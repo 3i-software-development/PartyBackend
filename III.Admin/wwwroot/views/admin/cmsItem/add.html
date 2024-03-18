@@ -118,6 +118,89 @@
         margin: 20px auto;
     }
 </style>
+
+<style>
+    .edit-box {
+        width: 50%;
+        height: 100%;
+        border: 1px solid #ccc;
+    }
+
+    ol,
+    ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    li {
+        margin-bottom: 2px;
+        margin-left: 20px;
+    }
+
+    blockquote {
+        background-color: #f9f9f9;
+        border-left: 10px solid #ccc;
+        margin: 1.5em 10px;
+        padding: 0.5em 10px;
+    }
+
+    footer {
+        margin-top: 0.5em;
+        text-align: right;
+        font-style: italic;
+    }
+
+    .warning {
+        border: 2px solid #f00;
+        background-color: #ffe6e6;
+        padding: 10px;
+        margin-bottom: 20px;
+    }
+
+        .warning strong {
+            color: #f00;
+        }
+
+    ul.checklist {
+        list-style-type: none;
+        padding-left: 0;
+    }
+
+        ul.checklist li {
+            margin-bottom: 5px;
+        }
+
+            ul.checklist li.checked {
+                text-decoration: line-through;
+            }
+
+    .tit-page {
+        text-align: center;
+    }
+
+    .save-btn {
+        transform: translateX(670%);
+        margin-top: 10px;
+    }
+
+    .container {
+        max-width: 800px;
+        /* Điều chỉnh kích thước container theo ý muốn */
+        margin: 0 auto;
+        /* Canh giữa container */
+    }
+
+    #editorjs-content img {
+        max-width: 100%;
+        /* Đặt độ rộng tối đa cho ảnh là 100% */
+        height: auto;
+        /* Cho phép chiều cao tự điều chỉnh để giữ nguyên tỷ lệ */
+        display: block;
+        /* Đảm bảo hiển thị ảnh là mỗi ảnh trên một dòng */
+        margin: 10px auto;
+        /* Canh giữa ảnh */
+    }
+</style>
 <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
 </button>
 <div class="modal-header white-custom height-50">
@@ -360,8 +443,15 @@
                         </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade" id="demo">
-                        <div ng-include="'../views/admin/cmsItem/demo.html'">
-
+                        <div ng-controller="demoCmsItm">
+                            <input type="button" ng-click="saveCms()" value="Save">
+                            <div class="container">
+                                <div style="display: flex; justify-content: center">
+                                    <div class="edit-box">
+                                        <div id="editorjs"></div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
