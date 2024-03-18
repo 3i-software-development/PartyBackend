@@ -492,8 +492,8 @@ footer.footer-dark {
         }
 
     .main-menu.menu-dark {
-        color: #dcdcdc;
-        background: #121f3e;
+        color: #000;
+        background: #fff;
     }
 
         .main-menu.menu-dark .main-menu-header {
@@ -501,17 +501,17 @@ footer.footer-dark {
         }
 
             .main-menu.menu-dark .main-menu-header .menu-search {
-                background: #0b1115;
+                background: #fff;
                 padding: 0.5rem 1rem;
                 color: #c3c3c3;
             }
 
                 .main-menu.menu-dark .main-menu-header .menu-search:focus {
-                    border-color: #020304;
+                    border-color: #fff;
                 }
 
         .main-menu.menu-dark .navigation {
-            background: #121f3e;
+            background: #fff;
         }
 
             .main-menu.menu-dark .navigation .navigation-header_border-top {
@@ -544,7 +544,7 @@ footer.footer-dark {
                     }
 
             .main-menu.menu-dark .navigation li a {
-                color: #a8b6cc;
+                color: #263847;
             }
 
                 .main-menu.menu-dark .navigation li a span.menu-sub-title {
@@ -662,7 +662,7 @@ footer.footer-dark {
 
                         .main-menu.menu-dark .navigation > li ul .open > ul {
                             display: block;
-                            background: #0f161b;
+                            background: #fff;
                         }
 
                             .main-menu.menu-dark .navigation > li ul .open > ul li > a {
@@ -706,11 +706,11 @@ footer.footer-dark {
                         }
 
                 .main-menu.menu-dark .navigation > li > ul {
-                    background: #1D2B36;
+                    background: #fff;
                 }
 
         .main-menu.menu-dark ul.menu-popout {
-            background: #1D2B36;
+            background: #fff;
         }
 
             .main-menu.menu-dark ul.menu-popout li a {
@@ -2766,7 +2766,11 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu-footer .content {
 .large-margin.ps-container > .ps-scrollbar-y-rail {
     margin: 100px 0;
 }
-
+@media screen and (max-width: 544px) {
+    .sidebar-left {
+        display: none;
+    }
+}
 @media screen and (min-width: 0px) {
     head {
         font-family: "xs 0px";
