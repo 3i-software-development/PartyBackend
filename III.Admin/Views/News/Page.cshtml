@@ -82,6 +82,21 @@
         .ce-toolbar__settings-btn, .ce-toolbar__plus, .tc-add-column, .tc-add-row, .tc-toolbox {
             display: none
         }
+
+        .ce-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .ce-table td, .ce-table th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            .ce-table th {
+                background-color: #f2f2f2;
+            }
     </style>
     <div id="editorjs"></div>
     <div id="editorjs-content"></div>
@@ -104,14 +119,16 @@
     <script src="https://cdn.jsdelivr.net/npm/@@calumk/editorjs-nested-checklist@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/editorjs-header-with-alignment@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/editorjs-paragraph-with-alignment@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/raw@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/link@latest"></script>
     <script src="~/js/editorjs/tool.js"></script>
     <script>
         var outputData = @Json.Serialize(Model.full_text.ToString());
         displayHTML(outputData);
-        
+
         function displayHTML(editorData) {
             const editorContent = document.getElementById('editorjs-content');
-            var model=JSON.parse(editorData)
+            var model = JSON.parse(editorData)
             console.log(model)
             convertToHTML(model, editorContent);
         }
@@ -154,6 +171,92 @@
                             imageElement.alt = block.data.caption; // Assume caption is in the "caption" field
                             blockElement.appendChild(imageElement);
                             blockElement.classList.add('ce-image'); // Thêm class cho image
+                            break;
+                        case 'list':
+                            const listType = block.data.style === 'ordered' ? 'ol' : 'ul'; // Xác định loại danh sách là ordered hoặc unordered
+                            const listElement = document.createElement(listType); // Tạo một thẻ ul hoặc ol tương ứng
+                            block.data.items.forEach(item => {
+                                const listItem = document.createElement('li'); // Tạo một thẻ li cho mỗi item trong danh sách
+                                listItem.textContent = item; // Đặt nội dung của thẻ li là item trong danh sách
+                                listElement.appendChild(listItem); // Thêm thẻ li vào thẻ ul hoặc ol
+                            });
+                            blockElement.appendChild(listElement); // Thêm thẻ ul hoặc ol vào block element
+                            blockElement.classList.add('ce-block'); // Thêm class cho danh sách
+                            break;
+                        
+                        case 'quote':
+                            const quoteElement = document.createElement('blockquote');
+                            quoteElement.textContent = block.data.text; // Assume quote text is in the "text" field
+                            if (block.data.caption) {
+                                const captionElement = document.createElement('footer');
+                                captionElement.textContent = block.data.caption; // Assume caption is in the "caption" field
+                                quoteElement.appendChild(captionElement);
+                            }
+                            blockElement.appendChild(quoteElement);
+                            blockElement.classList.add('ce-quote'); // Thêm class cho quote
+                            break;
+                        case 'delimiter':
+                            const delimiterElement = document.createElement('hr');
+                            blockElement.appendChild(delimiterElement);
+                            blockElement.classList.add('ce-delimiter'); // Thêm class cho delimiter
+                            break;
+                        case 'warning':
+                            const warningElement = document.createElement('div');
+                            warningElement.classList.add('warning'); // Thêm class cho warning
+                            const warningMessage = document.createElement('p');
+                            warningMessage.textContent = block.data.message; // Assume message is in the "message" field
+                            warningElement.appendChild(warningMessage);
+                            if (block.data.title) {
+                                const warningTitle = document.createElement('strong');
+                                warningTitle.textContent = block.data.title; // Assume title is in the "title" field
+                                warningElement.insertBefore(warningTitle, warningMessage); // Chèn tiêu đề trước thông báo
+                            }
+                            blockElement.appendChild(warningElement);
+                            break;
+                        case 'code':
+                            const codeWrapper = document.createElement('div');
+                            codeWrapper.innerHTML = block.data.code; // Assume code content is in the "code" field
+                            blockElement.appendChild(codeWrapper);
+                            blockElement.classList.add('ce-code'); // Thêm class cho block code
+                            break;
+                        case 'checklist':
+                            const checklistElement = document.createElement('ul');
+                            block.data.items.forEach(item => {
+                                const checkboxElement = document.createElement('input');
+                                checkboxElement.type = 'checkbox';
+                                const labelElement = document.createElement('label');
+                                labelElement.textContent = item.text;
+                                labelElement.prepend(checkboxElement);
+                                checklistElement.appendChild(labelElement);
+                            });
+                            blockElement.appendChild(checklistElement);
+                            blockElement.classList.add('ce-checklist'); // Thêm class cho block checklist
+                            break;
+                        case 'nestedchecklist':
+                            const nestedChecklistElement = document.createElement('ul'); // Tạo một thẻ ul cho nested checklist
+                            block.data.items.forEach(item => {
+                                const listItem = document.createElement('li'); // Tạo một thẻ li cho mỗi item trong nested checklist
+                                listItem.textContent = item.text; // Đặt nội dung của thẻ li là nội dung của item
+                                if (item.checked) {
+                                    listItem.classList.add('checked'); // Nếu item được kiểm tra, thêm class 'checked' vào thẻ li
+                                }
+                                if (item.items && item.items.length > 0) {
+                                    // Nếu có các mục lồng nhau, tái sử dụng đệ quy để tạo danh sách lồng nhau
+                                    const nestedList = document.createElement('ul');
+                                    item.items.forEach(subItem => {
+                                        const subListItem = document.createElement('li');
+                                        subListItem.textContent = subItem.text;
+                                        if (subItem.checked) {
+                                            subListItem.classList.add('checked');
+                                        }
+                                        nestedList.appendChild(subListItem);
+                                    });
+                                    listItem.appendChild(nestedList);
+                                }
+                                nestedChecklistElement.appendChild(listItem); // Thêm thẻ li vào thẻ ul
+                            });
+                            blockElement.appendChild(nestedChecklistElement); // Thêm thẻ ul vào block element
+                            blockElement.classList.add('ce-block'); // Thêm class cho nested checklist
                             break;
                         // Thêm xử lý cho các loại block khác nếu cần
                     }

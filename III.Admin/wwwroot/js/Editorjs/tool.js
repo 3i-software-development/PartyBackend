@@ -76,4 +76,18 @@
     },
     nestedchecklist: editorjsNestedChecklist,
     table: Table,
+    raw: {
+        class: RawTool,
+        config: {
+            placeholder: 'Enter raw HTML here...',
+        },
+    },
+    link: {
+        class: LinkTool,
+        inlineToolbar: true,
+        config: {
+            endpoint: 'https://your-link-endpoint.com',
+            placeholder: 'Paste your link here...',
+        },
+    },
 }

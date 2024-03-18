@@ -79,6 +79,25 @@ namespace III.Admin.Controllers
         }
 
 
+        //[AllowAnonymous]
+        //public async Task<IActionResult> CreateAccount()
+        //{
+        //    var msg = new JMessage() { Error = false };
+        //    for (int i=0; i<20; i++)
+        //    {
+        //        var user = new AspNetUser
+        //        {
+        //            UserName = "truongchibo" + i,
+        //            Email = "truongchibo"+i+"@gmail.com",
+        //            GivenName = "Trưởng chi bộ" + i,
+        //            Area = "User",
+        //            Active = true,
+        //        };
+        //        var result = await _userManager.CreateAsync(user,"123456");
+        //    }
+        //    return Ok(msg);
+        //}
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register2([FromBody] RegisterDto model)
