@@ -92,7 +92,7 @@ namespace III.Admin.Controllers
                            title = a.title,
                            id = a.id,
                            hits = a.hits,
-                           full_text = a.full_text,
+                           full_text = a.cat_id == 1421?a.json_editor: a.full_text,
                            extra_fields = a.extra_fields,
                            featured_ordering = a.featured_ordering,
                            cat_id = a.cat_id,

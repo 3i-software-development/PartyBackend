@@ -104,6 +104,8 @@ namespace ESEIM.Models
         public string hash_tag { get; set; }
         public string share { get; set; }
         public string multiple_language { get; set; }
+        public string json_editor { get; set; }
+
     }
 
     public class CMSItemModel
@@ -118,5 +120,6 @@ namespace ESEIM.Models
         public DateTime? Modified { get; set; }
         public string Name { get; set; }
         public bool IsRead { get; set; }
+        public string json_editor { get; set; }
     }
 }

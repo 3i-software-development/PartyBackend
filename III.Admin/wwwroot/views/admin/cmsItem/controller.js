@@ -288,6 +288,28 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $ht
     });
 });
 
+app.controller('demoCmsItm', function ($scope, $rootScope, $compile, dataserviceCmsItem, $translate, $window, $filter) {
+    var editor;
+    setTimeout(function () {
+        editor = new EditorJS({
+            holder: "editorjs",
+            tools:tool,
+            data:$rootScope.JsonEdit
+        });
+    },3000);
+
+    $scope.saveCms = function () {
+        editor
+            .save()
+            .then((outputData) => {
+                console.log("Article data: ", outputData);
+                $rootScope.JsonEdit=outputData
+            })
+            .catch((error) => {
+                console.log("Saving failed: ", error);
+            });
+    };
+});
 app.controller('indexCmsItm', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceCmsItem, $translate, $window, $filter) {
     var vm = $scope;
     $scope.model = {
@@ -875,7 +897,7 @@ app.controller('addCmsItm', function ($scope, $rootScope, $compile, $uibModal, $
             }
         }
         $scope.model.multiple_language = JSON.stringify($scope.jsonMultipleLanguage);
-
+        $scope.model.json_editor=JSON.stringify($rootScope.JsonEdit);
         validationSelect($scope.model);
         if ($scope.addform.validate() && !validationSelect($scope.model).Status) {
             var model = angular.copy($scope.model);
@@ -1084,6 +1106,7 @@ app.controller('editCmsItm', function ($scope, $rootScope, $compile, $uibModal, 
                     else {
                         $scope.model.date_post = '';
                     }
+                    $rootScope.JsonEdit=JSON.parse(rs.json_editor);
                 } catch (e) {
                     console.log(e);
                     $scope.model.date_post = '';
@@ -1185,9 +1208,9 @@ app.controller('editCmsItm', function ($scope, $rootScope, $compile, $uibModal, 
                 $scope.jsonMultipleLanguage.push($scope.modelJson);
             }
         }
-        debugger
         $scope.model.multiple_language = JSON.stringify($scope.jsonMultipleLanguage);
 
+        $scope.model.json_editor=JSON.stringify($rootScope.JsonEdit);
         validationSelect($scope.model);
         if ($scope.editform.validate() && !validationSelect($scope.model).Status) {
             var model = angular.copy($scope.model);
