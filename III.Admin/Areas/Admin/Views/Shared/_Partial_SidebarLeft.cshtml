@@ -1402,7 +1402,7 @@
         </div>
     </div>
 </div>
-<div data-scroll-to-active="true" class="main-menu menu-dark menu-accordion menu-shadow" id="menu-mobile">
+<div data-scroll-to-active="true" class="main-menu menu-dark menu-accordion menu-shadow" id="menu-mobile" style="width:100vw">
     <div class="main-menu-content page-sidebar navbar-collapse" style="background-color:orangered;">
         <ul id="main-menu-navigation" class="navigation navigation-main">
             <li class="nav-item pt20">
@@ -1756,6 +1756,101 @@
                     </li>
                 </ul>
             </li>
+@*Ngôn ngữ*@
+ @* <li class="dropdown dropdown-language nav-item mr15" style="top: 0px;">
+                            <a id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class=" nav-link none-hover" style="padding-bottom: 0px; padding-top: 5px;">
+                                <i class="flag-icon @curlLanguage.Icon fs20" style="    border: solid 1px lightgray"></i>
+                            </a>
+                            @* <div class="selected-language black fs12" style="transform: translateX(35%); line-height: 24px">@curlLanguage.DisplayName</div> *@
+                            <div aria-labelledby="dropdown-flag" class="dropdown-menu">
+                                @{
+                                    foreach (var lang in LanguageService.GetListLanguages())
+                                    {
+                                        <a class="dropdown-item" onclick="onRedirect('@lang.Culture')">
+                                            <span class="flag-icon @lang.Icon"></span> @lang.DisplayName
+                                        </a>
+                                    }
+                                }
+                            </div>
+                        </li> *@
+            @* <li class="dotted-menu" />
+            <li class="nav-item">
+              <a id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class=" nav-link none-hover" style="padding-bottom: 0px; padding-top: 5px;">
+                                <i class="flag-icon @curlLanguage.Icon fs20 menu-title bold" style="    border: solid 1px lightgray"></i>
+                            </a>
+                <a href="#">
+                    <i class="fas fa-question-circle"></i><span class="menu-title bold">Ngôn ngữ</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="">
+                        <a href="/Admin/Asset"><i class="fas fa-book"></i>@Localizer["MENU_ASSET_MANAGEMENT"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetGroup"><i class="fas fa-globe"></i>@Localizer["MENU_SYS_DM_GROUP_TS"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetInventory"><i class="fas fa-file-signature"></i>@Localizer["MENU_SYS_ASSET_INVENTORY"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetAllocation"><i class="fas fa-location-arrow"></i>@Localizer["MENU_SYS_ASSET_ALLOCATION"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetBuy"><i class="fas fa-cart-plus"></i>@Localizer["MENU_SYS_PROPERTY_SHOOPING"] </a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetTransfer"><i class="fas fa-retweet"></i>@Localizer["MENU_SYS_PROPERTY_TRANSFER"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetRqMaintenanceRepair"><i class="fas fa-user-shield"></i>@Localizer["MENU_SYS_REQUEST_MAINTENANCE"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetMaintenance"><i class="fas fa-wrench"></i>@Localizer["MENU_SYS_PROPERTY_REPAIR"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetImprovement"><i class="fas fa-user-md"></i>@Localizer["MENU_SYS_PROPERTY_MAINTENANCE"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetCancel"><i class="fas fa-ban"></i>@Localizer["MENU_SYS_PROPERTY_DESTRUCTION"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetLiquidation"><i class="fas fa-gavel"></i>@Localizer["MENU_SYS_QILUIGATION_OF_ASSETS"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetRPTBroken"><i class="fas fa-exclamation-triangle"></i>@Localizer["MENU_SYS_REPORT_LOSS_PROPERTY"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetRecalled"><i class="fas fa-user-lock"></i>@Localizer["MENU_SYS_ASSET_RECOVERY"]</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/AssetCommonSetting"><i class="fa fa-cogs"></i>@Localizer["MENU_SYS_PARAMETER_SETTING"]</a>
+                    </li>
+                    <li class="">
+                        <a href="/Admin/AssetActivity">
+                            <i class="fa fa-signal"></i> <span>@Localizer["MENU_ASSET_ACTIVITY"]</span>
+                            <span class="pull-right-container">
+                                <small class="label pull-right bg-green"></small>
+                            </span>
+                        </a>
+                    </li>
+                </ul>
+            </li> *@
+
+
+
+
             @*Quản lý quỹ*@
             <!-- <li class="dotted-menu" />
             <li class="nav-item">

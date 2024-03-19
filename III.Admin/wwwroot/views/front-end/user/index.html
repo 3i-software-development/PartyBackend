@@ -273,6 +273,25 @@
         font-size: 14px;
         /* Adjust the font size as needed */
     }
+    
+    .table-wrapper {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+    .table-wrapper .list-item {
+        min-width: 100%;
+        /* Ensure table occupies full width */
+    }
+
+    /* Optional: Style the scrollbar */
+    .table-wrapper::-webkit-scrollbar {
+        height: 10px;
+    }
+
+    .table-wrapper::-webkit-scrollbar-thumb {
+        background: #888;
+    }
 </style>
 
 <div class="notifi">
@@ -1156,54 +1175,57 @@
                                                 <span>Thêm</span>
                                             </button>
                                         </div>
+                                        
 
                                     </div>
 
                                 </div>
-                                <div class="list-item">
-                                    <table class="table-container">
-                                        <thead>
-                                            <tr>
-                                                <th>Quan hệ</th>
-                                                <th>Họ và tên</th>
-                                                <th>Năm sinh, mất nếu có và lý do</th>
-                                                <th>Địa chỉ</th>
+                                <div class="table-wrapper">
+                                    <div class="list-item">
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>Quan hệ</th>
+                                                    <th>Họ và tên</th>
+                                                    <th>Năm sinh, mất nếu có và lý do</th>
+                                                    <th>Địa chỉ</th>
 
-                                                <th>Nghề nghiệp</th>
-                                                <th>Quá trình công tác</th>
-                                                <th>Thái độ chính trị</th>
-                                                <th>Đảng viên</th>
-                                                <th>Xoá bỏ</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
-                                                <td>
-                                                    {{x.Relation}}
-                                                </td>
-                                                <td>{{x.Name}}</td>
-                                                <td>
-                                                    {{x.BirthYear}}
+                                                    <th>Nghề nghiệp</th>
+                                                    <th>Quá trình công tác</th>
+                                                    <th>Thái độ chính trị</th>
+                                                    <th>Đảng viên</th>
+                                                    <th>Xoá bỏ</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
+                                                    <td>
+                                                        {{x.Relation}}
+                                                    </td>
+                                                    <td>{{x.Name}}</td>
+                                                    <td>
+                                                        {{x.BirthYear}}
 
-                                                </td>
-                                                <td>
-                                                    <div><span>- Quê quán: {{x.HomeTown}}</span></div>
-                                                    <div><span>- Nơi cư trú: {{x.Residence}}</span></div>
-                                                </td>
-                                                <td>{{x.Job}}</td>
-                                                <td>{{x.WorkingProgress}}</td>
-                                                <td>{{x.PoliticalAttitude}}</td>
-                                                <td>{{x.PartyMember == 1?"Có" : "Không"}}</td>
+                                                    </td>
+                                                    <td>
+                                                        <div><span>- Quê quán: {{x.HomeTown}}</span></div>
+                                                        <div><span>- Nơi cư trú: {{x.Residence}}</span></div>
+                                                    </td>
+                                                    <td>{{x.Job}}</td>
+                                                    <td>{{x.WorkingProgress}}</td>
+                                                    <td>{{x.PoliticalAttitude}}</td>
+                                                    <td>{{x.PartyMember == 1?"Có" : "Không"}}</td>
 
 
-                                                <td ng-click="deleteFamily($index)">
-                                                    <button class="btn" style="color:red">
-                                                        <i class="fa fa-trash"></i>
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                                    <td ng-click="deleteFamily($index)">
+                                                        <button class="btn" style="color:red">
+                                                            <i class="fa fa-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                                 <!-- <div class="row">
                                 <div style="background-color: #fff; border-radius: 5px;">
@@ -1341,24 +1363,29 @@
                                         <span>Thêm</span>
                                     </button>
                                 </div>
-                                <div class="list-item">
-                                    <table>
-                                        <tr>
-                                            <th>Từ ngày</th>
-                                            <th>Đến ngày</th>
-                                            <th>Nội dung</th>
-                                            <th>Xoá bỏ</th>
-                                        </tr>
-                                        <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)">
-                                            <td>{{x.Begin}}</td>
-                                            <td>{{x.End}}</td>
-                                            <td>{{x.Content}}</td>
-                                            <td style="text-align:center">
-                                                <i style="color:red" class="fa fa-trash"
-                                                    ng-click="deletePesonalHistory($index)"></i>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <div class="form-group row">
+                                    <!-- Form fields here -->
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="list-item">
+                                        <table>
+                                            <tr>
+                                                <th>Từ ngày</th>
+                                                <th>Đến ngày</th>
+                                                <th>Nội dung</th>
+                                                <th>Xoá bỏ</th>
+                                            </tr>
+                                            <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)">
+                                                <td>{{x.Begin}}</td>
+                                                <td>{{x.End}}</td>
+                                                <td>{{x.Content}}</td>
+                                                <td style="text-align:center">
+                                                    <i style="color:red" class="fa fa-trash"
+                                                        ng-click="deletePesonalHistory($index)"></i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex; justify-content:space-between">
@@ -1469,26 +1496,31 @@
                                         <span>Thêm</span>
                                     </button>
                                 </div>
-                                <div class="list-item">
-                                    <table>
-                                        <tr>
-                                            <th>Từ ngày</th>
-                                            <th>Đến ngày</th>
-                                            <th>Nội dung</th>
-                                            <th>Chức vụ</th>
-                                            <th>Xoá bỏ</th>
-                                        </tr>
-                                        <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
-                                            <td>{{x.From}}</td>
-                                            <td>{{x.To}}</td>
-                                            <td>{{x.Work}}</td>
-                                            <td>{{x.Role}}</td>
-                                            <td style="text-align:center">
-                                                <i style="color:red" class="fa fa-trash"
-                                                    ng-click="deleteWorkingTracking($index)"></i>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <div class="form-group row">
+                                    <!-- Form fields here -->
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="list-item">
+                                        <table>
+                                            <tr>
+                                                <th>Từ ngày</th>
+                                                <th>Đến ngày</th>
+                                                <th>Nội dung</th>
+                                                <th>Chức vụ</th>
+                                                <th>Xoá bỏ</th>
+                                            </tr>
+                                            <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
+                                                <td>{{x.From}}</td>
+                                                <td>{{x.To}}</td>
+                                                <td>{{x.Work}}</td>
+                                                <td>{{x.Role}}</td>
+                                                <td style="text-align:center">
+                                                    <i style="color:red" class="fa fa-trash"
+                                                        ng-click="deleteWorkingTracking($index)"></i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
@@ -1559,25 +1591,30 @@
                                         <span>Sửa</span>
                                     </button>-->
                                 </div>
-                                <div class="list-item">
-                                    <table>
-                                        <tr>
-                                            <th>Thời gian</th>
+                                <div class="form-group row">
+                                    <!-- Form fields here -->
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="list-item">
+                                        <table>
+                                            <tr>
+                                                <th>Thời gian</th>
 
-                                            <th>Nội dung</th>
-                                            <th>Xoá bỏ</th>
-                                        </tr>
-                                        <tr ng-repeat="x in HistoricalFeatures" ng-click="selectHistorySpecialist(x)">
-                                            <td>{{x.MonthYear}}</td>
-                                            <td>{{x.Content}}</td>
+                                                <th>Nội dung</th>
+                                                <th>Xoá bỏ</th>
+                                            </tr>
+                                            <tr ng-repeat="x in HistoricalFeatures"
+                                                ng-click="selectHistorySpecialist(x)">
+                                                <td>{{x.MonthYear}}</td>
+                                                <td>{{x.Content}}</td>
 
-                                            <td style="text-align:center">
-                                                <i style="color:red" class="fa fa-trash"
-                                                    ng-click="deleteHistorySpecialist($index)"></i>
-                                            </td>
-                                        </tr>
-
-                                    </table>
+                                                <td style="text-align:center">
+                                                    <i style="color:red" class="fa fa-trash"
+                                                        ng-click="deleteHistorySpecialist($index)"></i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex; justify-content:space-between">
@@ -1672,25 +1709,29 @@
                     <span>Sửa</span>
                 </button> -->
                                 </div>
-                                <div class="list-item">
-                                    <table>
-                                        <tr>
-                                            <th>Ngày, tháng, năm</th>
-                                            <th>Lý do, hình thức</th>
-                                            <th>Cấp quyết định</th>
-                                            <th>Xoá bỏ</th>
-                                        </tr>
-                                        <tr ng-repeat="x in Laudatory" ng-click="selectLaudatory(x)">
-                                            <td>{{x.MonthYear}}</td>
-                                            <td>{{x.Reason}}</td>
-                                            <td>{{x.GrantOfDecision}}</td>
-                                            <td style="text-align:center">
-                                                <i style="color:red" class="fa fa-trash"
-                                                    ng-click="deleteAward($index)"></i>
-                                            </td>
-                                        </tr>
-
-                                    </table>
+                                <div class="form-group row">
+                                    <!-- Form fields here -->
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="list-item">
+                                        <table>
+                                            <tr>
+                                                <th>Ngày, tháng, năm</th>
+                                                <th>Lý do, hình thức</th>
+                                                <th>Cấp quyết định</th>
+                                                <th>Xoá bỏ</th>
+                                            </tr>
+                                            <tr ng-repeat="x in Laudatory" ng-click="selectLaudatory(x)">
+                                                <td>{{x.MonthYear}}</td>
+                                                <td>{{x.Reason}}</td>
+                                                <td>{{x.GrantOfDecision}}</td>
+                                                <td style="text-align:center">
+                                                    <i style="color:red" class="fa fa-trash"
+                                                        ng-click="deleteAward($index)"></i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
@@ -1786,25 +1827,30 @@
                     <span>Sửa</span>
                 </button> -->
                                 </div>
-                                <div class="list-item">
-                                    <table>
-                                        <tr>
-                                            <th>Tháng, năm</th>
-                                            <th>Lý do, hình thức</th>
-                                            <th>Cấp quyết định</th>
-                                            <th>Xoá bỏ</th>
-                                        </tr>
-                                        <tr ng-repeat="x in Disciplined" ng-click="selectWarningDisciplined(x)">
-                                            <td>{{x.MonthYear}}</td>
-                                            <td>{{x.Reason}}</td>
-                                            <td>{{x.GrantOfDecision}}</td>
-                                            <td style="text-align:center">
-                                                <i style="color:red" class="fa fa-trash"
-                                                    ng-click="deleteWarningDisciplined($index)"></i>
-                                            </td>
-                                        </tr>
+                                <div class="form-group row">
+                                    <!-- Form fields here -->
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="list-item">
+                                        <table>
+                                            <tr>
+                                                <th>Tháng, năm</th>
+                                                <th>Lý do, hình thức</th>
+                                                <th>Cấp quyết định</th>
+                                                <th>Xoá bỏ</th>
+                                            </tr>
+                                            <tr ng-repeat="x in Disciplined" ng-click="selectWarningDisciplined(x)">
+                                                <td>{{x.MonthYear}}</td>
+                                                <td>{{x.Reason}}</td>
+                                                <td>{{x.GrantOfDecision}}</td>
+                                                <td style="text-align:center">
+                                                    <i style="color:red" class="fa fa-trash"
+                                                        ng-click="deleteWarningDisciplined($index)"></i>
+                                                </td>
+                                            </tr>
 
-                                    </table>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
@@ -1942,29 +1988,34 @@
                     <span>Sửa</span>
                 </button> -->
                                 </div>
-                                <div class="list-item">
-                                    <table>
-                                        <tr>
-                                            <th>Từ ngày</th>
-                                            <th>Đến ngày</th>
-                                            <th>Tên trường</th>
-                                            <th>Ngành học hoặc tên lớp học</th>
-                                            <th>Văn bằng chứng chỉ</th>
-                                            <th>Xoá bỏ</th>
-                                        </tr>
-                                        <tr ng-repeat="x in PassedTrainingClasses"
-                                            ng-click="selectTrainingCertificatedPass(x)">
-                                            <td>{{x.From}}</td>
-                                            <td>{{x.To}}</td>
-                                            <td>{{x.SchoolName}}</td>
-                                            <td>{{x.Class}}</td>
-                                            <td>{{x.Certificate}}</td>
-                                            <td style="text-align:center">
-                                                <i style="color:red" class="fa fa-trash"
-                                                    ng-click="deleteTrainingCertificatedPass($index)"></i>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <div class="form-group row">
+                                    <!-- Form fields here -->
+                                </div>
+                                <div class="table-wrapper">
+                                    <div class="list-item">
+                                        <table>
+                                            <tr>
+                                                <th>Từ ngày</th>
+                                                <th>Đến ngày</th>
+                                                <th>Tên trường</th>
+                                                <th>Ngành học hoặc tên lớp học</th>
+                                                <th>Văn bằng chứng chỉ</th>
+                                                <th>Xoá bỏ</th>
+                                            </tr>
+                                            <tr ng-repeat="x in PassedTrainingClasses"
+                                                ng-click="selectTrainingCertificatedPass(x)">
+                                                <td>{{x.From}}</td>
+                                                <td>{{x.To}}</td>
+                                                <td>{{x.SchoolName}}</td>
+                                                <td>{{x.Class}}</td>
+                                                <td>{{x.Certificate}}</td>
+                                                <td style="text-align:center">
+                                                    <i style="color:red" class="fa fa-trash"
+                                                        ng-click="deleteTrainingCertificatedPass($index)"></i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
@@ -2083,26 +2134,32 @@
                     <span>Sửa</span>
                 </button> -->
                                 </div>
-                                <div class="list-item">
-                                    <table>
-                                        <tr>
-                                            <th>Từ ngày</th>
-                                            <th>Đến ngày</th>
-                                            <th>Nội dung đi</th>
-                                            <th>Đi nước nào</th>
-                                            <th>Xoá bỏ</th>
-                                        </tr>
-                                        <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)">
-                                            <td>{{x.From}}</td>
-                                            <td>{{x.To}}</td>
-                                            <td>{{x.Contact}}</td>
-                                            <td>{{x.Country}}</td>
-                                            <td style="text-align:center">
-                                                <i style="color:red" class="fa fa-trash"
-                                                    ng-click="deleteGoAboard($index)"></i>
-                                            </td>
-                                        </tr>
-                                    </table>
+                                <div class="form-group row">
+                                    <!-- Form fields here -->
+                                </div>
+
+                                <div class="table-wrapper">
+                                    <div class="list-item">
+                                        <table>
+                                            <tr>
+                                                <th>Từ ngày</th>
+                                                <th>Đến ngày</th>
+                                                <th>Nội dung đi</th>
+                                                <th>Đi nước nào</th>
+                                                <th>Xoá bỏ</th>
+                                            </tr>
+                                            <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)">
+                                                <td>{{x.From}}</td>
+                                                <td>{{x.To}}</td>
+                                                <td>{{x.Contact}}</td>
+                                                <td>{{x.Country}}</td>
+                                                <td style="text-align:center">
+                                                    <i style="color:red" class="fa fa-trash"
+                                                        ng-click="deleteGoAboard($index)"></i>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
 

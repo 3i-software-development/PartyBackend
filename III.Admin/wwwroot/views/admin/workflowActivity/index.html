@@ -260,6 +260,7 @@
         max-width: 100%; /* Chiều rộng tối đa của phần tử chứa bảng */
         overflow: auto; 
       }
+      
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
 <link href="/lib/robust/css/core/menu/menu-types/vertical-menu.css" <div ng-show="isShowDiagram" class="parent_svg"
@@ -495,120 +496,113 @@
         </div>
 
     </div>
-    <div id="searchBox" ng-show="isSearch">
-        <div class="table-toolbar">
-            <div class="portlet light bordered mb5 mt10">
-                <div class="row">
-                    <div class="col-md-12" style="height:20px">
-                        <i ng-click="showSearch()"
-                            style="margin-top:9px !important; margin-right:5px !important; font-size:25px"
-                            class="fas fa-times pull-right h28 w28 close-input-search" role="button"
-                            title="Ẩn tìm kiếm"></i>
-                    </div>
-                    <div class="col-md-12 pl-0">
-                        <!--<div class="col-md-6">
-                        <label class="fw600 text-underline">{{'Nhóm luồng' | translate}}</label>
-                        <div class="input-group br24">
-                            <ui-select class="ui-select-bootstrap-right-radius" ng-model="modelSearch.WfGroup" theme="bootstrap">
-                                <ui-select-match placeholder="{{'Nhóm luồng' | translate}}..."><b class="bold">{{$select.selected.Name}}</b></ui-select-match>
-                                <ui-select-choices repeat="x.Code as x in lstWfGroup | filter: $select.search">
-                                    {{x.Name}}
-                                </ui-select-choices>
-                            </ui-select>
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="modelSearch.WfGroup=''" class="btn btn-default no-shadow" style="">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
+    <div class="row">
+        <div id="searchBox" ng-show="isSearch">
+            <div class="table-toolbar">
+                <div class="portlet light bordered mb5 mt10">
+                    <div class="row">
+                        <div class="col-md-12" style="height:20px">
+                            <i ng-click="showSearch()"
+                                style="margin-top:9px !important; margin-right:5px !important; font-size:25px"
+                                class="fas fa-times pull-right h28 w28 close-input-search" role="button"
+                                title="Ẩn tìm kiếm"></i>
                         </div>
-                    </div>-->
-
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="label-lg-content text-underline">{{'WFAI_MSG_STREAM_NAME_INSTANCE_CODE' |
-                                    translate}}</label>
-                                <input data-ng-model="modelSearch.WfInstName" class="form-control br24"
-                                    name="WfInstName"
-                                    placeholder=" {{'WFAI_MSG_STREAM_NAME_INSTANCE_CODE' | translate}}..." />
+                        <div class="col-md-12 pl-0">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label
+                                            class="label-lg-content text-underline">{{'WFAI_MSG_STREAM_NAME_INSTANCE_CODE' |
+                                            translate}}</label>
+                                        <input data-ng-model="modelSearch.WfInstName" class="form-control br24"
+                                            name="WfInstName"
+                                            placeholder=" {{'WFAI_MSG_STREAM_NAME_INSTANCE_CODE' | translate}}..." />
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw600 text-underline">{{'WFAI_CRUD_STATUS' | translate}}</label>
+                                    <div class="input-group br24 search-group">
+                                        <ui-select ng-model="modelSearch.Status" theme="bootstrap">
+                                            <ui-select-match
+                                                placeholder="{{'WFAI_CRUD_STATUS' | translate}}"><b>{{$select.selected.Name}}</b></ui-select-match>
+                                            <ui-select-choices
+                                                repeat="x.Code as x in listStatusWF | filter:$select.Name| filter: $select.search">
+                                                {{x.Name}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="modelSearch.Status=''"
+                                                class="btn btn-default no-shadow" style="">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label class="fw600 text-underline">{{'WFAI_SEARCH_FROM_DATE'| translate}}</label>
+                                    <div class='input-group br24 date'>
+                                        <input type='text' class="form-control input-date" ng-model="modelSearch.FromDate"
+                                            placeholder="{{'WFAI_SEARCH_FROM_DATE' | translate}}..." id='fromDate' />
+                                        <span class="input-group-btn ">
+                                            <button type="button" ng-click="modelSearch.FromDate='';"
+                                                class="btn btn-default no-shadow">
+                                                <span class="glyphicon glyphicon-remove "></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="fw600 text-underline">{{'WFAI_SEARCH_TO_DATE'| translate}}</label>
+                                    <div class='input-group br24 date'>
+                                        <input type='text' class="form-control input-date" ng-model="modelSearch.ToDate"
+                                            placeholder="{{'WFAI_SEARCH_TO_DATE' | translate}}..." id='toDate' />
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="modelSearch.ToDate='';"
+                                                class="btn btn-default no-shadow">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <label class="fw600 text-underline">{{'WFAI_CRUD_STATUS' | translate}}</label>
-                            <div class="input-group br24 search-group">
-                                <ui-select ng-model="modelSearch.Status" theme="bootstrap">
-                                    <ui-select-match
-                                        placeholder="{{'WFAI_CRUD_STATUS' | translate}}"><b>{{$select.selected.Name}}</b></ui-select-match>
-                                    <ui-select-choices
-                                        repeat="x.Code as x in listStatusWF | filter:$select.Name| filter: $select.search">
-                                        {{x.Name}}
-                                    </ui-select-choices>
-                                </ui-select>
-                                <span class="input-group-btn">
-                                    <button type="button" ng-click="modelSearch.Status=''"
-                                        class="btn btn-default no-shadow" style="">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-11 pl-0">
-                        <div class="col-md-6">
-                            <label class="fw600 text-underline">{{'WFAI_SEARCH_FROM_DATE'| translate}}</label>
-                            <div class='input-group br24 date'>
-                                <input type='text' class="form-control input-date" ng-model="modelSearch.FromDate"
-                                    placeholder="{{'WFAI_SEARCH_FROM_DATE' | translate}}..." id='fromDate' />
-                                <span class="input-group-btn ">
-                                    <button type="button" ng-click="modelSearch.FromDate='';"
-                                        class="btn btn-default no-shadow">
-                                        <span class="glyphicon glyphicon-remove "></span>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <label class="fw600 text-underline">{{'WFAI_SEARCH_TO_DATE'| translate}}</label>
-                            <div class='input-group br24 date'>
-                                <input type='text' class="form-control input-date" ng-model="modelSearch.ToDate"
-                                    placeholder="{{'WFAI_SEARCH_TO_DATE' | translate}}..." id='toDate' />
-                                <span class="input-group-btn">
-                                    <button type="button" ng-click="modelSearch.ToDate='';"
-                                        class="btn btn-default no-shadow">
-                                        <span class="glyphicon glyphicon-remove"></span>
-                                    </button>
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-1 h-70 pl-0 pr-0" style="">
-                        <div class="btn-group actions d-flex pull-left">
-                            <div class="text-center mt30">
-                                <a class1="btn btn-icon-only btn-circle btn-outline purple-custom" ng-click="search()">
-                                    <span><i class="fas fa-search fs30 color-dark"></i></span>
-                                </a>
-                                <!--<p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>-->
+                        <div class="col-md-12 pl-0 pr-0 mt-3">
+                            <div class="col-md-6">
+                                <div class="btn-group actions d-flex pull-left">
+                                    <div class="text-center">
+                                        <a class1="btn btn-icon-only btn-circle btn-outline purple-custom"
+                                            ng-click="search()">
+                                            <span><i class="fas fa-search fs30 color-dark"></i></span>
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
+        </div>
+        <div class="col col-md-12 pr-0 pt5 p-1" id="main-table">
+            <div class="row pl-2">
+                <div class="col-md-4">
+                    <span class="bold">* {{'WFAI_LBL_ALL_WF' | translate}}: {{statiscalWf.SumWf}},</span>
+                </div>
+                <div class="col-md-4">
+                    <span class="text-danger bold">{{'WFAI_LBL_WF_PENDING' | translate}}: {{statiscalWf.PendingWf}},</span>
+                </div>
+                <div class="col-md-4">
+                    <span class="text-green bold">{{'WFAI_LBL_WF_SUCCED' | translate}}: {{statiscalWf.SuccedWf}}</span>
+                </div>
+            </div>
+            <div class="v-scroll" style="max-height: 80vh; max-width: 100%; overflow: auto;">
+                <table class="table dataTable table-hover table-striped-double" datatable dt-options="dtOptionsList"
+                    dt-columns="dtColumnsList" dt-instance="dt.dtInstanceList" id="tblDataWfInstance"></table>
+            </div>
         </div>
     </div>
-    <div class="col-md-12 pr-0 pt5 p-114" id="main-table">
-        <div class="row pl-2">
-            <span class="bold">* {{'WFAI_LBL_ALL_WF' | translate}}: {{statiscalWf.SumWf}},</span>
-            <span class="text-danger bold">&nbsp; {{'WFAI_LBL_WF_PENDING' | translate}}:
-                {{statiscalWf.PendingWf}},</span>
-            <span class="text-green bold">&nbsp; {{'WFAI_LBL_WF_SUCCED' | translate}}: {{statiscalWf.SuccedWf}}</span>
-        </div>
-        <div class="v-scroll" style="max-height: 80vh;max-width:100%;overflow:auto;">
-            <table class="table dataTable table-hover table-striped-double" datatable dt-options="dtOptionsList"
-                dt-columns="dtColumnsList" dt-instance="dt.dtInstanceList" id="tblDataWfInstance"></table>
-        </div>
-    </div>
+   
 
     <div class="main-menu-editWorkflow" style="top: 64px;width:50%;height:80vh; display:flex; 
         background-color: #fff; box-shadow: -3px -2px 5px 0px rgb(0 0 0 / 30%)" ng-if="isEditWorkflow">
