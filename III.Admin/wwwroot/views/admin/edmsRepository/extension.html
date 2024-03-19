@@ -68,6 +68,7 @@
                             </div>
                         </div>
                     </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                             <label class="control-label pl-0"><i class="fa fa-key"></i>&nbsp;{{'EDMSR_TAB_FILE_CURD_LBL_TAG' | translate}}</label>
@@ -80,12 +81,35 @@
                             <tags-input add-on-blur="true" add-on-enter="true" class="tag-wareHouseFile br12" use-strings="true" min-length="0" placeholder="{{'EDMSR_TAB_FILE_CURD_HASHTAG' | translate}}" ng-model="model.HashTag"></tags-input>
                         </div>
                     </div>
+                    <div class="col-md-12" style="padding-top: 75px;">
+                        <div class="row">
+                            <div ng-if="showQR" class="col-md-3" style="padding: 25px;">
+                                <qrcode role="button" data="{{model.HardFileAddress}}" size="90"></qrcode>
+                            </div>
+                            <div ng-class="showQR?'col-md-9':'col-md-12'">
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class=""><i class="fa fa-folder"></i>&nbsp;{{'EDMSR_TAB_FILE_HARD_CODE' | translate}}</label>
+                                        <input class="form-control br24" type="text" id="" ng-model="model.HardFileCode" placeholder="{{'EDMSR_TAB_FILE_HARD_CODE' | translate}}...">
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="form-group">
+                                        <label class=""><i class="fa fa-address-card"></i>&nbsp;{{'EDMSR_TAB_FILE_HARD_ADDRESS' | translate}}</label>
+                                        <input class="form-control br24" type="text" id="" ng-model="model.HardFileAddress" placeholder="{{'EDMSR_TAB_FILE_HARD_ADDRESS' | translate}}...">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
         </form>
     </div>
 </div>
-<div class="modal-footer mt70 mr10">
+<div class="modal-footer mt40 mr10">
+    
     <div class="btn-group actions d-flex pull-right">
         <div class="text-center">
             <a class1="btn btn-icon-only btn-circle btn-outline green-custom" ng-click="save()" href="javascript:;">
