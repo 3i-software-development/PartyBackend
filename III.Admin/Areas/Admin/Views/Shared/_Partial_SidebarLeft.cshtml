@@ -1757,22 +1757,7 @@
                 </ul>
             </li>
 @*Ngôn ngữ*@
- @* <li class="dropdown dropdown-language nav-item mr15" style="top: 0px;">
-                            <a id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class=" nav-link none-hover" style="padding-bottom: 0px; padding-top: 5px;">
-                                <i class="flag-icon @curlLanguage.Icon fs20" style="    border: solid 1px lightgray"></i>
-                            </a>
-                            @* <div class="selected-language black fs12" style="transform: translateX(35%); line-height: 24px">@curlLanguage.DisplayName</div> *@
-                            <div aria-labelledby="dropdown-flag" class="dropdown-menu">
-                                @{
-                                    foreach (var lang in LanguageService.GetListLanguages())
-                                    {
-                                        <a class="dropdown-item" onclick="onRedirect('@lang.Culture')">
-                                            <span class="flag-icon @lang.Icon"></span> @lang.DisplayName
-                                        </a>
-                                    }
-                                }
-                            </div>
-                        </li> *@
+ 
             @* <li class="dotted-menu" />
             <li class="nav-item">
               <a id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class=" nav-link none-hover" style="padding-bottom: 0px; padding-top: 5px;">
