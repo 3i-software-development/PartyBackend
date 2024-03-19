@@ -258,6 +258,21 @@
                             blockElement.appendChild(nestedChecklistElement); // Thêm thẻ ul vào block element
                             blockElement.classList.add('ce-block'); // Thêm class cho nested checklist
                             break;
+                              case 'raw':
+                                const rawWrapper = document.createElement('div');
+                                rawWrapper.innerHTML = block.data.html; // Assume code content is in the "code" field
+                                blockElement.appendChild(rawWrapper);
+                                blockElement.classList.add('ce-raw'); // Thêm class cho block code
+                                break;
+                            case 'link':
+                                const linkElement = document.createElement('a');
+                                linkElement.textContent = block.data.link;
+                                linkElement.href = block.data.url; // Đặt URL đích
+                                blockElement.appendChild(linkElement);
+                                linkElement.classList.add('ce-link'); // Thêm class cho đoạn văn bản
+
+
+                                break;
                         // Thêm xử lý cho các loại block khác nếu cần
                     }
 
