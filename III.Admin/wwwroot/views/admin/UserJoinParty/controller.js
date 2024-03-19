@@ -2216,12 +2216,11 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             console.log($scope.JSONobj);
         }
     };
-
+    
     function handleTextUpload(txt) {
         $scope.defaultRTE.value = txt;
         setTimeout(function () {
             var listPage = document.querySelectorAll(".Section0 > div > table");
-            console.log(listPage)
             //Page2 Lịch sử bản thân
             var listTagpinPage1 = listPage[1].querySelectorAll("tbody > tr > td > p");
             var objPage1 = Array.from(listTagpinPage1).filter(function (element) {
@@ -2266,17 +2265,19 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             })
 
             for (let i = 0; i < pElementP2s.length; i++) {
-                var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
-                var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);
-                var BusinessNDutyObj = {
-                    From: begin,
-                    To: end,
-                    Work: pElementP2s[i][1],
-                    Role: pElementP2s[i][2]
-                };
-                $scope.BusinessNDuty.push(BusinessNDutyObj);
+                if(pElementP2s[i].length!=0){
+                    var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
+                    var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);
+                    var BusinessNDutyObj = {
+                        From: begin,
+                        To: end,
+                        Work: pElementP2s[i][1],
+                        Role: pElementP2s[i][2]
+                    };
+                    $scope.BusinessNDuty.push(BusinessNDutyObj);
+                }
             }
-            console.log('BusinessNDuty', $scope.BusinessNDuty)
+            console.log('BusinessNDuty',pElementP2s)
 
             //pag4: những lớp đào tạo bồi dưỡng đã qa
             var datapage4 = Array.from(listPage[4].querySelectorAll('tr:nth-child(n+2)'));
@@ -2292,18 +2293,19 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
             console.log(pElementP4s)
 
-            
             let check = 0;
 
             for (let i = 0; i < pElementP4s.length; i++) {
-                var obj = {
-                    SchoolName: pElementP4s[i][0],
-                    Class: pElementP4s[i][1],
-                    From: pElementP4s[i][2].substring(0, pElementP4s[i][2].indexOf('đến')),
-                    To: pElementP4s[i][2].substring(pElementP4s[i][2].lastIndexOf('đến') + 4).trim(),
-                    Certificate: pElementP4s[i][1]
-                };
-                $scope.PassedTrainingClasses.push(obj);
+                if(pElementP4s[i].length==4){
+                    var obj = {
+                        SchoolName: pElementP4s[i][0],
+                        Class: pElementP4s[i][1],
+                        From: pElementP4s[i][2].substring(0, pElementP4s[i][2].indexOf('đến')),
+                        To: pElementP4s[i][2].substring(pElementP4s[i][2].lastIndexOf('đến') + 4).trim(),
+                        Certificate: pElementP4s[i][1]
+                    };
+                    $scope.PassedTrainingClasses.push(obj);
+                }
                 //check = 1;
             }
             // if (check === 1) {
@@ -2368,14 +2370,15 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 pElementP5s.push(pInTr);
             })
             for (let i = 0; i < pElementP5s.length; i++) {
-
-                var GoAboardObj = {
-                    From: pElementP5s[i][0].substring(pElementP5s[i][0].indexOf("Từ") + 2, pElementP5s[i][0].indexOf("đến")).trim(),
-                    To: pElementP5s[i][0].substring(pElementP5s[i][0].indexOf("đến") + 3).trim(),
-                    Contact: pElementP5s[i][1],
-                    Country: pElementP5s[i][2]
-                };
-                $scope.GoAboard.push(GoAboardObj);
+                if(pElementP5s[i].length==3){
+                    var GoAboardObj = {
+                        From: pElementP5s[i][0].substring(pElementP5s[i][0].indexOf("Từ") + 2, pElementP5s[i][0].indexOf("đến")).trim(),
+                        To: pElementP5s[i][0].substring(pElementP5s[i][0].indexOf("đến") + 3).trim(),
+                        Contact: pElementP5s[i][1],
+                        Country: pElementP5s[i][2]
+                    };
+                    $scope.GoAboard.push(GoAboardObj);
+                }
             }
             console.log('GoAboard', $scope.GoAboard)
             //Page6 Khen thuong
@@ -2390,13 +2393,14 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 pElementP6s.push(pInTr);
             })
             for (let i = 0; i < pElementP6s.length; i++) {
-
-                var obj = {
-                    MonthYear: pElementP6s[i][0].trim(),
-                    Reason: pElementP6s[i][1],
-                    GrantOfDecision: pElementP6s[i][2]
-                };
-                $scope.Laudatory.push(obj);
+                if(pElementP6s[i].length==3){
+                    var obj = {
+                        MonthYear: pElementP6s[i][0].trim(),
+                        Reason: pElementP6s[i][1],
+                        GrantOfDecision: pElementP6s[i][2]
+                    };
+                    $scope.Laudatory.push(obj);
+                }
             }
             console.log('Laudatory', $scope.Laudatory)
             //Page7 ki luat
@@ -2409,7 +2413,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 }).map(function (element) {
                     return element.innerText.trim();
                 });
-                if(pInTr.length == 3){
+                if (pInTr.length == 3) {
                     pElementP7s.push(pInTr);
                 }
             })
@@ -2465,7 +2469,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     }
                     if (pE8[y][i].startsWith("- Đảng viên:")) {
                         var partyMember = pE8[y][i].slice(('- Đảng viên:').length).trim()
-                        if(partyMember.toLowerCase() == "không"){
+                        if (partyMember.toLowerCase() == "không") {
                             $scope.Relationship[RelationshipIndex].PartyMember = false;
                         }
                         else $scope.Relationship[RelationshipIndex].PartyMember = true;
@@ -2474,7 +2478,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                         // let regex = /^(\d{4})-(.*)$/;
 
                         $scope.Relationship[RelationshipIndex].WorkingProgress = '';
-                        for (j = i + 1;j<=pE8[y].length-1 && !pE8[y][j].startsWith('-') && !pE8[y][j].startsWith('*'); j++) {
+                        for (j = i + 1; j <= pE8[y].length - 1 && !pE8[y][j].startsWith('-') && !pE8[y][j].startsWith('*'); j++) {
                             let inputString = pE8[y][j];
                             //let match = inputString.match(regex);
 
@@ -2484,37 +2488,36 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                             //     Job: match[2].trim()  // Loại bỏ khoảng trắng ở đầu và cuối của công việc
                             //   };
                             //  $scope.Relationship[RelationshipIndex].WorkingProgress.push(resultObject);
-                            $scope.Relationship[RelationshipIndex].WorkingProgress+= inputString + ',';
+                            $scope.Relationship[RelationshipIndex].WorkingProgress += inputString + ',';
                             i = j;
                             //}
                         }
                     }
                     if (pE8[y][i].startsWith("- Thái độ chính trị:")) {
                         $scope.Relationship[RelationshipIndex].PoliticalAttitude = '';
-                        try{
-                            for (j = i + 1; j<=pE8[y].length-1 && pE8[y][j].startsWith('+'); j++) {
-                                $scope.Relationship[RelationshipIndex].PoliticalAttitude+= (pE8[y][j].slice(1).trim()) + ',';
+                        try {
+                            for (j = i + 1; j <= pE8[y].length - 1 && pE8[y][j].startsWith('+'); j++) {
+                                $scope.Relationship[RelationshipIndex].PoliticalAttitude += (pE8[y][j].slice(1).trim()) + ',';
                                 i = j;
                             }
                         }
-                        catch{
+                        catch {
                             console.log(pE8[y]);
                         }
                     }
-
                     if ((pE8[y][i].startsWith('*'))) {
                         let regex = /^\*(.+?):$/;
-                            let match = pE8[y][i].match(regex);
-    
-                            if (match) {
-                                let relationship = match[1];
-                                RelationshipIndex = $scope.Relationship.length;
-                                $scope.Relationship[RelationshipIndex] = {
-                                    Relation: relationship.trim(),
-                                    ClassComposition: '',
-                                    PartyMember: false,
-                                }
+                        let match = pE8[y][i].match(regex);
+
+                        if (match) {
+                            let relationship = match[1];
+                            RelationshipIndex = $scope.Relationship.length;
+                            $scope.Relationship[RelationshipIndex] = {
+                                Relation: relationship.trim(),
+                                ClassComposition: '',
+                                PartyMember: false,
                             }
+                        }
                     }
                 }
             }
@@ -2530,32 +2533,35 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 return element.innerText.trim();
             });
             $scope.PlaceCreatedTime = {
-                place: datapage9[0].substring(0, datapage9[0].indexOf(',')),
-                createdTime: datapage9[0].substring(datapage9[0].indexOf('ngày') + 4, datapage9[0].indexOf('tháng')).trim() + '-'
-                    + datapage9[0].substring(datapage9[0].indexOf('tháng') + 5, datapage9[0].indexOf('năm')).trim() + '-'
-                    + datapage9[0].substring(datapage9[0].indexOf('năm') + 4).trim()
+                place: datapage9[0].trim()
+                // createdTime: datapage9[0].substring(datapage9[0].indexOf('ngày') + 4, datapage9[0].indexOf('tháng')).trim() + '-'
+                //     + datapage9[0].substring(datapage9[0].indexOf('tháng') + 5, datapage9[0].indexOf('năm')).trim() + '-'
+                //     + datapage9[0].substring(datapage9[0].indexOf('năm') + 4).trim()
             };
             var obj = $scope.defaultRTE.getContent();
-            console.log(obj);
+            console.log(datapage9);
             $scope.listPage = $(obj).find('> div > div > div').toArray();
             $scope.listInfo1 = $($scope.listPage[0]).find('table > tbody > tr > td > p').toArray()
                 .map(y => $(y).find('> span').toArray().map(t => $(t).text()));
             //Lấy sdt 
             $scope.listDetail8 = $($scope.listPage[0])
-                .find('table > tbody > tr:nth-child(1) > td > p:nth-child(27) > span:last-child').text();
-
+                .find('table > tbody > tr:nth-child(1) > td > p:nth-child(27)').text();
+                console.log($scope.listDetail8);
             $scope.listDetail1 = $($scope.listPage[0])
                 .find('table > tbody > tr:nth-child(2) > td > p:nth-child(n+7):nth-child(-n+15)').toArray()
-                .map(t => $(t).find('> span:last-child').text());
-            
+                .map(t => $(t).text());
+            console.log($scope.listDetail1);
+
             $scope.Detail1 = $($scope.listPage[0])
                 .find('table > tbody > tr:nth-child(2) > td > p:nth-child(16) > span:nth-child(2)').text()
-                //.map(z => $(z).text());
+            //.map(z => $(z).text());
+            
             console.log($scope.listDetail2)
             $scope.Detail2 = $($scope.listPage[0])
-            .find('table > tbody > tr:nth-child(2) > td > p:nth-child(16) > span:nth-child(4)').text()
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(16) > span:nth-child(4)').text()
+                console.log($scope.Detail1 + $scope.Detail2);
             $scope.listDetail3 = $($scope.listPage[0])
-                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(17) > span:last-child').text()
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(17)').text()
 
             $scope.listDetail4 = $($scope.listPage[0])
                 .find('table > tbody > tr:nth-child(2) > td > p:nth-child(27) > span:last-child').text().split(',')
@@ -2566,61 +2572,57 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
             $scope.listDetail6 = $($scope.listPage[0])
                 .find('table > tbody > tr:nth-child(2) > td > p:nth-child(n+19):nth-child(-n+26)').toArray()
-                .map(t => $(t).find('> span:last-child').text());
-
+                .map(t => $(t).text());
+            console.log($scope.listDetail6);
             $scope.listDetail7 = $($scope.listPage[0])
                 .find('table > tbody > tr:nth-child(2) > td > p:nth-child(28) > span:nth-child(5)').toArray()
                 .map(z => $(z).text());
 
             $scope.listDetail9 = $($scope.listPage[0])
-                .find('table > tbody > tr:nth-child(1) > td > p:nth-child(29) > span:last-child').text();
+                .find('table > tbody > tr:nth-child(1) > td > p:nth-child(29)').text();
 
-
-            $scope.infUser.FirstName = $scope.listDetail1[0].trim();
-            $scope.infUser.Sex = $scope.listDetail1[1];
-            $scope.infUser.LastName = $scope.listDetail1[2].trim();
-            $scope.infUser.Birthday = $scope.listDetail1[3];
-            $scope.infUser.HomeTown = $scope.listDetail1[5].trim();
-            $scope.infUser.PlaceofBirth = $scope.listDetail1[4].trim();
-            $scope.infUser.Residence = $scope.listDetail1[7].trim();
-            $scope.infUser.TemporaryAddress = $scope.listDetail1[8].trim();
+            $scope.infUser.FirstName = $scope.listDetail1[0].split(":")[1] ? $scope.listDetail1[0].split(":")[1].trim() : "";
+            $scope.infUser.Sex = $scope.listDetail1[1].split(":")[1] ? $scope.listDetail1[1].split(":")[1].trim() : "";
+            $scope.infUser.LastName = $scope.listDetail1[2].split(":")[1] ? $scope.listDetail1[2].split(":")[1].trim() : "";
+            $scope.infUser.Birthday = $scope.listDetail1[3].split(":")[1] ? $scope.listDetail1[3].split(":")[1].trim() : "";
+            $scope.infUser.HomeTown = $scope.listDetail1[5].split(":")[1] ? $scope.listDetail1[5].split(":")[1].trim() : "";
+            $scope.infUser.PlaceofBirth = $scope.listDetail1[4].split(":")[1] ? $scope.listDetail1[4].split(":")[1].trim() : "";
+            $scope.infUser.Residence = $scope.listDetail1[7].split(":")[1] ? $scope.listDetail1[7].split(":")[1].trim() : "";
+            $scope.infUser.TemporaryAddress = $scope.listDetail1[8].split(":")[1] ? $scope.listDetail1[8].split(":")[1].trim() : "";
 
             $scope.infUser.Nation = $scope.Detail1.trim();
             $scope.infUser.Religion = $scope.Detail2.trim();
 
-            $scope.infUser.NowEmployee = $scope.listDetail3.trim();
+            $scope.infUser.NowEmployee = $scope.listDetail3.split(":")[1] ? $scope.listDetail3.split(":")[1].trim() : "";
 
             $scope.infUser.PlaceinGroup = $scope.listDetail4[0];
-            $scope.infUser.DateInGroup = $scope.listDetail4[1].match(/\d+/g).join('-');
+            $scope.infUser.DateInGroup = $scope.listDetail4[1]//.match(/\d+/g).join('-');
 
-            $scope.infUser.PlaceInParty = $scope.listDetail5[0].split(',')[0];
-            $scope.infUser.DateInParty = $scope.listDetail5[0].split(',')[1].match(/\d+/g).join('-');
-            $scope.infUser.PlaceRecognize = $scope.listDetail7[0].split(',')[0];
-            $scope.infUser.DateRecognize = $scope.listDetail7[0].split(',')[1].match(/\d+/g).join('-');
-            $scope.infUser.Presenter = $scope.listDetail5[2].trim();
+            $scope.infUser.PlaceInParty = $scope.listDetail5[0];
+            $scope.infUser.DateInParty = $scope.listDetail5[0]//.split(',')[1]//.match(/\d+/g).join('-');
+            $scope.infUser.PlaceRecognize = $scope.listDetail7[0]//.split(',')[0];
+            $scope.infUser.DateRecognize = $scope.listDetail7[0]//.split(',')[1]//.match(/\d+/g).join('-');
+            $scope.infUser.Presenter = $scope.listDetail5[2]//.trim();
 
-            $scope.infUser.Phone = $scope.listDetail8.trim();
-            $scope.infUser.PhoneContact = $scope.listDetail9.trim();
+            $scope.infUser.Phone = $scope.listDetail8.split(":")[1] ? $scope.listDetail8.split(":")[1].trim() : "";
+            $scope.infUser.PhoneContact = $scope.listDetail9.split(":")[1] ? $scope.listDetail9.split(":")[1].trim() : "";
+            console.log($scope.infUser.Phone);
+            $scope.infUser.LevelEducation.GeneralEducation = $scope.listDetail6[0].split(":")[1] ? $scope.listDetail6[0].split(":")[1].trim() : "";
+            $scope.infUser.LevelEducation.VocationalTraining = $scope.listDetail6[1].split(":")[1] ? $scope.listDetail6[1].split(":")[1].trim() : "";
+            $scope.infUser.LevelEducation.Undergraduate = $scope.listDetail6[2].split(":")[1] ? $scope.listDetail6[2].split(":")[1].trim() : "";//.split(',');
+            $scope.infUser.LevelEducation.RankAcademic = $scope.listDetail6[3].split(":")[1] ? $scope.listDetail6[3].split(":")[1].trim() : "";
+            $scope.infUser.LevelEducation.PoliticalTheory = $scope.listDetail6[4].split(":")[1] ? $scope.listDetail6[4].split(":")[1].trim() : "";//.split(',');
 
-            $scope.infUser.LevelEducation.GeneralEducation = $scope.listDetail6[0].trim();
-            $scope.infUser.LevelEducation.VocationalTraining = $scope.listDetail6[1].trim();
-            $scope.infUser.LevelEducation.Undergraduate = $scope.listDetail6[2].trim();//.split(',');
-            $scope.infUser.LevelEducation.RankAcademic = $scope.listDetail6[3].trim();
-            $scope.infUser.LevelEducation.PoliticalTheory = $scope.listDetail6[4].trim();//.split(',');
-
-            $scope.infUser.LevelEducation.ForeignLanguage = $scope.listDetail6[5].trim();
-            $scope.infUser.LevelEducation.It = $scope.listDetail6[6].trim();//.split(',');
-            $scope.infUser.LevelEducation.MinorityLanguage = $scope.listDetail6[7].trim();//.split(',');
-
-            $scope.infUser.Phone = $scope.listDetail8.trim();
-            $scope.infUser.PhoneContact = $scope.listDetail9.trim();
+            $scope.infUser.LevelEducation.ForeignLanguage = $scope.listDetail6[5].split(":")[1] ? $scope.listDetail6[5].split(":")[1].trim() : "";
+            $scope.infUser.LevelEducation.It = $scope.listDetail6[6].split(":")[1] ? $scope.listDetail6[6].split(":")[1].trim() : "";//.split(',');
+            $scope.infUser.LevelEducation.MinorityLanguage = $scope.listDetail6[7].split(":")[1] ? $scope.listDetail6[7].split(":")[1].trim() : "";//.split(',');
 
             //Nguoi gioi thieu
             $scope.Introducer = {
                 PersonIntroduced: $scope.infUser.Presenter,
-                PlaceTimeJoinUnion: $scope.infUser.PlaceinGroup + ", " + $scope.infUser.DateInGroup,
-                PlaceTimeJoinParty: $scope.infUser.PlaceInParty + ", " + $scope.infUser.DateInParty,
-                PlaceTimeRecognize: $scope.infUser.PlaceRecognize + ", " + $scope.infUser.DateRecognize
+                PlaceTimeJoinUnion: $scope.infUser.PlaceinGroup,
+                PlaceTimeJoinParty: $scope.infUser.PlaceInParty,
+                PlaceTimeRecognize: $scope.infUser.PlaceRecognize
             };
             console.log($scope.infUser);
             var JSONobj = {
@@ -2641,7 +2643,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             }, 100);
         }, 100);
     }
-
     setTimeout(async function () {
         //  loadDate();
         // initialize Rich Text Editor component

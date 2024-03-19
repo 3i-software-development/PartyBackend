@@ -19,7 +19,9 @@
         .edit-box {
             width: 50%;
             height: 100%;
-            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            overflow: auto;
         }
 
         ol,
@@ -97,9 +99,16 @@
             .ce-table th {
                 background-color: #f2f2f2;
             }
+
+        .ce-link {
+            text-decoration: none;
+            color: inherit;
+        }
     </style>
-    <div id="editorjs"></div>
-    <div id="editorjs-content"></div>
+    <div id="editorjs">
+    </div>
+    <div id="editorjs-content">
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/@@editorjs/editorjs@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@@editorjs/paragraph@latest"></script>
@@ -144,12 +153,48 @@
                         case 'paragraph':
                             blockElement.textContent = block.data.text;
                             blockElement.classList.add('ce-paragraph'); // Thêm class cho đoạn văn bản
+                            blockElement.style.fontSize = '18px';
+                            blockElement.style.wordWrap = 'break-word';
+                            blockElement.style.marginLeft = '100px';
+                            blockElement.style.marginRight = '100px';
+                            switch (block.data.alignment) {
+                                case 'left':
+                                    blockElement.style.textAlign = 'left';
+                                    break;
+                                case 'center':
+                                    blockElement.style.textAlign = 'center';
+                                    break;
+                                case 'right':
+                                    blockElement.style.textAlign = 'right';
+                                    break;
+                                case 'justify':
+                                    blockElement.style.textAlign = 'justify';
+                                    break;
+                                default:
+                                    blockElement.style.textAlign = 'left'; // Căn trái mặc định
+                            }
                             break;
                         case 'header':
                             const headerElement = document.createElement('h' + block.data.level);
                             headerElement.textContent = block.data.text;
                             blockElement.appendChild(headerElement);
                             blockElement.classList.add('ce-header'); // Thêm class cho header
+                            switch (block.data.alignment) {
+                                case 'left':
+                                    blockElement.style.textAlign = 'left';
+                                    break;
+                                case 'center':
+                                    blockElement.style.textAlign = 'center';
+                                    break;
+                                case 'right':
+                                    blockElement.style.textAlign = 'right';
+                                    break;
+                                case 'justify':
+                                    blockElement.style.textAlign = 'justify';
+                                    break;
+                                default:
+                                    blockElement.style.textAlign = 'left'; // Căn trái mặc định
+                            }
                             break;
                         case 'table':
                             const tableElement = document.createElement('table');
@@ -183,7 +228,7 @@
                             blockElement.appendChild(listElement); // Thêm thẻ ul hoặc ol vào block element
                             blockElement.classList.add('ce-block'); // Thêm class cho danh sách
                             break;
-                        
+
                         case 'quote':
                             const quoteElement = document.createElement('blockquote');
                             quoteElement.textContent = block.data.text; // Assume quote text is in the "text" field
@@ -196,8 +241,7 @@
                             blockElement.classList.add('ce-quote'); // Thêm class cho quote
                             break;
                         case 'delimiter':
-                            const delimiterElement = document.createElement('hr');
-                            blockElement.appendChild(delimiterElement);
+
                             blockElement.classList.add('ce-delimiter'); // Thêm class cho delimiter
                             break;
                         case 'warning':
@@ -258,21 +302,21 @@
                             blockElement.appendChild(nestedChecklistElement); // Thêm thẻ ul vào block element
                             blockElement.classList.add('ce-block'); // Thêm class cho nested checklist
                             break;
-                              case 'raw':
-                                const rawWrapper = document.createElement('div');
-                                rawWrapper.innerHTML = block.data.html; // Assume code content is in the "code" field
-                                blockElement.appendChild(rawWrapper);
-                                blockElement.classList.add('ce-raw'); // Thêm class cho block code
-                                break;
-                            case 'link':
-                                const linkElement = document.createElement('a');
-                                linkElement.textContent = block.data.link;
-                                linkElement.href = block.data.url; // Đặt URL đích
-                                blockElement.appendChild(linkElement);
-                                linkElement.classList.add('ce-link'); // Thêm class cho đoạn văn bản
+                        case 'raw':
+                            const rawWrapper = document.createElement('div');
+                            rawWrapper.innerHTML = block.data.html; // Assume code content is in the "code" field
+                            blockElement.appendChild(rawWrapper);
+                            blockElement.classList.add('ce-raw'); // Thêm class cho block code
+                            break;
+                        case 'link':
+                            const linkElement = document.createElement('a');
+                            linkElement.textContent = block.data.link;
+                            linkElement.href = block.data.url; // Đặt URL đích
+                            blockElement.appendChild(linkElement);
+                            linkElement.classList.add('ce-link'); // Thêm class cho đoạn văn bản
 
 
-                                break;
+                            break;
                         // Thêm xử lý cho các loại block khác nếu cần
                     }
 
