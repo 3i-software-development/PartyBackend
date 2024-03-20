@@ -2185,14 +2185,16 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="PersonIntroduced" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{Introducer.PersonIntroduced}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="Introducer.PersonIntroduced" type="text"
                                                 placeholder="Người giới thiệu" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="Introducer.PersonIntroduced"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -2207,14 +2209,14 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
+                                            <i class="fa fa-info-circle" id="PlaceTimeJoinUnion" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{Introducer.PlaceTimeJoinUnion}}.{{matchedItems[0].guide}}">
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="Introducer.PlaceTimeJoinUnion" type="text"
                                                 placeholder="Ngày và nơi vào Đoàn" />
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -2229,14 +2231,14 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
+                                            <i class="fa fa-info-circle" id="PlaceTimeJoinParty" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{Introducer.PlaceTimeRecognize}}.{{matchedItems[0].guide}}">
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="Introducer.PlaceTimeJoinParty" type="text"
                                                 placeholder="Ngày và nơi vào Đảng lần thứ nhất" />
+                                                
                                         </div>
                                     </div>
                                 </div>
@@ -2250,14 +2252,15 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="PlaceTimeRecognize" title="Popover Header"
+                                               popover-placement="bottom-left"
+                                                uib-popover="{{Introducer.PlaceTimeRecognize}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="Introducer.PlaceTimeRecognize" type="text"
                                                 placeholder="Ngày và nơi công nhận chính thức lần thứ nhất" />
+                                            
                                         </div>
                                     </div>
                                 </div>

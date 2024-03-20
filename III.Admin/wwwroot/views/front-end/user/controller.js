@@ -407,6 +407,23 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             id: "place",
             guide: "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
         },
+        {
+            id: "PlaceTimeRecognize",
+            guide: "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+        },
+        {
+            id: "PlaceTimeJoinParty",
+            guide: "Bạn có thể nhập ngày và nơi vào Đảng lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+        },
+        {
+            id: "PlaceTimeJoinUnion",
+            guide: "Bạn cần nhập ngày và nơi vào Đoàn.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+        },
+        {
+            id: "PersonIntroduced",
+            guide: "Bạn có thể ghi tên người giới thiệu vào Đảng và chức vụ của người giới thiệu. Ví dụ: Trịnh Ngọc Thái - Bí thư Đảng Uỷ "
+        },
+        
     ]
       //Autocomplete
       $scope.Gender = ['Nam', 'Nữ', 'Khác'];
