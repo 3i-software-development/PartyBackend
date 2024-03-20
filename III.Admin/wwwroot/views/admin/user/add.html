@@ -70,6 +70,22 @@
         border-radius: 0 5px 0px 0;
         /*border-right: 1px solid #d3d3d3;*/
     }
+    @media(max-width:450px)
+    {
+        .tab-content{
+            max-height: 281px;
+            overflow-y: scroll;
+            scroll-behavior: auto;
+        }
+        .nav-tabs {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            overflow-y: hidden;
+        }
+    }
 </style>
 <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
 </button>
@@ -296,16 +312,16 @@
                             <label class="control-label ">{{'Kiểu nhân viên' | translate}}</label> <!--ADM_USER_CURD_LBL_EMPLOYEE_TYPE-->
                         </div>
                         <div class="col-md-12">
-                            <div class="group-typeWork">
-                                <label ng-repeat="x in entities" ng-class=" $index % 2 == 0 ? 'col-md-6' : 'col-md-5'" class="mt-checkbox mt-checkbox-outline fs12" style="margin: 6px 0 0 10px!important;">
+                            <div class="group-typeWork row">
+                                <div ng-repeat="x in entities" class="col-xs-6 fs12 pb5 pl10 d-flex">
 
                                     <i class="fas fa-square" style="color:cornflowerblue;font-size: 20px;margin-right: 10px;" ng-if="x.Check != true" ng-click="x.Check = true"></i>
 
                                     <i class="fas fa-check-square" style="color:cornflowerblue;font-size: 20px;margin-right: 10px;" ng-if="x.Check == true" ng-click="x.Check = false"></i>
-                                    {{x.Name}}
+                                    <p>{{x.Name}}</p>
                                     <!--<input type="checkbox" ng-model="x.Check"> {{x.Name}}-->
                                     <!--<span></span>-->
-                                </label>
+                                </div>
                             </div>
                         </div>
                     </div>

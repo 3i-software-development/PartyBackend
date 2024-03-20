@@ -449,9 +449,9 @@
                             <i class="icon-home pt10 fs45 brown-color" id="icon-home"></i>
                         </a>*@
                 </li>
-                <!-- Begin mobi home-->
+                  <!-- Begin mobi home-->
                <div class="row hidden-md-up" >
-                    <div class="col-xs-4">
+                    <div class="col-xs-6">
                         <li class="nav-item mobile-menu  float-xs-left">
                             <a class="nav-link nav-menu-main menu-toggle hidden-xs none-hover">
                                 <i class="fas fa-bars" style="color:#43516C; transform: translate(-20px, 10px); font-size: 2rem;"></i>
@@ -460,8 +460,8 @@
                     </div>
                    
                   
-                    <div class="col-xs-2"  style="top:10px">
-                    <li class="dropdown dropdown-notification nav-item">
+                    <div class="col-xs-3"  style="top:10px;right:-60px">
+                    <li class="dropdown dropdown-notification nav-item" style="transform:translateX(-20px)">
                                 <a href="#" data-toggle="dropdown" class="nav-link nav-link-label none-hover" style=" transform: translateY(5px);">
                                     <i class="fa-solid fa-bell fs30 black"></i>
                                     <span class="tag tag-pill tag-default tag-danger tag-default tag-up" style="right:-14px" id="countAllNotifyNew">@countAll </span></a>
@@ -528,38 +528,21 @@
                                 </ul>
                             </li>
                     </div>
-                      <div class="col-xs-4" style="top:10px">
-                          <li class="dropdown dropdown-user nav-item" style="bottom:-10px;">
-                                <a href="#" data-toggle="dropdown" style="padding-bottom:0px;">
-                                    @* <img class="img-circle" style="width:25px;height:25px" onerror="this.src='../../../images/default/no_user.png'" src="@picture" alt="avatar"><i></i> *@
-                                    <i class="fas fa-user fa-lg" style="color:black; font-size:30px; transform:translateX(50px);"></i>
-                                </a>
-                                <span class="user-name black bold fs14" style=" margin-right:20px; line-height: 20px">@ESEIM.AppContext.UserName</span>
-                                <div class="dropdown-menu dropdown-menu-right">
-                                    <a href="/Admin/AccountLogin" class="dropdown-item"><i class="icon-head"></i> <span class="title fs12 black">@Localizer["HEADER_LBL_INFO_PROFILE"]</span></a>
-                                    <a onclick="openPopupConfirmDeleteAccount()" class="dropdown-item"><i class="fas fa-trash-alt fs15"></i> <span class="title fs12 black">Xóa tài khoản</span></a>
-                                    <div class="dropdown-divider"></div><a href="/Admin/Account/Logout" class="dropdown-item"><i class="icon-power3"></i> <span class="title fs12 black">@Localizer["HEADER_LBL_LOG_OUT"]</span></a>
-                                </div>
-                            </li>
+                      <div class="col-xs-3" style="top:15px">
+            <li class="dropdown dropdown-user nav-item" style="bottom: -10px;right:-20px">
+                <a href="#" data-toggle="dropdown" style="padding-bottom: 0px; position: relative; display: flex; flex-direction: column; align-items: center;">
+                    <i class="fas fa-user fa-lg" style="color: #337AB7; font-size: 30px; margin-bottom: 5px; padding-bottom:5px"></i>
+                    @*<p class="user-name black bold fs14" style="text-align: center;">@ESEIM.AppContext.UserName</p>*@
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="/Admin/AccountLogin" class="dropdown-item"><i class="icon-head"></i> <span class="title fs12 black">@Localizer["HEADER_LBL_INFO_PROFILE"]</span></a>
+                    <a onclick="openPopupConfirmDeleteAccount()" class="dropdown-item"><i class="fas fa-trash-alt fs15"></i> <span class="title fs12 black">Xóa tài khoản</span></a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/Admin/Account/Logout" class="dropdown-item"><i class="icon-power3"></i> <span class="title fs12 black">@Localizer["HEADER_LBL_LOG_OUT"]</span></a>
+                </div>
+            </li>
                     </div>
-                     <div class="col-xs-2"  style="top:10px"> 
-                        <li class="dropdown dropdown-language nav-item mr15" style="top: 0px;">
-                            <a id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class=" nav-link none-hover" style="padding-bottom: 0px; padding-top: 5px;">
-                                <i class="flag-icon @curlLanguage.Icon fs20" style="    border: solid 1px lightgray"></i>
-                            </a>
-                            @* <div class="selected-language black fs12" style="transform: translateX(35%); line-height: 24px">@curlLanguage.DisplayName</div> *@
-                            <div aria-labelledby="dropdown-flag" class="dropdown-menu">
-                                @{
-                                    foreach (var lang in LanguageService.GetListLanguages())
-                                    {
-                                        <a class="dropdown-item" onclick="onRedirect('@lang.Culture')">
-                                            <span class="flag-icon @lang.Icon"></span> @lang.DisplayName
-                                        </a>
-                                    }
-                                }
-                            </div>
-                        </li>
-                    </div>
+                    
                     
                 </div>
                 @* end mobile *@

@@ -51,10 +51,10 @@
     </div>
     <div class="col-lg-3 pl-0">
         <div class="form-group" ng-class="{ 'has-error': errorRoleId}">
-            <div class="col-md-12 pl-1">
+            <div class="col-md-12 pl-0">
                 <label class="control-label" ng-class="{'require':(model.TypeStaff === '' || model.TypeStaff === null )||(model.TypeStaff === 10)}">{{'ADM_USER_CURD_LBL_ROLE' | translate}}</label>
             </div>
-            <div class="col-md-12 pl-1 pr-0">
+            <div class="col-md-12 pl-0 pr-1">
                 <div class="input-group br24 col-md-12">
                     <ui-select ng-model="modelGroupUser.RoleId" ng-required="true" on-select="changleSelect('RoleId')" ng-disabled="isAllData != 'True'">
                         <ui-select-match placeholder="{{'ADM_USER_CURD_COMBO_ROLE' | translate}}...">{{$select.selected.Title}}</ui-select-match>
