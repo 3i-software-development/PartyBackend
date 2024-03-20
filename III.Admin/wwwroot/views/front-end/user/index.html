@@ -2109,8 +2109,9 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px; ">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom" data-bs-content="VD:Campuchia">
+                                            <i class="fa fa-info-circle" id="whichCountry" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedGoAboard.Country}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"

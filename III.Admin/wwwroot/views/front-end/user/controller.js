@@ -408,6 +408,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             guide: "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
         },
         {
+            id: "whichCountry",
+            guide: "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+        },
+        {
             id: "PlaceTimeRecognize",
             guide: "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
         },
