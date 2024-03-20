@@ -404,12 +404,98 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             guide: "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
         },
         {
+            id: "Relation",
+            guide: "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
+        },
+        {
+            id: "Name",
+            guide: "Bạn cần nhập rõ tên của người thân. Ví dụ: 'Trịnh Ngọc Thái'"
+        },
+        {
+            id: "BirthYear",
+            guide: "Bạn cần nhập rõ ngày tháng năm sinh, năm mất (nếu có, kèm theo lý do) của người thân. Ví dụ: '16-09-1940 - 20-3-2010 - Mất do tuổi cao sức yếu'"
+        },
+        
+        {
+            id: "PoliticalAttitude",
+            guide: "Bạn cần nhập rõ thái độ chính trị của người thân. Ví dụ: 'Ủng hộ Cách mạng, trung thành tuyệt đối với lý tưởng mà Đảng đề ra'"
+        },
+        {
+            id: "HomeTown",
+            guide: "Bạn cần nhập rõ quê quán của người thân. Ví dụ: 'xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
+        },
+        {
+            id: "Residence",
+            guide: "Bạn cần nhập rõ nơi cứ trú của người thân. Ví dụ: 'Số nhà 56, thôn 8, xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
+        },
+        
+        {
+            id: "FamilyJob",
+            guide: "Bạn cần nhập chức vụ  của người thân. Ví dụ: 'Giáo Viên'"
+        },
+        {
+            id: "WorkingProgress",
+            guide: "Bạn cần nhập chi tiết về quá trình công tác của người thân. Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'"
+        },
+
+        {
+            id: "Role",
+            guide: "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
+        },
+
+        {
+            id: "Content",
+            guide: "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
+        },
+        {
+            id: "AwardReason",
+            guide: "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
+        },
+        
+        {
+            id: "MonthYear",
+            guide: "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+        },
+        {
+            id: "GrantOfDecision",
+            guide: "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
+        },
+        {
+            id: "DisciplineReason",
+            guide: "Bạn cần nhập lý do bị kỷ luật.Ví dụ: Gây rối trật tự, vi phạm quy định,..."
+        },
+        {
+            id: "SchoolName",
+            guide: "Bạn cần nhập tên trường bạn đã theo học.Ví dụ: Trường Đại học Sư Phạm Hà Nội"
+        },
+        {
+            id: "Class",
+            guide: "Bạn cần nhập tên lớp bạn đã theo học.Ví dụ: Lớp bổ túc kiến thức tin học văn phòng"
+        },
+      
+        {
+            id: "Certificate",
+            guide: "Bạn cần nhập chứng chỉ mà bạn đã đạt được.Ví dụ: Chứng chỉ Tin học văn phòng"
+        },
+        {
             id: "place",
             guide: "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
         },
         {
+            id: "From",
+            guide: "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+        },
+        {
+            id: "To",
+            guide: "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+        },
+        {
+            id: "Contact",
+            guide: "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
+        },
+        {
             id: "whichCountry",
-            guide: "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+            guide: "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
         },
         {
             id: "PlaceTimeRecognize",
