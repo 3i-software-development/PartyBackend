@@ -182,15 +182,14 @@ app.factory('dataservice', function ($http){
         },
         //địa chỉ 
         getProvince: function (callback) {
-            $http.post('/UserProfile/GetProvince').then(callback);
-
+            $http.get('/UserProfile/GetProvince').then(callback);
         },
-        //getDistrictByProvinceId: function (data, callback) {
-        //    $http.post('/UserProfile/GetDistrictByProvinceId?provinceId=', data).then(callback);
-        //},
-        //getWardByDistrictId: function (data, callback) {
-        //    $http.post('/UserProfile/GetWardByDistrictId?districtId=', data).then(callback);
-        //},
+        getDistrictByProvinceId: function (data, callback) {
+            $http.get('/UserProfile/GetDistrictByProvinceId?provinceId='+ data).then(callback);
+        },
+        getWardByDistrictId: function (data, callback) {
+            $http.get('/UserProfile/GetWardByDistrictId?districtId='+ data).then(callback);
+        },
 
 
     }
@@ -292,7 +291,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
     $scope.getGrupUsers();
 
-
+    
 
     $scope.$watch('Voice', function (newValue, oldValue) {
         //nếu có sự thay đổi thì dựa vào $scope.input để thêm 
@@ -1430,7 +1429,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     $scope.status = JSON.parse(rs.Status).slice(-4);
                     $scope.infUser.ResumeNumber = rs.ResumeNumber;
                     $scope.GroupUser = rs.GroupUserCode;
-
+                    
+                    $scope.infUser.PlaceWorking=rs.PlaceWorking;
                     console.log($scope.status);
 
                     if ($scope.infUser.ResumeNumber) {
@@ -1454,6 +1454,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.ProfileList = [];
 
     $scope.initdata = function () {
+        dataservice.getProvince(function(rs){
+            $scope.ListProvince=rs.data;
+            console.log($scope.ListProvince);
+        })
         $scope.getPartyAdmissionProfileByUsername()
     }
     $scope.initdata()
@@ -1676,7 +1680,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 $scope.model.ResumeNumber = $scope.infUser.ResumeNumber;
                 $scope.model.Username = $scope.UserName;
                 $scope.model.GroupUserCode = $scope.GroupUser;
-
+                $scope.model.PlaceWorking=$scope.infUser.PlaceWorking
 
                 if ($scope.infUser.ResumeNumber != '' && $scope.infUser.ResumeNumber != undefined) {
                     console.log($scope.model);
@@ -2834,33 +2838,20 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }, 50);
 });
 
-app.directive("choosePosition", function () {
+app.directive("choosePosition", function (dataservice) {
     return {
         restrict: "AE",
         require: "ngModel",
         templateUrl:ctxfolder+'/Posision.html',
         scope:{
-            ngModelCtrl: '=' // Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
+            ngModelCtrl: '=',// Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
+            provinces: '='
         },
         link: function (scope, element, attrs, ngModelCtrl) {
-            console.log(ngModelCtrl);
+            console.log(scope.provinces);
             scope.ditrict= [
-                {"id": 1, "ten": "Hà Nội"},
-                {"id": 2, "ten": "Hồ Chí Minh"},
-                {"id": 3, "ten": "Đà Nẵng"},
-                {"id": 4, "ten": "Hải Phòng"}
               ];
             scope.Ward=[
-                {"id": 1, "ten": "Ba Đình"},
-                {"id": 2, "ten": "Hoàn Kiếm"},
-                {"id": 3, "ten": "Cầu Giấy"},
-                {"id": 4, "ten": "Thanh Xuân"}
-              ]
-            scope.Province=[
-                {"id": 1, "ten": "Phúc Xá"},
-                {"id": 2, "ten": "Trúc Bạch"},
-                {"id": 3, "ten": "Quán Thánh"},
-                {"id": 4, "ten": "Ngọc Hà"}
               ]
               // Hàm phân tích ngModelCtrl
             function parseNgModelValue(value) {
@@ -2878,7 +2869,18 @@ app.directive("choosePosition", function () {
                 var value = scope.model.tinh_id + '_' + scope.model.huyen_id + '_' + scope.model.xaPhuong_id;
                 ngModelCtrl.$setViewValue(value);
                 ngModelCtrl.$render();
-                
+                if(parseInt(scope.model.tinh_id)!=NaN)
+                dataservice.getDistrictByProvinceId(scope.model.tinh_id,function(rs){
+                    rs=rs.data
+                    scope.ditrict=rs;
+                    console.log(rs)
+                })
+                if(parseInt(scope.model.huyen_id)!=NaN)
+                dataservice.getWardByDistrictId(scope.model.huyen_id,function(rs){
+                    rs=rs.data
+                    scope.Ward=rs;
+                    console.log(rs)
+                })
                 console.log(ngModelCtrl.$modelValue)
             }
 
@@ -2905,20 +2907,16 @@ app.directive("choosePosition", function () {
                 huyen_id: '',
                 xaPhuong_id: ''
             };
-
-            scope.disableHuyen=true;
-            scope.disableXa=true
-
             // Hàm được gọi khi một mục được chọn
             scope.onItemSelect = function (selected, level) {
                 if (level === 'tinh') {
-                    scope.disableHuyen=false;
-                    scope.disableXa=true
                     scope.model.huyen_id = ''; // Xóa giá trị huyện khi chọn một tỉnh mới
                     scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một tỉnh mới
+                   
                 } else if (level === 'huyen') {
                     scope.disableXa=false
                     scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một huyện mới
+                    
                 }
             };
 

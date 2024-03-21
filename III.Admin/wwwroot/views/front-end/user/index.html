@@ -292,6 +292,20 @@
     .table-wrapper::-webkit-scrollbar-thumb {
         background: #888;
     }
+    .w4{
+        width: 33,3%;
+    }
+    .d-flex{
+        width: 100%;
+        display: flex;
+    }
+    .ui-select-toggle{
+        align-items: center;
+        display: flex;
+    }
+    .ui-select-toggle .caret{
+        right: 2px !important;
+    }
 </style>
 <div class="notifi">
     <div class="showNotifi" style="justify-content: space-between;">
@@ -484,7 +498,6 @@
                                         </div>
                                     </div>
 
-
                                     <div class="form-group row">
                                         <div class="col-md-4 pr-0 ">
                                             <i class="fa fa-map-marker"></i>
@@ -497,11 +510,11 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle" id="noiSinh" title="Popover Header"
                                                     popover-placement="bottom-left"
-                                                    uib-popover="Nơi sinh của bạn là: {{infUser.PlaceofBirth}}. {{matchedItems[0].guide}}"></i>
+                                                    uib-popover="Nơi sinh của bạn là: {{infUser.PlaceofBirth}}. {{matchedItems[0].guide}}">
+                                                </i>
                                                 <input class="displayInfo speechInput" style="border: #FFFF;"
                                                     name="CusCode" ng-model="infUser.PlaceofBirth" type="text"
-                                                    placeholder="Nơi sinh" ng-required="true">
-
+                                                    placeholder="Số điện thoại" ng-required="true">
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                                     ng-model="infUser.PlaceofBirth"></i>
                                             </div>
@@ -520,11 +533,12 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle" id="queQuan" title="Popover Header"
                                                     popover-placement="bottom-left"
-                                                    uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}}"></i>
+                                                    uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}}">
+                                                </i>
                                                 <input class="displayInfo speechInput" style="border: #FFFF;"
                                                     name="CusCode" ng-model="infUser.HomeTown" type="text"
-                                                    placeholder="Nơi sinh" ng-required="true">
-                                                <i class="fa fa-microphone" style="font-size:20px" voice-recognition
+                                                    placeholder="Số điện thoại" ng-required="true">
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                                     ng-model="infUser.HomeTown"></i>
                                             </div>
 
@@ -541,12 +555,16 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                            <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle" id="diaChiThuongTru" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}}">
                                                 </i>
-                                                <choose-position ng-model="infUser.Residence"></choose-position>
+                                                <input class="displayInfo speechInput" style="border: #FFFF;"
+                                                    name="CusCode" ng-model="infUser.Residence" type="text"
+                                                    placeholder="Số điện thoại" ng-required="true">
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                    ng-model="infUser.Residence"></i>
                                             </div>
 
                                         </div>
@@ -562,12 +580,16 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle" id="diaChiTamTru" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddress}}. {{matchedItems[0].guide}}">
                                                 </i>
-                                                <choose-position ng-model="infUser.TemporaryAddress"></choose-position>
+                                                <input class="displayInfo speechInput" style="border: #FFFF;"
+                                                    name="CusCode" ng-model="infUser.TemporaryAddress" type="text"
+                                                    placeholder="Số điện thoại" ng-required="true">
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                    ng-model="infUser.TemporaryAddress"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -955,7 +977,25 @@
                                                     </ui-select-choices>
                                                 </ui-select>
                                             </div>
+                                            
+                                        </div>
+                                    </div>
 
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0 ">
+                                            <i class="fa fa-users"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">
+                                               Địa giới hành chính
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
+                                                    title="Popover Header" data-bs-placement="bottom"
+                                                    data-bs-content="Ví dụ: 'Hà Nội'"
+                                                    style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                                                <choose-position ng-model="infUser.PlaceWorking" provinces="ListProvince"></choose-position>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -1233,56 +1273,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <!-- <div class="row">
-                                <div style="background-color: #fff; border-radius: 5px;">
-                                    <div class="" style="font-size: 13px;">
-                                        <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Quan hệ</th>
-                                                    <th>Họ và tên</th>
-                                                    <th>Năm sinh, mất nếu có và lý do</th>
-                                                    <th>Địa chỉ</th>
-                                                    
-                                                    <th>Nghề nghiệp</th>
-                                                    <th>Quá trình công tác</th>
-                                                    <th>Thái độ chính trị</th>
-                                                    <th>Đảng viên</th>
-                                                    <th>Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody> 
-                                                <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
-                                                    <td>
-                                                        {{x.Relation}}
-                                                    </td>
-                                                    <td>{{x.Name}}</td>
-                                                    <td>
-                                                        {{x.BirthYear}}
-                                                        
-                                                    </td>
-                                                    <td>
-                                                        <div><span>- Quê quán: {{x.HomeTown}}</span></div>
-                                                        <div><span>- Nơi cư trú: {{x.Residence}}</span></div>
-                                                    </td>
-                                                    <td>{{x.Job}}</td>
-                                                    <td>{{x.WorkingProgress}}</td>
-                                                    <td>{{x.PoliticalAttitude}}</td>
-                                                    <td>{{x.PartyMember == 1?"Có" : "Không"}}</td>
-                                                    
-                                                    
-                                                    <td>
-                                                        <button class="btn" ng-click="deleteFamily($index)" style="color:red">
-                                                            <i class="fa fa-trash"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        
-                                    </div>
-                                </div>
-                            </div> -->
+                               
                             </div>
 
                             <div class="toggle-header" style="display:flex; justify-content:space-between;">
