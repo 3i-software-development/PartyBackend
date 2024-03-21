@@ -579,6 +579,21 @@ namespace III.Admin.Controllers
             var rs = _context.WarningDisciplineds.Where(p => p.IsDeleted == false && p.ProfileCode == profileCode).ToList();
             return rs;
         }
+        public object GetProvince()
+        {
+            var rs = _context.Provinces.ToList();
+            return rs;
+        }
+        public object GetDistrictByProvinceId(int provinceId)
+        {
+            var rs = _context.Districts.Where(p =>  p.provinceId == provinceId).ToList();
+            return rs;
+        }
+        public object GetWardByDistrictId(int districtId)
+        {
+            var rs = _context.Wards.Where(p => p.districtId == districtId).ToList();
+            return rs;
+        }
         #endregion
 
         #region Update
