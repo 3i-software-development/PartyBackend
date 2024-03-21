@@ -1429,7 +1429,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     $scope.status = JSON.parse(rs.Status).slice(-4);
                     $scope.infUser.ResumeNumber = rs.ResumeNumber;
                     $scope.GroupUser = rs.GroupUserCode;
-
+                    
+                    $scope.infUser.PlaceWorking=rs.PlaceWorking;
                     console.log($scope.status);
 
                     if ($scope.infUser.ResumeNumber) {
@@ -1679,7 +1680,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 $scope.model.ResumeNumber = $scope.infUser.ResumeNumber;
                 $scope.model.Username = $scope.UserName;
                 $scope.model.GroupUserCode = $scope.GroupUser;
-
+                $scope.model.PlaceWorking=$scope.infUser.PlaceWorking
 
                 if ($scope.infUser.ResumeNumber != '' && $scope.infUser.ResumeNumber != undefined) {
                     console.log($scope.model);
