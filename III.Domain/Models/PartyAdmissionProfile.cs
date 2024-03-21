@@ -116,6 +116,9 @@ namespace ESEIM.Models
         public List<JsonLog> JsonStaus { get; set; }
         public string WfInstCode { get; set; }
         public string GroupUserCode { get; set; }
+        public string PlaceWorking { get; set; }
+
+       
     }
 
     public class JsonFile
