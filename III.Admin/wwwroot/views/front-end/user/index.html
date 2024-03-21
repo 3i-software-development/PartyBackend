@@ -993,9 +993,9 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" id="Relation" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Quan hệ của bạn là: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}">
+                                                    <i class="fa fa-info-circle" id="Relation"
+                                                    popover-placement="bottom-left"
+                                                    uib-popover="{{selectedFamily.Relation}}.{{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-change="filterRelation()" ng-model="selectedFamily.Relation"
@@ -1017,9 +1017,10 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" id="MenberFamilyName" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Họ và tên người thân của bạn là: {{selectedFamily.Name}}. {{matchedItems[0].guide}}">
+                                                    <i class="fa fa-info-circle" id="Name"
+                                                    popover-placement="bottom-left"
+                                                    uib-popover="{{selectedFamily.Name}}.{{matchedItems[0].guide}}">
+
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Name" type="text"
@@ -1036,9 +1037,9 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" id="selectedFamily.BirthYear" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Năm sinh - năm mất (nếu có) người thân của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}">
+                                                    <i class="fa fa-info-circle" id="BirthYear"
+                                                    popover-placement="bottom-left"
+                                                    uib-popover="{{selectedFamily.BirthYear}}.{{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.BirthYear" type="text"
@@ -1071,9 +1072,9 @@
 
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" id="selectedFamily.PoliticalAttitude" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Thái độ chính trị của người này là: {{selectedFamily.PoliticalAttitude}}. {{matchedItems[0].guide}}">
+                                                    <i class="fa fa-info-circle" id="PoliticalAttitude"
+                                                    popover-placement="bottom-left"
+                                                    uib-popover="{{selectedFamily.PoliticalAttitude}}.{{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.PoliticalAttitude" type="text"
@@ -1093,9 +1094,10 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" id="selectedFamily.HomeTown" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Quê quán người thân của bạn là: {{selectedFamily.HomeTown}}. {{matchedItems[0].guide}}">
+                                                    <i class="fa fa-info-circle" id="HomeTown"
+                                                    popover-placement="bottom-left"
+                                                    uib-popover="{{selectedFamily.HomeTown}}.{{matchedItems[0].guide}}">
+
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.HomeTown" type="text"
@@ -1113,9 +1115,9 @@
 
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle"  id="selectedFamily.Residence" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        data-bs-content="Nơi cư trú người thân của bạn là: {{selectedFamily.Residence}}. {{matchedItems[0].guide}}">
+                                                    <i class="fa fa-info-circle" id="Residence"
+                                                    popover-placement="bottom-left"
+                                                    uib-popover="{{selectedFamily.Residence}}.{{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Residence" type="text"
@@ -1133,9 +1135,10 @@
 
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" id="selectedFamily.Job" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Nghề nghiệp người thân của bạn là: {{selectedFamily.Job}}. {{matchedItems[0].guide}}">
+                                                    <i class="fa fa-info-circle" id="FamilyJob"
+                                                    popover-placement="bottom-left"
+                                                    uib-popover="{{selectedFamily.FamilyJob}}.{{matchedItems[0].guide}}">
+
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Job" type="text"
@@ -1153,9 +1156,9 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class=" br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" id="selectedFamily.WorkingProgress" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Quá trình công tác người thân của bạn là: {{selectedFamily.WorkingProgress}}. {{matchedItems[0].guide}}">
+                                                    <i class="fa fa-info-circle" id="WorkingProgress"
+                                                    popover-placement="bottom-left"
+                                                    uib-popover="{{selectedFamily.WorkingProgress}}.{{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.WorkingProgress" type="text"
@@ -1302,12 +1305,13 @@
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold"
                                                 style="padding-right: 0px;">
-                                                <i class="fa fa-info-circle" id="selectedPersonHistory.Begin" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Thời gian bắt đầu là: {{selectedPersonHistory.Begin}}. {{matchedItems[0].guide}}">
-                                                    </i>
+                                                <i class="fa fa-info-circle" id="From"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedPersonHistory.From}}.{{matchedItems[0].guide}}">
+
+                                                </i>
                                                 <input class="displayInfo" style="border: #FFFF;"
-                                                    ng-model="selectedPersonHistory.Begin" type="text"
+                                                    ng-model="selectedPersonHistory.From" type="text"
                                                     placeholder="Từ ngày" />
                                             </div>
                                         </div>
@@ -1322,12 +1326,13 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex;padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" id="selectedPersonHistory.End" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Thời gian kết thúc là: {{selectedPersonHistory.End}}. {{matchedItems[0].guide}}">
-                                                    </i>
+                                                <i class="fa fa-info-circle" id="To"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedPersonHistory.To}}.{{matchedItems[0].guide}}">
+
+                                                </i>
                                                 <input class="displayInfo" style="border: #FFFF;"
-                                                    ng-model="selectedPersonHistory.End" type="text"
+                                                    ng-model="selectedPersonHistory.To" type="text"
                                                     placeholder="Đến ngày" />
                                             </div>
                                         </div>
@@ -1341,10 +1346,10 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" id="selectedPersonHistory.Content" title="Popover Header"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="Bạn làm gì trong thời gian này của bạn là: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}">
-                                                    </i>
+                                            <i class="fa fa-info-circle" id="Content" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedPersonHistory.Content}}.{{matchedItems[0].guide}}">
+                                            </i>
                                             <input class="displayInfo" style="border: #FFFF;"
                                                 ng-model="selectedPersonHistory.Content" type="text"
                                                 placeholder="Nội dung" />
@@ -1408,9 +1413,10 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD: 01-01-2024">
+                                                <i class="fa fa-info-circle" id="From"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedWorkingTracking.From}}.{{matchedItems[0].guide}}">
+
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1429,9 +1435,9 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD: 01-01-2024">
+                                                <i class="fa fa-info-circle" id="To"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}">
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1451,13 +1457,13 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="Content" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedWorkingTracking.Content}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                ng-model="selectedWorkingTracking.Work" type="text"
+                                                ng-model="selectedWorkingTracking.Content" type="text"
                                                 placeholder="Nội dung" />
                                         </div>
                                     </div>
@@ -1472,9 +1478,9 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex; padding-left: 1px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="Role" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1543,8 +1549,9 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex; padding-right: 1px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom" data-bs-content="VD: 01-01-2024">
+                                            <i class="fa fa-info-circle" id="MonthYear" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedHistorySpecialist.MonthYear}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1563,9 +1570,9 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex; padding-right: 1px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="Content" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedHistorySpecialist.Content}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1637,14 +1644,14 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD: 01-01-2024">
+                                                <i class="fa fa-info-circle" id="MonthYear"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedLaudatory.MonthYear}}.{{matchedItems[0].guide}}">
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                     ng-model="selectedLaudatory.MonthYear" type="text"
-                                                    placeholder="Ngày, tháng, năm" />
+                                                    placeholder="Tháng, năm" />
                                             </div>
                                         </div>
                                     </div>
@@ -1658,9 +1665,9 @@
                                         </div>
                                         <div class="col-md-7" style="display: flex; padding-left: 1px; ">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                                <i class="fa fa-info-circle" id="GrantOfDecision"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedLaudatory.GrantOfDecision}}.{{matchedItems[0].guide}}">
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1681,13 +1688,13 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="AwardReason" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedLaudatory.AwardReason}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                ng-model="selectedLaudatory.Reason" type="text"
+                                                ng-model="selectedLaudatory.AwardReason" type="text"
                                                 placeholder="Lý do, hình thức" />
                                         </div>
                                     </div>
@@ -1755,9 +1762,9 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD: 01-01-2024">
+                                                <i class="fa fa-info-circle" id="MonthYear"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedWarningDisciplined.MonthYear}}.{{matchedItems[0].guide}}">
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1775,10 +1782,9 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 1px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
+                                                <i class="fa fa-info-circle" id="GrantOfDecision"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedWarningDisciplined.GrantOfDecision}}.{{matchedItems[0].guide}}">
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                     ng-model="selectedWarningDisciplined.GrantOfDecision" type="text"
@@ -1798,13 +1804,13 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;padding-right: 1px; ">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="DisciplineReason" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedWarningDisciplined.DisciplineReason}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                ng-model="selectedWarningDisciplined.Reason" type="text"
+                                                ng-model="selectedWarningDisciplined.DisciplineReason" type="text"
                                                 placeholder="Lý do.. hình thức" />
                                         </div>
                                     </div>
@@ -1874,9 +1880,9 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD: 01-01-2024">
+                                                <i class="fa fa-info-circle" id="From"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedTrainingCertificatedPass.From}}.{{matchedItems[0].guide}}">
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1895,9 +1901,9 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD: 01-01-2024">
+                                                <i class="fa fa-info-circle" id="To"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedTrainingCertificatedPass.To}}.{{matchedItems[0].guide}}">
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1917,9 +1923,9 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex; padding-right: 8px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="SchoolName" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedTrainingCertificatedPass.SchoolName}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1938,9 +1944,9 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;  padding-right: 8px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="Class" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedTrainingCertificatedPass.Class}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1960,9 +1966,9 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;   padding-right: 8px; ">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="Certificate" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedTrainingCertificatedPass.Certificate}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -2039,9 +2045,9 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD: 01-01-2024">
+                                                <i class="fa fa-info-circle" id="From"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedGoAboard.From}}.{{matchedItems[0].guide}}">
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -2060,9 +2066,9 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD: 01-01-2024">
+                                                <i class="fa fa-info-circle" id="To"
+                                                popover-placement="bottom-left"
+                                                uib-popover="{{selectedGoAboard.To}}.{{matchedItems[0].guide}}">
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -2082,10 +2088,9 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px; ">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
+                                            <i class="fa fa-info-circle" id="Contact" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedGoAboard.Contact}}.{{matchedItems[0].guide}}">
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedGoAboard.Contact" type="text"
@@ -2103,8 +2108,9 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px; ">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom" data-bs-content="VD:Campuchia">
+                                            <i class="fa fa-info-circle" id="whichCountry" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{selectedGoAboard.Country}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -2179,14 +2185,16 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="PersonIntroduced" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{Introducer.PersonIntroduced}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="Introducer.PersonIntroduced" type="text"
                                                 placeholder="Người giới thiệu" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="Introducer.PersonIntroduced"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -2201,14 +2209,14 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
+                                            <i class="fa fa-info-circle" id="PlaceTimeJoinUnion" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{Introducer.PlaceTimeJoinUnion}}.{{matchedItems[0].guide}}">
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="Introducer.PlaceTimeJoinUnion" type="text"
                                                 placeholder="Ngày và nơi vào Đoàn" />
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -2223,14 +2231,14 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
+                                            <i class="fa fa-info-circle" id="PlaceTimeJoinParty" title="Popover Header"
+                                            popover-placement="bottom-left"
+                                            uib-popover="{{Introducer.PlaceTimeRecognize}}.{{matchedItems[0].guide}}">
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="Introducer.PlaceTimeJoinParty" type="text"
                                                 placeholder="Ngày và nơi vào Đảng lần thứ nhất" />
+                                                
                                         </div>
                                     </div>
                                 </div>
@@ -2244,14 +2252,15 @@
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                                            <i class="fa fa-info-circle" id="PlaceTimeRecognize" title="Popover Header"
+                                               popover-placement="bottom-left"
+                                                uib-popover="{{Introducer.PlaceTimeRecognize}}.{{matchedItems[0].guide}}">
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="Introducer.PlaceTimeRecognize" type="text"
                                                 placeholder="Ngày và nơi công nhận chính thức lần thứ nhất" />
+                                            
                                         </div>
                                     </div>
                                 </div>
