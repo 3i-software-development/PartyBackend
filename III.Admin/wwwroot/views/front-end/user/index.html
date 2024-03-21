@@ -293,7 +293,6 @@
         background: #888;
     }
 </style>
-
 <div class="notifi">
     <div class="showNotifi" style="justify-content: space-between;">
         <div ng-click="showNotifi=!showNotifi">
@@ -542,15 +541,12 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="display:flex">
                                                 <i class="fa fa-info-circle" id="diaChiThuongTru" title="Popover Header"
                                                     popover-placement="bottom-left"
-                                                    uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}}"></i>
-                                                <input class="displayInfo speechInput" style="border: #FFFF;"
-                                                    name="CusCode" ng-model="infUser.Residence" type="text"
-                                                    placeholder="Địa chỉ thường trú" ng-required="true">
-                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.Residence"></i>
+                                                    uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}}">
+                                                </i>
+                                                <choose-position ng-model="infUser.Residence"></choose-position>
                                             </div>
 
                                         </div>
@@ -566,17 +562,13 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="display: flex;">
                                                 <i class="fa fa-info-circle" id="diaChiTamTru" title="Popover Header"
                                                     popover-placement="bottom-left"
-                                                    uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddress}}. {{matchedItems[0].guide}}"></i>
-                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                    ng-model="infUser.TemporaryAddress" type="text"
-                                                    placeholder="Địa chỉ tạm trú" ng-required="true">
-                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.TemporaryAddress"></i>
+                                                    uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddress}}. {{matchedItems[0].guide}}">
+                                                </i>
+                                                <choose-position ng-model="infUser.TemporaryAddress"></choose-position>
                                             </div>
-
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -697,7 +689,7 @@
                                                 <input class="displayInfo" name="CusCode" ng-model="infUser.FirstName"
                                                     type="text" placeholder="Họ và tên khai sinh" ng-required="true">
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.FirstName"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -721,7 +713,7 @@
                                                     ng-model="infUser.LevelEducation.GeneralEducation" type="text"
                                                     placeholder="Giáo dục phổ thông" ng-required="true">
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.LevelEducation.GeneralEducation"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in FilterGeneralEducation"
                                                         ng-click="SelectGeneralEducation(item)">
@@ -749,7 +741,7 @@
                                                     ng-model="infUser.LevelEducation.Undergraduate" type="text"
                                                     placeholder="Giáo dục đại học" />
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.LevelEducation.Undergraduate"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in FilterUndergraduate"
                                                         ng-click="SelectUndergraduate(item)">
@@ -776,7 +768,7 @@
                                                     ng-model="infUser.LevelEducation.RankAcademic" type="text"
                                                     placeholder="Trường tốt nghiệp" />
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.LevelEducation.RankAcademic"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in FilterRankAcademic"
                                                         ng-click="SelectRankAcademic(item)">
@@ -803,7 +795,7 @@
                                                     ng-model="infUser.LevelEducation.VocationalTraining" type="text"
                                                     placeholder="Giáo dục nghề nghiệp" />
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.LevelEducation.VocationalTraining"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -824,7 +816,7 @@
                                                     ng-model="infUser.LevelEducation.ForeignLanguage" type="text"
                                                     ng-change="filterForeignLanguage()" placeholder="Ngoại ngữ" />
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.LevelEducation.ForeignLanguage"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in FilterForeignLanguage"
                                                         ng-click="SelectForeignLanguage(item)">{{item}}</li>
@@ -851,7 +843,7 @@
                                                     ng-model="infUser.LevelEducation.MinorityLanguage" type="text"
                                                     placeholder="Tiếng dân tộc thiểu số" />
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.LevelEducation.MinorityLanguage"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in FilterMinorityLanguage"
                                                         ng-click="SelectMinorityLanguage(item)">{{item}}</li>
@@ -879,7 +871,7 @@
                                                     ng-model="infUser.LevelEducation.PoliticalTheory" type="text"
                                                     placeholder="Lý luận chính trị" />
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.LevelEducation.PoliticalTheory"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in FilterPoliticalTheory"
                                                         ng-click="SelectPoliticalTheory(item)">
@@ -905,7 +897,7 @@
                                                     ng-change="filterIt()" ng-model="infUser.LevelEducation.It"
                                                     type="text" placeholder="Tin học" />
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="infUser.LevelEducation.It"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in FilterIt" ng-click="SelectIt(item)">
                                                         {{item}}</li>
@@ -930,7 +922,7 @@
                                                     ng-change="filterplace()" ng-model="PlaceCreatedTime.place"
                                                     type="text" placeholder="Nơi tạo" />
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.LastName"></i>
+                                                    ng-model="PlaceCreatedTime.place"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in Filterplace" ng-click="Selectplace(item)">
                                                         {{item}}</li>
