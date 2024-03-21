@@ -8572,7 +8572,7 @@ table.dataTable.no-footer {
     .tabs-dkxe .icon {
       font-size: 60px;
       margin-right: 10px; }
-    @media (max-width: 480px) {
+    @media (max-width: 1000px) {
       .div-brand {
         display: none!important;
       }
