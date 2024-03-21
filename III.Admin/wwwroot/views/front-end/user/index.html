@@ -1000,6 +1000,8 @@
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-change="filterRelation()" ng-model="selectedFamily.Relation"
                                                         type="text" placeholder="Quan hệ" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedFamily.Relation"></i>
                                                     <ul class="autocomplete-list">
                                                         <li ng-repeat="item in FilterRelation"
                                                             ng-click="SelectRelation(item)">
@@ -1025,6 +1027,8 @@
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Name" type="text"
                                                         placeholder="Họ và tên" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedFamily.Name"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -1060,6 +1064,7 @@
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                     ng-model="selectedFamily.PartyMember" type="checkbox"
                                                     placeholder="" />
+                                                    
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -1079,6 +1084,8 @@
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.PoliticalAttitude" type="text"
                                                         placeholder="Thái độ chính trị" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedFamily.PoliticalAttitude"></i>
                                                 </div>
 
                                             </div>
@@ -1102,6 +1109,8 @@
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.HomeTown" type="text"
                                                         placeholder="Quê quán" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedFamily.HomeTown"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -1122,6 +1131,8 @@
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Residence" type="text"
                                                         placeholder="Nơi cư trú" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedFamily.Residence"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -1143,6 +1154,8 @@
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Job" type="text"
                                                         placeholder="Nghề nghiệp" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedFamily.Job"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -1163,6 +1176,8 @@
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.WorkingProgress" type="text"
                                                         placeholder="Quá trình công tác" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedFamily.WorkingProgress"></i>
                                                 </div>
                                             </div>
 
@@ -1353,6 +1368,8 @@
                                             <input class="displayInfo" style="border: #FFFF;"
                                                 ng-model="selectedPersonHistory.Content" type="text"
                                                 placeholder="Nội dung" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedPersonHistory.Content"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -1465,6 +1482,8 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedWorkingTracking.Content" type="text"
                                                 placeholder="Nội dung" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedWorkingTracking.Content"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -1486,6 +1505,8 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedWorkingTracking.Role" type="text"
                                                 placeholder="Chức vụ" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedWorkingTracking.Role"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -1578,6 +1599,8 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedHistorySpecialist.Content" type="text"
                                                 placeholder="Nội dung" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedHistorySpecialist.Content"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -1673,6 +1696,8 @@
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                     ng-model="selectedLaudatory.GrantOfDecision" type="text"
                                                     placeholder="Cấp quyết định" />
+                                                    <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedLaudatory.GrantOfDecision"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -1694,8 +1719,10 @@
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                ng-model="selectedLaudatory.AwardReason" type="text"
+                                                ng-model="selectedLaudatory.Reason" type="text"
                                                 placeholder="Lý do, hình thức" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedLaudatory.Reason"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -1789,6 +1816,8 @@
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                     ng-model="selectedWarningDisciplined.GrantOfDecision" type="text"
                                                     placeholder="Cấp quyết định" />
+                                                    <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedWarningDisciplined.GrantOfDecision"></i>
                                             </div>
                                         </div>
                                     </div>
@@ -1812,6 +1841,9 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedWarningDisciplined.DisciplineReason" type="text"
                                                 placeholder="Lý do.. hình thức" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedWarningDisciplined.DisciplineReason"></i>
+                                                
                                         </div>
                                     </div>
                                 </div>
@@ -1931,6 +1963,8 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedTrainingCertificatedPass.SchoolName" type="text"
                                                 placeholder="Tên trường" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedTrainingCertificatedPass.SchoolName"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -1952,6 +1986,9 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedTrainingCertificatedPass.Class" type="text"
                                                 placeholder="Ngành học" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedTrainingCertificatedPass.Class"></i>
+                                                
                                         </div>
                                     </div>
                                 </div>
@@ -1974,6 +2011,8 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedTrainingCertificatedPass.Certificate" type="text"
                                                 placeholder="Văn bằng chứng chỉ" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedTrainingCertificatedPass.Certificate"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -2095,6 +2134,8 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-model="selectedGoAboard.Contact" type="text"
                                                 placeholder="Nội dung" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedGoAboard.Contact"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -2116,6 +2157,8 @@
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                 ng-change="filterCountry()" ng-model="selectedGoAboard.Country"
                                                 type="text" placeholder="Nước nào" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                ng-model="selectedGoAboard.Country"></i>
                                             <ul class="autocomplete-list">
                                                 <li ng-repeat="item in FilterCountry" ng-click="SelectCountry(item)">
                                                     {{item}}</li>
