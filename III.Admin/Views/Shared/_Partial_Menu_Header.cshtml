@@ -12,7 +12,7 @@
         Console.WriteLine(ex.Message);
     }
 }
-        
+
 <div class="header-nav" id="myHeader" style="margin-left: 0rem">
     <div class="container flex-row">
         <div class="ms-2 item-menu" style="font-size:27px" id="Home">
@@ -37,64 +37,69 @@
                 <span>HỖ TRỢ</span>
             </a>
         </div>
-        
+
 
         @if (!User.Identity.IsAuthenticated || userSession == null)
         {
             //nút đăng nhập đăng ký
             <div class="ms-2 item-menu pl330" style="color: white">
-                <div class="ms-2 item-menu" ><a class="dropdown-item fs-4 nav-link" asp-controller="UserProfile" asp-action="Login">ĐĂNG NHẬP</a></div>
-                <div class="ms-2 item-menu" ><a class="dropdown-item fs-4 nav-link" asp-controller="UserProfile" asp-action="Register">ĐĂNG KÝ</a></div>
+                <div class="ms-2 item-menu"><a class="dropdown-item fs-4 nav-link" asp-controller="UserProfile" asp-action="Login">ĐĂNG NHẬP</a></div>
+                <div class="ms-2 item-menu"><a class="dropdown-item fs-4 nav-link" asp-controller="UserProfile" asp-action="Register">ĐĂNG KÝ</a></div>
             </div>
-        }else{
+        }
+        else
+        {
 
             <div class="pl330" style="color: white">
                 <div class="ms-2 item-menu">
-                <a class="nav-link" href="#">
-                        <span>@userSession.FullName</span>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li>
-                        <a class="dropdown-item fs-4" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                            Đăng xuất
-                        </a>
-                        <form id="logout-form" asp-controller="UserProfile" asp-action="Logout" method="post" style="display: none;">
-                            @Html.AntiForgeryToken()
-                        </form>
-                    </li>
-                    @* <li><a class="dropdown-item fs-4" asp-controller="UserProfile" asp-action="Admin">Thông tin cá nhân</a></li> *@
-                    <li><a class="dropdown-item fs-4" asp-controller="UserProfile" asp-action="Index">Lý lịch đảng viên</a></li>
-                </ul></div>
+                    <a class="nav-link" href="#">
+                        <span style="white-space:nowrap">@userSession.FullName</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                        <li>
+                            <a class="dropdown-item fs-4" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                Đăng xuất
+                            </a>
+                            <form id="logout-form" asp-controller="UserProfile" asp-action="Logout" method="post" style="display: none;">
+                                @Html.AntiForgeryToken()
+                            </form>
+                        </li>
+                        @* <li><a class="dropdown-item fs-4" asp-controller="UserProfile" asp-action="Admin">Thông tin cá nhân</a></li> *@
+                        <li><a class="dropdown-item fs-4" asp-controller="UserProfile" asp-action="Index">Lý lịch đảng viên</a></li>
+                    </ul>
+                </div>
             </div>
         }
         <div class="div-brand-menu">
- <a href="tel:0935743575" class="nut-goi nut-action">
- <div><span class="tooltext">Gọi ngay</span></div>
- </a>
- <a href="http://zalo.me/0935743575" target="_blank" class="nut-zalo nut-action">
- <div><span class="tooltext">Chat với chúng tôi qua Zalo</span></div>
- </a>
- <a href="https://m.me/elamwebnhatrang/" target="_blank" class="nut-face nut-action">
- <div><span class="tooltext">Facebook Messenger</span></div>
- </a>
+            <a href="tel:0935743575" class="nut-goi nut-action">
+                <div><span class="tooltext">Gọi ngay</span></div>
+            </a>
+            <a href="http://zalo.me/0935743575" target="_blank" class="nut-zalo nut-action">
+                <div><span class="tooltext">Chat với chúng tôi qua Zalo</span></div>
+            </a>
+            <a href="https://m.me/elamwebnhatrang/" target="_blank" class="nut-face nut-action">
+                <div><span class="tooltext">Facebook Messenger</span></div>
+            </a>
 
-</div>
+        </div>
     </div>
-    
+
 </div>
 
 
 <style>
-.item-menu {
-      
+    .item-menu {
     }
-.item-menu .dropdown-item:hover {
-        color: #CE7A58 !important;
-          background-color: transparent !important;
+
+        .item-menu .dropdown-item:hover {
+            color: #CE7A58 !important;
+            background-color: transparent !important;
+        }
+
+    li {
+        border-bottom: none !important;
     }
-li {
-  border-bottom: none!important;
-}
+
     .item-menu {
         position: relative;
         display: inline-block;
@@ -127,116 +132,72 @@ li {
     .item-menu:hover .dropdown-menu {
         display: block;
     }
+
     .div-brand-menu {
         display: none;
-  font-size: 14px !important;
-  z-index: 2147483647;
-  bottom: 54px;
-  right: 0 !important;
-  padding-left: 5px;
-  }
- 
-  .div-brand-menu > a {
- 
-  display: inline-block;
- 
-  overflow: visible !important;
- 
-  width: 54px !important;
- 
-  height: 54px !important;
- 
-  margin: 6px !important;
- 
-  background-size: 100% !important;
- 
-  border: 2px solid #E5E5E5 !important;
- 
-  border-radius: 50% !important;
- 
-  margin: 8px;
- 
-  text-align: center;
- 
-  background-repeat: no-repeat;
- 
-  background-position: center center;
- 
-  background-size: auto;
- 
-  cursor: pointer;
- 
-  position: relative;
- 
-  }
- 
-  .div-brand-menu .nut-action:hover .tooltext {
- 
-  visibility: visible;
- 
-  opacity: 1;
- 
-  }
- 
-  .div-brand-menu:hover .nut-action {
- 
-  text-decoration: none !important;
- 
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(0, 0, 0, 0.13);
- 
-  }
- 
-  .div-brand-menu .tooltext {
- 
-  visibility: hidden;
- 
-  font-size: 12px !important;
- 
-  line-height: 16px !important;
- 
-  text-align: center;
- 
-  white-space: nowrap;
- 
-  border-radius: 4px;
- 
-  padding: 8px;
- 
-  position: absolute;
- 
-  top: calc(50% – 16px);
- 
-  z-index: 1;
- 
-  opacity: 0;
- 
-  transition: opacity 0.5s;
- 
-  left: 120%;
- 
-  background-image: linear-gradient(180deg, #e57373 0%, #c62828 100%);
- 
-  color: #fff;
- 
-  }
- 
- .div-brand-menu .nut-goi {
- 
-  background-image: url("../../../images/default/telephone-call_3059590.png");
- 
-  }
- 
- 
-  .div-brand-menu .nut-zalo {
- 
-  background-image: url("../../../images/default/Logo-Zalo-Arc.webp");
- 
-  }
- 
-  .div-brand-menu .nut-face {
- 
-  background-image: url("../../../images/default/images.jpg");
- 
-  }
- 
+        font-size: 14px !important;
+        z-index: 2147483647;
+        bottom: 54px;
+        right: 0 !important;
+        padding-left: 5px;
+    }
+
+        .div-brand-menu > a {
+            display: inline-block;
+            overflow: visible !important;
+            width: 54px !important;
+            height: 54px !important;
+            margin: 6px !important;
+            background-size: 100% !important;
+            border: 2px solid #E5E5E5 !important;
+            border-radius: 50% !important;
+            margin: 8px;
+            text-align: center;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: auto;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .div-brand-menu .nut-action:hover .tooltext {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .div-brand-menu:hover .nut-action {
+            text-decoration: none !important;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(0, 0, 0, 0.13);
+        }
+
+        .div-brand-menu .tooltext {
+            visibility: hidden;
+            font-size: 12px !important;
+            line-height: 16px !important;
+            text-align: center;
+            white-space: nowrap;
+            border-radius: 4px;
+            padding: 8px;
+            position: absolute;
+            top: calc(50% – 16px);
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.5s;
+            left: 120%;
+            background-image: linear-gradient(180deg, #e57373 0%, #c62828 100%);
+            color: #fff;
+        }
+
+        .div-brand-menu .nut-goi {
+            background-image: url("../../../images/default/telephone-call_3059590.png");
+        }
+
+
+        .div-brand-menu .nut-zalo {
+            background-image: url("../../../images/default/Logo-Zalo-Arc.webp");
+        }
+
+        .div-brand-menu .nut-face {
+            background-image: url("../../../images/default/images.jpg");
+        }
 </style>

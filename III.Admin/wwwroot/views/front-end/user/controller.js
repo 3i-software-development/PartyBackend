@@ -179,10 +179,10 @@ app.factory('dataservice', function ($http) {
         },
         deleteFile: function (fileName, ResumeNumber, callback) {
             $http.get('/UserProfile/DeleteFile?ResumeNumber=' + ResumeNumber + '&fileName=' + fileName).then(callback);
-        }
+        },
         //địa chỉ 
-        getProvince: function (data, callback) {
-            $http.post('/UserProfile/GetProvince/', data).then(callback);
+        getProvince: function (callback) {
+            $http.post('/UserProfile/GetProvince').then(callback);
 
         },
         getDistrictByProvinceId: function (data, callback) {
@@ -2905,7 +2905,7 @@ app.directive("choosePosition", function () {
                 huyen_id: '',
                 xaPhuong_id: ''
             };
-            
+
             scope.disableHuyen=true;
             scope.disableXa=true
 
