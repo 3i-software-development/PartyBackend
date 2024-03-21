@@ -1,93 +1,162 @@
-    <div class="view-routes">
-        <div class="box-register">
-            <div class="justify-content-center row">
-                <div class="col" style="flex: 1 1 0%;">
-                    <h2 class="text-center text-register">
-                        <span>Đăng ký</span>
-                    </h2>
-                </div>
+<div class="view-routes">
+    <div class="box-register">
+        <div class="justify-content-center row">
+            <div class="col" style="flex: 1 1 0%;">
+                <h2 class="text-center text-register">
+                    <span>Đăng ký</span>
+                </h2>
+            </div>
+        </div>
+
+        <form id="register-form" method="get" class="av-invalid pb-10">
+            <div class="form-group">
+                <label for="UserName">
+                    <span>Số căn cước</span>
+                </label>
+                <input placeholder="Nhập số căn cước" required="" ng-model="model.UserName" type="text"
+                    class="form-control" value="">
             </div>
 
-            <form id="register-form" method="get" class="av-invalid pb-10">
-                <div class="form-group">
-                    <label for="UserName">
-                        <span>Số căn cước</span>
-                    </label>
-                    <input placeholder="Nhập số căn cước" required="" ng-model="model.UserName" type="text" class="form-control" value="">
-                </div>
-                <div class="form-group">
-                    <label for="FullName">
-                        <span>Họ tên</span>
-                    </label>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <input name="GivenName" placeholder="Nhập họ và tên" required="" maxlength="250" 
+            <div class="form-group">
+                <label for="Password">
+                    <span>Mật khẩu <span>
+                </label>
+                <input placeholder="Nhập mật khẩu" required="true" ng-model="model.Password" type="password"
+                    class="form-control" autocomplete="new-password">
+            </div>
+            <div class="form-group">
+                <label for="ConfrimPassword">
+                    <span>Xác Nhận Mật khẩu <span>
+                </label>
+                <input name="ConfrimPassword" required="true" placeholder="Nhập mật khẩu" required=""
+                    ng-model="model.ConfrimPassword" type="password" class="form-control rounded-input">
+            </div>
+
+            <div class="form-group">
+                <label for="Email">Email</label>
+                <input name="Email" placeholder="Nhập email của bạn" ng-model="model.Email" autocomplete="new-password"
+                    class="form-control" value="">
+            </div>
+
+            <div class="form-group">
+                <label for="FullName">
+                    <span>Họ tên</span>
+                </label>
+                <div class="row">
+                    <div class="col-md-12">
+                        <input name="GivenName" placeholder="Nhập họ và tên" required="" maxlength="250"
                             ng-model="model.GivenName" type="text" class="form-control" value="">
-                        </div>
                     </div>
-                    
                 </div>
-                <div class="form-group">
-                    <label for="PhoneNumber">
-                        <span>Số điện thoại</span>
-                    </label>
-                    <input name="PhoneNumber" placeholder="Nhập số điện thoại" required="true" 
-                    minlength="10" maxlength="11" ng-model="model.PhoneNumber" type="text" class="form-control" value="">
-                </div>
-                <div class="form-group">
-                    <label for="Gender">
+
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber">
+                    <span>Số điện thoại</span>
+                </label>
+                <input name="PhoneNumber" placeholder="Nhập số điện thoại" required="true" minlength="10" maxlength="11"
+                    ng-model="model.PhoneNumber" type="text" class="form-control" value="">
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <label for="Gender" class="col-md-4">
                         <span>Giới tính</span>
                     </label>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <input type="radio" name="gender" ng-model="Gender" value="Nữ" id="female">
-                            <label for="female">Nữ</label><br><br>
-                        </div>
-                        <div class="col-md-6">
-                            <input type="radio" name="gender" ng-model="Gender" value="Nam" id="male">
-                            <label for="male">Nam</label><br><br>
-                        </div>
+                    <div class="col-md-4">
+                        <input  type="radio" name="gender" ng-model="Gender" value="Nữ" id="female">
+                        <label for="female">Nữ</label><br>
                     </div>
-                    
-
+                    <div class="col-md-4">
+                        <input type="radio" name="gender" ng-model="Gender" value="Nam" id="male">
+                        <label for="male">Nam</label><br>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="Email">Email</label>
-                    <input name="Email" placeholder="Nhập email của bạn" ng-model="model.Email" autocomplete="new-password"
-                     class="form-control" value="">
-                </div>
-
-                <div class="form-group">
-                    <label for="Password">
-                        <span>Mật khẩu <span>
-                    </label>
-                    <input placeholder="Nhập mật khẩu" required="true" ng-model="model.Password" type="password" class="form-control"
-                    autocomplete="new-password">
-                </div>
-                <div class="form-group">
-                    <label for="ConfrimPassword">
-                        <span>Xác Nhận Mật khẩu <span>
-                    </label>
-                    <input name="ConfrimPassword" required="true" placeholder="Nhập mật khẩu" required="" 
-                    ng-model="model.ConfrimPassword" type="password" class="form-control rounded-input">
-                </div>
-                <label class="lbl-term">
-                    <span>Bằng cách nhấp vào Đăng ký, bạn đồng ý với </span>
-                    <a href="https://dichvucong.gov.vn/p/home/dvc-dieu-khoan-su-dung.html" target="_blank">
-                        <span>Điều khoản, Chính sách chia sẻ thông tin </span>
-                    </a><span>của chúng tôi.</span>
+            </div>
+            <div class="form-group" style="margin-bottom: 10px;">
+                <label for="RegisterJoinGroupCode">
+                    <span>Nhóm chi bộ</span>
                 </label>
-                <button class="btn-register btn btn-secondary btn-block" ng-click="Register()">
-                    <span>Đăng ký</span>
-                </button>
-                <div style="margin-top: 10px;">
-                    <div>
-                        <div class="col" style="flex: 1 1 0%; text-align: center;">
-                            <label style="margin-right: 5px;">Đã có tài khoản? </label>
-                            <label style="color: rgb(206, 122, 88);"><a style="color: rgb(206, 122, 88);" href="/UserProfile/Login">Đăng nhập</a></label>
-                        </div>
+                <div class="">
+                    <ui-select class="form-control p0 br-24" ng-model="model.RegisterJoinGroupCode" theme="bootstrap" class="displayInfo"
+                        ng-change="onItemSelect($select.selected)">
+                        <ui-select-match class="br-24 ovf-hidden" placeholder="Chọn nhóm chi bộ">{{$select.selected.Title}}</ui-select-match>
+                        <ui-select-choices repeat="x.Code as x in GroupUsers | filter: $select.search">
+                            <div>{{x.Title}}</div>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
+            </div>
+
+            <label class="lbl-term">
+                <span>Bằng cách nhấp vào Đăng ký, bạn đồng ý với </span>
+                <a href="https://dichvucong.gov.vn/p/home/dvc-dieu-khoan-su-dung.html" target="_blank">
+                    <span>Điều khoản, Chính sách chia sẻ thông tin </span>
+                </a><span>của chúng tôi.</span>
+            </label>
+            <button class="btn-register btn btn-secondary btn-block" ng-click="Register()">
+                <span>Đăng ký</span>
+            </button>
+            <div style="margin-top: 10px;">
+                <div>
+                    <div class="col" style="flex: 1 1 0%; text-align: center;">
+                        <label style="margin-right: 5px;">Đã có tài khoản? </label>
+                        <label style="color: rgb(206, 122, 88);"><a style="color: rgb(206, 122, 88);"
+                                href="/UserProfile/Login">Đăng nhập</a></label>
                     </div>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
     </div>
+</div>
+<style>
+    .lbl-term{
+        font-weight: normal;
+    }
+    .ui-select-toggle{
+        border-radius: 24px;
+        height: 32px;
+        width: 100%;
+    }
+    .p0{
+        padding: 0;
+    }
+    .br-24{
+        border-radius: 24px;
+    }
+    .ovf-hidden{
+        overflow: hidden;
+    }
+    input[type="radio"] {
+        display: none; /* Ẩn radio button mặc định */
+    }
+    
+    /* Tạo một custom checkbox */
+    input[type="radio"] + label {
+        display: inline-block;
+        position: relative;
+        padding-left: 25px; /* Khoảng cách giữa checkbox và label */
+        cursor: pointer;
+        font-weight: normal;
+    }
+    
+    /* Tạo hộp chọn tùy chỉnh */
+    input[type="radio"] + label:before {
+        content: "";
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid #999;
+        border-radius: 50%; /* Tạo hình tròn */
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    /* Hiệu ứng khi checked */
+    input[type="radio"]:checked + label:before {
+        background-color: #007bff; /* Màu nền khi được chọn */
+        border-color: #007bff; /* Màu viền khi được chọn */
+    }
+</style>

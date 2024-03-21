@@ -47,7 +47,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         Gender: true,
         Email: '',
         Password:'',
-        ConfrimPassword:''
+        ConfrimPassword:'',
+        RegisterJoinGroupCode:''
     }
     $scope.GroupUsers = []
     $scope.getGrupUsers = function () {
@@ -55,6 +56,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             console.log(rs)
             $scope.GroupUsers = rs.data;
         })
+    }
+    $scope.getGrupUsers ()
+    $scope.onItemSelect = function (item) {
+        $scope.model.RegisterJoinGroupCode = item.Code;
     }
     $scope.Gender="Nam"
     $scope.Register=function(){
@@ -79,11 +84,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             Title:``
         }
         var Title=``;
-        if(model.UserName==''||model.UserName==undefined||model.UserName==null){
-            msg.Error=true;
-            $scope.UserNameError=true;
-            Title+=`<p style="font-size:13px;">Tên đăng nhập không được để trống</p></br>`
-        }if( /^\d{12}$/.test(model.UserName.length)){
+        if(!/^\d{12}$/.test(model.UserName)){
             msg.Error=true;
             $scope.PasswordError=true;  
             Title+=`<p style="font-size:13px;">CCCD gồm 12 số</p></br>`
@@ -119,6 +120,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.ConfrimPasswordError=true;
             
             Title+=`<p style="font-size:13px;">Xác nhận mật khẩu chưa trùng khớp</p></br>`
+        }if(model.RegisterJoinGroupCode==''||model.RegisterJoinGroupCode==undefined||model.RegisterJoinGroupCode==null){
+            msg.Error=true;
+            $scope.RegisterJoinGroupCodeError=true;  
+            Title+=`<p style="font-size:13px;">Mật khẩu không được để trống</p></br>`
         }
         msg.Title=Title
         return msg;
