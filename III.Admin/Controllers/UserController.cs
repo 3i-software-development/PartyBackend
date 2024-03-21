@@ -718,6 +718,7 @@ namespace III.Admin.Controllers
             public string Username { get; set; }
             public string Status { get; set; }
             public string GroupUserCode { get; set; }
+            public string PlaceWorking { get; set; }
 
         }
         [HttpPut]
@@ -775,7 +776,9 @@ namespace III.Admin.Controllers
                 obj.UnderPostGraduateEducation = model.UnderPostGraduateEducation;
                 obj.WfInstCode = model.WfInstCode;
                 obj.GroupUserCode = model.GroupUserCode;
-               
+                obj.PlaceWorking= model.PlaceWorking;
+
+
                 _context.PartyAdmissionProfiles.Update(obj);
                 _context.SaveChanges();
 
@@ -1270,6 +1273,7 @@ namespace III.Admin.Controllers
                     obj.JsonStaus = new List<JsonLog>();
                     obj.JsonProfileLinks = new List<JsonFile>();
                     obj.GroupUserCode = model.GroupUserCode;
+                    obj.PlaceWorking = model.PlaceWorking;
 
                     _context.PartyAdmissionProfiles.Add(obj);
 					_context.SaveChanges();
