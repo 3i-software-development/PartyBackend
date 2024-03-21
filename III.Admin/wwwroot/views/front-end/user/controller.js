@@ -179,10 +179,15 @@ app.factory('dataservice', function ($http) {
         },
         deleteFile: function (fileName, ResumeNumber, callback) {
             $http.get('/UserProfile/DeleteFile?ResumeNumber=' + ResumeNumber + '&fileName=' + fileName).then(callback);
-        }
+        },
         //địa chỉ 
+<<<<<<< HEAD
         //getProvince: function (data, callback) {
         //    $http.post('/UserProfile/GetProvince/', data).then(callback);
+=======
+        getProvince: function (callback) {
+            $http.post('/UserProfile/GetProvince').then(callback);
+>>>>>>> 86e35c3478445c88a6176d4fb2097fc40343e1dc
 
         //},
         //getDistrictByProvinceId: function (data, callback) {
@@ -2834,5 +2839,94 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }, 50);
 });
 
+app.directive("choosePosition", function () {
+    return {
+        restrict: "AE",
+        require: "ngModel",
+        templateUrl:ctxfolder+'/Posision.html',
+        scope:{
+            ngModelCtrl: '=' // Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
+        },
+        link: function (scope, element, attrs, ngModelCtrl) {
+            console.log(ngModelCtrl);
+            scope.ditrict= [
+                {"id": 1, "ten": "Hà Nội"},
+                {"id": 2, "ten": "Hồ Chí Minh"},
+                {"id": 3, "ten": "Đà Nẵng"},
+                {"id": 4, "ten": "Hải Phòng"}
+              ];
+            scope.Ward=[
+                {"id": 1, "ten": "Ba Đình"},
+                {"id": 2, "ten": "Hoàn Kiếm"},
+                {"id": 3, "ten": "Cầu Giấy"},
+                {"id": 4, "ten": "Thanh Xuân"}
+              ]
+            scope.Province=[
+                {"id": 1, "ten": "Phúc Xá"},
+                {"id": 2, "ten": "Trúc Bạch"},
+                {"id": 3, "ten": "Quán Thánh"},
+                {"id": 4, "ten": "Ngọc Hà"}
+              ]
+              // Hàm phân tích ngModelCtrl
+            function parseNgModelValue(value) {
+                var parts = value.split('_'); // Tách giá trị thành các phần
+                var result = {
+                    tinh_id: parseInt(parts[0]),
+                    huyen_id: parseInt(parts[1]),
+                    xaPhuong_id: parseInt(parts[2])
+                };
+                return result;
+            }
 
+            // Hàm cập nhật giá trị ngModelCtrl
+            function updateNgModelValue() {
+                var value = scope.model.tinh_id + '_' + scope.model.huyen_id + '_' + scope.model.xaPhuong_id;
+                ngModelCtrl.$setViewValue(value);
+                ngModelCtrl.$render();
+                
+                console.log(ngModelCtrl.$modelValue)
+            }
 
+            // Watchers để theo dõi thay đổi trong giá trị ngModelCtrl
+            scope.$watch(function () {
+                return ngModelCtrl.$modelValue;
+            }, function (newValue) {
+                if (newValue) {
+                    var parsedValue = parseNgModelValue(newValue);
+                    scope.model.tinh_id = parsedValue.tinh_id;
+                    scope.model.huyen_id = parsedValue.huyen_id;
+                    scope.model.xaPhuong_id = parsedValue.xaPhuong_id;
+                }
+            });
+
+            // Watchers để theo dõi thay đổi trong các mô hình tinh, huyen và xaPhuong
+            scope.$watchGroup(['model.tinh_id', 'model.huyen_id', 'model.xaPhuong_id'], function () {
+                updateNgModelValue();
+            });
+
+            // Khởi tạo model
+            scope.model = {
+                tinh_id: '',
+                huyen_id: '',
+                xaPhuong_id: ''
+            };
+
+            scope.disableHuyen=true;
+            scope.disableXa=true
+
+            // Hàm được gọi khi một mục được chọn
+            scope.onItemSelect = function (selected, level) {
+                if (level === 'tinh') {
+                    scope.disableHuyen=false;
+                    scope.disableXa=true
+                    scope.model.huyen_id = ''; // Xóa giá trị huyện khi chọn một tỉnh mới
+                    scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một tỉnh mới
+                } else if (level === 'huyen') {
+                    scope.disableXa=false
+                    scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một huyện mới
+                }
+            };
+
+        },
+    };
+});
