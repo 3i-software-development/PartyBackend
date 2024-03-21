@@ -114,7 +114,7 @@ namespace III.Admin.Controllers
                 }
                 var user = await _userManager.FindByEmailAsync(model.Email);
                 //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                if (user == null)
+                if (user != null)
                 {
                     msg.Error = true;
                     msg.Title = "Email đã tồn tại";
