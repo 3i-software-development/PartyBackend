@@ -180,7 +180,19 @@ app.factory('dataservice', function ($http) {
         deleteFile: function (fileName, ResumeNumber, callback) {
             $http.get('/UserProfile/DeleteFile?ResumeNumber=' + ResumeNumber + '&fileName=' + fileName).then(callback);
         }
-        //
+        //địa chỉ 
+        getProvince: function (data, callback) {
+            $http.post('/UserProfile/GetProvince/', data).then(callback);
+
+        },
+        getDistrictByProvinceId: function (data, callback) {
+            $http.post('/UserProfile/GetDistrictByProvinceId?provinceId=', data).then(callback);
+        },
+        getWardByDistrictId: function (data, callback) {
+            $http.post('/UserProfile/GetWardByDistrictId?districtId=', data).then(callback);
+        },
+
+
     }
 });
 
