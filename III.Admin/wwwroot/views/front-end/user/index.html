@@ -993,9 +993,9 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ: Bố">
+                                                    <i class="fa fa-info-circle" id="Relation" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Quan hệ của bạn là: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-change="filterRelation()" ng-model="selectedFamily.Relation"
@@ -1017,10 +1017,9 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ: Nguyễn Quang Huy">
-
+                                                    <i class="fa fa-info-circle" id="MenberFamilyName" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Họ và tên người thân của bạn là: {{selectedFamily.Name}}. {{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Name" type="text"
@@ -1037,9 +1036,9 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ: 1923-2010( mất vì tuổi già tại nhà riêng)">
+                                                    <i class="fa fa-info-circle" id="selectedFamily.BirthYear" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Năm sinh - năm mất (nếu có) người thân của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.BirthYear" type="text"
@@ -1072,9 +1071,9 @@
 
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ:Trung thành với Đảng">
+                                                    <i class="fa fa-info-circle" id="selectedFamily.PoliticalAttitude" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Thái độ chính trị của người này là: {{selectedFamily.PoliticalAttitude}}. {{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.PoliticalAttitude" type="text"
@@ -1094,10 +1093,9 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ:Tuân Chính, Vĩnh Tường, Vĩnh Phúc">
-
+                                                    <i class="fa fa-info-circle" id="selectedFamily.HomeTown" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Quê quán người thân của bạn là: {{selectedFamily.HomeTown}}. {{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.HomeTown" type="text"
@@ -1115,9 +1113,9 @@
 
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ: Nhà B1-4, 85 Hạ Đình Khu đô thị Hạ Đình - Thanh Xuân - Hà Nội">
+                                                    <i class="fa fa-info-circle"  id="selectedFamily.Residence" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        data-bs-content="Nơi cư trú người thân của bạn là: {{selectedFamily.Residence}}. {{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Residence" type="text"
@@ -1135,10 +1133,9 @@
 
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ: Chủ tịch công ty 3i">
-
+                                                    <i class="fa fa-info-circle" id="selectedFamily.Job" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Nghề nghiệp người thân của bạn là: {{selectedFamily.Job}}. {{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Job" type="text"
@@ -1156,10 +1153,9 @@
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class=" br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'">
-
+                                                    <i class="fa fa-info-circle" id="selectedFamily.WorkingProgress" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Quá trình công tác người thân của bạn là: {{selectedFamily.WorkingProgress}}. {{matchedItems[0].guide}}">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.WorkingProgress" type="text"
@@ -1306,11 +1302,10 @@
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold"
                                                 style="padding-right: 0px;">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD:01-01-2024">
-
-                                                </i>
+                                                <i class="fa fa-info-circle" id="selectedPersonHistory.Begin" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Thời gian bắt đầu là: {{selectedPersonHistory.Begin}}. {{matchedItems[0].guide}}">
+                                                    </i>
                                                 <input class="displayInfo" style="border: #FFFF;"
                                                     ng-model="selectedPersonHistory.Begin" type="text"
                                                     placeholder="Từ ngày" />
@@ -1327,11 +1322,10 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex;padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                                                    title="Popover Header" data-bs-placement="bottom"
-                                                    data-bs-content="VD:01-01-2024">
-
-                                                </i>
+                                                <i class="fa fa-info-circle" id="selectedPersonHistory.End" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Thời gian kết thúc là: {{selectedPersonHistory.End}}. {{matchedItems[0].guide}}">
+                                                    </i>
                                                 <input class="displayInfo" style="border: #FFFF;"
                                                     ng-model="selectedPersonHistory.End" type="text"
                                                     placeholder="Đến ngày" />
@@ -1347,10 +1341,10 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                                data-bs-placement="bottom"
-                                                data-bs-content="Ví dụ: 'phường Minh Khai, quận Bắc Từ Liêm, Hà Nội'">
-                                            </i>
+                                            <i class="fa fa-info-circle" id="selectedPersonHistory.Content" title="Popover Header"
+                                                        popover-placement="bottom-left"
+                                                        uib-popover="Bạn làm gì trong thời gian này của bạn là: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}">
+                                                    </i>
                                             <input class="displayInfo" style="border: #FFFF;"
                                                 ng-model="selectedPersonHistory.Content" type="text"
                                                 placeholder="Nội dung" />

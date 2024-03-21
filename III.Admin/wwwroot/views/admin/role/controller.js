@@ -302,8 +302,8 @@ app.controller('index', function ($scope, $rootScope, $compile, $confirm, $uibMo
         return data == "True" ? '<span class="text-success">{{"ADM_ROLE_CURD_LBL_ROLE_ACTIVE" | translate}}</span>' : '<span class="text-danger">{{"ADM_ROLE_CURD_LBL_ROLE_INACTIVE" | translate}}</span>';
     }));
     vm.dtColumns.push(DTColumnBuilder.newColumn('action').notSortable().withTitle('{{"ADM_ROLE_LIST_COL_ROLE_ACTION" | translate}}').renderWith(function (data, type, full) {
-        return '<a title="{{&quot;COM_BTN_EDIT&quot; | translate}}" ng-click="edit(' + full._STT + ')" style1= "width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class1="btn btn-icon-only btn-circle btn-outline blue"><i class="fas fa-edit fs25 pr20"></i></a>' + 
-            '<a title="{{&quot;COM_BTN_DELETE&quot; | translate}}" ng-click="delete(\'' + full.Id + '\')" style1 = "width: 25px; height: 25px; padding: 0px;;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class1="btn btn-icon-only btn-circle btn-outline red"><i class="fas fa-trash-alt fs25" style="color: red"></i></a>';
+        return '<a title="{{&quot;COM_BTN_EDIT&quot; | translate}}" ng-click="edit(' + full._STT + ')" style= "width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class1="btn btn-icon-only btn-circle btn-outline blue"><i class="fas fa-edit fs25 pr20"></i></a>' + 
+            '<a title="{{&quot;COM_BTN_DELETE&quot; | translate}}" ng-click="delete(\'' + full.Id + '\')" style = "width: 25px; height: 25px; padding: 0px;;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class1="btn btn-icon-only btn-circle btn-outline red"><i class="fas fa-trash-alt fs25" style="color: red"></i></a>';
     }));
     vm.reloadData = reloadData;
     vm.dtInstance = {};

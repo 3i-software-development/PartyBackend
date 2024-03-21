@@ -407,6 +407,18 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             id: "place",
             guide: "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
         },
+        {
+            id: "MenberFamilyName",
+            guide: "Bạn cần nhập họ va tên người thân của mình.Ví dụ: Nguyễn Văn A"
+        },
+        {
+            id: "Relation",
+            guide: "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố"
+        },
+        {
+            id: "selectedFamily.BirthYear",
+            guide: "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
+        },
     ]
       //Autocomplete
       $scope.Gender = ['Nam', 'Nữ', 'Khác'];
