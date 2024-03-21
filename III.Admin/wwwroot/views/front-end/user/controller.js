@@ -1,6 +1,6 @@
 ﻿var ctxfolder = "/views/front-end/user";
 var app = angular.module('App_ESEIM', ["ngRoute", 'ui.select', "ngAnimate", "ngSanitize", "ui.bootstrap"])
-app.factory('dataservice', function ($http) {
+app.factory('dataservice', function ($http){
     var headers = {
         "Content-Type": "application/json;odata=verbose",
         "Accept": "application/json;odata=verbose",
@@ -181,15 +181,10 @@ app.factory('dataservice', function ($http) {
             $http.get('/UserProfile/DeleteFile?ResumeNumber=' + ResumeNumber + '&fileName=' + fileName).then(callback);
         },
         //địa chỉ 
-<<<<<<< HEAD
-        //getProvince: function (data, callback) {
-        //    $http.post('/UserProfile/GetProvince/', data).then(callback);
-=======
         getProvince: function (callback) {
             $http.post('/UserProfile/GetProvince').then(callback);
->>>>>>> 86e35c3478445c88a6176d4fb2097fc40343e1dc
 
-        //},
+        },
         //getDistrictByProvinceId: function (data, callback) {
         //    $http.post('/UserProfile/GetDistrictByProvinceId?provinceId=', data).then(callback);
         //},
