@@ -52,7 +52,7 @@ body {
     color: #ccc;
 }
 
-.fa-lock {
+.fa-lock, .fa-eye-slash, .fa-eye {
     position: absolute;
     padding: 12px;
     color: #ccc;
@@ -180,8 +180,11 @@ body {
         z-index: 3;
         color: #000000;
         border-radius: 15px;
+        font-size:20px
     }
-
+    i{
+        font-size:17px;
+    }
     .checkbox-default label {
         display: inline-block;
         position: relative;
@@ -245,6 +248,11 @@ body {
 }
 
 @media (min-width: 1024px) and (max-width: 1200px) {
+    .check-icon {
+        right: 20px;
+        top: 0;
+        position: absolute;
+    }
     .login_panel {
         width: 33.33333%;
     }
@@ -335,8 +343,10 @@ body {
         margin-top: 10px !important;
     }
 }
-
 @media (min-width: 768px) and (max-width: 1024px) {
+    body{
+        font-size:30px;
+    }
     .login_panel {
         width: 72%;
     }
@@ -344,13 +354,14 @@ body {
     .inner_container img {
         width: 300px;
     }
+
     #app-web {
         visibility: hidden;
         display: none;
     }
 
     .login-text-app {
-        font-size: 35px !important;
+        font-size: 30px !important;
     }
 
     .login_inner_container {
@@ -370,9 +381,10 @@ body {
     .checkbox-default label {
         display: inline-block;
         position: relative;
-        padding-left: 40px;
+        padding-left: 45px;
+        padding-right: 45px;
         font-weight: 400;
-        color: #ffffff;
+        color: #000000;
     }
 
         .checkbox-default label::before {
@@ -395,16 +407,17 @@ body {
             position: absolute;
             width: 16px;
             height: 16px;
-            top: 0;
-            left: 0;
+            top: -9px;
+            left: -1px;
             padding-top: 1px;
-            font-size: 11px;
+            font-size: 36px;
             color: #999;
         }
 
     .btn-login {
         width: 240px !important;
         height: 70px !important;
+        float: inherit !important;
         border-radius: 30px !important;
     }
 
@@ -436,6 +449,7 @@ body {
 
     .fsd2 {
         font-size: 30px !important;
+        padding-right: 10px;
     }
 
     .qr-block {
@@ -449,6 +463,14 @@ body {
 
     .mtd1 {
         margin-top: 40px !important;
+    }
+
+    .check-icon {
+        right: 60px;
+        top: 0;
+        position: absolute;
+        line-height: 65px !important;
+        font-size: 40px !important;
     }
 }
 
@@ -564,6 +586,14 @@ body {
     .mtd1 {
         margin-top: 40px !important;
     }
+
+    .check-icon {
+        right: 60px;
+        top: 0;
+        position: absolute;
+        line-height: 35px !important;
+        font-size: 30px !important;
+    }
 }
 
 @media (max-width: 565px) {
@@ -677,6 +707,14 @@ body {
 
     .mtd1 {
         margin-top: 40px !important;
+    }
+
+    .check-icon {
+        right: 60px;
+        top: 0;
+        position: absolute;
+        line-height: 35px !important;
+        font-size: 30px !important;
     }
 }
 
@@ -1073,6 +1111,4 @@ a:not([href]):not([tabindex]) {
     right: 60px;
     top: 0;
     position: absolute;
-    line-height: 35px !important;
 }
-@media screen and max
