@@ -1,6 +1,6 @@
 ﻿var ctxfolder = "/views/front-end/user";
 var app = angular.module('App_ESEIM', ["ngRoute", 'ui.select', "ngAnimate", "ngSanitize", "ui.bootstrap"])
-app.factory('dataservice', function ($http) {
+app.factory('dataservice', function ($http){
     var headers = {
         "Content-Type": "application/json;odata=verbose",
         "Accept": "application/json;odata=verbose",
