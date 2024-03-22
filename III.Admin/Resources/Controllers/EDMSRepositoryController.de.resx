@@ -1113,4 +1113,10 @@
   <data name="EDMSR_MSG_CATEGORY_MODULE_FILE_UPLOAD_DEFAULT_EXIST" xml:space="preserve">
     <value>Dieses Modul hochladen Datei Standardeinstellung wurde registriert</value>
   </data>
+  <data name="EDMSR_TAB_FILE_HARD_ADDRESS" xml:space="preserve">
+    <value>Harte Dateiadresse</value>
+  </data>
+  <data name="EDMSR_TAB_FILE_HARD_CODE" xml:space="preserve">
+    <value>Harter Dateicode</value>
+  </data>
 </root>

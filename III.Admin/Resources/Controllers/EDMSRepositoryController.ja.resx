@@ -1113,4 +1113,10 @@
   <data name="EDMSR_CURL_BL_PACK_IN" xml:space="preserve">
     <value>詰め込む</value>
   </data>
+  <data name="EDMSR_TAB_FILE_HARD_ADDRESS" xml:space="preserve">
+    <value>ハードファイルアドレス</value>
+  </data>
+  <data name="EDMSR_TAB_FILE_HARD_CODE" xml:space="preserve">
+    <value>ハードファイルコード</value>
+  </data>
 </root>

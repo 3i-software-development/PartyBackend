@@ -306,6 +306,8 @@
     .ui-select-toggle .caret{
         right: 2px !important;
     }
+
+
 </style>
 <div class="notifi">
     <div class="showNotifi" style="justify-content: space-between;">
@@ -402,7 +404,7 @@
                             <div class="row mt-15" style="padding-left: 15px; font-size: 12px;" ng-show="showInfor">
                                 <div class="col-md-6">
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-4 pr-0" style="white-space:nowrap">
                                             <i class="fa fa-user"></i>
                                             <label class="control-label require custom-title-code-bold displayInfo">
                                                 Họ
@@ -411,7 +413,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="currentName" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Họ và tên của bạn là: {{infUser.LastName}}. {{matchedItems[0].guide}}">
@@ -428,7 +430,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-4 pr-0"  style="white-space:nowrap">
                                             <i class="fa fa-calendar"></i>
                                             <label class=" displayInfo control-label require custom-title-code-bold">
                                                 Ngày
@@ -436,7 +438,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="dateOfBird" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Ngày sinh của bạn là: {{infUser.Birthday}}. {{matchedItems[0].guide}}">
@@ -449,14 +451,14 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-4 pr-0"  style="white-space:nowrap">
                                             <i class="fa fa-venus-mars"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Giới tính
                                             </label>
                                         </div>
                                         <div class="col-md-8 ">
-                                            <div class="br24 form-control custom-title-code-bold ">
+                                            <div class="br24 form-control custom-title-code-bold " style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="gender" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Giới tính bạn chọn là: {{infUser.Sex}}. {{matchedItems[0].guide}}">
@@ -475,7 +477,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-4 pr-0"  style="white-space:nowrap">
                                             <i class="fas fa-phone"></i>
                                             <label class=" displayInfo control-label require custom-title-code-bold">
                                                 Số
@@ -484,7 +486,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="phone" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Sdt của bạn là: {{infUser.Phone}}. {{matchedItems[0].guide}}"></i>
@@ -499,7 +501,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-map-marker"></i>
                                             <label class=" displayInfo control-label require custom-title-code-bold">
                                                 Nơi
@@ -507,7 +509,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="noiSinh" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Nơi sinh của bạn là: {{infUser.PlaceofBirth}}. {{matchedItems[0].guide}}">
@@ -522,7 +524,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-map-marker"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Quê
@@ -530,7 +532,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="queQuan" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}}">
@@ -546,7 +548,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-home"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Địa
@@ -555,7 +557,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="diaChiThuongTru" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}}">
@@ -571,7 +573,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-home"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Địa
@@ -594,7 +596,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-users"></i>
                                             <label class=" displayInfo control-label require custom-title-code-bold">
                                                 Công
@@ -602,7 +604,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="job" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Công việc hiện tại của bạn của bạn là: {{infUser.NowEmployee}}. {{matchedItems[0].guide}}"></i>
@@ -620,7 +622,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-globe"></i>
                                             <label class=" displayInfo control-label require custom-title-code-bold">
                                                 Dân
@@ -628,7 +630,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="nation" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Dân tộc của bạn là: {{infUser.Nation}}. {{matchedItems[0].guide}}"></i>
@@ -653,7 +655,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="religion" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Tôn giáo của bạn là: {{infUser.Religion}}. {{matchedItems[0].guide}}"></i>
@@ -679,7 +681,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="selfComment" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Tôn giáo của bạn là: {{SelfComment.context}}. {{matchedItems[0].guide}}"></i>
@@ -695,7 +697,7 @@
                                 </div>
                                 <div class="col-md-6" style="padding-right: 10px">
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-4 pr-0"  style="white-space:nowrap">
                                             <i class="fa fa-user"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Họ
@@ -704,7 +706,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="firstName" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Tên khai sinh của bạn là: {{infUser.FirstName}}. {{matchedItems[0].guide}}"></i>
@@ -717,7 +719,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-graduation-cap"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Giáo
@@ -726,7 +728,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="generalEducation"
                                                     title="Popover Header" popover-placement="bottom-left"
                                                     uib-popover="Giáo dục phổ thông của bạn là: {{infUser.LevelEducation.GeneralEducation}}. {{matchedItems[0].guide}}"></i>
@@ -745,7 +747,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-graduation-cap"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Giáo
@@ -754,7 +756,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="undergraduate" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Tôt nghiệp đại học tại: {{infUser.LevelEducation.Undergraduate}}. {{matchedItems[0].guide}}"></i>
@@ -781,7 +783,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="rankAcademic" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Học hàm của bạn là: {{infUser.LevelEducation.RankAcademic}}. {{matchedItems[0].guide}}"></i>
@@ -800,7 +802,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 "  style="white-space:nowrap">
                                             <i class="fa fa-graduation-cap"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Giáo
@@ -809,7 +811,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="vocationalTraining"
                                                     title="Popover Header" popover-placement="bottom-left"
                                                     uib-popover="Giáo dục nghề nghiệp của bạn là: {{infUser.LevelEducation.VocationalTraining}}. {{matchedItems[0].guide}}"></i>
@@ -830,7 +832,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="foreignLanguage" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Ngoại ngữ của bạn là: {{infUser.LevelEducation.ForeignLanguage}}. {{matchedItems[0].guide}}"></i>
@@ -848,7 +850,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0 ">
+                                        <div class="col-md-4 pr-0 " style="white-space:nowrap">
                                             <i class="fa fa-graduation-cap"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Tiếng
@@ -856,7 +858,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="minorityLanguage"
                                                     title="Popover Header" popover-placement="bottom-left"
                                                     uib-popover="Tiếng dân tộc thiểu số của bạn là: {{infUser.LevelEducation.MinorityLanguage}}. {{matchedItems[0].guide}}"></i>
@@ -884,7 +886,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="politicalTheory" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Lý luận chính trị của bạn là: {{infUser.LevelEducation.PoliticalTheory}}. {{matchedItems[0].guide}}"></i>
@@ -911,7 +913,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="it" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Tôn giáo của bạn là: {{infUser.LevelEducation.It}}. {{matchedItems[0].guide}}"></i>
@@ -936,7 +938,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-8">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="place" title="Popover Header"
                                                     popover-placement="bottom-left"
                                                     uib-popover="Nơi bạn tạo phiếu: {{PlaceCreatedTime.place}}. {{matchedItems[0].guide}}"></i>
@@ -1024,7 +1026,7 @@
                                                     hệ</label>
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold">
+                                                <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                     <i class="fa fa-info-circle" id="Relation"
                                                     popover-placement="bottom-left"
                                                     uib-popover="{{selectedFamily.Relation}}.{{matchedItems[0].guide}}">
@@ -1050,7 +1052,7 @@
                                                     và tên</label>
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold">
+                                                <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                     <i class="fa fa-info-circle" id="Name"
                                                     popover-placement="bottom-left"
                                                     uib-popover="{{selectedFamily.Name}}.{{matchedItems[0].guide}}">
@@ -1072,7 +1074,7 @@
                                                     sinh, mất nếu có và lý do</label>
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold">
+                                                <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                     <i class="fa fa-info-circle" id="BirthYear"
                                                     popover-placement="bottom-left"
                                                     uib-popover="{{selectedFamily.BirthYear}}.{{matchedItems[0].guide}}">
@@ -1108,7 +1110,7 @@
                                             </div>
 
                                             <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold">
+                                                <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                     <i class="fa fa-info-circle" id="PoliticalAttitude"
                                                     popover-placement="bottom-left"
                                                     uib-popover="{{selectedFamily.PoliticalAttitude}}.{{matchedItems[0].guide}}">
@@ -1132,7 +1134,7 @@
                                                     quán</label>
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold">
+                                                <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                     <i class="fa fa-info-circle" id="HomeTown"
                                                     popover-placement="bottom-left"
                                                     uib-popover="{{selectedFamily.HomeTown}}.{{matchedItems[0].guide}}">
@@ -1155,7 +1157,7 @@
                                             </div>
 
                                             <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold">
+                                                <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                     <i class="fa fa-info-circle" id="Residence"
                                                     popover-placement="bottom-left"
                                                     uib-popover="{{selectedFamily.Residence}}.{{matchedItems[0].guide}}">
@@ -1177,7 +1179,7 @@
                                             </div>
 
                                             <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold">
+                                                <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                     <i class="fa fa-info-circle" id="FamilyJob"
                                                     popover-placement="bottom-left"
                                                     uib-popover="{{selectedFamily.FamilyJob}}.{{matchedItems[0].guide}}">
@@ -1200,7 +1202,7 @@
                                                     trình công tác</label>
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
-                                                <div class=" br24 form-control custom-title-code-bold">
+                                                <div class=" br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                     <i class="fa fa-info-circle" id="WorkingProgress"
                                                     popover-placement="bottom-left"
                                                     uib-popover="{{selectedFamily.WorkingProgress}}.{{matchedItems[0].guide}}">
@@ -1343,7 +1345,7 @@
                                             dung</label>
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px;">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="Content" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedPersonHistory.Content}}.{{matchedItems[0].guide}}">
@@ -1426,7 +1428,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-md-4 pr-0" style="padding-left: 7px;">
+                                        <div class="col-md-4 pr-0" style="padding-left: 7px; white-space:nowrap">
                                             <i class="fa fa-calendar"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Đến
@@ -1456,7 +1458,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px;">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="Content" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedWorkingTracking.Content}}.{{matchedItems[0].guide}}">
@@ -1479,7 +1481,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-9" style="display: flex; padding-left: 1px;">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="Role" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}">
@@ -1573,7 +1575,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-9" style="display: flex; padding-right: 1px;">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="Content" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedHistorySpecialist.Content}}.{{matchedItems[0].guide}}">
@@ -1670,7 +1672,7 @@
                                             </label>
                                         </div>
                                         <div class="col-md-7" style="display: flex; padding-left: 1px; ">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="GrantOfDecision"
                                                 popover-placement="bottom-left"
                                                 uib-popover="{{selectedLaudatory.GrantOfDecision}}.{{matchedItems[0].guide}}">
@@ -1695,7 +1697,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-8" style="display: flex;">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="AwardReason" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedLaudatory.AwardReason}}.{{matchedItems[0].guide}}">
@@ -1784,14 +1786,14 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
-                                        <div class="col-md-4 pr-0" style="padding-left: 7px;">
+                                        <div class="col-md-4 pr-0" style="padding-left: 7px; white-space:nowrap">
                                             <i class="fas fa-user-check"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Quyết định
                                             </label>
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 1px;">
-                                            <div class="br24 form-control custom-title-code-bold">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                                 <i class="fa fa-info-circle" id="GrantOfDecision"
                                                 popover-placement="bottom-left"
                                                 uib-popover="{{selectedWarningDisciplined.GrantOfDecision}}.{{matchedItems[0].guide}}">
@@ -1815,7 +1817,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-8" style="display: flex;padding-right: 1px; ">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="DisciplineReason" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedWarningDisciplined.DisciplineReason}}.{{matchedItems[0].guide}}">
@@ -1868,16 +1870,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="toggle-header" style="display:flex ; justify-content:space-between">
+                            <div class="toggle-header" style="display:flex ; justify-content:space-between; white-space:nowrap">
                                 <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="showWorkingProcess6=!showWorkingProcess6">
+                                     ng-click="showWorkingProcess6=!showWorkingProcess6" style="overflow:auto">
                                     <i ng-show="showWorkingProcess6" class="fa fa-caret-down"></i>
                                     <i ng-show="!showWorkingProcess6" class="fa fa-caret-right"></i>
                                     <label class="fs-18">Lớp đào tạo và bồi dưỡng đã qua</label>
                                 </div>
 
                                 <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="submitTrainingCertificatedPass()">
+                                     ng-click="submitTrainingCertificatedPass()">
                                     <i class="fas fa-save" style="font-size: 26px"></i>
                                 </div>
                             </div>
@@ -1937,7 +1939,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-8" style="display: flex; padding-right: 8px;">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="SchoolName" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedTrainingCertificatedPass.SchoolName}}.{{matchedItems[0].guide}}">
@@ -1960,7 +1962,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-8" style="display: flex;  padding-right: 8px;">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="Class" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedTrainingCertificatedPass.Class}}.{{matchedItems[0].guide}}">
@@ -1985,7 +1987,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-8" style="display: flex;   padding-right: 8px; ">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="Certificate" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedTrainingCertificatedPass.Certificate}}.{{matchedItems[0].guide}}">
@@ -2109,7 +2111,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px; ">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="Contact" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedGoAboard.Contact}}.{{matchedItems[0].guide}}">
@@ -2131,7 +2133,7 @@
                                         </label>
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px; ">
-                                        <div class="br24 form-control custom-title-code-bold">
+                                        <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle" id="whichCountry" title="Popover Header"
                                             popover-placement="bottom-left"
                                             uib-popover="{{selectedGoAboard.Country}}.{{matchedItems[0].guide}}">

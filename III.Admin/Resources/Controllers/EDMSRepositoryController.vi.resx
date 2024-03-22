@@ -1118,4 +1118,10 @@
   <data name="EDMSR_BTN_ARRANGE_FILE" xml:space="preserve">
     <value>Sắp xếp</value>
   </data>
+  <data name="EDMSR_TAB_FILE_HARD_ADDRESS" xml:space="preserve">
+    <value>Địa chỉ file cứng</value>
+  </data>
+  <data name="EDMSR_TAB_FILE_HARD_CODE" xml:space="preserve">
+    <value>Mã file cứng</value>
+  </data>
 </root>

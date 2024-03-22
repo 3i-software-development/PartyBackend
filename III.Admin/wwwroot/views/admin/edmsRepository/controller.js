@@ -5806,7 +5806,7 @@ app.controller('extension', function ($scope, $rootScope, $compile, $uibModal, D
     $scope.save = function () {
         switch ($scope.Type) {
             case 'LIST':
-                if ($scope.model.KeyWord !== '' || $scope.model.Subject !== '' || $scope.model.HashTag !== '' || $scope.model.Group !== '' || $scope.model.Type !== '') {
+                if ($scope.model.KeyWord !== '' || $scope.model.Subject !== '' || $scope.model.HashTag !== '' || $scope.model.Group !== '' || $scope.model.Type !== ''|| $scope.model.HardFileAddress !== ''|| $scope.model.HardFileCode !== '') {
 
                     var metaDataExt = JSON.stringify($scope.model);
                     dataserviceRepository.updateMetaData($scope.FileId, metaDataExt, function (rs) {
@@ -5819,7 +5819,7 @@ app.controller('extension', function ($scope, $rootScope, $compile, $uibModal, D
                 break;
 
             case 'DETAIL':
-                if ($scope.model.KeyWord !== '' || $scope.model.Subject !== '' || $scope.model.HashTag !== '' || $scope.model.Group !== '' || $scope.model.Type !== '') {
+                if ($scope.model.KeyWord !== '' || $scope.model.Subject !== '' || $scope.model.HashTag !== '' || $scope.model.Group !== '' || $scope.model.HardFileAddress !== ''|| $scope.model.HardFileCode !== '') {
                     $rootScope.DocumentExt = $scope.model;
                 }
                 break;
