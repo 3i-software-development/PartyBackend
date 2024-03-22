@@ -1,8 +1,10 @@
 ﻿ <!-- Left side column. contains the logo and sidebar -->
 @using ESEIM.Utils
 @using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization;
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IParameterService ParameterService
+
 @inject IHttpContextAccessor HttpContextAccessor
 @inject ILanguageService LanguageService
 @inject IViewLocalizer Localizer
@@ -11,6 +13,9 @@
     var isAllData = session.IsAllData;
     int countWarning = 0;
     int countNotifiCardjob = 0;
+      var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+     var listLanguage = LanguageService.GetListLanguages();
+    var curlLanguage = listLanguage.FirstOrDefault(x => x.Culture == requestCulture.RequestCulture.UICulture.Name);
 }
 <!-- <script src="https://kit.fontawesome.com/5a36b217b0.js" crossorigin="anonymous"></script> -->
 
@@ -1402,9 +1407,9 @@
         </div>
     </div>
 </div>
-<div data-scroll-to-active="true" class="main-menu menu-dark menu-accordion menu-shadow" id="menu-mobile" style="width:100vw">
+<div data-scroll-to-active="true" class="main-menu menu-dark menu-accordion menu-shadow" style="width:100vw" id="menu-mobile">
     <div class="main-menu-content page-sidebar navbar-collapse" style="background-color:orangered;">
-        <ul id="main-menu-navigation" class="navigation navigation-main">
+        <ul id="main-menu-navigation" class="navigation navigation-main" style="max-height: 100vh;overflow:auto">
             <li class="nav-item pt20">
                 <a href="/Admin/DashBoard"><i class="icon-home"></i>Trang chủ</a>
             </li>
@@ -1649,11 +1654,11 @@
                         <a href="#"><i class="fa-solid fa-house-laptop"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold"> Thiết bị và hạ tầng</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
                         <ul class="menu-content">
                             <li class="">
-                                <a href="/Admin/IotDeviceInfo"><i class="fa fa-calendar"></i> Thiết bị</a>
+                                <a href="/Admin/IotDeviceInfo"><i class="fa-solid fa-desktop"></i> Thiết bị</a>
                             </li>
                             <li class="dottet-sub-subMenu" />
                             <li class="">
-                                <a href="/Admin/ZoneSetup"><i class="fas fa-user-clock"></i> Khu vực</a>
+                                <a href="/Admin/ZoneSetup"><i class="fa-solid fa-location-pin"></i>Khu vực</a>
                             </li>
                             
                         </ul>
@@ -1756,88 +1761,79 @@
                     </li>
                 </ul>
             </li>
-@*Ngôn ngữ*@
- 
-            @* <li class="dotted-menu" />
+
+             @*ngôn ngữ*@
+            <li class="dotted-menu" />
             <li class="nav-item">
-              <a id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class=" nav-link none-hover" style="padding-bottom: 0px; padding-top: 5px;">
-                                <i class="flag-icon @curlLanguage.Icon fs20 menu-title bold" style="    border: solid 1px lightgray"></i>
-                            </a>
                 <a href="#">
-                    <i class="fas fa-question-circle"></i><span class="menu-title bold">Ngôn ngữ</span>
+                    <i class="flag-icon @curlLanguage.Icon fs20"></i><span class="menu-title bold">Ngôn ngữ</span>
                 </a>
                 <ul class="menu-content">
-                    <li class="">
-                        <a href="/Admin/Asset"><i class="fas fa-book"></i>@Localizer["MENU_ASSET_MANAGEMENT"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetGroup"><i class="fas fa-globe"></i>@Localizer["MENU_SYS_DM_GROUP_TS"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetInventory"><i class="fas fa-file-signature"></i>@Localizer["MENU_SYS_ASSET_INVENTORY"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetAllocation"><i class="fas fa-location-arrow"></i>@Localizer["MENU_SYS_ASSET_ALLOCATION"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetBuy"><i class="fas fa-cart-plus"></i>@Localizer["MENU_SYS_PROPERTY_SHOOPING"] </a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetTransfer"><i class="fas fa-retweet"></i>@Localizer["MENU_SYS_PROPERTY_TRANSFER"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetRqMaintenanceRepair"><i class="fas fa-user-shield"></i>@Localizer["MENU_SYS_REQUEST_MAINTENANCE"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetMaintenance"><i class="fas fa-wrench"></i>@Localizer["MENU_SYS_PROPERTY_REPAIR"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetImprovement"><i class="fas fa-user-md"></i>@Localizer["MENU_SYS_PROPERTY_MAINTENANCE"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetCancel"><i class="fas fa-ban"></i>@Localizer["MENU_SYS_PROPERTY_DESTRUCTION"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetLiquidation"><i class="fas fa-gavel"></i>@Localizer["MENU_SYS_QILUIGATION_OF_ASSETS"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetRPTBroken"><i class="fas fa-exclamation-triangle"></i>@Localizer["MENU_SYS_REPORT_LOSS_PROPERTY"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetRecalled"><i class="fas fa-user-lock"></i>@Localizer["MENU_SYS_ASSET_RECOVERY"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/AssetCommonSetting"><i class="fa fa-cogs"></i>@Localizer["MENU_SYS_PARAMETER_SETTING"]</a>
-                    </li>
-                    <li class="">
-                        <a href="/Admin/AssetActivity">
-                            <i class="fa fa-signal"></i> <span>@Localizer["MENU_ASSET_ACTIVITY"]</span>
-                            <span class="pull-right-container">
-                                <small class="label pull-right bg-green"></small>
-                            </span>
+                    <li class="dropdown dropdown-language nav-item mr15" style="top: 0px;">
+                       @* <a id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link none-hover" style="padding-bottom: 0px; padding-top: 5px;">
+                            <i class="flag-icon @curlLanguage.Icon fs20"></i>
                         </a>
+                        <span class="selected-language black fs12" style="margin-right:20px; line-height: 24px">@curlLanguage.DisplayName</span>*@
+                       
                     </li>
+                    <div aria-labelledby="dropdown-flag" >
+                            @{
+                                foreach (var lang in LanguageService.GetListLanguages())
+                                {
+                                       <li class="dottet-subMenu" />
+                                    <a class="dropdown-item" onclick="onRedirect('@lang.Culture')">
+                                        <span class="flag-icon @lang.Icon"></span> @lang.DisplayName
+                                    </a>
+                                    
+                                }
+                            }
+                     </div>
+
                 </ul>
-            </li> *@
+            </li>
 
 
+         
+            @*Thoát*@
+   
+               @* <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i><span class="menu-title bold">Thoát</span>
+                    </a>
+       
+                </li>*@
 
 
-            @*Quản lý quỹ*@
-            <!-- <li class="dotted-menu" />
+            
+
+            @*Thoát*@
+           <li class="dotted-menu" />
+            <li class="nav-item">
+                <a href="/Admin/Account/Logout">
+            <i class="fa-solid fa-right-from-bracket"></i><span class="menu-title bold">Thoát</span>
+                </a>
+                
+            </li>
+             <li class="dotted-menu" />
+    <div class="app-menu" style="    display: flex;
+    font-size: 2rem;
+    padding: 2px;">
+                    <a href="">
+                        <i style="color: #b8c7ce;" class="fab fa-facebook-square"></i>
+                    </a>
+                    <a href="" class="pl5">
+                        <i style="color: #b8c7ce;" class="fab fa-google-drive"></i>
+                    </a>
+                    <a href="" class="pl5">
+                        <i style="color: #b8c7ce;" class="fas fa-dove"></i>
+                    </a>
+                    <a href="" class="pl5">
+                        <i style="color: #b8c7ce;" class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+              <!--
+                    @*Quản lý quỹ*@
+           <li class="dotted-menu" />
             <li class="nav-item">
                 <a href="#">
                     <i class="fas fa-coins"></i><span class="menu-title bold">@Localizer["MENU_FUND"]</span>
@@ -2145,25 +2141,12 @@
                     </li>
                 </ul>
             </li> -->
-            <li class="dotted-menu" />
-            <li class="navigation-header" style="padding-top:5px"></li>
+            @*<li class="dotted-menu" />*@
+          @*  <li class="navigation-header" style="padding-top:5px"></li>
             <li class="">
                 <a href="/Admin/Account/Logout"><i class="fas fa-sign-out-alt"></i>@Localizer["MENU_LOGOUT"]</a>
-            </li>
-            <div class="app-menu">
-                <a href="">
-                    <i style="color: #b8c7ce;" class="fab fa-facebook-square"></i>
-                </a>
-                <a href="" class="pl5">
-                    <i style="color: #b8c7ce;" class="fab fa-google-drive"></i>
-                </a>
-                <a href="" class="pl5">
-                    <i style="color: #b8c7ce;" class="fas fa-dove"></i>
-                </a>
-                <a href="" class="pl5">
-                    <i style="color: #b8c7ce;" class="fab fa-linkedin-in"></i>
-                </a>
-            </div>
+            </li>*@
+               
         </ul>
     </div>
 </div>
