@@ -32,6 +32,19 @@ app.factory('dataserviceJoinParty', function ($http) {
         $http(req).then(callback);
     };
     return {
+        //địa chỉ 
+        getProvince: function (callback) {
+            $http.get('/UserProfile/GetProvince').then(callback);
+        },
+        getDistrictByProvinceId: function (data, callback) {
+            $http.get('/UserProfile/GetDistrictByProvinceId?provinceId='+ data).then(callback);
+        },
+        getWardByDistrictId: function (data, callback) {
+            $http.get('/UserProfile/GetWardByDistrictId?districtId='+ data).then(callback);
+        },
+        GetGroupUser: function (callback) {
+            $http.get('/UserProfile/GetGroupUser').then(callback);
+        },
         Import: function (data, callback) {
             $http.get('/Admin/WorkflowActivity/Import?ressumeNumber=' + data).then(callback)
         },
@@ -919,7 +932,11 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
 
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter,$http) {   
     $scope.initData=function(){
-            
+        $scope.ProfileList = [];
+        dataserviceJoinParty.getProvince(function(rs){
+            $scope.ListProvince=rs.data;
+            console.log($scope.ListProvince);
+        })
         $scope.ListStatus = [{
             Name: 'Mới đẩy lên',
             Code: 'Mới đẩy lên'
@@ -1008,6 +1025,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.infUser.ResumeNumber =  rs.ResumeNumber;
                 //$scope.infUser.Status =  rs.Status;
                 $scope.infUser.WfInstCode =  rs.WfInstCode;
+                $scope.GroupUser = rs.GroupUserCode;
+                $scope.infUser.PlaceWorking=rs.PlaceWorking;
                 
                 $scope.Username=rs.Username;
                 console.log($scope.infUser);
@@ -1055,6 +1074,18 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     }
     $scope.initData();
+
+    $scope.GroupUsers = [];
+    $scope.getGrupUsers = function () {
+        dataserviceJoinParty.GetGroupUser(function (rs) {
+            console.log(rs)
+            $scope.GroupUsers = rs.data;
+        })
+    }
+    $scope.onItemSelect = function (item) {
+        $scope.GroupUser = item.Code;
+    }
+    $scope.getGrupUsers();
 
     
 
@@ -1570,6 +1601,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.model.Status = $scope.infUser.Status;
                 $scope.model.Username=$scope.Username;
                 $scope.model.WfInstCode=$scope.infUser.WfInstCode;
+                $scope.model.GroupUserCode = $scope.GroupUser;
+                $scope.model.PlaceWorking=$scope.infUser.PlaceWorking
 
             if($scope.infUser.ResumeNumber!='' && $scope.infUser.ResumeNumber!=undefined &&
             $scope.Username!='' && $scope.Username!=undefined){
@@ -2675,6 +2708,88 @@ app.controller('log-status-wf-full', function ($scope, $rootScope, $compile, $ui
     }, 400);
 });
 
-app.cotroller("testFile",function($scope,dataservice){
-    
-})
+app.directive("choosePosition", function (dataserviceJoinParty) {
+    return {
+        restrict: "AE",
+        require: "ngModel",
+        templateUrl:ctxfolderJoinParty+'/Posision.html',
+        scope:{
+            ngModelCtrl: '=',// Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
+            provinces: '='
+        },
+        link: function (scope, element, attrs, ngModelCtrl) {
+            console.log(scope.provinces);
+            scope.ditrict= [
+              ];
+            scope.Ward=[
+              ]
+              // Hàm phân tích ngModelCtrl
+            function parseNgModelValue(value) {
+                var parts = value.split('_'); // Tách giá trị thành các phần
+                var result = {
+                    tinh_id: parseInt(parts[0]),
+                    huyen_id: parseInt(parts[1]),
+                    xaPhuong_id: parseInt(parts[2])
+                };
+                return result;
+            }
+
+            // Hàm cập nhật giá trị ngModelCtrl
+            function updateNgModelValue() {
+                var value = scope.model.tinh_id + '_' + scope.model.huyen_id + '_' + scope.model.xaPhuong_id;
+                ngModelCtrl.$setViewValue(value);
+                ngModelCtrl.$render();
+                if(parseInt(scope.model.tinh_id)!=NaN)
+                dataserviceJoinParty.getDistrictByProvinceId(scope.model.tinh_id,function(rs){
+                    rs=rs.data
+                    scope.ditrict=rs;
+                    console.log(rs)
+                })
+                if(parseInt(scope.model.huyen_id)!=NaN)
+                dataserviceJoinParty.getWardByDistrictId(scope.model.huyen_id,function(rs){
+                    rs=rs.data
+                    scope.Ward=rs;
+                    console.log(rs)
+                })
+                console.log(ngModelCtrl.$modelValue)
+            }
+
+            // Watchers để theo dõi thay đổi trong giá trị ngModelCtrl
+            scope.$watch(function () {
+                return ngModelCtrl.$modelValue;
+            }, function (newValue) {
+                if (newValue) {
+                    var parsedValue = parseNgModelValue(newValue);
+                    scope.model.tinh_id = parsedValue.tinh_id;
+                    scope.model.huyen_id = parsedValue.huyen_id;
+                    scope.model.xaPhuong_id = parsedValue.xaPhuong_id;
+                }
+            });
+
+            // Watchers để theo dõi thay đổi trong các mô hình tinh, huyen và xaPhuong
+            scope.$watchGroup(['model.tinh_id', 'model.huyen_id', 'model.xaPhuong_id'], function () {
+                updateNgModelValue();
+            });
+
+            // Khởi tạo model
+            scope.model = {
+                tinh_id: '',
+                huyen_id: '',
+                xaPhuong_id: ''
+            };
+            // Hàm được gọi khi một mục được chọn
+            scope.onItemSelect = function (selected, level) {
+                if (level === 'tinh') {
+                    scope.model.huyen_id = ''; // Xóa giá trị huyện khi chọn một tỉnh mới
+                    scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một tỉnh mới
+                   
+                } else if (level === 'huyen') {
+                    scope.disableXa=false
+                    scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một huyện mới
+                    
+                }
+            };
+
+        },
+    };
+});

@@ -88,10 +88,31 @@
     /* Màu nền khi hàng được chọn */
     font-weight: bold;
   }
+
   .table-scrollable {
-    max-height: 80vh; /* Chiều cao tối đa của phần tử chứa bảng */
-    max-width: 100%; /* Chiều rộng tối đa của phần tử chứa bảng */
-    overflow: auto; 
+    max-height: 80vh;
+    /* Chiều cao tối đa của phần tử chứa bảng */
+    max-width: 100%;
+    /* Chiều rộng tối đa của phần tử chứa bảng */
+    overflow: auto;
+  }
+
+  .w4 {
+    width: 33, 3%;
+  }
+
+  .d-flex {
+    width: 100%;
+    display: flex;
+  }
+
+  .ui-select-toggle {
+    align-items: center;
+    display: flex;
+  }
+
+  .ui-select-toggle .caret {
+    right: 2px !important;
   }
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
@@ -421,7 +442,7 @@
 
       </div>
     </div>
-    
+
     <div class="row pr-2">
       <div class="" id="dropzone">
         <table class="table dataTable table-hover table-striped" datatable dt-options="dtOptions" dt-columns="dtColumns"

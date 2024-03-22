@@ -150,6 +150,41 @@
         flex: 0 0 auto;
         /* Không co giãn các tab */
     }
+    .w4{
+        width: 33%;
+    }
+    .d-flex{
+        width: 100%;
+        display: flex;
+    }
+    .ui-select-toggle{
+        align-items: center;
+        display: flex;
+        font-weight: bold;
+        font-size: 12px !important;
+    }
+    .ui-select-toggle .caret{
+        right: 2px !important;
+    }
+    
+    .ui-select-bootstrap div,
+    .ui-select-bootstrap span,
+    .ui-select-bootstrap input,
+    .ui-select-bootstrap .btn-default-focus,
+    .ui-select-choices {
+        height: 24.5px;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        font-size: 15px;
+    }
+    .ui-select-bootstrap .ui-select-choices-row.active>a{
+        color: #000;
+        text-wrap: nowrap;
+    }
+    .ui-select-bootstrap > .ui-select-choices{
+        width: auto;
+    }
 </style>
 <div class="portlet-body form row" style="margin-top: 15px">
     <div class="col-lg-12" method="post">
@@ -384,6 +419,24 @@
                                     </div>
                                 </div>
                             </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0 ">
+                                    <i class="fa fa-users"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                       Địa giới hành chính
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                        <i class="fa fa-info-circle" data-bs-toggle="popover"
+                                            title="Popover Header" data-bs-placement="bottom"
+                                            data-bs-content="Ví dụ: 'Hà Nội'"
+                                            style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                                        <choose-position ng-model="infUser.PlaceWorking" provinces="ListProvince" style="width: 100%;"></choose-position>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group row">
@@ -567,6 +620,35 @@
 
                                 </div>
                             </div>
+                            
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0 ">
+                                    <i class="fa fa-users"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Nhóm chi bộ
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                        <i class="fa fa-info-circle" data-bs-toggle="popover"
+                                            title="Popover Header" data-bs-placement="bottom"
+                                            data-bs-content="Ví dụ: 'Hà Nội'"
+                                            style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                                        <ui-select ng-model="GroupUser" theme="bootstrap" class="displayInfo"
+                                            ng-change="onItemSelect($select.selected)"
+                                            style="border: none; height: 24.5px; display: inline-block;">
+                                            <ui-select-match placeholder="Chọn nhóm chi bộ"
+                                                style="height:24.5px">{{$select.selected.Title}}</ui-select-match>
+                                            <ui-select-choices
+                                                repeat="x.Code as x in GroupUsers | filter: $select.search">
+                                                <div>{{x.Title}}</div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+                                    
+                                </div>
+                            </div>
+
                         </div>
 
                     </div>
