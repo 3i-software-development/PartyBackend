@@ -2575,3 +2575,9 @@ div.jsoneditor {
         padding-right: 14px !important;
     }
 }
+ol.breadcrumb {
+    display: flex;
+    overflow: auto;
+    margin-bottom: 3rem;
+    white-space: nowrap;
+} 
