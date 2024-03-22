@@ -2796,6 +2796,9 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu-footer .content {
     .sidebar-left {
         display: none;
     }
+    .content-wrapper padding-right-90{
+        padding-right:14px;
+    }
 }
 @media screen and (min-width: 0px) {
     head {
