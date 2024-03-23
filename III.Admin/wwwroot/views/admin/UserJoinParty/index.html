@@ -34,6 +34,15 @@
     box-shadow: 1px 3px 8px 0px #888888c2;
   }
 
+  @media (max-width: 450px){
+      #searchBox {
+          left:-12px;
+          top:-30px;
+      }
+
+     
+  }
+
   .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top {
     z-index: 1032 !important;
   }
@@ -94,7 +103,13 @@
     /* Chiều cao tối đa của phần tử chứa bảng */
     max-width: 100%;
     /* Chiều rộng tối đa của phần tử chứa bảng */
-    overflow: auto;
+    overflow: auto!important;
+  }
+
+  @media (max-width:600px){
+    .table-scrollable{
+        max-width:100vw!important;
+    }
   }
 
   .w4 {
@@ -205,7 +220,7 @@
                 </div>
               </div>
 
-              <div class="col-md-2">
+              <div class="col-md-2 pr-0">
                 <label class="fw600 text-underline">{{'Ngày sinh đến' | translate}}</label>
                 <div class="input-group br24">
                   <input type="text" autocomplete="off" class="form-control"

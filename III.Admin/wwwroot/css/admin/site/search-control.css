@@ -16,6 +16,6 @@
 }
 @media (max-width: 450px) {
     #searchBox .portlet {
-        width: 250px !important;
+        width: 100vw !important;
     }
 }
