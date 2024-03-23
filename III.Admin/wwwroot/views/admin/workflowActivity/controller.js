@@ -3931,16 +3931,19 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     }
 
     $scope.isEditWorkflow = false;
-    $scope.editWorkflow = function(){   
-        if ($scope.isEditWorkflow == true) {
+    $scope.editWorkflow = function () {
+        if ($scope.isEditWorkflow) {
+            if ($(window).width() < 600) {
+                $('#main-table').css('opacity', '0.2');
+            }
             $('#main-table').css('width', '50%');
-        }else{
-            $('#main-table').css('width', '');
+        } else {
+            $('#main-table').css('opacity', '');
+            $('#main-table').css('width', ''); // Reset the width to its default value
         }
-        
-        //setTimeout(() => $scope.$apply());     
-        //setTimeout(() => $scope.$apply());
     }
+
+
 
     $scope.checkHiddenInforWf = false;
     $scope.checkHiddenFileWfActivityHistory = false;

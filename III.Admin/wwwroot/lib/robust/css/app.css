@@ -91,6 +91,7 @@ html {
     }
     html body .content .content-wrapper {
         padding: 1rem;
+        width: fit-content;
     }
 
     html body footer {
