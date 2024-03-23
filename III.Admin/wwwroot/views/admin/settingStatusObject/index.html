@@ -9,6 +9,55 @@
         color: black;
         text-decoration: underline;
     }
+    .btn-group {
+        width:auto;
+    }
+    .table-toolbar {
+        width: 80%;
+    }
+    .table-responsive {
+        width: 80%;
+    }
+    @media(max-width:450px)
+    {
+        .table-toolbar{
+            width:100%;
+        }
+        .input-group {
+            width: 320px;
+        }
+        .btn-save{
+            margin-left:250px !important;
+        }
+        .btn-add{
+            margin-left:-2px !important;
+
+        }
+        .table-responsive{
+            width:100%;
+        }
+    }
+    
+    @media screen and (min-width:450px) and (max-width:768px) {
+        .table-responsive {
+            width: 100%;
+        }
+        .table-toolbar{
+            width:100%;
+        }
+        .input-group {
+            width: 350px;
+        }
+        .btn-save {
+            margin-left: 255px !important;
+        }
+
+        .btn-add {
+            margin-left: 5px !important;
+        }
+
+       }
+   
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
 
@@ -16,7 +65,7 @@
     <div class="portlet light bordered input-search mb5 mt10">
         <div class="portlet-body pb5">
             <div class="row mb5">
-                <div class="col-md-3 pl-0 pr-0">
+                <div class="col-md-4 pl-0 pr-0">
                     <div class="form-group" ng-class="{'has-error' : errorObjectTypeCode}">
                         <div class="col-md-12">
                             <label class="control-label require fw600">{{'ST_STT_OBJ_TYPE' | translate}}</label>
@@ -60,14 +109,14 @@
 
                 <div class="col-md-2" style="width: 14%;">
                     <div class="btn-group mt20 actions d-flex">
-                        <div class="text-center flex-basis-100 pull-right" ng-click="add()" style="margin-left: -22px;">
+                        <div class=" btn-add text-center flex-basis-100 pull-right" ng-click="add()" style="margin-left: -22px;margin-bottom:11px">
                             <a class="fs30 ">
                                 <span><i class="fa-solid fa-plus"></i></span>
                             </a>
                             <p class="text-underline mb-0 fs9 nowrap pt3">{{'COM_BTN_ADD' | translate}}</p>
                         </div>
 
-                        <div class="text-center flex-basis-100 pull-right" ng-click="save()" style="margin-left: 458px">
+                        <div class=" btn-save text-center flex-basis-100 pull-right" ng-click="save()" style="margin-left: 58px;margin-bottom:8px">
                             <a class="fs30">
                                 <span><i class="fas fa-save"></i></span>
                             </a>
