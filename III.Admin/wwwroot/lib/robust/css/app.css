@@ -87,7 +87,7 @@ html {
 @media (max-width: 767px) {
     
     .breadcrumb-item{
-        font-size:10px !important;
+        font-size:15px !important;
     }
     html body .content .content-wrapper {
         padding: 1rem;
