@@ -22,6 +22,13 @@
             width: 50% !important;
         }
     }
+    @media(max-width:450px){
+       ::before .col-md-12[style*="padding: 0;"] label.control-label.require {
+            padding: 0 !important;
+        }
+        
+
+    }
 
     .status-detail {
         border-radius: 5px;
@@ -51,19 +58,19 @@
                                 <i class="fa fa-barcode" aria-hidden="true"></i>
                                 <label class="control-label require">{{'Mã bộ dữ liệu trạng thái' | translate}}</label>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-md-12"">
                                 <input type="text" class="form-control br24" ng-model="model.GroupCode" name="GroupCode" placeholder="{{'Mã bộ trạng thái' | translate}}..." ng-readonly="isAdded" />
                             </div>
                         </div>
                     </div>
                     <div class="col-md-7 pr-0">
                         <div class="form-group">
-                            <div class="col-md-12">
+                            <div  class="col-md-12" style="padding: 0;">
                                 <i class="fas fa-info-circle" aria-hidden="true"></i>
-                                <label class="control-label require">{{'Tên bộ dữ liệu trạng thái' | translate}}</label>
+                                <label class="control-label require" style="padding: 0;">{{'Tên bộ dữ liệu trạng thái' | translate}}</label>
                             </div>
-                            <div class="col-md-12">
-                                <input type="text" class="form-control br24" ng-model="model.GroupName" name="GroupName" placeholder="{{'Tên bộ trạng thái' | translate}}..." />
+                            <div class="col-md-12" style="padding: 0;">
+                                <input style="padding: 0;" type="text" class="form-control br24" ng-model="model.GroupName" name="GroupName" placeholder="{{'Tên bộ trạng thái' | translate}}..." />
                             </div>
                         </div>
                     </div>

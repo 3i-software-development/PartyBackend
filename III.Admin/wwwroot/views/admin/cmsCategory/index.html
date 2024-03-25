@@ -41,6 +41,7 @@
     tr.active {
         background-color: #cccddf !important;
     }
+   
 
     .title-cat {
         width: 100%;
@@ -48,9 +49,21 @@
         font-size: 15px;
         padding: 5px 0px;
     }
+    @media(max-width:450px)
+    {
+        .btn-group{
+            margin-top:20px !important!;
+        }
+    }
+
+    @media  (min-width: 616px) {
+        .btn-group{
+            margin-top:-50px;
+        }
+    }
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
-<div class="btn-group actions pt5 pb-1 pull-right d-flex mr5" style="margin-top: -50px;">
+<div class="btn-group actions pt5 pb-1 pull-right d-flex mr5" >
     <div class="pr-2 text-center mt10">
         <a ng-click="showSearch()" class1="btn btn-icon-only btn-circle btn-outline gold-custom">
             <span><i class="fas fa-search fs30"></i></span>
@@ -147,20 +160,28 @@
             <td class="title-cat">
                 <i class="fa fa-hand-o-right text-primary" ng-if="x.Level == 0"></i>
                 <!--<i ng-click="expand(x)" class="pt5" ng-class="{'fa fa-caret-up pull-right right-position': x.IsExpand,
-                                               'fa fa-caret-down pull-right right-position': !x.IsExpand}">
-    </i>-->
+                                                   'fa fa-caret-down pull-right right-position': !x.IsExpand}">
+        </i>-->
                 <span ng-click="expand(x)" ng-dblclick="edit(x.Id)">{{x.Title}} </span>
-                <span class="pull-right mr50" ng-click="add()"><img src="/images/icons/create_item_icon.png" style="height:18px" /></span>
+            <td>
                 <span class="cursor glyphicon glyphicon-ban-circle text-danger fs20 pTip-right btn-publish-inline pull-right mr50" ng-click="publish(x.Id)" ng-if="x.Published != true"></span>
                 <span class="cursor glyphicon glyphicon-ok-sign text-success fs20 pTip-right btn-publish-inline pull-right mr50" ng-click="publish(x.Id)" ng-if="x.Published == true"></span>
-                <!--<span ng-show="k.IsShow" class="d-flex pt5 pb5" ng-class="{'active' : markId == k.id}" ng-repeat="k in x.ListCmsItem" style="width: 100%;" dnd-draggable1="k" dnd-effect-allowed1="copyMove" dnd-type1="'item'" dnd-moved1="x.ListCmsItem.splice($index, 1)">
-        <i class="fa fa-file-text-o text-primary pt3 pl30"></i>&nbsp;
-        <a class="fs13 fw400 cms-item-link" ng-class="{'cms-item-link-active' : markId == k.id}">
-            <span ng-dblclick="editCmsItem(k.id)" ng-click="viewContent(k.id, x.Id)">{{k.title}}</span>
-            <i class="fas fa-copy pt3 pl10" style="color: #15aabf" ng-click="copyCmsItem(k.id)"></i>
-        </a>
-    </span>-->
-                </
+            </td>
+            <td>
+                <span class="pull-right mr50" ng-click="add()"><img src="/images/icons/create_item_icon.png" style="height:18px" /></span>
+            <td>
+
+                <!--<span ng-show="k.IsShow" class="d-flex pt5 pb5" ng-class="{'active' : markId == k.id}" ng-repeat="k in x.ListCmsItem" style="width: 100%;" dnd-draggable1="k" dnd-effect-allowe
+                </td>
+
+                    d1="copyMove" dnd-type1="'item'" dnd-moved1="x.ListCmsItem.splice($index, 1)">
+            <i class="fa fa-file-text-o text-primary pt3 pl30"></i>&nbsp;
+            <a class="fs13 fw400 cms-item-link" ng-class="{'cms-item-link-active' : markId == k.id}">
+                <span ng-dblclick="editCmsItem(k.id)" ng-click="viewContent(k.id, x.Id)">{{k.title}}</span>
+                <i class="fas fa-copy pt3 pl10" style="color: #15aabf" ng-click="copyCmsItem(k.id)"></i>
+            </a>
+        </span>-->
+                <!--</-->
             </td>
         </tr>
     </tbody>

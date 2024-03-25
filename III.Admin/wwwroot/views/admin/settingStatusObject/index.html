@@ -18,23 +18,32 @@
     .table-responsive {
         width: 80%;
     }
+
+
     @media(max-width:450px)
     {
+       
+
+    
         .table-toolbar{
-            width:100%;
+            width:95%;
         }
         .input-group {
-            width: 320px;
+            width: 90%;
+        }
+        #input2{
+            width:98% !important;
         }
         .btn-save{
-            margin-left:250px !important;
+            padding-left:160px !important;
         }
         .btn-add{
             margin-left:-2px !important;
 
         }
         .table-responsive{
-            width:100%;
+            width:95%;
+            height:200px;
         }
     }
     
@@ -92,7 +101,7 @@
                             <label class="control-label require fw600">{{'ST_STT_OBJ_GROUP_STT' | translate}}</label>
                         </div>
                         <div class="col-md-12">
-                            <div class="input-group br24-nobtn">
+                            <div id="input2" class="input-group br24-nobtn">
                                 <ui-select tagging ng-model="model.StatusGroupCode" theme="bootstrap" ng-change="changeSelect('StatusGroupCode')">
                                     <ui-select-match placeholder="{{'ST_STT_OBJ_GROUP_STT' | translate}}..."><b>{{$select.selected.Name}}</b></ui-select-match>
                                     <ui-select-choices repeat=" x.Code as x in listGroupStatus | filter: $select.search">
