@@ -127,6 +127,13 @@ body.modal-open {
     border-radius: 4px !important;
     overflow: initial !important;
 }
+
+@media(max-width:450px) {
+    .input-group {
+        width: 200px;
+    }
+}
+
 @media (max-width:600px){
     .modal-content{
         width:95vw;
