@@ -24,6 +24,18 @@
         background: #EEEEEE;
         border: 1px solid #d4d4d4;
     }
+
+    @media (max-width:600px) {
+        .title-json {
+            margin-left: 15px;
+        }
+
+        .ShowImage {
+            width: 65vw;
+            margin-left: 16px;
+        }
+
+    }
 </style>
 
 <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
@@ -48,7 +60,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pl-0">
+                    <div class="col-md-12">
                         <div class="form-group">
                             <div class="col-md-12">
                                 <i class="fa fa-info-circle"></i>
@@ -59,7 +71,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pl-0">
+                    <div class="col-md-12">
                         <div class="form-group" ng-class="{'has-error' : errorType}">
                             <div class="col-md-12 pr-5">
                                 <i class="fa fa-info-circle"></i>
@@ -97,9 +109,9 @@
                                 <i class="fa fa-info-circle"></i>
                                 <label class="control-label bold">{{'SYB_CURD_OBJECT_SHOW'|translate}}</label>
                             </div>
-                            <div class="col-md-6 pr-0">
+                            <div class="col-md-6 pr-0 title-json">
                                 <input id="upload" accept=".png,.jpg,.jpeg,.gif,.tif" custom-on-change-sumbol="attrfile" type="file" />
-                                <a ng-click="loadfile()" class="control-label bold pull-right">{{'SYB_CURD_OBJECT_UPLOAD_FILE' |translate}}</a>
+                                <a ng-click="loadfile()" class="control-label bold pull-right ">{{'SYB_CURD_OBJECT_UPLOAD_FILE' |translate}}</a>
                             </div>
                             <div class="col-md-12 pr-0 ShowImage image">
                                 <img id="imageId" style="height:120px !important;width:80%" ng-click="loadfile()" class="h-300 w-450 br-n" onerror="this.src='../../../images/default/uploadimg.png'" ng-src="{{model.gallery==null ? '../../../images/default/uploadimg.png' : model.gallery}}" role="button" />

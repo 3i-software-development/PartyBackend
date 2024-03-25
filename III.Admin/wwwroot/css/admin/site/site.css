@@ -127,7 +127,11 @@ body.modal-open {
     border-radius: 4px !important;
     overflow: initial !important;
 }
-
+@media (max-width:600px){
+    .modal-content{
+        width:95vw;
+    }
+}
 .portlet.light .portlet-body {
     padding-top: 0px;
 }
@@ -2596,7 +2600,7 @@ div.jsoneditor {
 ol.breadcrumb {
     display: flex;
     overflow: auto;
-    /*margin-bottom: 3rem;*/
+    margin-bottom: 3rem;
     white-space: nowrap;
 } 
 

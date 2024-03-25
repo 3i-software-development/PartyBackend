@@ -14,7 +14,11 @@
         width: calc(75% - 50px);
         right: 75px;
     }
-
+    @media (max-width:600px){
+        #searchBox  {
+           width:100vw!important;
+        }
+    }
         #searchBox .bordered {
             border: 1px solid #80808057 !important;
             box-shadow: 1px 3px 8px 0px #888888c2;
@@ -35,7 +39,7 @@
         <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_ADD' | translate}}</p>
     </div>
 </div>
-<div id="searchBox" ng-show="isSearch">
+<div id="searchBox" ng-show="isSearch" >
     <div class="table-toolbar pt10">
         <div class="portlet light bordered mb5 mt10">
             <div class="portlet-body">

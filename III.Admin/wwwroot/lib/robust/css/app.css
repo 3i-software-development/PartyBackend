@@ -98,6 +98,12 @@ html {
     }
 }
 
+    @media (max-width:600px) {
+        #searchBox {
+            left: -5px !important;
+        }
+    }
+
 /*
 * Col 3 layout for detached and general type
 */
