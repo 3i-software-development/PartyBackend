@@ -33,6 +33,26 @@
             border: 1px solid #80808057 !important;
             box-shadow: 1px 3px 8px 0px #888888c2;
         }
+@media (max-width: 600px){
+    .col-lg-3 .input-group{
+        width:80vw;
+    }
+    .btn-search {
+        padding: 0px !important;
+        justify-content: center;
+        border: solid 2px gray;
+        background-color: #3277B3;
+        border-radius:15px;
+        margin:15px;
+        padding: 5px 0;
+    }
+    .text-search{
+      display:none;
+    }
+    .btn-cl{
+        color:white!important;
+    }
+}
 
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
@@ -125,12 +145,12 @@
                             </div>
                         </div>
                         <div class="col-lg-2">
-                            <div class="btn-group pt20 actions d-flex">
+                            <div class="btn-group pt20 actions d-flex btn-search">
                                 <div class="text-center mt10 pr10">
                                     <a ng-click="reload()" class1="btn btn-icon-only btn-outline btn-de btn-boder1">
-                                        <span><i class="fas fa-search fs30 color-dark"></i></span>
+                                        <span><i class="fas fa-search fs30 btn-cl" style="color:white"></i></span>
                                     </a>
-                                    <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
+                                    <p class="text-underline fs9 mb5 pt3 text-search">{{'COM_BTN_SEARCH' | translate}}</p>
                                 </div>
                             </div>
                         </div>

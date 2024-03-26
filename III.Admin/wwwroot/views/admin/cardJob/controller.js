@@ -5040,11 +5040,13 @@ app.controller('indexCardJob', function ($scope, $http, $location, $rootScope, $
             $scope.showNavLeft = false;
             document.getElementById("mySidenav").style.width = "0px";
             document.getElementById("BoardDetail").style.paddingLeft = "0px";
+            document.getElementById("BoardDetail").style.opacity = "1";
         }
         else {
             $scope.showNavLeft = true;
             document.getElementById("mySidenav").style.width = "345px";
             document.getElementById("BoardDetail").style.paddingLeft = "330px";
+            document.getElementById("BoardDetail").style.opacity = "0";
         }
     }
 
