@@ -271,6 +271,31 @@
         margin-right: 7px;
         border: none;
     }
+
+    @media (max-width:600px){
+        #c.lower-canvas {
+            width: 100vw!important;
+            height: 100vh!important;
+        }
+        .menu-top {
+            flex-direction: column !important;
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow:none!important;
+        }
+        .menu2{
+            left:-15px!important;
+            bottom:300px!important;
+           
+        }
+        .full-text span{
+            display:none!important;
+        }
+        .json_div{
+            right:0px!important;
+
+        }
+    }
 </style>
 
 <div class="table-toolbar">
@@ -513,7 +538,7 @@
                     Delete
                 </div>
             </div>
-            <div class="create-box" ng-click="showFullText()">
+            <div class="create-box full-text" ng-click="showFullText()">
                 <!--<i class="fas fa-search-plus"></i>-->
                 <input type="checkbox" name="fullText" id="fullText" class="radio_buttons option-input-3 radio" ng-model="isTextFull" ng-click="changeTextFull(isTextFull)">
                 <span>&nbsp;&nbsp;PARTIAL TEXT / FULL TEXT </span>

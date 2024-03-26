@@ -106,10 +106,28 @@
         font-size: 40px !important;
         color: green;
     }
+    @media (max-width:600px){
+        .nav-header{
+            margin-left:5px!important;
+            margin-right:10px!important;
+        }
+        .sidenav{
+            width:100vw;
+        }
+        .add-board{
+            z-index:9999;
+        }
+  
+    }
+
+    .sidenav{
+        width:345px;
+    }
+
 </style>
 <div class="row h100">
     <!--nav left-->
-    <div class="sidenav" id="mySidenav" style="width: 345px; overflow: hidden; padding-top: 88px" ng-show="!SearchAdvMode">
+    <div class="sidenav" id="mySidenav" style="overflow: hidden; padding-top: 88px" ng-show="!SearchAdvMode">
         <div class="nav-header pl10">
             <div class="btn-group actions">
                 <div class="text-center" style="margin-top: 25px;">
@@ -196,7 +214,7 @@
                     <div class="col-md-12 pl5 pr5 text-white">
                         <div class="col-xs-12 pt10 p0 d-flex align-item-ct justify-content-sb">
                             <span class="d-flex align-item-ct">
-                                <a class="fs25 w25 pull-left text-center" ng-click="addBoard()">
+                                <a class="fs25 w25 pull-left text-center add-board" ng-click="addBoard()">
                                     <span><i class="fas fa-plus color-dark cursor"></i></span>
                                 </a>
                                 <a class="fs20 w75 pull-left text-center" ng-click="editBoard(boardCode)" ng-if="boardCode != '' && boardCode != null">
@@ -212,7 +230,7 @@
                 </div>
                 <div class="col-md-12 p0 boards" ng-repeat="board in listBoardsGroup">
                     <div class="col-md-12 pl5 pr5" ng-repeat="x in board.ListBoard | filter: searchKey">
-                        <div class="col-md-12 p0 mnh35 d-flex align-item-ct cursor" ng-repeat="k in x | filter: searchKey" ng-click="detail(k.BoardCode, k.BoardID)"
+                        <div class="col-md-12  mnh35 d-flex align-item-ct cursor" ng-repeat="k in x | filter: searchKey" ng-click="detail(k.BoardCode, k.BoardID)"
                              ng-class="{'board-selected-special':boardCode==k.BoardCode || boardCode == '' || boardCode == null}">
                             <span class="flex-basis-50 flex-no-shrink pull-left">
                                 <i class="{{k.Avatar}} fs20"></i>
