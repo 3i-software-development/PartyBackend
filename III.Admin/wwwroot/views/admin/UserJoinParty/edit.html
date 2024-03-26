@@ -185,6 +185,68 @@
     .ui-select-bootstrap > .ui-select-choices{
         width: auto;
     }
+
+   /*Style for switch*/
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 50px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
 </style>
 <div class="portlet-body form row" style="margin-top: 15px">
     <div class="col-lg-12" method="post">
@@ -211,8 +273,21 @@
                 </a>
             </div>
         </div>
+
+        <div class="col-md-3 mb-10">
+        <label style="font-size:16px; font-weight: 500;"> Lưu dữ liệu vào file Json </label>
+        <label class="switch">
+            <input type="checkbox" ng-model="SaveJson">
+            <span style="height: 32px; width: 60px;" class="slider round"></span>
+          </label>
+          <a style="margin-left: 10px;" href="" ng-click="saveToJson()">
+            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
+            <span style="font-size:16px; font-weight: 500;">Lưu</span>
+        </a>
+        </div>
+       
         <!-- trạng thái -->
-        <div class="col-md-6">
+        <div class="col-md-3">
             <div style="display:flex;float:right">
                 <div ng-click="submitPartyAdmissionProfile()">
                     <i class="fa fa-floppy-o fs-1" style="font-size: 35px; padding-top: 10px;"></i>
@@ -227,6 +302,7 @@
                     </textarea>
             </div>
         </div>
+        <div>
         <form class="col-md-12"
             style="border: 0px solid #e7ecf1 !important;box-shadow: 0 2px 3px 2px rgb(0 0 0 / 3%) !important;">
             <div class="row mt-action-5">
@@ -655,6 +731,7 @@
                 </div>
             </div>
         </form>
+    </div>
     </div>
 
     <div class="row">

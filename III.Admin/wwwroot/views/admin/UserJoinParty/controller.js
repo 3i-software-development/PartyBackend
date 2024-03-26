@@ -232,6 +232,10 @@ app.factory('dataserviceJoinParty', function ($http) {
         GetLogStatusOfWFInst:function (data, callback) {
             $http.get(`/Admin/WorkflowActivity/GetLogStatusOfWFInst?wfCode=${data}`).then(callback)
         },
+        
+        UpdateOrCreateUserfileJson:function (data,callback) {
+            $http.post('/Admin/UserJoinParty/UpdateOrCreateUserfileJson',data).then(callback);
+        },
     }
 });
 
@@ -930,7 +934,27 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
     };
 });
 
-app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter,$http) {   
+app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter,$http) { 
+    $scope.ImportFile = function (data) {
+        dataserviceJoinParty.UpdateOrCreateUserfileJson(data, function (rs) {
+            rs = rs.data;
+            if (rs.Error) {
+                App.toastrError(rs.Title);
+            } else {
+                console.log(rs.Object);
+                $scope.downloadFile(rs.Title)
+                //window.open('/Admin/Docman#', '_blank');
+            }
+        });
+    }
+    $scope.downloadFile = function (file) {
+        // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
+        var link = document.createElement("a");
+        link.href = file; // Đặt đường dẫn đến tệp Word
+        link.download="Profile.json"
+        // Kích hoạt sự kiện nhấp vào liên kết
+        link.click();
+    }  
     $scope.initData=function(){
         $scope.ProfileList = [];
         dataserviceJoinParty.getProvince(function(rs){
@@ -1017,7 +1041,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.infUser.LevelEducation.RankAcademic = rs.Degree;
                 
                 $scope.infUser.LevelEducation.ForeignLanguage = rs.ForeignLanguage;
-                $scope.infUser.LevelEducation.MinorityLanguage =  rs.MinorityLanguages;
+                $scope.infUser.LevelEducation.MinorityLanguage =  rs.MinorityLanguages.trim();
                 $scope.infUser.LevelEducation.It = rs.ItDegree;
                 $scope.infUser.LevelEducation.PoliticalTheory = rs.PoliticalTheory ;
                 $scope.SelfComment.context = rs.SelfComment;
@@ -1607,6 +1631,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             if($scope.infUser.ResumeNumber!='' && $scope.infUser.ResumeNumber!=undefined &&
             $scope.Username!='' && $scope.Username!=undefined){
                 console.log($scope.model);
+                if($scope.SaveJson==true){
+                    $scope.ImportFile($scope.model);
+                    return
+                }
                 dataserviceJoinParty.update($scope.model, function (result) {
                     result= result.data;
                     if (result.Error) {

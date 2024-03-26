@@ -905,6 +905,40 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             console.log($scope.infUser);
         }
     };
+    //lấy dữ liệu từ data lưu vào fileJson
+    $scope.saveToJson = function() {
+        // Lấy dữ liệu từ form
+        var data = $scope.infUser;
+
+        // Kiểm tra trạng thái của toggle switch
+        var jsonToggle = document.getElementById("jsonToggle");
+        if (jsonToggle.checked) {
+            // Nếu toggle switch được chọn, lưu dữ liệu vào file JSON
+            saveDataToJson(data);
+        } else {
+            // Nếu toggle switch không được chọn, không thực hiện gì cả hoặc thực hiện hành động khác
+            console.log("Không lưu vào file JSON vì toggle switch không được chọn.");
+        }
+    };
+    function saveDataToJson(data) {
+        // Chuyển đổi dữ liệu sang định dạng JSON
+        var jsonData = JSON.stringify(data);
+
+        // Tạo một đường dẫn cho tệp JSON, bạn có thể thay đổi tên tệp và đường dẫn tùy thích
+        var fileName = "data.json";
+
+        // Tạo một URL cho dữ liệu JSON
+        var fileURL = "data:text/json;charset=utf-8," + encodeURIComponent(jsonData);
+
+        // Tạo một phần tử `<a>` để tạo một liên kết tải xuống
+        var downloadLink = document.createElement("a");
+        downloadLink.href = fileURL;
+        downloadLink.download = fileName;
+
+        // Kích hoạt sự kiện click trên phần tử `<a>` để tải xuống tệp JSON
+        downloadLink.click();
+    }
+});
 
 
     //Thêm data vào PersonalHistory

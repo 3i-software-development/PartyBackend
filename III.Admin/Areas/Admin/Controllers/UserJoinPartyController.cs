@@ -35,6 +35,11 @@ using System.Data;
 using static III.Admin.Controllers.WorkflowActivityController;
 using Syncfusion.DocIO.DLS;
 using System.IO;
+using Microsoft.SqlServer.Management.Smo;
+using Newtonsoft.Json;
+using Microsoft.AspNetCore.Hosting;
+using Amazon.SimpleNotificationService.Util;
+using static III.Admin.Controllers.UserProfileController;
 
 namespace III.Admin.Controllers
 {
@@ -47,14 +52,16 @@ namespace III.Admin.Controllers
         private readonly IRepositoryService _repositoryService;
         private readonly IStringLocalizer<SharedResources> _sharedResources;
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-        public UserJoinPartyController(EIMDBContext context, IStringLocalizer<SharedResources> sharedResources, IUploadService upload, ILuceneService luceneService, IRepositoryService repositoryService)
+        public UserJoinPartyController(EIMDBContext context, IStringLocalizer<SharedResources> sharedResources, IUploadService upload, ILuceneService luceneService, IRepositoryService repositoryService, IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _sharedResources = sharedResources;
             _upload = upload;
             _luceneService = luceneService;
             _repositoryService = repositoryService;
+            _hostingEnvironment = hostingEnvironment;
         }
 
         [Breadcrumb("ViewData.UserJoinParty", AreaName = "Admin", FromAction = "Index", FromController = typeof(DashBoardController))]
@@ -63,6 +70,26 @@ namespace III.Admin.Controllers
             ViewData["CrumbDashBoard"] = _sharedResources["COM_CRUMB_DASH_BOARD"];
             ViewData["UserJoinParty"] = "Hồ sơ lý lịch đảng viên";
             return View();
+        }
+
+        [HttpPost]
+        public JMessage UpdateOrCreateUserfileJson([FromBody] ModelViewPAMP jsonData)
+        {
+            var rs = new JMessage { Error = false, };
+            try
+            {
+                // Đường dẫn tới file JSON
+                string filePath = "/uploads/json/UserProfile_" + DateTime.Now.ToString("ddMMyyyyHHmmss")+".json";
+                string content = JsonConvert.SerializeObject(jsonData);
+                System.IO.File.WriteAllText(_hostingEnvironment.WebRootPath + filePath,content );
+                rs.Title = filePath;
+            }
+            catch (Exception ex)
+            {
+                rs.Error = true;
+                rs.Title = "Không thể tạo file";
+            }
+            return rs;
         }
         public class JTableModelFile : JTableModel
         {
