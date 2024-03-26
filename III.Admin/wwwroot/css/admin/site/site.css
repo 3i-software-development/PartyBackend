@@ -128,17 +128,12 @@ body.modal-open {
     overflow: initial !important;
 }
 
-@media(max-width:450px) {
-    .input-group {
-        width: 200px;
+@media (max-width:600px) {
+    .modal-content {
+        width: 95vw;
     }
 }
 
-@media (max-width:600px){
-    .modal-content{
-        width:95vw;
-    }
-}
 .portlet.light .portlet-body {
     padding-top: 0px;
 }
@@ -300,8 +295,9 @@ table.dataTable.no-footer {
             color: gray;
             font-size: 10px;
         }
-@media (max-width:600px){
-    li .breadcrumb-item{
+
+@media (max-width:600px) {
+    li .breadcrumb-item {
         font-size: 20px;
     }
 }
@@ -2585,14 +2581,16 @@ div.jsoneditor {
 .shadow-bottom {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 10px 10px -10px;
 }
+
 @media (max-width: 991px) {
     .content-wrapper.padding-right-80,
     .content-wrapper.padding-right-90 {
         padding-right: 0px !important;
     }
-    #breadcrumb{
-        padding-left:10px;
-        margin-top:-20px;
+
+    #breadcrumb {
+        padding-left: 10px;
+        margin-top: -20px;
     }
 
     .dataTable {
@@ -2600,14 +2598,15 @@ div.jsoneditor {
         max-height: fit-content !important;
         overflow-y: auto;
     }
+
     .v-scroll, .table-scrollable {
         max-height: fit-content !important;
     }
 }
+
 ol.breadcrumb {
-    display: flex;
     overflow: auto;
+    display: flex;
     margin-bottom: 3rem;
     white-space: nowrap;
-} 
-
+}
