@@ -415,6 +415,15 @@
         color: black;
         text-decoration: underline;
     }
+    @media(max-width:450px){
+        .fs16{
+            font-size:10px !important;
+        }
+        #tile2{
+            padding-right:55px !important;
+        }
+
+           }
 </style>
 
 <div class="row border-responsive ohzoho-soft" id="contentMain">
@@ -471,7 +480,7 @@
             </div>
             <div class="col-md-6 col-lg-6 box-item mb-5 border-right aos-init aos-animate" data-aos="fade-up" data-aos-delay="">
                 <div class="ozoho-apps-category text-center">
-                    <h4 class="fs18 text-underline">{{'CWH_WF_PROCESS' | translate}}</h4>
+                    <h4 id="tile2" class="fs18 text-underline">{{'CWH_WF_PROCESS' | translate}}</h4>
                     <p></p>
                     <ul>
                         <li class="pull-left pl-1" style="margin-bottom:8px">
@@ -524,7 +533,7 @@
                 </div>
             </div>
         </div>-->
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pr-1 pl-0" style="width: 50% !important">
+        <div class="col-md-6">
             <div class="dashboard-stat2 ">
                 <div class="title1">
                     <div>
@@ -544,96 +553,99 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pl-0 pr-1" style="width: 50% !important">
-            <div class="dashboard-stat2 ">
-                <div class="title1">
-                    <div>
-                        <h0 class="fs14 text-header-box gach">{{'WFH_LBL_SALES_OF_WORK' | translate}}</h0>
-                    </div>
-                    <!--<div class="report">
-                        <span class="text-header-box">{{'WFH_LBL_DETAIL' | translate}}</span>
-                        <i style="color:#000; margin-left:5px" class="fas fa-caret-right"></i>
-                    </div>-->
-                </div>
-                <div style="display:flex ;">
-                    <div style="width:60%">
-                        <marquee onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="150" style="height:290px">
-                            <div class="box1-content">
-                                <div ng-repeat="x in listWFL" style="padding: 0px; width:100%">
+        <div class="col-md-6">
+            <div class="row">
+                <div >
+                    <div class="dashboard-stat2 ">
+                        <div class="title1">
+                            <div>
+                                <h0 class="fs14 text-header-box gach">{{'WFH_LBL_SALES_OF_WORK' | translate}}</h0>
+                            </div>
+                            <!--<div class="report">
+                    <span class="text-header-box">{{'WFH_LBL_DETAIL' | translate}}</span>
+                    <i style="color:#000; margin-left:5px" class="fas fa-caret-right"></i>
+                </div>-->
+                        </div>
+                        <div style="display:flex ;">
+                            <div style="width:60%">
+                                <marquee onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="150" style="height:290px">
+                                    <div class="box1-content">
+                                        <div ng-repeat="x in listWFL" style="padding: 0px; width:100%">
 
-                                    <div class="row left-row">
-                                        <span class="pl20" style="color: #000; font-weight:700">{{x.WfInstCode}}</span>
-                                        <span class="text-content-box-act-emp "> : </span>
-                                        <span class="text-header-box-act-employee">{{x.WfInstName}}</span>
-                                    </div>
-                                    <div class="row pl-3 left-row">
-                                        <span class="text-content-box-act-emp">&bull;&nbsp;{{x.StatusName}}</span>
-                                    </div>
-                                    <div class="row pl-3 left-row" ng-if="x.UpdatedBy != '' && x.UpdatedBy != null && x.UpdatedBy != undefined">
-                                        <span class="text-content-box-act-emp">&bull;&nbsp;{{'WFH_LBL_NEWLY_EDITED_PROGRESS_BY' | translate}}  :</span>
-                                        <span class="text-header-box-act-employee">{{x.UpdatedBy}}</span>
-                                        <span style="color:#000">{{'WFH_LBL_AT' | translate}}:</span><span class="fs13" style="color:#000">&nbsp;&nbsp;{{x.UpdatedTime|date:'dd/MM/yyyy HH:mm:ss'}}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </marquee>
-                    </div>
-                    <div style="width:30%;margin-left:0;">
-                        <div class="box1-content" id="">
-                            <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                <div class="spani1" style="width:100%">
-                                    <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                        <div style="display:flex;">
-                                            <i class="fas fa-sitemap"></i>
-                                            <span class="fs16 gach">{{'WFH_LBL_TOTAL_FLOW' | translate}} :</span>
+                                            <div class="row left-row">
+                                                <span class="pl20" style="color: #000; font-weight:700">{{x.WfInstCode}}</span>
+                                                <span class="text-content-box-act-emp "> : </span>
+                                                <span class="text-header-box-act-employee">{{x.WfInstName}}</span>
+                                            </div>
+                                            <div class="row pl-3 left-row">
+                                                <span class="text-content-box-act-emp">&bull;&nbsp;{{x.StatusName}}</span>
+                                            </div>
+                                            <div class="row pl-3 left-row" ng-if="x.UpdatedBy != '' && x.UpdatedBy != null && x.UpdatedBy != undefined">
+                                                <span class="text-content-box-act-emp">&bull;&nbsp;{{'WFH_LBL_NEWLY_EDITED_PROGRESS_BY' | translate}}  :</span>
+                                                <span class="text-header-box-act-employee">{{x.UpdatedBy}}</span>
+                                                <span style="color:#000">{{'WFH_LBL_AT' | translate}}:</span><span class="fs13" style="color:#000">&nbsp;&nbsp;{{x.UpdatedTime|date:'dd/MM/yyyy HH:mm:ss'}}</span>
+                                            </div>
                                         </div>
-                                        <span class="fs16" style="color:#000">{{numWorkFlow}}</span>
                                     </div>
-                                </div>
+                                </marquee>
                             </div>
-                            <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                <div class="spani1" style="width:100%">
-                                    <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                        <div style="display:flex;font-size:25px;">
-                                            <i class="fas fa-check"></i>
-                                            <span class="fs16 gach">{{'WFH_LBL_FINISH' | translate}} :</span>
+                            <div style="width:40%;margin-left:0;">
+                                <div class="box1-content" id="">
+                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                        <div class="spani1" style="width:100%">
+                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                <div style="display:flex;">
+                                                    <i class="fas fa-sitemap"></i>
+                                                    <span class="fs16 gach">{{'WFH_LBL_TOTAL_FLOW' | translate}} :</span>
+                                                </div>
+                                                <span class="fs16" style="color:#000;font-weight:bold">{{numWorkFlow}}</span>
+                                            </div>
                                         </div>
-                                        <span class="fs16" style="color:#000;">{{numWorkFlowSuccess}}</span>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                <div class="spani1" style="width:100%">
-                                    <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                        <div style="display:flex;font-size:25px;">
-                                            <i class="fas fa-spinner"></i>
-                                            <span class="fs16 gach">{{'WFH_LBL_PROCESSING' | translate}} :</span>
+                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                        <div class="spani1" style="width:100%">
+                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                <div style="display:flex;font-size:25px;">
+                                                    <i class="fas fa-check"></i>
+                                                    <span class="fs16 gach">{{'WFH_LBL_FINISH' | translate}} :</span>
+                                                </div>
+                                                <span class="fs16" style="color:#000; font-weight:bold" >{{numWorkFlowSuccess}}</span>
+                                            </div>
                                         </div>
-                                        <span class="fs16" style="color: #000">
-                                            {{numWorkFlowPending}}
-                                        </span>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                <div class="spani1" style="width:100%">
-                                    <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                        <div style="display:flex;font-size:25px;">
-                                            <i class="fas fa-hourglass-half"></i>
-                                            <span class="fs16 gach">{{'WFH_LBL_OUT_OF_DATE' | translate}} :</span>
+                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                        <div class="spani1" style="width:100%">
+                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                <div style="display:flex;font-size:25px;">
+                                                    <i class="fas fa-spinner"></i>
+                                                    <span class="fs16 gach">{{'WFH_LBL_PROCESSING' | translate}} :</span>
+                                                </div>
+                                                <span class="fs16" style="color: #000; font-weight:bold">{{numWorkFlowPending}}
+                                                </span>
+                                            </div>
                                         </div>
-                                        <span class="fs16" style="color:#000;">{{numWorkFlowExpires}}</span>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                <div class="spani1" style="width:100%">
-                                    <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                        <div style="display:flex;font-size:25px;">
-                                            <i class="fas fa-undo-alt"></i>
-                                            <span class="fs16 gach">{{'WFH_LBL_CANCEL' | translate}} :</span>
+                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                        <div class="spani1" style="width:100%">
+                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                <div style="display:flex;font-size:25px;">
+                                                    <i class="fas fa-hourglass-half"></i>
+                                                    <span class="fs16 gach">{{'WFH_LBL_OUT_OF_DATE' | translate}} :</span>
+                                                </div>
+                                                <span class="fs16" style="color:#000;font-weight:bold">{{numWorkFlowExpires}}</span>
+                                            </div>
                                         </div>
-                                        <span class="fs16" style="color:#000">{{numWorkFlowCancel}}</span>
+                                    </div>
+                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                        <div class="spani1" style="width:100%">
+                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                <div style="display:flex;font-size:25px;">
+                                                    <i class="fas fa-undo-alt"></i>
+                                                    <span class="fs16 gach">{{'WFH_LBL_CANCEL' | translate}} :</span>
+                                                </div>
+                                                <span class="fs16" style="color:#000;font-weight:bold">{{numWorkFlowCancel}}</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -641,10 +653,13 @@
                     </div>
                 </div>
             </div>
+           
+
         </div>
+       
     </div>
-    <div class="row " style="display:flex">
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pr-1 pl-0" style="width: 50% !important;">
+    <div class="row ">
+        <div class="col-md-6">
             <div class="dashboard-stat2  notice2">
                 <div class="title1">
                     <div>
@@ -663,105 +678,111 @@
                 </div>
             </div>
         </div>
-        <div class="dashboard-stat2" style="height: 375px !important;width:50% !important;margin-right:0.5%;">
+        <div class="col-md-6">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 " style="width: 100% !important">
-                    <div class="dashboard-stat2 " style="border:none;box-shadow:none ;background:none ">
-                        <div class="title2">
-                            <div>
-                                <h0 class="fs14 text-header-box gach">{{'CWH_LBL_JOB_WORK' | translate}}</h0>
-                            </div>
-                            <!--<div class="report">
-                                <span class="text-header-box">{{'CWH_LBL_DETAIL' | translate}}</span>
-                                <i class="fas fa-caret-right" style="color:#000;margin-left:5px"></i>
-                            </div>-->
-                        </div>
-                        <div style="display:flex ;">
-                            <div style="width:70%">
-                                <marquee onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="150" style="height:290px">
-                                    <div class="box1-content" id="congviectrienkhai">
-                                        <div style="padding: 0px; width:100%" ng-repeat="x in lstActCardJob">
-                                            <div class="row left-row">
-                                                <span class="pl20" style="color: #000;font-weight:700">{{x.CardCode}}</span>
-                                                <span class="text-content-box-act-emp "> : </span>
-                                                <span class="text-header-box-act-employee">{{x.CardName}}</span>
-                                            </div>
-                                            <div class="row pl-3 left-row">
-                                                <span class="text-content-box-act-emp">&bull;&nbsp;{{x.Status}}</span>
-                                            </div>
-                                            <div class="row pl-3 left-row">
-                                                <span class="text-content-box-act-emp">&bull;&nbsp;{{'CWH_LBL_NEWLY EDITED PROGRESS_BY' | translate}} :</span>
-                                                <span class="text-header-box-act-employee">{{x.UpdatedBy}}</span>
-                                                <span style="color:#000">{{'CWH_LBL_AT' | translate}} :</span><span class="fs13" style="color:#000">&nbsp;&nbsp;{{x.UpdatedTime|date:'dd/MM/yyyy HH:mm:ss'}}</span>
-                                            </div>
-                                            <br />
+                <div>
+                    <div class="dashboard-stat2" >
+                        <div class="row">
+                            <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 " style="width: 100% !important">
+                                <div class="dashboard-stat2 " style="border:none;box-shadow:none ;background:none ">
+                                    <div class="title2">
+                                        <div>
+                                            <h0 class="fs14 text-header-box gach">{{'CWH_LBL_JOB_WORK' | translate}}</h0>
                                         </div>
+                                        <!--<div class="report">
+                            <span class="text-header-box">{{'CWH_LBL_DETAIL' | translate}}</span>
+                            <i class="fas fa-caret-right" style="color:#000;margin-left:5px"></i>
+                        </div>-->
                                     </div>
-                                </marquee>
-
-                            </div>
-
-                            <div style="width:40%;margin-left:0;">
-                                <div class="box1-content" id="">
-                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                        <div class="spani1" style="width:100%">
-                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                                <div style="display:flex;font-size:25px;">
-                                                    <i class="fas fa-box-open"></i>
-                                                    <span class="fs16 gach">{{'CWH_LBL_TOTAL_WORK' | translate}} :</span>
+                                    <div style="display:flex ;">
+                                        <div style="width:70%">
+                                            <marquee onmouseover="stop()" onmouseout="start()" direction="up" scrolldelay="150" style="height:290px">
+                                                <div class="box1-content" id="congviectrienkhai">
+                                                    <div style="padding: 0px; width:100%" ng-repeat="x in lstActCardJob">
+                                                        <div class="row left-row">
+                                                            <span class="pl20" style="color: #000;font-weight:700">{{x.CardCode}}</span>
+                                                            <span class="text-content-box-act-emp "> : </span>
+                                                            <span class="text-header-box-act-employee">{{x.CardName}}</span>
+                                                        </div>
+                                                        <div class="row pl-3 left-row">
+                                                            <span class="text-content-box-act-emp">&bull;&nbsp;{{x.Status}}</span>
+                                                        </div>
+                                                        <div class="row pl-3 left-row">
+                                                            <span class="text-content-box-act-emp">&bull;&nbsp;{{'CWH_LBL_NEWLY EDITED PROGRESS_BY' | translate}} :</span>
+                                                            <span class="text-header-box-act-employee">{{x.UpdatedBy}}</span>
+                                                            <span style="color:#000">{{'CWH_LBL_AT' | translate}} :</span><span class="fs13" style="color:#000">&nbsp;&nbsp;{{x.UpdatedTime|date:'dd/MM/yyyy HH:mm:ss'}}</span>
+                                                        </div>
+                                                        <br />
+                                                    </div>
                                                 </div>
-                                                <h4 class="fs16" style="color:#000">{{sumCardWork}}</h4>
-                                            </div>
+                                            </marquee>
+
                                         </div>
 
-                                    </div>
-                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                        <div class="spani1" style="width:100%">
-                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                                <div style="display:flex;font-size:25px;">
-                                                    <i class="fas fa-check"></i>
-                                                    <span class="fs16 gach">{{'CWH_LBL_FINISH' | translate}} :</span>
-                                                </div>
-                                                <h4 class="fs16" style="color:#000;">{{cardWorkSuccess}}</h4>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                        <div class="spani1" style="width:100%">
-                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                                <div style="display:flex;font-size:25px;">
-                                                    <i class="fas fa-spinner"></i>
+                                        <div style="width:50%;margin-left:0;">
+                                            <div class="box1-content" id="">
+                                                <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                                    <div class="spani1" style="width:100%">
+                                                        <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                            <div style="display:flex;font-size:25px;">
+                                                                <i class="fas fa-box-open"></i>
+                                                                <span class="fs16 gach">{{'CWH_LBL_TOTAL_WORK' | translate}} :</span>
+                                                            </div>
+                                                            <h4 class="fs16" style="color:#000">{{sumCardWork}}</h4>
+                                                        </div>
+                                                    </div>
 
-                                                    <span class="fs16 gach">{{'CWH_LBL_ON_GOING' | translate}} :</span>
                                                 </div>
-                                                <h4 class="fs16" style="color: #000">
-                                                    {{cardWorkPending}}
-                                                </h4>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                        <div class="spani1" style="width:100%">
-                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                                <div style="display:flex;font-size:25px;">
-                                                    <i class="fas fa-hourglass-half"></i>
-                                                    <span class="fs16 gach">{{'CWH_LBL__OUT_OF_DATE' | translate}} :</span>
+                                                <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                                    <div class="spani1" style="width:100%">
+                                                        <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                            <div style="display:flex;font-size:25px;">
+                                                                <i class="fas fa-check"></i>
+                                                                <span class="fs16 gach">{{'CWH_LBL_FINISH' | translate}} :</span>
+                                                            </div>
+                                                            <h4 class="fs16" style="color:#000;">{{cardWorkSuccess}}</h4>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <h4 class="fs16" style="color:#000;">{{cardWorkExpires}}</h4>
+                                                <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                                    <div class="spani1" style="width:100%">
+                                                        <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                            <div style="display:flex;font-size:25px;">
+                                                                <i class="fas fa-spinner"></i>
 
-                                            </div>
-                                        </div>
-                                    </div>
+                                                                <span class="fs16 gach">{{'CWH_LBL_ON_GOING' | translate}} :</span>
+                                                            </div>
+                                                            <h4 class="fs16" style="color: #000">
+                                                                {{cardWorkPending}}
+                                                            </h4>
+                                                        </div>
+                                                    </div>
 
-                                    <div class="spani" style="padding: 10px 0px;border-bottom:none">
-                                        <div class="spani1" style="width:100%">
-                                            <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
-                                                <div style="display:flex;font-size:25px;">
-                                                    <i class="fas fa-undo-alt"></i>
-                                                    <span class="fs16 gach">{{'CWH_LBL_CANCEL' | translate}} :</span>
                                                 </div>
-                                                <h4 class="fs16" style="color:#000">{{cardWorkcancel}}</h4>
+                                                <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                                    <div class="spani1" style="width:100%">
+                                                        <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                            <div style="display:flex;font-size:25px;">
+                                                                <i class="fas fa-hourglass-half"></i>
+                                                                <span class="fs16 gach">{{'CWH_LBL__OUT_OF_DATE' | translate}} :</span>
+                                                            </div>
+                                                            <h4 class="fs16" style="color:#000;">{{cardWorkExpires}}</h4>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="spani" style="padding: 10px 0px;border-bottom:none">
+                                                    <div class="spani1" style="width:100%">
+                                                        <div style="display:flex;justify-content:space-between !important;width:100%;display:flex;justify-content:space-between !important;width:100%; align-items: flex-end">
+                                                            <div style="display:flex;font-size:25px;">
+                                                                <i class="fas fa-undo-alt"></i>
+                                                                <span class="fs16 gach">{{'CWH_LBL_CANCEL' | translate}} :</span>
+                                                            </div>
+                                                            <h4 class="fs16" style="color:#000">{{cardWorkcancel}}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -772,6 +793,7 @@
                 </div>
             </div>
         </div>
+      
     </div>
     <div class="row " style="display:flex">
     </div>

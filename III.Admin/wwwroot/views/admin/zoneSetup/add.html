@@ -2,6 +2,14 @@
     .modal-body .control-label {
         font-size: 13px !important;
     }
+    @media(max-width:450px){
+        .btn-input {
+            width: 100% !important;
+        }
+        .text-btn-cancel{
+            margin-top:26px;
+            padding-right:5px;
+        }
 </style>
 <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
 </button>
@@ -60,7 +68,7 @@
                                 <label class="control-label require ng-binding">&nbsp;{{'Trạng thái' | translate}}</label>
                             </div>
                             <div class="col-md-8 pl-0">
-                                <div class="input-group br24-nobtn">
+                                <div class=" btn-input input-group br24-nobtn">
                                     <ui-select tagging ng-model="model.ZoneStatus" theme="bootstrap" on-select="changeSelect('STATUS')">
                                         <ui-select-match placeholder="{{'Trạng thái' | translate}}...">{{$select.selected.Name}}</ui-select-match>
                                         <ui-select-choices repeat="x.Code as x in lstStatus | filter: $select.search">
@@ -109,7 +117,7 @@
                                 <a>
                                     <span><i class="fas fa-times pull-right h28 w28" style="--fa-primary-color: red;"></i></span>
                                 </a>
-                                <p class="text-underline mb-0 fs9 pt3">{{'COM_BTN_CANCEL' | translate}}</p>
+                                <p  class=" text-btn-cancel text-underline mb-0 fs9 pt3">{{'COM_BTN_CANCEL' | translate}}</p>
                             </div>
                             <div class="fs30" ng-click="submit()">
                                 <a style="background-color: white !important;border-radius: 0 !important; border: 0px solid #4b9bd2 !important">
