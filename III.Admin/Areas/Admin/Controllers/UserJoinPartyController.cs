@@ -71,15 +71,35 @@ namespace III.Admin.Controllers
             ViewData["UserJoinParty"] = "Hồ sơ lý lịch đảng viên";
             return View();
         }
-
+        public class converJsonPartyAdmission{
+            public ModelViewPAMP Profile { get; set; }
+            public PersonalHistory[] PersonalHistories { get; set; }
+            public TrainingCertificatedPass[] TrainingCertificatedPasses { get; set; }
+            public WarningDisciplined[] WarningDisciplineds { get; set; }
+            public Award[] Awards { get; set; }
+            public Family[] Families { get; set; }
+            public GoAboard[] GoAboards { get; set; }
+            public HistorySpecialist[] HistorySpecialist { get; set; }
+            public IntroducerOfParty IntroducerOfParty { get; set; }
+            public WorkingTracking[] WorkingTracking { get; set; }
+        }
         [HttpPost]
-        public JMessage UpdateOrCreateUserfileJson([FromBody] ModelViewPAMP jsonData)
+        public JMessage UpdateOrCreateUserfileJson([FromBody] converJsonPartyAdmission jsonData)
         {
             var rs = new JMessage { Error = false, };
             try
             {
-                // Đường dẫn tới file JSON
-                string filePath = "/uploads/json/UserProfile_" + DateTime.Now.ToString("ddMMyyyyHHmmss")+".json";
+                string folderPath = "/uploads/json/";
+                string fileName = "UserProfile_" + DateTime.Now.ToString("ddMMyyyyHHmmss") + ".json";
+                string filePath = folderPath + fileName;
+
+                // Kiểm tra xem thư mục chứa file có tồn tại không
+                if (!Directory.Exists(_hostingEnvironment.WebRootPath + folderPath))
+                {
+                    // Nếu không tồn tại, tạo thư mục mới
+                    Directory.CreateDirectory(_hostingEnvironment.WebRootPath + folderPath);
+                }
+
                 string content = JsonConvert.SerializeObject(jsonData);
                 System.IO.File.WriteAllText(_hostingEnvironment.WebRootPath + filePath,content );
                 rs.Title = filePath;

@@ -936,7 +936,115 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
 
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter,$http) { 
     $scope.ImportFile = function (data) {
-        dataserviceJoinParty.UpdateOrCreateUserfileJson(data, function (rs) {
+        $scope.Json={
+            Profile:data,
+            PersonalHistories:[],
+            TrainingCertificatedPasses:[] ,
+            WarningDisciplineds:[],
+            Awards:[],
+            Families:[] ,
+            GoAboards:[], 
+            HistorySpecialist:[],
+            IntroducerOfParty:{},
+            WorkingTracking:[]
+        }
+
+        $scope.PersonalHistory.forEach(function (personalHistory) {
+            var obj = {};
+            obj.Begin = personalHistory.Begin;
+            obj.End = personalHistory.End;
+            obj.Content = personalHistory.Content;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            obj.Id=personalHistory.Id;
+            $scope.Json.PersonalHistories.push(obj)
+        });
+
+        $scope.PassedTrainingClasses.forEach(function (passedTrainingClasses) {
+            var obj = {};
+            obj.SchoolName = passedTrainingClasses.SchoolName;
+            obj.Class = passedTrainingClasses.Class;
+            obj.From = passedTrainingClasses.From;
+            obj.To = passedTrainingClasses.To;
+            obj.Certificate = passedTrainingClasses.Certificate;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = passedTrainingClasses.Id;
+            $scope.Json.TrainingCertificatedPasses.push(obj)
+        });
+
+        $scope.Disciplined.forEach(function (e) {
+            var obj = {};
+            obj.MonthYear = e.MonthYear;
+            obj.Reason = e.Reason;
+            obj.GrantOfDecision = e.GrantOfDecision;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id=e.Id;
+            $scope.Json.WarningDisciplineds.push(obj)
+        });
+
+        $scope.Laudatory.forEach(function (laudatory) {
+            var obj = {};
+            obj.MonthYear = laudatory.MonthYear;
+            obj.Reason = laudatory.Reason;
+            obj.GrantOfDecision = laudatory.GrantOfDecision;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = laudatory.Id;
+            $scope.Json.Awards.push(obj)
+        });
+
+        $scope.Relationship.forEach(function (e) {
+            var obj = {};
+            obj.Relation = e.Relation;
+            obj.PartyMember = e.PartyMember;
+            obj.Name = e.Name;
+            obj.BirthYear = e.BirthYear;
+            obj.Residence = e.Residence;
+            obj.PoliticalAttitude = e.PoliticalAttitude;
+            obj.HomeTown = e.HomeTown;
+            obj.Job = e.Job;
+            obj.WorkingProgress = e.WorkingProgress;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //bj.Id=e.Id;
+            $scope.Json.Families.push(obj)            
+        });
+
+        $scope.GoAboard.forEach(function (e) {
+            var obj = {};
+            obj.From = e.From;
+            obj.To = e.To;
+            obj.Contact = e.Contact;
+            obj.Country = e.Country;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = e.Id;
+            $scope.Json.GoAboards.push(obj)
+        });
+
+        $scope.HistoricalFeatures.forEach(function (historicalFeatures) {
+            var obj = {};
+            obj.MonthYear = historicalFeatures.MonthYear;
+            obj.Content = historicalFeatures.Content;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = historicalFeatures.Id;
+            $scope.Json.HistorySpecialist.push(obj)
+        });
+        
+        $scope.Json.IntroducerOfParty.PersonIntroduced = $scope.Introducer.PersonIntroduced;
+        $scope.Json.IntroducerOfParty.PlaceTimeJoinUnion = $scope.Introducer.PlaceTimeJoinUnion;
+        $scope.Json.IntroducerOfParty.PlaceTimeJoinParty = $scope.Introducer.PlaceTimeJoinParty;
+        $scope.Json.IntroducerOfParty.PlaceTimeRecognize = $scope.Introducer.PlaceTimeRecognize;
+        $scope.Json.IntroducerOfParty.ProfileCode = $scope.infUser.ResumeNumber;
+
+        $scope.BusinessNDuty.forEach(function (businessNDuty) {
+            var obj = {};
+            obj.From = businessNDuty.From;
+            obj.To = businessNDuty.To;
+            obj.Work = businessNDuty.Work;
+            obj.Role = businessNDuty.Role;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = businessNDuty.Id;
+            $scope.Json.WorkingTracking.push(obj)
+        });
+        
+        dataserviceJoinParty.UpdateOrCreateUserfileJson($scope.Json, function (rs) {
             rs = rs.data;
             if (rs.Error) {
                 App.toastrError(rs.Title);
@@ -1660,7 +1768,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.model.PlaceTimeRecognize = $scope.Introducer.PlaceTimeRecognize;
             $scope.model.ProfileCode = $scope.infUser.ResumeNumber;
             $scope.model.Id = $scope.Introducer.Id;
-            
         };
         dataserviceJoinParty.insertIntroducer($scope.model, function (result) {
             result= result.data;
