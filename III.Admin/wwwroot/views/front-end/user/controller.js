@@ -2870,7 +2870,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         obj.firstChild.contentEditable = 'false'
 
     }, 50);
-});
+
 
 app.directive("choosePosition", function (dataservice) {
     return {
