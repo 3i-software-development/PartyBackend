@@ -307,6 +307,19 @@ app.directive('fabricCanvas', function () {
     };
 });
 app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, $cookies, $translate) {
+    $scope.mobilePortletVisible = false;
+    $scope.showBtn = true;
+
+    $scope.toggleMobilePortlet = function () {
+        $scope.mobilePortletVisible = !$scope.mobilePortletVisible;
+        $scope.showBtn = false;
+    };
+
+    $scope.toggleMobileBtn = function () {
+        $scope.mobilePortletVisible = false;
+        $scope.showBtn = true;
+    };
+
     $rootScope.go = function (path) {
         $location.path(path); return false;
     };

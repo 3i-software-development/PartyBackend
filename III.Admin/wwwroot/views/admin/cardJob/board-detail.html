@@ -237,6 +237,21 @@
             .insearch {
                 width: 95vw !important;
             }
+            .board{
+                position:absolute!important;
+                z-index:99!important;
+            }
+            .title-board-1 {
+                padding: 10px 0px !important;
+            }
+            .title-board-2 {
+                position:fixed!important;
+                transform: translateY(40px) !important;
+            }
+            .title-board-3{
+                position:fixed!important;
+                right:0!important;
+            }
           
         }
 </style>
@@ -653,10 +668,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 title-board-1">
             <div class="board" ng-if="show.board && boardCode != null">
-                <a class="black bold fs18 title-board">{{modelDetail.BoardName}}</a>
-                <span class="badge-customer badge-customer-success">{{modelDetail.Completed}}%</span>
+                <a class="black bold fs18 title-board title-board-2">{{modelDetail.BoardName}}</a>
+                <span class="badge-customer badge-customer-success title-board-3">{{modelDetail.Completed}}%</span>
             </div>
         </div>
     </div>
