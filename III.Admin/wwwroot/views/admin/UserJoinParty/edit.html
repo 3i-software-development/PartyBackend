@@ -267,23 +267,21 @@ input:checked + .slider:before {
         </div>
         <div class="col-md-3 mb-10">
             <div class="text-center pull-right">
-                <a href="" ng-click="uploadFile()">
+                <a href="" ng-click="SaveJson ? uploadJsonFile() : uploadFile()">
                     <i class="fa fa-download" aria-hidden="true"></i>
-                    <span style="font-size:16px; font-weight: 500;">Load dữ liệu</span>
+                    <span style="font-size:16px; font-weight: 500;">{{ SaveJson ? 'Load dữ liệu JSON' : 'Load dữ liệu' }}</span>
                 </a>
             </div>
         </div>
 
         <div class="col-md-3 mb-10">
-        <label style="font-size:16px; font-weight: 500;"> Lưu dữ liệu vào file Json </label>
-        <label class="switch">
-            <input type="checkbox" ng-model="SaveJson">
-            <span style="height: 32px; width: 60px;" class="slider round"></span>
-          </label>
-          <a style="margin-left: 10px;" href="" ng-click="saveToJson()">
-            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
-            <span style="font-size:16px; font-weight: 500;">Lưu</span>
-        </a>
+            <label style="font-size:16px; font-weight: 500;">
+                {{ SaveJson ? 'Lưu dữ liệu vào file Json' : 'Lưu dữ liệu vào Database' }}
+            </label>
+            <label class="switch">
+                <input type="checkbox" ng-model="SaveJson">
+                <span style="height: 32px; width: 60px;" class="slider round"></span>
+            </label>
         </div>
        
         <!-- trạng thái -->

@@ -1055,6 +1055,158 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             }
         });
     }
+    $scope.ImportJsonFile = function(data){
+        $scope.infUser.LastName=data.Profile.CurrentName;
+$scope.infUser.Birthday = data.Profile.Birthday;
+$scope.infUser.FirstName = data.Profile.BirthName;
+$scope.infUser.Sex = data.Profile.Gender;
+$scope.infUser.Nation = data.Profile.Nation;
+$scope.infUser.Religion = data.Profile.Religion;
+$scope.infUser.Residence = data.Profile.PermanentResidence;
+$scope.infUser.Phone = data.Profile.Phone;
+$scope.infUser.PlaceofBirth = data.Profile.PlaceBirth;
+$scope.infUser.NowEmployee = data.Profile.Job;
+$scope.infUser.HomeTown = data.Profile.HomeTown;
+$scope.infUser.TemporaryAddress = data.Profile.TemporaryAddress;
+$scope.infUser.LevelEducation.GeneralEducation = data.Profile.GeneralEducation;
+$scope.infUser.LevelEducation.VocationalTraining = data.Profile.JobEducation;
+$scope.infUser.LevelEducation.Undergraduate = data.Profile.UnderPostGraduateEducation;
+$scope.infUser.LevelEducation.RankAcademic = data.Profile.Degree;
+$scope.infUser.LevelEducation.ForeignLanguage = data.Profile.ForeignLanguage;
+$scope.infUser.LevelEducation.MinorityLanguage = data.Profile.MinorityLanguages;
+$scope.infUser.LevelEducation.It = data.Profile.ItDegree;
+$scope.infUser.LevelEducation.PoliticalTheory = data.Profile.PoliticalTheory;
+$scope.SelfComment.context = data.Profile.SelfComment;
+$scope.PlaceCreatedTime.place = data.Profile.CreatedPlace;
+$scope.infUser.ResumeNumber = data.Profile.ResumeNumber;
+$scope.infUser.Status = data.Profile.Status;
+$scope.Username = data.Profile.Username;
+$scope.infUser.WfInstCode = data.Profile.WfInstCode;
+$scope.GroupUser = data.Profile.GroupUserCode;
+$scope.infUser.PlaceWorking=data.Profile.PlaceWorking;
+
+        
+        data.Awards.forEach(function (laudatory) {
+            var obj = {};
+            obj.MonthYear = laudatory.MonthYear;
+            obj.Reason = laudatory.Reason;
+            obj.GrantOfDecision = laudatory.GrantOfDecision;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = laudatory.Id;
+            $scope.Laudatory.push(obj)
+        });
+        data.PersonalHistories.forEach(function (personalHistory) {
+            var obj = {};
+            obj.Begin = personalHistory.Begin;
+            obj.End = personalHistory.End;
+            obj.Content = personalHistory.Content;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            obj.Id=personalHistory.Id;
+            $scope.PersonalHistory.push(obj)
+        });
+        data.TrainingCertificatedPasses
+         .forEach(function (passedTrainingClasses) {
+            var obj = {};
+            obj.SchoolName = passedTrainingClasses.SchoolName;
+            obj.Class = passedTrainingClasses.Class;
+            obj.From = passedTrainingClasses.From;
+            obj.To = passedTrainingClasses.To;
+            obj.Certificate = passedTrainingClasses.Certificate;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = passedTrainingClasses.Id;
+            $scope.PassedTrainingClasses.push(obj)
+         });
+        data.WarningDisciplineds
+        .forEach(function (e) {
+            var obj = {};
+            obj.MonthYear = e.MonthYear;
+            obj.Reason = e.Reason;
+            obj.GrantOfDecision = e.GrantOfDecision;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id=e.Id;
+            $scope.Disciplined.push(obj)
+        });
+        data.Families
+        .forEach(function (e) {
+            var obj = {};
+            obj.Relation = e.Relation;
+            obj.PartyMember = e.PartyMember;
+            obj.Name = e.Name;
+            obj.BirthYear = e.BirthYear;
+            obj.Residence = e.Residence;
+            obj.PoliticalAttitude = e.PoliticalAttitude;
+            obj.HomeTown = e.HomeTown;
+            obj.Job = e.Job;
+            obj.WorkingProgress = e.WorkingProgress;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //bj.Id=e.Id;
+            $scope.Relationship.push(obj)            
+        });
+        data.GoAboards.forEach(function (e) {
+            var obj = {};
+            obj.From = e.From;
+            obj.To = e.To;
+            obj.Contact = e.Contact;
+            obj.Country = e.Country;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = e.Id;
+            $scope.GoAboard.push(obj)
+        });
+        data.HistorySpecialist
+        .forEach(function (historicalFeatures) {
+            var obj = {};
+            obj.MonthYear = historicalFeatures.MonthYear;
+            obj.Content = historicalFeatures.Content;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = historicalFeatures.Id;
+            $scope.HistoricalFeatures.push(obj)
+        });
+        data.WorkingTracking.forEach(function (businessNDuty) {
+            var obj = {};
+            obj.From = businessNDuty.From;
+            obj.To = businessNDuty.To;
+            obj.Work = businessNDuty.Work;
+            obj.Role = businessNDuty.Role;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            //obj.Id = businessNDuty.Id;
+            $scope.BusinessNDuty.push(obj)
+        });
+        $scope.Introducer.PersonIntroduced=data.IntroducerOfParty.PersonIntroduced
+        $scope.Introducer.PlaceTimeJoinUnion=data.IntroducerOfParty.PlaceTimeJoinUnion
+        $scope.Introducer.PlaceTimeJoinParty=data.IntroducerOfParty.PlaceTimeJoinParty
+        $scope.Introducer.PlaceTimeRecognize=data.IntroducerOfParty.PlaceTimeRecognize
+
+        $scope.$apply()
+    }
+    
+    $scope.uploadJsonFile = async function () {
+        var file = document.getElementById("FileItem").files[0];
+        if (file == null || file == undefined || file == "") {
+            App.toastrError("Bạn chưa chọn file");
+        } else {
+            // Check if the selected file is not a JSON file
+            if (file.type !== "application/json") {
+                App.toastrError("File bạn tải không phải là file JSON");
+                return;
+            }
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    var jsonData = JSON.parse(event.target.result);
+                    console.log(jsonData); // Hoặc thực hiện các thao tác khác với dữ liệu JSON ở đây
+                    $scope.ImportJsonFile(jsonData);
+                } catch (error) {
+                    console.error("Đã xảy ra lỗi khi đọc file JSON:", error);
+                }
+            };
+            reader.onerror = function(event) {
+                console.error("Đã xảy ra lỗi khi đọc file:", event.target.error);
+            };
+    
+            reader.readAsText(file);
+           
+        }
+    };
     $scope.downloadFile = function (file) {
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
         var link = document.createElement("a");
@@ -2356,6 +2508,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
         console.log($scope.id);
     }
+    
 
     $scope.uploadFile = async function () {
         var file = document.getElementById("FileItem").files[0];
