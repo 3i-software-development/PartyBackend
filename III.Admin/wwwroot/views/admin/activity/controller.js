@@ -1436,9 +1436,20 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     }));
     canvas2 = canvas;
     $rootScope.canvas2 = canvas;
+    
+    $scope.dataEditor;
 
+    function getDataFromTheEditor() {
+        return $scope.dataEditor.getData();
+    }
     //Init data
     $scope.initData = function () {
+        AddCkeditor5("description").then(Editor => {
+            $scope.dataEditor=Editor
+            console.log($scope.dataEditor);
+        }).catch(error => {
+            console.error("Lỗi khi khởi tạo editor:", error);
+        });
         dataservice.getWflow(function (rs) {
             rs = rs.data;
             $scope.listWF = rs;
@@ -2005,7 +2016,9 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
                     else  $scope.modelEditActivity.ListGroupData=[];
 
                     $rootScope.ActivityName = $scope.modelEditActivity.Title;
-                    
+
+                    $scope.dataEditor.setData(rs.Desc)
+
                     $scope.$apply()
                     
                     dataservice.getMileStoneAct(para, function (rs) {
@@ -2439,9 +2452,10 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     var node = $rootScope.canvas2.getPrimarySelection();
 
     $rootScope.isAdded = true;
+    
 
     $scope.submit = function () {
-        var data = CKEDITOR.instances['description'].getData();
+        var data = getDataFromTheEditor();
         $scope.modelEditActivity.Desc = data;
         validationSelect($scope.modelEditActivity);
         console.log("Activity Update",$scope.modelEditActivity)
@@ -4655,8 +4669,14 @@ app.controller('addCatActivity', function ($scope, $rootScope, $compile, $uibMod
         $uibModalInstance.close('cancel');
     };
 
+    $scope.dataEditor;
+
+    function getDataFromTheEditor() {
+        return $scope.dataEditor.getData();
+    }
+
     $scope.submit = function () {
-        var data = CKEDITOR.instances['description'].getData();
+        var data = getDataFromTheEditor()
         $scope.model.Desc = data;
         validationSelect($scope.model);
         if ($scope.addform.validate() && !validationSelect($scope.model).Status) {
@@ -5126,19 +5146,16 @@ app.controller('addCatActivity', function ($scope, $rootScope, $compile, $uibMod
             window.open(url, '_blank');
         }
     }
-
     var editor;
-    function ckEditer() {
-        editor = CKEDITOR.replace('description', {
-            cloudServices_tokenUrl: '/MobileApp/Token',
-            cloudServices_uploadUrl: '/MobileApp/UploadFile',
-            filebrowserBrowseUrl: '',
-            filebrowserUploadUrl: '/MobileApp/Upload',
-            embed_provider: '/uploader/upload.php'
-        });
-    }
+    
     setTimeout(function () {
-        ckEditer();
+        AddCkeditor5("description").then(Editor => {
+            $scope.dataEditor=Editor
+            console.log($scope.dataEditor);
+        }).catch(error => {
+            console.error("Lỗi khi khởi tạo editor:", error);
+        });
+
         setModalDraggable('.modal-dialog');
     }, 200);
 });
@@ -5164,15 +5181,26 @@ app.controller('edit-activity', function ($scope, $rootScope, $compile, $uibModa
     $rootScope.isAdded = true;
 
     $scope.initData = function () {
+        
+
         var obj = {
             ActCode: para
         }
         dataservice.getItemActivity(obj, function (rs) {
             rs = rs.data;
+            AddCkeditor5("description").then(Editor => {
+                $scope.dataEditor.setData(rs.Desc)
+                $scope.dataEditor=Editor
+                console.log($scope.dataEditor);
+            }).catch(error => {
+                console.error("Lỗi khi khởi tạo editor:", error);
+            });
             $scope.model = rs;
             if ($scope.model.ListGroupData != '' && $scope.model.ListGroupData != null && $scope.model.ListGroupData != undefined)
                 $scope.model.ListGroupData = $scope.model.ListGroupData.split(',');
             $rootScope.ActivityName = $scope.model.Title;
+            
+                    
             dataservice.getMileStoneAct(para, function (rs) {
                 rs = rs.data;
                 $scope.model.MileStone = rs;
@@ -5659,18 +5687,9 @@ app.controller('edit-activity', function ($scope, $rootScope, $compile, $uibModa
             window.open(url, '_blank');
         }
     }
-
-    var editor;
-    function ckEditer() {
-        editor = CKEDITOR.replace('description', {
-            cloudServices_tokenUrl: '/MobileApp/Token',
-            cloudServices_uploadUrl: '/MobileApp/UploadFile',
-            filebrowserBrowseUrl: '',
-            filebrowserUploadUrl: '/MobileApp/Upload',
-            embed_provider: '/uploader/upload.php'
-        });
-    }
+    
     setTimeout(function () {
+        
         setModalDraggable('.modal-dialog');
     }, 200);
     setTimeout(function () {
