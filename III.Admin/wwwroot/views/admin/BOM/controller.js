@@ -81,5 +81,14 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $ht
 });
 
 app.controller('index', function ($scope, $rootScope, $cookies, $filter, $translate){
-
+    $scope.ListOption=[{
+        Name:'tùy chọn 1',
+        Code: "1",
+    },{
+        Name:'tùy chọn 2',
+        Code: "2",
+    },{
+        Name:'tùy chọn 3',
+        Code: "3",
+    }]
 })

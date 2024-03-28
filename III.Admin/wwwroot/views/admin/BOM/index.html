@@ -55,23 +55,38 @@
 <div class="" >
     <h1 style="text-align:center">BOM</h1>
     <h3 style="text-align:center; background-color:grey">Text</h3>
-    <p>Lệnh sản xuất</p>
     <div class="row">
         <div class="col-md-6">
-            <select class="input-with-dropdown">
-                <option value="option1">Tùy chọn 1</option>
-                <option value="option2">Tùy chọn 2</option>
-                <option value="option3">Tùy chọn 3</option>
-            </select>
-            <button class="btn-in btn btn-primary">IN</button>
-            <button class="btn-out btn btn-danger">OUT</button>
-            <button class="btn-ca1 btn btn-success">CA 1</button>
-            <button class="camera-icon"><i class="fa-solid fa-camera"></i></button>
+            <div class="form-group col-sm-6">
+                <label>Lệnh sản xuất</label>
+                <div class="input-group-nobtn br24">
+                    <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.Type" theme="bootstrap">
+                        <ui-select-match placeholder="{{'Tùy chọn'}}..."><b
+                                class="bold">#{{$select.selected.Name}}:</b><b>
+                                {{$select.selected.Name}}</b></ui-select-match>
+                        <ui-select-choices repeat="x.Code as x in ListOption | filter: $select.search">
+                            #{{x.Code}}: {{x.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="col-sm-6 pt20">
+                <button class="btn-in btn btn-primary">IN</button>
+                <button class="btn-out btn btn-danger">OUT</button>
+                <button class="btn-ca1 btn btn-success">CA 1</button>
+                <button class="camera-icon"><i class="fa-solid fa-camera"></i></button>
+            </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 pt20">
             <div class="form-group">
-                <label for="datetimepicker">Chọn ngày và giờ:</label>
-                <input type="text" class="form-control datetimepicker" id="datetimepicker">
+                <div class="input-group br24">
+                    <input ng-model="model.Date" class="form-control ng-pristine ng-valid ng-empty ng-touched" id="datetimepicker" type="text" placeholder="Chọn ngày..." ng-keydown="($event.keyCode == 13) &amp;&amp; reload()">
+                    <span class="input-group-btn">
+                      <button type="button" ng-click="model.Date''" class="btn btn-default no-shadow">
+                        <span class="glyphicon glyphicon-remove"></span>
+                      </button>
+                    </span>
+                  </div>
             </div>
         </div>
     </div>
