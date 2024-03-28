@@ -2,7 +2,7 @@ var ctxfolderBOM = "/views/admin/BOM";
 
 var app = angular.module('App_ESEIM', ["ngRoute", "ngCookies", "ngValidate", "datatables", "datatables.bootstrap", "pascalprecht.translate", "ngJsTree", "treeGrid", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', 'ui.select', 'dynamicNumber', 'ng.jsoneditor']);
 
-app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $cookies, $filter, dataserviceBonusDecision, $translate) {
+app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $cookies, $filter, $translate) {
     $rootScope.go = function (path) {
         $location.path(path); return false;
     };
@@ -80,6 +80,6 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $ht
     
 });
 
-app.controller('index', function ($scope, $rootScope, $cookies, $filter, dataserviceBonusDecision, $translate){
+app.controller('index', function ($scope, $rootScope, $cookies, $filter, $translate){
 
 })
