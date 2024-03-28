@@ -1,1 +1,107 @@
-BOM
+<style>
+    .input-with-clear-btn {
+        padding-right: 30px;
+    }
+
+        .input-with-clear-btn::after {
+            content: "×";
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #999;
+        }
+
+            .input-with-clear-btn::after:hover {
+                color: #333;
+            }
+
+    .btn-in {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-out {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .btn-ca1 {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    button:hover {
+        opacity: 0.8;
+    }
+
+    .camera-icon {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background-image: url('path/to/your-camera-icon.png');
+        background-size: cover;
+        background-color: #007bff;
+    }
+
+    .activity-menu {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 10px;
+    }
+</style>
+<div class="" >
+    <h1 style="text-align:center">BOM</h1>
+    <h3 style="text-align:center; background-color:grey">Text</h3>
+    <p>Lệnh sản xuất</p>
+    <div class="row">
+        <div class="col-md-6">
+            <select class="input-with-dropdown">
+                <option value="option1">Tùy chọn 1</option>
+                <option value="option2">Tùy chọn 2</option>
+                <option value="option3">Tùy chọn 3</option>
+            </select>
+            <button class="btn-in btn btn-primary">IN</button>
+            <button class="btn-out btn btn-danger">OUT</button>
+            <button class="btn-ca1 btn btn-success">CA 1</button>
+            <button class="camera-icon"><i class="fa-solid fa-camera"></i></button>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="datetimepicker">Chọn ngày và giờ:</label>
+                <input type="text" class="form-control datetimepicker" id="datetimepicker">
+            </div>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Column 1</th>
+                    <th scope="col">Column 2</th>
+                    <th scope="col">Column 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Data 1</td>
+                    <td>Data 2</td>
+                    <td>Data 3</td>
+                </tr>
+                <!-- Thêm các dòng dữ liệu khác nếu cần -->
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+<script>
+    $(document).ready(function () {
+        $('.datetimepicker').datetimepicker();
+    });
+</script>
