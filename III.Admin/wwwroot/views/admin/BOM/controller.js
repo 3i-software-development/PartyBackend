@@ -72,7 +72,7 @@ app.factory('dataservice', function ($http) {
     };
     return{
         GetActInstArranged:function (data, callback) {
-            $http.post(`/Admin/WorkflowActivity/GetActInstArrangedRelaCurrentUser?id=${data}&objType=BOM_ACTIVITY`).then(callback)
+            $http.post(`/Admin/WorkflowActivity/GetActInstArranged?objInst=${data}&objType=BOM_ACTIVITY`).then(callback)
         },
     }
 })
@@ -129,13 +129,17 @@ app.controller('index', function ($scope, $rootScope, $cookies, $filter, $transl
         })
     }
 
-    $scope.editWorkflow=function(id){
-        formatActIns(id)
+    $scope.editWorkflow=function(){
+        $scope.isEditWorkflow=false
+        fixContent()
+    }
+    $scope.editWorkflow2=function(insCode){
+        formatActIns(insCode)
+        fixContent()
     }
     function fixContent(){
-
         if ($scope.isEditWorkflow == true) {
-            $('#tblData_wrapper').css('width', '50%');
+            $('#tblData_wrapper').css('width', '60%');
             
         }else{
             $('#tblData_wrapper').css('width', '');

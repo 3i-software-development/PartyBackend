@@ -18,11 +18,11 @@
     position: absolute;
     right: -10px;
     display: flex;
-    width: 50%;
+    width: 40%;
     min-height: 80vh;
     display: flex;
     background-color: #fff;
-    box-shadow: -2px -2px 2px 0px rgb(0 0 0 / 30%);
+    box-shadow: -1px -1px 1px 0px rgb(0 0 0 / 30%);
     overflow-y: auto;
     overflow-x: hidden;
   }
@@ -185,7 +185,7 @@
         </div>
     </div>
     <div class="table-responsive d-flex">
-        <table>
+        <table id="tblData_wrapper">
             <thead>
                 <tr>
                     <th>#</th>
@@ -195,13 +195,13 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-click="editWorkflow(12703)">
+                <tr ng-click="editWorkflow2('BOM_001')">
                     <td>1</td>
                     <td>Data 1</td>
                     <td>Data 2</td>
                     <td>Data 3</td>
                 </tr>
-                <tr ng-click="editWorkflow(12703)">
+                <tr ng-click="editWorkflow2('BOM_001')">
                     <td>2</td>
                     <td>Data 4</td>
                     <td>Data 5</td>
@@ -321,7 +321,7 @@
                   </div>
                 </div>
       
-                <div class="row">
+                <!-- <div class="row">
                   <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
                     <div class="toggle-header" style="display: flex;  min-height: 40px;">
                       <i ng-show="model.checkHiddenFileWfActivity" class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
@@ -342,7 +342,7 @@
                       </label>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="col-md-12" style="padding: 0px;" ng-if="model.checkHiddenFileWfActivity">
                   <div ng-include="'../views/admin/workflowActivity/more-file.html'" ng-controller="more-file-wf"
                     ng-init="InitNotModal(WfCode)"></div>
