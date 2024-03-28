@@ -2441,8 +2441,8 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     $rootScope.isAdded = true;
 
     $scope.submit = function () {
-        var data = CKEDITOR.instances['description'].getData();
-        $scope.modelEditActivity.Desc = data;
+        // var data = CKEDITOR.instances['description'].getData();
+        // $scope.modelEditActivity.Desc = data;
         validationSelect($scope.modelEditActivity);
         console.log("Activity Update",$scope.modelEditActivity)
         if ($scope.addform.validate() && !validationSelect($scope.modelEditActivity).Status) {
