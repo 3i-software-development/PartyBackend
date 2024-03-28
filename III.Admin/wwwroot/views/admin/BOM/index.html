@@ -53,8 +53,7 @@
     }
 </style>
 <div class="" >
-    <h1 style="text-align:center">BOM</h1>
-    <h3 style="text-align:center; background-color:grey">Text</h3>
+    <h2 style="text-align:center;"><u>{{'Công đoạn cán tôn'}}</u></h2>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group col-sm-6">
@@ -74,7 +73,7 @@
                 <button class="btn-in btn btn-primary">IN</button>
                 <button class="btn-out btn btn-danger">OUT</button>
                 <button class="btn-ca1 btn btn-success">CA 1</button>
-                <button class="camera-icon"><i class="fa-solid fa-camera"></i></button>
+                <button class="btn-ca1 btn btn-success"><i class="fa-solid fa-camera"></i></button>
             </div>
         </div>
         <div class="col-md-6 pt20">
@@ -82,7 +81,7 @@
                 <div class="input-group br24">
                     <input ng-model="model.Date" class="form-control ng-pristine ng-valid ng-empty ng-touched" id="datetimepicker" type="text" placeholder="Chọn ngày..." ng-keydown="($event.keyCode == 13) &amp;&amp; reload()">
                     <span class="input-group-btn">
-                      <button type="button" ng-click="model.Date''" class="btn btn-default no-shadow">
+                      <button type="button" ng-click="model.Date=''" class="btn btn-default no-shadow">
                         <span class="glyphicon glyphicon-remove"></span>
                       </button>
                     </span>
@@ -108,7 +107,6 @@
                     <td>Data 2</td>
                     <td>Data 3</td>
                 </tr>
-                <!-- Thêm các dòng dữ liệu khác nếu cần -->
             </tbody>
         </table>
     </div>
