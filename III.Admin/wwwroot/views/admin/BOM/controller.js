@@ -43,6 +43,39 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $cookies, $filter, $t
     }
 });
 
+app.factory('dataservice', function ($http) {
+    $http.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
+    var headers = {
+        "Content-Type": "application/json;odata=verbose",
+        "Accept": "application/json;odata=verbose",
+    }
+    var submitFormUpload = function (url, data, callback) {
+        var req = {
+            method: 'POST',
+            url: url,
+            headers: {
+                'Content-Type': undefined
+            },
+            beforeSend: function () {
+                App.blockUI({
+                    target: "#modal-body",
+                    boxed: true,
+                    message: 'loading...'
+                });
+            },
+            complete: function () {
+                App.unblockUI("#modal-body");
+            },
+            data: data
+        }
+        $http(req).then(callback);
+    };
+    return{
+        GetActInstArranged:function (data, callback) {
+            $http.post(`/Admin/WorkflowActivity/GetActInstArrangedRelaCurrentUser?id=${data}&objType=BOM_ACTIVITY`).then(callback)
+        },
+    }
+})
 
 app.config(function ($routeProvider, $validatorProvider, $translateProvider, $httpProvider) {
     $translateProvider.useUrlLoader('/Admin/BonusDecision/Translation');
@@ -80,7 +113,37 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $ht
     
 });
 
-app.controller('index', function ($scope, $rootScope, $cookies, $filter, $translate){
+app.controller('index', function ($scope, $rootScope, $cookies, $filter, $translate,dataservice){
+    $scope.isEditWorkflow=false;
+    function formatActIns(objIns) {
+        dataservice.GetActInstArranged(objIns,function(rs){
+            console.log(rs.data)
+            if(rs.data.ActArranged==[]){
+                $scope.isEditWorkflow = false
+                fixContent()
+                return
+            }
+            $scope.listActs=rs.data.ActArranged;
+            $scope.isEditWorkflow = true
+            fixContent()
+        })
+    }
+
+    $scope.editWorkflow=function(id){
+        formatActIns(id)
+    }
+    function fixContent(){
+
+        if ($scope.isEditWorkflow == true) {
+            $('#tblData_wrapper').css('width', '50%');
+            
+        }else{
+            $('#tblData_wrapper').css('width', '');
+            return
+        }
+    }
+
+
     $scope.ListOption=[{
         Name:'tùy chọn 1',
         Code: "1",

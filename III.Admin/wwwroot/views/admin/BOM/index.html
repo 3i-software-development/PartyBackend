@@ -1,4 +1,96 @@
 <style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #ccc;
+        padding: 8px;
+        text-align: left;
+    }
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+    thead {
+        background-color: #e0e0e0; 
+    }
+  .main-menu-editWorkflow {
+    position: absolute;
+    right: -10px;
+    display: flex;
+    width: 50%;
+    min-height: 80vh;
+    display: flex;
+    background-color: #fff;
+    box-shadow: -2px -2px 2px 0px rgb(0 0 0 / 30%);
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  .main-right-editWorkflow {
+    position: absolute;
+    right: 80px;
+    display: flex;
+    width: 35px;
+    height: 40px;
+    display: flex;
+    background-color: #cccccc;
+  }
+
+  .toggle-header {
+    cursor: pointer;
+    background-color: #EEEEEE;
+    padding-left: 10px;
+  }
+
+  #tblData_wrapper {
+    box-shadow: 2px -2px 2px 0px rgb(0 0 0 / 30%);
+    min-height: 80vh;
+  }
+
+  @media (max-width:600px){
+      #tblData_wrapper {
+          width:100vw;
+      }
+  }
+
+  .actName {
+    font-weight: bold;
+    color: black;
+  }
+
+  .listaction a {
+    margin-right: 10px;
+  }
+
+  tr.active {
+    background-color: #44d9ec;
+    /* Màu nền khi hàng được chọn */
+    font-weight: bold;
+  }
+
+  .table-scrollable {
+    max-height: 80vh;
+    /* Chiều cao tối đa của phần tử chứa bảng */
+    max-width: 100%;
+    /* Chiều rộng tối đa của phần tử chứa bảng */
+    overflow: auto!important;
+  }
+
+  @media (max-width:600px){
+    .table-scrollable{
+        max-width:100vw!important;
+    }
+  }
+
+  .w4 {
+    width: 33, 3%;
+  }
+
+  .d-flex {
+    width: 100%;
+    display: flex;
+  }
     .input-with-clear-btn {
         padding-right: 30px;
     }
@@ -51,6 +143,9 @@
         right: 0;
         padding: 10px;
     }
+    .zid-0{
+        z-index: 0;
+    }
 </style>
 <div class="" >
     <h2 style="text-align:center;"><u>{{'Công đoạn cán tôn'}}</u></h2>
@@ -58,8 +153,8 @@
         <div class="col-md-6">
             <div class="form-group col-sm-6">
                 <label>Lệnh sản xuất</label>
-                <div class="input-group-nobtn br24">
-                    <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.Type" theme="bootstrap">
+                <div class="input-group-nobtn br24-nobtn">
+                    <ui-select ng-model="model.Type" theme="bootstrap">
                         <ui-select-match placeholder="{{'Tùy chọn'}}..."><b
                                 class="bold">#{{$select.selected.Name}}:</b><b>
                                 {{$select.selected.Name}}</b></ui-select-match>
@@ -69,7 +164,7 @@
                     </ui-select>
                 </div>
             </div>
-            <div class="col-sm-6 pt20">
+            <div class="col-sm-6 pt20" style="left: 300px">
                 <button class="btn-in btn btn-primary">IN</button>
                 <button class="btn-out btn btn-danger">OUT</button>
                 <button class="btn-ca1 btn btn-success">CA 1</button>
@@ -78,7 +173,7 @@
         </div>
         <div class="col-md-6 pt20">
             <div class="form-group">
-                <div class="input-group br24">
+                <div class="input-group br24" style="width:300px; left: 350px">
                     <input ng-model="model.Date" class="form-control ng-pristine ng-valid ng-empty ng-touched" id="datetimepicker" type="text" placeholder="Chọn ngày..." ng-keydown="($event.keyCode == 13) &amp;&amp; reload()">
                     <span class="input-group-btn">
                       <button type="button" ng-click="model.Date=''" class="btn btn-default no-shadow">
@@ -89,27 +184,188 @@
             </div>
         </div>
     </div>
-    
-    <div class="table-responsive">
-        <table class="table table-striped">
+    <div class="table-responsive d-flex">
+        <table>
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Column 1</th>
-                    <th scope="col">Column 2</th>
-                    <th scope="col">Column 3</th>
+                    <th>#</th>
+                    <th>Column 1</th>
+                    <th>Column 2</th>
+                    <th>Column 3</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
+                <tr ng-click="editWorkflow(12703)">
+                    <td>1</td>
                     <td>Data 1</td>
                     <td>Data 2</td>
                     <td>Data 3</td>
                 </tr>
+                <tr ng-click="editWorkflow(12703)">
+                    <td>2</td>
+                    <td>Data 4</td>
+                    <td>Data 5</td>
+                    <td>Data 6</td>
+                </tr>
             </tbody>
         </table>
+        <div class="main-menu-editWorkflow" ng-show="isEditWorkflow">
+            <div class="portlet-body form baolo" style="width:100%; position:absolute; background:#fff;">
+              <div class="modal-header" style="background-color: #ffffff; padding: 5px;">
+                <div class="col-md-10 pl-0">
+                  <i class="fa fa-edit black icon-insert fs20"></i>
+                  <span class="label-lg" id="modal-title"
+                    style="vertical-align: 5px;font-weight: bold; color: black;">{{'WFAI_TITLE_EDIT_WF'|translate}}</span>
+                </div>
+                <!-- <div class="col-md-2 text-right">
+                        <i class="fa-solid fa-caret-right icon-scalet fs20 mt5" ng-click="editWorkflow()"></i>
+                    </div> -->
+              </div>
+              <div class="modal-body" style="padding-bottom: 0px;">
+                <div class="row" ng-repeat="act in listActs">
+                  <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
+                    <div class="toggle-header" style="display: flex;  min-height: 40px;">
+                      <i ng-show="act[0].checkHiddenActWf" class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
+                      <i ng-show="!act[0].checkHiddenActWf" class="fa-solid fa-caret-right icon-scalet fs30 mt10"></i>
+                      <label ng-click="CloseAll(act[0]);" class="label-lg"
+                        style="vertical-align: 7px;display: flex; align-items: center;">
+                        <div>
+                          <div class="d-flex">
+      
+                            <div style="display: inline-block; margin-left: 5px; font-weight: 500">
+                              <div ng-if="act[0].ActStatus == 'Đã xử lý'">
+                                <a class="actName" title="{{ act[0].ActName }}"
+                                  ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                  <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                </a>
+      
+                                <span class="badge-customer badge-customer-success">{{ act[0].ActStatus }}</span>
+                                <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                  style="width: 17px;height: 17px;margin-top: -5px;" />
+                              </div>
+                              <div
+                                ng-if="act[0].ActStatus == 'Đang xử lý' || act[0].ActStatus == 'Chưa xử lý' || act[0].ActStatus == 'Kích hoạt'">
+                                <div ng-if="act[0].ActStatus != 'Chưa xử lý'">
+                                  <a class="actName" title="{{ act[0].ActName }}"
+                                    ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                    <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                  </a>
+      
+                                  <span class="badge-customer badge-customer-warning">{{ act[0].ActStatus }}</span>
+                                  <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                    style="width: 17px;height: 17px;margin-top: -5px;" />
+                                </div>
+                                <div ng-if="act[0].ActStatus == 'Chưa xử lý'">
+                                  <a class="actName" title="{{ act[0].ActName }}"
+                                    ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                    <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                  </a>
+      
+                                  <span class="badge-customer badge-customer-lock">{{ act[0].ActStatus }}</span>
+                                  <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                    style="width: 17px;height: 17px;margin-top: -5px;" />
+                                </div>
+                              </div>
+      
+                              <div ng-if="act[0].ActStatus == 'Hủy'">
+                                <a class="actName" title="{{ act[0].ActName }}"
+                                  ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                  <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                </a>
+      
+                                <span class="badge-customer badge-customer-danger">{{ act[0].ActStatus }}</span>
+                                <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                  style="width: 17px;height: 17px;margin-top: -5px;" />
+                              </div>
+                              <div ng-if="act[0].ActStatus == 'Dừng lại'">
+                                <a class="actName" title="{{ act[0].ActName }}"
+                                  ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                  <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                </a>
+      
+                                <span class="badge-customer badge-customer-pause">{{ act[0].ActStatus }}</span>
+                                <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                  style="width: 17px;height: 17px;margin-top: -5px;" />
+                              </div>
+                              <div
+                                ng-if="act[0].ActStatus != 'Hủy' && act[0].ActStatus != 'Dừng lại' && act[0].ActStatus != 'Đã xử lý' && act[0].ActStatus != 'Đang xử lý' && act[0].ActStatus != 'Chưa xử lý' && act[0].ActStatus != 'Kích hoạt'">
+                                <a class="actName" title="{{ act[0].ActName }}"
+                                  ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                  <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                </a>
+                                <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                  style="width: 17px;height: 17px;margin-top: -5px;" />
+                              </div>
+      
+                            </div>
+      
+                          </div>
+                          <span ng-if="act[0].ActStatus == 'Đã xử lý' && act[0].Log" class="fs10">
+                            <span class="bold fs12">{{ act[0].Log.CreatedBy }}</span><br />
+                            [{{ act[0].Log.sCreatedTime }}]
+                          </span>
+                        </div>
+                      </label>
+                      <div style="display: flex;align-items: center;margin-left: auto;margin-right: 20px;">
+                        <a title="Xem danh sách file" type="button" ng-click="moreFile(WfCode, act[0].ActivityInstCode)"
+                          style="width: 28px; height: 28px">
+                          <i class="fa-solid fa-file"
+                            style="--fa-secondary-color:blue; --fa-secondary-opacity: 1; --fa-primary-color: white; font-size: 25px;margin-top: 5px;"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-12" style="padding: 0px;" ng-if="act[0].checkHiddenActWf">
+                    <div ng-include="'../views/admin/workflowActivity/edit-activity-instance.html'"
+                      ng-controller="edit-activity-instance" ng-init="initEdit(act[0].Id, full.ObjectCode)"></div>
+                  </div>
+                </div>
+      
+                <div class="row">
+                  <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
+                    <div class="toggle-header" style="display: flex;  min-height: 40px;">
+                      <i ng-show="model.checkHiddenFileWfActivity" class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
+                      <i ng-show="!model.checkHiddenFileWfActivity" class="fa-solid fa-caret-right icon-scalet fs30 mt10"></i>
+                      <label ng-click="model.checkHiddenFileWfActivity=!model.checkHiddenFileWfActivity" class="label-lg"
+                        style="vertical-align: 7px;display: flex; align-items: center;">
+                        <div>
+                          <div class="d-flex">
+                            <div style="display: inline-block; margin-left: 5px; font-weight: 500">
+                              <a class="actName" title="Danh sách tệp đính kèm">
+                                <div class="numberStep1" style="display: inline">
+                                  <span>{{"Danh sách tệp đính kèm" }}</span>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-12" style="padding: 0px;" ng-if="model.checkHiddenFileWfActivity">
+                  <div ng-include="'../views/admin/workflowActivity/more-file.html'" ng-controller="more-file-wf"
+                    ng-init="InitNotModal(WfCode)"></div>
+                </div>
+              </div>
+            </div>
+      
+          </div>
+      
+          <div class="main-right-editWorkflow" ng-show="isEditWorkflow">
+            <div class="create-box create-box-r" ng-click="editWorkflow()">
+              <!-- <img src="/images/notepad/notepad/activity/left.png" ng-show="!isEditWorkflow" style="border: 2px solid gray;"/>
+                <img src="/images/notepad/notepad/activity/right.png" ng-show="isEditWorkflow" style="border: 2px solid gray;"/> -->
+              <i class="fa-solid fa-caret-right icon-scalet fs25 mt10" style="margin-left: 12px;"
+                ng-show="isEditWorkflow"></i>
+              <i class="fa-solid fa-caret-left icon-scalet fs25 mt10" style="margin-left: 12px;"
+                ng-show="!isEditWorkflow"></i>
+            </div>
+          </div>
     </div>
+
+    
+    
 
 
 </div>
