@@ -280,19 +280,24 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     console.log("indeeeeee");
 
     $scope.GroupUsers = [];
-    $scope.getGrupUsers = function () {
+    $scope.getGroupUsers = function () {
         dataservice.GetGroupUser(function (rs) {
             console.log(rs)
             $scope.GroupUsers = rs.data;
         })
+        $http.get('/views/front-end/user/Guide.json').then(function (response) {
+            $scope.jsonParse = response.data; // Gán dữ liệu từ tệp JSON vào biến $scope.jsonParse
+            console.log($scope.jsonParse);
+        }).catch(function (error) {
+            console.error('Lỗi khi tải dữ liệu JSON:', error);
+        });
     }
     $scope.onItemSelect = function (item) {
         $scope.GroupUser = item.Code;
     }
-    $scope.getGrupUsers();
+    $scope.getGroupUsers();
 
     
-
     $scope.$watch('Voice', function (newValue, oldValue) {
         //nếu có sự thay đổi thì dựa vào $scope.input để thêm 
     });
@@ -345,8 +350,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         } 
        
     });
-
-
     //Autocomplete tôn giáo
     $scope.filteredItemReligions = [];
     $scope.filterItemReligions = function () {
@@ -358,8 +361,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.selectItemReligion = function (item) {
         $scope.infUser.Religion = item;
         $scope.filteredItemReligions = [];
-       
-
     };
     $scope.jsonParse = [
         {
@@ -495,7 +496,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             id: "AwardReason",
             guide: "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
         },
-
+    
         {
             id: "MonthYear",
             guide: "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
@@ -753,6 +754,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.SelectRankAcademic = function (item) {
         $scope.infUser.LevelEducation.RankAcademic = item;
         $scope.FilterRankAcademic = [];
+
     };
 
     //Autocomplete lý luận chính trị
@@ -853,6 +855,14 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.$apply(); // Cần sử dụng $apply() để cập nhật scope
     });
     $scope.handleClick = function (id) {
+        // Kiểm tra nếu $scope.jsonParse không phải là một mảng
+        if (!Array.isArray($scope.jsonParse)) {
+            // Nếu không phải mảng, gán $scope.jsonParse thành một mảng trống
+            $scope.jsonParse = [];
+            console.warn('$scope.jsonParse không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+
+        // Tiếp tục xử lý như bình thường
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
             return item.id === id;
         });
@@ -1444,7 +1454,24 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     //     $scope.insertFamily();
     // }
 
+    $('.icon-clickable').click(function () {
+        var id = $(this).attr('id');
+        $scope.handleUserClick(id);
+    });
 
+    $scope.handleUserClick = function (id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+
+        $scope.matchedItemss= $scope.jsonGuide.filter(function (item) {
+            return item.id === id;
+        });
+        console.log('$scope.matchedItemss:',$scope.matchedItemss)
+        $scope.$apply();
+    };
+    
     $scope.getPartyAdmissionProfileByUsername = function () {
         if ($scope.UserName == null || $scope.UserName == undefined) {
             //thông báo không lấy được username
@@ -1498,6 +1525,24 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     
                     $scope.infUser.PlaceWorking=rs.PlaceWorking;
                     console.log($scope.status);
+
+                    // Tạo đường dẫn đến tệp JSON
+                    var jsonUrl = `/uploads/json/reviewprofile_${$scope.infUser.ResumeNumber}.json`;
+
+                    $http.get(jsonUrl).then(function (response) {
+                        $scope.jsonGuide = response.data;
+                        console.log($scope.jsonGuide);
+                        $.each($scope.jsonGuide, function(index, item) {
+                        // Tìm thẻ <i> có id trùng với id của phần tử
+                        var $icon = $('#' + item.id+'.fa.fa-info-circle');
+                        // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+                        if ($icon.length > 0) {
+                            $icon.css('color', 'red');
+                        }
+                    });
+                    }).catch(function (error) {
+                        console.error('Lỗi khi tải dữ liệu JSON:', error);
+                    });
 
                     if ($scope.infUser.ResumeNumber) {
                         $scope.getFamilyByProfileCode();
@@ -1715,7 +1760,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         } if ($scope.GroupUser == "" || $scope.GroupUser == null || $scope.GroupUser == undefined) {
             $scope.err = true
             App.toastrError("Bạn chưa chọn nhóm chi bộ để xử lý")
-        } 
+        }
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
         if ($scope.err == false) {
             if ($scope.UserName != null && $scope.UserName != undefined) {
@@ -2890,7 +2935,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.fileList = [];
 
-    setTimeout(function () {
+    setTimeout(async function () {
+        //  loadDate();
+        // initialize Rich Text Editor component
         $scope.defaultRTE = new ej.richtexteditor.RichTextEditor({
             height: '850px'
         });
