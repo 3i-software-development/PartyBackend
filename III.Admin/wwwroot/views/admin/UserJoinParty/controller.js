@@ -243,6 +243,20 @@ app.factory('dataserviceJoinParty', function ($http) {
         },
     }
 });
+app.controller("ConvertJson", function ($scope, $rootScope, dataserviceJoinParty) {
+    $scope.listNote=[]
+    $scope.model = {
+        comment: '',
+        id:''
+    }
+    //Hàm lấy file json gán vào listNote (nếu có)
+
+    //Hàm submit gọi api
+    $scope.submit = function () { 
+        
+        
+    }
+});
 
 app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, dataserviceJoinParty, $cookies, $translate) {
     $rootScope.go = function (path) {
@@ -942,28 +956,144 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
 });
 
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $http) { 
-    $scope.ImportFile = function (data) {
-        $scope.Json = {
-            Profile: data,
-            PersonalHistories: [],
-            TrainingCertificatedPasses: [],
-            WarningDisciplineds: [],
-            Awards: [],
-            Families: [],
-            GoAboards: [],
-            HistorySpecialist: [],
-            IntroducerOfParty: {},
-            WorkingTracking: []
+
+     $scope.popoverLabels = [
+        {
+            "id": "currentName",
+            "labelText": "Họ và tên",
+        },
+        {
+            "id": "dateOfBird",
+            "labelText": "Ngày sinh",
+        },
+        {
+            "id": "gender",
+            "labelText": "Giới tính",
+        },
+        {
+            "id": "phone",
+            "labelText": "Số điện thoại",
+        },
+        {
+            "id": "noiSinh",
+            "labelText": "Nơi sinh",
+        },
+       {
+            "id": "queQuan",
+            "labelText": "Quê quán",
+        },
+        {
+            "id": "diaChiThuongTru",
+            "labelText": "Thường trú",
+        },
+        {
+            "id": "diaChiTamTru",
+            "labelText": "Tam trú",
+        },
+        {
+            "id": "job",
+            "labelText": "Công việc hiện tại",
+        },
+        {
+            "id": "nation",
+            "labelText": "Dân tộc",
+        },
+        {
+            "id": "religion",
+            "labelText": "Tôn giáo",
+        },
+        {
+            "id": "firstName",
+            "labelText": "Họ và tên khai sinh",
+        },
+        {
+            "id": "generalEducation",
+            "labelText": "Giáo dục phổ thông",
+        },
+        {
+            "id": "undergraduate",
+            "labelText": "Giáo dục đại học",
+        },
+        {
+            "id": "rankAcademic",
+            "labelText": "Học hàm",
+        },
+        {
+            "id": "vocationalTraining",
+            "labelText": "Giáo dục nghề nghiệp",
+        },
+        {
+            "id": "foreignLanguage",
+            "labelText": "Ngoại ngữ",
+        },
+        {
+            "id": "minorityLanguage",
+            "labelText": "Tiếng dân tộc thiểu số",
+        },
+        {
+            "id": "politicalTheory",
+            "labelText": "Lý luận chính trị",
+        },
+        {
+            "id": "it",
+            "labelText": "Tin học",
+        },
+        {
+            "id": "place",
+            "labelText": "Nơi tạo",
+        },
+        {
+            "id": "selfComment",
+            "labelText": "Tự nhận xét",
+        },
+    ];
+
+    $scope.popoverLabel = '';
+    $scope.popoverid = '';
+    $scope.commentTextarea = '';
+    var matchedLabel = [];
+    $scope.openPopover = function (popoverId) {
+        matchedLabel = $scope.popoverLabels.find(function (item) {
+            return item.id === popoverId;
+        });
+        $scope.pp.id = matchedLabel.id;
+        $scope.popoverid = matchedLabel.id;
+        if (matchedLabel) {
+            $scope.popoverLabel = matchedLabel.labelText;
+            $scope.commentTextarea = matchedLabel.comment;
         }
+    };
+    
+    $scope.submit = function () {
+        if ($scope.pp.id !== '' && $scope.pp.comment !== '') {
+            $scope.addJson();
+        }
+    };
+
+    $scope.ImportFile = function (data) {
+        $scope.Json={
+            Profile:data,
+            PersonalHistories:[],
+            TrainingCertificatedPasses:[] ,
+            WarningDisciplineds:[],
+            Awards:[],
+            Families:[] ,
+            GoAboards:[], 
+            HistorySpecialist:[],
+            IntroducerOfParty:{},
+            WorkingTracking:[]
+        }
+
         $scope.PersonalHistory.forEach(function (personalHistory) {
             var obj = {};
             obj.Begin = personalHistory.Begin;
             obj.End = personalHistory.End;
             obj.Content = personalHistory.Content;
             obj.ProfileCode = $scope.infUser.ResumeNumber;
-            obj.Id = personalHistory.Id;
+            obj.Id=personalHistory.Id;
             $scope.Json.PersonalHistories.push(obj)
         });
+
         $scope.PassedTrainingClasses.forEach(function (passedTrainingClasses) {
             var obj = {};
             obj.SchoolName = passedTrainingClasses.SchoolName;
@@ -1009,7 +1139,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             obj.WorkingProgress = e.WorkingProgress;
             obj.ProfileCode = $scope.infUser.ResumeNumber;
             //bj.Id=e.Id;
-            $scope.Json.Families.push(obj)
+            $scope.Json.Families.push(obj)            
         });
 
         $scope.GoAboard.forEach(function (e) {
@@ -1031,7 +1161,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             //obj.Id = historicalFeatures.Id;
             $scope.Json.HistorySpecialist.push(obj)
         });
-
+        
         $scope.Json.IntroducerOfParty.PersonIntroduced = $scope.Introducer.PersonIntroduced;
         $scope.Json.IntroducerOfParty.PlaceTimeJoinUnion = $scope.Introducer.PlaceTimeJoinUnion;
         $scope.Json.IntroducerOfParty.PlaceTimeJoinParty = $scope.Introducer.PlaceTimeJoinParty;
@@ -1048,293 +1178,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             //obj.Id = businessNDuty.Id;
             $scope.Json.WorkingTracking.push(obj)
         });
-
+        
         dataserviceJoinParty.UpdateOrCreateUserfileJson($scope.Json, function (rs) {
-            rs = rs.data;
-            if (rs.Error) {
-                App.toastrError(rs.Title);
-            } else {
-                console.log(rs.Object);
-                $scope.downloadFile(rs.Title)
-                //window.open('/Admin/Docman#', '_blank');
-            }
-        });
-    }
-    $scope.ImportJsonFile = function (data) {
-        $scope.infUser.LastName = data.Profile.CurrentName;
-        $scope.infUser.Birthday = data.Profile.Birthday;
-        $scope.infUser.FirstName = data.Profile.BirthName;
-        $scope.infUser.Sex = data.Profile.Gender;
-        $scope.infUser.Nation = data.Profile.Nation;
-        $scope.infUser.Religion = data.Profile.Religion;
-        $scope.infUser.Residence = data.Profile.PermanentResidence;
-        $scope.infUser.Phone = data.Profile.Phone;
-        $scope.infUser.PlaceofBirth = data.Profile.PlaceBirth;
-        $scope.infUser.NowEmployee = data.Profile.Job;
-        $scope.infUser.HomeTown = data.Profile.HomeTown;
-        $scope.infUser.TemporaryAddress = data.Profile.TemporaryAddress;
-        $scope.infUser.LevelEducation.GeneralEducation = data.Profile.GeneralEducation;
-        $scope.infUser.LevelEducation.VocationalTraining = data.Profile.JobEducation;
-        $scope.infUser.LevelEducation.Undergraduate = data.Profile.UnderPostGraduateEducation;
-        $scope.infUser.LevelEducation.RankAcademic = data.Profile.Degree;
-        $scope.infUser.LevelEducation.ForeignLanguage = data.Profile.ForeignLanguage;
-        $scope.infUser.LevelEducation.MinorityLanguage = data.Profile.MinorityLanguages;
-        $scope.infUser.LevelEducation.It = data.Profile.ItDegree;
-        $scope.infUser.LevelEducation.PoliticalTheory = data.Profile.PoliticalTheory;
-        $scope.SelfComment.context = data.Profile.SelfComment;
-        $scope.PlaceCreatedTime.place = data.Profile.CreatedPlace;
-        $scope.infUser.ResumeNumber = data.Profile.ResumeNumber;
-        $scope.infUser.Status = data.Profile.Status;
-        $scope.Username = data.Profile.Username;
-        $scope.infUser.WfInstCode = data.Profile.WfInstCode;
-        $scope.GroupUser = data.Profile.GroupUserCode;
-        $scope.infUser.PlaceWorking = data.Profile.PlaceWorking;
-
-
-        data.Awards.forEach(function (laudatory) {
-            var obj = {};
-            obj.MonthYear = laudatory.MonthYear;
-            obj.Reason = laudatory.Reason;
-            obj.GrantOfDecision = laudatory.GrantOfDecision;
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-            //obj.Id = laudatory.Id;
-            $scope.Laudatory.push(obj)
-        });
-        data.PersonalHistories.forEach(function (personalHistory) {
-            var obj = {};
-            obj.Begin = personalHistory.Begin;
-            obj.End = personalHistory.End;
-            obj.Content = personalHistory.Content;
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-            obj.Id = personalHistory.Id;
-            $scope.PersonalHistory.push(obj)
-        });
-        data.TrainingCertificatedPasses
-            .forEach(function (passedTrainingClasses) {
-                var obj = {};
-                obj.SchoolName = passedTrainingClasses.SchoolName;
-                obj.Class = passedTrainingClasses.Class;
-                obj.From = passedTrainingClasses.From;
-                obj.To = passedTrainingClasses.To;
-                obj.Certificate = passedTrainingClasses.Certificate;
-                obj.ProfileCode = $scope.infUser.ResumeNumber;
-                //obj.Id = passedTrainingClasses.Id;
-                $scope.PassedTrainingClasses.push(obj)
-            });
-        data.WarningDisciplineds
-            .forEach(function (e) {
-                var obj = {};
-                obj.MonthYear = e.MonthYear;
-                obj.Reason = e.Reason;
-                obj.GrantOfDecision = e.GrantOfDecision;
-                obj.ProfileCode = $scope.infUser.ResumeNumber;
-                //obj.Id=e.Id;
-                $scope.Disciplined.push(obj)
-            });
-        data.Families
-            .forEach(function (e) {
-                var obj = {};
-                obj.Relation = e.Relation;
-                obj.PartyMember = e.PartyMember;
-                obj.Name = e.Name;
-                obj.BirthYear = e.BirthYear;
-                obj.Residence = e.Residence;
-                obj.PoliticalAttitude = e.PoliticalAttitude;
-                obj.HomeTown = e.HomeTown;
-                obj.Job = e.Job;
-                obj.WorkingProgress = e.WorkingProgress;
-                obj.ProfileCode = $scope.infUser.ResumeNumber;
-                //bj.Id=e.Id;
-                $scope.Relationship.push(obj)
-            });
-        data.GoAboards.forEach(function (e) {
-            var obj = {};
-            obj.From = e.From;
-            obj.To = e.To;
-            obj.Contact = e.Contact;
-            obj.Country = e.Country;
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-            //obj.Id = e.Id;
-            $scope.GoAboard.push(obj)
-        });
-        data.HistorySpecialist
-            .forEach(function (historicalFeatures) {
-                var obj = {};
-                obj.MonthYear = historicalFeatures.MonthYear;
-                obj.Content = historicalFeatures.Content;
-                obj.ProfileCode = $scope.infUser.ResumeNumber;
-                //obj.Id = historicalFeatures.Id;
-                $scope.HistoricalFeatures.push(obj)
-            });
-        data.WorkingTracking.forEach(function (businessNDuty) {
-            var obj = {};
-            obj.From = businessNDuty.From;
-            obj.To = businessNDuty.To;
-            obj.Work = businessNDuty.Work;
-            obj.Role = businessNDuty.Role;
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-            //obj.Id = businessNDuty.Id;
-            $scope.BusinessNDuty.push(obj)
-        });
-        $scope.Introducer.PersonIntroduced = data.IntroducerOfParty.PersonIntroduced
-        $scope.Introducer.PlaceTimeJoinUnion = data.IntroducerOfParty.PlaceTimeJoinUnion
-        $scope.Introducer.PlaceTimeJoinParty = data.IntroducerOfParty.PlaceTimeJoinParty
-        $scope.Introducer.PlaceTimeRecognize = data.IntroducerOfParty.PlaceTimeRecognize
-
-        $scope.$apply()
-    }
-
-    $scope.uploadJsonFile = async function () {
-        var file = document.getElementById("FileItem").files[0];
-        if (file == null || file == undefined || file == "") {
-            App.toastrError("Bạn chưa chọn file");
-        } else {
-            // Check if the selected file is not a JSON file
-            if (file.type !== "application/json") {
-                App.toastrError("File bạn tải không phải là file JSON");
-                return;
-            }
-            var reader = new FileReader();
-            reader.onload = function (event) {
-                try {
-                    var jsonData = JSON.parse(event.target.result);
-                    console.log(jsonData); // Hoặc thực hiện các thao tác khác với dữ liệu JSON ở đây
-                    $scope.ImportJsonFile(jsonData);
-                } catch (error) {
-                    console.error("Đã xảy ra lỗi khi đọc file JSON:", error);
-                }
-            };
-            reader.onerror = function (event) {
-                console.error("Đã xảy ra lỗi khi đọc file:", event.target.error);
-            };
-
-            reader.readAsText(file);
-
-        }
-    };
-
-
-     $scope.popoverLabels = [
-        {
-            "id": "HovaTen",
-            "labelText": "Họ và tên",
-        },
-        {
-            "id": "NgaySinh",
-            "labelText": "Ngày sinh",
-        },
-        {
-            "id": "GioiTinh",
-            "labelText": "Giới tính",
-        },
-        {
-            "id": "SDT",
-            "labelText": "Số điện thoại",
-        },
-        {
-            "id": "NoiSinh",
-            "labelText": "Nơi sinh",
-        },
-       {
-            "id": "QueQuan",
-            "labelText": "Quê quán",
-        },
-        {
-            "id": "ThuongTru",
-            "labelText": "Thường trú",
-        },
-        {
-            "id": "TamTru",
-            "labelText": "Tam trú",
-        },
-        {
-            "id": "CVHT",
-            "labelText": "Công việc hiện tại",
-        },
-        {
-            "id": "DanToc",
-            "labelText": "Dân tộc",
-        },
-        {
-            "id": "TonGiao",
-            "labelText": "Tôn giáo",
-        },
-        {
-            "id": "HovaTenKS",
-            "labelText": "Họ và tên khai sinh",
-        },
-        {
-            "id": "GDPT",
-            "labelText": "Giáo dục phổ thông",
-        },
-        {
-            "id": "GDDH",
-            "labelText": "Giáo dục đại học",
-        },
-        {
-            "id": "HocHam",
-            "labelText": "Học hàm",
-        },
-        {
-            "id": "GDNN",
-            "labelText": "Giáo dục nghề nghiệp",
-        },
-        {
-            "id": "NgoaiNgu",
-            "labelText": "Ngoại ngữ",
-        },
-        {
-            "id": "TDTTS",
-            "labelText": "Tiếng dân tộc thiểu số",
-        },
-        {
-            "id": "LLCT",
-            "labelText": "Lý luận chính trị",
-        },
-        {
-            "id": "TinHoc",
-            "labelText": "Tin học",
-        },
-        {
-            "id": "NoiTao",
-            "labelText": "Nơi tạo",
-        },
-        {
-            "id": "TuNhanXet",
-            "labelText": "Tự nhận xét",
-        },
-    ];
-
-    $scope.popoverLabel = '';
-    $scope.popoverid = '';
-    $scope.commentTextarea = '';
-    var matchedLabel = [];
-    $scope.openPopover = function (popoverId) {
-        matchedLabel = $scope.popoverLabels.find(function (item) {
-            return item.id === popoverId;
-        });
-        $scope.pp.id = matchedLabel.id;
-        $scope.popoverid = matchedLabel.id;
-        if (matchedLabel) {
-            $scope.popoverLabel = matchedLabel.labelText;
-            $scope.commentTextarea = matchedLabel.comment;
-        }
-    };
-    
-    $scope.submit = function () {
-        if ($scope.pp.id !== '' && $scope.pp.comment !== '') {
-            $scope.addJson();
-        }
-    };
-
-    $scope.closePopover = function () {
-        if ($scope.popoverid === matchedLabel.id) {
-            delete $scope.popoverLabels;
-        }
-    };
-
-    $scope.ImportFile = function (data) {
-        dataserviceJoinParty.UpdateOrCreateUserfileJson(data, function (rs) {
             rs = rs.data;
             if (rs.Error) {
                 App.toastrError(rs.Title);
@@ -1368,6 +1213,14 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $http.get(jsonUrl).then(function (response) {
             $scope.jsonGuide = response.data;
             console.log($scope.jsonGuide);
+            $.each($scope.jsonGuide, function(index, item) {
+            // Tìm thẻ <i> có id trùng với id của phần tử
+            var $icon = $('#' + item.id+'.fa.fa-info-circle');
+            // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+            if ($icon.length > 0) {
+                $icon.css('color', 'red');
+            }
+        });
         }).catch(function (error) {
             console.error('Lỗi khi tải dữ liệu JSON:', error);
         });
@@ -1382,7 +1235,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     $('.icon-clickable').click(function () {
         var id = $(this).attr('id');
         $scope.handleUserClick(id);
-        $scope.$apply();
     });
 
     $scope.handleUserClick = function (id) {
@@ -1394,6 +1246,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.matchedItemss= $scope.jsonGuide.filter(function (item) {
             return item.id === id;
         });
+        console.log('$scope.matchedItemss:',$scope.matchedItemss)
+        $scope.$apply();
     };
 
     $scope.downloadFile = function (file) {
@@ -1565,6 +1419,11 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 rs = rs.data;
                 if (rs.Error) {
                     App.toastrError(rs.Title);
+                    var $icon = $('#' + $scope.pp.id+'.fa.fa-info-circle');
+                    // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+                    if ($icon.length > 0) {
+                        $icon.css('color', 'red');
+                    }
                 }
                 else {
                     App.toastrSuccess(rs.Title);
@@ -1703,19 +1562,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     };
     
     $scope.addToPersonalHistory = function () {
-        $scope.err=false
         if($scope.selectedPersonHistory.Begin==null||$scope.selectedPersonHistory.Begin==undefined||$scope.selectedPersonHistory.Begin==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedPersonHistory.End==null||$scope.selectedPersonHistory.End==undefined||$scope.selectedPersonHistory.End==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedPersonHistory.Content==null||$scope.selectedPersonHistory.Content==undefined||$scope.selectedPersonHistory.Content==''){
-            $scope.err=true
-        }
-        
-        if($scope.err){
-            App.toastrError("Bạn chưa nhập đủ thông tin")
             return
         }
         var model = {}
@@ -2164,7 +2017,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.model.PlaceTimeRecognize = $scope.Introducer.PlaceTimeRecognize;
             $scope.model.ProfileCode = $scope.infUser.ResumeNumber;
             $scope.model.Id = $scope.Introducer.Id;
-            
         };
         dataserviceJoinParty.insertIntroducer($scope.model, function (result) {
             result= result.data;
@@ -2344,33 +2196,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
     //add
     $scope.addToFamily = function () {
-        $scope.err=false
         if($scope.selectedFamily.Relation==null||$scope.selectedFamily.Relation==undefined||$scope.selectedFamily.Relation==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedFamily.Residence==null||$scope.selectedFamily.Residence==undefined||$scope.selectedFamily.Residence==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedFamily.Name==null||$scope.selectedFamily.Name==undefined||$scope.selectedFamily.Name==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedFamily.BirthYear==null||$scope.selectedFamily.BirthYear==undefined||$scope.selectedFamily.BirthYear==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedFamily.PoliticalAttitude==null||$scope.selectedFamily.PoliticalAttitude==undefined||$scope.selectedFamily.PoliticalAttitude==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedFamily.HomeTown==null||$scope.selectedFamily.HomeTown==undefined||$scope.selectedFamily.HomeTown==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedFamily.Job==null||$scope.selectedFamily.Job==undefined||$scope.selectedFamily.Job==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedFamily.WorkingProgress==null||$scope.selectedFamily.WorkingProgress==undefined||$scope.selectedFamily.WorkingProgress==''){
-            $scope.err=true
-        }
-        if($scope.err){
-            App.toastrError("Bạn chưa nhập đủ thông tin")
             return
         }
         var model = {}
@@ -2388,19 +2235,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.selectedFamily={}
     }
     $scope.addToAward = function () {
-        $scope.err=false
         if($scope.selectedLaudatory.MonthYear==null||$scope.selectedLaudatory.MonthYear==undefined||$scope.selectedLaudatory.MonthYear==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedLaudatory.GrantOfDecision==null||$scope.selectedLaudatory.GrantOfDecision==undefined||$scope.selectedLaudatory.GrantOfDecision==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedLaudatory.Reason==null||$scope.selectedLaudatory.Reason==undefined||$scope.selectedLaudatory.Reason==''){
-            $scope.err=true
-        }
-        
-        if($scope.err){
-            App.toastrError("Bạn chưa nhập đủ thông tin")
             return
         }
         var model = {}
@@ -2411,22 +2252,16 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.Laudatory.push(model)
     }
     $scope.addToBusinessNDuty = function () {
-        $scope.err=false
         if($scope.selectedWorkingTracking.From==null||$scope.selectedWorkingTracking.From==undefined||$scope.selectedWorkingTracking.From==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedWorkingTracking.To==null||$scope.selectedWorkingTracking.To==undefined||$scope.selectedWorkingTracking.To==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedWorkingTracking.Work==null||$scope.selectedWorkingTracking.Work==undefined||$scope.selectedWorkingTracking.Work==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedWorkingTracking.Role==null||$scope.selectedWorkingTracking.Role==undefined||$scope.selectedWorkingTracking.Role==''){
-            $scope.err=true
-        }
-        
-        if($scope.err){
-            App.toastrError("Bạn chưa nhập đủ thông tin")
             return
         }
         var model = {}
@@ -2439,16 +2274,11 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.BusinessNDuty.push(model)
     }
     $scope.addToHistorySpecialist = function () {
-        $scope.err=false
+        
         if($scope.selectedHistorySpecialist.MonthYear==null||$scope.selectedHistorySpecialist.MonthYear==undefined||$scope.selectedHistorySpecialist.MonthYear==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedHistorySpecialist.Content==null||$scope.selectedHistorySpecialist.Content==undefined||$scope.selectedHistorySpecialist.Content==''){
-            $scope.err=true
-        }
-        
-        if($scope.err){
-            App.toastrError("Bạn chưa nhập đủ thông tin")
             return
         }
         var obj = {};
@@ -2460,19 +2290,14 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.HistoricalFeatures.push(obj)
     }
     $scope.addToDisciplined = function () {
-        $scope.err=false
+        
         if($scope.selectedWarningDisciplined.MonthYear==null||$scope.selectedWarningDisciplined.MonthYear==undefined||$scope.selectedWarningDisciplined.MonthYear==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedWarningDisciplined.Reason==null||$scope.selectedWarningDisciplined.Reason==undefined||$scope.selectedWarningDisciplined.Reason==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedWarningDisciplined.GrantOfDecision==null||$scope.selectedWarningDisciplined.GrantOfDecision==undefined||$scope.selectedWarningDisciplined.GrantOfDecision==''){
-            $scope.err=true
-        }
-        
-        if($scope.err){
-            App.toastrError("Bạn chưa nhập đủ thông tin")
             return
         }
         var obj = {};
@@ -2485,21 +2310,17 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.Disciplined.push(obj)
     }
     $scope.addToTrainingCertificatedPass = function () {
-        $scope.err=false
+        
         if($scope.selectedTrainingCertificatedPass.From==null||$scope.selectedTrainingCertificatedPass.From==undefined||$scope.selectedTrainingCertificatedPass.From==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedTrainingCertificatedPass.To==null||$scope.selectedTrainingCertificatedPass.To==undefined||$scope.selectedTrainingCertificatedPass.To==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedTrainingCertificatedPass.SchoolName==null||$scope.selectedTrainingCertificatedPass.SchoolName==undefined||$scope.selectedTrainingCertificatedPass.SchoolName==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedTrainingCertificatedPass.Certificate==null||$scope.selectedTrainingCertificatedPass.Certificate==undefined||$scope.selectedTrainingCertificatedPass.Certificate==''){
-            $scope.err=true
-        }
-        if($scope.err){
-            App.toastrError("Bạn chưa nhập đủ thông tin")
             return
         }
         var obj = {};
@@ -2514,21 +2335,17 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.PassedTrainingClasses.push(obj)
     }
     $scope.addToGoAboard = function () {
-        $scope.err=false
+        
         if($scope.selectedGoAboard.From==null||$scope.selectedGoAboard.From==undefined||$scope.selectedGoAboard.From==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedGoAboard.To==null||$scope.selectedGoAboard.To==undefined||$scope.selectedGoAboard.To==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedGoAboard.Contact==null||$scope.selectedGoAboard.Contact==undefined||$scope.selectedGoAboard.Contact==''){
-            $scope.err=true
+            return
         }
         if($scope.selectedGoAboard.Country==null||$scope.selectedGoAboard.Country==undefined||$scope.selectedGoAboard.Country==''){
-            $scope.err=true
-        }
-        if($scope.err){
-            App.toastrError("Bạn chưa nhập đủ thông tin")
             return
         }
         var obj = {};
@@ -2806,7 +2623,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             var resultImp = await fetch("/UserProfile/Import", requestOptions);
             var txt = await resultImp.text();
             $scope.defaultRTE
-            console.log($scope.defaultRTE)
+            // console.log($scope.defaultRTE)
             $scope.JSONobjj = handleTextUpload(txt);
             if($scope.JSONobjj = []) {
                 App.toastrError("File bạn tải không hợp lệ");
