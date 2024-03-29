@@ -124,9 +124,16 @@ namespace III.Admin.Controllers
             var rs = new JMessage { Error = false, };
             try
             {
-                // Đường dẫn tới file JSON
-                string filePath = _hostingEnvironment.WebRootPath + "/uploads/json/reviewprofile_" + ResumeNumber + ".json";
-                //lấy json
+                string folderPath = "/uploads/json/";
+                string fileName = "reviewprofile_" + ResumeNumber + ".json";
+                string filePath = folderPath + fileName;
+
+                // Kiểm tra xem thư mục chứa file có tồn tại không
+                if (!Directory.Exists(_hostingEnvironment.WebRootPath + folderPath))
+                {
+                    // Nếu không tồn tại, tạo thư mục mới
+                    Directory.CreateDirectory(_hostingEnvironment.WebRootPath + folderPath);
+                }
                 if (System.IO.File.Exists(filePath))
                 {
                     // Đọc dữ liệu từ file JSON
