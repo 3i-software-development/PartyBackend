@@ -3397,6 +3397,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         obj.firstChild.contentEditable = 'false'
 
     }, 50);
+    }
 });
 
 app.controller('log-status-wf-full', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataserviceJoinParty, para) {
