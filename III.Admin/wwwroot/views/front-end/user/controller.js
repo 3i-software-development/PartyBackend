@@ -938,6 +938,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         // Kích hoạt sự kiện click trên phần tử `<a>` để tải xuống tệp JSON
         downloadLink.click();
     }
+});
 
 
     //Thêm data vào PersonalHistory
@@ -2871,7 +2872,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }, 50);
 
 
-});
 app.directive("choosePosition", function (dataservice) {
     return {
         restrict: "AE",
