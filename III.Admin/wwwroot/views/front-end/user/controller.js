@@ -753,7 +753,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.SelectRankAcademic = function (item) {
         $scope.infUser.LevelEducation.RankAcademic = item;
         $scope.FilterRankAcademic = [];
-
     };
 
     //Autocomplete lý luận chính trị
@@ -1716,7 +1715,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         } if ($scope.GroupUser == "" || $scope.GroupUser == null || $scope.GroupUser == undefined) {
             $scope.err = true
             App.toastrError("Bạn chưa chọn nhóm chi bộ để xử lý")
-        }
+        } 
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
         if ($scope.err == false) {
             if ($scope.UserName != null && $scope.UserName != undefined) {
@@ -1781,18 +1780,18 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
     }
     $scope.addToPersonalHistory = function () {
-        if ($scope.selectedPersonHistory.Begin == null || $scope.selectedPersonHistory.Begin == undefined || $scope.selectedPersonHistory.Begin == '') {
+        if ($scope.selectedPersonHistory.From == null || $scope.selectedPersonHistory.From == undefined || $scope.selectedPersonHistory.From == '') {
             return
         }
-        if ($scope.selectedPersonHistory.End == null || $scope.selectedPersonHistory.End == undefined || $scope.selectedPersonHistory.End == '') {
+        if ($scope.selectedPersonHistory.To == null || $scope.selectedPersonHistory.To == undefined || $scope.selectedPersonHistory.To == '') {
             return
         }
         if ($scope.selectedPersonHistory.Content == null || $scope.selectedPersonHistory.Content == undefined || $scope.selectedPersonHistory.Content == '') {
             return
         }
         var model = {}
-        model.Begin = $scope.selectedPersonHistory.Begin
-        model.End = $scope.selectedPersonHistory.End
+        model.Begin = $scope.selectedPersonHistory.From
+        model.End = $scope.selectedPersonHistory.To
         model.Content = $scope.selectedPersonHistory.Content
         model.Id = 0;
         $scope.PersonalHistory.push(model)
@@ -1828,7 +1827,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         if ($scope.selectedWarningDisciplined.MonthYear == null || $scope.selectedWarningDisciplined.MonthYear == undefined || $scope.selectedWarningDisciplined.MonthYear == '') {
             return
         }
-        if ($scope.selectedWarningDisciplined.Reason == null || $scope.selectedWarningDisciplined.Reason == undefined || $scope.selectedWarningDisciplined.Reason == '') {
+        if ($scope.selectedWarningDisciplined.DisciplineReason == null || $scope.selectedWarningDisciplined.DisciplineReason == undefined || $scope.selectedWarningDisciplined.DisciplineReason == '') {
             return
         }
         if ($scope.selectedWarningDisciplined.GrantOfDecision == null || $scope.selectedWarningDisciplined.GrantOfDecision == undefined || $scope.selectedWarningDisciplined.GrantOfDecision == '') {
@@ -1837,7 +1836,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         var model = {}
         model.MonthYear = $scope.selectedWarningDisciplined.MonthYear
         model.GrantOfDecision = $scope.selectedWarningDisciplined.GrantOfDecision
-        model.Reason = $scope.selectedWarningDisciplined.Reason
+        model.Reason = $scope.selectedWarningDisciplined.DisciplineReason
         model.Id = 0;
         $scope.Disciplined.push(model)
     }
