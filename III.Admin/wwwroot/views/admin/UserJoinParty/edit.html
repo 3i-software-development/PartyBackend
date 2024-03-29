@@ -200,6 +200,66 @@
         color: red; /* Chuyển màu thành đỏ khi hover vào */
         cursor: pointer; /* Biến con trỏ thành hình bàn tay khi hover vào */
     }
+    /*Style for switch*/
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 50px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 </style>
 <div class="portlet-body form row" style="margin-top: 15px">
     <!--<input type="button" ng-click="addJson()" value="add">-->
@@ -221,23 +281,22 @@
         </div>
         <div class="col-md-3 mb-10">
             <div class="text-center pull-right">
-                <a href="" ng-click="uploadFile()">
+                <a href="" ng-click="SaveJson ? uploadJsonFile() : uploadFile()">
                     <i class="fa fa-download" aria-hidden="true"></i>
-                    <span style="font-size:16px; font-weight: 500;">Load dữ liệu</span>
+                    <span style="font-size:16px; font-weight: 500;">{{ SaveJson ? 'Load dữ liệu JSON' : 'Load dữ liệu' }}</span>
                 </a>
             </div>
         </div>
 
         <div class="col-md-3 mb-10">
-        <label style="font-size:16px; font-weight: 500;"> Lưu dữ liệu vào file Json </label>
-        <label class="switch">
+            <label style="font-size:16px; font-weight: 500;">
+                {{ SaveJson ? 'Lưu dữ liệu vào file Json' : 'Lưu dữ liệu vào Database' }}
+            </label>
+            <label class="switch">
             <input type="checkbox" ng-model="SaveJson">
             <span style="height: 32px; width: 60px;" class="slider round"></span>
           </label>
-          <a style="margin-left: 10px;" href="" ng-click="saveToJson()">
-            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i>
-            <span style="font-size:16px; font-weight: 500;">Lưu</span>
-        </a>
+          
         </div>
        
         <!-- trạng thái -->
@@ -266,15 +325,15 @@
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
                                     <!-- Icon user -->
-                                    <i class="fa fa-user" id="currentName" ng-click="openPopover('currentName');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-user icon-clickable" id="HovaTen" ng-click="openPopover('HovaTen')" uib-popover-template="'popoverTemplate.html'" popover-placement="right"></i>
 
                                     <!-- Label Họ và tên -->
                                     <label class="control-label require custom-title-code-bold displayInfo" for="inputName">Họ và tên</label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="currentName" title="Popover Header" popover-placement="bottom-left"
-                                            uib-popover="Họ tên của bạn là: {{infUser.LastName}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <i class="fa fa-info-circle" id="currentName" title="Popover Header" popover-placement="bottom-left"
+                                            uib-popover="Họ tên của bạn là: {{infUser.LastName}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
 
                                         <input class="displayInfo speechInput" name="CusCode"
                                                ng-model="infUser.LastName" type="text" placeholder="Họ và tên"
@@ -288,7 +347,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-calendar icon-clickable" id="dateOfBird" ng-click="openPopover('dateOfBird')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-calendar icon-clickable" id="NgaySinh" ng-click="openPopover('NgaySinh')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="click" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class=" displayInfo control-label require custom-title-code-bold">
                                         Ngày
                                         sinh
@@ -296,9 +355,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="dateOfBird" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="dateOfBird" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Ngày sinh của bạn là: {{infUser.Birthday}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"> 
+                                           uib-popover="Ngày sinh của bạn là: {{infUser.Birthday}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}">
 
                                         </i>
                                         <input class="displayInfo" name="CusCode" ng-model="infUser.Birthday"
@@ -309,17 +368,17 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-venus-mars icon-clickable" id="gender" ng-click="openPopover('gender')" uib-popover-template="'popoverTemplate.html'" popover-placement="right"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold" popover-trigger="outsideClick">
+                                    <i class="fa fa-venus-mars icon-clickable" id="GioiTinh" ng-click="openPopover('GioiTinh')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
                                         Giới
                                         tính
                                     </label>
                                 </div>
                                 <div class="col-md-8 ">
                                     <div class="br24 form-control custom-title-code-bold " style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="gender" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="gender" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Giới tính bạn chọn là: {{infUser.Sex}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                           uib-popover="Giới tính bạn chọn là: {{infUser.Sex}}. {{matchedItems[0].guide}}">
                                         </i>
                                         <input id="tags" class="displayInfo speechInput" name="CusCode"
                                                ng-model="infUser.Sex" type="text" placeholder="Giới tính"
@@ -337,7 +396,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fas fa-phone icon-clickable" id="phone" ng-click="openPopover('phone')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fas fa-phone icon-clickable" id="SDT" ng-click="openPopover('SDT')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class=" displayInfo control-label require custom-title-code-bold">
                                         Số điện
                                         thoại
@@ -345,9 +404,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="phone" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="phone" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Số điện thoại của bạn là: {{infUser.Phone}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Sdt của bạn là: {{infUser.Phone}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.Phone" type="text"
                                                placeholder="Số điện thoại" ng-required="true">
@@ -360,17 +419,17 @@
 
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-map-marker icon-clickable" id="noiSinh" ng-click="openPopover('noiSinh')" uib-popover-template="'popoverTemplate.html'" popover-placement="right"></i>
-                                    <label class=" displayInfo control-label require custom-title-code-bold" popover-trigger="outsideClick">
+                                    <i class="fa fa-map-marker icon-clickable" id="NoiSinh" ng-click="openPopover('NoiSinh')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
+                                    <label class=" displayInfo control-label require custom-title-code-bold">
                                         Nơi
                                         sinh
                                     </label>
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="noiSinh" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="noiSinh" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Nơi sinh của bạn là: {{infUser.PlaceofBirth}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                           uib-popover="Nơi sinh của bạn là: {{infUser.PlaceofBirth}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}">
                                         </i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.PlaceofBirth" type="text"
@@ -383,7 +442,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-map-marker icon-clickable" id="queQuan" ng-click="openPopover('queQuan')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-map-marker icon-clickable" id="QueQuan" ng-click="openPopover('QueQuan')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Quê
                                         quán
@@ -393,7 +452,7 @@
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                         <i class="fa fa-info-circle icon-clickable" id="queQuan" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                           uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}">
                                         </i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.HomeTown" type="text"
@@ -407,7 +466,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-home icon-clickable" id="diaChiThuongTru" ng-click="openPopover('diaChiThuongTru')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-home icon-clickable" id="ThuongTru" ng-click="openPopover('ThuongTru')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Địa chỉ
                                         thường trú
@@ -417,7 +476,7 @@
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                         <i class="fa fa-info-circle icon-clickable" id="diaChiThuongTru" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                           uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}">
                                         </i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.Residence" type="text"
@@ -431,7 +490,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-home icon-clickable" id="diaChiTamTru" ng-click="openPopover('diaChiTamTru')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-home icon-clickable" id="TamTru" ng-click="openPopover('TamTru')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Địa chỉ
                                         tạm trú
@@ -439,9 +498,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="diaChiTamTru" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="diaChiTamTru" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddress}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                           uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddress}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}">
                                         </i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.TemporaryAddress" type="text"
@@ -453,7 +512,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-users icon-clickable" id="job" ng-click="openPopover('job')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-users icon-clickable" id="CVHT" ng-click="openPopover('CVHT')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class=" displayInfo control-label require custom-title-code-bold">
                                         Công
                                         việc hiện tại
@@ -461,9 +520,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="job" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="job" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Công việc hiện tại của bạn của bạn là: {{infUser.NowEmployee}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Công việc hiện tại của bạn của bạn là: {{infUser.NowEmployee}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" name="CusCode" ng-model="infUser.NowEmployee"
                                                type="text" ng-change="filterItems()"
                                                placeholder="Công việc hiện tại" ng-required="true">
@@ -480,7 +539,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-globe icon-clickable" id="nation" ng-click="openPopover('nation')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-globe icon-clickable" id="DanToc" ng-click="openPopover('DanToc')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class=" displayInfo control-label require custom-title-code-bold">
                                         Dân
                                         tộc
@@ -488,9 +547,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="nation" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="nation" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Dân tộc của bạn là: {{infUser.Nation}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"  popover-trigger="outsideClick"></i>
+                                           uib-popover="Dân tộc của bạn là: {{infUser.Nation}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" name="CusCode" ng-model="infUser.Nation"
                                                ng-change="filterNation()" type="text" placeholder="Dân tộc"
                                                ng-required="true">
@@ -506,7 +565,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-plus-square icon-clickable" id="religion" ng-click="openPopover('religion')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-plus-square icon-clickable" id="TonGiao" ng-click="openPopover('TonGiao')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Tôn
                                         giáo
@@ -514,9 +573,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="religion" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="religion" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Tôn giáo của bạn là: {{infUser.Religion}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Tôn giáo của bạn là: {{infUser.Religion}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" name="CusCode"
                                                ng-change="filterItemReligions()" ng-model="infUser.Religion"
                                                type="text" placeholder="Tôn giáo" ng-required="true">
@@ -539,7 +598,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="display:flex">
-                                        <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
+                                        <i class="fa fa-info-circle" data-bs-toggle="popover"
                                            title="Popover Header" data-bs-placement="bottom"
                                            data-bs-content="Ví dụ: 'Hà Nội'"
                                            style="vertical-align: 7px; display: flex; align-items: center;"></i>
@@ -551,7 +610,7 @@
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-user icon-clickable" id="firstName" ng-click="openPopover('firstName')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-user icon-clickable" id="HovaTenKS" ng-click="openPopover('HovaTenKS')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Họ và
                                         tên khai sinh
@@ -559,9 +618,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="firstName" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="firstName" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Tên khai sinh của bạn là: {{infUser.FirstName}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Tên khai sinh của bạn là: {{infUser.FirstName}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" name="CusCode" ng-model="infUser.FirstName"
                                                type="text" placeholder="Họ và tên khai sinh" ng-required="true">
                                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
@@ -572,7 +631,7 @@
 
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap icon-clickable" id="generalEducation" ng-click="openPopover('generalEducation')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="GDPT" ng-click="openPopover('GDPT')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Giáo dục
                                         phổ thông
@@ -580,9 +639,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="generalEducation"
+                                        <i class="fa fa-info-circle" id="generalEducation"
                                            title="Popover Header" popover-placement="bottom-left"
-                                           uib-popover="Giáo dục phổ thông của bạn là: {{infUser.LevelEducation.GeneralEducation}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Giáo dục phổ thông của bạn là: {{infUser.LevelEducation.GeneralEducation}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" name="CusCode"
                                                ng-change="filterGeneralEducation()"
                                                ng-model="infUser.LevelEducation.GeneralEducation" type="text"
@@ -600,7 +659,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap icon-clickable" id="undergraduate" ng-click="openPopover('undergraduate')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="GDDH" ng-click="openPopover('GDDH')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Giáo dục
                                         đại học
@@ -608,9 +667,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="undergraduate" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="undergraduate" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Tôt nghiệp đại học tại: {{infUser.LevelEducation.Undergraduate}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Tôt nghiệp đại học tại: {{infUser.LevelEducation.Undergraduate}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                ng-change="filterUndergraduate()"
                                                ng-model="infUser.LevelEducation.Undergraduate" type="text"
@@ -628,7 +687,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap icon-clickable" id="rankAcademic" ng-click="openPopover('rankAcademic')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="HocHam" ng-click="openPopover('HocHam')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class=" displayInfo control-label require custom-title-code-bold">
                                         Học
                                         hàm
@@ -636,9 +695,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="rankAcademic" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="rankAcademic" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Học hàm của bạn là: {{infUser.LevelEducation.RankAcademic}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Học hàm của bạn là: {{infUser.LevelEducation.RankAcademic}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                ng-change="filterRankAcademic()"
                                                ng-model="infUser.LevelEducation.RankAcademic" type="text"
@@ -656,7 +715,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap icon-clickable" id="vocationalTraining" ng-click="openPopover('vocationalTraining')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="GDNN" ng-click="openPopover('GDNN')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Giáo dục
                                         nghề nghiệp
@@ -664,9 +723,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="vocationalTraining"
+                                        <i class="fa fa-info-circle" id="vocationalTraining"
                                            title="Popover Header" popover-placement="bottom-left"
-                                           uib-popover="Giáo dục nghề nghiệp của bạn là: {{infUser.LevelEducation.VocationalTraining}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Giáo dục nghề nghiệp của bạn là: {{infUser.LevelEducation.VocationalTraining}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                ng-model="infUser.LevelEducation.VocationalTraining" type="text"
                                                placeholder="Giáo dục nghề nghiệp" />
@@ -677,7 +736,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap icon-clickable" id="foreignLanguage" ng-click="openPopover('foreignLanguage')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="NgoaiNgu" ng-click="openPopover('NgoaiNgu')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Ngoại
                                         ngữ
@@ -685,9 +744,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="foreignLanguage" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="foreignLanguage" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Ngoại ngữ của bạn là: {{infUser.LevelEducation.ForeignLanguage}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Ngoại ngữ của bạn là: {{infUser.LevelEducation.ForeignLanguage}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                ng-model="infUser.LevelEducation.ForeignLanguage" type="text"
                                                ng-change="filterForeignLanguage()" placeholder="Ngoại ngữ" />
@@ -702,7 +761,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap icon-clickable" id="minorityLanguage" ng-click="openPopover('minorityLanguage')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="TDTTS" ng-click="openPopover('TDTTS')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Tiếng
                                         dân tộc thiểu số
@@ -710,9 +769,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="minorityLanguage"
+                                        <i class="fa fa-info-circle" id="minorityLanguage"
                                            title="Popover Header" popover-placement="bottom-left"
-                                           uib-popover="Tiếng dân tộc thiểu số của bạn là: {{infUser.LevelEducation.MinorityLanguage}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Tiếng dân tộc thiểu số của bạn là: {{infUser.LevelEducation.MinorityLanguage}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                ng-change="filterMinorityLanguage()"
                                                ng-model="infUser.LevelEducation.MinorityLanguage" type="text"
@@ -729,7 +788,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-graduation-cap icon-clickable" id="politicalTheory" ng-click="openPopover('politicalTheory')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="LLCT" ng-click="openPopover('LLCT')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Lý luận
                                         chính trị
@@ -737,9 +796,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="politicalTheory" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="politicalTheory" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Lý luận chính trị của bạn là: {{infUser.LevelEducation.PoliticalTheory}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Lý luận chính trị của bạn là: {{infUser.LevelEducation.PoliticalTheory}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                ng-change="filterPoliticalTheory()"
                                                ng-model="infUser.LevelEducation.PoliticalTheory" type="text"
@@ -757,7 +816,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-graduation-cap icon-clickable" id="it" ng-click="openPopover('it')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="TinHoc" ng-click="openPopover('TinHoc')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Tin
                                         học
@@ -765,9 +824,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="it" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="it" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Tin học của bạn là: {{infUser.LevelEducation.It}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Tôn giáo của bạn là: {{infUser.LevelEducation.It}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                ng-change="filterIt()" ng-model="infUser.LevelEducation.It"
                                                type="text" placeholder="Tin học" />
@@ -783,7 +842,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-map-marker icon-clickable" id="place" ng-click="openPopover('place')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-map-marker icon-clickable" id="NoiTao" ng-click="openPopover('NoiTao')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Nơi
                                         tạo
@@ -791,9 +850,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="place" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="place" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Nơi bạn tạo phiếu: {{PlaceCreatedTime.place}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Nơi bạn tạo phiếu: {{PlaceCreatedTime.place}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                ng-change="filterplace()" ng-model="PlaceCreatedTime.place"
                                                type="text" placeholder="Nơi tạo" />
@@ -810,7 +869,7 @@
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-pencil-square-o icon-clickable" id="selfComment" ng-click="openPopover('selfComment')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <i class="fa fa-pencil-square-o icon-clickable" id="TuNhanXet" ng-click="openPopover('TuNhanXet')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" ng-style="{'color': matchedItemss[0].comment ? 'red' : 'inherit'}"></i>
                                     <label class="displayInfo control-label require custom-title-code-bold">
                                         Tự nhận
                                         xét
@@ -818,9 +877,9 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                        <i class="fa fa-info-circle  icon-clickable" id="selfComment" title="Popover Header"
+                                        <i class="fa fa-info-circle" id="selfComment" title="Popover Header"
                                            popover-placement="bottom-left"
-                                           uib-popover="Tự nhận xét của bạn là: {{SelfComment.context}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                           uib-popover="Tôn giáo của bạn là: {{SelfComment.context}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"></i>
                                         <input class="displayInfo" name="CusCode" ng-model="SelfComment.context"
                                                type="text" placeholder="Tự nhận xét" ng-required="true">
 
@@ -840,7 +899,7 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="br24 form-control custom-title-code-bold" style="display:flex">
-                                        <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
+                                        <i class="fa fa-info-circle" data-bs-toggle="popover"
                                            title="Popover Header" data-bs-placement="bottom"
                                            data-bs-content="Ví dụ: 'Hà Nội'"
                                            style="vertical-align: 7px; display: flex; align-items: center;"></i>
@@ -962,6 +1021,7 @@
 
 <script type="text/ng-template" id="popoverTemplate.html">
     <div class="custom-popover-content">
+        <i class="fa fa-times close-icon" ng-click="closePopover()" style="margin-left:210px"></i><br />
         <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
         <i class="fa fa-microphone" voice-recognition style="padding-right: 85px"></i>
         <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
