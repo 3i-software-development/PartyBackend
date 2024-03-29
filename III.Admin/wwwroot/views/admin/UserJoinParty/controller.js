@@ -2806,7 +2806,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             var resultImp = await fetch("/UserProfile/Import", requestOptions);
             var txt = await resultImp.text();
             $scope.defaultRTE
-            // console.log($scope.defaultRTE)
+            console.log($scope.defaultRTE)
             $scope.JSONobjj = handleTextUpload(txt);
             if($scope.JSONobjj = []) {
                 App.toastrError("File bạn tải không hợp lệ");
