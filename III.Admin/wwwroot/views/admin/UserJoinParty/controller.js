@@ -957,7 +957,7 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
 
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $http) { 
 
-     $scope.popoverLabels = [
+    $scope.popoverLabels = [
         {
             "id": "currentName",
             "labelText": "Họ và tên",
