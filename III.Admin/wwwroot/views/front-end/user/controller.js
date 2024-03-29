@@ -280,24 +280,19 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     console.log("indeeeeee");
 
     $scope.GroupUsers = [];
-    $scope.getGroupUsers = function () {
+    $scope.getGrupUsers = function () {
         dataservice.GetGroupUser(function (rs) {
             console.log(rs)
             $scope.GroupUsers = rs.data;
         })
-        $http.get('/views/front-end/user/Guide.json').then(function (response) {
-            $scope.jsonParse = response.data; // Gán dữ liệu từ tệp JSON vào biến $scope.jsonParse
-            console.log($scope.jsonParse);
-        }).catch(function (error) {
-            console.error('Lỗi khi tải dữ liệu JSON:', error);
-        });
     }
     $scope.onItemSelect = function (item) {
         $scope.GroupUser = item.Code;
     }
-    $scope.getGroupUsers();
+    $scope.getGrupUsers();
 
     
+
     $scope.$watch('Voice', function (newValue, oldValue) {
         //nếu có sự thay đổi thì dựa vào $scope.input để thêm 
     });
@@ -321,6 +316,37 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.infUser.NowEmployee = item;
         $scope.filteredItems = [];
     };
+
+    $('body').on('click', function (event) {
+        // Nếu click vào ô input, trả về ngay
+        if ($(event.target).is('input[type="text"]')) {
+            return;
+        }
+
+        // Kiểm tra xem phần tử được click có là con của ul.autocomplete-list hay không
+        if (!$(event.target).closest('ul.autocomplete-list').length) {
+            // Xử lý sự kiện click ở đây cho các phần tử không phải là con của ul.autocomplete-list
+           
+            $scope.filteredItemReligions = [];
+            $scope.FilterGender = [];
+            $scope.filteredItems = [];
+            $scope.FilterNation = [];
+            $scope.FilterGeneralEducation = [];
+            $scope.FilterUndergraduate = [];
+            $scope.FilterRankAcademic = [];
+            $scope.FilterForeignLanguage = [];
+            $scope.FilterMinorityLanguage = [];
+            $scope.FilterPoliticalTheory = [];
+            $scope.FilterIt = [];
+            $scope.Filterplace = [];
+            $scope.FilterRelation = [];
+            $scope.FilterCountry = [];
+            $scope.$digest();
+        } 
+       
+    });
+
+
     //Autocomplete tôn giáo
     $scope.filteredItemReligions = [];
     $scope.filterItemReligions = function () {
@@ -332,11 +358,219 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.selectItemReligion = function (item) {
         $scope.infUser.Religion = item;
         $scope.filteredItemReligions = [];
+       
+
     };
-    $scope.jsonParse = [];
+    $scope.jsonParse = [
+        {
+            id: "currentName",
+            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
+        },
+        {
+            id: "gender",
+            guide: "Bạn cần chọn giới tính của mình, nếu không phải nam hoặc nữ hãy chọn khác. Ví dụ: Nam"
+        },
+        {
+            id: "firstName",
+            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
+        },
+        {
+            id: "dateOfBird",
+            guide: "Bạn cần nhập đầy đủ ngày-tháng-năm.Ví dụ: 12-04-1954"
+        },
+        {
+            id: "phone",
+            guide: "Bạn cần nhập đầy đủ số điện thoại.Ví dụ: 0397638979"
+        },
+        {
+            id: "noiSinh",
+            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
+        },
+        {
+            id: "queQuan",
+            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
+        },
+        {
+            id: "diaChiThuongTru",
+            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
+        },
+        {
+            id: "diaChiTamTru",
+            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
+        },
+        {
+            id: "job",
+            guide: "Bạn cần nhập đầy đủ công việc và vị trí tại công ty. Ví dụ: Chủ tịch Quốc hội nước CHXHCN Việt Nam"
+        },
+        {
+            id: "nation",
+            guide: "Bạn cần nhập tên đầy đủ của dân tộc.Ví dụ: Kinh"
+        },
+        {
+            id: "religion",
+            guide: "Bạn cần nhập đầy đủ tên của tôn giáo.Ví dụ: Phật giáo"
+        },
+        {
+            id: "selfComment",
+            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu"
+        },
 
-    
+        {
+            id: "generalEducation",
+            guide: "Bạn cần điền số lớp đã học/số lớp giáo dục phổ thông khi bạn học.Ví dụ: 12/12"
+        },
+        {
+            id: "undergraduate",
+            guide: "Bạn cần nhập đầy đủ tên trường mình giáo dục đại học hoặc sau đại học.Ví dụ: Trường Đại học Văn hoá Sài Gòn, Trường Đại học Tài chính- Kế toán TP.Hồ Chí Minh "
+        },
+        {
+            id: "rankAcademic",
+            guide: "Bạn cần nhập đầy đủ học hàm.Ví dụ: Thạc sĩ"
+        },
+        {
+            id: "vocationalTraining",
+            guide: "Bạn cần nhập đầy đủ loại và nơi bạn học nghề.Ví dụ: Học may tại trường trường nghề Bách khoa Hà nội"
+        },
+        {
+            id: "foreignLanguage",
+            guide: "Bạn cần nhập đầy đủ các ngoại ngữ mà bạn biết.Ví dụ: tiếng Anh(Mĩ), tiếng Trung(Phồn thể)"
+        },
+        {
+            id: "minorityLanguage",
+            guide: "Bạn cần nhập đầy đủ các tiếng dân tộc thiểu số bạn biết.Ví dụ: tiếng Thái, tiếng Ê-đê"
+        },
+        {
+            id: "politicalTheory",
+            guide: "Bạn cần nhập đầy đủ bằng cấp lý luận chính trị.Ví dụ: Cao cấp lý luận chính trị"
+        },
+        {
+            id: "it",
+            guide: "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
+        },
+        {
+            id: "Relation",
+            guide: "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
+        },
+        {
+            id: "Name",
+            guide: "Bạn cần nhập rõ tên của người thân. Ví dụ: 'Trịnh Ngọc Thái'"
+        },
+        {
+            id: "BirthYear",
+            guide: "Bạn cần nhập rõ ngày tháng năm sinh, năm mất (nếu có, kèm theo lý do) của người thân. Ví dụ: '16-09-1940 - 20-3-2010 - Mất do tuổi cao sức yếu'"
+        },
 
+        {
+            id: "PoliticalAttitude",
+            guide: "Bạn cần nhập rõ thái độ chính trị của người thân. Ví dụ: 'Ủng hộ Cách mạng, trung thành tuyệt đối với lý tưởng mà Đảng đề ra'"
+        },
+        {
+            id: "HomeTown",
+            guide: "Bạn cần nhập rõ quê quán của người thân. Ví dụ: 'xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
+        },
+        {
+            id: "Residence",
+            guide: "Bạn cần nhập rõ nơi cứ trú của người thân. Ví dụ: 'Số nhà 56, thôn 8, xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
+        },
+
+        {
+            id: "FamilyJob",
+            guide: "Bạn cần nhập chức vụ  của người thân. Ví dụ: 'Giáo Viên'"
+        },
+        {
+            id: "WorkingProgress",
+            guide: "Bạn cần nhập chi tiết về quá trình công tác của người thân. Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'"
+        },
+
+        {
+            id: "Role",
+            guide: "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
+        },
+
+        {
+            id: "Content",
+            guide: "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
+        },
+        {
+            id: "AwardReason",
+            guide: "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
+        },
+
+        {
+            id: "MonthYear",
+            guide: "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+        },
+        {
+            id: "GrantOfDecision",
+            guide: "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
+        },
+        {
+            id: "DisciplineReason",
+            guide: "Bạn cần nhập lý do bị kỷ luật.Ví dụ: Gây rối trật tự, vi phạm quy định,..."
+        },
+        {
+            id: "SchoolName",
+            guide: "Bạn cần nhập tên trường bạn đã theo học.Ví dụ: Trường Đại học Sư Phạm Hà Nội"
+        },
+        {
+            id: "Class",
+            guide: "Bạn cần nhập tên lớp bạn đã theo học.Ví dụ: Lớp bổ túc kiến thức tin học văn phòng"
+        },
+
+        {
+            id: "Certificate",
+            guide: "Bạn cần nhập chứng chỉ mà bạn đã đạt được.Ví dụ: Chứng chỉ Tin học văn phòng"
+        },
+        {
+            id: "place",
+            guide: "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
+        },
+        {
+            id: "MenberFamilyName",
+            guide: "Bạn cần nhập họ va tên người thân của mình.Ví dụ: Nguyễn Văn A"
+        },
+        {
+            id: "Relation",
+            guide: "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố"
+        },
+        {
+            id: "selectedFamily.BirthYear",
+            guide: "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
+        },
+        {
+            id: "From",
+            guide: "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+        },
+        {
+            id: "To",
+            guide: "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+        },
+        {
+            id: "Contact",
+            guide: "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
+        },
+        {
+            id: "whichCountry",
+            guide: "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
+        },
+        {
+            id: "PlaceTimeRecognize",
+            guide: "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+        },
+        {
+            id: "PlaceTimeJoinParty",
+            guide: "Bạn có thể nhập ngày và nơi vào Đảng lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+        },
+        {
+            id: "PlaceTimeJoinUnion",
+            guide: "Bạn cần nhập ngày và nơi vào Đoàn.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+        },
+        {
+            id: "PersonIntroduced",
+            guide: "Bạn có thể ghi tên người giới thiệu vào Đảng và chức vụ của người giới thiệu. Ví dụ: Trịnh Ngọc Thái - Bí thư Đảng Uỷ "
+        },
+
+    ]
     //Autocomplete
     $scope.Gender = ['Nam', 'Nữ', 'Khác'];
     $scope.itemEmployees = [
@@ -519,7 +753,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.SelectRankAcademic = function (item) {
         $scope.infUser.LevelEducation.RankAcademic = item;
         $scope.FilterRankAcademic = [];
-
     };
 
     //Autocomplete lý luận chính trị
@@ -620,14 +853,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.$apply(); // Cần sử dụng $apply() để cập nhật scope
     });
     $scope.handleClick = function (id) {
-        // Kiểm tra nếu $scope.jsonParse không phải là một mảng
-        if (!Array.isArray($scope.jsonParse)) {
-            // Nếu không phải mảng, gán $scope.jsonParse thành một mảng trống
-            $scope.jsonParse = [];
-            console.warn('$scope.jsonParse không phải là một mảng. Đã gán thành một mảng trống.');
-        }
-
-        // Tiếp tục xử lý như bình thường
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
             return item.id === id;
         });
@@ -745,6 +970,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         // Kích hoạt sự kiện click trên phần tử `<a>` để tải xuống tệp JSON
         downloadLink.click();
     }
+
+
 
     //Thêm data vào PersonalHistory
     $scope.PersonalHistory = [];
@@ -1217,24 +1444,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     //     $scope.insertFamily();
     // }
 
-    $('.icon-clickable').click(function () {
-        var id = $(this).attr('id');
-        $scope.handleUserClick(id);
-    });
 
-    $scope.handleUserClick = function (id) {
-        if (!Array.isArray($scope.jsonGuide)) {
-            $scope.jsonGuide = [];
-            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
-        }
-
-        $scope.matchedItemss= $scope.jsonGuide.filter(function (item) {
-            return item.id === id;
-        });
-        console.log('$scope.matchedItemss:',$scope.matchedItemss)
-        $scope.$apply();
-    };
-    
     $scope.getPartyAdmissionProfileByUsername = function () {
         if ($scope.UserName == null || $scope.UserName == undefined) {
             //thông báo không lấy được username
@@ -1288,24 +1498,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     
                     $scope.infUser.PlaceWorking=rs.PlaceWorking;
                     console.log($scope.status);
-
-                    // Tạo đường dẫn đến tệp JSON
-                    var jsonUrl = `/uploads/json/reviewprofile_${$scope.infUser.ResumeNumber}.json`;
-
-                    $http.get(jsonUrl).then(function (response) {
-                        $scope.jsonGuide = response.data;
-                        console.log($scope.jsonGuide);
-                        $.each($scope.jsonGuide, function(index, item) {
-                        // Tìm thẻ <i> có id trùng với id của phần tử
-                        var $icon = $('#' + item.id+'.fa.fa-info-circle');
-                        // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
-                        if ($icon.length > 0) {
-                            $icon.css('color', 'red');
-                        }
-                    });
-                    }).catch(function (error) {
-                        console.error('Lỗi khi tải dữ liệu JSON:', error);
-                    });
 
                     if ($scope.infUser.ResumeNumber) {
                         $scope.getFamilyByProfileCode();
@@ -1523,7 +1715,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         } if ($scope.GroupUser == "" || $scope.GroupUser == null || $scope.GroupUser == undefined) {
             $scope.err = true
             App.toastrError("Bạn chưa chọn nhóm chi bộ để xử lý")
-        }
+        } 
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
         if ($scope.err == false) {
             if ($scope.UserName != null && $scope.UserName != undefined) {
@@ -1588,18 +1780,18 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
     }
     $scope.addToPersonalHistory = function () {
-        if ($scope.selectedPersonHistory.Begin == null || $scope.selectedPersonHistory.Begin == undefined || $scope.selectedPersonHistory.Begin == '') {
+        if ($scope.selectedPersonHistory.From == null || $scope.selectedPersonHistory.From == undefined || $scope.selectedPersonHistory.From == '') {
             return
         }
-        if ($scope.selectedPersonHistory.End == null || $scope.selectedPersonHistory.End == undefined || $scope.selectedPersonHistory.End == '') {
+        if ($scope.selectedPersonHistory.To == null || $scope.selectedPersonHistory.To == undefined || $scope.selectedPersonHistory.To == '') {
             return
         }
         if ($scope.selectedPersonHistory.Content == null || $scope.selectedPersonHistory.Content == undefined || $scope.selectedPersonHistory.Content == '') {
             return
         }
         var model = {}
-        model.Begin = $scope.selectedPersonHistory.Begin
-        model.End = $scope.selectedPersonHistory.End
+        model.Begin = $scope.selectedPersonHistory.From
+        model.End = $scope.selectedPersonHistory.To
         model.Content = $scope.selectedPersonHistory.Content
         model.Id = 0;
         $scope.PersonalHistory.push(model)
@@ -1635,7 +1827,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         if ($scope.selectedWarningDisciplined.MonthYear == null || $scope.selectedWarningDisciplined.MonthYear == undefined || $scope.selectedWarningDisciplined.MonthYear == '') {
             return
         }
-        if ($scope.selectedWarningDisciplined.Reason == null || $scope.selectedWarningDisciplined.Reason == undefined || $scope.selectedWarningDisciplined.Reason == '') {
+        if ($scope.selectedWarningDisciplined.DisciplineReason == null || $scope.selectedWarningDisciplined.DisciplineReason == undefined || $scope.selectedWarningDisciplined.DisciplineReason == '') {
             return
         }
         if ($scope.selectedWarningDisciplined.GrantOfDecision == null || $scope.selectedWarningDisciplined.GrantOfDecision == undefined || $scope.selectedWarningDisciplined.GrantOfDecision == '') {
@@ -1644,7 +1836,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         var model = {}
         model.MonthYear = $scope.selectedWarningDisciplined.MonthYear
         model.GrantOfDecision = $scope.selectedWarningDisciplined.GrantOfDecision
-        model.Reason = $scope.selectedWarningDisciplined.Reason
+        model.Reason = $scope.selectedWarningDisciplined.DisciplineReason
         model.Id = 0;
         $scope.Disciplined.push(model)
     }
@@ -2698,9 +2890,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.fileList = [];
 
-    setTimeout(async function () {
-        //  loadDate();
-        // initialize Rich Text Editor component
+    setTimeout(function () {
         $scope.defaultRTE = new ej.richtexteditor.RichTextEditor({
             height: '850px'
         });
@@ -2710,8 +2900,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         obj.firstChild.contentEditable = 'false'
 
     }, 50);
-});
 
+});
 app.directive("choosePosition", function (dataservice) {
     return {
         restrict: "AE",
