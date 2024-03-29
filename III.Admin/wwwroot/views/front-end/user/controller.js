@@ -287,9 +287,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         })
         $http.get('/views/front-end/user/Guide.json').then(function (response) {
             $scope.jsonParse = response.data; // Gán dữ liệu từ tệp JSON vào biến $scope.jsonParse
-            console.log($scope.jsonParse);
+            
         }).catch(function (error) {
-            console.error('Lỗi khi tải dữ liệu JSON:', error);
+            console.error('Lỗi khi tải dữ liệu JSON');
         });
     }
     $scope.onItemSelect = function (item) {
@@ -1531,7 +1531,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
                     $http.get(jsonUrl).then(function (response) {
                         $scope.jsonGuide = response.data;
-                        console.log($scope.jsonGuide);
                         $.each($scope.jsonGuide, function(index, item) {
                         // Tìm thẻ <i> có id trùng với id của phần tử
                         var $icon = $('#' + item.id+'.fa.fa-info-circle');
@@ -1541,7 +1540,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         }
                     });
                     }).catch(function (error) {
-                        console.error('Lỗi khi tải dữ liệu JSON:', error);
+                        console.error('Lỗi khi tải dữ liệu JSON');
                     });
 
                     if ($scope.infUser.ResumeNumber) {
