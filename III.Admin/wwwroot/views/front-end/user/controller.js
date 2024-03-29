@@ -316,6 +316,37 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.infUser.NowEmployee = item;
         $scope.filteredItems = [];
     };
+
+    $('body').on('click', function (event) {
+        // Nếu click vào ô input, trả về ngay
+        if ($(event.target).is('input[type="text"]')) {
+            return;
+        }
+
+        // Kiểm tra xem phần tử được click có là con của ul.autocomplete-list hay không
+        if (!$(event.target).closest('ul.autocomplete-list').length) {
+            // Xử lý sự kiện click ở đây cho các phần tử không phải là con của ul.autocomplete-list
+           
+            $scope.filteredItemReligions = [];
+            $scope.FilterGender = [];
+            $scope.filteredItems = [];
+            $scope.FilterNation = [];
+            $scope.FilterGeneralEducation = [];
+            $scope.FilterUndergraduate = [];
+            $scope.FilterRankAcademic = [];
+            $scope.FilterForeignLanguage = [];
+            $scope.FilterMinorityLanguage = [];
+            $scope.FilterPoliticalTheory = [];
+            $scope.FilterIt = [];
+            $scope.Filterplace = [];
+            $scope.FilterRelation = [];
+            $scope.FilterCountry = [];
+            $scope.$digest();
+        } 
+       
+    });
+
+
     //Autocomplete tôn giáo
     $scope.filteredItemReligions = [];
     $scope.filterItemReligions = function () {
@@ -327,6 +358,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.selectItemReligion = function (item) {
         $scope.infUser.Religion = item;
         $scope.filteredItemReligions = [];
+       
+
     };
     $scope.jsonParse = [
         {
