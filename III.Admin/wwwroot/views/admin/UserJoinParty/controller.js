@@ -720,11 +720,15 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
             if (!$scope.headerCompiled) {
                 $scope.headerCompiled = true;
                 $compile(angular.element(header).contents())($scope);
-                
+
                 $scope.initData()
+                
+                console.log(1);
             }
+            console.log(2);
         })
         .withOption('initComplete', function (settings, json) {
+            console.log(3);
         })
         .withOption('createdRow', function (row, data, dataIndex) {
             $compile(angular.element(row))($scope);
@@ -837,25 +841,26 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     vm.reloadData = reloadData;
     vm.dtInstance = {};
     setTimeout(function () {
-    }, 200);
-    $("#PostFromDate").datepicker({
-        inline: false,
-        autoclose: true,
-        format: "dd/mm/yyyy",
-        fontAwesome: true,
-    }).on('changeDate', function (selected) {
-        var maxDate = new Date(selected.date.valueOf());
-        $('#PostToDate').datepicker('setStartDate', maxDate);
-    });
-    $("#PostToDate").datepicker({
-        inline: false,
-        autoclose: true,
-        format: "dd/mm/yyyy",
-        fontAwesome: true,
-    }).on('changeDate', function (selected) {
-        var maxDate = new Date(selected.date.valueOf());
-        $('#PostFromDate').datepicker('setEndDate', maxDate);
-    });
+        $("#PostFromDate").datepicker({
+            inline: false,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            fontAwesome: true,
+        }).on('changeDate', function (selected) {
+            var maxDate = new Date(selected.date.valueOf());
+            $('#PostToDate').datepicker('setStartDate', maxDate);
+        });
+        $("#PostToDate").datepicker({
+            inline: false,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            fontAwesome: true,
+        }).on('changeDate', function (selected) {
+            var maxDate = new Date(selected.date.valueOf());
+            $('#PostFromDate').datepicker('setEndDate', maxDate);
+        });
+    }, 2000);
+    
 });
 
 app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $filter) {
@@ -1342,97 +1347,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
     };
 
-    $scope.popoverLabels = [
-        {
-            "id": "HovaTen",
-            "labelText": "Họ và tên",
-        },
-        {
-            "id": "NgaySinh",
-            "labelText": "Ngày sinh",
-        },
-        {
-            "id": "GioiTinh",
-            "labelText": "Giới tính",
-        },
-        {
-            "id": "SDT",
-            "labelText": "Số điện thoại",
-        },
-        {
-            "id": "NoiSinh",
-            "labelText": "Nơi sinh",
-        },
-        {
-            "id": "QueQuan",
-            "labelText": "Quê quán",
-        },
-        {
-            "id": "ThuongTru",
-            "labelText": "Thường trú",
-        },
-        {
-            "id": "TamTru",
-            "labelText": "Tam trú",
-        },
-        {
-            "id": "CVHT",
-            "labelText": "Công việc hiện tại",
-        },
-        {
-            "id": "DanToc",
-            "labelText": "Dân tộc",
-        },
-        {
-            "id": "TonGiao",
-            "labelText": "Tôn giáo",
-        },
-        {
-            "id": "HovaTenKS",
-            "labelText": "Họ và tên khai sinh",
-        },
-        {
-            "id": "GDPT",
-            "labelText": "Giáo dục phổ thông",
-        },
-        {
-            "id": "GDDH",
-            "labelText": "Giáo dục đại học",
-        },
-        {
-            "id": "HocHam",
-            "labelText": "Học hàm",
-        },
-        {
-            "id": "GDNN",
-            "labelText": "Giáo dục nghề nghiệp",
-        },
-        {
-            "id": "NgoaiNgu",
-            "labelText": "Ngoại ngữ",
-        },
-        {
-            "id": "TDTTS",
-            "labelText": "Tiếng dân tộc thiểu số",
-        },
-        {
-            "id": "LLCT",
-            "labelText": "Lý luận chính trị",
-        },
-        {
-            "id": "TinHoc",
-            "labelText": "Tin học",
-        },
-        {
-            "id": "NoiTao",
-            "labelText": "Nơi tạo",
-        },
-        {
-            "id": "TuNhanXet",
-            "labelText": "Tự nhận xét",
-        },
-    ];
-
     $scope.popoverLabel = '';
     $scope.popoverid = '';
     $scope.commentTextarea = '';
@@ -1656,30 +1570,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
                 $scope.getIntroducerOfPartyByProfileCode()
                 
-                $scope.getListFile();
-                
-                setTimeout(function () {
-                    $("#PersonalHistorysFromDate").datepicker({
-                        inline: false,
-                        autoclose: true,
-                        format: "dd-mm-yyyy",
-                        fontAwesome: true,
-                    }).on('changeDate', function (selected) {
-                        var maxDate = new Date(selected.date.valueOf());
-                        $('#PersonalHistorysToDate').datepicker('setStartDate', maxDate);
-                    });
-                    $("#PersonalHistorysToDate").datepicker({
-                        inline: false,
-                        autoclose: true,
-                        format: "dd-mm-yyyy",
-                        fontAwesome: true,
-                    }).on('changeDate', function (selected) {
-                        var maxDate = new Date(selected.date.valueOf());
-                        $('#PersonalHistorysFromDate').datepicker('setEndDate', maxDate);
-                    });
-                    
-                }, 500);
-                
+                $scope.getListFile();                
             })
 
     }

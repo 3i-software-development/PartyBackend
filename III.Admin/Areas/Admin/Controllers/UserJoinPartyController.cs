@@ -126,7 +126,7 @@ namespace III.Admin.Controllers
             {
                 string folderPath = "/uploads/json/";
                 string fileName = "reviewprofile_" + ResumeNumber + ".json";
-                string filePath = folderPath + fileName;
+                string filePath = _hostingEnvironment.WebRootPath + folderPath + fileName;
 
                 // Kiểm tra xem thư mục chứa file có tồn tại không
                 if (!Directory.Exists(_hostingEnvironment.WebRootPath + folderPath))
