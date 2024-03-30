@@ -1374,7 +1374,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             delete $scope.popoverLabels;
         }
     };
-    
+
     $scope.userGroup = [];
     $scope.fetchUserGroup = function () {
         dataserviceJoinParty.GetGroupUser(function (rs) {
@@ -1396,7 +1396,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
         $http.get(jsonUrl).then(function (response) {
             $scope.jsonGuide = response.data;
-            console.log($scope.jsonGuide);
             $.each($scope.jsonGuide, function(index, item) {
             // Tìm thẻ <i> có id trùng với id của phần tử
             var $icon = $('#' + item.id+'.fa.fa-info-circle');
@@ -1406,7 +1405,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             }
         });
         }).catch(function (error) {
-            console.error('Lỗi khi tải dữ liệu JSON:', error);
+            
         });
     };
 
@@ -2363,7 +2362,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         console.log("Vào");
     }
     //add
-    $scope.addToFamily = function () {
         $scope.addToFamily = function () {
             $scope.err = false
             if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation == '') {
@@ -2394,20 +2392,21 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 App.toastrError("Bạn chưa nhập đủ thông tin")
                 return
             }
-        var model = {}
-        model.Relation = $scope.selectedFamily.Relation;
-        model.Residence = $scope.selectedFamily.Residence;
-        model.PartyMember = $scope.selectedFamily.PartyMember;
-        model.Name = $scope.selectedFamily.Name;
-        model.BirthYear = $scope.selectedFamily.BirthYear;
-        model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
-        model.HomeTown = $scope.selectedFamily.HomeTown;
-        model.Job = $scope.selectedFamily.Job;
-        model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
-        model.Id=0;
-        $scope.Relationship.push(model);
-        $scope.selectedFamily={}
-    }
+            var model = {}
+            model.Relation = $scope.selectedFamily.Relation;
+            model.Residence = $scope.selectedFamily.Residence;
+            model.PartyMember = $scope.selectedFamily.PartyMember;
+            model.Name = $scope.selectedFamily.Name;
+            model.BirthYear = $scope.selectedFamily.BirthYear;
+            model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
+            model.HomeTown = $scope.selectedFamily.HomeTown;
+            model.Job = $scope.selectedFamily.Job;
+            model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
+            model.Id=0;
+            $scope.Relationship.push(model);
+            $scope.selectedFamily={}
+        }
+        
         $scope.addToAward = function () {
             $scope.err = false
             if ($scope.selectedLaudatory.MonthYear == null || $scope.selectedLaudatory.MonthYear == undefined || $scope.selectedLaudatory.MonthYear == '') {
@@ -2552,16 +2551,16 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 App.toastrError("Bạn chưa nhập đủ thông tin")
                 return
             }
-        var obj = {};
-        obj.From = $scope.selectedGoAboard.From;
-        obj.To = $scope.selectedGoAboard.To;
-        obj.Contact = $scope.selectedGoAboard.Contact;
-        obj.Country = $scope.selectedGoAboard.Country;
-        
-        obj.ProfileCode = $scope.infUser.ResumeNumber;
-        obj.Id=0;
-        $scope.GoAboard.push(obj)
-    }
+            var obj = {};
+            obj.From = $scope.selectedGoAboard.From;
+            obj.To = $scope.selectedGoAboard.To;
+            obj.Contact = $scope.selectedGoAboard.Contact;
+            obj.Country = $scope.selectedGoAboard.Country;
+            
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            obj.Id=0;
+            $scope.GoAboard.push(obj)
+        }
     
     //Update
     $scope.selectedFamily={};
@@ -3275,7 +3274,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         obj.firstChild.contentEditable = 'false'
 
     }, 50);
-    }
 });
 
 app.controller('log-status-wf-full', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataserviceJoinParty, para) {
