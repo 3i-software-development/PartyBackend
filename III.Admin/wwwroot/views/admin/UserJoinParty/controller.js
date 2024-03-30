@@ -841,24 +841,24 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     vm.reloadData = reloadData;
     vm.dtInstance = {};
     setTimeout(function () {
-        $("#PostFromDate").datepicker({
-            inline: false,
-            autoclose: true,
-            format: "dd/mm/yyyy",
-            fontAwesome: true,
-        }).on('changeDate', function (selected) {
-            var maxDate = new Date(selected.date.valueOf());
-            $('#PostToDate').datepicker('setStartDate', maxDate);
-        });
-        $("#PostToDate").datepicker({
-            inline: false,
-            autoclose: true,
-            format: "dd/mm/yyyy",
-            fontAwesome: true,
-        }).on('changeDate', function (selected) {
-            var maxDate = new Date(selected.date.valueOf());
-            $('#PostFromDate').datepicker('setEndDate', maxDate);
-        });
+            $("#PostFromDate").datepicker({
+                inline: false,
+                autoclose: true,
+                format: "dd/mm/yyyy",
+                fontAwesome: true,
+            }).on('changeDate', function (selected) {
+                var maxDate = new Date(selected.date.valueOf());
+                $('#PostToDate').datepicker('setStartDate', maxDate);
+            });
+            $("#PostToDate").datepicker({
+                inline: false,
+                autoclose: true,
+                format: "dd/mm/yyyy",
+                fontAwesome: true,
+            }).on('changeDate', function (selected) {
+                var maxDate = new Date(selected.date.valueOf());
+                $('#PostFromDate').datepicker('setEndDate', maxDate);
+            });
     }, 2000);
     
 });
@@ -1374,20 +1374,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             delete $scope.popoverLabels;
         }
     };
-
-    $scope.ImportFile = function (data) {
-        dataserviceJoinParty.UpdateOrCreateUserfileJson(data, function (rs) {
-            rs = rs.data;
-            if (rs.Error) {
-                App.toastrError(rs.Title);
-            } else {
-                console.log(rs.Object);
-                $scope.downloadFile(rs.Title)
-                //window.open('/Admin/Docman#', '_blank');
-            }
-        });
-    }
-
+    
     $scope.userGroup = [];
     $scope.fetchUserGroup = function () {
         dataserviceJoinParty.GetGroupUser(function (rs) {
