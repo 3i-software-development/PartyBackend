@@ -84,6 +84,9 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $ht
         .when('/', {
             templateUrl: ctxfolderBOM + '/index.html',
             controller: 'index'
+        }).when('/input', {
+            templateUrl: ctxfolderBOM + '/input.html',
+            controller: 'input'
         })
 
     $validatorProvider.setDefaults({
@@ -158,4 +161,8 @@ app.controller('index', function ($scope, $rootScope, $cookies, $filter, $transl
         Name:'tùy chọn 3',
         Code: "3",
     }]
+})
+
+app.controller('input', function ($scope, $rootScope, $cookies, $filter, $translate,dataservice){
+
 })

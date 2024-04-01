@@ -1,0 +1,304 @@
+<style>
+    .btn-container {
+            display: inline-block;
+    }
+
+    .btn-container button {
+        width: 30px;
+        height: 30px;
+        background-color: #f0f0f0; 
+        border: none;
+        border-radius: 20%; 
+        margin: 5px;
+        cursor: pointer;
+        
+    }
+
+    .btn-container button:hover {
+        background-color: #ccc; 
+    }
+
+    #numberInput {
+        width: 30px;
+        height: 30px;
+        color: #1d13eb;
+        text-align: center;
+        border: none;
+    }
+
+    .btn-in {
+        background-color: #28a745;
+        color: #fff;
+    }
+
+    .btn-out {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .btn-ca1 {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .camera-icon {
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        background-size: cover;
+        background-color: #007bff;
+    }
+    .tab {
+        overflow-x: auto;
+        white-space: nowrap; 
+        border: 1px solid #ccc;
+        background-color: #f1f1f1;
+        margin-top: 20px;
+        display: flex; 
+        justify-content: left; 
+    }
+
+    .tab button {
+        background-color: inherit;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        transition: 0.3s;
+        white-space: nowrap;
+        border-radius: 10px; 
+    }
+
+    .tab button:hover {
+        background-color: #ddd; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .tab button.active {
+        background-color: #ccc;
+    }
+
+    .tabcontent {
+        display: none;
+        padding: 20px;
+        border-top: none;
+        text-align: center; 
+    }
+
+    table {
+        width: 100%;
+        margin: auto;
+        border-collapse: collapse;
+        margin-top: 20px; 
+    }
+
+    th, td {
+        border: 1px solid #ddd; 
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #d7e7ff;
+        font-weight: bold; 
+        color: rgb(34, 47, 227);
+    }
+    
+    #inputValue{
+        border-radius: 25px; 
+        width: 40%;
+        box-sizing: border-box;
+        padding: 5px;
+        text-align: center;
+    }
+</style>
+<div>
+    <h2 style="text-align:center; font-size: 30px !important"><u>{{'CÔNG ĐOẠN CÁN TÔN'}}</u></h2>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <div class="btn-container form-group col-sm-6" style="margin-top: 20px;">
+                <label>Phiên: </label>
+                <button onclick="decrease()">-</button>
+                <input type="number" id="numberInput" value="0" />
+                <button onclick="increase()" style="margin-left:-5px">+</button>
+            </div>
+            <div class="col-sm-6 pt20" style="left: 300px">
+                <button class="btn-in btn btn-primary"><b>IN</b></button>
+                <button class="btn-out btn btn-danger"><b>OUT</b></button>
+                <button class="btn-ca1 btn btn-success"><i class="fa-solid fa-camera"></i></button>
+            </div>
+        </div>
+        <div class="col-md-6 pt20">
+            <div style="display:flex;float:right">
+                <div ng-click="submitPartyAdmissionProfile()">
+                    <i class="fa fa-floppy-o fs-1" style="font-size: 35px; padding-top:10px"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab">
+        <button class="tablinks" onclick="openTab(event, 'NhapLieu')">Nhập liệu</button>
+        <button class="tablinks" onclick="openTab(event, 'CapNhat')">Cập nhật</button>
+        <button class="tablinks" onclick="openTab(event, 'VatTu')">Vật tư trên thuyền</button>
+    </div>
+    
+    <div id="NhapLieu" class="tabcontent">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên hạng mục</th>
+                    <th style="width: 40%;">Giá trị</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001. Thép tấm 1200x3000x1.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>002. Thép tấm 1200x3000x1.2mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>003. Thép tấm 1220x3000x1.5mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>004. Thép tấm 1200x3000x2.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>005. Thép tấm 1200x3000x3.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>006. Thép cuộn mạ kẽm 1.2mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>007. Thép cuộn mạ kẽm 0.58mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>008. Thép cuộn mạ kẽm 0.75mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div id="CapNhat" class="tabcontent">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên hạng mục</th>
+                    <th style="width: 40%;">Giá trị</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001. Thép tấm 1200x3000x1.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>002. Thép tấm 1200x3000x1.2mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>003. Thép tấm 1220x3000x1.5mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>004. Thép tấm 1200x3000x2.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>005. Thép tấm 1200x3000x3.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>006. Thép cuộn mạ kẽm 1.2mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>007. Thép cuộn mạ kẽm 0.58mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>008. Thép cuộn mạ kẽm 0.75mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div id="VatTu" class="tabcontent">
+        <table>
+            <thead>
+                <tr>
+                    <th>Tên hạng mục</th>
+                    <th style="width: 40%;">Giá trị</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>001. Thép tấm 1200x3000x1.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>002. Thép tấm 1200x3000x1.2mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>003. Thép tấm 1220x3000x1.5mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>004. Thép tấm 1200x3000x2.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>005. Thép tấm 1200x3000x3.0mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>006. Thép cuộn mạ kẽm 1.2mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>007. Thép cuộn mạ kẽm 0.58mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+                <tr>
+                    <td>008. Thép cuộn mạ kẽm 0.75mm (cái)</td>
+                    <td><input type="number" value="0" id="inputValue"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    function increase() {
+        var input = document.getElementById('numberInput');
+        input.value = parseInt(input.value) + 1;
+    }
+
+    function decrease() {
+        var input = document.getElementById('numberInput');
+        input.value = parseInt(input.value) - 1;
+    }
+    function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+</script>
