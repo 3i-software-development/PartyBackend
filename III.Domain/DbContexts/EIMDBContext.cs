@@ -17,8 +17,12 @@ namespace ESEIM.Models
         public EIMDBContext(DbContextOptions<EIMDBContext> options) : base(options)
         {
         }
-		//PartyAdmissionProfile
-		public virtual DbSet<Family> Families { get; set; }
+        //BOM
+        public virtual DbSet<BOMProductionWarehouseHd> BOMProductionWarehouseHds { get; set; }
+        public virtual DbSet<BOMProductionWarehouseDt> BOMProductionWarehouseDts { get; set; }
+
+        //PartyAdmissionProfile
+        public virtual DbSet<Family> Families { get; set; }
 		public virtual DbSet<IntroducerOfParty> IntroducerOfParties { get; set; }
 		public virtual DbSet<Award> Awards { get; set; }
 		public virtual DbSet<GoAboard> GoAboards { get; set; }

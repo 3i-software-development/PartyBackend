@@ -24,5 +24,9 @@ namespace III.Admin.Areas.Admin.Controllers
             ViewData["CrumbMenuBOM"] = "MENU BOM";
             return View();
         }
+
+        #region BOM_PRODUCTION_WAREHOUSE
+
+        #endregion
     }
 }
