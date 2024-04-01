@@ -3294,6 +3294,73 @@ app.controller('log-status-wf-full', function ($scope, $rootScope, $compile, $ui
     }, 400);
 });
 
+app.directive("voiceRecognition", function () {
+    return {
+        restrict: "AE",
+        require: "ngModel",
+        link: function (scope, element, attrs, ngModelCtrl) {
+            console.log(ngModelCtrl);
+            if ("webkitSpeechRecognition" in window) {
+                var spokenText = "";
+
+                var recognition = new webkitSpeechRecognition();
+                recognition.lang = "vi-VN";
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.onstart = function () { };
+
+                recognition.onend = function () {
+                    console.log("Spoken text:", spokenText);
+                };
+
+                recognition.onresult = function (event) {
+                    var transcript = event.results[0][0].transcript;
+                    spokenText = transcript;
+                    if (spokenText != "") {
+                        ngModelCtrl.$setViewValue(transcript);
+
+                        ngModelCtrl.$render();
+                        // Cập nhật giá trị trong ng-model
+                        console.log(ngModelCtrl);
+                    }
+                };
+
+                element.on("pointerdown", function (event) {
+                    event.preventDefault();
+                    scope.startRecognition(recognition);
+                    element.css("color", "red");
+                });
+
+                element.on("mouseup", function () {
+                    scope.stopRecognition(recognition);
+                    element.css("color", "");
+                });
+                element.on("pointerout", function (event) {
+                    event.preventDefault();
+                    scope.stopRecognition(recognition);
+                    element.css("color", "");
+                });
+                element.on("contextmenu", function (event) {
+                    event.preventDefault();
+                });
+            }
+
+            scope.startRecognition = function (recognition) {
+                if (recognition) {
+                    recognition.start();
+                }
+            };
+
+            scope.stopRecognition = function (recognition) {
+                if (recognition) {
+                    recognition.stop();
+                }
+            };
+        },
+    };
+});
+
 app.directive("choosePosition", function (dataserviceJoinParty) {
     return {
         restrict: "AE",
