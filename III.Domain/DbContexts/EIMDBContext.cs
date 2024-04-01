@@ -20,6 +20,10 @@ namespace ESEIM.Models
         //BOM
         public virtual DbSet<BOMProductionWarehouseHd> BOMProductionWarehouseHds { get; set; }
         public virtual DbSet<BOMProductionWarehouseDt> BOMProductionWarehouseDts { get; set; }
+        public virtual DbSet<BomRt> BomRts { get; set; }
+        public virtual DbSet<BomHs> BomHs { get; set; }
+        public virtual DbSet<BomItemOnChannel> BomItemOnChannels { get; set; }
+        public virtual DbSet<BomUpdateQtyItemIn> BomUpdateQtyItemIns { get; set; }
 
         //PartyAdmissionProfile
         public virtual DbSet<Family> Families { get; set; }

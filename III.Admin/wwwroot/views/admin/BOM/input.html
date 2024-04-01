@@ -113,34 +113,47 @@
     }
 </style>
 <div>
-    <h2 style="text-align:center; font-size: 30px !important"><u>{{'CÔNG ĐOẠN CÁN TÔN'}}</u></h2>
+    <h2 style="text-align:center; font-size: 30px !important"><u>{{'CÔNG ĐOẠN '+ActIns.Title}}</u></h2>
     
     <div class="row">
-        <div class="col-md-6">
-            <div class="btn-container form-group col-sm-6" style="margin-top: 20px;">
+        <div class="col-md-8">
+            <div class="form-group col-sm-4">
+                <label>Lệnh sản xuất</label>
+                <div class="input-group-nobtn br24-nobtn">
+                    <ui-select ng-model="WareHouseProductionHeader" theme="bootstrap">
+                        <ui-select-match placeholder="{{'Tùy chọn'}}..."><b
+                                class="bold">#{{$select.selected.Id}}:</b><b>
+                                {{$select.selected.TicketCode}}</b></ui-select-match>
+                        <ui-select-choices repeat="x.TicketCode as x in ListHd | filter: $select.search">
+                            #{{x.Id}}: {{x.TicketCode}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+            </div>
+            <div class="btn-container form-group col-sm-4" style="margin-top: 20px;">
                 <label>Phiên: </label>
                 <button onclick="decrease()">-</button>
                 <input type="number" id="numberInput" value="0" />
                 <button onclick="increase()" style="margin-left:-5px">+</button>
             </div>
-            <div class="col-sm-6 pt20" style="left: 300px">
-                <button class="btn-in btn btn-primary"><b>IN</b></button>
-                <button class="btn-out btn btn-danger"><b>OUT</b></button>
+            <div class="col-sm-4 pt20" style="left: 300px">
+                <button class="btn-in btn btn-primary" ng-click="output()"><b>IN</b></button>
+                <button class="btn-out btn btn-danger" ng-click="output()"><b>OUT</b></button>
                 <button class="btn-ca1 btn btn-success"><i class="fa-solid fa-camera"></i></button>
             </div>
         </div>
-        <div class="col-md-6 pt20">
+        <div class="col-md-4 pt20">
             <div style="display:flex;float:right">
-                <div ng-click="submitPartyAdmissionProfile()">
+                <div ng-click="submit()">
                     <i class="fa fa-floppy-o fs-1" style="font-size: 35px; padding-top:10px"></i>
                 </div>
             </div>
         </div>
     </div>
     <div class="tab">
-        <button class="tablinks" onclick="openTab(event, 'NhapLieu')">Nhập liệu</button>
-        <button class="tablinks" onclick="openTab(event, 'CapNhat')">Cập nhật</button>
-        <button class="tablinks" onclick="openTab(event, 'VatTu')">Vật tư trên thuyền</button>
+        <button class="tablinks active" id="NhapLieu" onclick="openTab('NhapLieu')">Nhập liệu</button>
+        <button class="tablinks" id="CapNhat" onclick="openTab('CapNhat')">Cập nhật</button>
+        <button class="tablinks" id="VatTu" onclick="openTab('VatTu')">Vật tư trên thuyền</button>
     </div>
     
     <div id="NhapLieu" class="tabcontent">
@@ -152,37 +165,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>001. Thép tấm 1200x3000x1.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>002. Thép tấm 1200x3000x1.2mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>003. Thép tấm 1220x3000x1.5mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>004. Thép tấm 1200x3000x2.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>005. Thép tấm 1200x3000x3.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>006. Thép cuộn mạ kẽm 1.2mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>007. Thép cuộn mạ kẽm 0.58mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>008. Thép cuộn mạ kẽm 0.75mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
+                <tr ng-repeat="item in GroupAttr">
+                    <td>{{$index+1|threeDigitString}}. {{item.Name}} ({{item.Unit}})</td>
+                    <td><input type="number" ng-model="bomDataModel.ListBom[$index].Quantity" value="0" id="inputValue"></td>
                 </tr>
             </tbody>
         </table>
@@ -197,37 +182,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>001. Thép tấm 1200x3000x1.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>002. Thép tấm 1200x3000x1.2mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>003. Thép tấm 1220x3000x1.5mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>004. Thép tấm 1200x3000x2.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>005. Thép tấm 1200x3000x3.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>006. Thép cuộn mạ kẽm 1.2mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>007. Thép cuộn mạ kẽm 0.58mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>008. Thép cuộn mạ kẽm 0.75mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
+                <tr ng-repeat="item in GroupAttr">
+                    <td>{{$index+1|threeDigitString}}. {{item.Name}} ({{item.Unit}})</td>
+                    <td><input type="number" ng-model="bomDataModel.ListBom[$index].Quantity" value="0" id="inputValue"></td>
                 </tr>
             </tbody>
         </table>
@@ -242,37 +199,9 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>001. Thép tấm 1200x3000x1.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>002. Thép tấm 1200x3000x1.2mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>003. Thép tấm 1220x3000x1.5mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>004. Thép tấm 1200x3000x2.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>005. Thép tấm 1200x3000x3.0mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>006. Thép cuộn mạ kẽm 1.2mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>007. Thép cuộn mạ kẽm 0.58mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
-                </tr>
-                <tr>
-                    <td>008. Thép cuộn mạ kẽm 0.75mm (cái)</td>
-                    <td><input type="number" value="0" id="inputValue"></td>
+                <tr ng-repeat="item in GroupAttr">
+                    <td>{{$index+1|threeDigitString}}. {{item.Name}} ({{item.Unit}})</td>
+                    <td><input type="number" ng-model="bomDataModel.ListBom[$index].Quantity" value="0" id="inputValue"></td>
                 </tr>
             </tbody>
         </table>
@@ -288,7 +217,8 @@
         var input = document.getElementById('numberInput');
         input.value = parseInt(input.value) - 1;
     }
-    function openTab(evt, tabName) {
+    function openTab(tabName) {
+            var evt=$('.tablinks#'+tabName);
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
             for (i = 0; i < tabcontent.length; i++) {
@@ -298,7 +228,8 @@
             for (i = 0; i < tablinks.length; i++) {
                 tablinks[i].className = tablinks[i].className.replace(" active", "");
             }
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
+            $('.tabcontent#' + tabName).css('display', 'block');
+            evt.addClass("active");
         }
+    openTab('NhapLieu')
 </script>

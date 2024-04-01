@@ -1,8 +1,11 @@
 ﻿@using ESEIM.Utils
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
 
 @{
     ViewData["Title"] = ViewData["CrumbBOM"];
     Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+    var session = HttpContextAccessor.HttpContext.GetSessionUser();
 }
 @section plugin_style{
 }
@@ -10,6 +13,6 @@
 
 }
 <div id="contentMain" ng-app="App_ESEIM" ng-controller="Ctrl_ESEIM">
-    <div ng-view></div>
+    <div ng-view ng-init="username=@session.UserName"></div>
 </div>
 <script src="~/views/admin/BOM/controller.js" type="text/javascript"></script>

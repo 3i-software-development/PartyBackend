@@ -55,5 +55,6 @@ namespace ESEIM.Models
         public string NestedWF { get; set; }
         public string RoleDefault { get; set; }
         public string ListGroupData { get; set; }
+        public string Image { get; set; }
     }
 }

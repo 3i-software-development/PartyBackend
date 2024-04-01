@@ -154,12 +154,12 @@
             <div class="form-group col-sm-6">
                 <label>Lệnh sản xuất</label>
                 <div class="input-group-nobtn br24-nobtn">
-                    <ui-select ng-model="model.Type" theme="bootstrap">
+                    <ui-select ng-model="HD" theme="bootstrap">
                         <ui-select-match placeholder="{{'Tùy chọn'}}..."><b
-                                class="bold">#{{$select.selected.Name}}:</b><b>
-                                {{$select.selected.Name}}</b></ui-select-match>
-                        <ui-select-choices repeat="x.Code as x in ListOption | filter: $select.search">
-                            #{{x.Code}}: {{x.Name}}
+                                class="bold">#{{$select.selected.TicketCode}}:</b><b>
+                                {{$select.selected.TicketCode}}</b></ui-select-match>
+                        <ui-select-choices repeat="x.Id as x in ListHd | filter: $select.search">
+                            #{{x.Id}}: {{x.TicketCode}}
                         </ui-select-choices>
                     </ui-select>
                 </div>
@@ -306,13 +306,13 @@
                           </span>
                         </div>
                       </label>
-                      <div style="display: flex;align-items: center;margin-left: auto;margin-right: 20px;">
+                      <!-- <div style="display: flex;align-items: center;margin-left: auto;margin-right: 20px;">
                         <a title="Xem danh sách file" type="button" ng-click="moreFile(WfCode, act[0].ActivityInstCode)"
                           style="width: 28px; height: 28px">
                           <i class="fa-solid fa-file"
                             style="--fa-secondary-color:blue; --fa-secondary-opacity: 1; --fa-primary-color: white; font-size: 25px;margin-top: 5px;"></i>
                         </a>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                   <div class="col-md-12" style="padding: 0px;" ng-if="act[0].checkHiddenActWf">
