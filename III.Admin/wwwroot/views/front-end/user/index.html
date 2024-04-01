@@ -642,7 +642,7 @@
                                                        ng-change="filterNation()" type="text" placeholder="Dân tộc"
                                                        ng-required="true">
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                   ng-model="infUser.LastName"></i>
+                                                   ng-model="infUser.Nation"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in FilterNation" ng-click="SelectNation(item)">
                                                         {{item}}
@@ -668,7 +668,7 @@
                                                        ng-change="filterItemReligions()" ng-model="infUser.Religion"
                                                        type="text" placeholder="Tôn giáo" ng-required="true">
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                   ng-model="infUser.LastName"></i>
+                                                   ng-model="infUser.Religion"></i>
                                                 <ul class="autocomplete-list">
                                                     <li ng-repeat="item in filteredItemReligions"
                                                         ng-click="selectItemReligion(item)">{{item}}</li>

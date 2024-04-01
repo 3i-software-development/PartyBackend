@@ -433,7 +433,7 @@ input:checked + .slider:before {
                                         </i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.PlaceofBirth" type="text"
-                                               placeholder="Số điện thoại" ng-required="true">
+                                               placeholder="Nơi sinh" ng-required="true">
                                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                            ng-model="infUser.PlaceofBirth"></i>
                                     </div>
@@ -456,7 +456,7 @@ input:checked + .slider:before {
                                         </i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.HomeTown" type="text"
-                                               placeholder="Số điện thoại" ng-required="true">
+                                               placeholder="Quê quán" ng-required="true">
                                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                            ng-model="infUser.HomeTown"></i>
                                     </div>
@@ -480,7 +480,7 @@ input:checked + .slider:before {
                                         </i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.Residence" type="text"
-                                               placeholder="Số điện thoại" ng-required="true">
+                                               placeholder="Địa chỉ thường trú" ng-required="true">
                                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                            ng-model="infUser.Residence"></i>
                                     </div>
@@ -504,7 +504,7 @@ input:checked + .slider:before {
                                         </i>
                                         <input class="displayInfo speechInput" style="border: #FFFF;"
                                                name="CusCode" ng-model="infUser.TemporaryAddress" type="text"
-                                               placeholder="Số điện thoại" ng-required="true">
+                                               placeholder="Địa chỉ tạm trú" ng-required="true">
                                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                            ng-model="infUser.TemporaryAddress"></i>
                                     </div>
@@ -554,7 +554,7 @@ input:checked + .slider:before {
                                                ng-change="filterNation()" type="text" placeholder="Dân tộc"
                                                ng-required="true">
                                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                           ng-model="infUser.LastName"></i>
+                                           ng-model="infUser.Nation"></i>
                                         <ul class="autocomplete-list">
                                             <li ng-repeat="item in FilterNation" ng-click="SelectNation(item)">
                                                 {{item}}
@@ -580,7 +580,7 @@ input:checked + .slider:before {
                                                ng-change="filterItemReligions()" ng-model="infUser.Religion"
                                                type="text" placeholder="Tôn giáo" ng-required="true">
                                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                           ng-model="infUser.LastName"></i>
+                                           ng-model="infUser.Religion"></i>
                                         <ul class="autocomplete-list">
                                             <li ng-repeat="item in filteredItemReligions"
                                                 ng-click="selectItemReligion(item)">{{item}}</li>
