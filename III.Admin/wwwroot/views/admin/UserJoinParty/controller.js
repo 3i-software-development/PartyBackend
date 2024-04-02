@@ -1466,6 +1466,66 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             "id":"placeTimeRecognize",
             "labelText": "Ngày và nơi công nhận chính thức lần thứ nhất",
         },
+        {
+            "id":"certificate",
+            "labelText": "Văn bằng chứng chỉ",
+        },
+        {
+            "id":"class",
+            "labelText": "Ngành học hoặc tên lớp học",
+        },
+        {
+            "id":"schoolName",
+            "labelText": "Tên trường",
+        },
+        {
+            "id":"to",
+            "labelText": "Đến ngày",
+        },
+        {
+            "id":"from",
+            "labelText": "Từ ngày",
+        },
+        {
+            "id":"disciplineReason",
+            "labelText": "Lý do, hình thức",
+        },
+        {
+            "id":"grantOfDecision",
+            "labelText": "Cấp quyết định",
+        },
+        {
+            "id":"monthYear",
+            "labelText": "Tháng, năm",
+        },
+        {
+            "id":"begin",
+            "labelText": "Từ ngày",
+        },
+        {
+            "id":"end",
+            "labelText": "Đến ngày",
+        },
+        {
+            "id":"content",
+            "labelText": "Nội dung",
+        },
+        {
+            "id":"work",
+            "labelText": "Nội dung",
+        },
+        {
+            "id":"reason",
+            "labelText": "Lý do, hình thức",
+        },
+        {
+            "id":"grantOfDecision",
+            "labelText": "Cấp quyết định",
+        },
+        {
+            "id":"role",
+            "labelText": "Chức vụ",
+        },
     ];
 
     $scope.popoverLabel = '';
