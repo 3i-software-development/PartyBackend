@@ -28,7 +28,11 @@
             <div class="col-md-8" style="display: flex; padding-left: 8px;">
                 <div class="br24 form-control custom-title-code-bold" style="padding-right: 0px;">
                     <i class="fa fa-info-circle icon-clickable" id="begin" title="Popover Header" popover-placement="bottom-left"
-                    uib-popover="Từ ngày: {{selectedPersonHistory.Begin}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                    uib-popover="Từ ngày: {{selectedPersonHistory.Begin}}.
+                    {{matchedItems[0].guide}}.
+
+                       Lưu ý: {{matchedItemss[0].comment}}"
+                       popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Begin" type="text" placeholder="Từ ngày" />
                 </div>
             </div>
