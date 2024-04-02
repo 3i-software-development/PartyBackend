@@ -1,3 +1,23 @@
+<style>
+    .table-wrapper {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+        .table-wrapper .list-item {
+            min-width: 100%;
+            /* Ensure table occupies full width */
+        }
+
+        /* Optional: Style the scrollbar */
+        .table-wrapper::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+</style>
 <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
     <div ng-click="insertFamily()">
         <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
@@ -12,7 +32,7 @@
                     <label class="displayInfo control-label require custom-title-code-bold">Quan hệ</label>
                 </div>
                 <div class="col-md-8" style="display: flex;">
-                    <div class="br24 form-control custom-title-code-bold">
+                    <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                         <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="VD:01-01-2024">
                         </i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.Relation" type="text" ng-change="filterRelation()" placeholder="Quan hệ" />
@@ -54,7 +74,7 @@
                     <label class="displayInfo control-label require custom-title-code-bold">Năm sinh</label>
                 </div>
                 <div class="col-md-8" style="display: flex;">
-                    <div class="br24 form-control custom-title-code-bold">
+                    <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                         <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation" title="Popover Header" popover-placement="bottom-left"
                         uib-popover="Năm sinh của bạn là: {{infUser.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         
@@ -80,7 +100,7 @@
                 </div>
     
                 <div class="col-md-8" style="display: flex;">
-                    <div class="br24 form-control custom-title-code-bold">
+                    <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                         <i class="fa fa-info-circle icon-clickable" id="dangVien" title="Popover Header" popover-placement="bottom-left"
                         uib-popover="Đảng viên của bạn là: {{selectedFamily.PoliticalAttitude}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.PoliticalAttitude" type="text" placeholder="Thái độ chính trị" />
@@ -96,7 +116,7 @@
                     <i class="fa fa-map-marker" id="homeTown" ng-click="openPopover('homeTown');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
                     <label class="displayInfo control-label require custom-title-code-bold">Quê quán</label>
                 </div>
-                <div class="col-md-8" style="display: flex;">
+                <div class="col-md-8" style="display: flex; white-space:nowrap">
                     <div class="br24 form-control custom-title-code-bold">
                         <i class="fa fa-info-circle icon-clickable" id="homeTown" title="Popover Header" popover-placement="bottom-left"
                         uib-popover="Quên quán của người thân là: {{selectedFamily.HomeTown}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
@@ -113,7 +133,7 @@
                 </div>
     
                 <div class="col-md-8" style="display: flex;">
-                    <div class="br24 form-control custom-title-code-bold">
+                    <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                         <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="VD:Xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang">
                         </i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.Residence" type="text" placeholder="Nơi cư trú" />
@@ -129,7 +149,7 @@
                 </div>
     
                 <div class="col-md-8" style="display: flex;">
-                    <div class="br24 form-control custom-title-code-bold">
+                    <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                         <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="VD:Giáo viên">
     
                         </i>
@@ -146,7 +166,7 @@
                     <label class="displayInfo control-label require custom-title-code-bold">Quá trình công tác</label>
                 </div>
                 <div class="col-md-8" style="display: flex;">
-                    <div class=" br24 form-control custom-title-code-bold">
+                    <div class=" br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                         <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="VD:Từ 1978 - 1979: Cán bộ Ban Quản lý kinh tế tỉnh Quảng Nam - Đà Nẵng.">
                         </i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.WorkingProgress" type="text" placeholder="Quá trình công tác" />
@@ -169,53 +189,56 @@
     <div class="row">
         <div style="background-color: #fff; border-radius: 5px;">
             <div class="" style="padding-left: 20px; font-size: 13px;">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Quan hệ</th>
-                            <th>Họ và tên</th>
-                            <th>Năm sinh, mất nếu có và lý do</th>
-                            <th>Địa chỉ</th>
-                            
-                            <th>Nghề nghiệp</th>
-                            <th>Quá trình công tác</th>
-                            <th>Thái độ chính trị</th>
-                            <th>Đảng viên</th>
-                            <th>Xoá bỏ</th>
-                        </tr>
-                    </thead>
-                    <tbody> 
-                        <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
-                            <td>
-                                {{x.Relation}}
-                            </td>
-                            <td>{{x.Name}}</td>
-                            <td>
-                                {{x.BirthYear}}
-                                
-                            </td>
-                            <td>
-                                <div><span>- Quê quán: {{x.HomeTown}}</span></div>
-                                <div><span>- Nơi cư trú: {{x.Residence}}</span></div>
-                            </td>
-                            <td>{{x.Job}}</td>
-                            <td>{{x.WorkingProgress}}</td>
-                            <td>{{x.PoliticalAttitude}}</td>
-                            <td>{{x.PartyMember == 1?"Có" : "Không"}}</td>
-                            
-                            
-                            <td>
-                                <button class="btn" ng-click="deleteFamily($index)" style="color:red">
-                                    <i class="fa fa-trash"></i>
-                                </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                
+                <div class="table-wrapper">
+                    <div class="list-item">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Quan hệ</th>
+                                    <th>Họ và tên</th>
+                                    <th>Năm sinh, mất nếu có và lý do</th>
+                                    <th>Địa chỉ</th>
+
+                                    <th>Nghề nghiệp</th>
+                                    <th>Quá trình công tác</th>
+                                    <th>Thái độ chính trị</th>
+                                    <th>Đảng viên</th>
+                                    <th>Xoá bỏ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
+                                    <td>
+                                        {{x.Relation}}
+                                    </td>
+                                    <td>{{x.Name}}</td>
+                                    <td>
+                                        {{x.BirthYear}}
+
+                                    </td>
+                                    <td>
+                                        <div><span>- Quê quán: {{x.HomeTown}}</span></div>
+                                        <div><span>- Nơi cư trú: {{x.Residence}}</span></div>
+                                    </td>
+                                    <td>{{x.Job}}</td>
+                                    <td>{{x.WorkingProgress}}</td>
+                                    <td>{{x.PoliticalAttitude}}</td>
+                                    <td>{{x.PartyMember == 1?"Có" : "Không"}}</td>
+
+
+                                    <td>
+                                        <button class="btn" ng-click="deleteFamily($index)" style="color:red">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 </div>
 <script type="text/ng-template" id="popoverTemplate.html">
     <div class="custom-popover-content">
