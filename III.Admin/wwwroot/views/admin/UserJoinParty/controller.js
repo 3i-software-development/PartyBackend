@@ -962,6 +962,341 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
 
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $http) { 
 
+    //Autocomplete
+    $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
+    $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo']
+    $scope.filteredItems = [];
+
+    //Autocomplete công việc
+    $scope.filterItems = function () {
+        $scope.filteredItems = $scope.itemEmployees.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.NowEmployee.toLowerCase());
+        });
+    };
+
+    $scope.selectItem = function (item) {
+        $scope.infUser.NowEmployee = item;
+        $scope.filteredItems = [];
+    };
+
+    $('body').on('click', function (event) {
+        // Nếu click vào ô input, trả về ngay
+        if ($(event.target).is('input[type="text"]')) {
+            return;
+        }
+
+        // Kiểm tra xem phần tử được click có là con của ul.autocomplete-list hay không
+        if (!$(event.target).closest('ul.autocomplete-list').length) {
+            // Xử lý sự kiện click ở đây cho các phần tử không phải là con của ul.autocomplete-list
+
+            $scope.filteredItemReligions = [];
+            $scope.FilterGender = [];
+            $scope.filteredItems = [];
+            $scope.FilterNation = [];
+            $scope.FilterGeneralEducation = [];
+            $scope.FilterUndergraduate = [];
+            $scope.FilterRankAcademic = [];
+            $scope.FilterForeignLanguage = [];
+            $scope.FilterMinorityLanguage = [];
+            $scope.FilterPoliticalTheory = [];
+            $scope.FilterIt = [];
+            $scope.Filterplace = [];
+            $scope.FilterRelation = [];
+            $scope.FilterCountry = [];
+            $scope.$digest();
+        }
+
+    });
+    //Autocomplete tôn giáo
+    $scope.filteredItemReligions = [];
+    $scope.filterItemReligions = function () {
+        $scope.filteredItemReligions = $scope.itemReligions.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.Religion.toLowerCase());
+        });
+    };
+
+    $scope.selectItemReligion = function (item) {
+        $scope.infUser.Religion = item;
+        $scope.filteredItemReligions = [];
+    };
+  
+    //Autocomplete
+    $scope.Gender = ['Nam', 'Nữ', 'Khác'];
+    $scope.itemEmployees = [
+        'Bác sĩ', 'Luật sư', 'Giáo viên', 'Kỹ sư', 'Nhân viên kinh doanh', 'Quản lý dự án', 'Nhân viên bán hàng', 'Chuyên viên tài chính', 'Kỹ thuật viên IT', 'Nhân viên marketing', 'Nhà hàng khách sạn', 'Thợ xây', 'Nghệ sĩ/ nghệ nhân', 'Nhân viên quản lý nhân sự', 'Chuyên viên tư vấn', 'Nhân viên kế toán', 'Y tá/ điều dưỡng',
+        'Chuyên viên tài sản', 'Nhân viên chăm sóc khách hàng', 'Nhân viên sản xuất/ vận hành máy', 'Nhà thiết kế đồ họa', 'Nhân viên văn phòng', 'Nhà khoa học dữ liệu', 'Chuyên viên bảo mật mạng', 'Nhà hàng trưởng', 'Nhân viên dịch vụ khách hàng', 'Công an', 'Nhà xuất bản/ biên tập viên', 'Nhà đào tạo/ huấn luyện viên', 'Nhân viên quản lý sản xuất'];
+    $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo'];
+    $scope.Nation = ['Kinh', 'Tày', 'Thái', 'Mường', 'HMông', 'Dao', 'Khơ Me', 'Nùng', 'Hoa', 'Gia Rai', 'Ê Đê', 'Ba Na', 'Xơ Đăng', 'Sán Chay', 'Cơ Tu', 'Chăm', 'Sán Dìu', 'Cống', 'Bố Y', 'Giáy', 'Lào', 'Sán Rìu', 'Hrê', 'MNông', 'XTiêng', 'Bru-Vân Kiều', 'Thổ', 'Gié-Triêng', 'Co Lao', 'Tà Ôi', 'Mạ', 'Hà Nhì', 'Chơ Ro', 'La Chí', 'Phù Lá', 'La Ha', 'La Hủ', 'Lự', 'Lô Lô', 'Chứt', 'Mảng', 'Pà Thẻn', 'Cờ Lao', 'Bốn', 'Cống', 'Si La', 'Pu Péo', 'Rơ Măm', 'La Hu', 'Kháng', 'Ô Đu', 'Sách', 'Lô Lô Chóe', 'Chứt'];
+    $scope.ForeignLanguage = [
+        'Không', 'TOEIC - 0 đến 150', 'TOEIC - 150 đến 300', 'TOEIC - 300 đến 450', 'TOEIC - 450 đến 600', 'TOEIC - 600 đến 750', 'TOEIC - 750 đến 900', 'IELTS - Dưới 4.0', 'IELTS - 4.0 đến 4.5', 'IELTS - 4.5 đến 5.0', 'IELTS - 5.0 đến 5.5', 'IELTS - 5.5 đến 6.0', 'IELTS - 6.0 đến 6.5', 'IELTS - 6.5 đến 7.0', 'IELTS - 7.0 đến 7.5', 'IELTS - 7.5 đến 8.0', 'IELTS - 8.0 đến 8.5', 'IELTS - 8.5 đến 9.0', 'Tiếng Nhật - N1', 'Tiếng Nhật - N2', 'Tiếng Nhật - N3', 'Tiếng Nhật - N4', 'Tiếng Nhật - N5', 'Tiếng Trung - HSK 1', 'Tiếng Trung - HSK 2', 'Tiếng Trung - HSK 3', 'Tiếng Trung - HSK 4', 'Tiếng Trung - HSK 5', 'Tiếng Trung - HSK 6',
+        'Tiếng Đức - Goethe-Zertifikat A1', 'Tiếng Đức - Goethe-Zertifikat A2', 'Tiếng Đức - Goethe-Zertifikat B1', 'Tiếng Đức - Goethe-Zertifikat B2', 'Tiếng Đức - Goethe-Zertifikat C1', 'Tiếng Đức - Goethe-Zertifikat C2', 'Tiếng Pháp - DELF A1', 'Tiếng Pháp - DELF A2', 'Tiếng Pháp - DELF B1', 'Tiếng Pháp - DELF B2', 'Tiếng Pháp - DALF C1', 'Tiếng Pháp - DALF C2', 'Tiếng Tây Ban Nha - DELE A1', 'Tiếng Tây Ban Nha - DELE A2', 'Tiếng Tây Ban Nha - DELE B1', 'Tiếng Tây Ban Nha - DELE B2', 'Tiếng Tây Ban Nha - DELE C1', 'Tiếng Tây Ban Nha - DELE C2', 'Tiếng Ý - CELI A1', 'Tiếng Ý - CELI A2', 'Tiếng Ý - CELI 1', 'Tiếng Ý - CELI 2', 'Tiếng Ý - CELI 3', 'Tiếng Ý - CELI 4', 'Tiếng Ý - CELI 5',
+        'Tiếng Hàn - TOPIK 1', 'Tiếng Hàn - TOPIK 2', 'Tiếng Hàn - TOPIK 3', 'Tiếng Hàn - TOPIK 4', 'Tiếng Hàn - TOPIK 5', 'Tiếng Hàn - TOPIK 6', 'Tiếng Nga - ТРКИ 1', 'Tiếng Nga - ТРКИ 2', 'Tiếng Nga - ТРКИ 3', 'Tiếng Nga - ТРКИ 4', 'Tiếng Nga - ТРКИ 5'
+    ];
+    $scope.Undergraduate = [
+        "Đại học Quốc gia Hà Nội",
+        "Đại học Quốc gia TP.Hồ Chí Minh",
+        "Đại học Bách khoa Hà Nội",
+        "Đại học Khoa học Xã hội và Nhân văn TP.Hồ Chí Minh",
+        "Đại học Ngoại thương",
+        "Đại học Y Hà Nội",
+        "Đại học Sư phạm Hà Nội",
+        "Đại học Công nghệ",
+        "Đại học Nông nghiệp",
+        "Đại học Tôn Đức Thắng",
+        "Đại học Sư phạm TP.Hồ Chí Minh",
+        "Đại học Tài chính - Marketing",
+        "Đại học Y dược TP.Hồ Chí Minh",
+        "Đại học Mở TP.Hồ Chí Minh",
+        "Đại học Giao thông Vận tải",
+        "Cao đẳng Công nghệ Thủ Đức",
+        "Cao đẳng Kinh tế - Công nghệ Hà Nội",
+        "Cao đẳng Sư phạm Đà Nẵng",
+        "Cao đẳng Kỹ thuật Công nghệ Cần Thơ",
+        "Cao đẳng Công nghệ Thông tin TP.Hồ Chí Minh",
+        "Cao đẳng Sư phạm TP.Hồ Chí Minh",
+        "Cao đẳng Y dược Huế",
+        "Cao đẳng Nghệ thuật Hà Nội",
+        "Cao đẳng Thương mại và Du lịch Hà Nội",
+        "RMIT University Việt Nam",
+        "British University Vietnam",
+        "University of London - Royal Holloway",
+        "Troy University",
+        "Fulbright University Vietnam",
+        "Vietnam National University - International School",
+        "Hanoi University of Science and Technology - School of International Education",
+        "Hoa Sen University - International School",
+        "Foreign Trade University - International School",
+        "University of Science - Vietnam National University, HCMC - International School"
+    ];
+    $scope.RankAcademic = [
+        "Không",
+        "Cử nhân",
+        "Thạc sĩ",
+        "Tiến sĩ",
+        "Cử nhân cao học",
+        "Thạc sĩ chuyên sâu",
+        "Chứng chỉ chuyên ngành",
+        "Cử nhân khoa học",
+        "Cử nhân xã hội",
+        "Phó giáo sư",
+        "Giáo sư"
+    ];
+    $scope.PoliticalTheory = ["Không", "Cao cấp lý luận chính trị", "Trung cấp lý luận chính trị", "Sơ cấp lý luận chính trị"];
+    $scope.It = ["Không", "Chứng chỉ CNTT cơ bản", "Chứng chỉ CNTT cao cấp", "chứng chỉ tin học MOS", "Chứng chỉ tin học IC3"];
+    $scope.place = ["An Giang", "Bà Rịa - Vũng Tàu", "Bạc Liêu", "Bắc Giang", "Bắc Kạn", "Bắc Ninh",
+        "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau",
+        "Cần Thơ", "Cao Bằng", "Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai",
+        "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương",
+        "Hải Phòng", "Hậu Giang", "Hòa Bình", "Hưng Yên", "Khánh Hòa", "Kiên Giang",
+        "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định",
+        "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình",
+        "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La",
+        "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế",
+        "Tiền Giang", "TP. Hồ Chí Minh", "Trà Vinh", "Tuyên Quang", "Vĩnh Long",
+        "Vĩnh Phúc", "Yên Bái"];
+
+    $scope.MinorityLanguage = ["Không", "Tiếng Tày", "Tiếng Nùng", "Tiếng Mông", "Tiếng Dao", "Tiếng H'Mông", "Tiếng Khơ Mú", "Tiếng Xơ Đăng", "Tiếng Chăm", "Tiếng Bru-Vân Kiều", "Tiếng Ê Đê", "Tiếng Sán Dìu", "Tiếng Hrê", "Tiếng Co Tu", "Tiếng Ra Glai", "Tiếng Xtiêng", "Tiếng Giáy", "Tiếng Cơ Ho", "Tiếng M'Nông", "Tiếng Thổ", "Tiếng Chơ Ro", "Tiếng Hà Nhì", "Tiếng La Hu", "Tiếng Ô Đu", "Tiếng X'áng", "Tiếng Kháng",
+        "Tiếng Cống", "Tiếng Si La", "Tiếng Chứt", "Tiếng Hà Lang", "Tiếng Xinh Mun", "Tiếng Maa", "Tiếng Sơ Rục", "Tiếng Hơ Lô", "Tiếng Mảng", "Tiếng Ơ Đu", "Tiếng Hà Nhì", "Tiếng Jơ Lơng", "Tiếng Bố Y", "Tiếng Lự", "Tiếng Sán Chay", "Tiếng Sán Dìu", "Tiếng Hán Nôm", "Tiếng Hoa", "Tiếng Khmer", "Tiếng Bahnar", "Tiếng Jrai", "Tiếng Raglai", "Tiếng Bru", "Tiếng Hre", "Tiếng Mnong", "Tiếng Chru", "Tiếng Halang", "Tiếng Pu Peo",
+        "Tiếng Pà Thẻn", "Tiếng Arem", "Tiếng Xinh Mun", "Tiếng Puoc", "Tiếng Ta Oi", "Tiếng Pa Then", "Tiếng Tày Thanh"];
+    $scope.GeneralEducation = ["Không", "10/10", "12/12", "9/12"];
+
+    $scope.Relation = ["Ông nội", "Bà nội", "Bà ngoại", "Ông ngoại", "Bố đẻ", "Mẹ đẻ", "Em trai", "Vợ (Chồng)", "Con trai", "Con gái", "Ông nội vợ (Chồng)", "Bà nội vợ (Chồng)", "Ông ngoại vợ (chồng)",
+        "Bà ngoại vợ (chồng)", "Bố vợ (chồng)", "Mẹ vợ (chồng)", "Em trai vợ (chồng)"];
+
+    $scope.Country = ["Afghanistan", "Albania",
+        "Algeria", "Andorra", "Angola", "Antigua và Barbuda", "Argentina", "Armenia", "Úc", "Áo", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Bỉ", "Belize", "Bénin", "Bhutan", "Bolivia", "Bosnia và Herzegovina", "Botswana", "Brasil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Campuchia", "Cameroon", "Canada",
+        "Cộng hòa Trung Phi", "Chad", "Chile", "Trung Quốc", "Colombia", "Comoros", "Cộng hòa Congo", "Cộng hòa Dân chủ Congo", "Costa Rica", "Croatia", "Cuba", "Síp", "Cộng hòa Séc", "Đan Mạch", "Djibouti", "Dominica", "Cộng hòa Dominica", "Đông Timor", "Ecuador", "Ai Cập", "El Salvador", "Guinea Xích Đạo", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Phần Lan", "Pháp", "Gabon", "Gambia", "Georgia", "Đức", "Ghana", "Hy Lạp", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "Ấn Độ", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Ý", "Jamaica", "Nhật Bản", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Triều Tiên", "Hàn Quốc", "Kosovo",
+        "Kuwait", "Kyrgyzstan", "Lào", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Quần đảo Marshall", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro",
+        "Morocco", "Mozambique", "Myanmar (Miến Điện)", "Namibia", "Nauru", "Nepal", "Hà Lan", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Na Uy", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Ba Lan", "Bồ Đào Nha", "Qatar", "Romania", "Nga", "Rwanda", "Saint Kitts và Nevis", "Saint Lucia", "Saint Vincent và Grenadines", "Samoa", "San Marino", "Sao Tome và Principe",
+        "Ả Rập Saudi", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Quần đảo Solomon", "Somalia", "Nam Phi", "Nam Sudan", "Tây Ban Nha", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Thụy Điển", "Thụy Sĩ", "Syria", "Tajikistan", "Tanzania", "Thái Lan", "Đông Timor", "Togo", "Tonga", "Trinidad và Tobago", "Tunisia", "Thổ Nhĩ Kỳ", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine",
+        "Các Tiểu vương quốc Ả Rập Thống nhất", "Vương quốc Anh", "Hoa Kỳ", "Uruguay", "Uzbekistan", "Vanuatu", "Thành Vatican", "Venezuela", "Việt Nam", "Yemen", "Zambia", "Zimbabwe"];
+    // ===================================
+    $scope.filteredItems = [];
+    //Autocomplete công việc
+    $scope.filterItems = function () {
+        $scope.filteredItems = $scope.itemEmployees.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.NowEmployee.toLowerCase());
+        });
+    };
+
+    $scope.selectItem = function (item) {
+        $scope.infUser.NowEmployee = item;
+        $scope.filteredItems = [];
+    };
+    //Autocomplete tôn giáo
+    $scope.filteredItemReligions = [];
+    $scope.filterItemReligions = function () {
+        $scope.filteredItemReligions = $scope.itemReligions.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.Religion.toLowerCase());
+        });
+    };
+
+    $scope.selectItemReligion = function (item) {
+        $scope.infUser.Religion = item;
+        $scope.filteredItemReligions = [];
+    };
+    //Autocomplete dân tộc
+    $scope.FilterNation = [];
+    $scope.filterNation = function () {
+        // Dân tộc
+        $scope.FilterNation = $scope.Nation.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.Nation.toLowerCase());
+        });
+    };
+    $scope.SelectNation = function (item) {
+        $scope.infUser.Nation = item;
+        $scope.FilterNation = [];
+
+    };
+    //Autocomplete ngoại ngữ
+    $scope.FilterForeignLanguage = [];
+    $scope.filterForeignLanguage = function () {
+        // Ngoại ngữ
+        $scope.FilterForeignLanguage = $scope.ForeignLanguage.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.ForeignLanguage.toLowerCase());
+        });
+    };
+    $scope.SelectForeignLanguage = function (item) {
+        $scope.infUser.LevelEducation.ForeignLanguage = item;
+        $scope.FilterForeignLanguage = [];
+
+    };
+
+    //Autocomplete giáo dục  đại học
+    $scope.FilterUndergraduate = [];
+    $scope.filterUndergraduate = function () {
+        // đại học - cao đẳng
+        $scope.FilterUndergraduate = $scope.Undergraduate.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.Undergraduate.toLowerCase());
+        });
+    };
+    $scope.SelectUndergraduate = function (item) {
+        $scope.infUser.LevelEducation.Undergraduate = item;
+        $scope.FilterUndergraduate = [];
+
+    };
+
+    //Autocomplete giới tính
+    $scope.FilterGender = [];
+
+    $scope.filterSex = function () {
+        // giới tính
+        $scope.FilterGender = $scope.Gender.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.Sex.toLowerCase());
+        });
+    };
+
+    $scope.SelectSex = function (item) {
+        $scope.infUser.Sex = item;
+        $scope.FilterGender = [];
+
+    };
+    //Autocomplete hàm học
+    $scope.FilterRankAcademic = [];
+    $scope.filterRankAcademic = function () {
+        // hàm học
+        $scope.FilterRankAcademic = $scope.RankAcademic.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.RankAcademic.toLowerCase());
+        });
+    };
+    $scope.SelectRankAcademic = function (item) {
+        $scope.infUser.LevelEducation.RankAcademic = item;
+        $scope.FilterRankAcademic = [];
+
+    };
+
+    //Autocomplete lý luận chính trị
+    $scope.FilterPoliticalTheory = [];
+    $scope.filterPoliticalTheory = function () {
+        // lý luận chính trị
+        $scope.FilterPoliticalTheory = $scope.PoliticalTheory.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.PoliticalTheory.toLowerCase());
+        });
+    };
+    $scope.SelectPoliticalTheory = function (item) {
+        $scope.infUser.LevelEducation.PoliticalTheory = item;
+        $scope.FilterPoliticalTheory = [];
+
+    };
+    //Autocomplete tin học
+    $scope.FilterIt = [];
+    $scope.filterIt = function () {
+        // lý luận chính trị
+        $scope.FilterIt = $scope.It.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.It.toLowerCase());
+        });
+    };
+    $scope.SelectIt = function (item) {
+        $scope.infUser.LevelEducation.It = item;
+        $scope.FilterIt = [];
+
+    };
+
+    //Autocomplete nơi tạo
+    $scope.Filterplace = [];
+
+    $scope.filterplace = function () {
+        // giới tính
+        $scope.Filterplace = $scope.place.filter(function (item) {
+            return item.toLowerCase().includes($scope.PlaceCreatedTime.place.toLowerCase());
+        });
+    };
+
+    $scope.Selectplace = function (item) {
+        $scope.PlaceCreatedTime.place = item;
+        $scope.Filterplace = [];
+
+    };
+    //Autocomplete tiếng dân tộc thiểu số
+    $scope.FilterMinorityLanguage = [];
+    $scope.filterMinorityLanguage = function () {
+        //tiếng dân tộc thiểu số
+        $scope.FilterMinorityLanguage = $scope.MinorityLanguage.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.MinorityLanguage.toLowerCase());
+        });
+    };
+    $scope.SelectMinorityLanguage = function (item) {
+        $scope.infUser.LevelEducation.MinorityLanguage = item;
+        $scope.FilterMinorityLanguage = [];
+    };
+    //Autocomplete giáo dục phổ thông
+    $scope.FilterGeneralEducation = [];
+    $scope.filterGeneralEducation = function () {
+        // phổ thông
+        $scope.FilterGeneralEducation = $scope.GeneralEducation.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.GeneralEducation.toLowerCase());
+        });
+    };
+    $scope.SelectGeneralEducation = function (item) {
+        $scope.infUser.LevelEducation.GeneralEducation = item;
+        $scope.FilterGeneralEducation = [];
+
+    };
+    //Autocomplete quan hệ
+    $scope.FilterRelation = [];
+    $scope.filterRelation = function () {
+        //tiếng dân tộc thiểu số
+        $scope.FilterRelation = $scope.Relation.filter(function (item) {
+            return item.toLowerCase().includes($scope.selectedFamily.Relation.toLowerCase());
+        });
+    };
+    $scope.SelectRelation = function (item) {
+        $scope.selectedFamily.Relation = item;
+        $scope.FilterRelation = [];
+    };
+    //Autocomplete nước ngoài
+    $scope.FilterCountry = [];
+    $scope.filterCountry = function () {
+        //tiếng dân tộc thiểu số
+        $scope.FilterCountry = $scope.Country.filter(function (item) {
+            return item.toLowerCase().includes($scope.selectedGoAboard.Country.toLowerCase());
+        });
+    };
+    $scope.SelectCountry = function (item) {
+        $scope.selectedGoAboard.Country = item;
+        $scope.FilterCountry = [];
+    };
+
     $scope.popoverLabels = [
         {
             "id": "currentName",
@@ -1050,6 +1385,86 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         {
             "id": "selfComment",
             "labelText": "Tự nhận xét",
+        },
+        {
+            "id": "Relationship",
+            "labelText": "Quan hệ",
+        },
+        {
+            "id":"MenberFamilyName",
+            "labelText": "Họ và tên",
+        },
+        {
+            "id":"dateOfBirdRelation",
+            "labelText": "Năm sinh",
+        },
+        {
+            "id":"PoliticalAttitude",
+            "labelText": "Thái độ chính trị",
+        },
+        {
+            "id":"homeTown",
+            "labelText": "Quê quán",
+        },
+        {
+            "id":"residence",
+            "labelText": "Nơi cư trú",
+        },
+        {
+            "id":"career",
+            "labelText": "Nghề nghiệp",
+        },
+        {
+            "id":"working",
+            "labelText": "Quá trình công tác",
+        },
+        {
+            "id":"startDate",
+            "labelText": "Từ ngày",
+        },
+        {
+            "id":"endDate",
+            "labelText": "Đến ngày",
+        },
+        {
+            "id":"content",
+            "labelText": "Nội dung",
+        },
+        {
+            "id":"startDateAboard",
+            "labelText": "Từ ngày",
+        },
+        {
+            "id":"endDateAboard",
+            "labelText": "Đến ngày",
+        },
+        {
+            "id":"contact",
+            "labelText": "Nội dung đi",
+        },
+        {
+            "id":"country",
+            "labelText": "Nước nào",
+        },
+        {
+            "id":"personIntroduced",
+            "labelText": "Người giới thiệu",
+        },
+        {
+            "id":"placeTimeJoinUnion",
+            "labelText": "Ngày và nơi vào Đoàn",
+        },
+        {
+            "id":"placeTimeJoinParty",
+            "labelText": "Ngày và nơi vào Đảng lần thứ nhất",
+        },
+        {
+            "id":"placeTimeJoinParty",
+            "labelText": "Ngày và nơi vào Đảng lần thứ nhất",
+        },
+        {
+            "id":"placeTimeRecognize",
+            "labelText": "Ngày và nơi công nhận chính thức lần thứ nhất",
         },
     ];
 
@@ -1223,6 +1638,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.infUser.WfInstCode = data.Profile.WfInstCode;
         $scope.GroupUser = data.Profile.GroupUserCode;
         $scope.infUser.PlaceWorking = data.Profile.PlaceWorking;
+        $scope.infUser.Relation = data.Profile.Relationship;
 
 
         data.Awards.forEach(function (laudatory) {
@@ -1537,6 +1953,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.infUser.WfInstCode =  rs.WfInstCode;
                 $scope.GroupUser = rs.GroupUserCode;
                 $scope.infUser.PlaceWorking=rs.PlaceWorking;
+                $scope.infUser.Relation=rs.Relationship;
                 
                 $scope.Username=rs.Username;
                 console.log($scope.infUser);
@@ -2113,6 +2530,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         } if($scope.infUser.Phone == ""||$scope.infUser.Phone == null||$scope.infUser.Phone == undefined){
             $scope.err=true
             App.toastrError("Không được để trường Số điện thoại trống")
+        } if($scope.infUser.Relation == ""||$scope.infUser.Relation == null||$scope.infUser.Relation == undefined){
+            $scope.err=true
+            App.toastrError("Không được để trường quan hệ trống")
         }
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
         if($scope.err==true){
@@ -2149,7 +2569,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.model.Username=$scope.Username;
                 $scope.model.WfInstCode=$scope.infUser.WfInstCode;
                 $scope.model.GroupUserCode = $scope.GroupUser;
-                $scope.model.PlaceWorking=$scope.infUser.PlaceWorking
+                $scope.model.PlaceWorking=$scope.infUser.PlaceWorking;
+                $scope.model.Relationship=$scope.infUser.Relation;
 
             if($scope.infUser.ResumeNumber!='' && $scope.infUser.ResumeNumber!=undefined &&
             $scope.Username!='' && $scope.Username!=undefined){
@@ -3203,6 +3624,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.infUser.FirstName = $scope.listDetail1[0].split(":")[1] ? $scope.listDetail1[0].split(":")[1].trim() : "";
             $scope.infUser.Sex = $scope.listDetail1[1].split(":")[1] ? $scope.listDetail1[1].split(":")[1].trim() : "";
             $scope.infUser.LastName = $scope.listDetail1[2].split(":")[1] ? $scope.listDetail1[2].split(":")[1].trim() : "";
+            $scope.infUser.Relation = $scope.listDetail1[2].split(":")[1] ? $scope.listDetail1[2].split(":")[1].trim() : "";
             $scope.infUser.Birthday = $scope.listDetail1[3].split(":")[1] ? $scope.listDetail1[3].split(":")[1].trim() : "";
             $scope.infUser.HomeTown = $scope.listDetail1[5].split(":")[1] ? $scope.listDetail1[5].split(":")[1].trim() : "";
             $scope.infUser.PlaceofBirth = $scope.listDetail1[4].split(":")[1] ? $scope.listDetail1[4].split(":")[1].trim() : "";
@@ -3275,6 +3697,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     }, 50);
 });
+
+
 
 app.controller('log-status-wf-full', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataserviceJoinParty, para) {
     $scope.cancel = function () {

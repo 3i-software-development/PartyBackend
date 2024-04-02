@@ -35,13 +35,16 @@
             <div class="col-md-8" style="display: flex; padding-right: 8px;">
                 <div class="br24 form-control custom-title-code-bold">
                     <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                        data-bs-placement="bottom"
-                        data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                       data-bs-placement="bottom"
+                       data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
 
                     </i>
                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                        ng-model="selectedWarningDisciplined.GrantOfDecision" type="text"
-                        placeholder="Cấp quyết định" />
+                           ng-model="selectedWarningDisciplined.GrantOfDecision" type="text"
+                           placeholder="Cấp quyết định" />
+                    
+                    <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                       ng-model="selectedWarningDisciplined.GrantOfDecision"></i>
                 </div>
             </div>
         </div>
@@ -58,11 +61,13 @@
         <div class="col-md-10" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold">
                 <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom"
-                    data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                   data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
 
                 </i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                    ng-model="selectedWarningDisciplined.Reason" type="text" placeholder="Lý do.. hình thức" />
+                       ng-model="selectedWarningDisciplined.Reason" type="text" placeholder="Lý do.. hình thức" />
+                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                   ng-model="selectedWarningDisciplined.DisciplineReason"></i>
             </div>
         </div>
     </div>

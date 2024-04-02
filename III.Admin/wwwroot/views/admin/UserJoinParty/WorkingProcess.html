@@ -304,12 +304,14 @@
                     <i class="fa fa-calendar"></i>
                     <label class="displayInfo control-label require custom-title-code-bold">Cấp quyết định</label>
                 </div>
-                <div class="col-md-8" style="display: flex; padding-right: 8px; ">
+                <div class="col-md-8" style="display: flex; padding-right: 8px; white-space:nowrap">
                     <div class="br24 form-control custom-title-code-bold">
                         <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-    
+
                         </i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedLaudatory.GrantOfDecision" type="text" placeholder="Cấp quyết định" />
+                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                           ng-model="selectedLaudatory.GrantOfDecision"></i>
                     </div>
                 </div>
             </div>
@@ -322,9 +324,11 @@
             <div class="col-md-10" style="display: flex;">
                 <div class="br24 form-control custom-title-code-bold">
                     <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-    
+
                     </i>
                     <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedLaudatory.Reason" type="text" placeholder="Lý do, hình thức" />
+                    <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                       ng-model="selectedLaudatory.Reason"></i>
                 </div>
             </div>
         </div>

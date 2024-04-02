@@ -260,6 +260,25 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
+
+    .autocomplete-list {
+        position: relative;
+        z-index: 2;
+        background-color: #F5F5F5;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .autocomplete-list li {
+            cursor: pointer;
+            padding: 5px;
+            border: none;
+        }
+
+            .autocomplete-list li:hover {
+                background-color: #f0f0f0;
+            }
 </style>
 <div class="portlet-body form row" style="margin-top: 15px">
     <!--<input type="button" ng-click="addJson()" value="add">-->
@@ -988,6 +1007,12 @@ input:checked + .slider:before {
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="2">
                         <div ng-include="'../views/admin/UserJoinParty/PersonalHistory.html'"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="2">
+                        <div ng-include="'../views/admin/UserJoinParty/Family.html'"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="2">
+                        <div ng-include="'../views/admin/UserJoinParty/GoAboard.html'"></div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="3">
                         <div ng-include="'../views/admin/UserJoinParty/WorkingTracking.html'"></div>
