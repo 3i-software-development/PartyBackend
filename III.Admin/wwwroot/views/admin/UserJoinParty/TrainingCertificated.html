@@ -80,7 +80,7 @@
     </div>
     <div class="form-group row">
         <div class="col-md-2 pr-0">
-            <i class="fa fa-pencil-square-o" id="class" ng-click="openPopover('class');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+            <i class="fa fa-pencil-square-o" id="certificate" ng-click="openPopover('certificate');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label class="displayInfo control-label require custom-title-code-bold">
                 Văn
                 bằng
@@ -89,10 +89,8 @@
         </div>
         <div class="col-md-10" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold">
-                <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom"
-                   data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
-                </i>
+                <i class="fa fa-info-circle icon-clickable" id="certificate" title="Popover Header" popover-placement="bottom-left"
+                uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.Certificate}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                        ng-model="selectedTrainingCertificatedPass.Certificate" type="text"
                        placeholder="Văn bằng chứng chỉ" />
@@ -135,3 +133,15 @@
         </table>
     </div>
 </div>
+<script type="text/ng-template" id="popoverTemplate.html">
+    <div class="custom-popover-content">
+        <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
+        <i class="fa fa-microphone" voice-recognition style="padding-right: 85px"></i>
+        <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
+        <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment" popover-placement="bottom" uib-popover="{{matchedItemss[0].comment}}"></textarea>
+    </div>
+</script>
+
+<!-- JavaScript Bootstrap từ CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

@@ -7,7 +7,7 @@
     <div class="form-group row">
         <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
             <div class="col-md-4 pr-0" style="padding-left: 7px;">
-                <i class="fa fa-calendar"></i>
+                <i class="fa fa-calendar" id="from" ng-click="openPopover('from');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
                 <label class="displayInfo control-label require custom-title-code-bold">
                     Từ
                     ngày
@@ -15,11 +15,8 @@
             </div>
             <div class="col-md-8" style="display: flex; padding-left: 8px;">
                 <div class="br24 form-control custom-title-code-bold">
-                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                       title="Popover Header" data-bs-placement="bottom"
-                       data-bs-content="VD: 01-01-2024">
-
-                    </i>
+                    <i class="fa fa-info-circle icon-clickable" id="from" title="Popover Header" popover-placement="bottom-left"
+                    uib-popover="Từ ngày: {{selectedWorkingTracking.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                            ng-model="selectedWorkingTracking.From" type="text"
                            placeholder="Từ ngày" />
@@ -28,7 +25,7 @@
         </div>
         <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
             <div class="col-md-4 pr-0">
-                <i class="fa fa-calendar"></i>
+                <i class="fa fa-calendar" id="to" ng-click="openPopover('to');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
                 <label class="displayInfo control-label require custom-title-code-bold">
                     Đến
                     ngày
@@ -36,11 +33,8 @@
             </div>
             <div class="col-md-8" style="display: flex; padding-right: 8px;">
                 <div class="br24 form-control custom-title-code-bold">
-                    <i class="fa fa-info-circle" data-bs-toggle="popover"
-                       title="Popover Header" data-bs-placement="bottom"
-                       data-bs-content="VD: 01-01-2024">
-
-                    </i>
+                    <i class="fa fa-info-circle icon-clickable" id="to" title="Popover Header" popover-placement="bottom-left"
+                    uib-popover="Từ ngày: {{selectedWorkingTracking.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                            ng-model="selectedWorkingTracking.To" type="text"
                            placeholder="Đến ngày" />
@@ -50,7 +44,7 @@
     </div>
     <div class="form-group row">
         <div class="col-md-2 pr-0">
-            <i class="fa fa-pencil-square-o"></i>
+            <i class="fa fa-pencil-square-o" id="work" ng-click="openPopover('work');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label class="displayInfo control-label require custom-title-code-bold">
                 Nội
                 dung
@@ -58,11 +52,8 @@
         </div>
         <div class="col-md-10" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold">
-                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                   title="Popover Header" data-bs-placement="bottom"
-                   data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
-                </i>
+                <i class="fa fa-info-circle icon-clickable" id="work" title="Popover Header" popover-placement="bottom-left"
+                uib-popover="Từ ngày: {{selectedWorkingTracking.Work}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                        ng-model="selectedWorkingTracking.Work" type="text"
                        placeholder="Nội dung" />
@@ -73,7 +64,7 @@
     </div>
     <div class="form-group row">
         <div class="col-md-2 pr-0">
-            <i class="fa fa-pencil-square-o"></i>
+            <i class="fa fa-pencil-square-o" id="role" ng-click="openPopover('role');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label class="displayInfo control-label require custom-title-code-bold">
                 Chức
                 vụ
@@ -81,11 +72,8 @@
         </div>
         <div class="col-md-10" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold">
-                <i class="fa fa-info-circle" data-bs-toggle="popover"
-                   title="Popover Header" data-bs-placement="bottom"
-                   data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
-
-                </i>
+                <i class="fa fa-info-circle icon-clickable" id="role" title="Popover Header" popover-placement="bottom-left"
+                uib-popover="Từ ngày: {{selectedWorkingTracking.Role}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedWorkingTracking.Role" type="text" placeholder="Chức vụ" />
                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                    ng-model="selectedWorkingTracking.Role"></i>
@@ -120,3 +108,15 @@
 </table>
 </div>
 </div>
+<script type="text/ng-template" id="popoverTemplate.html">
+    <div class="custom-popover-content">
+        <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
+        <i class="fa fa-microphone" voice-recognition style="padding-right: 85px"></i>
+        <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
+        <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment" popover-placement="bottom" uib-popover="{{matchedItemss[0].comment}}"></textarea>
+    </div>
+</script>
+
+<!-- JavaScript Bootstrap từ CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
