@@ -1,0 +1,110 @@
+﻿<div ng-controller="product">
+    <div class="table-toolbar" ng-hide="IsEnabledExportLot">
+        <form name="searchform" class="form-horizontal" method="post" ng-validate="validationOptions">
+            <div class="row">
+                <div class="col-md-3">
+                    <label class="control-label">{{'MIS_CURD_LBL_PRODUCT' | translate}}</label>
+                    <div class="input-group">
+                        <ui-select tagging ng-model="model.ProductCode" theme="bootstrap" on-select="changleSelect('ProductCode')">
+                            <ui-select-match placeholder="{{'MIS_CURD_TXT_PRODUCT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="x.Code as x in listProductCode | filter: $select.search">
+                                {{x.Name}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-2 pl-0">
+                    <label class="control-label">{{'MIS_CURD_LBL_QUANTITY' | translate}}</label>
+                    <div class='input-group'>
+                        <input type='number' min="0" class="br4 form-control input-date" ng-model="model.Quantity" placeholder="{{'MIS_CURD_TXT_QUANTITY' | translate}}..." />
+                    </div>
+                </div>
+                <div class="col-md-1 pl-0">
+                    <label class="control-label">{{'MIS_CURD_LBL_UNIT' | translate}}</label>
+                    <div class="input-group">
+                        <ui-select tagging ng-model="model.Unit" theme="bootstrap" on-select="changleSelect('Unit')">
+                            <ui-select-match placeholder="{{'MIS_CURD_TXT_UNIT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="x.Code as x in listUnit | filter: $select.search">
+                                {{x.Name}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+                <div class="col-md-2 pl-0">
+                    <label class="control-label">{{'MIS_CURD_LBL_PRICE' | translate}}</label>
+                    <div class='input-group'>
+                        <input type='number' min="0" class="br4 form-control input-date" ng-model="model.SalePrice" placeholder="{{'MIS_CURD_TXT_PRICE' | translate}}..." />
+                    </div>
+                </div>
+                <div class="col-md-1 pl-0">
+                    <label class="control-label">{{'MIS_CURD_LBL_TAX_RATE' | translate}}</label>
+                    <div class='input-group'>
+                        <input type='number' min="0" class="br4 form-control input-date" ng-model="model.TaxRate" placeholder="%" />
+                    </div>
+                </div>
+                <div class="col-md-1 pl-0">
+                    <label class="control-label">{{'MIS_CURD_LBL_DISCOUNT' | translate}}</label>
+                    <div class='input-group'>
+                        <input type='number' min="0" class="br4 form-control input-date" ng-model="model.Discount" placeholder="%" />
+                    </div>
+                </div>
+                <div class="col-md-1 pl-0">
+                    <label class="control-label">{{'MIS_CURD_LBL_COMMISSION' | translate}}</label>
+                    <div class='input-group'>
+                        <input type='number' min="0" class="br4 form-control input-date" ng-model="model.Commission" placeholder="%" />
+                    </div>
+                </div>
+                <div class="col-md-1 actions mt15 ">
+                    <a ng-show="isEdit==false" ng-disabled="LotProductCode==''" ng-click="add()" class="btn btn-icon-only btn-circle btn-outline green-custom ">
+                        <span><i class="fa fa-plus"></i></span>
+                    </a>
+                    <a ng-show="isEdit==true" ng-click="close()" class="btn btn-icon-only btn-circle btn-outline red-custom ">
+                        <span><i class="fa fa-close"></i></span>
+                    </a>
+                    <a ng-show="isEdit==true" ng-click="save()" class="btn btn-icon-only btn-circle btn-outline green-custom ">
+                        <span><i class="fa fa-save"></i></span>
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-bordered" id="tblListProduct">
+            <thead>
+                <tr>
+                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_QR_CODE' | translate}}</th>
+                    <th class="col-md-2 text-center fw600 text-underline">{{'MIS_LIST_COL_NAME_PRODUCT' | translate}}</th>
+                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_QUANTITY' | translate}}</th>
+                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_PRICE' | translate}}</th>
+                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_TAX_RATE' | translate}}</th>
+                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_NOTE' | translate}}</th>
+                    <th class="col-md-2 text-center fw600 text-underline">{{'MIS_LIST_COL_TIME_ADD' | translate}}</th>
+                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_CREATOR' | translate}}</th>
+                    <th class="col-md-2 text-center fw600 text-underline" ng-hide="IsEnabledExportLot">{{'MIS_LIST_COL_ACTION' | translate}}</th>
+                    <th class="col-md-2 text-center fw600 text-underline">{{'MIS_LIST_COL_WAREHOUSE' | translate}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="{{x.Id}}" ng-repeat="x in listProducts" ng-click="editItem(x)">
+                    <td class="text-center">
+                        <img src='data:image/png;base64,{{x.sQrCode}}' height="40" width="40" />
+                    </td>
+                    <td class="text-center">{{x.ProductName}}</td>
+                    <td class="text-center">{{x.Quantity}}</td>
+                    <td class="text-center">{{x.Cost}}</td>
+                    <td class="text-center">{{x.Tax}}</td>
+                    <td class="text-center">{{x.Note}}</td>
+                    <td class="text-center">{{x.CreatedTime}}</td>
+                    <td class="text-center">{{x.CreatedBy}}</td>
+                    <td class="text-center" ng-hide="IsEnabledExportLot">
+                        <button title="Cập nhật" ng-click="editItem($index)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-icon-only btn-circle btn-outline blue"><i class="fa fa-edit"></i></button>
+                        <button title="Xóa" ng-click="removeItem($index)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45);" class="btn btn-icon-only btn-circle btn-outline red"><i class="fa fa-trash"></i></button>
+                    </td>
+                    <td class="text-center" ng-hide="IsEnabledExportLot">
+                        <button title="Xếp kho" ng-click="orderingItem($index)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(85,168,253,0.45);" class="btn btn-icon-only btn-circle btn-outline blue"><i class="fa fa-cubes"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

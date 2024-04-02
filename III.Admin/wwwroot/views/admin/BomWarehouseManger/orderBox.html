@@ -1,0 +1,180 @@
+﻿<style>
+    .flex-container {
+        padding: 15px;
+        margin: 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .selected {
+        background: #308cea !important;
+        font-weight: bold !important;
+    }
+
+
+    .flex-item {
+        background: #9e8b73;
+        width: 50px;
+        border-radius: 4px;
+        height: 50px;
+        margin: 5px;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
+
+        .flex-item:hover {
+            background: #53afe8;
+        }
+
+    .flex-box {
+        padding: 15px;
+        margin: 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .item-box {
+        /*width: 50px;
+        height: 50px;*/
+        margin: 5px;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
+
+        .item-box :hover {
+            background: #53afe8;
+        }
+
+    .item-box-text, .item-box-text:hover {
+        background: none !important;
+        position: absolute;
+        top: 18px;
+        left: 30%;
+        right: auto;
+        color: white;
+        font-size: 14px;
+    }
+
+    #inforWareHouse {
+        max-height: 320px;
+        height: 290px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+
+        #inforWareHouse .header {
+            background: #9e8b73;
+            height: 40px;
+            margin-left: 0;
+            margin-right: 0;
+            border-bottom: solid 3px #0082c4;
+            color: #ffffff;
+            padding: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    .box-push {
+        padding: 5px;
+        margin-bottom: 5px;
+        color: #fff;
+        background: #b88b50;
+    }
+</style>
+<div class="modal-header">
+    <img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />
+    <i class="fas fa-store" style="padding-top:10px;font-size:20px"></i>
+    <span class="modal-title " id="modal-title">{{'MIS_TITLE_SORT_WAREHOUSE_IMPORT_BILL' | translate}}</span>
+</div>
+<div id="modal-body">
+    <div class="portlet-body form">
+        <form name="addform" method="post" ng-validate="validationOptions">
+            <div class="form-body">
+                <div class="row">
+                    <div class="listFloor col-md-4">
+                        <div ng-include="'../views/admin/edmsWareHouseReceipt/listFloor.html'"></div>
+                    </div>
+
+                    <div class="listLine col-md-4">
+                        <div ng-include="'../views/admin/edmsWareHouseReceipt/listLine.html'"></div>
+                    </div>
+
+                    <div class="listRack col-md-4">
+                        <div ng-include="'../views/admin/edmsWareHouseReceipt/listRack.html'"></div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="table-toolbar pb15">
+                            <label>{{'MIS_CURD_LBL_SHELF_POSITION' | translate}}</label>
+                            <input class="form-control" ng-model="RackPosition" placeholder='{{'MIS_CURD_ENTER_RACK' | translate}}...' />
+                        </div>
+                        <label class="labelbodergroup bold"><span>{{'EDWHR_CURD_LBL_SERIAL' | translate}}</span></label>
+                        <div class="table-toolbar pb20">
+                            <ul class="flex-container">
+                                <li class="flex-item" ng-class="{ 'selected': x.Checked}" role="button" ng-repeat="x in position" ng-click="selectOrder($index, position)">
+                                    {{x.Text}}
+                                </li>
+                            </ul>
+                        </div>
+                        <label class="labelbodergroup bold"><span>{{'MIS_CURD_CATALOG_PRODUCT' | translate}}</span></label>
+                        <div class="table-toolbar">
+                            <ul class="flex-box">
+                                <li class="item-box custom-tooltip" ng-class="{ 'selected': x.Checked}" role="button" ng-repeat="x in listBox" ng-click="selectBox($index, listBox)">
+                                    <img src="../../../images/default/box.png" class="h-70" />
+                                    <span class="item-box-text">{{x.NumBoxth}}</span>
+                                    <span class="custom-tooltiptext">Sản phẩm {{x.NumBoxth}}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-2 pt20">
+                        <div id="inforWareHouse">
+                            <div class="row header">
+                                <span>{{'MIS_CURD_CHOSE_PRODUCT' | translate}}</span>
+                            </div>
+                            <div class="body" style="padding:10px">
+                                <div ng-repeat="x in listSelect" ng-if="listSelect.length!=0" class="box-push">
+                                    <b>{{'MIS_CURD_LBL_PROJECT' | translate}} {{x.NumBoxth}}</b><br />
+                                    <b>{{'MIS_CURD_LBL_STT' | translate}} {{x.Ordering}}</b>
+                                </div>
+                                <span class="text-danger" ng-if="listSelect.length==0">{{'MIS_CURD_PRENT_EMPTYS' | translate}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <button ng-click="submit()" class="btn btn-red mr5" href="javascript:;">
+        <i class="fas fa-save"></i> {{'COM_BTN_SAVE' | translate}}
+    </button>
+</div>

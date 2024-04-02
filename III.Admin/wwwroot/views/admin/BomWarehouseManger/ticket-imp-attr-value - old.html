@@ -1,0 +1,130 @@
+﻿<style>
+    tags-input .tags .tag-item .remove-button {
+        margin: 0 0 0 5px;
+        padding: 0;
+        border: none;
+        background: 0 0;
+        cursor: pointer;
+        vertical-align: middle;
+        font: 700 16px Arial,sans-serif;
+        color: #ea1818;
+    }
+</style>
+<div class="modal-header" style="background-color:white">
+    <img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />
+    <i class="fa fa-edit icon-edit fs16 black"></i>
+    <span class="modal-title black" id="modal-title" style="width: 92%;">
+        {{'MIS_TITLE_MODAL_ATTR_PROD' | translate}}
+    </span>
+</div>
+<div class="modal-body" id="modal-body" style="padding-bottom: 0px !important;">
+    <div class="portlet-body form">
+        <form name="attrValue" class="form-horizontal" method="post" ng-validate="">
+            <div class="form-body pt-0 pb-0 pl15">
+                <div class="col-md-4 pl-0" ng-class="{'has-error' : errorAttrCode}">
+                    <label class="control-label require">{{'MIS_LBL_C_ATTR' | translate}}</label>
+                    <div class="input-group">
+                        <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.AttrCode" theme="bootstrap" on-select="changeSelect('AttrCode')">
+                            <ui-select-match placeholder="{{'MIS_LBL_C_ATTR' | translate}}...">{{$select.selected.AttrName}}</ui-select-match>
+                            <ui-select-choices repeat="x.AttrCode as x in listAttr | filter: $select.search">
+                                {{x.AttrName}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <span ng-show="errorAttrCode" class="label-color validation-message">
+                        {{'MIS_VALIDATE_ATTR_NOT_BLANK' | translate}}
+                    </span>
+                </div>
+                <!--<div class="col-md-4">
+                    <div class="form-group" ng-class="{'has-error' : errorValue || errorValuePack}">
+                        <label class="control-label require">{{'MIS_LBL_C_COST_VALUE' | translate}}</label>
+                        <div class='input-group'>
+                            <input ng-change="changeValue('Value')" ng-blur="restrictUnit()" class="br4 form-control bold" ng-model="model.Value" placeholder="{{'MIS_LBL_C_COST_VALUE' | translate}}..." />
+                            <span ng-show="errorValue" class="label-color validation-message">
+                                {{'MIS_VALIDATE_COST_VALUE_NOT_BLANK' | translate}}
+                            </span>
+                            <span ng-show="errorValuePack" class="label-color validation-message">
+                                {{'MIS_VALIDATE_ATTR_PACKING' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                </div>-->
+
+                <div class="col-md-4" ng-class="{ 'has-error': errorPackCode}">
+                    <label class="control-label require">{{'MIS_LBL_C_COST_VALUE' | translate}}</label>
+                    <div class="input-group">
+                        <ui-select tagging ng-model="model.PackCode" theme="bootstrap" ng-change="changeSelect('PackCode')">
+                            <ui-select-match placeholder="{{'MIS_LBL_C_COST_VALUE' | translate}}">{{$select.selected.Title}}</ui-select-match>
+                            <ui-select-choices repeat="x.Code as x in listAttrValue | filter: $select.search">
+                                <div style="padding-left: {{30 * x.Level}}px">
+                                    <i ng-show="x.HasChild" class="fa fa-folder-open icon-state-warning"></i>
+                                    <i ng-show="!x.HasChild" class="fa fa-folder text-info"></i>
+                                    {{x.Title}}
+                                </div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <span class="text-danger fs11">{{model.PackHierarchyPath}}</span>
+                    <span ng-show="errorPackCode" class="label-color validation-message">
+                        {{'Giá trị không được để trống' | translate}}
+                    </span>
+                </div>
+
+                <div class="col-md-2" ng-class="{'has-error' : errorUnit}">
+                    <label class="control-label">{{'MIS_LBL_C_UNIT' | translate}}</label>
+                    <div class="input-group">
+                        <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.Unit" theme="bootstrap" on-select="changleSelect('Unit')">
+                            <ui-select-match placeholder="{{'MIS_LBL_C_UNIT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="x.Code as x in lstUnit | filter: $select.search">
+                                {{x.Name}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                    <span ng-show="errorUnit" class="label-color validation-message">
+                        {{'MIS_VALIDATE_UNIT_NOT_BLANK' | translate}}
+                    </span>
+                </div>
+                <button class="btn green-custom ml5 mt20 mr-2" ng-click="submit()">
+                    <i class="fa fa-plus"></i>
+                    {{'COM_BTN_ADD' | translate}}
+                </button>
+            </div>
+            
+        </form>
+        <div class="col-md-12 pb5 pt5">
+            <div class="form-group">
+                <div class="table-responsive" style="max-height: 400px; overflow-y: scroll;">
+                    <table class="table table-bordered" style="margin-bottom: 0;">
+                        <thead>
+                            <tr>
+                                <th class="text-center col-md-1">{{'MIS_COL_INDEX' | translate}}</th>
+                                <th class="text-center col-md-3 nowrap">{{'MIS_COL_PRODUCT' | translate}}</th>
+                                <th class="text-center col-md-2 nowrap">{{'MIS_COL_ATTR' | translate}}</th>
+                                <th class="text-center col-md-2 nowrap">{{'MIS_COL_COST_VALUE' | translate}}</th>
+                                <th class="text-center col-md-1 nowrap">{{'MIS_COL_UNIT' | translate}}</th>
+                                <th class="text-center col-md-2 nowrap">{{'COM_LIST_COL_ACTION' | translate}}</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="x in lstAttrValue">
+                            <tr>
+                                <td class="text-center pt15">{{$index + 1}}</td>
+                                <td class="text-center pt15">{{x.ProductName}}</td>
+                                <td class="text-center pt15">{{x.Name}}</td>
+                                <td class="text-center">{{x.Value}}</td>
+                                <td class="text-center">{{x.Unit}}</td>
+                                <td class="text-center">
+                                    <!--<button title="Sửa" ng-click="edit(x.ID)" style="width: 25px; height: 25px; padding: 0px" class="btn btn-icon-only btn-circle btn-outline blue"><i class="fa fa-edit"></i></button>-->
+                                    <button title="Xóa"  ng-click="delete(x.ID)" style="width: 25px; height: 25px; padding: 0px" class="btn btn-icon-only btn-circle btn-outline red"><i class="fa fa-trash"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="modal-footer" style="padding: 0xp !important;">
+   
+</div>

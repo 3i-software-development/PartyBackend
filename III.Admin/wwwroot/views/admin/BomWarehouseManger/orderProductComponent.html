@@ -1,0 +1,239 @@
+﻿<style>
+    #product .control-label {
+        text-align: left;
+    }
+
+    .tab .nav-tabs li.active > div,
+    .tab .nav-tabs > li.active > div:focus {
+        border: none;
+        color: purple;
+        background: white;
+        border-top: 1px solid #d3d3d3;
+        border-left: 1px solid #d3d3d3;
+        border-right: 1px solid #d3d3d3;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        font-weight: 700 !important;
+        border-bottom: 6px solid #ff9800 !important;
+    }
+
+    .tab .nav-tabs {
+        margin-bottom: 0px;
+        border-bottom-width: 0px !important;
+    }
+
+        .tab .nav-tabs li {
+            border-right: 1px solid #ddd;
+        }
+
+            /*.tab .nav-tabs li:last-child {
+                border-right: 0px solid #ddd;
+            }
+
+            .tab .nav-tabs li:first-child div {
+                border-left: 1px solid #ddd;
+            }*/
+
+            .tab .nav-tabs li div {
+                color: black;
+                background: white;
+                border-radius: 0;
+                margin-right: -1px;
+                padding: 5.5px 20px;
+                /*border-bottom: 1px solid #d3d3d3;*/
+                font-weight: 600;
+            }
+
+    .nav-tabs li:first-child div {
+        border-radius: 5px 0 0 0px;
+    }
+
+    .nav-tabs li:last-child div {
+        border-radius: 0 5px 0px 0;
+        /*border-right: 1px solid #d3d3d3;*/
+    }
+
+    ::-webkit-scrollbar {
+        background-color: #F5F5F5;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background-color: #eaeaea;
+    }
+
+    ::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 1px rgb(0 0 0 / 30%);
+        background-color: #F5F5F5;
+    }
+
+
+    @media(max-width:1200px) {
+        .modal-60 {
+            width: 80% !important;
+        }
+    }
+
+    @media(min-width:1201px) and (max-width:1500px) {
+        .modal-60 {
+            width: 70% !important;
+        }
+    }
+
+    @media(min-width:1501px) {
+        .modal-60 {
+            width: 60% !important;
+        }
+    }
+
+    .tab .tab-content {
+        border: 1px solid #d3d3d3 !important;
+        padding: 15px;
+    }
+
+    .disabled-element {
+        cursor: not-allowed !important;
+        pointer-events: auto;
+    }
+
+        .disabled-element > .cke, .disabled-element > div {
+            opacity: 0.6 !important;
+            pointer-events: none !important;
+        }
+</style>
+<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+</button>
+<div class="modal-header white-custom height-50">
+    <!--<img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />-->
+    <i class="fa fa-plus-circle icon-insert " style="line-height: 30px"></i>
+    <span class="modal-title" id="modal-title" style="line-height: 30px" ng-if="isEdit">{{header}}</span>
+</div>
+<div class="modal-body pb-0" id="modal-body">
+    <div class="portlet-body form">
+        <form name="addform" class="form-horizontal" method="post" ng-validate="validationOptions">
+            <div class="form-body">
+                <div class="row">
+                    <div class="w-100 d-flex">
+                        <div class="col-md-8 pl-0 flex-grow-full" ng-class="{ 'has-error': errorProductCode, 'disabled-element' : !isReturn}">
+                            <label class="control-label require">{{'Sản phẩm cha' | translate}}</label>
+                            <div class="d-flex flex-column">
+                                <div class="input-group br24-nobtn">
+                                    <ui-select tagging ng-model="modelCustom.ProductCode" theme="bootstrap" on-select="selectProduct($item)">
+                                        <ui-select-match placeholder="{{'Chọn sản phẩm cha' | translate}}...">
+                                            {{$select.selected.Name}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="x.Code as x  in listProductMapping | filter: $select.search" refresh="reloadProductMapping($select.search)">
+                                            <span>{{x.Name}}</span>
+                                            <div class="row mt15" ng-if="$last">
+                                                <button class="btn btn-xs btn-success"
+                                                        style="width: 100%;"
+                                                        ng-click="loadMoreMapping($select, $event);"
+                                                        ng-disabled="loading">
+                                                    Load more...
+                                                </button>
+                                            </div>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span ng-show="errorProductCode" class="label-color validation-message">
+                                        {{'Chọn sản phẩm cha' | translate}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 flex-basis-250 pl-0" ng-class="{'has-error' : errorNoParent, 'disabled-element' : !isReturn}">
+                            <label class="control-label require">{{'No (Thứ tự sản phẩm trong dãy)' | translate}}</label>
+                            <div class='mr5'>
+                                <input ng-change="change('quantityImp')" class="form-control ng-pristine ng-untouched ng-valid ng-not-empty br24" ng-model="modelCustom.NoParent" placeholder="{{'No' | translate}}..."
+                                       num-thousand='true' awnum num-int='21' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                <span ng-show="errorNoParent" class="label-color validation-message">
+                                    {{'Thứ tự cha không được để trống' | translate}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 pl-0" ng-class="{'has-error' : errorNoParent, 'disabled-element' : !isReturn}">
+                            <label class="control-label require">{{'Thứ tự sản phẩm cha' | translate}}</label>
+                            <div class='mr5'>
+                                <input class="form-control ng-pristine ng-untouched ng-valid ng-not-empty br24" ng-model="modelCustom.ProductNo" placeholder="{{'Thứ tự' | translate}}..."
+                                       type="text" readonly/>
+                                <span ng-show="errorNoParent" class="label-color validation-message">
+                                    {{'Thứ tự cha không được để trống' | translate}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="btn-group actions col-md-1 pl-0 mt30 flex-basis-50 flex-no-shrink">
+                            <div class="text-center pull-right" ng-click="submit()">
+                                <a class="">
+                                    <span><i class=" fa-regular fa-floppy-disk fs25"></i></span>
+                                </a>
+                                <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SAVE' | translate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <div class="row mt10">
+            <div class="col-lg-12">
+                <div class="tab" role="tabpanel">
+                    <ul class="nav nav-tabs border-bottom-w01" role="tablist">
+                        <!--<li role="presentation" class="active">
+                            <div href="#Description" aria-controls="home" role="button" data-toggle="tab">{{'MLP_CURD_TAB_FILE_CURD_LBL_NOTE' | translate}}</div>
+                        </li>
+                        <li role="presentation" class="disabled stepNext">
+                            <div href="#FilePlugin" aria-controls="profile" role="button" data-toggle="tab">
+                                {{'MLP_CURD_TAB_FILE' | translate}}
+                            </div>
+                        </li>-->
+                        <li role="presentation" class="active">
+                            <div href="#Properties" aria-controls="profile" role="button" data-toggle="tab">
+                                {{'MLP_CURD_TAB_PROPERTIES' | translate}}
+                            </div>
+                        </li>
+                        <li role="presentation" class="disabled stepNext">
+                            <div href="#Component" aria-controls="profile" role="button" data-toggle="tab">
+                                {{'Thành phần vật tư con' | translate}}
+                            </div>
+                        </li>
+                        <!--<li role="presentation" class="disabled stepNext">
+                            <div href="#History" aria-controls="profile" role="button" data-toggle="tab">
+                                {{'MLP_CURD_TAB_HISTORY' | translate}}
+                            </div>
+                        </li>-->
+
+                    </ul>
+                </div>
+                <div class="tab-content pt10 h-400 mb10" style="border: 1px solid #d3d3d3; padding: 15px;">
+                    <!--<div role="tabpanel" class="tab-pane fade in active" id="Description" ng-class="{'disabled-element' : (isShow == '' && !isEdit) || isCustom }">
+                        <textarea ng-model="model.full_text" id="ckEditorItem"></textarea>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="FilePlugin">
+                        <div style="height: 350px; overflow-y: auto; overflow-x: hidden" ng-include="'../views/admin/filePlugin/file-plugin.html'" ng-class="{'disabled-element' : isShow == ''|| isCustom }"></div>
+                    </div>-->
+                    <div role="tabpanel" class="tab-pane fade in active" id="Properties">
+                        <div ng-include="'../views/admin/productImport/tabAttribute.html'" ng-class="{'disabled-element' : (isShow == '' && !isEdit) || isReturn }"></div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="Component">
+                        <div ng-include="'../views/admin/productImport/tabComponent.html'" ng-class="{'disabled-element' : isShow == '' && !isEdit }"></div>
+                    </div>
+                    <!--<div role="tabpanel" class="tab-pane fade" id="History">
+                        <div ng-include="'../views/admin/materialProduct/tabHistoryProduct.html'" ng-class="{'disabled-element' : (isShow == '' && !isEdit) || isCustom }"></div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('#image').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+    $("#file").change(function () {
+        readURL(this);
+    });
+</script>

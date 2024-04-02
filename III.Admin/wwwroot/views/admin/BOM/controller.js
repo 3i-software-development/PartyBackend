@@ -215,8 +215,17 @@ app.controller('index', function ($scope, $rootScope, $cookies, $filter, $transl
 })
 
 app.controller('input', function ($scope, $rootScope, $cookies, $filter, $translate,dataservice,$routeParams,$location){
+    $scope.DetailCode=0
+    $scope.increase=function() {
+        $scope.DetailCode++
+    }
+
+    $scope.decrease=function() {
+        $scope.DetailCode--
+    }
     $scope.submit=function(){
-        
+        console.log($scope.bomDataModel);
+        return;
         dataservice.PostBomRt($scope.bomDataModel,function(rs){
             rs=rs.data;
             if (rs.Error) {
@@ -234,17 +243,17 @@ app.controller('input', function ($scope, $rootScope, $cookies, $filter, $transl
     };
 
     // Thêm một mục BomRtModel vào ListBom
-    $scope.addBomItem = function() {
+    $scope.addBomItem = function(GroupAttr,ActivityCode) {
         var newItem = {
             Id: null,
             ItemCode: '',
             ItemName: '',
             Quantity: 0,
             QuantityRemain: null,
-            Unit: '',
+            Unit: GroupAttr.Unit,
             Specification: '',
-            Io: '',
-            ActivityCode: '',
+            Io: 'in',
+            ActivityCode: ActivityCode,
             ShiftCode: '',
             WordOrderCode: '',
             ObjectType: '',
@@ -276,6 +285,9 @@ app.controller('input', function ($scope, $rootScope, $cookies, $filter, $transl
                 rs=rs.data
                 console.log(rs);
                 $scope.GroupAttr=rs.filter(item => item.Code.endsWith("_I"));
+                $scope.GroupAttr.forEach(function(item){
+                    $scope.addBomItem(item)
+                })
             })
         })
     }
@@ -313,4 +325,4 @@ app.filter('threeDigitString', function() {
       }
       return str;
     };
-  });
+});

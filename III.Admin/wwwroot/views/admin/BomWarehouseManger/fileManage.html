@@ -1,0 +1,91 @@
+﻿<style type="text/css">
+    .tag-wareHouseFile .tags {
+        height: 75px;
+        max-height: 75px;
+    }
+
+    .contentMainCategory {
+        max-height: 360px;
+        overflow: auto;
+        height: 360px;
+    }
+
+    tags-input .host {
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        height: 0;
+    }
+    #tblDataFolder_info {
+        display: none;
+    }
+    th > .mt-checkbox > span:after {
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid #888;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+    td > .mt-checkbox > span:after {
+        left: 6px;
+        top: 2px;
+        width: 5px;
+        height: 10px;
+        border: solid #888;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+    }
+</style>
+<div class="modal-header no-color">
+    <!--<img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />-->
+    <i class="fa fa-plus-circle black icon-insert "></i>
+    <span class="modal-title black" id="modal-title" style="top: 7px;"> {{'Chọn tệp nhiệm vụ' | translate}}</span>
+</div>
+<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+</button>
+<div class="modal-body pb-0" id="modal-body">
+    <div class="portlet-body form">
+        <form name="addformfile" class="form-horizontal" method="post" ng-validate1="validationOptionsFile">
+            <div class="form-body">
+                <div class="row">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="col-md-12 pr-0 pl25" style="top: -15px;">
+                                <!--<div class="form-group">
+                                    <div class="col-md-8 pr-0">
+                                        <label class="control-label bold">&nbsp;{{'Đối tượng' | translate}}</label>
+                                        <div class="input-group br24-nobtn">
+                                            <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.ObjFileShare" theme="bootstrap" ng-change="changeObj(model.ObjFileShare)">
+                                                <ui-select-match placeholder="{{'Đối tượng' | translate}}..."><b>{{$select.selected.Name}}</b></ui-select-match>
+                                                <ui-select-choices repeat="x.Code as x in lstObjFileShare | filter:$select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="top: 23px;">
+                                        <div class="btn-group actions d-flex">
+                                            <div class="text-center pr20">
+                                                <a ng-click="addFile()" class="fs30">
+                                                    <span><i class="fa-solid fa-plus"></i></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <table class="table dataTable table-hover table-striped"
+                                       datatable
+                                       dt-options="dtOptions"
+                                       dt-columns="dtColumns"
+                                       dt-instance="dtInstance"
+                                       id="tblDataCustomerFile"></table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

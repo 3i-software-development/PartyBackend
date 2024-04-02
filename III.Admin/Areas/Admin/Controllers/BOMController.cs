@@ -43,6 +43,18 @@ namespace III.Admin.Areas.Admin.Controllers
 
             return View();
         }
+
+        [Breadcrumb("ViewData.CrumbBOM", AreaName = "Admin", FromAction = "Index", FromController = typeof(MenuBOMController))]
+        [AdminAuthorize]
+        public IActionResult BomWarehouseManger()
+        {
+            ViewData["CrumbDashBoard"] = _sharedResources["COM_CRUMB_DASH_BOARD"];
+            ViewData["CrumbMenuBOM"] = "Menu Quản lý BOM";
+            ViewData["CrumbBOM"] = "Quản lý kho BOM";
+
+            return View();
+        }
+
         #region BOM_hs
 
         [HttpPost]
@@ -330,28 +342,98 @@ namespace III.Admin.Areas.Admin.Controllers
                 var fromDate = !string.IsNullOrEmpty(jTablePara.StartTime) ? DateTime.ParseExact(jTablePara.StartTime, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var toDate = !string.IsNullOrEmpty(jTablePara.EndTime) ? DateTime.ParseExact(jTablePara.EndTime, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
 
-                var query = from a in _context.BOMProductionWarehouseDts.Where(x => !x.IsDeleted)
-                            where (userType == 10
-                                    || (userType == 2 && session.ListUserOfBranch.Any(x => x == a.CreatedBy))
-                                    || (userType == 0 && session.UserName == a.CreatedBy)
-                                )
-                            select a;
+                var query = FuncJTable(userType,"","","","",jTablePara.StartTime,jTablePara.EndTime,"");
 
                 var count = query.Count();
                 var data = query.OrderUsingSortExpression(jTablePara.QueryOrderBy).Skip(intBeginFor).Take(jTablePara.Length).AsNoTracking().ToList();
 
-                var jdata = JTableHelper.JObjectTable(data, jTablePara.Draw, count,
-                    "Id", "ItemCode", "Quantity", "Unit", "Specification", "IO", "TicketCode", "CreatedBy", "CreatedTime", "UpdatedBy", "UpdatedTime", "DeletedBy", "DeletedTime", "IsDeleted"
-                    );
+                var jdata = JTableHelper.JObjectTable(data, jTablePara.Draw, count, "Id", "TicketCode", "QrTicketCode", "CusCode", "CusName", "StoreCode", "StoreName", "Title"
+                    , "UserImport", "UserImportName", "UserSend", "Note", "PositionGps", "PositionText", "FromDevice", "InsurantTime",
+                    "TimeTicketCreate", "Reason", "ReasonName", "StoreCodeSend", "CreatedBy", "StoreNameRevice", "StoreNameDeliver");
                 return Json(jdata);
             }
             catch (Exception ex)
             {
-                var jdata = JTableHelper.JObjectTable(new List<BOMProductionWarehouseHd>(), jTablePara.Draw, 0,
-                    "Id", "ItemCode", "Quantity", "Unit", "Specification", "IO", "TicketCode", "CreatedBy", "CreatedTime", "UpdatedBy", "UpdatedTime", "DeletedBy", "DeletedTime", "IsDeleted"
-                    );
+                var jdata = JTableHelper.JObjectTable(new List<HeadersBomWarehouse>(), jTablePara.Draw, 0, "Id", "TicketCode", "QrTicketCode", "CusCode", "CusName", "StoreCode", "StoreName", "Title"
+                    , "UserImport", "UserImportName", "UserSend", "Note", "PositionGps", "PositionText", "FromDevice", "InsurantTime", 
+                    "TimeTicketCreate", "Reason", "ReasonName", "StoreCodeSend", "CreatedBy", "StoreNameRevice", "StoreNameDeliver");
                 return Json(jdata);
             }
+        }
+
+        [NonAction]
+        public IQueryable<HeadersBomWarehouse> FuncJTable(int userType, string Title, string CusCode, string StoreCode,
+            string UserImport, string FromDate, string ToDate, string ReasonName, string SupCode = "")
+        {
+            var session = HttpContext.GetSessionUser();
+
+            var fromDate = !string.IsNullOrEmpty(FromDate) ? DateTime.ParseExact(FromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
+            var toDate = !string.IsNullOrEmpty(ToDate) ? DateTime.ParseExact(ToDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
+
+            var query = (from a in _context.BOMProductionWarehouseHds.Where(x => x.IsDeleted != true).AsNoTracking()
+                             //join c in _context.PAreaMappingsStore.Where(x => !x.IsDeleted && x.ObjectType == "AREA") on a.StoreCode equals c.ObjectCode
+                             //into c1
+                             //from c in c1.DefaultIfEmpty()
+                             //join f in _context.PAreaCategoriesStore.Where(x => x.IsDeleted == false && x.PAreaType == "AREA") on c.CategoryCode equals f.Code
+                             //into f1
+                             //from f in f1.DefaultIfEmpty()
+                         join c in _context.EDMSWareHouses.Where(x => x.WHS_Flag != true) on a.DeliverId equals c.WHS_Code into c1
+                         from c in c1.DefaultIfEmpty()
+                         join r in _context.EDMSWareHouses.Where(x => x.WHS_Flag != true) on a.ReceiverId equals r.WHS_Code into r1
+                         from r in r1.DefaultIfEmpty()
+                         join d in _context.Users.Where(x => x.Active) on a.CreatedBy equals d.UserName
+                         //join e in _context.CommonSettings.Where(x => !x.IsDeleted && x.Group == "IMP_REASON") on a.Reason equals e.CodeSet into e1
+                         //from e in e1.DefaultIfEmpty()
+                             //field khách hàng trong phiếu nhập chính là nhà cung cấp (hiện tại chưa sửa)
+                         //join b in _context.Suppliers.Where(x => x.IsDeleted != true) on a.SupCode equals b.SupCode into b1
+                         //from b2 in b1.DefaultIfEmpty()
+                         where
+                         //(string.IsNullOrEmpty(Title) || (!string.IsNullOrEmpty(a.Title) && a.Title.ToLower().Contains(Title.ToLower())))
+                         //&& (string.IsNullOrEmpty(CusCode) || (a.CusCode == CusCode))
+                         //&& (string.IsNullOrEmpty(SupCode) || (a.SupCode == SupCode))
+                         //&& (string.IsNullOrEmpty(StoreCode) || (a.StoreCode == StoreCode))
+                         //&& (string.IsNullOrEmpty(UserImport) || (a.UserImport == UserImport))
+                         //&& (string.IsNullOrEmpty(FromDate) || (a.TimeTicketCreate >= fromDate))
+                         //&& (string.IsNullOrEmpty(ToDate) || (a.TimeTicketCreate <= toDate))
+                         //&& (string.IsNullOrEmpty(ReasonName) || (a.Reason == ReasonName))
+                             //Điều kiện phân quyền dữ liệu
+                             //&&
+                             (userType == 10
+                                    || (userType == 2 && session.ListUserOfBranch.Any(x => x == a.CreatedBy))
+                                    || (userType == 0 && session.UserName == a.CreatedBy)
+                                )
+                         select new HeadersBomWarehouse
+                         {
+                             Id = a.Id,
+                             TicketCode = a.TicketCode,
+                             CusCode = "",
+                             //a.SupCode,
+                             CusName = "",
+                             //b2 != null ? b2.SupName : "",
+                             StoreCode = "",
+                             //a.StoreCode,
+                             StoreNameRevice = r != null ? r.WHS_Name : "",
+                             StoreNameDeliver = c != null ? c.WHS_Name : "",
+                             //c != null ? c.WHS_Name : "",
+                             Title = "",//a.Title,
+                             UserImport = "",// a.UserImport,
+                             UserImportName = d.GivenName,
+                             UserSend = "",// a.UserSend,
+                             Note = "",// a.Note,
+                             PositionGps = "",// a.PositionGps,
+                             PositionText = "",// a.PositionText,
+                             FromDevice = "",// a.FromDevice,
+                             TotalPayed = 0,// a.TotalPayed,
+                             TotalMustPayment = 0,//a.TotalMustPayment,
+                             InsurantTime = null,// a.InsurantTime,
+                             TimeTicketCreate = a.CreatedTime,
+                             NextTimePayment = null,// a.NextTimePayment,
+                             Reason = "",//a.Reason,
+                             ReasonName = "",// e != null ? e.ValueSet : "",
+                             StoreCodeSend = "",// a.StoreCodeSend,
+                             CreatedBy = a.CreatedBy,
+                         });
+            return query;
         }
 
         // CREATE operation for BOM_PRODUCTION_WAREHOUSE_DT
@@ -587,6 +669,35 @@ namespace III.Admin.Areas.Admin.Controllers
 
         #endregion
 
+    }
+
+    public class HeadersBomWarehouse
+    {
+        public int Id { get; set; }
+        public string TicketCode { get; set; }
+        public string CusCode { get; set; }
+        public string CusName { get; set; }
+        public string StoreCode { get; set; }
+        public string StoreName { get; set; }
+        public string Title { get; set; }
+        public string UserImport { get; set; }
+        public string UserImportName { get; set; }
+        public string UserSend { get; set; }
+        public string Note { get; set; }
+        public string PositionGps { get; set; }
+        public string PositionText { get; set; }
+        public string FromDevice { get; set; }
+        public decimal? TotalPayed { get; set; }
+        public decimal? TotalMustPayment { get; set; }
+        public DateTime? InsurantTime { get; set; }
+        public DateTime? TimeTicketCreate { get; set; }
+        public DateTime? NextTimePayment { get; set; }
+        public string Reason { get; set; }
+        public string ReasonName { get; set; }
+        public string StoreCodeSend { get; set; }
+        public string CreatedBy { get; set; }
+        public string StoreNameDeliver { get; set; }
+        public string StoreNameRevice { get; set; }
     }
 
     public class BOMWareHouseDetailImpModelInsert

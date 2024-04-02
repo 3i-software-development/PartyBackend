@@ -1,0 +1,759 @@
+﻿<style>
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    @media(min-width:992px)and (max-width:1200px) {
+        .modal-65 {
+            width: 85% !important;
+        }
+    }
+
+    @media (min-width:1200px) and (max-width:1500px) {
+        .modal-65 {
+            width: 70% !important;
+        }
+    }
+
+    @media(min-width:1500px) {
+        .modal-65 {
+            width: 55% !important;
+        }
+    }
+
+    .formAddDefault {
+        padding-bottom: 5px !important;
+        border: 1px solid #c2cad869 !important;
+        border-radius: 4px;
+        background: #fffef66b;
+    }
+
+    .breadcrumb>li {
+        font-size: 16px;
+        font-weight: 700;
+        color: black;
+        text-decoration: underline;
+    }
+
+    .color-white {
+        color: white;
+    }
+
+    .progress {
+        height: 20px
+    }
+
+    .progress-bar {
+        background-color: #4868aa;
+    }
+
+    #payment:after {
+        height: 0px;
+    }
+
+    .border-black {
+        border: 1px solid #000;
+    }
+
+    .name {
+        top: 12%;
+        margin-left: 55px;
+        font-size: 10px;
+        position: absolute;
+    }
+
+    .dateapr {
+        position: absolute;
+        margin-left: 55px;
+        top: 32%;
+        font-size: 10px;
+    }
+
+    #defaultRTE_toolbar {
+        position: inherit !important;
+    }
+</style>
+<link rel="stylesheet" href="../../../css/admin/workflowActivity/workflow-ticket.css" />
+<div class="portlet-body form">
+    <form name="addform" method="post" ng-validate="validationOptions" class="form-horizontal pr15 shadow-bottom">
+        <div class="form-body" style="padding: 0px !important;">
+            <div class="row pt5">
+                <div class="col-lg-12">
+                    <div ng-include="'../../views/admin/workflowPlugin/wf-plugin.html'"></div>
+                </div>
+            </div>
+            <div class="row pt5" ng-show="showHeader">
+                <div class="col-lg-6">
+                    <div class="form-group" ng-class="{ 'has-error': errorStoreCode}">
+                        <div class="col-md-4">
+                            <i class="fa fa-bank" aria-hidden="true"></i>
+                            <label class="control-label">
+                                {{'MIS_CURD_TAB_ACTIVITY_FLOW' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24-nobtn">
+                                <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.WorkflowCat"
+                                    theme="bootstrap" ng-change="loadDiagramWF(model.WorkflowCat)">
+                                    <ui-select-match placeholder="{{'MIS_CURD_TAB_ACTIVITY_FLOW' | translate}}..."><b
+                                            class="text-brown">{{$select.selected.Name}}</b></ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in lstWorkflow | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-class="{ 'has-error': errorLotProductCode}">
+                        <div class="col-md-4 d-flex pr-0">
+                            <i class="fa fa-cube pt10 pr5" aria-hidden="true"></i>
+                            <label class="control-label text-left">
+                                {{'MIS_CURD_ENTER_PO_RETAIL' | translate}}
+                            </label>
+                            <div class="mt-checkbox-list pt5 pl10">
+                                <label class="mt-checkbox mt-checkbox-outline mb10">
+                                    <input type="checkbox" name="IsEnabled" ng-model="IsEnabledImportLot"
+                                        ng-change="checkedImportLot(IsEnabledImportLot)" ng-checked="IsEnabledImportLot"
+                                        ng-disabled="!isNotSave" />
+                                    <span></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24-nobtn">
+                                <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.LotProductCode"
+                                    theme="bootstrap" on-select="changleSelect('LotProductCode',$item)"
+                                    ng-disabled="!IsEnabledImportLot||!isNotSave">
+                                    <ui-select-match
+                                        placeholder=" {{'MIS_CHOSE_IMPORT_APLICATION' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listLotProduct | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <span ng-show="errorLotProductCode" class="label-color validation-message">
+                                {{'MIS_CURD_LBL_CHOSE_LOT_ENTER' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--Kho nhập-->
+                    <div class="form-group" ng-class="{ 'has-error': errorStoreCode}">
+                        <div class="col-md-4">
+                            <i class="fa fa-bank" aria-hidden="true"></i>
+                            <label class="control-label require">
+                                {{'MIS_CURD_LBL_IMPORT' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24-nobtn">
+                                <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.StoreCode"
+                                    theme="bootstrap" on-select="changleSelect('StoreCode',$item)">
+                                    <ui-select-match
+                                        placeholder="{{'MIS_CURD_LBL_IMPORT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listStore | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <span ng-show="errorStoreCode" class="label-color validation-message">
+                                {{'MIS_CURD_TXT_IMPORT' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--NCC-->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <label class="control-label ">
+                                {{'MIS_CURD_TXT_SUPPLIERT' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24">
+                                <ui-select ng-model="model.SupCode" theme="bootstrap"
+                                    on-select="changleSelect('SupCode',$item)"
+                                    ng-disabled="IsEnabledImportLot || disabledReason">
+                                    <ui-select-match
+                                        placeholder="{{'MIS_CURD_TXT_SUPPLIERT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listSupplier | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.SupCode=''" class="btn btn-default no-shadow"
+                                        style="">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--KH-->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <label class="control-label ">{{'MIST_COL_CUSTOMER' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24">
+                                <ui-select tagging ng-model="model.CusCode" theme="bootstrap" on-select="changleSelect('CusCode',$item)"
+                                    ng-disabled="IsEnabledImportLot || disabledReason">
+                                    <ui-select-match placeholder="{{'MIST_COL_CUSTOMER' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listCustomer | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.CusCode=''" class="btn btn-default no-shadow"
+                                        style="">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                    <!-- <button type="button" ng-click="addCustomer()" class="btn btn-default no-shadow" style="">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button> -->
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-show="model.Reason == 'IMP_FROM_MOVE_STORE'"
+                        ng-class="{ 'has-error': errorStoreCodeSend}">
+                        <div class="col-md-4">
+                            <i class="fa fa-bank" aria-hidden="true"></i>
+                            <label class="control-label require">
+                                {{'MIS_CURD_LBL_WARE_HOURE_SOURCE' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24-nobtn">
+                                <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.StoreCodeSend"
+                                    theme="bootstrap" on-select="changleSelect('StoreCodeSend',$item)">
+                                    <ui-select-match
+                                        placeholder="{{'MIS_CURD_TXT_WARE_HOURE_SOURCE' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listStoreSend | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <span ng-show="errorStoreCodeSend" class="label-color validation-message">
+                                {{'MIS_CURD_TAB_SELECT_STORE' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--NV nhập-->
+                    <div class="form-group" ng-class="{ 'has-error': errorUserImport}">
+                        <div class="col-md-4 pr-0">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <label class="control-label require">
+                                {{'MIS_LIST_COL_MIS_STAFT_ENTER' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24-nobtn">
+                                <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.UserImport"
+                                    theme="bootstrap" on-select="changleSelect('UserImport',$item)">
+                                    <ui-select-match
+                                        placeholder="{{'MIS_CURD_TXT_ENTER_STAFT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listUserImport | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <span ng-show="errorUserImport" class="label-color validation-message">
+                                {{'MIS_CURD_TXT_ENTER_STAFT' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--Loại nhiên liệu - vỏ bình - vật tư-->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label class="control-label">
+                                <i class="fa fa-product-hunt" aria-hidden="true"></i>
+                                <b>{{'Hình thức nhập vật tư' | translate}}</b>
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24-nobtn">
+                                <ui-select class1="fs16 bold" tagging ng-model="model.GroupType" theme="bootstrap"
+                                    on-select="changleSelect('GroupType', $item)">
+                                    <ui-select-match placeholder="{{'Hình thức' | translate}}...">
+                                        <b class="fs16">{{$select.selected.Name}}</b>
+                                        <!-- {{$select.selected.Name}} -->
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in Types | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Ghi chú-->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                            <label class="control-label ">
+                                {{'MIS_CURD_TXT_MIS_NOTE' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <textarea type="text" class="form-control br12" ng-model="model.Note" rows="3"
+                                placeholder="{{'MIS_CURD_TXT_MIS_NOTE' | translate}}..." name="Note"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group d-flex">
+                        <div class="col-md-2 flex-basis-135 flex-no-shrink">
+                            <i class="fa fa-bank" aria-hidden="true"></i>
+                            <label class="control-label">
+                                {{'MIS_CURD_TAB_STATUS' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="input-group br24-nobtn">
+                                <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.StatusTemp"
+                                    theme="bootstrap" ng-change="changeStatus()">
+                                    <ui-select-match placeholder="{{'MIS_CURD_TAB_STATUS' | translate}}...">
+                                        <p><span>{{$select.selected.CreatedBy}}</span> đã cập nhật trạng thái <span
+                                                class="text-primary fw600">{{$select.selected.Name}}</span> cho hoạt
+                                            động <span
+                                                class="fw600 text-green">{{$select.selected.ObjectRelative}}</span><span
+                                                class="fw600 text-green">[{{$select.selected.CreatedTime}}]</span></p>
+                                    </ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listStatusLog | filter: $select.search"
+                                        ui-disable-choice="true">
+                                        <span>{{x.CreatedBy}}</span> đã cập nhật trạng thái <span
+                                            class="text-primary fw600">{{x.Name}}</span> cho hoạt động <span
+                                            class="fw600 text-green">{{x.ObjectRelative}} [{{x.CreatedTime |
+                                            date:'dd/MM/yyyy HH:mm:ss'}}]</span>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Nhập mã phiếu-->
+                    <div class="form-group">
+                        <div class="col-md-4 pr-0">
+                            <i class="fa fa-barcode" aria-hidden="true"></i>
+                            <label class="control-label require custom-title-code-bold">
+                                {{'MIS_CURD_CODE_MATERIAL_ENTER' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control custom-title-code-bold br24"
+                                ng-model="model.TicketCode" name="TicketCode"
+                                placeholder="{{'MIS_CURD_CODE_MATERIAL_ENTER' | translate}}..." readonly />
+                        </div>
+                    </div>
+                    <!--Chọn lô nhập-->
+                    <!--<div class="form-group">
+                        <div class="col-md-4 pr-0">
+                            <i class="fa fa-barcode" aria-hidden="true"></i>
+                            <label class="control-label require custom-title-code-bold">{{'Lô vật tư' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control custom-title-code-bold br24" ng-model="model.LotProductCode" name="LotProductCode" placeholder="{{'Lô vật tư' | translate}}..." />
+                        </div>
+                    </div>-->
+                    <!--Tiêu đề phiếu-->
+                    <div class="form-group" ng-class="{ 'has-error': errorTitle}">
+                        <div class="col-md-4 pr-0">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            <label class="control-label require custom-title-code-bold">
+                                {{'MIS_LIST_COL_TITLE_IMPORT' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control custom-title-code-bold br24" ng-model="model.Title"
+                                name="Title" placeholder="{{'MIS_LIST_COL_TITLE_IMPORT' | translate}}..."
+                                ng-text-change="changeTilte()" ng-change="changeTilte()" />
+                        </div>
+                    </div>
+                    <!--Lý do-->
+                    <div class="form-group" ng-class="{ 'has-error': errorReason}">
+                        <div class="col-md-4">
+                            <i class="fas fa-question-circle" aria-hidden="true"></i>
+                            <label class="control-label">
+                                {{'MIS_CURD_LBL_REASON' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group br24">
+                                <ui-select class="ui-select-bootstrap-right-radius" ng-model="model.Reason"
+                                    theme="bootstrap" on-select="changleSelect('Reason',$item)"
+                                    ng-disabled="IsEnabledImportLot">
+                                    <ui-select-match
+                                        placeholder="{{'MIS_CURD_TXT_REASON' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listReason | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="addReason()" class="btn btn-default no-shadow">
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                    </button>
+                                </span>
+                            </div>
+                            <span ng-show="errorReason" class="label-color validation-message">
+                                {{'MIS_CURD_TXT_REASON' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <!--Người gửi-->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <label class="control-label text-left">
+                                <i class="fa fa-user"></i>&nbsp;
+                                {{'MIS_CURD_LBL_PEOPLE_SEND' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control br24" ng-model="model.UserSend" name="UserSend"
+                                placeholder="{{'MIS_CURD_LBL_PEOPLE_SEND' | translate}}..." />
+                        </div>
+                    </div>
+                    <!--Ngày tạo-->
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <i class="fa fa-calendar"></i>
+                            <label class="control-label require">
+                                {{'MIS_CURD_LBL_CREATED_DATE' | translate}}
+                            </label>
+                        </div>
+                        <!--id='TimeTicketCreate'-->
+                        <div class="col-md-8">
+                            <div class='input-group br24 date'>
+                                <input type='text' class="form-control input-date" autocomplete="off"
+                                    style="height: 33px;" name="TimeTicketCreate" id="TimeTicketCreate"
+                                    ng-model="model.TimeTicketCreate" ng-change="changleSelect('TimeTicketCreate')"
+                                    placeholder="{{'MIS_CURD_LBL_CREATED_DATE' | translate}}..." />
+                                <span class="input-group-addon">
+                                    <span class="fa-regular fa-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--File phiếu-->
+                    <div class="form-group" ng-if="model.SrcData">
+                        <div class="col-md-4 pr-0">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            <label class="control-label require custom-title-code-bold">
+                                {{'File nhập' | translate}}
+                            </label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class='input-group br24 date'>
+                                <input type='text' class="form-control" autocomplete="off" style="height: 33px;"
+                                    ng-model="model.SrcData" placeholder="{{'File nhập' | translate}}..." readonly />
+                                <span class="input-group-addon">
+                                    <span class="fa-regular fa-file-word" ng-if="model.SrcType === '.docx'"
+                                        ng-click="viewFile()"></span>
+                                    <span class="fa-regular fa-file-excel" ng-if="model.SrcType === '.xlsx'"
+                                        ng-click="viewFile()"></span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <!--Theo dõi blog-->
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <div class="text-center pull-right pl-2 pr10" ng-click="submit()">
+                                <a class="">
+                                    <span><i class="fa-solid fa-plus pt15 fs30"></i></span>
+                                </a>
+                                <p class="text-underline fs9 mb5 pt3">
+                                    {{'COM_BTN_SAVE' | translate}}
+                                </p>
+                            </div>
+                            <div class="text-center pull-right pl-2 pr10" ng-click="importWord()">
+                                <a class="">
+                                    <span><i class="fas fa-upload pt15 fs30"></i></span>
+                                </a>
+                                <p class="text-underline fs9 mb5 pt3">
+                                    {{'Nhập file word' | translate}}
+                                </p>
+                            </div>
+                            <a class="control-label text-primary pt30 text-underline pull-right"
+                                ng-click="openLog()">{{'MIS_LINK_TRACK_LOG' | translate}}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row pr30 mt10">
+        <div class="col-lg-12">
+            <div class="tab-content">
+                <div class="tab-pane active">
+                    <div class="table-toolbar shadow-bottom pb5" ng-hide="IsEnabledImportLot">
+                        <form name="searchform" class="form-horizontal" method="post" ng-validate="validationOptions">
+                            <div class="col-md-12 pl-0 pr-0 d-flex">
+                                <div class="col-md-5 pl-0" ng-class="{ 'has-error': errorProductCode}">
+                                    <label class="control-label require text-left">
+                                        {{'MIS_CURD_LBL_CATALOGUE_PRODUCT' | translate}}
+                                        <span class="text-danger" ng-if="modelList.ImpType!=''">
+                                            {{'MIS_LBL_PACK' | translate}} ({{modelList.ImpType}})
+                                        </span>
+                                    </label>
+                                    <div class="d-flex flex-column">
+                                        <div class="input-group br24-nobtn">
+                                            <!--<ui-select class="ui-select-bootstrap-right-radius" ng-model="modelList.ProductCode" theme="bootstrap" ng-change="changeProduct()" ng-disabled="disableProductCode">
+                                                    <ui-select-match placeholder="{{'MIS_CURD_LBL_PRODUCT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices repeat="x.ProductCode as x in listProduct | filter: $select.search">
+                                                        {{x.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>-->
+                                            <ui-select tagging ng-model="modelList.ProductCode" theme="bootstrap"
+                                                ng-change="changeProduct()">
+                                                <ui-select-match
+                                                    placeholder="{{'MIS_CURD_LBL_PRODUCT' | translate}}...">
+                                                    {{$select.selected.Name}}
+                                                </ui-select-match>
+                                                <ui-select-choices
+                                                    repeat="x.Code as x  in listProduct | filter: $select.search"
+                                                    refresh="reloadProductCategory($select.search)">
+                                                    <span>{{x.Name}}</span>
+                                                    <div class="row mt15" ng-if="$last">
+                                                        <button class="btn btn-xs btn-success" style="width: 100%;"
+                                                            ng-click="loadMoreCategory($select, $event);"
+                                                            ng-disabled="loading">
+                                                            Load more...
+                                                        </button>
+                                                    </div>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span ng-show="errorProductCode" class="label-color validation-message">
+                                                {{'MIS_VALIDATE_CHOOSE_PRODUCT' | translate}}
+                                            </span>
+                                        </div>
+                                        <span class="pt10 ml15">
+                                            <a class="pr10 green pull-right" ng-click="attrValue()">
+                                                <span>{{'MIS_LBL_SIZE_PROD' | translate}}: </span>
+                                                <span class="text-danger">[{{long}} x {{wide}} x {{high}}], </span>
+
+                                                <span>{{'MIS_LBL_PACKING' | translate}}: </span>
+                                                <span class="text-danger">{{packing}}, </span>
+
+                                                <span>{{'MIS_LBL_WEIGHT' | translate}}: </span>
+                                                <span class="text-danger">{{weight}} {{unitWeight}}</span>
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 pl-0" ng-class="{'has-error' : errorType}">
+                                    <label class="control-label require">
+                                        {{'Kiểu nhập' | translate}}
+                                    </label>
+                                    <div class="d-flex flex-column">
+                                        <div class="input-group br24-nobtn">
+                                            <ui-select class="ui-select-bootstrap-right-radius"
+                                                ng-model="modelList.ImpType" theme="bootstrap"
+                                                on-select="changleSelect('Type', $item)">
+                                                <ui-select-match
+                                                    placeholder="{{'Chọn kiểu nhập' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices
+                                                    repeat="x.Code as x in listType | filter: $select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span ng-show="errorType" class="label-color validation-message">
+                                                {{'Kiểu nhập không được để trống' | translate}}
+                                            </span>
+                                        </div>
+                                        <span class="pt10 ml15"
+                                            ng-if="modelList.ImpType == 'CUSTOM' || modelList.ImpType == 'RETURN'">
+                                            <a class="pr10 pull-right" ng-click="editProd()">
+                                                <!--<i class="fas fa-ellipsis-h fs25"></i>-->
+                                                Mở form vật tư
+                                            </a>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 pl-0 pr-0">
+                                    <div class="col-md-6">
+                                        <div class="form-group" ng-class="{'has-error' : errorQuantityImp}">
+                                            <label class="control-label require">
+                                                {{'MIS_LBL_CD_QUANTITY' | translate}}
+                                            </label>
+                                            <div class='mr5'>
+                                                <input ng-change="change('quantityImp')"
+                                                    class="form-control ng-pristine ng-untouched ng-valid ng-not-empty br24"
+                                                    ng-model="modelList.QuantityImp"
+                                                    placeholder="{{'MIS_LBL_CD_QUANTITY' | translate}}..."
+                                                    num-thousand='true' awnum num-int='21'
+                                                    onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                                <span ng-show="errorQuantityImp" class="label-color validation-message">
+                                                    {{'MIS_VALIDATE_QUANTITY' | translate}}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 pr-0" ng-class="{'has-error' : errorUnit}">
+                                        <label class="control-label require">
+                                            {{'MIS_CURD_TAB_DETAIL_LIST_COL_UNIT' | translate}}
+                                        </label>
+                                        <div class="input-group br24-nobtn">
+                                            <ui-select class="ui-select-bootstrap-right-radius"
+                                                ng-model="modelList.Unit" theme="bootstrap"
+                                                on-select="changleSelect('Unit', $item)">
+                                                <ui-select-match
+                                                    placeholder="{{'MIS_CURD_TAB_DETAIL_LIST_COL_UNIT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices
+                                                    repeat="x.Code as x in listUnit | filter: $select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                        <span ng-show="errorUnit" class="label-color validation-message">
+                                            {{'MIS_VALIDATE_UNIT_NOT_BLANK' | translate}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 pl-0">
+                                    <div class="col-md-9" ng-class="{ 'has-error': errorSalePrice}">
+                                        <label class="control-label">
+                                            {{'MIS_CURD_SEARCH_LBL_PRICE' | translate}}
+                                        </label>
+                                        <div class='mr5'>
+                                            <input ng-change="change('price')"
+                                                class="form-control ng-pristine ng-untouched ng-valid ng-not-empty br24"
+                                                ng-model="modelList.SalePrice"
+                                                placeholder="{{'MIS_CURD_SEARCH_TXT_PRICE' | translate}}..."
+                                                num-thousand='true' awnum num-int='21'
+                                                onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                            <span ng-show="errorSalePrice" class="label-color validation-message">
+                                                {{'MIS_VALIDATE_ENTER_PRICE' | translate}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3 pr-0">
+                                        <div class="form-group" ng-class="{ 'has-error': errorCurrency}">
+                                            <label class="control-label">
+                                                {{'MIS_LBL_CD_TYPE_MONEY' | translate}}
+                                            </label>
+                                            <div class="input-group br24-nobtn">
+                                                <ui-select class="ui-select-bootstrap-right-radius" tagging
+                                                    ng-model="modelList.Currency" theme="bootstrap"
+                                                    on-select="changleSelect('Currency')" ng-disabled="true">
+                                                    <ui-select-match
+                                                        placeholder="{{'MIS_LBL_CD_TYPE_MONEY' | translate}}">{{$select.selected.Name}}</ui-select-match>
+                                                    <ui-select-choices
+                                                        repeat="x.Code as x in listCurrentcy | filter: $select.search">
+                                                        {{x.Name}}
+                                                    </ui-select-choices>
+                                                </ui-select>
+                                            </div>
+                                            <span ng-show="errorCurrency" class="label-color validation-message">
+                                                {{'MIS_VALIDATE_MONEY' | translate}}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="text-center pull-right pl-2 pt10 flex-basis-75 flex-no-shrink" style="margin-top: 13px;" ng-click="addDetail()">
+                                    <a class="">
+                                        <span><i style="--fa-primary-color: green; margin-right: 13px;" class="fa-solid fa-arrow-down pl10 fs30"></i></span>
+                                    </a>
+                                    <p class="text-underline fs9 mb5 pt3">
+                                        {{'MIS_BTN_ADD_BELOW' | translate}}
+                                    </p>
+                                </div>
+                                <div class="text-center pull-right pl-2 pt10 flex-basis-75 flex-no-shrink" style="margin-top: 13px;" ng-click="toggleHeader()">
+                                    <a class="">
+                                        <span><i class="fas fa-chevron-up fs30" ng-if="showHeader"></i></span>
+                                        <span><i class="fas fa-chevron-down fs30" ng-if="!showHeader"></i></span>
+                                    </a>
+                                    <!-- <p class="text-underline fs9 mb5 pt3">
+                                        {{'MIS_BTN_ADD_BELOW' | translate}}
+                                    </p> -->
+                                </div>
+                            </div>
+                            <div class="col-md-6 pl-0 pr-0 d-flex">
+                                <div class="col-md-12 pl-0">
+                                    <label class="control-label">
+                                        {{'Tình trạng sản phẩm' | translate}}
+                                    </label>
+                                    <div class="d-flex flex-column">
+                                        <div class="input-group br24-nobtn">
+                                            <ui-select ng-model="model1.ListStatus" multiple theme="bootstrap"
+                                                class="h-70 br12">
+                                                <ui-select-match
+                                                    placeholder="{{'Điền tình trạng' | translate}}...">{{$item.Name}}</ui-select-match>
+                                                <ui-select-choices
+                                                    repeat="x.Code as x in listStatus | filter:$select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="table-responsive mt10">
+                        <table class="table table-bordered" id="tblListProduct">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_MIS_CODE_QR' |
+                                        translate}}</th>
+                                    <th class="col-md-3 text-center fw600 text-underline">{{'MIS_LIST_COL_NAME_PRODUCT'
+                                        | translate}}</th>
+                                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_RATE' |
+                                        translate}}</th>
+                                    <th class="col-md-1 text-center fw600 text-underline nowrap">
+                                        {{'MIS_LIST_COL_AMOUNT_ENTER' | translate}}</th>
+                                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_UNIT' |
+                                        translate}}</th>
+                                    <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LBL_CD_TYPE_MONEY' |
+                                        translate}}</th>
+                                    <th class="col-md-1 text-center fw600 text-underline">{{'Tình trạng' | translate}}
+                                    </th>
+                                    <!--<th class="col-md-1 text-center fw600 text-underline">{{'MIS_COL_QUANTITY_ARRANGED' | translate}}</th>-->
+                                    <th class="col-md-1 text-center fw600 text-underline">{{'COM_LIST_COL_ACTION' |
+                                        translate}}</th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="x in listProdDetail">
+                                <tr>
+                                    <td class="text-center"><img src='data:image/png;base64,{{x.QrCode}}'
+                                            ng-click="viewQrCode(x.sProductQrCode)" height="40" width="40" /></td>
+                                    <td class="text-brown bold">
+                                        {{x.ProductName}} ({{x.ProductCode}})
+                                        <br /><span class="text-primary fs10">- {{'MIS_CURD_TAB_SPECFICATION' |
+                                            translate}}: {{x.PackType}}</span>
+                                        <br /><span class="text-primary fs10">- {{'Id' | translate}}: {{x.Id}}</span>
+                                    </td>
+                                    <td class="text-center text-danger bold">{{x.SalePrice | currency:"":0}}</td>
+                                    <td class="text-center">{{x.Quantity}}</td>
+                                    <td class="text-center">{{x.Unit}}</td>
+                                    <td class="text-center">{{x.Currency}}</td>
+                                    <td class="text-center">{{x.ProductStatus}}</td>
+                                    <!--<td class="text-center">{{x.QuantityIsSet}}</td>-->
+                                    <td class="text-center">
+                                        <!--<button title="Xem tùy chỉnh" ng-if="x.IsCustomized" ng-click="viewProdCustom($index)" style="width: 25px; height: 25px; padding-right: 5px;" class=""><i class="fas fs25 fa-gear cursor color-dark"></i></button>-->
+                                        <button title="Xếp kho" ng-click="orderProductVatCo($index)"
+                                            ng-if="x.ImpType !== 'RETURN'"
+                                            style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)"
+                                            class="btn btn-icon-only btn-circle btn-outline blue">
+                                            <img src="../../../images/wareHouse/orderStore.png" height="25"
+                                                width="25" />
+                                        </button>
+                                        <a ng-show="!IsEnabledImportLot" title="Xóa" ng-click="deleteDetail(x.Id)"
+                                            style="width: 25px; height: 25px; padding: 0px">
+                                            <i class="fas fa-trash-alt fs25 mt10" style="color:red"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

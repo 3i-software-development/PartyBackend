@@ -1,0 +1,181 @@
+﻿<!-- <style>
+    .flex-container {
+        padding: 15px;
+        margin: 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .selected {
+        background: #308cea !important;
+        font-weight: bold !important;
+    }
+
+
+    .flex-item {
+        background: #9e8b73;
+        width: 50px;
+        border-radius: 4px;
+        height: 50px;
+        margin: 5px;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    .flex-item:hover {
+        background: #53afe8;
+    }
+
+    .flex-box {
+        padding: 15px;
+        margin: 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .item-box {
+        /*width: 50px;
+        height: 50px;*/
+        margin: 5px;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    .item-box :hover {
+        background: #53afe8;
+    }
+
+    .item-box-text,
+    .item-box-text:hover {
+        background: none !important;
+        position: absolute;
+        top: 18px;
+        left: 30%;
+        right: auto;
+        color: white;
+        font-size: 14px;
+    }
+
+    #inforWareHouse {
+        max-height: 320px;
+        height: 290px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+
+    #inforWareHouse .header {
+        background: #9e8b73;
+        height: 40px;
+        margin-left: 0;
+        margin-right: 0;
+        border-bottom: solid 3px #0082c4;
+        color: #ffffff;
+        padding: 5px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .box-push {
+        padding: 5px;
+        margin-bottom: 5px;
+        color: #fff;
+        background: #b88b50;
+    }
+    .message-center {
+        top: 25%;
+    }
+</style>
+<div class="modal-header white-custom">
+    <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+    </button>
+    <i class="fa-solid fa-pallet" style="line-height: 30px"></i>
+
+    <img src="../../../images/wareHouse/orderStore.png" height="30" width="30" />
+    <span class="modal-title" id="modal-title">
+        Nhập từ pallet, kiện
+        {{'MIS_TITLE_SORT_WAREHOUSE_IMPORT_BILL' | translate}}:
+        <span title="{{ model.ProductName}}">{{ model.ProductName.length > 40 ? model.ProductName.substr(0, 40) + "..." : model.ProductName }}</span>
+    </span>
+</div>
+<div id="modal-body">
+    <div class="portlet-body form" style="height: 200px; overflow-y: auto;">
+    </div>
+</div> -->
+
+<div ng-controller="addPallet">
+    <div class="table-toolbar">
+        <div class="portlet light bordered mb5 mt10">
+            <div class="portlet-body">
+                <div class="col-md-12 pr-0" style="height:20px">
+                    <i ng-click="cancel()"
+                        style="margin-top:9px !important; font-size:25px"
+                        class="fas fa-times  pull-right h28 w28  close-input-search" role="button"
+                        title="Ẩn thêm pallet"></i>
+                </div>
+
+                <!-- <img class="pull-right h28 w28 close-input-search" role="button" title="{{'MIS_CURD__TITLE_CLOSE_EXPSTORE' | translate}}" src="/images/default/close.png" />-->
+                <div class="row pt25 mb5">
+                    <div class="col-md-11">
+                        <div class="form-group br24-nobtn">
+                            <div class="d-flex justify-content-sb">
+                                <label class="require">
+                                    {{'Chọn pallet' | translate}}
+                                </label>
+                                <a ng-click="delete()" style="line-height: 25px; margin-right: 10px">
+                                    <!-- <i class="fa-solid fa-pallet" style="margin-top: 3px; float: left"></i>&nbsp; -->
+                                    Xóa
+                                </a>
+                            </div>
+                            <ui-select class="ui-select-bootstrap-right-radius bold fs16" tagging
+                                ng-model="model.PackCode" theme="bootstrap"
+                                ng-change="changeSelect('PALLET',model.PackCode)">
+                                <ui-select-match placeholder="{{'Chọn pallet' | translate}}">
+                                    <b style="color: green;" class="fs16">
+                                        {{$select.selected.Name}}
+                                    </b>
+                                </ui-select-match>
+                                <ui-select-choices repeat="x.Code as x in listPallet | filter: $select.search">
+                                    {{x.Name}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <div class="col-md-1 p-0">
+                        <div class="text-center pull-left pt20 mr10" ng-click="save()">
+                            <a class="">
+                                <span class="fa-solid fa-plus fs30"></span>
+                            </a>
+                            <p class="text-underline fs9 mb5 pt3">{{'Thêm' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

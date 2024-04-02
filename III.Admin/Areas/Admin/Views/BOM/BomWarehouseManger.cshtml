@@ -1,0 +1,121 @@
+﻿@using ESEIM.Utils
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = ViewData["CrumbBOM"];
+    Layout = "~/Areas/Admin/Views/Shared/_Layout_Admin.cshtml";
+
+    var session = HttpContextAccessor.HttpContext.GetSessionUser();
+
+    string apiList = "/Admin/ProductImport/GridDataOfUser";
+    var userType = 0;
+    bool isAdmin = false;
+    if (session.UserType == 10)
+    {
+        apiList = "/Admin/ProductImport/GridDataOfAdmin";
+        userType = 10;
+        isAdmin = true;
+    }
+    else
+    {
+        var perJtable = session.GetPermission("ProductImport", "GridDataOfAdmin");
+        if (perJtable != null)
+        {
+            apiList = perJtable.ResourceApi;
+            userType = 10;
+        }
+        else
+        {
+            perJtable = session.GetPermission("ProductImport", "GridDataOfBranch");
+            if (perJtable != null)
+            {
+                apiList = perJtable.ResourceApi;
+                userType = 2;
+            }
+        }
+    }
+    bool hasPermissionMaterialImpStoreInsert = session.HasPermission(CommonUtil.Controller_MaterialImpStore, CommonUtil.Action_Insert);
+    bool hasPermissionMaterialImpStoreUpdate = session.HasPermission(CommonUtil.Controller_MaterialImpStore, CommonUtil.Action_Update);
+    bool hasPermissionMaterialImpStoreDelete = session.HasPermission(CommonUtil.Controller_MaterialImpStore, CommonUtil.Action_Delete);
+
+    bool hasPermissionMaterialProductsInsert = session.HasPermission(CommonUtil.Controller_MaterialProduct, CommonUtil.Action_Insert);
+    bool hasPermissionMaterialProductsUpdate = session.HasPermission(CommonUtil.Controller_MaterialProduct, CommonUtil.Action_Update);
+    bool hasPermissionMaterialProductDelete = session.HasPermission(CommonUtil.Controller_MaterialProduct, CommonUtil.Action_Delete);
+    var prodCustomUuid = session.ProductCustomUuid;
+    var sessionLanguage = HttpContextAccessor.HttpContext.Session;
+    byte[] value;
+    var idObject = 0;
+    if (sessionLanguage.IsAvailable)
+    {
+        var boolValue = sessionLanguage.TryGetValue("IdObject", out value);
+        if (boolValue)
+        {
+            byte[] temp = new byte[4];
+            if (BitConverter.IsLittleEndian)
+            {
+                temp = Enumerable.Reverse(value).ToArray();
+            }
+            idObject = BitConverter.ToInt32(temp, 0);
+        }
+    }
+    var isAllData = session.IsAllData;
+}
+@section plugin_style{
+    <link href="https://cdn.syncfusion.com/ej2/20.3.47/material.css" rel="stylesheet" />
+}
+@section plugin_script {
+    <script src="~/lib/assets/global/plugins/tinymce/tinymce.min.js"></script>
+    <script src="~/lib/assets/global/plugins/tinymce/config.tinymce.js"></script>
+    <script src="~/lib/assets/global/plugins/angulerjs-taginput/ng-tags-input.min.js"></script>
+    <script src="~/js/admin/cardjob/popover.js" type="text/javascript"></script>
+    <script src="~/lib/assets/global/plugins/angulerjs-scroll/angular-scroll.js"></script>
+    <script src="~/lib/assets/global/plugins/fullcalendar-3.9.0/fullcalendar.min.js"></script>
+    <script src="~/lib/assets/global/plugins/ckeditor/ckeditor.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDHceKL6LCQusky6nFYduGFGcg4UKyTI6o&libraries=places"
+            type="text/javascript"></script>
+    <script src="https://cdn.syncfusion.com/ej2/20.4.42/dist/ej2.min.js"></script>
+    <script>
+        ej.base.registerLicense('ORg4AjUWIQA/Gnt2VVhkQlFadVdJXGFWfVJpTGpQdk5xdV9DaVZUTWY/P1ZhSXxQdkRiW31fdHVRT2NfVEU=');
+    </script>
+}
+
+<div id="contentMain" ng-app="App_ESEIM_IMP_STORE" ng-controller="Ctrl_ESEIM_IMP_STORE">
+    <div ng-controller="Ctrl_ESEIM_MATERIAL_PROD"></div>
+    <div ng-view></div>
+</div>
+<script>
+    var PERMISSION_MaterialImpStore = {
+        LIST: '@(apiList)',
+        userType: @userType,
+        IsAdmin: @(isAdmin ? "true" : "false"),
+        Insert: @(hasPermissionMaterialImpStoreInsert ? "true" : "false"),
+        Update: @(hasPermissionMaterialImpStoreUpdate ? "true" : "false"),
+        Delete: @(hasPermissionMaterialImpStoreDelete ? "true" : "false"),
+    };
+
+     var PERMISSION_MATERIAL_PRODUCT = {
+        Insert: @(hasPermissionMaterialProductsInsert ? "true" : "false"),
+        Update: @(hasPermissionMaterialProductsUpdate ? "true" : "false"),
+        Delete: @(hasPermissionMaterialProductDelete ? "true" : "false"),
+    };
+    var isAllData = "@(isAllData)";
+    var idObject = @idObject;
+    var defaultUuid = "uuid";
+    //var prodCustomUuid = @(prodCustomUuid ?? "defaultUuid");
+</script>
+<script src="~/views/admin/BomWarehouseManger/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/contract/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/filePlugin/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/cardJob/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/customer/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/project/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/contractPo/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/sendRequestWorkPrice/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/supplier/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/attributeManager/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/materialProduct/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/edmsRepository/controller.js" type="text/javascript"></script>
+
+<script src="~/views/admin/workflowActivity/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/workflowPlugin/controller.js" type="text/javascript"></script>
+<script src="~/views/admin/payDecision/controller.js" type="text/javascript"></script>

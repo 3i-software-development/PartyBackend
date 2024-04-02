@@ -1,0 +1,125 @@
+﻿<style>
+    .flex-container {
+        padding: 15px;
+        margin: 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .selected {
+        background: #308cea !important;
+        font-weight: bold !important;
+    }
+
+
+    .flex-item {
+        background: #9e8b73;
+        width: 50px;
+        border-radius: 4px;
+        height: 50px;
+        margin: 5px;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
+
+        .flex-item:hover {
+            background: #53afe8;
+        }
+
+    .flex-box {
+        padding: 15px;
+        margin: 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .item-box {
+        /*width: 50px;
+        height: 50px;*/
+        margin: 5px;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
+
+        .item-box :hover {
+            background: #53afe8;
+        }
+
+    .item-box-text, .item-box-text:hover {
+        background: none !important;
+        position: absolute;
+        top: 18px;
+        left: 30%;
+        right: auto;
+        color: white;
+        font-size: 14px;
+    }
+
+    #inforWareHouse {
+        max-height: 320px;
+        height: 290px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+
+        #inforWareHouse .header {
+            background: #9e8b73;
+            height: 40px;
+            margin-left: 0;
+            margin-right: 0;
+            border-bottom: solid 3px #0082c4;
+            color: #ffffff;
+            padding: 5px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    .box-push {
+        padding: 5px;
+        margin-bottom: 5px;
+        color: #fff;
+        background: #b88b50;
+    }
+</style>
+<div class="modal-header white-custom">
+    <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+    </button>
+
+    <!--<img src="../../../images/wareHouse/orderStore.png" height="30" width="30" />-->
+    <i class="fa-solid fa-paperclip fs15"></i>
+    <span class="modal-title" id="modal-title">
+        <!--{{'MIS_TITLE_SORT_WAREHOUSE_IMPORT_BILL' | translate}}-->
+        Tài liệu nhập kho
+        <!--<span title="{{ model.ProductName}}">{{ model.ProductName.length > 40 ? model.ProductName.substr(0, 40) + "..." : model.ProductName }}</span>-->
+    </span>
+</div>
+<div id="modal-body">
+    <div style="height: 500px; overflow-y: auto; padding: 10px; overflow-x: hidden" ng-include="'../views/admin/filePlugin/file-plugin.html'"></div>
+</div>
+

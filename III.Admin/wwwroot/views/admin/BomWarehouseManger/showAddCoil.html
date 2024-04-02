@@ -1,0 +1,505 @@
+﻿<style>
+    .pos .ui-select-bootstrap .ui-select-toggle {
+        border-bottom-left-radius: 0px !important;
+        border-top-left-radius: 0px !important;
+        border-bottom-right-radius: 0px !important;
+        border-top-right-radius: 0px !important;
+        padding-left: 5px !important
+    }
+
+
+    .ui-select-bootstrap .ui-select-toggle {
+        border-bottom-right-radius: 4px !important;
+        border-top-right-radius: 4px !important;
+    }
+
+    #user .tags {
+        max-height: 200px;
+        height: 140px;
+    }
+
+    .border-qrcode .img-thumbnail {
+        border: none;
+    }
+
+    .border-qrcode .file-header {
+        margin-left: 25px;
+        margin-top: -12px;
+        position: absolute;
+        background: linear-gradient(to bottom,#f1f1f1,#FBFCFC );
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        font-size: 11px;
+        padding: 3px 10px !important;
+    }
+
+    .border-qrcode .file-body {
+        max-height: 80px;
+        height: 80px;
+        border-radius: 4px !important;
+        border: 1px solid #e9dada;
+        padding-top: 15px;
+        background: #fffdfd;
+    }
+
+    .labelbodergroup {
+        margin-left: 24px;
+        margin-top: -12px;
+        position: absolute;
+        background: linear-gradient(to bottom,#f2eee6,#FBFCFC );
+        border: 1px solid #e9dada;
+        border-radius: 4px;
+        font-size: 11px;
+        padding: 3px 10px !important;
+    }
+
+    .table_body {
+        background: linear-gradient(to bottom,#f2eee6,#FBFCFC );
+        border-radius: 4px !important;
+        border: 1px solid #e9dada;
+        padding-top: 15px;
+        box-shadow: 0px 5px 10px 2px rgba(127, 143, 166,0.2) !important;
+        padding-bottom: 15px;
+    }
+
+    #box-documentType .tags {
+        max-height: 200px;
+        height: 140px;
+    }
+
+    #documentType .tags {
+        max-height: 90px;
+        height: 90px;
+    }
+
+    #box .file-body {
+        height: 150px;
+        border-radius: 4px !important;
+        border: 1px solid #e9dada;
+        padding-top: 15px;
+        background: #fffdfd;
+    }
+
+    #box .file-header {
+        margin-left: 25px;
+        margin-top: -12px;
+        position: absolute;
+        background: linear-gradient(to bottom,#f1f1f1,#FBFCFC );
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        font-size: 11px;
+        padding: 3px 10px !important;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 58px;
+        height: 46px;
+    }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 15px;
+            width: 15px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+    @media(min-width:992px)and (max-width:1200px) {
+        .modal-65 {
+            width: 85% !important;
+        }
+    }
+
+    @media (min-width:1200px) and (max-width:1500px) {
+        .modal-65 {
+            width: 70% !important;
+        }
+    }
+
+    @media(min-width:1500px) {
+        .modal-65 {
+            width: 55% !important;
+        }
+    }
+
+
+
+    .formAddDefault {
+        padding-bottom: 5px !important;
+        border: 1px solid #c2cad8 !important;
+        border-radius: 4px;
+        background: #fffef6;
+    }
+
+    .switchCustom {
+        /*position: relative;
+        display: inline-block;*/
+        width: 50px;
+        height: 27px;
+    }
+
+        .switchCustom input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+    .btnSwitch {
+        width: 35px;
+        float: right;
+        padding-top: 2px;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: -4px;
+        /*left: 0;
+        right: 0;
+        bottom: 0;*/
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            -webkit-transition: .4s;
+            transition: .4s;
+        }
+
+    input:checked + .slider {
+        background-color: #006732;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+        width: 60px;
+        height: 27px;
+        margin-top: 7px;
+        background-color: #006732;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+</style>
+
+<div class="modal-header">
+    <img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />
+    <i class="fa fa-plus-circle icon-insert "></i>
+    <span class="modal-title " id="modal-title">{{'MIS_ADD_ROLL_BOX' | translate}}</span>
+</div>
+<div class="modal-body pb-0" id="modal-body">
+    <div class="portlet-body form">
+        <form name="addform" method="post" ng-validate="validationOptions" class="form-horizontal userFormAreaHeader">
+            <div class="form-body">
+                <div class="row mtn20">
+                    <div class="col-md-12 p-0 formAddDefault">
+                        <div class="col-md-6" ng-class="{ 'has-error': errorProductCode}">
+                            <label class="control-label require">{{'MIS_CURD_LBL_CATALOGUE_PRODUCT' | translate}} <span class="text-danger" ng-if="modelList.ImpType!=''"> {{'MIS_LBL_PACK' | translate}} ({{modelList.ImpType}})</span></label>
+                            <div class="d-flex">
+                                <div class="input-group col-md-11">
+                                    <ui-select tagging ng-model="modelList.ProductCode" theme="bootstrap" on-select="changleSelect('ProductCode',$item)" ng-disabled="disableProductCode">
+                                        <ui-select-match placeholder="{{'MIS_CURD_LBL_PRODUCT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                        <ui-select-choices repeat="x.Code as x in listProduct | filter: $select.search">
+                                            {{x.Name}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span ng-show="errorProductCode" class="label-color validation-message">
+                                        {{'MIS_VALIDATE_CHOOSE_PRODUCT' | translate}}
+                                    </span>
+                                </div>
+                                <a class="question pl10 fs25" style="color:#428bca" data-toggle="popover" data-placement="bottom" data-html="true" data-content="{{'MES_GAI_SEARCH_CHILD' | translate}} <br /> {{'MES_GAI_SEARCH_COMPLETED' | translate}}" data-trigger="hover" data-original-title="Hướng dẫn tìm kiếm">
+                                    <i class="fa fa-question-circle"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-2 pl-0" ng-class="{ 'has-error': errorQuantity}">
+                            <label class="control-label require">{{'Giá trị' | translate}}</label>
+                            <div class='input-group'>
+                                <input ng-change="change('quantity')" class="br4 form-control input-date bold" ng-model="modelList.QuantityNeedSet" placeholder="{{'MIS_MSG_VALUE' | translate}}..." num-thousand='true' awnum num-int='21' ng-disabled="true" />
+                                <span ng-show="errorQuantity" class="label-color validation-message">
+                                    {{'MIS_VALIDATE_ENTER_QUANTITY' | translate}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 pl-0" ng-class="{ 'has-error': errorSalePrice}">
+                            <label class="control-label require">{{'MIS_CURD_SEARCH_LBL_PRICE' | translate}}</label>
+                            <div class='input-group'>
+                                <input ng-change="change('price')" class="form-control bold br4" ng-model="modelList.SalePrice" placeholder="{{'MIS_CURD_SEARCH_TXT_PRICE' | translate}}..." num-thousand='true' awnum num-int='21' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+                                <span ng-show="errorSalePrice" class="label-color validation-message">
+                                    {{'MIS_VALIDATE_ENTER_PRICE' | translate}}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-1 pl-0">
+                            <label class="control-label">{{'MIS_CURD_TAB_DETAIL_LIST_COL_UNIT' | translate}}</label>
+                            <div class="input-group">
+                                <ui-select tagging ng-model="modelList.Unit" theme="bootstrap" on-select="changleSelect('Unit',$item)" ng-disabled="modelDisable">
+                                    <ui-select-match placeholder="{{'MIS_CURD_TAB_DETAIL_LIST_COL_UNIT' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listUnit | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="col-md-1 mt20 pr-0">
+                            <div class="btn-group actions d-flex">
+                                <div class="text-center" ng-click="save()">
+                                    <a class="btn btn-icon-only btn-circle btn-outline green-custom">
+                                        <span><i class="fa fa-save"></i></span>
+                                    </a>
+                                    <p class="text-underline fs9 mb-0  pt3">{{'COM_BTN_SAVE' | translate}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 formAddDefault mt5">
+                        <div class="row p-0">
+                            <div class="col-md-2" ng-class="{ 'has-error': errorProductImpType}">
+                                <label class="control-label">{{'MIS_TXT_TYPE' | translate}}</label>
+                                <div class="input-group">
+                                    <ui-select tagging ng-model="modelList.ProductImpType" theme="bootstrap" on-select="changleSelect('ProductImpType',$item)" ng-disabled="disableProductImpType">
+                                        <ui-select-match placeholder="{{'MIS_TXT_TYPE' | translate}}...">{{$select.selected}}</ui-select-match>
+                                        <ui-select-choices repeat="x in listProductType | filter: $select.search">
+                                            {{x}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span ng-show="errorProductImpType" class="label-color validation-message">
+                                        {{'MIS_TXT_TYPE_BLANK' | translate}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pl-0" ng-class="{ 'has-error': errorValueCoil}">
+                                <label class="control-label require">{{'MIS_TXT_VALUE_PER_UNIT' | translate}}</label>
+                                <div class='input-group'>
+                                    <input ng-change="change('ValueCoil')" type="number" min="1" class="br4 form-control input-date bold" ng-model="modelList.ValueCoil" placeholder="{{'MIS_ENTER_VALUE' | translate}}..." ng-disabled="disableValueCoil" />
+                                    <span ng-show="errorValueCoil" class="label-color validation-message">
+                                        {{'MIS_ENTER_VALUE' | translate}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-1 pl-0" ng-class="{ 'has-error': errorUnitCoil}">
+                                <label class="control-label require">{{'MIS_CURD_TAB_DETAIL_LIST_COL_UNIT' | translate}}</label>
+                                <div class='input-group'>
+                                    <input class="br4 form-control input-date bold" style="padding-left:5px" ng-model="modelList.UnitCoil" placeholder="{{'MIS_CURD_TAB_DETAIL_LIST_COL_UNIT' | translate}}..." ng-disabled="disableUnitCoil" />
+                                    <span ng-show="errorUnitCoil" class="label-color validation-message">
+                                        {{'MIS_ENTER_UNIT' | translate}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pl-0" ng-class="{ 'has-error': errorQuantityCoil}">
+                                <label class="control-label require">{{'MIS_CURD_TAB_DETAIL_LIST_COL_QUANTITY' | translate}}</label>
+                                <div class='input-group'>
+                                    <input class="br4 form-control input-date bold" ng-model="modelList.QuantityCoil" placeholder="{{'' | translate}}..." num-thousand='true' awnum num-int='21' ng-disabled="disableQuantityCoil" />
+                                    <span ng-show="errorQuantityCoil" class="label-color validation-message">
+                                        {{'MIS_VALIDATE_ENTER_QUANTITY' | translate}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pl-0" ng-class="{ 'has-error': errorRuleCoil}">
+                                <label class="control-label require">{{'MIS_LBL_RULE' | translate}}</label>
+                                <div class='input-group'>
+                                    <input ng-change="change('ruleCoil')" class="br4 form-control input-date bold" ng-model="modelList.RuleCoil" placeholder="{{'MIS_LBL_RULE' | translate}}..." />
+                                    <span ng-show="errorRuleCoil" class="label-color validation-message">
+                                        {{'MIS_LBL_ENTER_RULE' | translate}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pl-0" ng-class="{ 'has-error': errorProductLot}">
+                                <label class="control-label require">{{'MIS_LBL_LOT' | translate}}</label>
+                                <div class='input-group'>
+                                    <input class="form-control br4" ng-change="change('productlot')" ng-model="modelList.ProductLot" placeholder="Lot..." />
+                                    <span ng-show="errorProductLot" class="label-color validation-message">
+                                        {{'MIS_VALIDATE_LOT_BLANK' | translate}}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-1 mt20 pl-0">
+                                <div class="btn-group actions d-flex">
+                                    <div class="text-center pl10" ng-click="addCoil()">
+                                        <a class="btn btn-icon-only btn-circle btn-outline purple-custom">
+                                            <span><i class="fa fa-plus"></i></span>
+                                        </a>
+                                        <p class="text-underline fs9 mb-0 pt3">{{'MIS_ENTER_ROLL' | translate}}</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div ng-if="isCoil" class="hidden">
+                                <div class="col-md-3" ng-class="{ 'has-error': errorProductRelative}">
+                                    <label class="control-label">{{'Cuộn gốc' | translate}}</label>
+                                    <div class="input-group">
+                                        <ui-select tagging ng-model="modelList.ProductCoilRelative" theme="bootstrap" on-select="changleSelect('ProductRelative',$item)" ng-disabled="disableProductRelative">
+                                            <ui-select-match placeholder="{{'Chọn cuộn trong kho' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                            <ui-select-choices repeat="x.Code as x in listProductRelative | filter: $select.search">
+                                                {{x.Name}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="modelList.ProductCoilRelative=''" class="btn btn-default no-shadow" style="">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </span>
+                                        <span ng-show="errorProductRelative" class="label-color validation-message">
+                                            {{'MIS_VALIDATE_ROLL_BLANK' | translate}}
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 pl-0" ng-class="{ 'has-error': errorProductCoil}">
+                                    <label class="control-label">{{'MIS_ENTER_ROLL' | translate}} <span class="fs8 text-danger">{{modelList.ProductCoil}}</span></label>
+                                    <div class='input-group'>
+                                        <input class="form-control br4" ng-model="modelList.sProductCoil" placeholder="{{'MIS_ROLL1' | translate}}..." ng-change="changeCoil()" ng-disabled="disableProductCoil" />
+                                        <span ng-show="errorProductCoil" class="label-color validation-message">
+                                            {{'MIS_TXT_ROLL1_BLANK' | translate}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div ng-if="!isCoil" class="hidden">
+                                <div class="col-md-3" ng-class="{ 'has-error': errorProductRelative}">
+                                    <label class="control-label">{{'MIS_LBL_BOX' | translate}}</label>
+                                    <div class="input-group">
+                                        <ui-select tagging ng-model="modelList.ProductCoilRelative" theme="bootstrap" on-select="changleSelect('ProductRelative',$item)" ng-disabled="disableProductRelative">
+                                            <ui-select-match placeholder="{{'MIS_SELECT_BOX' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                            <ui-select-choices repeat="x.Code as x in listProductRelative | filter: $select.search">
+                                                {{x.Name}}
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <span class="input-group-btn">
+                                            <button type="button" ng-click="modelList.ProductCoilRelative=''" class="btn btn-default no-shadow" style="">
+                                                <span class="glyphicon glyphicon-remove"></span>
+                                            </button>
+                                        </span>
+                                        <span ng-show="errorProductRelative" class="label-color validation-message">
+                                            {{'MIS_VALIDATE_BOX_BLANK' | translate}}
+                                        </span>
+                                        iv
+                                    </div>
+                                    iv
+                                </div>
+                                <div class="col-md-4 pl-0" ng-class="{ 'has-error': errorProductCoil}">
+                                    <label class="control-label">{{'MIS_BOX1' | translate}} <span class="fs8 text-danger">{{modelList.ProductCoil}}</span></label>
+                                    <div class='input-group'>
+                                        <input class="form-control br4" ng-model="modelList.sProductCoil" placeholder="{{'MIS_BOX1' | translate}}..." ng-change="changeCoil()" ng-disabled="disableProductCoil" />
+                                        <span ng-show="errorProductCoil" class="label-color validation-message">
+                                            {{'MIS_VALIDATE_BOX2_BLANK' | translate}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row p-0">
+                            <div class="col-md-12">
+                                <label class="control-label text-danger fs11">{{'MIS_TXT_CODE_ROLL_BOX' | translate}} {{modelList.ProductCoil}}</label>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-12 pl-0">
+                                    <label class="control-label">{{'MIS_LIST_RBP' | translate}}</label>
+                                </div>
+                                <div class="table-responsive" ng-show="isShowListCoil">
+                                    <table class="table table-bordered" id="tblListProductCoil">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_STT' | translate}}</th>
+                                                <th class="col-md-2 text-center fw600 text-underline">{{'MIST_TABLE_ENTER_TYPE' | translate}}</th>
+                                                <th class="col-md-2 text-center fw600 text-underline">{{'MIST_ROLL_BOX' | translate}}</th>
+                                                <th class="col-md-2 text-center fw600 text-underline">{{'MIS_TXT_VALUE_PER_UNIT' | translate}}</th>
+                                                <th class="col-md-1 text-center fw600 text-underline">{{'MIS_CURD_TAB_DETAIL_LIST_COL_UNIT' | translate}}</th>
+                                                <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LBL_LOT' | translate}}</th>
+                                                <th class="col-md-1 text-center fw600 text-underline">{{'MIST_STATUS_INVENTORY' | translate}}</th>
+                                                <th class="col-md-1 text-center fw600 text-underline">{{'MIS_LIST_COL_ACTION_MIS' | translate}}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="x in model.ListCoil | orderBy: 'IsOrder'">
+                                                <td class="text-center">{{$index+1}}</td>
+                                                <td class="text-center">{{x.ProductImpType}}</td>
+                                                <td class="text-center">{{x.RuleCoil}}</td>
+                                                <td class="text-center">{{x.ValueCoil | number}}</td>
+                                                <td class="text-center">{{x.UnitCoil}}</td>
+                                                <td class="text-center">{{x.ProductLot}}</td>
+                                                <td class="text-center" ng-class="{'text-success':x.IsOrder,'text-danger':!x.IsOrder}">{{x.IsOrder ? 'Đã xếp kho' :'Chưa xếp kho'}}</td>
+                                                <td class="text-center nowrap">
+                                                    <button title="Xoá" ng-if="isDelete" ng-click="removeCoil(x)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-icon-only btn-circle btn-outline red"><i class="fa fa-trash"></i></button>
+                                                    <button title="Xếp kho" ng-click="orderingItemCoil(x)" style="width: 25px; height: 25px; padding: 0px;-webkit-box-shadow: 0 2px 5px 0 rgba(230,60,95,0.45)" class="btn btn-icon-only btn-circle btn-outline blue"><img src="../../../images/wareHouse/orderStore.png" height="25" width="25" /></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+

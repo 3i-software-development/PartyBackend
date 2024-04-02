@@ -1,0 +1,273 @@
+﻿<style>
+    @media (min-width: 1200px) and (max-width:1500px) {
+        .col-custom-lg-2 {
+            float: left !important;
+            width: 25% !important;
+        }
+    }
+
+    .app-content {
+        width: 100%;
+    }
+
+    .breadcrumb>li {
+        font-size: 16px;
+        font-weight: 700;
+        color: black;
+        text-decoration: underline;
+    }
+
+    #contentMain {
+        position: relative;
+    }
+
+    #searchBox {
+        position: absolute;
+        z-index: 12;
+        width: calc(100% - 80px);
+        right: 30px;
+    }
+
+    #searchBox .bordered {
+        border: 1px solid #80808057 !important;
+        box-shadow: 1px 3px 8px 0px #888888c2;
+    }
+
+    .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top {
+        z-index: 1032 !important;
+    }
+</style>
+<link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
+<div ng-controller="index">
+    <div class="btn-group pt5 pb-1 pull-right actions d-flex" style="margin-top: -70px;">
+        <!--<div class="text-center pr-2" ng-show="!isSearch">
+        <a class="btn btn-icon-only btn-circle btn-outline gold-custom" ng-click="showSearch()">
+            <span><i class="fa fa-search"></i></span>
+        </a>
+        <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
+    </div>-->
+        <div class="text-center mt10 pr30">
+            <a class="" ng-click="reload()">
+                <span><i class="fas fa-arrows-rotate fs30"></i></span>
+            </a>
+            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_REFRESH' | translate}}</p>
+        </div>
+        <div class="text-center mt10 pr30">
+            <a class="" ng-click="showSearch()">
+                <span><i class="fas fa-search fs30"></i></span>
+            </a>
+            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
+        </div>
+        <div class="text-center mt10 pr30" ng-if="permissionMaterialImpStore.Insert">
+            <a class="" ng-click="add()">
+                <span><i class="fa-solid fa-plus fs30"></i></span>
+            </a>
+            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_ADD' | translate}}</p>
+        </div>
+        <div class="text-center pr-2">
+            <a ng-click="viewCmsDetail('DSNS_TKNS')" class="fs30">
+                <span><i class="fas fa-question " aria-hidden="true"></i></span>
+            </a>
+        </div>
+    </div>
+
+    <div id="searchBox" ng-show="isSearch">
+        <div class="table-toolbar">
+            <div class="portlet light bordered mb5 mt10">
+                <div class="portlet-body">
+                    <div class="col-md-12" style="height:20px">
+                        <i ng-click="showSearch()"
+                            style="margin-top:9px !important; margin-right:5px !important; font-size:25px"
+                            class="fas fa-times  pull-right h28 w28  close-input-search" role="button"
+                            title="Ẩn tìm kiếm"></i>
+                    </div>
+
+                    <!-- <img class="pull-right h28 w28 close-input-search" role="button" title="{{'MIS_CURD__TITLE_CLOSE_EXPSTORE' | translate}}" src="/images/default/close.png" />-->
+                    <div class="row pt5 mb5">
+                        <div class="col-md-4">
+                            <label class="fw600 text-underline">{{'MIS_LIST_COL_MIS_TITLE' | translate}}</label>
+                            <div class='input-group br24'>
+                                <input ng-model="model.Title" class="form-control" type="text"
+                                    placeholder="{{'MIS_LIST_COL_MIS_TITLE' | translate}}..."
+                                    ng-keydown="($event.keyCode == 13) && search()" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.Title=''" class="btn btn-default no-shadow">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-2">
+                            <label class="fw600 text-underline">{{'MIS_CURD_LBL_START_DATE' | translate}}</label>
+                            <div class="input-group br24">
+                                <input ng-model="model.FromDate" class="form-control" type="text"
+                                    placeholder="{{'MIS_CURD_LBL_START_DATE' | translate}}..." id='FromTo'
+                                    ng-keydown="($event.keyCode == 13) && search()" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.FromDate=''"
+                                        class="btn btn-default no-shadow start-date">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <label class="fw600 text-underline">{{'MIS_CURD_LBL_END_DATE' | translate}}</label>
+                            <div class="input-group br24">
+                                <input ng-model="model.ToDate" class="form-control" type="text"
+                                    placeholder="{{'MIS_CURD_LBL_END_DATE' | translate}}..." id='DateTo'
+                                    ng-keydown="($event.keyCode == 13) && search()" />
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.ToDate=''"
+                                        class="btn btn-default no-shadow end-date">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="fw600 text-underline">
+                                {{'MIS_CURD_LBL_CHOSE_WARE_MATERIAL_IMPOSTORE' | translate}}
+                            </label>
+                            <div class='input-group br24 search-group'>
+                                <ui-select tagging ng-model="model.StoreCode" theme="bootstrap" on-select="search()">
+                                    <ui-select-match
+                                        placeholder="{{'MIS_CURD_TXT_CHOSE_WARE_MATERIAL_IMPOSTORE' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listStore | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.StoreCode=''"
+                                        class="btn btn-default no-shadow" style="">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="fw600 text-underline">{{'MIS_LIST_COL_MIS_STAFT_ENTER' | translate}}</label>
+                            <div class='input-group br24 search-group'>
+                                <ui-select tagging ng-model="model.UserImport" theme="bootstrap" on-select="search()">
+                                    <ui-select-match
+                                        placeholder="{{'MIS_LIST_COL_MIS_STAFT_ENTER' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listUserImport | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.UserImport=''"
+                                        class="btn btn-default no-shadow" style="">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="col-lg-2 col-md-4 col-custom-lg-2" style="width: 14%;">
+                            <label class="fw600 text-underline">{{'MIS_CURD_LBL_CHOSE_REASON' | translate}}</label>
+                            <div class='input-group br24 search-group'>
+                                <ui-select tagging ng-model="model.ReasonName" theme="bootstrap" on-select="reload()">
+                                    <ui-select-match
+                                        placeholder="{{'MIS_CURD_TXT_CHOSE_REASON' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listReason | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                            <span class="input-group-btn">
+                                    <button type="button" ng-click="model.ReasonName=''" class="btn btn-default no-shadow"
+                                        style="">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </span>
+                        </div>
+                        </div> -->
+                        <div class="col-md-3">
+                            <label class="fw600 text-underline">{{'Nhà cung cấp' | translate}}</label>
+                            <div class="input-group br24">
+                                <ui-select ng-model="model.SupplierCode" theme="bootstrap" on-select="search()">
+                                    <ui-select-match
+                                        placeholder="{{'Nhà cung cấp' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listSupplier | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.SupplierCode=''"
+                                        class="btn btn-default no-shadow" style="">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="fw600 text-underline">{{'MIST_COL_CUSTOMER' | translate}}</label>
+                            <div class="input-group br24">
+                                <ui-select ng-model="model.CusCode" theme="bootstrap" on-select="search()">
+                                    <ui-select-match
+                                        placeholder="{{'MIST_COL_CUSTOMER' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in listCustomer | filter: $select.search">
+                                        {{x.Name}}
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.CusCode=''" class="btn btn-default no-shadow"
+                                        style="">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                        <!--<i ng-click="showSearch()" class="fas fa-angle-up pull-right h28 w28 close-input-search hide-search-more-line" role="button" title="Ẩn tìm kiếm" style="margin-right: 20px !important;"></i>-->
+                        <div class="col-lg-1" style="width: 5%;">
+                            <div class="btn-group pt20 actions d-flex">
+                                <div class="text-center pr10">
+                                    <div class="text-center" ng-click="search()">
+                                        <a class="">
+                                            <span><i class="fas fa-search pt10 fs30"></i></span>
+                                        </a>
+                                        <!--<p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12"> <label class="text-danger">{{'COM_MSG_LIST_GUIDE' | translate}}</label></div>
+    </div>
+    <table class="table dataTable table-hover table-striped" datatable dt-options="dtOptions" dt-columns="dtColumns"
+        dt-instance="dtInstance" id="tblData"></table>
+</div>
+<script>
+    setTimeout(function () {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        $('.table-scrollable').mousedown(function (e) {
+            isDown = true;
+            startX = e.pageX - $('.table-scrollable').offset().left;
+            scrollLeft = $('.table-scrollable').scrollLeft();
+        });
+        $('.table-scrollable').mouseleave(function () {
+            isDown = false;
+        });
+        $('.table-scrollable').mouseup(function () {
+            isDown = false;
+        });
+        $('.table-scrollable').mousemove(function (e) {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - $('.table-scrollable').offset().left;
+            const walk = (x - startX) * 1; //scroll-fast
+            $('.table-scrollable').scrollLeft(scrollLeft - walk);
+            console.log(walk);
+        });
+    }, 1000);
+
+</script>

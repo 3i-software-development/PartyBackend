@@ -1,0 +1,297 @@
+﻿<style>
+    .flex-container {
+        padding: 15px;
+        margin: 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .selected {
+        background: #308cea !important;
+        font-weight: bold !important;
+    }
+
+
+    .flex-item {
+        background: #9e8b73;
+        width: 50px;
+        border-radius: 4px;
+        height: 50px;
+        margin: 5px;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    .flex-item:hover {
+        background: #53afe8;
+    }
+
+    .flex-box {
+        padding: 15px;
+        margin: 0;
+        list-style: none;
+        -ms-box-orient: horizontal;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: -moz-flex;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .item-box {
+        /*width: 50px;
+        height: 50px;*/
+        margin: 5px;
+        line-height: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 2em;
+        text-align: center;
+    }
+
+    .item-box :hover {
+        background: #53afe8;
+    }
+
+    .item-box-text,
+    .item-box-text:hover {
+        background: none !important;
+        position: absolute;
+        top: 18px;
+        left: 30%;
+        right: auto;
+        color: white;
+        font-size: 14px;
+    }
+
+    #inforWareHouse {
+        max-height: 320px;
+        height: 290px;
+        border-radius: 4px;
+        border: 1px solid #ddd;
+    }
+
+    #inforWareHouse .header {
+        background: #9e8b73;
+        height: 40px;
+        margin-left: 0;
+        margin-right: 0;
+        border-bottom: solid 3px #0082c4;
+        color: #ffffff;
+        padding: 5px;
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .box-push {
+        padding: 5px;
+        margin-bottom: 5px;
+        color: #fff;
+        background: #b88b50;
+    }
+</style>
+<div class="modal-header white-custom">
+    <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+    </button>
+
+    <img src="../../../images/wareHouse/orderStore.png" height="30" width="30" />
+    <span class="modal-title" id="modal-title">
+        Xếp sản phẩm trong phiếu
+        <!-- {{'MIS_TITLE_SORT_WAREHOUSE_IMPORT_BILL' | translate}}:
+        <span title="{{ model.ProductName}}">
+            {{ model.ProductName.length > 40 ? model.ProductName.substr(0, 40) + "..." : model.ProductName }}
+        </span> -->
+    </span>
+</div>
+<div id="modal-body">
+    <div class="portlet-body form" style="height: 500px; overflow-y: auto;">
+        <form name="addform" method="post" ng-validate="validationOrderProductOptions">
+            <div class="form-body">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="form-group br24-nobtn">
+                            <label class="require">{{'Vị trí vật lý' | translate}}</label>
+                            <ui-select class="ui-select-bootstrap-right-radius bold fs16" tagging
+                                ng-model="model.MappingCode" theme="bootstrap"
+                                ng-change="changeSelect('MAPPING',model.MappingCode)">
+                                <ui-select-match placeholder="{{'Chọn vị trí vật lý' | translate}}">
+                                    <b style="color: green;" class="fs16">{{$select.selected.Name}} -
+                                        {{$select.selected.Mapping}}</b>
+                                </ui-select-match>
+                                <ui-select-choices repeat="x.Mapping as x in listMapping | filter: $select.search">
+                                    {{x.Name}} - {{x.Mapping}}
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-3 pl-0">
+        <div class="form-group br24-nobtn">
+            <label class="require">{{'MIS_CURD_LBL_RACK_CODE' | translate}} (<span class="text-danger">Có thể xếp: {{QuantityEmpty}}</span>)</label>
+            <ui-select class="ui-select-bootstrap-right-radius" tagging ng-model="model.RackCode" theme="bootstrap" ng-change="changeSelect('RACK',model.RackCode)">
+                <ui-select-match placeholder="{{'MIS_CURD_TXT_RACK_CODE' | translate}}"><b style="color: green;">{{$select.selected.RackName}}</b></ui-select-match>
+                <ui-select-choices repeat="x.RackCode as x in listRack | filter: $select.search">
+                    {{x.RackName}}
+                </ui-select-choices>
+            </ui-select>
+        </div>
+    </div>
+    <div class="col-md-3 pl-0">
+        <div class="table-toolbar pb15">
+            <label class="require">{{'MIS_CURD_LBL_SHELF_POSITION' | translate}}</label>
+            <input class="form-control br24 bold" ng-model="model.RackPosition" placeholder="{{'MIS_CURD_LBL_RACK_POSITION' | translate}}..." />
+        </div>
+    </div>-->
+                    <!--<div class="col-md-8" ng-class="{ 'has-error': errorZoneCode}">
+        <label class="control-label require">{{'Vị trí xếp' | translate}}</label>
+        <div class="input-group br24-nobtn">
+            <ui-select tagging ng-model="model.ZoneCode" theme="bootstrap" ng-change="changeSelect('ZoneCode',model.ZoneCode)">
+                <ui-select-match placeholder="{{'Vị trí xếp' | translate}}">{{$select.selected.Title}}</ui-select-match>
+                <ui-select-choices repeat="x.Code as x in lstTreeZone | filter: $select.search">
+                    <div style="padding-left: {{30 * x.Level}}px">
+                        <i ng-show="x.HasChild" class="fa fa-folder-open icon-state-warning"></i>
+                        <i ng-show="!x.HasChild" class="fa fa-folder text-info"></i>
+                        {{x.Title}}
+                    </div>
+                </ui-select-choices>
+            </ui-select>
+        </div>
+        <span class="text-danger fs11">{{model.PackHierarchyPath}}</span>
+        <span ng-show="errorZoneCode" class="label-color validation-message">
+            {{'Vị trí xếp không được để trống' | translate}}
+        </span>
+    </div>-->
+                    <!--<div class="col-md-2 pl-0">
+        <div class="table-toolbar pb15">
+            <label class="require">{{'MIS_LBL_SIZE' | translate}}</label>
+            <input class="form-control br24" placeholder="{{'MIS_LBL_SIZE' | translate}}" ng-model="model.Quantity" type="text" num-thousand='true' awnum num-int='21' onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
+        </div>
+    </div>-->
+                    <!-- <div class="col-md-3 pl-0">
+                        <label class="control-label require">{{'Chuỗi sản phẩm có thể xếp' | translate}}</label>
+                        <div class='mr5'>
+                            <input class="form-control bold fs16 br24" ng-model="model.ProductNoImp" placeholder="{{'Chuỗi' | translate}}..."
+                                   type="text" readonly />
+                            <span ng-show="errorNoParent" class="label-color validation-message">
+                                {{'Thứ tự cha không được để trống' | translate}}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="col-md-3 pl-0" ng-class="{'has-error' : errorNoParent}">
+                        <label class="control-label require">{{'Chuỗi sản phẩm cần xếp' | translate}}</label>
+                        <div class='mr5'>
+                            <input ng-change="change('quantityImp')" class="form-control bold fs16 br24" ng-model="model.ProductNo"
+                                   placeholder="{{'No' | translate}}..."
+                                   type="text" ng-disabled="model.IsTankStatic" />
+                            <span ng-show="!errorNoParent" class="label-color validation-message">
+                                {{'Thứ tự phải nhập đúng theo format sau: 1, 2, 3, 4..10' | translate}}
+                            </span>
+                            <span ng-show="errorNoParent" class="label-color validation-message">
+                                {{'Thứ tự cha không được để trống' | translate}}
+                            </span>
+                        </div>
+                    </div> -->
+                    <div class="col-md-5 p-0">
+                        <!-- <div class="text-center pull-left pt20 mr10" ng-click="addToOrder()">
+                            <a class="">
+                                <span class="fa-solid fa-plus fs30"></span>
+                            </a>
+                            <p class="text-underline fs9 mb5 pt3">{{'MIS_CURD_LBL_ODERING_PRODUCT' | translate}}</p>
+                        </div> -->
+                        <button type="button" ng-click="save()" class="btn pull-right mt20 btn-default no-shadow">
+                            <!-- <span class="glyphicon glyphicon-remove"></span> -->
+                            {{'MIS_CURD_LBL_ODERING_PRODUCT' | translate}}
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="table-responsive">
+                        <table class="table table-bordered" id="tblListProduct">
+                            <thead>
+                                <tr>
+                                    <th class="col-md-1 text-center fw600 text-underline">
+                                        {{'MIS_LIST_COL_STT' | translate}}
+                                    </th>
+                                    <!-- <th class="col-md-3 text-center fw600 text-underline">{{'MIS_LIST_COL_CODE_PRODUCT' | translate}}</th> -->
+                                    <th class="col-md-2 text-center fw600 text-underline">
+                                        {{'MIS_LIST_COL_NAME_PRODUCT' | translate}}
+                                    </th>
+                                    <!-- <th class="col-md-2 text-center fw600 text-underline">{{'MIS_LIST_COL_LOCATION' | translate}}</th> -->
+                                    <th class="col-md-1 text-center fw600 text-underline">
+                                        {{'Chuỗi hiện có' | translate}}
+                                    </th>
+                                    <th class="col-md-1 text-center fw600 text-underline">
+                                        {{'Chuỗi xếp' | translate}}
+                                    </th>
+                                    <th class="col-md-1 text-center fw600 text-underline">
+                                        {{'Số lượng' | translate}}
+                                    </th>
+                                    <th class="col-md-2 text-center fw600 text-underline">{{'MIS_LIST_COL_LOCATION' | translate}}</th>
+                                    <!-- <th class="col-md-1 text-center fw600 text-underline">{{'Thứ tự' | translate}}</th> -->
+                                    <th class="wpercent1 text-center fw600 text-underline nowrap">
+                                        <!-- {{'MIS_LIST_COL_ACTION_MIS' | translate}} -->
+                                        {{'Xếp' | translate}}
+                                    </th>
+                                    <th class="wpercent1 text-center fw600 text-underline nowrap">
+                                        <!-- {{'MIS_LIST_COL_ACTION_MIS' | translate}} -->
+                                        {{'Chọn' | translate}}
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="x in lstProduct">
+                                    <td class="text-center">{{$index+1}}</td>
+                                    <!-- <td class="text-left">{{x.ProductQrCode}}</td> -->
+                                    <td class="text-left">{{x.ProductName}} - {{x.ProductCode}}</td>
+                                    <!-- <td class="text-left">{{x.PositionInStore}}</td> -->
+                                    <td class="text-center">
+                                        <input ng-change="change('quantityImp')" class="form-control bold fs16 br24"
+                                            ng-model="x.ProductNoInput" placeholder="{{'No' | translate}}..." type="text"
+                                            ng-disabled="x.IsTankStatic" />
+                                    </td>
+                                    <td class="text-center">
+                                        <input class="form-control bold fs16 br24" ng-model="x.ProductNoImp"
+                                            placeholder="{{'Chuỗi' | translate}}..." type="text" readonly />
+                                    </td>
+                                    <td class="text-center">{{x.Quantity|number}}</td>
+                                    <td class="text-left">
+                                        <li ng-repeat="y in x.ListPosition">{{y.PositionInStore}} ({{y.ProductNo}})</li>
+                                    </td>
+                                    <td class="text-center">
+                                        <a ng-click="orderProductVatCo(x)" class="">
+                                            <img src="../../../images/wareHouse/orderStore.png" height="30" width="30" />
+                                        </a>
+                                    </td>
+                                    <td class="text-center">
+                                        <!-- <a title="Xóa" ng-click="deleteOrder(x.Id)"
+                                            style="width: 25px; height: 25px; padding: 0px;" class=""><i
+                                                style="--fa-primary-color: red;"
+                                                class="fa-solid fa-trash  fs25"></i></a> -->
+                                        <input type="checkbox" ng-model="x.IsSelected"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
