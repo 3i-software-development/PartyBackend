@@ -1,3 +1,23 @@
+<style>
+    .table-wrapper {
+        max-width: 100%;
+        overflow-x: auto;
+    }
+
+        .table-wrapper .list-item {
+            min-width: 100%;
+            /* Ensure table occupies full width */
+        }
+
+        /* Optional: Style the scrollbar */
+        .table-wrapper::-webkit-scrollbar {
+            height: 10px;
+        }
+
+        .table-wrapper::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+</style>
 <div class="toggle-header">
     <div>
         <label> Tệp đính kèm </label>
@@ -18,25 +38,29 @@
 <div>
     <label style="margin-left : 15px;"> Danh sách tệp đính kèm đã tải lên </label>
     <div class="container mt-5">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Tên File</th>
-                    <th scope="col">Kích thước (bytes)</th>
-                    <th scope="col">Xóa bỏ</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr style="font-size:12px" ng-repeat="file in fileList">
-                    <td style="font-weight : 1000 ; color: dodgerblue ;">
-                        <a href="wwwroot/uploads/{{ file.FileName }}" download="{{ file.FileName }}"> {{ file.FileName }} </a>
-                    </td>
-                    <td>{{ file.FileSize }}</td>
-                    <td style="text-align:center">
-                        <i style="color:red;" class="fa fa-trash" ng-click="deleteFile(file)"></i>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+        <div class="table-wrapper">
+            <div class="list-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Tên File</th>
+                            <th scope="col">Kích thước (bytes)</th>
+                            <th scope="col">Xóa bỏ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="font-size:12px" ng-repeat="file in fileList">
+                            <td style="font-weight : 1000 ; color: dodgerblue ;">
+                                <a href="wwwroot/uploads/{{ file.FileName }}" download="{{ file.FileName }}"> {{ file.FileName }} </a>
+                            </td>
+                            <td>{{ file.FileSize }}</td>
+                            <td style="text-align:center">
+                                <i style="color:red;" class="fa fa-trash" ng-click="deleteFile(file)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+        </div>
