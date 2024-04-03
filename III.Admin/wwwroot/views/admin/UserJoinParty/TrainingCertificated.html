@@ -49,7 +49,7 @@
             </label>
         </div>
         <div class="col-md-10" style="display: flex;">
-            <div class="br24 form-control custom-title-code-bold">
+            <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                 <i class="fa fa-info-circle icon-clickable" id="schoolName" title="Popover Header" popover-placement="bottom-left"
                 uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.SchoolName}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -68,7 +68,7 @@
             </label>
         </div>
         <div class="col-md-10" style="display: flex;">
-            <div class="br24 form-control custom-title-code-bold">
+            <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
                 <i class="fa fa-info-circle icon-clickable" id="class" title="Popover Header" popover-placement="bottom-left"
                 uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.Class}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -91,6 +91,7 @@
             <div class="br24 form-control custom-title-code-bold">
                 <i class="fa fa-info-circle icon-clickable" id="certificate" title="Popover Header" popover-placement="bottom-left"
                 uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.Certificate}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                        ng-model="selectedTrainingCertificatedPass.Certificate" type="text"
                        placeholder="Văn bằng chứng chỉ" />
