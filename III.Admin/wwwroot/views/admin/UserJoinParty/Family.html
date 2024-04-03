@@ -33,8 +33,8 @@
                 </div>
                 <div class="col-md-8" style="display: flex;">
                     <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
-                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="VD:01-01-2024">
-                        </i>
+                        <i class="fa fa-info-circle icon-clickable" id="MenberFamilyName" title="Popover Header" popover-placement="bottom-left"
+                        uib-popover="Họ tên của bạn là: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.Relation" type="text" ng-change="filterRelation()" placeholder="Quan hệ" />
                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                            ng-model="selectedFamily.Relation"></i>

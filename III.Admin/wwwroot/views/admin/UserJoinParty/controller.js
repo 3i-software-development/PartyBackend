@@ -1698,7 +1698,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.infUser.WfInstCode = data.Profile.WfInstCode;
         $scope.GroupUser = data.Profile.GroupUserCode;
         $scope.infUser.PlaceWorking = data.Profile.PlaceWorking;
-        $scope.infUser.Relation = data.Profile.Relationship;
+        $scope.selectedFamily.Relation = data.Profile.Relationship;
 
 
         data.Awards.forEach(function (laudatory) {
@@ -1823,33 +1823,33 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
     };
 
-    $scope.popoverLabel = '';
-    $scope.popoverid = '';
-    $scope.commentTextarea = '';
-    var matchedLabel = [];
-    $scope.openPopover = function (popoverId) {
-        matchedLabel = $scope.popoverLabels.find(function (item) {
-            return item.id === popoverId;
-        });
-        $scope.pp.id = matchedLabel.id;
-        $scope.popoverid = matchedLabel.id;
-        if (matchedLabel) {
-            $scope.popoverLabel = matchedLabel.labelText;
-            $scope.commentTextarea = matchedLabel.comment;
-        }
-    };
+    //$scope.popoverLabel = '';
+    //$scope.popoverid = '';
+    //$scope.commentTextarea = '';
+    //var matchedLabel = [];
+    //$scope.openPopover = function (popoverId) {
+    //    matchedLabel = $scope.popoverLabels.find(function (item) {
+    //        return item.id === popoverId;
+    //    });
+    //    $scope.pp.id = matchedLabel.id;
+    //    $scope.popoverid = matchedLabel.id;
+    //    if (matchedLabel) {
+    //        $scope.popoverLabel = matchedLabel.labelText;
+    //        $scope.commentTextarea = matchedLabel.comment;
+    //    }
+    //};
 
-    $scope.submit = function () {
-        if ($scope.pp.id !== '' && $scope.pp.comment !== '') {
-            $scope.addJson();
-        }
-    };
+    //$scope.submit = function () {
+    //    if ($scope.pp.id !== '' && $scope.pp.comment !== '') {
+    //        $scope.addJson();
+    //    }
+    //};
 
-    $scope.closePopover = function () {
-        if ($scope.popoverid === matchedLabel.id) {
-            delete $scope.popoverLabels;
-        }
-    };
+    //$scope.closePopover = function () {
+    //    if ($scope.popoverid === matchedLabel.id) {
+    //        delete $scope.popoverLabels;
+    //    }
+    //};
 
     $scope.userGroup = [];
     $scope.fetchUserGroup = function () {
