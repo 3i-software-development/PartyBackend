@@ -2,6 +2,16 @@
     font-weight: bold;
 }
 
+.ck-editor__main {
+    max-height: 320px;
+    overflow: auto;
+}
+
+#editorjs {
+    width: 100%;
+    max-height: 320px;
+    overflow: auto;
+}
 
 .scroll_content_custom {
     top: 80px;
