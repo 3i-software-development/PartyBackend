@@ -449,7 +449,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             guide: "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
         },
         {
-            id: "Relation",
+            id: "Relationship",
             guide: "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
         },
         {

@@ -1,4 +1,4 @@
-<style>
+<!-- <style>
     .table-wrapper {
         max-width: 100%;
         overflow-x: auto;
@@ -28,13 +28,13 @@
         <div class="col-md-6" style="padding-left: 15px;">
             <div class="form-group row">
                 <div class="col-md-4 pr-0">
-                    <i class="fa fa-user" id="Relationship" ng-click="openPopover('Relationship');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                    <i class="fa fa-user" id="relationship" ng-click="openPopover('relationship');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
                     <label class="displayInfo control-label require custom-title-code-bold">Quan hệ</label>
                 </div>
                 <div class="col-md-8" style="display: flex;">
                     <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
-                        <i class="fa fa-info-circle icon-clickable" id="MenberFamilyName" title="Popover Header" popover-placement="bottom-left"
-                        uib-popover="Họ tên của bạn là: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                        <i class="fa fa-info-circle icon-clickable" id="relationship" title="Popover Header" popover-placement="bottom-left"
+                        uib-popover="Quan hệ của người thân là: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.Relation" type="text" ng-change="filterRelation()" placeholder="Quan hệ" />
                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                            ng-model="selectedFamily.Relation"></i>
@@ -101,7 +101,7 @@
     
                 <div class="col-md-8" style="display: flex;">
                     <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
-                        <i class="fa fa-info-circle icon-clickable" id="dangVien" title="Popover Header" popover-placement="bottom-left"
+                        <i class="fa fa-info-circle icon-clickable" id="PoliticalAttitude" title="Popover Header" popover-placement="bottom-left"
                         uib-popover="Đảng viên của bạn là: {{selectedFamily.PoliticalAttitude}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.PoliticalAttitude" type="text" placeholder="Thái độ chính trị" />
                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
@@ -150,9 +150,8 @@
     
                 <div class="col-md-8" style="display: flex;">
                     <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
-                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="VD:Giáo viên">
-    
-                        </i>
+                        <i class="fa fa-info-circle icon-clickable" id="career" title="Popover Header" popover-placement="bottom-left"
+                        uib-popover="Quên quán của người thân là: {{selectedFamily.Job}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.Job" type="text" placeholder="Nghề nghiệp" />
                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                     ng-model="selectedFamily.Job"></i>
@@ -167,8 +166,8 @@
                 </div>
                 <div class="col-md-8" style="display: flex;">
                     <div class=" br24 form-control custom-title-code-bold"  style="white-space:nowrap">
-                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom" data-bs-content="VD:Từ 1978 - 1979: Cán bộ Ban Quản lý kinh tế tỉnh Quảng Nam - Đà Nẵng.">
-                        </i>
+                        <i class="fa fa-info-circle icon-clickable" id="working" title="Popover Header" popover-placement="bottom-left"
+                        uib-popover="Quên quán của người thân là: {{selectedFamily.WorkingProgress}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.WorkingProgress" type="text" placeholder="Quá trình công tác" />
                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                     ng-model="selectedFamily.WorkingProgress"></i>
@@ -240,15 +239,15 @@
                 </div>
             </div>
 </div>
-<script type="text/ng-template" id="popoverTemplate.html">
+<!-- <script type="text/ng-template" id="popoverTemplate.html">
     <div class="custom-popover-content">
         <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
         <i class="fa fa-microphone" voice-recognition style="padding-right: 85px"></i>
         <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
         <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment" popover-placement="bottom" uib-popover="{{matchedItemss[0].comment}}"></textarea>
     </div>
-</script>
+</script> -->
 
 <!-- JavaScript Bootstrap từ CDN -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --> -->

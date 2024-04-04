@@ -955,6 +955,73 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
     };
 });
 
+app.directive("voiceRecognition", function () {
+    return {
+        restrict: "AE",
+        require: "ngModel",
+        link: function (scope, element, attrs, ngModelCtrl) {
+            console.log(ngModelCtrl);
+            if ("webkitSpeechRecognition" in window) {
+                var spokenText = "";
+
+                var recognition = new webkitSpeechRecognition();
+                recognition.lang = "vi-VN";
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.onstart = function () { };
+
+                recognition.onend = function () {
+                    console.log("Spoken text:", spokenText);
+                };
+
+                recognition.onresult = function (event) {
+                    var transcript = event.results[0][0].transcript;
+                    spokenText = transcript;
+                    if (spokenText != "") {
+                        ngModelCtrl.$setViewValue(transcript);
+
+                        ngModelCtrl.$render();
+                        // Cập nhật giá trị trong ng-model
+                        console.log(ngModelCtrl);
+                    }
+                };
+
+                element.on("pointerdown", function (event) {
+                    event.preventDefault();
+                    scope.startRecognition(recognition);
+                    element.css("color", "red");
+                });
+
+                element.on("mouseup", function () {
+                    scope.stopRecognition(recognition);
+                    element.css("color", "");
+                });
+                element.on("pointerout", function (event) {
+                    event.preventDefault();
+                    scope.stopRecognition(recognition);
+                    element.css("color", "");
+                });
+                element.on("contextmenu", function (event) {
+                    event.preventDefault();
+                });
+            }
+
+            scope.startRecognition = function (recognition) {
+                if (recognition) {
+                    recognition.start();
+                }
+            };
+
+            scope.stopRecognition = function (recognition) {
+                if (recognition) {
+                    recognition.stop();
+                }
+            };
+        },
+    };
+});
+
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $http) {
      //Autocomplete
      $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
@@ -1381,7 +1448,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             "labelText": "Tự nhận xét",
         },
         {
-            "id": "Relationship",
+            "id": "relationship",
             "labelText": "Quan hệ",
         },
         {
@@ -1393,7 +1460,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             "labelText": "Năm sinh",
         },
         {
-            "id": "PoliticalAttitude",
+            "id": "politicalAttitude",
             "labelText": "Thái độ chính trị",
         },
         {

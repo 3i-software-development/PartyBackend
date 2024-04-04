@@ -93,39 +93,39 @@
     "guide": "Bạn cần nhập rõ tên của người thân. Ví dụ: 'Trịnh Ngọc Thái'"
   },
   {
-    "id": "BirthYear",
+    "id": "dateOfBirdRelation",
     "guide": "Bạn cần nhập rõ ngày tháng năm sinh, năm mất (nếu có, kèm theo lý do) của người thân. Ví dụ: '16-09-1940 - 20-3-2010 - Mất do tuổi cao sức yếu'"
   },
 
   {
-    "id": "PoliticalAttitude",
+    "id": "politicalAttitude",
     "guide": "Bạn cần nhập rõ thái độ chính trị của người thân. Ví dụ: 'Ủng hộ Cách mạng, trung thành tuyệt đối với lý tưởng mà Đảng đề ra'"
   },
   {
-    "id": "HomeTown",
+    "id": "homeTown",
     "guide": "Bạn cần nhập rõ quê quán của người thân. Ví dụ: 'xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
   },
   {
-    "id": "Residence",
+    "id": "residence",
     "guide": "Bạn cần nhập rõ nơi cứ trú của người thân. Ví dụ: 'Số nhà 56, thôn 8, xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
   },
 
   {
-    "id": "FamilyJob",
+    "id": "career",
     "guide": "Bạn cần nhập chức vụ  của người thân. Ví dụ: 'Giáo Viên'"
   },
   {
-    "id": "WorkingProgress",
+    "id": "working",
     "guide": "Bạn cần nhập chi tiết về quá trình công tác của người thân. Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'"
   },
 
   {
-    "id": "Role",
+    "id": "role",
     "guide": "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
   },
 
   {
-    "id": "Content",
+    "id": "content",
     "guide": "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
   },
   {
@@ -179,11 +179,19 @@
     "guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
   },
   {
+    "id": "startDateAboard",
+    "guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },
+  {
     "id": "To",
     "guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
-    "id": "Contact",
+    "id": "endDateAboard",
+    "guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+  },
+  {
+    "id": "contact",
     "guide": "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
   },
   {
