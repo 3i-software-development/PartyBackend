@@ -5370,8 +5370,8 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
             if (!$rootScope.isAccepted) {
                 return App.toastrError(caption.WFAI_MSG_PLS_ACCEPT_ACT);
             }
-            var data = CKEDITOR.instances['description'].getData();
-            $scope.model.Desc = data;
+            //var data = CKEDITOR.instances['description'].getData();
+            //$scope.model.Desc = data;
 
             $scope.model.StartTime = null;
             $scope.model.EndTime = null;
@@ -6080,16 +6080,16 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
         }
     }
 
-    var editor;
-    function ckEditer() {
-        editor = CKEDITOR.replace('description', {
-            cloudServices_tokenUrl: '/MobileApp/Token',
-            cloudServices_uploadUrl: '/MobileApp/UploadFile',
-            filebrowserBrowseUrl: '',
-            filebrowserUploadUrl: '/MobileApp/Upload',
-            embed_provider: '/uploader/upload.php'
-        });
-    }
+    //var editor;
+    //function ckEditer() {
+    //    editor = CKEDITOR.replace('description', {
+    //        cloudServices_tokenUrl: '/MobileApp/Token',
+    //        cloudServices_uploadUrl: '/MobileApp/UploadFile',
+    //        filebrowserBrowseUrl: '',
+    //        filebrowserUploadUrl: '/MobileApp/Upload',
+    //        embed_provider: '/uploader/upload.php'
+    //    });
+    //}
 
     function displayJSON(canvas) {
         var writer = new draw2d.io.json.Writer();
@@ -6134,7 +6134,7 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
 
     setTimeout(function () {
         loadDate();
-        ckEditer();
+        /*ckEditer();*/
         setModalDraggable('.modal-dialog');
     }, 200);
 
