@@ -179,7 +179,7 @@
     "guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
   },
   {
-    "id": "startDateAboard",
+    "id": "StartDateAboard",
     "guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
   },
   {
@@ -187,15 +187,15 @@
     "guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
-    "id": "endDateAboard",
+    "id": "EndDateAboard",
     "guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
-    "id": "contact",
+    "id": "Contact",
     "guide": "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
   },
   {
-    "id": "whichCountry",
+    "id": "WhichCountry",
     "guide": "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
   },
   {

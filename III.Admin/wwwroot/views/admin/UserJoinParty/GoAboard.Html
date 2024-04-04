@@ -8,7 +8,7 @@
 <div class="form-group row">
     <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
         <div class="col-md-4 pr-0" style="padding-left: 7px;">
-            <i class="fa fa-calendar" id="startDateAboard" ng-click="openPopover('startDateAboard');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+            <i class="fa fa-calendar" id="From" ng-click="openPopover('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label
                 class="displayInfo control-label require custom-title-code-bold">
                 Từ
@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-8" style="display: flex; padding-left: 8px;">
             <div class="br24 form-control custom-title-code-bold">
-                <i class="fa fa-info-circle icon-clickable" id="startDateAboard" title="Popover Header" popover-placement="bottom-left"
+                <i class="fa fa-info-circle icon-clickable" id="From" title="Popover Header" popover-placement="bottom-left"
                 uib-popover="Từ ngày: {{selectedGoAboard.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;"
                     name="CusCode" ng-model="selectedGoAboard.From"
@@ -27,7 +27,7 @@
     </div>
     <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
         <div class="col-md-4 pr-0">
-            <i class="fa fa-calendar" id="endDateAboard" ng-click="openPopover('endDateAboard');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+            <i class="fa fa-calendar" id="To" ng-click="openPopover('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label
                 class="displayInfo control-label require custom-title-code-bold">
                 Đến
@@ -37,8 +37,8 @@
         <div class="col-md-8"
             style="display: flex; padding-right: 8px;">
             <div class="br24 form-control custom-title-code-bold">
-                <i class="fa fa-info-circle icon-clickable" id="startDateAboard" title="Popover Header" popover-placement="bottom-left"
-                uib-popover="Từ ngày: {{selectedGoAboard.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                <i class="fa fa-info-circle icon-clickable" id="To" title="Popover Header" popover-placement="bottom-left"
+                uib-popover="Đến ngày: {{selectedGoAboard.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;"
                     name="CusCode" ng-model="selectedGoAboard.To"
                     type="text" placeholder="Đến ngày" />
@@ -59,7 +59,7 @@
     <div class="col-md-10" style="display: flex;">
         <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
             <i class="fa fa-info-circle icon-clickable" id="contact" title="Popover Header" popover-placement="bottom-left"
-            uib-popover="Từ ngày: {{selectedGoAboard.Contact}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+            uib-popover="Nội dung đi: {{selectedGoAboard.Contact}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
             <input class="displayInfo" style="border: #FFFF;"
                    name="CusCode" ng-model="selectedGoAboard.Contact"
                    type="text" placeholder="Nội dung" />
@@ -70,7 +70,7 @@
 </div>
 <div class="form-group row">
     <div class="col-md-2 pr-0">
-        <i class="fa fa-pencil-square-o" id="country" ng-click="openPopover('country');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+        <i class="fa fa-pencil-square-o" id="WhichCountry" ng-click="openPopover('WhichCountry');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
         <label class="displayInfo control-label require custom-title-code-bold">
             Nước
             nào
@@ -78,8 +78,8 @@
     </div>
     <div class="col-md-10" style="display: flex;">
         <div class="br24 form-control custom-title-code-bold "  style="white-space:nowrap">
-            <i class="fa fa-info-circle icon-clickable" id="country" title="Popover Header" popover-placement="bottom-left"
-            uib-popover="Từ ngày: {{selectedGoAboard.Country}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+            <i class="fa fa-info-circle icon-clickable" id="WhichCountry" title="Popover Header" popover-placement="bottom-left"
+            uib-popover="{{selectedGoAboard.Country}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
             <input class="displayInfo" style="border: #FFFF;"
                    name="CusCode" ng-model="selectedGoAboard.Country" ng-change="filterCountry()"
                    type="text" placeholder="Nước nào" />
@@ -127,15 +127,3 @@
     </table>
 </div>
 </div>
-<script type="text/ng-template" id="popoverTemplate.html">
-    <div class="custom-popover-content">
-        <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
-        <i class="fa fa-microphone" voice-recognition style="padding-right: 85px"></i>
-        <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
-        <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment" popover-placement="bottom" uib-popover="{{matchedItemss[0].comment}}"></textarea>
-    </div>
-</script>
-
-<!-- JavaScript Bootstrap từ CDN -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

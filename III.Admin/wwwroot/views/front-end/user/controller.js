@@ -489,7 +489,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         },
 
         {
-            id: "Content",
+            id: "content",
             guide: "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
         },
         {
