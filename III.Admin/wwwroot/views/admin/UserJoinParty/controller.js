@@ -386,9 +386,6 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider) {
     });
 });
 app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $location, $translate) {
-
-
-
     var vm = $scope;
     $scope.tabnav = 'Section3'; // Initialize tabnav variable
 
@@ -836,26 +833,29 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         }));
     vm.reloadData = reloadData;
     vm.dtInstance = {};
-    setTimeout(function () {
-    }, 200);
-    $("#PostFromDate").datepicker({
-        inline: false,
-        autoclose: true,
-        format: "dd/mm/yyyy",
-        fontAwesome: true,
-    }).on('changeDate', function (selected) {
-        var maxDate = new Date(selected.date.valueOf());
-        $('#PostToDate').datepicker('setStartDate', maxDate);
+    $(document).ready(function() {
+        setTimeout(function() {
+            $("#PostFromDate").datepicker({
+                inline: false,
+                autoclose: true,
+                format: "dd/mm/yyyy",
+                fontAwesome: true,
+            }).on('changeDate', function(selected) {
+                var maxDate = new Date(selected.date.valueOf());
+                $('#PostToDate').datepicker('setStartDate', maxDate);
+            });
+            $("#PostToDate").datepicker({
+                inline: false,
+                autoclose: true,
+                format: "dd/mm/yyyy",
+                fontAwesome: true,
+            }).on('changeDate', function(selected) {
+                var maxDate = new Date(selected.date.valueOf());
+                $('#PostFromDate').datepicker('setEndDate', maxDate);
+            });
+        }, 200);
     });
-    $("#PostToDate").datepicker({
-        inline: false,
-        autoclose: true,
-        format: "dd/mm/yyyy",
-        fontAwesome: true,
-    }).on('changeDate', function (selected) {
-        var maxDate = new Date(selected.date.valueOf());
-        $('#PostFromDate').datepicker('setEndDate', maxDate);
-    });
+    
 });
 
 app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $filter) {
@@ -2334,7 +2334,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             guide: "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
         },
         {
-            id: "whichCountry",
+            id: "WhichCountry",
             guide: "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
         },
         {
@@ -3107,7 +3107,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         console.log("Vào");
     }
     //add
-    $scope.addToFamily = function () {
         $scope.addToFamily = function () {
             $scope.err = false
             if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation == '') {
@@ -3152,7 +3151,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.Relationship.push(model);
             $scope.selectedFamily = {}
         }
-    }
         $scope.addToAward = function () {
             $scope.err = false
             if ($scope.selectedLaudatory.MonthYear == null || $scope.selectedLaudatory.MonthYear == undefined || $scope.selectedLaudatory.MonthYear == '') {

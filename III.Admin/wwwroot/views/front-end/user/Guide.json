@@ -171,7 +171,7 @@
     "guide": "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố, mẹ, ông nội, ông ngoại"
   },
   {
-    "id": "selectedFamily.BirthYear",
+    "id": "BirthYear",
     "guide": "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
   },
   {
