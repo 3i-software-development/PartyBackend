@@ -1343,9 +1343,9 @@
                                                  style="padding-right: 0px;">
                                                 <i class="fa fa-info-circle icon-clickable" id="From"
                                                    popover-placement="bottom-left"
-                                                   uib-popover="{{selectedPersonHistory.From}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="'outsideClick'"></i>
+                                                   uib-popover="{{selectedPersonHistory.Begin}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
-                                                       ng-model="selectedPersonHistory.From" type="text"
+                                                       ng-model="selectedPersonHistory.Begin" type="text"
                                                        placeholder="Từ ngày" />
                                             </div>
                                         </div>
@@ -1362,9 +1362,9 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle icon-clickable" id="To"
                                                    popover-placement="bottom-left"
-                                                   uib-popover="{{selectedPersonHistory.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="'outsideClick'"></i>
+                                                   uib-popover="{{selectedPersonHistory.End}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
-                                                       ng-model="selectedPersonHistory.To" type="text"
+                                                       ng-model="selectedPersonHistory.End" type="text"
                                                        placeholder="Đến ngày" />
                                             </div>
                                         </div>
@@ -1854,15 +1854,15 @@
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="DisciplineReason" title="Popover Header"
                                                popover-placement="bottom-left"
-                                               uib-popover="{{selectedWarningDisciplined.DisciplineReason}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                               uib-popover="{{selectedWarningDisciplined.Reason}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
 
                                             </i>
                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                   ng-model="selectedWarningDisciplined.DisciplineReason" type="text"
+                                                   ng-model="selectedWarningDisciplined.Reason" type="text"
                                                    placeholder="Lý do.. hình thức" />
                                             <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                               ng-model="selectedWarningDisciplined.DisciplineReason"></i>
+                                               ng-model="selectedWarningDisciplined.Reason"></i>
 
                                         </div>
                                     </div>
