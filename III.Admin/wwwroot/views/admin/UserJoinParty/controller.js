@@ -522,6 +522,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         });
         act1.checkHiddenActWf = !actCheck;
     }
+
     $scope.createWfInstance = function (ResumeNumber) {
         $scope.modelWfInst = {
             WorkflowCode: "PARTY_ADMISSION_PROFILE",
@@ -738,11 +739,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
                 }
 
             });
-            // if ($rootScope.WorkflowInstCode!=null&&$rootScope.WorkflowInstCode!=undefined&&$rootScope.WorkflowInstCode!='' 
-            //     && data.WfInstCode === $rootScope.WorkflowInstCode) {
-            //     $(this).closest('table').find('tr').removeClass('active');
-            //     $(row).addClass('active').css('font-size', '16px !impotant');;
-            // }
+            // 
         });
     vm.dtColumns = [];
 
@@ -833,29 +830,27 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         }));
     vm.reloadData = reloadData;
     vm.dtInstance = {};
-    $(document).ready(function() {
         setTimeout(function() {
-            $("#PostFromDate").datepicker({
-                inline: false,
-                autoclose: true,
-                format: "dd/mm/yyyy",
-                fontAwesome: true,
-            }).on('changeDate', function(selected) {
-                var maxDate = new Date(selected.date.valueOf());
-                $('#PostToDate').datepicker('setStartDate', maxDate);
-            });
-            $("#PostToDate").datepicker({
-                inline: false,
-                autoclose: true,
-                format: "dd/mm/yyyy",
-                fontAwesome: true,
-            }).on('changeDate', function(selected) {
-                var maxDate = new Date(selected.date.valueOf());
-                $('#PostFromDate').datepicker('setEndDate', maxDate);
-            });
+            
         }, 200);
-    });
-    
+        $("#PostFromDate").datepicker({
+            inline: false,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            fontAwesome: true,
+        }).on('changeDate', function(selected) {
+            var maxDate = new Date(selected.date.valueOf());
+            $('#PostToDate').datepicker('setStartDate', maxDate);
+        });
+        $("#PostToDate").datepicker({
+            inline: false,
+            autoclose: true,
+            format: "dd/mm/yyyy",
+            fontAwesome: true,
+        }).on('changeDate', function(selected) {
+            var maxDate = new Date(selected.date.valueOf());
+            $('#PostFromDate').datepicker('setEndDate', maxDate);
+        });
 });
 
 app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $filter) {

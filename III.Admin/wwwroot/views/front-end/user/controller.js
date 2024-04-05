@@ -551,7 +551,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             guide: "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
         },
         {
-            id: "whichCountry",
+            id: "WhichCountry",
             guide: "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
         },
         {

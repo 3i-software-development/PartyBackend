@@ -234,7 +234,7 @@ namespace III.Admin.Controllers
                     var actintCodes = JtableWithContent(jTable, null, null, session, listType, 0);
                     fileCodes = actintCodes.Split(';').ToList();
                 }
-                List<string> codes= new List<string>();
+                List<string> codes = new List<string>();
                 if (fileCodes.Count > 0)
                 {
                     codes = _context.EDMSRepoCatFiles.Where(x => fileCodes.Contains(x.FileCode)).Select(x => x.ObjectCode).ToList();
@@ -243,67 +243,62 @@ namespace III.Admin.Controllers
                 var fromDate = !string.IsNullOrEmpty(jTablePara.FromDate) ? DateTime.ParseExact(jTablePara.FromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var toDate = !string.IsNullOrEmpty(jTablePara.ToDate) ? DateTime.ParseExact(jTablePara.ToDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var getYear = DateTime.Now.Year;
-                var query = from a in _context.PartyAdmissionProfiles.Where(x => x.IsDeleted == false)
-                            join b in _context.Users on a.CreatedBy equals b.UserName into b1
-                            from b in b1.DefaultIfEmpty()
-                            join wf in _context.WorkflowInstances.Where(x => x.IsDeleted == false && x.ObjectType == "TEST_JOIN_PARTY")
-                            .Select(wfa => new
-                            {
-                                actCode=_context.ActivityInstances.Where(x => x.IsDeleted == false && wfa.WfInstCode==x.WorkflowCode).Select(a=>a.ActivityInstCode).ToList(),
-                                wfa.WfInstCode,
-                                wfa.ObjectInst,
-                            })
-                            on a.ResumeNumber equals wf.ObjectInst into wf1
-                            from wf in wf1.DefaultIfEmpty()
+                var query = (from a in _context.PartyAdmissionProfiles.Where(x => x.IsDeleted == false)
+                             join b in _context.Users on a.CreatedBy equals b.UserName into b1
+                             from b in b1.DefaultIfEmpty()
+                             join wf in _context.WorkflowInstances.Where(x => x.IsDeleted == false && x.ObjectType == "TEST_JOIN_PARTY")
+                                .Select(wfa => new
+                                {
+                                    actCode = _context.ActivityInstances.Where(x => x.IsDeleted == false && wfa.WfInstCode == x.WorkflowCode).Select(a => a.ActivityInstCode).ToList(),
+                                    wfa.WfInstCode,
+                                    wfa.ObjectInst,
+                                })
+                                on a.ResumeNumber equals wf.ObjectInst into wf1
+                             from wf in wf1.DefaultIfEmpty()
 
-                            where (fromDate == null || (fromDate <= a.Birthday))
-                                   && (toDate == null || (toDate >= a.Birthday))
-                                   && (jTablePara.FromAge == null || (jTablePara.FromAge <= (getYear - a.Birthday.Value.Year))) 
-                                   && (jTablePara.ToAge == null || (jTablePara.ToAge >= (getYear - a.Birthday.Value.Year)))
-                                   && (string.IsNullOrEmpty(jTablePara.Name) || a.CurrentName.ToLower().Contains(jTablePara.Name.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.Status) || a.Status==jTablePara.Status)
-                                   && (string.IsNullOrEmpty(jTablePara.Username) || a.Username.ToLower().Contains(jTablePara.Username.ToLower()) || a.ResumeNumber.ToLower().Contains(jTablePara.Username.ToLower()))
+                             where (fromDate == null || (fromDate <= a.Birthday))
+                                    && (toDate == null || (toDate >= a.Birthday))
+                                    && (jTablePara.FromAge == null || (jTablePara.FromAge <= (getYear - a.Birthday.Value.Year)))
+                                    && (jTablePara.ToAge == null || (jTablePara.ToAge >= (getYear - a.Birthday.Value.Year)))
+                                    && (string.IsNullOrEmpty(jTablePara.Name) || a.CurrentName.ToLower().Contains(jTablePara.Name.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.Status) || a.Status == jTablePara.Status)
+                                    && (string.IsNullOrEmpty(jTablePara.Username) || a.Username.ToLower().Contains(jTablePara.Username.ToLower()) || a.ResumeNumber.ToLower().Contains(jTablePara.Username.ToLower()))
 
-                                   && (string.IsNullOrEmpty(jTablePara.Nation) || a.Nation.ToLower().Contains(jTablePara.Nation.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.Nation) || a.Nation.ToLower().Contains(jTablePara.Nation.ToLower()))
 
-                                   && (string.IsNullOrEmpty(jTablePara.Religion) || a.Religion.ToLower().Contains(jTablePara.Religion.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.ItDegree) || a.ItDegree.ToLower().Contains(jTablePara.ItDegree.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.Job) || a.Job.ToLower().Contains(jTablePara.Job.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.ForeignLanguage) || a.ForeignLanguage.ToLower().Contains(jTablePara.ForeignLanguage.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.UnderPostGraduateEducation) || a.UnderPostGraduateEducation.ToLower().Contains(jTablePara.UnderPostGraduateEducation.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.MinorityLanguages) || a.MinorityLanguages.ToLower().Contains(jTablePara.MinorityLanguages.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.HomeTown) || a.HomeTown.ToLower().Contains(jTablePara.HomeTown.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.JobEducation) || a.JobEducation.ToLower().Contains(jTablePara.JobEducation.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.Degree) || a.Degree.ToLower().Contains(jTablePara.Degree.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.PoliticalTheory) || a.PoliticalTheory.ToLower().Contains(jTablePara.PoliticalTheory.ToLower()))
-                                   && (string.IsNullOrEmpty(jTablePara.GeneralEducation) || a.GeneralEducation.ToLower().Contains(jTablePara.GeneralEducation.ToLower()))
-                                   && (jTablePara.Gender == null || a.Gender==jTablePara.Gender)
-                                   && (string.IsNullOrEmpty(jTablePara.KeyWord)||codes.Count != 0 && wf!=null && wf.actCode.Intersect(codes).Any())
-                            //&& (string.IsNullOrEmpty(jTablePara.Nation) || a.Nation.ToLower().Contains(jTablePara.Nation.ToLower()))
-                            //&& (string.IsNullOrEmpty(jTablePara.Religion) || a.Religion.ToLower().Contains(jTablePara.Religion.ToLower()))
-                            //&& (string.IsNullOrEmpty(jTablePara.JobEducation) || a.JobEducation.ToLower().Contains(jTablePara.JobEducation.ToLower()))
-                            //&& (string.IsNullOrEmpty(jTablePara.Degree) || a.JobEducation.ToLower().Contains(jTablePara.Degree.ToLower()))
-                            select new ModelUserJoinPartyTable
-                            {
-                                Id=a.Id,
-                                CurrentName=a.CurrentName,
-                                UserCode = a.UserCode,
-                                Status = a.Status,
-                                Username = a.Username,
-                                CreatedBy= b!=null ? b.GivenName: "",
-                                ProfileLink = a.ProfileLink,
-                                resumeNumber=a.ResumeNumber,
-                                WfInstCode=wf!=null?wf.WfInstCode:"",
-                                BirthYear = a.Birthday.HasValue ? a.Birthday.Value.Year.ToString() : "",
-                                TemporaryAddress = a.TemporaryAddress,
-                                UnderPostGraduateEducation = a.UnderPostGraduateEducation,
-                                Degree = a.Degree,
-                                GeneralEducation = a.GeneralEducation,
-                                Gender = a.Gender
-                            };
-               
-
-
+                                    && (string.IsNullOrEmpty(jTablePara.Religion) || a.Religion.ToLower().Contains(jTablePara.Religion.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.ItDegree) || a.ItDegree.ToLower().Contains(jTablePara.ItDegree.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.Job) || a.Job.ToLower().Contains(jTablePara.Job.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.ForeignLanguage) || a.ForeignLanguage.ToLower().Contains(jTablePara.ForeignLanguage.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.UnderPostGraduateEducation) || a.UnderPostGraduateEducation.ToLower().Contains(jTablePara.UnderPostGraduateEducation.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.MinorityLanguages) || a.MinorityLanguages.ToLower().Contains(jTablePara.MinorityLanguages.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.HomeTown) || a.HomeTown.ToLower().Contains(jTablePara.HomeTown.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.JobEducation) || a.JobEducation.ToLower().Contains(jTablePara.JobEducation.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.Degree) || a.Degree.ToLower().Contains(jTablePara.Degree.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.PoliticalTheory) || a.PoliticalTheory.ToLower().Contains(jTablePara.PoliticalTheory.ToLower()))
+                                    && (string.IsNullOrEmpty(jTablePara.GeneralEducation) || a.GeneralEducation.ToLower().Contains(jTablePara.GeneralEducation.ToLower()))
+                                    && (jTablePara.Gender == null || a.Gender == jTablePara.Gender)
+                                    && (string.IsNullOrEmpty(jTablePara.KeyWord) || codes.Count != 0 && wf != null && wf.actCode.Intersect(codes).Any())
+                             // Thêm điều kiện sắp xếp giảm dần theo Id
+                             select new ModelUserJoinPartyTable
+                             {
+                                 Id = a.Id,
+                                 CurrentName = a.CurrentName,
+                                 UserCode = a.UserCode,
+                                 Status = a.Status,
+                                 Username = a.Username,
+                                 CreatedBy = b != null ? b.GivenName : "",
+                                 ProfileLink = a.ProfileLink,
+                                 resumeNumber = a.ResumeNumber,
+                                 WfInstCode = wf != null ? wf.WfInstCode : "",
+                                 BirthYear = a.Birthday.HasValue ? a.Birthday.Value.Year.ToString() : "",
+                                 TemporaryAddress = a.TemporaryAddress,
+                                 UnderPostGraduateEducation = a.UnderPostGraduateEducation,
+                                 Degree = a.Degree,
+                                 GeneralEducation = a.GeneralEducation,
+                                 Gender = a.Gender
+                             })
+                             .OrderByDescending(x => x.Id); // Sắp xếp giảm dần theo Id
 
                 int total = _context.PartyAdmissionProfiles.Count();
                 var query_row_number = query.AsEnumerable().Select((x, index) => new
@@ -328,17 +323,18 @@ namespace III.Admin.Controllers
                 int count = query_row_number.Count();
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
 
-                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", 
+                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "UserCode", "Status", "Username",
                     "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender");
                 return Json(jdata);
             }
             catch (Exception err)
             {
-                var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", "CreatedBy", 
+                var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", "CreatedBy",
                     "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender");
                 return Json(jdata);
             }
         }
+
 
         #region search
 
