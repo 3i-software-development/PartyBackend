@@ -6849,7 +6849,7 @@ table.dataTable.no-footer {
       color: #8F969C; }
     .hotnews-top .wrap {
       padding: 0px 20px;
-      border-right: 1px solid #e2e2e2; }
+     /* border-right: 1px solid #e2e2e2;*/ }
     .hotnews-top .list-news {
       padding: 20px 30px; }
       .hotnews-top .list-news .item {
