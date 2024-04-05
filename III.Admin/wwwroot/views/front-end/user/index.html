@@ -312,11 +312,12 @@
 
     @media(max-width:450px) {
         .btn-load-file {
-            margin-top: 30px;
+            margin-top: 30px !important;
+            
         }
 
         .input-upload {
-            width: 340px !important;
+            width: 340px!important ;
         }
 
         .inputFile {
@@ -352,7 +353,7 @@
                             <div class="form-group flex-grow-full"
                                  style="display: flex; justify-content: space-between; width: 100%">
                                 <div class="input-group input-file row" style="">
-                                    <div class="form-control custom-title-code-bold col-md-8"
+                                    <div class=" input-upload form-control custom-title-code-bold col-md-8"
                                          style="border-radius: 24px;background-color: #EEF1F5;">
                                         <input class="form-control inputFile" style="font-size:16px"
                                                placeholder="Chọn tệp" readonly />
@@ -377,7 +378,7 @@
                                     </div>
                                 </div>
                                 <!-- <a class="pr15 fs11 text-underline pull-right" ng-click="chooseFileServer()">Chọn file từ server'</a> -->
-                                <div class="row"
+                                <div class="row  btn-load-file"
                                      style="width:200px;margin-left:20px;display:flex; justify-content: space-around;">
 
                                     <div class="text-center col"
