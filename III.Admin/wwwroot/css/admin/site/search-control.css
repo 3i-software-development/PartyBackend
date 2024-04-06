@@ -14,3 +14,8 @@
 .search-group > .ui-select-container > .ui-select-match > span > .ui-select-placeholder {
     color: brown !important;
 }
+@media (max-width: 450px) {
+    #searchBox .portlet {
+        width: 100vw !important;
+    }
+}

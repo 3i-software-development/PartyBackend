@@ -22,94 +22,102 @@
             width: 30% !important;
         }
     }
+    @media (max-width:600px){
+        .modal-content {
+            width: 95vw !important;
+            transform: translateY(40%) !important;
+        }
+    }
 </style>
-<div class="modal-header">
-    <img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />
-    <i class="fa fa-edit icon-edit "></i>
-    <span class="modal-title" id="modal-title"> {{'ADM_FUNC_CURD_TITLE_EDIT_FUNC' | translate}}</span>
-</div>
-<div class="modal-body pb-0" id="modal-body">
-    <div class="portlet-body form">
-        <form name="editform" class="form-horizontal userFormAreaHeader" method="post" ng-validate="validationOptions">
-            <div class="form-body">
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <i class="fa fa-barcode" aria-hidden="true"></i>
-                        <label class="control-label require custom-title-code-bold">{{'ADM_FUNC_CURD_LBL_FUNC_CODE' | translate}}</label>
+<div class="mobie-func-content">
+    <div class="modal-header">
+        <img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />
+        <i class="fa fa-edit icon-edit "></i>
+        <span class="modal-title" id="modal-title"> {{'ADM_FUNC_CURD_TITLE_EDIT_FUNC' | translate}}</span>
+    </div>
+    <div class="modal-body pb-0" id="modal-body">
+        <div class="portlet-body form">
+            <form name="editform" class="form-horizontal userFormAreaHeader" method="post" ng-validate="validationOptions">
+                <div class="form-body">
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <i class="fa fa-barcode" aria-hidden="true"></i>
+                            <label class="control-label require custom-title-code-bold">{{'ADM_FUNC_CURD_LBL_FUNC_CODE' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control custom-title-code-bold" ng-model="model.FunctionCode" name="FunctionCode" placeholder="{{'ADM_FUNC_CURD_TXT_FUNC_CODE' | translate}}..." readonly />
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control custom-title-code-bold" ng-model="model.FunctionCode" name="FunctionCode" placeholder="{{'ADM_FUNC_CURD_TXT_FUNC_CODE' | translate}}..." readonly/>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            <label class="control-label require custom-title-code-bold">{{'ADM_FUNC_CURD_LBL_FUNC_NAME' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input class="form-control custom-title-code-bold" ng-model="model.Title" name="Title" placeholder="{{'ADM_FUNC_CURD_TXT_FUNC_NAME' | translate}}..." />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <i class="fa fa-info-circle" aria-hidden="true"></i>
-                        <label class="control-label require custom-title-code-bold">{{'ADM_FUNC_CURD_LBL_FUNC_NAME' | translate}}</label>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <i class="fa fa-tree" aria-hidden="true"></i>
+                            <label class="control-label ">{{'ADM_FUNC_CURD_LBL_FUNC_PARENT' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="input-group">
+                                <ui-select tagging ng-model="model.ParentCode" theme="bootstrap">
+                                    <ui-select-match placeholder="{{'ADM_FUNC_CURD_COMBO_FUNC_PARENT' | translate }}...">{{$select.selected.Title}}</ui-select-match>
+                                    <ui-select-choices repeat="x.Code as x in treeData | filter: $select.search">
+                                        <div style="padding-left: {{15 * x.Level}}px">
+                                            <i ng-show="x.HasChild" class="fa fa-folder-open icon-state-warning"></i>
+                                            <i ng-show="!x.HasChild" class="fa fa-folder text-info"></i>
+                                            {{x.Title}}
+                                        </div>
+                                    </ui-select-choices>
+                                </ui-select>
+                                <span class="input-group-btn">
+                                    <button type="button" ng-click="model.ParentCode=''" class="btn btn-default no-shadow" style="">
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-8">
-                        <input class="form-control custom-title-code-bold" ng-model="model.Title" name="Title" placeholder="{{'ADM_FUNC_CURD_TXT_FUNC_NAME' | translate}}..." />
+                    <div class="form-group hidden">
+                        <div class="col-md-1">
+                            <i class="fa fa-bars fa-2x center-icon-popup" aria-hidden="true"></i>
+                        </div>
+                        <label class="control-label col-md-2 require">{{"ADM_FUNC_CURD_LBL_FUNC_ORDER" | translate }}</label>
+                        <div class="col-md-4">
+                            <input type="number" min="0" ng-model="model.Ord" ng-init="model.Ord=0" class="form-control" name="Ord" />
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <i class="fa fa-tree" aria-hidden="true"></i>
-                        <label class="control-label ">{{'ADM_FUNC_CURD_LBL_FUNC_PARENT' | translate}}</label>
-                    </div>
-                    <div class="col-md-8">
-                        <div class="input-group">
-                            <ui-select tagging ng-model="model.ParentCode" theme="bootstrap">
-                                <ui-select-match placeholder="{{'ADM_FUNC_CURD_COMBO_FUNC_PARENT' | translate }}...">{{$select.selected.Title}}</ui-select-match>
-                                <ui-select-choices repeat="x.Code as x in treeData | filter: $select.search">
-                                    <div style="padding-left: {{15 * x.Level}}px">
-                                        <i ng-show="x.HasChild" class="fa fa-folder-open icon-state-warning"></i>
-                                        <i ng-show="!x.HasChild" class="fa fa-folder text-info"></i>
-                                        {{x.Title}}
-                                    </div>
-                                </ui-select-choices>
-                            </ui-select>
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.ParentCode=''" class="btn btn-default no-shadow" style="">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
+                    <div class="form-group">
+                        <div class="col-md-4">
+                            <i class="fa fa-comment" aria-hidden="true"></i>
+                            <label class="control-label ">{{'ADM_FUNC_CURD_LBL_FUNC_DESCRIPTION' | translate}}</label>
+                        </div>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="model.Description" name="Description" placeholder="{{'ADM_FUNC_CURD_TXT_FUNC_DESCRIPTION' | translate}}..." />
                         </div>
                     </div>
                 </div>
-                <div class="form-group hidden">
-                    <div class="col-md-1">
-                        <i class="fa fa-bars fa-2x center-icon-popup" aria-hidden="true"></i>
-                    </div>
-                    <label class="control-label col-md-2 require">{{"ADM_FUNC_CURD_LBL_FUNC_ORDER" | translate }}</label>
-                    <div class="col-md-4">
-                        <input type="number" min="0" ng-model="model.Ord" ng-init="model.Ord=0" class="form-control" name="Ord" />
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-4">
-                        <i class="fa fa-comment" aria-hidden="true"></i>
-                        <label class="control-label ">{{'ADM_FUNC_CURD_LBL_FUNC_DESCRIPTION' | translate}}</label>
-                    </div>
-                    <div class="col-md-8">
-                        <input type="text" class="form-control" ng-model="model.Description" name="Description" placeholder="{{'ADM_FUNC_CURD_TXT_FUNC_DESCRIPTION' | translate}}..." />
-                    </div>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
-<div class="modal-footer">
-    <div class="btn-group actions d-flex pull-right">
-        <div class="text-center pr10">
-            <a class="btn btn-icon-only btn-circle btn-outline red-custom" ng-click="cancel()">
-                <span><i class="fa fa-close"></i></span>
-            </a>
-            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_CANCEL' | translate}}</p>
+            </form>
         </div>
-        <div class="text-center ">
-            <a class="btn btn-icon-only btn-circle btn-outline green-custom" ng-click="submit()" href="javascript:;">
-                <span><i class="fa fa-save"></i></span>
-            </a>
-            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SAVE' | translate}}</p>
+    </div>
+    <div class="modal-footer">
+        <div class="btn-group actions d-flex pull-right">
+            <div class="text-center pr10">
+                <a class="btn btn-icon-only btn-circle btn-outline red-custom" ng-click="cancel()">
+                    <span><i class="fa fa-close"></i></span>
+                </a>
+                <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_CANCEL' | translate}}</p>
+            </div>
+            <div class="text-center ">
+                <a class="btn btn-icon-only btn-circle btn-outline green-custom" ng-click="submit()" href="javascript:;">
+                    <span><i class="fa fa-save"></i></span>
+                </a>
+                <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SAVE' | translate}}</p>
+            </div>
         </div>
     </div>
 </div>

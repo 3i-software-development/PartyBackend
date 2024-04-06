@@ -2,6 +2,16 @@
     font-weight: bold;
 }
 
+.ck-editor__main {
+    max-height: 320px;
+    overflow: auto;
+}
+
+#editorjs {
+    width: 100%;
+    max-height: 320px;
+    overflow: auto;
+}
 
 .scroll_content_custom {
     top: 80px;
@@ -126,6 +136,12 @@ body.modal-open {
 .modal-content {
     border-radius: 4px !important;
     overflow: initial !important;
+}
+
+@media (max-width:600px) {
+    .modal-content {
+        width: 95vw;
+    }
 }
 
 .portlet.light .portlet-body {
@@ -290,6 +306,11 @@ table.dataTable.no-footer {
             font-size: 10px;
         }
 
+@media (max-width:600px) {
+    li .breadcrumb-item {
+        font-size: 20px;
+    }
+}
 /*--------------- menu---------------------*/
 
 .navbar-wrapper {
@@ -2569,4 +2590,33 @@ div.jsoneditor {
 /* Box-shadow special */
 .shadow-bottom {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 10px 10px -10px;
+}
+
+@media (max-width: 991px) {
+    .content-wrapper.padding-right-80,
+    .content-wrapper.padding-right-90 {
+        padding-right: 0px !important;
+    }
+
+    #breadcrumb {
+        padding-left: 10px;
+        margin-top: -20px;
+    }
+
+    .dataTable {
+        max-width: 100%;
+        max-height: fit-content !important;
+        overflow-y: auto;
+    }
+
+    .v-scroll, .table-scrollable {
+        max-height: fit-content !important;
+    }
+}
+
+ol.breadcrumb {
+    overflow: auto;
+    display: flex;
+    margin-bottom: 3rem;
+    white-space: nowrap;
 }

@@ -1,5 +1,6 @@
 ﻿@using Syncfusion.EJ2
 @using ESEIM.Utils
+@using System.Text.Json
 @model ESEIM.Models.AseanDocument;
 @{
     ViewData["Title"] = "Sửa tệp online";
@@ -92,9 +93,14 @@
         var isSuccess = false;
         documenteditor.saveAsBlob('Docx')
             .then(function (exportedDocument) {
-                debugger
+                var fullPathView = @Json.Serialize(Model.FullPathView.Split('/').Length==0?null:Model.FullPathView.Split('/').Last());
                 var formData = new FormData();
-                formData.append('fileUpload', exportedDocument);
+                if (fullPathView == '' || fullPathView == null || fullPathView == undefined) {
+                    formData.append('fileUpload', exportedDocument);
+                }
+                else{
+                    formData.append('fileUpload', exportedDocument, fullPathView);
+                }
                 var url = '/Admin/Docman/Save';
                 var req = new XMLHttpRequest();
                 req.overrideMimeType("application/json");
@@ -106,7 +112,7 @@
                         App.toastrError(rs.Title);
                         if (rs.ID == 0) {
                             setTimeout(function () {
-                                window.top.close();
+                                //window.top.close();
                             }, 3000);
                         }
                     } else {
@@ -120,6 +126,7 @@
                 req.send(formData);
             })
             .catch(function (error) {
+                console.log(error)
                 App.toastrError("Vui lòng xóa các đối tượng đặc biệt trong tệp tin");
             });
         //if (!isSuccess) {

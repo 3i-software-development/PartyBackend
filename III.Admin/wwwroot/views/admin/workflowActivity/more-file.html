@@ -2,9 +2,14 @@
     .message-center{
         top: 12%;
     }
+    .modal-header{
+        background-color: #fff;
+        color:#000000;
+    }
 </style>
-<div class="modal-header">
-    <img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />
+<div class="modal-header" ng-show="IsOpenModal">
+    <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+    </button>
     <i class="fa fa-file" style="padding-top: 7px;"></i>
     <span id="modal-title" style="font-weight: bold;">{{'Danh sách tệp tin' | translate}}</span>
 </div>
@@ -22,7 +27,11 @@
                 <tbody>
                     <tr class="" ng-repeat="x in lstFile">
                         <td class="text-center ">{{$index + 1}}</td>
-                        <td class=""><a ng-click="viewFile(x.Id, x.FileTypePhysic, x.CloudFileId)">{{x.FileName}}</a></td>
+                        <td class="">
+                            <i ng-style="{'color': x.iconColor, 'font-size': '15px'}" class="{{x.iconClass}}" aria-hidden="true"></i>
+                            <a ng-click="viewFile(x.Id, x.FileTypePhysic, x.CloudFileId)">
+                                {{x.FileName}}
+                            </a></td>
                         <td class="text-center">{{x.ActName}}</td>
                     </tr>
                 </tbody>

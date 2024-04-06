@@ -1,4 +1,21 @@
 ﻿<style>
+    @media(max-width:450px)
+    {
+        .text-center {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+    
+            .text-center a i {
+                font-size: 15px; 
+            }
+    
+            .text-center p {
+                font-size:5px;
+                margin-top: 30px; 
+                margin-bottom: 15px; 
+            }
+    }
     #contentMainRepository {
         overflow-x: hidden;
         overflow-y: visible;
@@ -80,6 +97,29 @@
         .btn.btn-outline.green:hover {
             background-color: #fff;
         }
+    @media(max-width:450px)
+    {
+        
+
+        .text-center {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+            .text-center a i {
+                font-size: 15px;
+            }
+
+            .text-center p {
+                font-size: 5px;
+                margin-top: 3px;
+                margin-bottom: 15px;
+            }
+        
+
+      
+       
+    }
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
 <div class="btn-group pt10 actions d-flex pull-right" style="margin-top: -55px;">
@@ -271,7 +311,8 @@
             </div>
         </div>
     </div>
-</div>    
+</div>   
+<br /> 
     <div class="row pr-2">
         <div class="col-lg-5 pt15">
             <div class="fs11"><label class="mColor">{{'EDMSR_LBL_TOTAL_FILE' | translate}}</label> <b>{{totalFile}}</b>.   <label class="mColor">{{'EDMSR_LBL_TOTAL_CAPICITY' | translate}}</label>: <b>{{totalSize}}</b></div>
@@ -337,265 +378,3 @@
         }, 1000);
 
     </script>
-
-    <!--<style>
-        #contentMainRepository {
-            max-height: 410px;
-            overflow-x: hidden;
-            overflow-y: visible;
-            height: 410px;
-            border-bottom: 1px solid #ccc;
-        }
-
-        .dataTables_wrapper .table-scrollable {
-            border: 1px solid #e7ecf1 !important;
-        }
-
-        .tree-header {
-            height: 34px;
-        }
-
-        .repository {
-            margin: -10px -5px 0 0;
-        }
-    </style>
-    <div class="table-toolbar">
-        <div class="row">
-            <div class="col-md-6 ">
-                <h1 class="bold mb-0">{{'EDMSR_TITLE_EDMS_FILE' | translate}}</h1>
-                <ul class="breadcrumb-title">
-                    <li>
-                        <i class="fa fa-home"></i>
-                        <a href="#">{{'EDMSR_LINK_HOME' | translate}}</a>
-                        <span>&gt;</span>
-                    </li>
-                    <li>
-                        <div>{{'EDMSR_TITLE_EDMS_FILE' | translate}}</div>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-md-6 ">
-                <div class="btn-group pt10 actions d-flex pull-right ">
-                    <div class="text-center pr10  btnSearch">
-                        <a class="btn btn-icon-only btn-circle btn-outline purple-custom ">
-                            <span><i class="fa fa-search"></i></span>
-                        </a>
-                        <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
-                    </div>
-                    <div class="text-center pr10">
-                        <a class="btn btn-icon-only btn-circle btn-outline green-custom" ng-click="addFile()">
-                            <span><i class="fa fa-upload"></i></span>
-                        </a>
-                        <p class="text-underline fs9 mb5 pt3">{{'EDMSR_BTN_UPLOAD_FILE' | translate}}</p>
-                    </div>
-                    <div class="text-center">
-                        <a class="btn btn-icon-only btn-circle btn-outline green-type1-custom" ng-click="fileManage()">
-                            <span><i class="fas fa-store-alt"></i></span>
-                        </a>
-                        <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_REPOSITORY' | translate}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="portlet light bordered input-search mt5 p10 hidden">
-            <div class="portlet-body">
-                <div class="row">
-                    <div class="col-md-12" style="height:20px">
-                        <img style="margin-top:5px !important; margin-right:5px !important" class="pull-right h28 w28 close-input-search" role="button" title="Đóng" src="/images/default/close.png" />
-                    </div>
-                    <div class="col-md-2">
-                        <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_FROM_DATE'| translate}}</label>
-                        <div class="input-group">
-                            <input type="text" autocomplete="off" class="form-control" placeholder="{{'EDMSR_CURD_TXT_SEARCH_FROM_DATE'| translate}}..." ng-model="model.FromDate" id="FromTo">
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.FromDate='';" class="btn btn-default no-shadow start-date">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_TO_DATE' | translate}}</label>
-                        <div class='input-group '>
-                            <input type='text' autocomplete="off" class="form-control " ng-model="model.ToDate" placeholder="{{'EDMSR_CURD_TXT_SEARCH_TO_DATE' | translate}}..." id='DateTo' />
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.ToDate='';" class="btn btn-default no-shadow end-date">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-    <<<<<<< .mine                    <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_CONTRACT' | translate}}</label>
-    =======                    <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_CONTRACT' | translate}}</label>
-    >>>>>>> .theirs                    <div class="input-group">
-                            <ui-select tagging ng-model="model.ContractCode" theme="bootstrap">
-    <<<<<<< .mine                            <ui-select-match placeholder="{{'EDMSR_CURD_COMBO_SEARCH_CONTRACT' | translate}}">{{$select.selected.ContractCode}}</ui-select-match>
-    =======                            <ui-select-match placeholder="{{'EDMSR_COMBO_CONTRACT' | translate}}">{{$select.selected.ContractCode}}</ui-select-match>
-    >>>>>>> .theirs                            <ui-select-choices repeat="x.ContractCode as x in contracts | filter: $select.search">
-                                    {{x.ContractCode}}
-                                </ui-select-choices>
-                            </ui-select>
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.ContractCode=''" class="btn btn-default no-shadow">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-    <<<<<<< .mine                    <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_CUSTOMER' | translate}}</label>
-    =======                    <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_CUSTOMER'| translate}}</label>
-    >>>>>>> .theirs                    <div class="input-group">
-                            <ui-select tagging ng-model="model.CustomerCode" theme="bootstrap">
-    <<<<<<< .mine                            <ui-select-match placeholder="{{'EDMSR_CURD_COMBO_SEARCH_CUSTOMER' | translate}}">{{$select.selected.CustomerCode}}</ui-select-match>
-    =======                            <ui-select-match placeholder="{{'EDMSR_COMBO_CUSTOMER'| translate}}">{{$select.selected.CustomerCode}}</ui-select-match>
-    >>>>>>> .theirs                            <ui-select-choices repeat="x.CustomerCode as x in customers | filter: $select.search">
-                                    {{x.CustomerCode}}
-                                </ui-select-choices>
-                            </ui-select>
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.CustomerCode=''" class="btn btn-default no-shadow">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-    <<<<<<< .mine                    <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_SUPPLIER' | translate}}</label>
-    =======                    <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SUPPLIER'| translate}}</label>
-    >>>>>>> .theirs                    <div class="input-group">
-                            <ui-select tagging ng-model="model.SupplierCode" theme="bootstrap">
-    <<<<<<< .mine                            <ui-select-match placeholder="{{'EDMSR_CURD_COMBO_SEARCH_SUPPLIER' | translate}}">{{$select.selected.SupplierCode}}</ui-select-match>
-    =======                            <ui-select-match placeholder="{{'EDMSR_COMBO_SUPPLIER'| translate}}">{{$select.selected.SupplierCode}}</ui-select-match>
-    >>>>>>> .theirs                            <ui-select-choices repeat="x.SupplierCode as x in suppliers | filter: $select.search">
-                                    {{x.SupplierCode}}
-                                </ui-select-choices>
-                            </ui-select>
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.SupplierCode=''" class="btn btn-default no-shadow">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-    <<<<<<< .mine                    <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_PROJECT' | translate}}</label>
-    =======                    <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_PROJECT'| translate}}</label>
-    >>>>>>> .theirs                    <div class="input-group">
-                            <ui-select tagging ng-model="model.ProjectCode" theme="bootstrap">
-    <<<<<<< .mine                            <ui-select-match placeholder="{{'EDMSR_CURD_COMBO_SEARCH_PROJECT' | translate}}">{{$select.selected.ProjectCode}}</ui-select-match>
-    =======                            <ui-select-match placeholder="{{'EDMSR_COMBO_PROJECT'| translate}}">{{$select.selected.ProjectCode}}</ui-select-match>
-    >>>>>>> .theirs                            <ui-select-choices repeat="x.ProjectCode as x in projects | filter: $select.search">
-                                    {{x.ProjectCode}}
-                                </ui-select-choices>
-                            </ui-select>
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.ProjectCode=''" class="btn btn-default no-shadow">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_FILE_NAME'| translate}}</label>
-                        <div class="input-group">
-                            <input ng-model="model.Name" class="form-control" type="text" placeholder="{{'EDMSR_CURD_TXT_SEARCH_FILE_NAME'| translate}}..." ng-keydown="($event.keyCode == 13) && search()" />
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.Name=''" class="btn btn-default no-shadow">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_TYPE' | translate}}</label>
-                        <div class="input-group">
-                            <ui-select tagging ng-model="model.FileType" theme="bootstrap">
-                                <ui-select-match placeholder="{{'EDMSR_CURD_TXT_SEARCH_TYPE' | translate}}">{{$select.selected.Name}}</ui-select-match>
-                                <ui-select-choices repeat="x.Code as x in FileType | filter: $select.search">
-                                    <i ng-show="x.Code==1" class="far fa-image"></i>
-                                    <i ng-show="x.Code==2" class="far fa-file-word"></i>
-                                    <i ng-show="x.Code==3" class="fa fa-file-excel-o"></i>
-                                    <i ng-show="x.Code==4" class="fa fa-file-powerpoint-o"></i>
-                                    <i ng-show="x.Code==5" class="fa fa-file-pdf-o"></i>
-                                    <i ng-show="x.Code==6" class="fa fa-file-text-o"></i>
-                                    {{x.Name}}
-                                </ui-select-choices>
-                            </ui-select>
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.FileType=''" class="btn btn-default no-shadow">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_CONTENT' | translate}}</label>
-                        <div class="input-group">
-                            <input ng-model="model.Content" class="form-control" type="text" placeholder="{{'EDMSR_CURD_TXT_SEARCH_CONTENT' | translate}}..." ng-keydown="($event.keyCode == 13) && search()" />
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.Content=''" class="btn btn-default no-shadow">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <label class="fw600 text-underline">{{'EDMSR_CURD_LBL_SEARCH_TAG' | translate}}</label>
-                        <div class="input-group">
-                            <input ng-model="model.Tags" class="form-control" type="text" placeholder="{{'EDMSR_CURD_TXT_SEARCH_TAG' | translate}}..." ng-keydown="($event.keyCode == 13) && search()" />
-                            <span class="input-group-btn">
-                                <button type="button" ng-click="model.Tags=''" class="btn btn-default no-shadow">
-                                    <span class="glyphicon glyphicon-remove"></span>
-                                </button>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 ">
-                        <div class="btn-group pt10 actions d-flex">
-                            <div class="pr10 text-center">
-                                <a class="btn btn-icon-only btn-circle btn-outline purple-custom" ng-click="search()">
-                                    <span><i class="fa fa-search"></i></span>
-                                </a>
-                                <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="panel panel-default boder-table br-none no-boxshadow">
-                <div class="panel-heading tree-header">
-                 <h4 class="panel-title pull-left bold">{{'EDMSR_LBL_TREEVIEW_HEADER' | translate}}</h4>
-                 <h4 class="panel-title pull-left bold">{{'EDMSR_TITLE_DOCUMENT_CATEGORY' | translate}}</h4>
-                   <div class="actions pull-right repository">
-                        <a class="btn btn-circle btn-icon-only btn-default no-boxshadow" title="{{'EDMSR_TITLE_ADD_REPOSITORY' | translate}}" ng-click="addCategory()">
-                            <i class="fa fa-plus"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default no-boxshadow" title="{{'EDMSR_TITLE_EDIT_REPOSITORY' | translate}}" ng-click="editCategory()">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                        <a class="btn btn-circle btn-icon-only btn-default no-boxshadow" title="{{'EDMSR_TITLE_DELETE_REPOSITORY' | translate}}" ng-click="deleteCategory()">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="panel-body scroller-sm-fade" id="contentMainRepository">
-                    <div id="treeDiv" tree="treeInstance" js-tree="treeConfig" should-apply="ac()" ng-model="treeData" tree-events-obj="treeEvents"></div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7">
-            <table class="table dataTable table-hover table-striped"
-                   datatable
-                   dt-options="dtOptions"
-                   dt-columns="dtColumns"
-                   dt-instance="dtInstance"
-                   id="tblData"></table>
-        </div>
-    </div>-->

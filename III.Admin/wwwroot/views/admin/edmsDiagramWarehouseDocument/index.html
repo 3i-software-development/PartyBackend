@@ -271,14 +271,68 @@
         margin-right: 7px;
         border: none;
     }
+
+    @media (max-width:600px){
+        #c.lower-canvas {
+            width: 100vw!important;
+            height: 100vh!important;
+        }
+        .menu-top {
+            flex-direction: column !important;
+            background-color: transparent !important;
+            border: none !important;
+            box-shadow:none!important;
+        }
+        .menu2{
+            left:-105px!important;
+            bottom:250px!important;
+           
+        }
+        .full-text span{
+            display:none!important;
+        }
+        .json_div{
+            right:0px!important;
+
+        }
+        .create-box{
+            height:45px!important;
+        }
+    }
+    @media (max-width:800px){
+        .portlet{
+            display:none!important;
+        }
+        .btn-show{
+            display:block!important;
+        }
+    }
+    @media (min-width:801px){
+        .portlet-mobile{
+            display:none!important;
+        }
+    }
+    #portlet-mobile{
+        position:absolute!important;
+        z-index:999999;
+        background-color:white!important;
+    }
 </style>
 
 <div class="table-toolbar">
+    <div class="col-md-1 flex-basis-100 btn-show" ng-show="showBtn" style="display:none;">
+        <div class="text-center pull-left pt20" style="margin-top: -10px;" ng-click="toggleMobilePortlet()">
+            <a class="fs30">
+                <span class="fas fa-search"></span>
+            </a>
+            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
+        </div>
+    </div>
     <div class="portlet light bordered input-search mt5 p10">
         <div class="portlet-body">
             <div class="row d-flex pt5" style="background-color:white">
                 <div class="col-md-12 pl-0 flex-grow-full d-flex">
-                    <div class="col-md-3 pl-0 flex-grow-full">
+                    <div class="col-md-3  flex-grow-full">
                         <div class="form-group">
                             <label class="fw600 text-underline">{{'EDMSWM_CURD_LBL_LIST_WAREHOUSE' | translate}}</label>
                             <div class="input-group br24">
@@ -433,6 +487,172 @@
             </div>
         </div>
     </div>
+    <!--START MOBILE-->
+    <div id="portlet-mobile" ng-show="mobilePortletVisible">
+        <button style="position:fixed; right:0;z-index:99999" ng-click="toggleMobileBtn()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="portlet-mobile light bordered input-search mt5 p10">
+            <div class="portlet-body">
+                <div  style="background-color:white">
+                    <div class="col-md-12 pl-0">
+                        <div class="col-md-3 pl-0 flex-grow-full">
+                            <div class="form-group">
+                                <label class="fw600 text-underline">{{'EDMSWM_CURD_LBL_LIST_WAREHOUSE' | translate}}</label>
+                                <div class="input-group br24">
+                                    <ui-select tagging ng-model="model.WhsCode" theme="bootstrap" on-select="changeWareHouse($item)">
+                                        <ui-select-match class="bold" placeholder="Kho hồ sơ"><b class="text-dark">{{$select.selected.Name}}</b></ui-select-match>
+                                        <ui-select-choices repeat="x.Code as x in listWareHouse | filter: $select.search">
+                                            {{x.Name}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="addArea()" class="btn btn-default no-shadow start-date">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pl-0 flex-grow-full">
+                            <div class="d-flex">
+                                <div class="col-md-11 flex-grow-full">
+                                    <div class="form-group">
+                                        <label class="fw600 text-underline">{{'EDMSWM_CURD_LBL_LIST_FLOOR' | translate}}</label>
+                                        <div class="input-group br24">
+                                            <ui-select tagging ng-model="model.FloorCode" theme="bootstrap" on-select="changeFloor($item)">
+                                                <ui-select-match class="bold" placeholder="Tầng"><b class="text-dark">{{$select.selected.Name}}</b></ui-select-match>
+                                                <ui-select-choices repeat="x.Code as x in listFloor | filter: $select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="addFloor()" class="btn no-shadow  btn-default" style="">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-1 flex-basis-100">
+                                    <div class="text-center pull-left pt20" style="margin-top: -10px;" ng-click="search()">
+                                        <a class="fs30">
+                                            <span class="fas fa-link"></span>
+                                        </a>
+                                        <p class="text-underline fs9 mb5 pt3">{{'Neo' | translate}}</p>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="col-md-3 pl-0 flex-grow-full">
+                            <div class="d-flex">
+                                <div class="col-md-11 flex-grow-full">
+                                    <div class="form-group">
+                                        <label class="fw600 text-underline">{{'EDMSWM_CURD_LBL_LIST_LINE' | translate}}</label>
+                                        <div class="input-group br24">
+                                            <ui-select tagging ng-model="model.LineCode" theme="bootstrap" on-select="changeLine($item)">
+                                                <ui-select-match class="bold" placeholder="Dẫy"><b class="text-dark">{{$select.selected.Name}}</b></ui-select-match>
+                                                <ui-select-choices repeat="x.Code as x in listLine | filter: $select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="addLine()" class="btn no-shadow  btn-default" style="">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-1 flex-basis-100">
+                                    <div class="text-center pull-left pt20" style="margin-top: -10px;" ng-click="search()">
+                                        <a class="fs30">
+                                            <span class="fas fa-link"></span>
+                                        </a>
+                                        <p class="text-underline fs9 mb5 pt3">{{'Neo' | translate}}</p>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="col-md-3 pl-0 flex-grow-full">
+                            <div class="d-flex">
+                                <div class="col-md-11 flex-grow-full">
+                                    <div class="form-group">
+                                        <label class="fw600 text-underline">{{'EDMSWM_CURD_LBL_LIST_RACK' | translate}}</label>
+                                        <div class="input-group br24">
+                                            <ui-select tagging ng-model="model.RackCode" theme="bootstrap" on-select="changeRack($item)">
+                                                <ui-select-match class="bold" placeholder="Kệ"><b class="text-dark">{{$select.selected.Name}}</b></ui-select-match>
+                                                <ui-select-choices repeat="x.Code as x in listRack | filter: $select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="addRack()" class="btn no-shadow  btn-default" style="">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-1 flex-basis-100">
+                                    <div class="text-center pull-left pt20" style="margin-top: -10px;" ng-click="search()">
+                                        <a class="fs30">
+                                            <span class="fas fa-link"></span>
+                                        </a>
+                                        <p class="text-underline fs9 mb5 pt3">{{'Neo' | translate}}</p>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                        <div class="col-md-3 pl-0 flex-grow-full">
+                            <div class="d-flex">
+                                <div class="col-md-11 flex-grow-full">
+                                    <div class="form-group">
+                                        <label class="fw600 text-underline">{{'EDMSWM_CURD_LBL_LIST_POSITION' | translate}}</label>
+                                        <div class="input-group br24">
+                                            <ui-select tagging ng-model="model.PositionCode" theme="bootstrap" ng-change="changePosition()">
+                                                <ui-select-match class="bold" placeholder="Vị trí"><b class="text-dark">{{$select.selected.Name}}</b></ui-select-match>
+                                                <ui-select-choices repeat="x.Code as x in listPosition | filter: $select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="addPosition()" class="btn no-shadow  btn-default" style="">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div class="col-md-1 flex-basis-100">
+                                    <div class="text-center pull-left pt20" style="margin-top: -10px;" ng-click="search()">
+                                        <a class="fs30">
+                                            <span class="fas fa-link"></span>
+                                        </a>
+                                        <p class="text-underline fs9 mb5 pt3">{{'Neo' | translate}}</p>
+                                    </div>
+                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-8">
+                        <div class="btn btn-icon-only btn-outline floor bold" ng-class="{'btn-floor':!x.Active,'blue-custom':x.Active}" ng-repeat="x in listFloor" ng-click="chooseFloor(x)">
+                            <span>{{x.Name}}</span>
+                        </div>
+                    </div>-->
+                    <div class="col-md-1 flex-basis-100">
+                        <div class="text-center pull-left pt20" style="margin-top: -10px;" ng-click="drawObject()">
+                            <a class="fs30">
+                                <span class="fas fa-search"></span>
+                            </a>
+                            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <div class="mnw800 pull-right menu2">
         <div class="menu-top menu-2">
             <div class="create-box" ng-click="zoomout()">
@@ -473,11 +693,11 @@
                 </div>
             </div>
             <!--<div class="create-box" ng-click="editArea()" ng-if="floorCode == '' || floorCode == null">
-        <i class="fas fa-pencil"></i>
-        <div class="create-box__hover">
-            {{'EDMSDWC_LBL_EDIT' | translate}}
-        </div>
-    </div>-->
+                <i class="fas fa-pencil"></i>
+                <div class="create-box__hover">
+                    {{'EDMSDWC_LBL_EDIT' | translate}}
+                </div>
+            </div>-->
             <div class="create-box" ng-click="deleteArea()" ng-if="wareHouseCode != '' && wareHouseCode != null && (floorCode == '' || floorCode == null)">
                 <i class="fas fa-trash-alt" style="color: red"></i>
                 <div class="create-box__hover">
@@ -513,7 +733,7 @@
                     Delete
                 </div>
             </div>
-            <div class="create-box" ng-click="showFullText()">
+            <div class="create-box full-text" ng-click="showFullText()">
                 <!--<i class="fas fa-search-plus"></i>-->
                 <input type="checkbox" name="fullText" id="fullText" class="radio_buttons option-input-3 radio" ng-model="isTextFull" ng-click="changeTextFull(isTextFull)">
                 <span>&nbsp;&nbsp;PARTIAL TEXT / FULL TEXT </span>
@@ -548,10 +768,10 @@
         <!--<div class="create-box" ng-click="bringToBack()">-->
         <!--<i class="fas fa-search-plus"></i>-->
         <!--BACK
-        <div class="create-box__hover">
-            {{'EDMSDWC_LBL_BACK' | translate}}
-        </div>
-    </div>-->
+            <div class="create-box__hover">
+                {{'EDMSDWC_LBL_BACK' | translate}}
+            </div>
+        </div>-->
         <div class="create-box" style="width: 75px">
             <div class="input-group br24-nobtn">
                 <ui-select ng-model="fontSize" theme="bootstrap" ng-change="changeFontSize(fontSize)">
@@ -584,16 +804,16 @@
         </div>-->
         <!--<span>&nbsp;&nbsp;BORDER SIZE </span>-->
         <!--<div class="create-box__hover">
-            {{'EDMSDWC_LBL_BORDER_SIZE' | translate}}
+                {{'EDMSDWC_LBL_BORDER_SIZE' | translate}}
+            </div>
         </div>
-    </div>
-    <div class="create-box">
-        <input type="color" ng-model="fontColor" ng-change="changeFontColor(fontColor)">
-        <div class="create-box__hover">
-            {{'EDMSDWC_LBL_BORDER_COLOR' | translate}}
-        </div>
-        <span>&nbsp;&nbsp;BORDER EDIT </span>
-    </div>-->
+        <div class="create-box">
+            <input type="color" ng-model="fontColor" ng-change="changeFontColor(fontColor)">
+            <div class="create-box__hover">
+                {{'EDMSDWC_LBL_BORDER_COLOR' | translate}}
+            </div>
+            <span>&nbsp;&nbsp;BORDER EDIT </span>
+        </div>-->
         <div class="create-box" ng-click="blink()">
             <!--<i class="fas fa-search-plus"></i>-->
             <input type="checkbox" name="fullText" id="fullText" class="radio_buttons option-input-3 radio" ng-model="isObjectBlink" ng-click="changeObjectBlink(isObjectBlink)">

@@ -1,5 +1,5 @@
 ﻿var ctxfolder = "/views/front-end/register";
-var app = angular.module('App_ESEIM', [ "ngRoute" ])
+var app = angular.module('App_ESEIM', [ "ngRoute", 'ui.select'])
 app.factory('dataservice', function ($http) {
     var headers = {
         "Content-Type": "application/json;odata=verbose",
@@ -19,7 +19,11 @@ app.factory('dataservice', function ($http) {
     return {
         Register:function(data,callback){
             $http.post('/UserProfile/Register2',data).then(callback);
-        }
+        },
+        
+        GetGroupUser: function (callback) {
+            $http.get('/UserProfile/GetGroupUser').then(callback);
+        },
     }
 });
 
@@ -43,7 +47,19 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         Gender: true,
         Email: '',
         Password:'',
-        ConfrimPassword:''
+        ConfrimPassword:'',
+        RegisterJoinGroupCode:''
+    }
+    $scope.GroupUsers = []
+    $scope.getGrupUsers = function () {
+        dataservice.GetGroupUser(function (rs) {
+            console.log(rs)
+            $scope.GroupUsers = rs.data;
+        })
+    }
+    $scope.getGrupUsers ()
+    $scope.onItemSelect = function (item) {
+        $scope.model.RegisterJoinGroupCode = item.Code;
     }
     $scope.Gender="Nam"
     $scope.Register=function(){
@@ -68,11 +84,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             Title:``
         }
         var Title=``;
-        if(model.UserName==''||model.UserName==undefined||model.UserName==null){
+        if(!/^\d{12}$/.test(model.UserName)){
             msg.Error=true;
-            $scope.UserNameError=true;
-            Title+=`<p style="font-size:13px;">Tên đăng nhập không được để trống</p></br>`
-        }if(model.GivenName==''||model.GivenName==undefined||model.GivenName==null){
+            $scope.PasswordError=true;  
+            Title+=`<p style="font-size:13px;">CCCD gồm 12 số</p></br>`
+        }
+        if(model.GivenName==''||model.GivenName==undefined||model.GivenName==null){
             msg.Error=true;
             $scope.GivenNameError=true;
             Title+=`<p style="font-size:13px;">Tên người dùng không được để trống</p></br>`
@@ -82,19 +99,39 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.PhoneNumberError=true;
             Title+=`<p style="font-size:13px;">Số điện thoại không được để trống</p></br>`
             
+        }if (!isValidEmail(model.Email)) {
+            msg.Error=true;
+            $scope.EmailError=true;
+            
+            Title+=`<p style="font-size:13px;">Email sai định dạng</p></br>`
         }if(model.Password==''||model.Password==undefined||model.Password==null){
             msg.Error=true;
             $scope.PasswordError=true;  
             Title+=`<p style="font-size:13px;">Mật khẩu không được để trống</p></br>`
 
-        }if(model.ConfrimPassword!=model.Password){            
+        }if(model.Password.length < 8){
+            msg.Error=true;
+            $scope.PasswordError=true;  
+            Title+=`<p style="font-size:13px;">Mật khẩu có ít nhất 8 ký tự</p></br>`
+
+        }
+        if(model.ConfrimPassword!=model.Password){            
             msg.Error=true;
             $scope.ConfrimPasswordError=true;
             
             Title+=`<p style="font-size:13px;">Xác nhận mật khẩu chưa trùng khớp</p></br>`
+        }if(model.RegisterJoinGroupCode==''||model.RegisterJoinGroupCode==undefined||model.RegisterJoinGroupCode==null){
+            msg.Error=true;
+            $scope.RegisterJoinGroupCodeError=true;  
+            Title+=`<p style="font-size:13px;">Mật khẩu không được để trống</p></br>`
         }
         msg.Title=Title
         return msg;
+    }
+    function isValidEmail(email) {
+        // Biểu thức chính quy kiểm tra định dạng email
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
     }
 });
 

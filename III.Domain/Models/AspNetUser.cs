@@ -125,6 +125,8 @@ namespace ESEIM.Models
         public string ShiftList { get; set; }
         public string SignImage { get; set; }
         public string LeadersOfUser { get; set; }
+        [StringLength(256)]
+        public string RegisterJoinGroupCode { get; set; }
     }
     public class AspNetUserCustom
     {

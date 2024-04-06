@@ -73,7 +73,22 @@ html {
         height: 100vh;
     }
 
+.bg {
+    background-image: url(https://danguykcncx.hanoi.gov.vn/wp-content/uploads/2023/06/danguy-logo-header-gif-1.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    width: 800px;
+    height: 85px;
+    position: absolute;
+    margin-left: 700px;
+    margin-top: -80px;
+}
 @media (max-width: 767px) {
+    
+    .breadcrumb-item{
+        font-size:15px !important;
+    }
     html body .content .content-wrapper {
         padding: 1rem;
     }
@@ -83,10 +98,17 @@ html {
     }
 }
 
+    @media (max-width:600px) {
+        #searchBox {
+            left: -5px !important;
+        }
+    }
+
 /*
 * Col 3 layout for detached and general type
 */
 @media (min-width: 992px) {
+
     body .content-right {
         width: calc(100% - 300px);
         float: right;
@@ -492,8 +514,8 @@ footer.footer-dark {
         }
 
     .main-menu.menu-dark {
-        color: #dcdcdc;
-        background: #121f3e;
+        color: #000;
+        background: #fff;
     }
 
         .main-menu.menu-dark .main-menu-header {
@@ -501,17 +523,17 @@ footer.footer-dark {
         }
 
             .main-menu.menu-dark .main-menu-header .menu-search {
-                background: #0b1115;
+                background: #fff;
                 padding: 0.5rem 1rem;
                 color: #c3c3c3;
             }
 
                 .main-menu.menu-dark .main-menu-header .menu-search:focus {
-                    border-color: #020304;
+                    border-color: #fff;
                 }
 
         .main-menu.menu-dark .navigation {
-            background: #121f3e;
+            background: #fff;
         }
 
             .main-menu.menu-dark .navigation .navigation-header_border-top {
@@ -544,7 +566,7 @@ footer.footer-dark {
                     }
 
             .main-menu.menu-dark .navigation li a {
-                color: #a8b6cc;
+                color: #263847;
             }
 
                 .main-menu.menu-dark .navigation li a span.menu-sub-title {
@@ -662,7 +684,7 @@ footer.footer-dark {
 
                         .main-menu.menu-dark .navigation > li ul .open > ul {
                             display: block;
-                            background: #0f161b;
+                            background: #fff;
                         }
 
                             .main-menu.menu-dark .navigation > li ul .open > ul li > a {
@@ -706,11 +728,11 @@ footer.footer-dark {
                         }
 
                 .main-menu.menu-dark .navigation > li > ul {
-                    background: #1D2B36;
+                    background: #fff;
                 }
 
         .main-menu.menu-dark ul.menu-popout {
-            background: #1D2B36;
+            background: #fff;
         }
 
             .main-menu.menu-dark ul.menu-popout li a {
@@ -1029,6 +1051,13 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu-footer .content {
         transition: transform .25s, top .35s, height .35s;
     }
 
+    .menu-hide #menu-mobile {
+        display: none;
+    }
+
+    .menu-open #menu-mobile {
+        display: block;
+    }
     .main-menu {
         transform: translate3d(-240px, 0, 0);
         backface-visibility: hidden;
@@ -1041,6 +1070,9 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu-footer .content {
 }
 
 @media (max-width: 991px) {
+    .bg {
+        display:none;
+    }
     .horizontal-layout.vertical-overlay-menu .main-menu-content {
         padding: 0;
     }
@@ -2766,7 +2798,14 @@ body.vertical-layout.vertical-menu.menu-expanded .main-menu-footer .content {
 .large-margin.ps-container > .ps-scrollbar-y-rail {
     margin: 100px 0;
 }
-
+@media screen and (max-width: 544px) {
+    .sidebar-left {
+        display: none;
+    }
+    .content-wrapper padding-right-90{
+        padding-right:14px;
+    }
+}
 @media screen and (min-width: 0px) {
     head {
         font-family: "xs 0px";

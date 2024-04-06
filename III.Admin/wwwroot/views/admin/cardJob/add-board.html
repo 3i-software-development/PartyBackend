@@ -3,6 +3,15 @@
         border-bottom-right-radius: 4px !important;
         border-top-right-radius: 4px !important;
     }
+    @media (max-width: 600px){
+        .inl, .inr {
+           width: 94vw!important;
+        }
+        .inl {
+            transform:translateX(-27px)!important;
+        }
+      
+    }
 </style>
 <div class="modal-header h-30 no-color" style1="background-color: #f1f1f1">
     <!--<img class="icon-remove" title="Đóng" src="/images/default/close.png" ng-click="cancel()" />-->
@@ -20,7 +29,7 @@
                         <input class="board-title form-control br24" name="BoardName" ng-model="model.BoardName" placeholder="{{'CJ_LBL_BOARD_NAME' | translate}}" autofocus />
                     </div>
                 </div>
-                <div class="col-md-6 pr-3">
+                <div class="col-md-6 pr-3 inr">
                     <div class="form-group br24-nobtn">
                         <label class="control-label">{{'CJ_LBL_BRANCH' | translate}}</label>
                         <ui-select tagging ng-model="model.Branch" theme="bootstrap" on-select="changeSelect('Branch')">
@@ -34,7 +43,7 @@
                         </span>
                     </div>
                 </div>
-                <div class="col-md-6 pl-3">
+                <div class="col-md-6 pl-3 inl">
                     <div class="form-group br24-nobtn">
                         <label class="control-label">{{'CJ_CURD_BTN_DEPARTMENT' | translate}}</label>
                         <ui-select tagging ng-model="model.Department" theme="bootstrap" on-select="changeSelect('Department')">

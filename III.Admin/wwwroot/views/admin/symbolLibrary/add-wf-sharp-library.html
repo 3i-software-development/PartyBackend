@@ -33,6 +33,16 @@
     .fa.fa-plus-circle.icon-insert{
         color:black
     }
+    @media (max-width:600px){
+     .title-json{
+         margin-left:15px;
+     }
+     .ShowImage{
+         width:65vw;
+         margin-left:16px;
+     }
+    
+    }
 </style>
 <div class="modal-header">
     <button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
@@ -56,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 pl-0">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <div class="col-md-12">
                                 <i class="fa fa-info-circle"></i>
@@ -67,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-3 pl-0">
+                    <div class="col-md-3">
                         <div class="form-group" ng-class="{'has-error' : errorType}">
                             <div class="col-md-12 pr-5">
                                 <i class="fa fa-info-circle"></i>
@@ -101,7 +111,7 @@
                     </div>
                     <div class="col-md-3 pr-3">
                         <div class="form-group">
-                            <div class="col-md-6 pl-0">
+                            <div class="col-md-6 pl-0 title-json">
                                 <i class="fa fa-info-circle"></i>
                                 <label class="control-label bold">{{'SYB_CURD_OBJECT_SHOW'|translate}}</label>
                             </div>

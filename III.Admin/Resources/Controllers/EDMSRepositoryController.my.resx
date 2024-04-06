@@ -1113,4 +1113,10 @@
   <data name="EDMSR_CURL_BL_PACK_IN" xml:space="preserve">
     <value>ထုပ်ပိုး</value>
   </data>
+  <data name="EDMSR_TAB_FILE_HARD_ADDRESS" xml:space="preserve">
+    <value>ခက်သောဖိုင်လိပ်စာ</value>
+  </data>
+  <data name="EDMSR_TAB_FILE_HARD_CODE" xml:space="preserve">
+    <value>Hard ဖိုင်ကုဒ်</value>
+  </data>
 </root>

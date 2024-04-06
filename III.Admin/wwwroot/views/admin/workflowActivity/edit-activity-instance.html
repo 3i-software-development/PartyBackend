@@ -354,7 +354,7 @@
                 <div class="form-body pt-0 pl-0 pr-0">
                     
                     <div class="row">
-                        <div class="col-xl-6 col-lg-12 pl5 pr-0" style="">
+                        <div class="col-xl-6 col-lg-12" style="">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label class="control-label require fw600">{{'WFAI_CRUD_ACT_NAME' | translate}}</label>
@@ -366,7 +366,7 @@
                             </div>
                         </div>
     
-                        <div class="col-xl-5 pl5 col-lg-10">
+                        <div class="col-xl-5 col-lg-10">
                             <div class="form-group" ng-class="{'has-error' : errorStatus}">
                                 <div class="col-md-12">
                                     <label ng-class="{'blink-act' : blink.Status}" class="control-label require fw600">{{'WFAI_CRUD_STATUS' | translate}}</label>
@@ -385,37 +385,13 @@
                                         {{'WFAI_VALIDATE_STATUS' | translate}}
                                     </span>
                                 </div>
-                                <span class="fs12 text-success pull-right pr-2" ng-click="viewLogStatus()">{{'WFAI_BTN_LOG' | translate}} ...</span>
+                                <span class="fs12 text-success pull-right" ng-click="viewLogStatus()">{{'WFAI_BTN_LOG' | translate}} ...</span>
                             </div>
                         </div>
     
-                        <!--<div class="col-lg-4 pl-0 pr-0 pt5 width-checkbox" style="width: 18%;">
-                            <div class="pull-left pt5">
-                                <div class="input-group d-flex pl-0 pr-0" style="padding: 12px; padding-bottom: 0px; margin-top: 5px;">
-                                    <div class="d-flex pl-0 pt5" style="margin-left: 5px;">
-                                        <span ng-repeat="x in activity">
-                                            <label class="mt-checkbox mt-checkbox-outline act-user fs12 p5" style="display:inline" ng-class="{'text-success chkbox-zero':x.Value==0,'text-success chkbox-diff-zero':x.Value==1,'text-danger chkbox-diff-zero':x.Value==2}">
-                                                <input ng-show="x.Value != 0" type="checkbox" ng-disabled="x.Value==0" ng-model="x.IsCheck" ng-change="updateActivity(x.Value, x.IsCheck)" /> <br />
-                                                <i ng-show="x.Value != 0" class="text-center nowrap ml10" style="font-style:normal;">{{x.Name}}</i><br />
-                                                <span ng-show="x.Value != 0" style="background-color: white; padding:12px; margin-top: -5px;"></span>
-                                            </label>
-                                        </span>
-                                    </div>
-                                    <div class="pr-0 pl5" style="padding-top: 22px;">
-                                        <a class="control-label fs12 fw700 text-primary text-underline pt20" ng-click="showLogActivity()">...</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>-->
-    
-                        <div class="col-xl-1 col-lg-2 pl-0 pr-0 mt25 pull-right" style="width: 7%;">
+                        <div class="col-xl-1 col-lg-2">
                             <div class="btn-group actions d-flex" style="width: 100%;">
-                                <!--<div class="text-center pl-0 pr-0" style="width: 100%;">
-                                    <a ng-click="submit()" class="btn btn-icon-only btn-outline" style="border: 1px solid #000;">
-                                        <span><i class="fa fa-save black"></i></span>
-                                    </a>
-                                    <p class="text-underline fs9 mb5 pt3"> {{'COM_BTN_SAVE' | translate}}</p>
-                                </div>-->
+                                
                                 <div class="text-center pl-0 pr-0 mt10" style="width: 100%;" ng-click="submit()">
                                     <a class1="btn btn-icon-only p-0 fs25" style1="color:cornflowerblue">
                                         <span><i class="fa-solid fa-plus fs25"></i></span>
@@ -426,7 +402,7 @@
                         </div>
                     </div>
                     <div class="row" ng-show="isAll">
-                        <div class="col-xl-4 col-md-12 pl5">
+                        <div class="col-xl-4 col-md-12">
                             <div class="col-md-5">
                                 <div class="form-group">
                                     <div class="col-md-12 pl-0">
@@ -605,8 +581,7 @@
                                 <div class="col-xl-3 col-lg-4 col-md-6 pl-0 pr-0 h-100" ng-repeat="x in listAttrGroupOfWf">
                                     <div class="text-center ml-3">
                                         <!--markGroup == x.Code-->
-                                        <img ng-click="loadAttrData(x.Code)" src="../../../images/workflowActivity/icon-data-orange.png" style="width: 40px; border-radius: 50%;box-shadow: 2px 2px 3px #b57706;" />
-                                        <p class="text-underline fs12 mb5 pt3">{{x.Name}} <span class="bold text-danger">({{x.Count}})</span></p>
+                                        <p class="text-underline fs12 mb5 pt3" ng-click="loadAttrData(x.Code)">{{x.Name}} <span class="bold text-danger">({{x.Count}})</span></p>
                                     </div>
                                 </div>
                             </div>

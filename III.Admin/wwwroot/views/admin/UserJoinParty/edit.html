@@ -21,7 +21,7 @@
         border: 1px solid #000;
     }
 
-    .breadcrumb>li {
+    .breadcrumb > li {
         font-size: 16px;
         font-weight: 700;
         color: black;
@@ -32,8 +32,8 @@
         color: white;
     }
 
-    .tab .nav-tabs li.active>div,
-    .tab .nav-tabs>li.active>div:focus {
+    .tab .nav-tabs li.active > div,
+    .tab .nav-tabs > li.active > div:focus {
         border: none;
         color: purple;
         background: white;
@@ -56,11 +56,11 @@
         border-bottom-width: 0px !important;
     }
 
-    .tab .nav-tabs li {
-        border-right: 1px solid #ddd;
-    }
+        .tab .nav-tabs li {
+            border-right: 1px solid #ddd;
+        }
 
-    /*.tab .nav-tabs li:last-child {
+            /*.tab .nav-tabs li:last-child {
                 border-right: 0px solid #ddd;
             }
 
@@ -68,15 +68,15 @@
                 border-left: 1px solid #ddd;
             }*/
 
-    .tab .nav-tabs li div {
-        color: black;
-        background: white;
-        border-radius: 0;
-        margin-right: -1px;
-        padding: 5.5px 20px;
-        /*border-bottom: 1px solid #d3d3d3;*/
-        font-weight: 600;
-    }
+            .tab .nav-tabs li div {
+                color: black;
+                background: white;
+                border-radius: 0;
+                margin-right: -1px;
+                padding: 5.5px 20px;
+                /*border-bottom: 1px solid #d3d3d3;*/
+                font-weight: 600;
+            }
 
     .nav-tabs li:first-child div {
         border-radius: 5px 0 0 0px;
@@ -146,45 +146,187 @@
         overflow-y: hidden;
     }
 
-    .nav-tabs li {
-        flex: 0 0 auto;
-        /* Không co giãn các tab */
+        .nav-tabs li {
+            flex: 0 0 auto;
+            /* Không co giãn các tab */
+        }
+
+    .w4 {
+        width: 33%;
     }
+
+    .d-flex {
+        width: 100%;
+        display: flex;
+    }
+
+    .ui-select-toggle {
+        align-items: center;
+        display: flex;
+        font-weight: bold;
+        font-size: 12px !important;
+    }
+
+        .ui-select-toggle .caret {
+            right: 2px !important;
+        }
+
+    .ui-select-bootstrap div,
+    .ui-select-bootstrap span,
+    .ui-select-bootstrap input,
+    .ui-select-bootstrap .btn-default-focus,
+    .ui-select-choices {
+        height: 24.5px;
+        border: none;
+        outline: none;
+        box-shadow: none;
+        font-size: 15px;
+    }
+
+    .ui-select-bootstrap .ui-select-choices-row.active > a {
+        color: #000;
+        text-wrap: nowrap;
+    }
+
+    .ui-select-bootstrap > .ui-select-choices {
+        width: auto;
+    }
+
+    .popover-inner{
+        width: 250px;
+    }
+
+    .close-icon:hover {
+        color: red; /* Chuyển màu thành đỏ khi hover vào */
+        cursor: pointer; /* Biến con trỏ thành hình bàn tay khi hover vào */
+    }
+    /*Style for switch*/
+    .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 50px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+    .autocomplete-list {
+        position: relative;
+        z-index: 2;
+        background-color: #F5F5F5;
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .autocomplete-list li {
+            cursor: pointer;
+            padding: 5px;
+            border: none;
+        }
+
+            .autocomplete-list li:hover {
+                background-color: #f0f0f0;
+            }
 </style>
 <div class="portlet-body form row" style="margin-top: 15px">
+    <!--<input type="button" ng-click="addJson()" value="add">-->
     <div class="col-lg-12" method="post">
         <div class="col-md-3 mb-10">
             <div class="input-group br24">
                 <input class="form-control inputFile" placeholder="Chọn tệp" readonly />
                 <span class="input-group-btn">
                     <button type="button" onclick="$(this).parent().find('input[type=file]').click();"
-                        class="btn btn-default no-shadow end-date">
+                            class="btn btn-default no-shadow end-date">
                         <span class="">Chọn tệp</span>
                     </button>
                     <input class="form-control hidden input-custom" id="FileItem" custom-on-change="FileItem"
-                        name="FileItem"
-                        onchange="$('.inputFile').val($(this).val().split('\\').pop()); angular.element(this).scope().fileNameChanged(this)"
-                        type="file">
+                           name="FileItem"
+                           onchange="$('.inputFile').val($(this).val().split('\\').pop()); angular.element(this).scope().fileNameChanged(this)"
+                           type="file">
                 </span>
             </div>
         </div>
         <div class="col-md-3 mb-10">
             <div class="text-center pull-right">
-                <a href="" ng-click="uploadFile()">
+                <a href="" ng-click="SaveJson ? uploadJsonFile() : uploadFile()">
                     <i class="fa fa-download" aria-hidden="true"></i>
-                    <span style="font-size:16px; font-weight: 500;">Load dữ liệu</span>
+                    <span style="font-size:16px; font-weight: 500;">{{ SaveJson ? 'Load dữ liệu JSON' : 'Load dữ liệu' }}</span>
                 </a>
             </div>
         </div>
+
+        <div class="col-md-3 mb-10">
+            <label style="font-size:16px; font-weight: 500;">
+                {{ SaveJson ? 'Lưu dữ liệu vào file Json' : 'Lưu dữ liệu vào Database' }}
+            </label>
+        <label class="switch">
+            <input type="checkbox" ng-model="SaveJson">
+            <span style="height: 32px; width: 60px;" class="slider round"></span>
+          </label>
+          
+        </div>
+       
         <!-- trạng thái -->
-        <div class="col-md-6">
+        <div class="col-md-3">
             <div style="display:flex;float:right">
                 <div ng-click="submitPartyAdmissionProfile()">
                     <i class="fa fa-floppy-o fs-1" style="font-size: 35px; padding-top: 10px;"></i>
                 </div>
             </div>
         </div>
-        
+
 
         <div class="tab-content pt10" style="display: none;">
             <div role="tabpanel" class="tab-pane fade in active" id="Word">
@@ -192,77 +334,103 @@
                     </textarea>
             </div>
         </div>
+        <div>
         <form class="col-md-12"
-            style="border: 0px solid #e7ecf1 !important;box-shadow: 0 2px 3px 2px rgb(0 0 0 / 3%) !important;">
+              style="border: 0px solid #e7ecf1 !important;box-shadow: 0 2px 3px 2px rgb(0 0 0 / 3%) !important;">
             <div class="row mt-action-5">
                 <div class="ml-15">
                     <div class="row mt-15" style="padding-left: 15px; font-size: 12px;">
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-user"></i>
-                                    <label class="control-label require custom-title-code-bold displayInfo">Họ và
-                                        tên</label>
+                                    <!-- Icon user -->
+                                    <i class="fa fa-user" id="currentName" ng-click="openPopover('currentName');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+
+                                    <!-- Label Họ và tên -->
+                                    <label class="control-label require custom-title-code-bold displayInfo" for="inputName">Họ và tên</label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ: 'Nguyễn Quang Huy'">
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="currentName" title="Popover Header" popover-placement="bottom-left"
+                                            uib-popover="Họ tên của bạn là: {{infUser.LastName}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
 
-                                        </i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.LastName"
-                                            type="text" placeholder="Họ và tên" />
+                                        <input class="displayInfo speechInput" name="CusCode"
+                                               ng-model="infUser.LastName" type="text" placeholder="Họ và tên"
+                                               ng-required="true">
+
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LastName"></i>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-calendar-o"></i>
-                                    <label class=" displayInfo control-label require custom-title-code-bold">Ngày
-                                        sinh</label>
+                                    <i class="fa fa-calendar icon-clickable" id="dateOfBird" ng-click="openPopover('dateOfBird')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class=" displayInfo control-label require custom-title-code-bold">
+                                        Ngày
+                                        sinh
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ:'05-11-1998'">
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="dateOfBird" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Ngày sinh của bạn là: {{infUser.Birthday}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"> 
 
                                         </i>
                                         <input class="displayInfo" name="CusCode" ng-model="infUser.Birthday"
-                                            type="text" placeholder="Ngày sinh" />
+                                               type="text" placeholder="Ngày sinh" ng-required="true">
                                     </div>
 
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-venus-mars"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Giới
-                                        tính</label>
+                                    <i class="fa fa-venus-mars icon-clickable" id="gender" ng-click="openPopover('gender')" uib-popover-template="'popoverTemplate.html'" popover-placement="right"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold" popover-trigger="outsideClick">
+                                        Giới
+                                        tính
+                                    </label>
                                 </div>
-                                <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ:'Nam'">
+                                <div class="col-md-8 ">
+                                    <div class="br24 form-control custom-title-code-bold " style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="gender" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Giới tính bạn chọn là: {{infUser.Sex}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
                                         </i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.Sex" type="text"
-                                            placeholder="Giới tính" />
+                                        <input id="tags" class="displayInfo speechInput" name="CusCode"
+                                               ng-model="infUser.Sex" type="text" placeholder="Giới tính"
+                                               ng-required="true" autocomplete="off" ng-change="filterSex()"
+                                               autocomplete-suggestions="suggestion for suggestion in genderSuggestions | filter:$viewValue">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.Sex"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterGender" ng-click="SelectSex(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
-
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fas fa-phone"></i>
-                                    <label class=" displayInfo control-label require custom-title-code-bold">Số điện
-                                        thoại</label>
+                                    <i class="fas fa-phone icon-clickable" id="phone" ng-click="openPopover('phone')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class=" displayInfo control-label require custom-title-code-bold">
+                                        Số điện
+                                        thoại
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ:'0397638979'"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.Phone" type="text"
-                                            placeholder="Số điện thoại" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="phone" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Số điện thoại của bạn là: {{infUser.Phone}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo speechInput" style="border: #FFFF;"
+                                               name="CusCode" ng-model="infUser.Phone" type="text"
+                                               placeholder="Số điện thoại" ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.Phone"></i>
                                     </div>
 
                                 </div>
@@ -270,53 +438,46 @@
 
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-map-marker"></i>
-                                    <label class=" displayInfo control-label require custom-title-code-bold">Nơi
-                                        sinh</label>
+                                    <i class="fa fa-map-marker icon-clickable" id="noiSinh" ng-click="openPopover('noiSinh')" uib-popover-template="'popoverTemplate.html'" popover-placement="right"></i>
+                                    <label class=" displayInfo control-label require custom-title-code-bold" popover-trigger="outsideClick">
+                                        Nơi
+                                        sinh
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Nơi sinh: Tuân Chính, Vĩnh Tường, Vĩnh Phúc"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.PlaceofBirth"
-                                            type="text" placeholder="Nơi sinh" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="noiSinh" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Nơi sinh của bạn là: {{infUser.PlaceofBirth}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                        </i>
+                                        <input class="displayInfo speechInput" style="border: #FFFF;"
+                                               name="CusCode" ng-model="infUser.PlaceofBirth" type="text"
+                                               placeholder="Nơi sinh" ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.PlaceofBirth"></i>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-map-marker"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Quê
-                                        quán</label>
+                                    <i class="fa fa-map-marker icon-clickable" id="queQuan" ng-click="openPopover('queQuan')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Quê
+                                        quán
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Nơi sinh: Tuân Chính, Vĩnh Tường, Vĩnh Phúc"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.HomeTown"
-                                            type="text" placeholder="Nơi sinh" ng-readonly="CustomerId !=''" />
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div class="form-group row">
-                                <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-home"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Địa chỉ
-                                        thường trú</label>
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Địa chỉ thường trú: Tuân Chính, Vĩnh Tường, Vĩnh Phúc"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.Residence"
-                                            type="text" placeholder="Địa chỉ thường trú"
-                                            ng-readonly="CustomerId !=''" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle icon-clickable" id="queQuan" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                        </i>
+                                        <input class="displayInfo speechInput" style="border: #FFFF;"
+                                               name="CusCode" ng-model="infUser.HomeTown" type="text"
+                                               placeholder="Quê quán" ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.HomeTown"></i>
                                     </div>
 
                                 </div>
@@ -324,64 +485,143 @@
 
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-home"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Địa chỉ
-                                        tạm trú</label>
+                                    <i class="fa fa-home icon-clickable" id="diaChiThuongTru" ng-click="openPopover('diaChiThuongTru')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Địa chỉ
+                                        thường trú
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Địa chỉ tạm trú: Tuân Chính, Vĩnh Tường, Vĩnh Phúc"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.TemporaryAddress"
-                                            type="text" placeholder="Địa chỉ tạm trú" ng-readonly="CustomerId !=''" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle icon-clickable" id="diaChiThuongTru" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                        </i>
+                                        <input class="displayInfo speechInput" style="border: #FFFF;"
+                                               name="CusCode" ng-model="infUser.Residence" type="text"
+                                               placeholder="Địa chỉ thường trú" ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.Residence"></i>
                                     </div>
 
                                 </div>
                             </div>
+
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-users"></i>
-                                    <label class=" displayInfo control-label require custom-title-code-bold">Công
-                                        việc hiện tại</label>
+                                    <i class="fa fa-home icon-clickable" id="diaChiTamTru" ng-click="openPopover('diaChiTamTru')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Địa chỉ
+                                        tạm trú
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Công việc hiện tại: Nhân viên công ty 3i"></i>
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="diaChiTamTru" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddress}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                        </i>
+                                        <input class="displayInfo speechInput" style="border: #FFFF;"
+                                               name="CusCode" ng-model="infUser.TemporaryAddress" type="text"
+                                               placeholder="Địa chỉ tạm trú" ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.TemporaryAddress"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0 ">
+                                    <i class="fa fa-users icon-clickable" id="job" ng-click="openPopover('job')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class=" displayInfo control-label require custom-title-code-bold">
+                                        Công
+                                        việc hiện tại
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="job" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Công việc hiện tại của bạn của bạn là: {{infUser.NowEmployee}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                                         <input class="displayInfo" name="CusCode" ng-model="infUser.NowEmployee"
-                                            type="text" placeholder="Công việc hiện tại" />
+                                               type="text" ng-change="filterItems()"
+                                               placeholder="Công việc hiện tại" ng-required="true">
+
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.NowEmployee"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in filteredItems" ng-click="selectItem(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-globe"></i>
-                                    <label class=" displayInfo control-label require custom-title-code-bold">Dân
-                                        tộc</label>
+                                    <i class="fa fa-globe icon-clickable" id="nation" ng-click="openPopover('nation')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class=" displayInfo control-label require custom-title-code-bold">
+                                        Dân
+                                        tộc
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Dân tộc: Kinh"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.Nation" type="text"
-                                            placeholder="Dân tộc" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="nation" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Dân tộc của bạn là: {{infUser.Nation}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"  popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" name="CusCode" ng-model="infUser.Nation"
+                                               ng-change="filterNation()" type="text" placeholder="Dân tộc"
+                                               ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.Nation"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterNation" ng-click="SelectNation(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-plus-square"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Tôn
-                                        giáo</label>
+                                    <i class="fa fa-plus-square icon-clickable" id="religion" ng-click="openPopover('religion')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Tôn
+                                        giáo
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Tôn giáo: Không"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.Religion"
-                                            type="text" placeholder="Tôn giáo" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="religion" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Tôn giáo của bạn là: {{infUser.Religion}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" name="CusCode"
+                                               ng-change="filterItemReligions()" ng-model="infUser.Religion"
+                                               type="text" placeholder="Tôn giáo" ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.Religion"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in filteredItemReligions"
+                                                ng-click="selectItemReligion(item)">{{item}}</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0 ">
+                                    <i class="fa fa-users" id="DGHC" ></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Địa giới hành chính
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                        <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
+                                           title="Popover Header" data-bs-placement="bottom"
+                                           data-bs-content="Ví dụ: 'Hà Nội'"
+                                           style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                                        <choose-position ng-model="infUser.PlaceWorking" provinces="ListProvince" style="width: 100%;"></choose-position>
                                     </div>
                                 </div>
                             </div>
@@ -389,191 +629,321 @@
                         <div class="col-md-6">
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-user"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Họ và
-                                        tên khai sinh</label>
+                                    <i class="fa fa-user icon-clickable" id="firstName" ng-click="openPopover('firstName')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Họ và
+                                        tên khai sinh
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Họ và tên khai sinh: Nguyễn Quang Huy"></i>
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="firstName" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Tên khai sinh của bạn là: {{infUser.FirstName}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                                         <input class="displayInfo" name="CusCode" ng-model="infUser.FirstName"
-                                            type="text" placeholder="Họ và tên khai sinh" />
+                                               type="text" placeholder="Họ và tên khai sinh" ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.FirstName"></i>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Giáo dục
-                                        phổ thông</label>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="generalEducation" ng-click="openPopover('generalEducation')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Giáo dục
+                                        phổ thông
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ:'12/12'"></i>
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="generalEducation"
+                                           title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Giáo dục phổ thông của bạn là: {{infUser.LevelEducation.GeneralEducation}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                                         <input class="displayInfo" name="CusCode"
-                                            ng-model="infUser.LevelEducation.GeneralEducation" type="text"
-                                            placeholder="Giáo dục phổ thông" />
+                                               ng-change="filterGeneralEducation()"
+                                               ng-model="infUser.LevelEducation.GeneralEducation" type="text"
+                                               placeholder="Giáo dục phổ thông" ng-required="true">
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LevelEducation.GeneralEducation"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterGeneralEducation"
+                                                ng-click="SelectGeneralEducation(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Giáo dục
-                                        đại học</label>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="undergraduate" ng-click="openPopover('undergraduate')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Giáo dục
+                                        đại học
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Ví dụ:'Đại học sư pham Hà Nội'"></i>
-                                        <input class="displayInfo" name="CusCode"
-                                            ng-model="infUser.LevelEducation.Undergraduate" type="text"
-                                            placeholder="Giáo dục đại học" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="undergraduate" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Tôt nghiệp đại học tại: {{infUser.LevelEducation.Undergraduate}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-change="filterUndergraduate()"
+                                               ng-model="infUser.LevelEducation.Undergraduate" type="text"
+                                               placeholder="Giáo dục đại học" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LevelEducation.Undergraduate"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterUndergraduate"
+                                                ng-click="SelectUndergraduate(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    <label class=" displayInfo control-label require custom-title-code-bold">Học
-                                        hàm</label>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="rankAcademic" ng-click="openPopover('rankAcademic')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class=" displayInfo control-label  custom-title-code-bold">
+                                        Học
+                                        hàm
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ:'Phó giáo sư'"></i>
-                                        <input class="displayInfo" name="CusCode"
-                                            ng-model="infUser.LevelEducation.RankAcademic" type="text"
-                                            placeholder="Trường tốt nghiệp" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="rankAcademic" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Học hàm của bạn là: {{infUser.LevelEducation.RankAcademic}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-change="filterRankAcademic()"
+                                               ng-model="infUser.LevelEducation.RankAcademic" type="text"
+                                               placeholder="Trường tốt nghiệp" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LevelEducation.RankAcademic"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterRankAcademic"
+                                                ng-click="SelectRankAcademic(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Giáo dục
-                                        nghề nghiệp</label>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="vocationalTraining" ng-click="openPopover('vocationalTraining')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Giáo dục
+                                        nghề nghiệp
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ:'Nghề thợ xây'"></i>
-                                        <input class="displayInfo" name="CusCode"
-                                            ng-model="infUser.LevelEducation.VocationalTraining" type="text"
-                                            placeholder="Giáo dục nghề nghiệp" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="vocationalTraining"
+                                           title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Giáo dục nghề nghiệp của bạn là: {{infUser.LevelEducation.VocationalTraining}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="infUser.LevelEducation.VocationalTraining" type="text"
+                                               placeholder="Giáo dục nghề nghiệp" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LevelEducation.VocationalTraining"></i>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Ngoại
-                                        ngữ</label>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="foreignLanguage" ng-click="openPopover('foreignLanguage')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Ngoại
+                                        ngữ
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ: 'Tiếng Anh'"></i>
-                                        <input class="displayInfo" name="CusCode"
-                                            ng-model="infUser.LevelEducation.ForeignLanguage" type="text"
-                                            placeholder="Ngoại ngữ" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="foreignLanguage" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Ngoại ngữ của bạn là: {{infUser.LevelEducation.ForeignLanguage}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="infUser.LevelEducation.ForeignLanguage" type="text"
+                                               ng-change="filterForeignLanguage()" placeholder="Ngoại ngữ" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LevelEducation.ForeignLanguage"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterForeignLanguage"
+                                                ng-click="SelectForeignLanguage(item)">{{item}}</li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Tiếng
-                                        dân tộc thiểu số</label>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="minorityLanguage" ng-click="openPopover('minorityLanguage')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Tiếng
+                                        dân tộc thiểu số
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ:'Tiếng dân tộc Thái'"></i>
-                                        <input class="displayInfo" name="CusCode"
-                                            ng-model="infUser.LevelEducation.MinorityLanguage" type="text"
-                                            placeholder="Tiếng dân tộc thiểu số" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="minorityLanguage"
+                                           title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Tiếng dân tộc thiểu số của bạn là: {{infUser.LevelEducation.MinorityLanguage}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-change="filterMinorityLanguage()"
+                                               ng-model="infUser.LevelEducation.MinorityLanguage" type="text"
+                                               placeholder="Tiếng dân tộc thiểu số" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LevelEducation.MinorityLanguage"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterMinorityLanguage"
+                                                ng-click="SelectMinorityLanguage(item)">{{item}}</li>
+                                        </ul>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Lý luận
-                                        chính trị</label>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="politicalTheory" ng-click="openPopover('politicalTheory')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Lý luận
+                                        chính trị
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Ví dụ:'Lý luận chính trị trung cấp'"></i>
-                                        <input class="displayInfo" name="CusCode"
-                                            ng-model="infUser.LevelEducation.PoliticalTheory" type="text"
-                                            placeholder="Lý luận chính trị" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="politicalTheory" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Lý luận chính trị của bạn là: {{infUser.LevelEducation.PoliticalTheory}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-change="filterPoliticalTheory()"
+                                               ng-model="infUser.LevelEducation.PoliticalTheory" type="text"
+                                               placeholder="Lý luận chính trị" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LevelEducation.PoliticalTheory"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterPoliticalTheory"
+                                                ng-click="SelectPoliticalTheory(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0">
-                                    <i class="fa fa-graduation-cap"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Tin
-                                        học</label>
+                                    <i class="fa fa-graduation-cap icon-clickable" id="it" ng-click="openPopover('it')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Tin
+                                        học
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Ví dụ:'Chứng chỉ tin học trung cấp'"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="infUser.LevelEducation.It"
-                                            type="text" placeholder="Tin học" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="it" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Tin học của bạn là: {{infUser.LevelEducation.It}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-change="filterIt()" ng-model="infUser.LevelEducation.It"
+                                               type="text" placeholder="Tin học" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="infUser.LevelEducation.It"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterIt" ng-click="SelectIt(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-map-marker"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Nơi
-                                        tạo</label>
+                                    <i class="fa fa-map-marker icon-clickable" id="place" ng-click="openPopover('place')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Nơi
+                                        tạo
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom" data-bs-content="Ví dụ: 'Hà Nội'"></i>
-                                        <input class="displayInfo" name="CusCode" ng-model="PlaceCreatedTime.place"
-                                            type="text" placeholder="Nơi tạo" />
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="place" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Nơi bạn tạo phiếu: {{PlaceCreatedTime.place}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-change="filterplace()" ng-model="PlaceCreatedTime.place"
+                                               type="text" placeholder="Nơi tạo" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="PlaceCreatedTime.place"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in Filterplace" ng-click="Selectplace(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
                                     </div>
 
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-4 pr-0 ">
-                                    <i class="fa fa-pencil-square-o"></i>
-                                    <label class="displayInfo control-label require custom-title-code-bold">Tự nhận
-                                        xét</label>
+                                    <i class="fa fa-pencil-square-o icon-clickable" id="selfComment" ng-click="openPopover('selfComment')" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Tự nhận
+                                        xét
+                                    </label>
                                 </div>
                                 <div class="col-md-8">
-                                    <div class="br24 form-control custom-title-code-bold">
-                                        <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header"
-                                            data-bs-placement="bottom"
-                                            data-bs-content="Ví dụ:'Tôi cảm thấy mình có đủ điều kiện để ra nhập Đảng'"></i>
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle  icon-clickable" id="selfComment" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Tự nhận xét của bạn là: {{SelfComment.context}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                                         <input class="displayInfo" name="CusCode" ng-model="SelfComment.context"
-                                            type="text" placeholder="Tự nhận xét" />
+                                               type="text" placeholder="Tự nhận xét" ng-required="true">
+
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="SelfComment.context"></i>
                                     </div>
 
                                 </div>
                             </div>
+
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0 ">
+                                    <i class="fa fa-users" id="NhomChiBo"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Nhóm chi bộ
+                                    </label>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                        <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
+                                           title="Popover Header" data-bs-placement="bottom"
+                                           data-bs-content="Ví dụ: 'Hà Nội'"
+                                           style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                                        <ui-select ng-model="GroupUser" theme="bootstrap" class="displayInfo"
+                                                   ng-change="onItemSelect($select.selected)"
+                                                   style="border: none; height: 24.5px; display: inline-block;">
+                                            <ui-select-match placeholder="Chọn nhóm chi bộ"
+                                                             style="height:24.5px">{{$select.selected.Title}}</ui-select-match>
+                                            <ui-select-choices repeat="x.Code as x in GroupUsers | filter: $select.search">
+                                                <div>{{x.Title}}</div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                    </div>
+
+                                </div>
+                            </div>
+                           
+
                         </div>
 
                     </div>
                 </div>
             </div>
         </form>
+    </div>
     </div>
 
     <div class="row">
@@ -582,72 +952,1125 @@
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
                         <div href="#1" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Lý lịch gia đình' | translate}}</div>
+                            {{'Lý lịch gia đình' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#2" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Lịch sử bản thân' | translate}}</div>
+                            {{'Lịch sử bản thân' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#3" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Những công tác/chức vụ' | translate}}</div>
+                            {{'Những công tác/chức vụ' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#4" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Đặc điểm lịch sử' | translate}}</div>
+                            {{'Đặc điểm lịch sử' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#5" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Khen thưởng' | translate}}</div>
+                            {{'Khen thưởng' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#6" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Kỷ luật' | translate}}</div>
+                            {{'Kỷ luật' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#7" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Những lớp đào tạo/bồi dưỡng' | translate}}</div>
+                            {{'Những lớp đào tạo/bồi dưỡng' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#8" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Đi nước ngoài' | translate}}</div>
+                            {{'Đi nước ngoài' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#9" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Giới thiệu vào đảng' | translate}}</div>
+                            {{'Giới thiệu vào đảng' | translate}}
+                        </div>
                     </li>
                     <li role="presentation" class="disabled stepNext">
                         <div href="#10" aria-controls="home" role="button" data-toggle="tab" class="ng-binding">
-                            {{'Tệp đính kèm' | translate}}</div>
+                            {{'Tệp đính kèm' | translate}}
+                        </div>
                     </li>
                 </ul>
                 <div class="tab-content" style="padding-right: 25px;">
                     <div role="tabpanel" class="tab-pane fade in active" id="1">
+                        <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
+                            <div ng-click="insertFamily()">
+                                <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+                            </div>
+                        </div>
+                        <div class="" style="padding-left: 20px; font-size: 13px;">
+                            <div class="row">
+                                <div class="col-md-6" style="padding-left: 15px;">
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0">
+                                            <i class="fa fa-user" id="relationship" ng-click="openPopover('relationship');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Quan hệ</label>
+                                        </div>
+                                        <div class="col-md-8" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                                <i class="fa fa-info-circle icon-clickable" id="relationship" title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="Quan hệ: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.Relation" type="text" ng-change="filterRelation()" placeholder="Quan hệ" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.Relation"></i>
+                                                <ul class="autocomplete-list">
+                                                    <li ng-repeat="item in FilterRelation"
+                                                        ng-click="SelectRelation(item)">
+                                                        {{item}}
+                                                    </li>
+                                                </ul>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0">
+                                            <i class="fa fa-user" id="MenberFamilyName" ng-click="openPopover('MenberFamilyName');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Họ và tên</label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                                <i class="fa fa-info-circle icon-clickable" id="MenberFamilyName" title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="Họ tên của bạn là: {{selectedFamily.Name}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                                <input class="displayInfo speechInput" name="CusCode"
+                                                       ng-model="selectedFamily.Name" type="text" placeholder="Họ và tên"
+                                                       ng-required="true">
+
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.Name"></i>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0">
+                                            <i class="fa fa-calendar-o" id="dateOfBirdRelation" ng-click="openPopover('dateOfBirdRelation');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Năm sinh</label>
+                                        </div>
+                                        <div class="col-md-8" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                                <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation" title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="Năm sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.BirthYear" type="text" placeholder="Năm sinh" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0 ">
+                                            <i class="fa fa-user"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Đảng viên</label>
+                                        </div>
+
+                                        <div class="col-md-8" style="display: flex;">
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.PartyMember" type="checkbox" placeholder="" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0 ">
+                                            <i class="fa fa-user" id="politicalAttitude" ng-click="openPopover('politicalAttitude');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Thái độ chính trị</label>
+                                        </div>
+
+                                        <div class="col-md-8" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                                <i class="fa fa-info-circle icon-clickable" id="politicalAttitude" title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="Thái độ chính trị của người thân là: {{selectedFamily.PoliticalAttitude}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.PoliticalAttitude" type="text" placeholder="Thái độ chính trị" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.PoliticalAttitude"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding-left: 15px;">
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0">
+                                            <i class="fa fa-map-marker" id="homeTown" ng-click="openPopover('homeTown');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Quê quán</label>
+                                        </div>
+                                        <div class="col-md-8" style="display: flex; white-space:nowrap">
+                                            <div class="br24 form-control custom-title-code-bold">
+                                                <i class="fa fa-info-circle icon-clickable" id="homeTown" title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="Quên quán của người thân là: {{selectedFamily.HomeTown}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.HomeTown" type="text" placeholder="Quê quán" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.HomeTown"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0 ">
+                                            <i class="fa fa-home" id="residence" ng-click="openPopover('residence');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Nơi cư trú</label>
+                                        </div>
+
+                                        <div class="col-md-8" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                                <i class="fa fa-info-circle icon-clickable" id="residence" title="Popover Header" popover-placement="bottom-left"
+                                                uib-popover="Nơi cư trú của người thân là: {{selectedFamily.Residence}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.Residence" type="text" placeholder="Nơi cư trú" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.Residence"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0 ">
+                                            <i class="fa fa-users" id="career" ng-click="openPopover('career');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Nghề nghiệp</label>
+                                        </div>
+
+                                        <div class="col-md-8" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                                <i class="fa fa-info-circle icon-clickable" id="career" title="Popover Header" popover-placement="bottom-left"
+                                                uib-popover="Nghề nghiệp của người thân là: {{selectedFamily.Job}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                             
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.Job" type="text" placeholder="Nghề nghiệp" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.Job"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0 ">
+                                            <i class="fa fa-user" id="working" ng-click="openPopover('working');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">Quá trình công tác</label>
+                                        </div>
+                                        <div class="col-md-8" style="display: flex;">
+                                            <div class=" br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                                <i class="fa fa-info-circle icon-clickable" id="working" title="Popover Header" popover-placement="bottom-left"
+                                                uib-popover="Quá trình công tác của người thân là: {{selectedFamily.WorkingProgress}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedFamily.WorkingProgress" type="text" placeholder="Quá trình công tác" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.WorkingProgress"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="pull-right">
+                                        <button class="btn" ng-click="addToFamily(x)" style="color:#0dcaf0">
+                                            <i class="fa fa-plus"></i>
+                                            <span>Thêm</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div style="background-color: #fff; border-radius: 5px;">
+                                    <div class="" style="padding-left: 20px; font-size: 13px;">
+                                        <div class="table-wrapper">
+                                            <div class="list-item">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Quan hệ</th>
+                                                            <th>Họ và tên</th>
+                                                            <th>Năm sinh, mất nếu có và lý do</th>
+                                                            <th>Địa chỉ</th>
+
+                                                            <th>Nghề nghiệp</th>
+                                                            <th>Quá trình công tác</th>
+                                                            <th>Thái độ chính trị</th>
+                                                            <th>Đảng viên</th>
+                                                            <th>Xoá bỏ</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
+                                                            <td>
+                                                                {{x.Relation}}
+                                                            </td>
+                                                            <td>{{x.Name}}</td>
+                                                            <td>
+                                                                {{x.BirthYear}}
+
+                                                            </td>
+                                                            <td>
+                                                                <div><span>- Quê quán: {{x.HomeTown}}</span></div>
+                                                                <div><span>- Nơi cư trú: {{x.Residence}}</span></div>
+                                                            </td>
+                                                            <td>{{x.Job}}</td>
+                                                            <td>{{x.WorkingProgress}}</td>
+                                                            <td>{{x.PoliticalAttitude}}</td>
+                                                            <td>{{x.PartyMember == 1?"Có" : "Không"}}</td>
+
+
+                                                            <td>
+                                                                <button class="btn" ng-click="deleteFamily($index)" style="color:red">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="2">
+                        <div class="" style="padding-left: 20px; font-size: 13px;">
+
+                            <div style="display:flex ; justify-content:end;margin:10px">
+                                <div ng-click="submitPersonalHistorys()">
+                                    <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="mt-15" style="padding-left: 15px;">
+                            <div class="form-group row">
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0" style="padding-left: 7px; ">
+                                        <i class="fa fa-calendar" id="From" ng-click="openPopover('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Từ
+                                            ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-left: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold" style="padding-right: 0px;">
+                                            <i class="fa fa-info-circle icon-clickable" id="From" title="Popover Header"
+                                               popover-placement="bottom-left"
+                                               uib-popover="{{selectedPersonHistory.From}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                                
+                                            
+                                            <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Begin" type="text"
+                                                   placeholder="Từ ngày" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 row" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0">
+                                        <i class="fa fa-calendar" id="To" ng-click="openPopover('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Đến
+                                            ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex;padding-right: 0">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="To"
+                                               popover-placement="bottom-left"
+                                               uib-popover="{{selectedPersonHistory.To}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                            
+                                            <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.End" type="text"
+                                                   placeholder="Đến ngày" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">Nội dung</label>
+                                </div>
+                                <div class="col-md-10" style="display: flex; padding-left:5px">
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Nội dung của bạn là: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick">
+                                        </i>
+                                        <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Content" type="text"
+                                               placeholder="Nội dung" />
+                                        <i class="fa fa-microphone pull-right" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedPersonHistory.Content"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button class="btn" ng-click="addToPersonalHistory()" style="">
+                                    <i class="fa fa-plus"></i>
+                                    <span>Thêm</span>
+                                </button>
+                            </div>
+                            <div class="table-wrapper">
+                                <div class="list-item">
+                                    <table>
+                                        <tr>
+                                            <th>Từ ngày</th>
+                                            <th>Đến ngày</th>
+                                            <th>Nội dung</th>
+                                            <th>Xoá bỏ</th>
+                                        </tr>
+                                        <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)">
+                                            <td>{{x.Begin}}</td>
+                                            <td>{{x.End}}</td>
+                                            <td>{{x.Content}}</td>
+                                            <td style="text-align:center">
+                                                <i style="color:red" class="fa fa-trash" ng-click="deletePesonalHistory($index)"></i>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade " id="2">
                         <div ng-include="'../views/admin/UserJoinParty/Family.html'"></div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="2">
-                        <div ng-include="'../views/admin/UserJoinParty/PersonalHistory.html'"></div>
+                        <div class="mt-15" style="padding-left: 15px;">
+                            <div class="form-group row">
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0" style="padding-left: 7px;">
+                                        <i class="fa fa-calendar" id="From" ng-click="openPopover('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Từ
+                                            ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-left: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="From" title="Popover Header" popover-placement="bottom-left"
+                                               uib-popover="Từ ngày: {{selectedGoAboard.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                            <input class="displayInfo" style="border: #FFFF;"
+                                                   name="CusCode" ng-model="selectedGoAboard.From"
+                                                   type="text" placeholder="Từ ngày" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0">
+                                        <i class="fa fa-calendar" id="To" ng-click="openPopover('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Đến
+                                            ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8"
+                                         style="display: flex; padding-right: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="To" title="Popover Header" popover-placement="bottom-left"
+                                               uib-popover="Đến ngày: {{selectedGoAboard.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                            <input class="displayInfo" style="border: #FFFF;"
+                                                   name="CusCode" ng-model="selectedGoAboard.To"
+                                                   type="text" placeholder="Đến ngày" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="contact" ng-click="openPopover('contact');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Nội
+                                        dung
+                                        đi
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle icon-clickable" id="contact" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="nội dung đi: {{selectedGoAboard.Contact}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;"
+                                               name="CusCode" ng-model="selectedGoAboard.Contact"
+                                               type="text" placeholder="Nội dung" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedGoAboard.Contact"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="WhichCountry" ng-click="openPopover('WhichCountry');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Nước
+                                        nào
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold " style="white-space:nowrap">
+                                        <i class="fa fa-info-circle icon-clickable" id="WhichCountry" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Nước nào: {{selectedGoAboard.Country}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;"
+                                               name="CusCode" ng-model="selectedGoAboard.Country" ng-change="filterCountry()"
+                                               type="text" placeholder="Nước nào" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedGoAboard.Country"></i>
+                                        <ul class="autocomplete-list">
+                                            <li ng-repeat="item in FilterCountry" ng-click="SelectCountry(item)">
+                                                {{item}}
+                                            </li>
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button class="btn" ng-click="addToGoAboard()" style="">
+
+                                    <i class="fa fa-plus"></i>
+                                    <span>Thêm</span>
+                                </button>
+                                <!-- <button class="btn" ng-click="updateGoAboard()" style="color:#0dcaf0">
+        <i class="fa fa-plus"></i>
+        <span>Sửa</span>
+        </button> -->
+                            </div>
+                            <div class="list-item">
+                                <table>
+                                    <tr>
+                                        <th>Từ ngày</th>
+                                        <th>Đến ngày</th>
+                                        <th>Nội dung đi</th>
+                                        <th>Đi nước nào</th>
+                                        <th>Xoá bỏ</th>
+                                    </tr>
+                                    <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)">
+                                        <td>{{x.From}}</td>
+                                        <td>{{x.To}}</td>
+                                        <td>{{x.Contact}}</td>
+                                        <td>{{x.Country}}</td>
+                                        <td style="text-align:center">
+                                            <i style="color:red" class="fa fa-trash"
+                                               ng-click="deleteGoAboard($index)"></i>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="3">
-                        <div ng-include="'../views/admin/UserJoinParty/WorkingTracking.html'"></div>
+                        <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
+                            <div ng-click="submitBusinessNDuty()">
+                                <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+                            </div>
+                        </div>
+                        <div class="mt-15" style="padding-left: 15px;">
+                            <div class="form-group row">
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0" style="padding-left: 7px;">
+                                        <i class="fa fa-calendar" id="From" ng-click="openPopover('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Từ
+                                            ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-left: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="From"
+                                               popover-placement="bottom-left"
+                                               uib-popover="{{selectedWorkingTracking.From}}.{{matchedItems[0].guide}}"  popover-trigger="outsideClick">
+
+
+                                            </i>
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                   ng-model="selectedWorkingTracking.From" type="text"
+                                                   placeholder="Từ ngày" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0">
+                                        <i class="fa fa-calendar" id="To" ng-click="openPopover('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Đến
+                                            ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-right: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="To"
+                                               popover-placement="bottom-left"
+                                               uib-popover="{{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}"  popover-trigger="outsideClick">
+
+                                            </i>
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                   ng-model="selectedWorkingTracking.To" type="text"
+                                                   placeholder="Đến ngày" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Nội
+                                        dung
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+
+
+
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="{{selectedWorkingTracking.Work}}.{{matchedItems[0].guide}}"  popover-trigger="outsideClick">
+
+                                        </i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="selectedWorkingTracking.Work" type="text"
+                                               placeholder="Nội dung" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedWorkingTracking.Work"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="role" ng-click="openPopover('role');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Chức
+                                        vụ
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="role" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}" popover-trigger="outsideClick">
+
+                                        </i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedWorkingTracking.Role" type="text" placeholder="Chức vụ" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedWorkingTracking.Role"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button class="btn" ng-click="addToBusinessNDuty()" style="">
+
+                                    <i class="fa fa-plus"></i>
+                                    <span>Thêm</span>
+                                </button>
+                            </div>
+                            <div class="list-item">
+                                <table>
+                                    <tr>
+                                        <th>Từ ngày</th>
+                                        <th>Đến ngày</th>
+                                        <th>Nội dung</th>
+                                        <th>Chức vụ</th>
+                                        <th>Xoá bỏ</th>
+                                    </tr>
+                                    <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
+                                        <td>{{x.From}}</td>
+                                        <td>{{x.To}}</td>
+                                        <td>{{x.Work}}</td>
+                                        <td>{{x.Role}}</td>
+                                        <td style="text-align:center">
+                                            <i style="color:red" class="fa fa-trash" ng-click="deleteWorkingTracking($index)"></i>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="4">
-                        <div ng-include="'../views/admin/UserJoinParty/HistorySpecicalist.html'"></div>
+                        <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
+                            <div ng-click="submitHistorySpecialist()">
+                                <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+                            </div>
+                        </div>
+                        <div class="mt-15" style="padding-left: 15px;">
+                            <div class="form-group row">
+                                <div class="col-md-3 pr-0">
+                                    <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover('MonthYear');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Thời
+                                        gian
+                                    </label>
+                                </div>
+                                <div class="col-md-9" style="display: flex; padding-right: 8px;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="MonthYear" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Thời gian: .{{selectedHistorySpecialist.MonthYear}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="selectedHistorySpecialist.MonthYear" type="text" placeholder="Thời gian" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-3 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Nội
+                                        dung
+                                    </label>
+                                </div>
+                                <div class="col-md-9" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
+                                           popover-placement="bottom-left"
+                                           uib-popover="Nội dung: .{{selectedHistorySpecialist.Content}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="selectedHistorySpecialist.Content" type="text" placeholder="Nội dung" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedHistorySpecialist.Content"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button class="btn" ng-click="addToHistorySpecialist()" style="">
+
+                                    <i class="fa fa-plus"></i>
+                                    <span>Thêm</span>
+                                </button>
+                                <!--<button class="btn" ng-click="updateHistorySpecialist()" style="color:#0dcaf0">
+                <i class="fa fa-plus"></i>
+                <span>Sửa</span>
+            </button>-->
+                            </div>
+                            <div class="list-item">
+                                <table>
+                                    <tr>
+                                        <th>Thời gian</th>
+
+                                        <th>Nội dung</th>
+                                        <th>Xoá bỏ</th>
+                                    </tr>
+                                    <tr ng-repeat="x in HistoricalFeatures" ng-click="selectHistorySpecialist(x)">
+                                        <td>{{x.MonthYear}}</td>
+                                        <td>{{x.Content}}</td>
+
+                                        <td style="text-align:center">
+                                            <i style="color:red" class="fa fa-trash" ng-click="deleteHistorySpecialist($index)"></i>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="5">
-                        <div ng-include="'../views/admin/UserJoinParty/Award.html'"></div>
+                        <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
+                            <div ng-click="submitAward()">
+                                <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+                            </div>
+                        </div>
+                        <div class="mt-15" style="padding-left: 15px;">
+                            <div class="form-group row">
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0" style="padding-left: 7px;">
+                                        <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover('MonthYear');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Ngày, tháng, năm
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-left: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="MonthYear" title="Popover Header" popover-placement="bottom-left"
+                                               uib-popover="Ngày, tháng, năm: {{selectedLaudatory.MonthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                   ng-model="selectedLaudatory.MonthYear" type="text" placeholder="Ngày, tháng, năm" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0">
+                                        <i class="fa fa-calendar" id="GrantOfDecision" ng-click="openPopover('GrantOfDecision');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Cấp
+                                            quyết định
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-right: 8px; ">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="GrantOfDecision" title="Popover Header" popover-placement="bottom-left"
+                                               uib-popover="Cấp quyết định: {{selectedLaudatory.GrantOfDecision}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                   ng-model="selectedLaudatory.GrantOfDecision" type="text" placeholder="Cấp quyết định" />
+                                            <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                               ng-model="selectedLaudatory.GrantOfDecision"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="AwardReason" ng-click="openPopover('AwardReason');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Lý
+                                        do,
+                                        hình thức
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="AwardReason" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Lý do: {{selectedLaudatory.Reason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedLaudatory.Reason"
+                                               type="text" placeholder="Lý do, hình thức" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedLaudatory.Reason"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button class="btn" ng-click="addToAward()" style="">
+
+                                    <i class="fa fa-plus"></i>
+                                    <span>Thêm</span>
+                                </button>
+                                <!-- <button class="btn" ng-click="updateLaudatory()" style="color:#0dcaf0">
+            <i class="fa fa-plus"></i>
+            <span>Sửa</span>
+            </button> -->
+                            </div>
+                            <div class="list-item">
+                                <table>
+                                    <tr>
+                                        <th>Ngày, tháng, năm</th>
+                                        <th>Lý do, hình thức</th>
+                                        <th>Cấp quyết định</th>
+                                        <th>Xoá bỏ</th>
+                                    </tr>
+                                    <tr ng-repeat="x in Laudatory" ng-click="selectLaudatory(x)">
+                                        <td>{{x.MonthYear}}</td>
+                                        <td>{{x.Reason}}</td>
+                                        <td>{{x.GrantOfDecision}}</td>
+                                        <td style="text-align:center">
+                                            <i style="color:red" class="fa fa-trash" ng-click="deleteAward($index)"></i>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="6">
-                        <div ng-include="'../views/admin/UserJoinParty/WarningDisciplined.html'"></div>
+                        <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
+                            <div ng-click="submitDisciplined()">
+                                <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+                            </div>
+                        </div>
+                        <div class="mt-15" style="padding-left: 15px;">
+                            <div class="form-group row">
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0" style="padding-left: 7px;">
+                                        <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover('MonthYear');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Tháng,
+                                            năm
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-left: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="MonthYear" title="Popover Header" popover-placement="bottom-left"
+                                               uib-popover="Tháng, năm: {{selectedWarningDisciplined.MonthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                   ng-model="selectedWarningDisciplined.MonthYear" type="text" placeholder="Tháng, năm" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0">
+                                        <i class="fa fa-calendar" id="GrantOfDecision" ng-click="openPopover('GrantOfDecision');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Cấp
+                                            quyết định
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-right: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="GrantOfDecision" title="Popover Header" popover-placement="bottom-left"
+                                               uib-popover="Cấp quyết định: {{selectedWarningDisciplined.GrantOfDecision}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                   ng-model="selectedWarningDisciplined.GrantOfDecision" type="text"
+                                                   placeholder="Cấp quyết định" />
+
+                                            <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                               ng-model="selectedWarningDisciplined.GrantOfDecision"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="DisciplineReason" ng-click="openPopover('DisciplineReason');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Lý
+                                        do,
+                                        hình thức
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="DisciplineReason" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Từ ngày: {{selectedWarningDisciplined.DisciplineReason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="selectedWarningDisciplined.Reason" type="text" placeholder="Lý do.. hình thức" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedWarningDisciplined.DisciplineReason"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button class="btn" ng-click="addToDisciplined()" style="">
+
+                                    <i class="fa fa-plus"></i>
+                                    <span>Thêm</span>
+                                </button>
+                                <!-- <button class="btn" ng-click="updateWarningDisciplined()" style="color:#0dcaf0">
+
+            <i class="fa fa-plus" ></i>
+            <span>Sửa</span>
+            </button> -->
+                            </div>
+                            <div class="list-item">
+                                <table>
+                                    <tr>
+                                        <th>Tháng, năm</th>
+                                        <th>Lý do, hình thức</th>
+                                        <th>Cấp quyết định</th>
+                                        <th>Xoá bỏ</th>
+                                    </tr>
+                                    <tr ng-repeat="x in Disciplined" ng-click="selectWarningDisciplined(x)">
+                                        <td>{{x.MonthYear}}</td>
+                                        <td>{{x.Reason}}</td>
+                                        <td>{{x.GrantOfDecision}}</td>
+                                        <td style="text-align:center">
+                                            <i style="color:red" class="fa fa-trash" ng-click="deleteWarningDisciplined($index)"></i>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="7">
-                        <div ng-include="'../views/admin/UserJoinParty/TrainingCertificated.html'"></div>
+                        <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
+                            <div ng-click="submitTrainingCertificatedPass()">
+                                <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+                            </div>
+                        </div>
+                        <div class="mt-15" style="padding-left: 15px;">
+                            <div class="form-group row">
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0" style="padding-left: 7px;">
+                                        <i class="fa fa-calendar" id="From" ng-click="openPopover('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Từ
+                                            ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-left: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="From" title="Popover Header" popover-placement="bottom-left"
+                                               uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                   ng-model="selectedTrainingCertificatedPass.From" type="text" placeholder="Từ ngày" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                                    <div class="col-md-4 pr-0">
+                                        <i class="fa fa-calendar" id="To" ng-click="openPopover('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Đến
+                                            ngày
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8" style="display: flex; padding-right: 8px;">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <i class="fa fa-info-circle icon-clickable" id="To" title="Popover Header" popover-placement="bottom-left"
+                                               uib-popover="Đến ngày: {{selectedTrainingCertificatedPass.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                   ng-model="selectedTrainingCertificatedPass.To" type="text" placeholder="Đến ngày" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="SchoolName" ng-click="openPopover('SchoolName');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Tên
+                                        trường
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle icon-clickable" id="SchoolName" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Tên trường: {{selectedTrainingCertificatedPass.SchoolName}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="selectedTrainingCertificatedPass.SchoolName" type="text" placeholder="Tên trường" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedTrainingCertificatedPass.SchoolName"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="Class" ng-click="openPopover('Class');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Ngành
+                                        học hoặc tên lớp học
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle icon-clickable" id="Class" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Ngành học hoặc tên lớp học: {{selectedTrainingCertificatedPass.Class}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="selectedTrainingCertificatedPass.Class" type="text" placeholder="Ngành học" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedTrainingCertificatedPass.Class"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-2 pr-0">
+                                    <i class="fa fa-pencil-square-o" id="Certificate" ng-click="openPopover('Certificate');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label require custom-title-code-bold">
+                                        Văn
+                                        bằng
+                                        chứng chỉ
+                                    </label>
+                                </div>
+                                <div class="col-md-10" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="Certificate" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Văn bằng chứng chỉ: {{selectedTrainingCertificatedPass.Certificate}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="selectedTrainingCertificatedPass.Certificate" type="text"
+                                               placeholder="Văn bằng chứng chỉ" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="selectedTrainingCertificatedPass.Certificate"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button class="btn" ng-click="addToTrainingCertificatedPass()" style="">
+
+                                    <i class="fa fa-plus"></i>
+                                    <span>Thêm</span>
+                                </button>
+                                <!-- <button class="btn" ng-click="updateTrainingCertificatedPass()" style="color:#0dcaf0">
+            <i class="fa fa-plus"></i>
+            <span>Sửa</span>
+            </button> -->
+                            </div>
+                            <div class="list-item">
+                                <table>
+                                    <tr>
+                                        <th>Từ ngày</th>
+                                        <th>Đến ngày</th>
+                                        <th>Tên trường</th>
+                                        <th>Ngành học hoặc tên lớp học</th>
+                                        <th>Văn bằng chứng chỉ</th>
+                                        <th>Xoá bỏ</th>
+                                    </tr>
+                                    <tr ng-repeat="x in PassedTrainingClasses" ng-click="selectTrainingCertificatedPass(x)">
+                                        <td>{{x.From}}</td>
+                                        <td>{{x.To}}</td>
+                                        <td>{{x.SchoolName}}</td>
+                                        <td>{{x.Class}}</td>
+                                        <td>{{x.Certificate}}</td>
+                                        <td style="text-align:center">
+                                            <i style="color:red" class="fa fa-trash" ng-click="deleteTrainingCertificatedPass($index)"></i>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="8">
                         <div ng-include="'../views/admin/UserJoinParty/GoAboard.html'"></div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="9">
-                        <div ng-include="'../views/admin/UserJoinParty/IntroducerOfParty.html'"></div>
+                        <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
+                            <div ng-click="submitIntroducer()">
+                                <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+                            </div>
+                        </div>
+                        <div class="row mt-15" style="padding: 20px;font-size: 13px;">
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0">
+                                    <i class="fa fa-user" id="PersonIntroduced" ng-click="openPopover('PersonIntroduced');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">
+                                        Người giới
+                                        thiệu
+                                    </label>
+                                </div>
+                                <div class="col-md-8" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                                        <i class="fa fa-info-circle icon-clickable" id="PersonIntroduced" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="Người giới thiệu: {{Introducer.PersonIntroduced}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="Introducer.PersonIntroduced" type="text"
+                                               placeholder="Người giới thiệu" />
+                                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                           ng-model="Introducer.PersonIntroduced"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0 ">
+                                    <i class="fa fa-calendar" id="PlaceTimeJoinUnion" ng-click="openPopover('PlaceTimeJoinUnion');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo control-label  custom-title-code-bold">Ngày và nơi vào Đoàn</label>
+                                </div>
+                                <div class="col-md-8" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinUnion" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="{{Introducer.PlaceTimeJoinUnion}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="Introducer.PlaceTimeJoinUnion" type="text"
+                                               placeholder="Ngày và nơi vào Đoàn" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0 ">
+                                    <i class="fa fa-calendar" id="PlaceTimeJoinParty" ng-click="openPopover('PlaceTimeJoinParty');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo  custom-title-code-bold">Ngày và nơi vào Đảng lần thứ nhất</label>
+                                </div>
+                                <div class="col-md-8" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinParty" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="{{Introducer.PlaceTimeJoinParty}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="Introducer.PlaceTimeJoinParty" type="text"
+                                               placeholder="Ngày và nơi vào Đảng lần thứ nhất" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-md-4 pr-0 ">
+                                    <i class="fa fa-calendar" id="PlaceTimeRecognize" ng-click="openPopover('PlaceTimeRecognize');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                                    <label class="displayInfo  custom-title-code-bold">Ngày và nơi công nhận chính thức lần thứ nhất</label>
+                                </div>
+                                <div class="col-md-8" style="display: flex;">
+                                    <div class="br24 form-control custom-title-code-bold">
+                                        <i class="fa fa-info-circle icon-clickable" id="PlaceTimeRecognize" title="Popover Header" popover-placement="bottom-left"
+                                           uib-popover="{{Introducer.PlaceTimeRecognize}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                               ng-model="Introducer.PlaceTimeRecognize" type="text"
+                                               placeholder="Ngày và nơi công nhận chính thức lần thứ nhất" />
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                     <div role="tabpanel" class="tab-pane fade " id="10">
                         <div ng-include="'../views/admin/UserJoinParty/InputFile.html'"></div>
@@ -656,5 +2079,17 @@
             </div>
         </div>
     </div>
-</div>
-</div>
+</div></div>
+
+<script type="text/ng-template" id="popoverTemplate.html">
+    <div class="custom-popover-content">
+        <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
+        <i class="fa fa-microphone" voice-recognition style="padding-right: 85px"></i>
+        <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
+        <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment" popover-placement="bottom" uib-popover="{{matchedItemss[0].comment}}"></textarea>
+    </div>
+</script>
+
+<!-- JavaScript Bootstrap từ CDN -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>

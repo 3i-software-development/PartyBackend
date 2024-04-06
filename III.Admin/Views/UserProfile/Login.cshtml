@@ -1,63 +1,77 @@
 ﻿@using Hot.Models.AccountViewModels
 @{
-    ViewData["Title"] = "Quản lý module khách hàng";
+    ViewData["Title"] = "Đăng nhập";
     Layout = "~/Views/Shared/_LayoutAppLogin.cshtml";
 }
 @model LoginViewModel
 
-                    <div class="ui-header">
-                        <div class="text-center">
-                            <h4 style="color: #333333;font-weight: bold; font-family: Nunito Sans !important;margin-bottom: 60px;font-size: 30px;
+<div class="ui-header">
+    <div class="text-center">
+        <h4 style="color: #333333;font-weight: bold; font-family: Nunito Sans !important;margin-bottom: 60px;font-size: 30px;
                                 line-height: 24px;
                                 font-weight: 600;">
-                                Đăng nhập</h4>
-                         
-                        </div>
-                    </div>
+            Đăng nhập
+        </h4>
+
+    </div>
+</div>
 
 
-                    <div class="segment-form">
-                        <form asp-controller="UserProfile" asp-action="Login" asp-route-returnurl="@ViewData["returnUrl"]" method="post" class="form-horizontal">
-                    <div class="form-group ">
-                        <div class="col-md-12" style="text-align:left">
-                            <i class="fa fa-user icon"></i>
-                            <input asp-for="Username" id="UserName" placeholder="Tài khoản" class="form-control login_textfield" autocomplete="off" />
-                            @*<span asp-validation-for="Username" class="text-danger"></span>*@
-                        </div>
-                    </div>
-                    <div class="form-group mbd1">
-                        <div class="col-md-12" style="text-align:left">
-                            <i class="fa fa-lock icon" ></i>
-                            <input asp-for="Password" id="Password" placeholder="Mật khẩu" class="form-control login_textfield" autocomplete="off" />
-                            <a><i class="fa fa-eye check-icon" id="ShowPassword" aria-hidden="true"></i></a>
-                            <a><i class="fa fa-eye-slash check-icon hidden"  id="HidePassword" aria-hidden="true"></i></a>
-                            @*<span asp-validation-for="Password" class="text-danger"></span>*@
-                        </div>
-                    </div>
-                    <div class="form-group text-center p10">
+<div class="segment-form">
+    <form asp-controller="UserProfile" asp-action="Login" asp-route-returnurl="@ViewData["returnUrl"]" method="post" class="form-horizontal">
+        <div class="form-group ">
+            <div class="col-md-12" style="text-align:left">
+                <i class="fa fa-user icon"></i>
+                <input asp-for="Username" id="UserName" placeholder="Số căn cước" class="form-control login_textfield" />
+                @*<span asp-validation-for="Username" class="text-danger"></span>*@
+            </div>
+        </div>
+        <div class="form-group mbd1">
+            <div class="col-md-12" style="text-align:left">
+                <i class="fa fa-lock icon"></i>
+                <input asp-for="Password" id="Password" placeholder="Mật khẩu" class="form-control login_textfield" />
+                <i class="fa fa-eye check-icon icon" id="ShowPassword" aria-hidden="true"></i>
+                <i class="fa fa-eye-slash check-icon hidden icon" id="HidePassword" aria-hidden="true"></i>
+                @*<span asp-validation-for="Password" class="text-danger"></span>*@
+            </div>
+        </div>
+        <div class="form-group text-center p10">
             <button type="submit" class="btn-register btn btn-secondary btn-block">Đăng nhập</button>
-                    </div>
-                    <div class="form-group" style="display:flex">
-                        <div class="col-md-6 text-center">
-                            <div class="checkbox-default pt0 fsd2 mb10 pull-right">
-                                <input id="checkbox5" type="checkbox" style="">
-                                <label for="checkbox5">
-                                   Nhớ mật khẩu
-                                </label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <a href="/Admin/Account/ForgotPassword" id="forget-password" class="forget-password fsd2">Quên mật khẩu ?</a>
-                        </div>
-                    </div>
-                </form>
-                       
-                    </div>
+        </div>
+        <div class="form-group" style="display:flex">
+            <div class="col-md-6 text-center">
+                <div class="checkbox-default pt0 fsd2 mb10 pull-right">
+                    <input id="checkbox5" type="checkbox" style="">
+                    <label for="checkbox5">
+                        Nhớ mật khẩu
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <a href="/Admin/Account/ForgotPassword" id="forget-password" class="forget-password fsd2">Quên mật khẩu ?</a>
+            </div>
+        </div>
+    </form>
+
+</div>
+<script>
+    document.getElementById("ShowPassword").addEventListener("click", function (event) {
+        event.preventDefault();
+        var passwordInput = document.getElementById("Password");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+        } else {
+            passwordInput.type = "password";
+        }
+        console.log("show")
+    });
+</script>
 
 @section Styles{
+
     <style>
         .container {
-            max-width:660px !important
+            max-width: 660px !important
         }
 
         .fa-user {
@@ -65,6 +79,7 @@
             padding: 12px;
             color: #ccc;
         }
+
         .fixed-bottom {
             position: fixed;
             right: 0;
@@ -72,8 +87,12 @@
             left: 0;
             z-index: 1030;
         }
-        body{
-            min-height: 100vh;
+
+        body {
+            min-height: 140vh;
+            background: url(../../../images/default/bg-party.png);
+            background-size: 100%;
+            background-position-y: center;
         }
     </style>
 }

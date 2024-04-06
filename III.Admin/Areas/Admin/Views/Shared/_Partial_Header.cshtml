@@ -397,6 +397,31 @@
         border-bottom: 6px solid #ff9800 !important;
         font-weight: 700;
     }
+     @@media (max-width: 767px) {
+    .navbar-wrapper {
+        padding-bottom: 0;
+    }
+
+    .navbar-header {
+        height: 60px;
+    }
+
+    .nav-item {
+        margin-left: 0;
+    }
+
+    .nav-link {
+        padding: 10px 20px;
+        margin-top: 5px;
+    }
+
+    .navbar-container {
+        margin-left: 0;
+    }
+
+    .bg {
+        display: none;
+    }
 </style>
 <nav class="header-navbar navbar navbar-with-menu navbar-fixed-top navbar-semi-dark navbar-shadow">
     <div class="navbar-wrapper" style="padding-bottom: 5px; background: #ffffff;">
@@ -424,20 +449,112 @@
                             <i class="icon-home pt10 fs45 brown-color" id="icon-home"></i>
                         </a>*@
                 </li>
-                <!-- Begin mobi home-->
-                <li class="nav-item mobile-menu hidden-md-up float-xs-left"><a class="nav-link nav-menu-main menu-toggle hidden-xs none-hover"><i class="fas fa-home font-large-1"></i></a></li>
-                <li class="nav-item mobile-menu hidden-md-up float-xs-left" style="margin-left: -15px;"><a class="nav-link nav-menu-main  hidden-xs none-hover" id="btnOpenTrelloMobile" href="/Admin/CardJob"><i class="fa fa-trello font-large-1"></i></a></li>
-                <li class="nav-item hidden-md-up float-xs-right"><a data-toggle="collapse" data-target="#navbar-menu" class="nav-link open-navbar-container none-hover"><i class="icon-ellipsis pe-2x icon-icon-rotate-right-right"></i></a></li>
-                <!-- End mobi ...-->
+                  <!-- Begin mobi home-->
+               <div class="row hidden-md-up" >
+                    <div class="col-xs-6">
+                        <li class="nav-item mobile-menu  float-xs-left">
+                            <a class="nav-link nav-menu-main menu-toggle hidden-xs none-hover">
+                                <i class="fas fa-bars" style="color:#43516C; transform: translate(-20px, 10px); font-size: 2rem;"></i>
+                            </a>
+                        </li>
+                    </div>
+                   
+                  
+                    <div class="col-xs-3"  style="top:5px;right:-60px">
+                    <li class="dropdown dropdown-notification nav-item" style="transform:translateX(-20px)">
+                                <a href="#" data-toggle="dropdown" class="nav-link nav-link-label none-hover" style=" transform: translateY(5px);">
+                                    <i class="fa-solid fa-bell fs30 black"></i>
+                                    <span class="tag tag-pill tag-default tag-danger tag-default tag-up" style="right:-14px" id="countAllNotifyNew">@countAll </span></a>
+                                <ul class="dropdown-menu dropdown-menu-media dropdown-menu-right" style="top: 45px;">
+                                    <li class="dropdown-menu-header">
+                                        <h6 class="dropdown-header m-0"><span class="grey darken-2 bold black"><span class="title fs12 black">@Localizer["HEADER_LBL_NOTIFY"]</span><span class="notification-tag tag tag-default tag-danger float-xs-right m-0" id="allNotifyNew">@countAll @Localizer["HEADER_LBL_NEW_NOTIFY"]</span></span></h6>
+                                    </li>
+                                    <li class="list-group scrollable-container">
+                                        <a href="/Admin/CardJob" class="list-group-item">
+                                            <div class="media">
+                                                <div class="media-left valign-middle"><i class="icon-check2 icon-bg-circle bg-green bg-accent-3"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading red darken-1 fs14 bold black"><span class="title fs12 black">@Localizer["HEADER_LBL_CARD"]</span></h6>
+                                                    <p class="font-medium-3 text-muted black" id="countCardWork"><span class="title fs12 black">@Localizer["HEADER_LBL_YOU_HAVE"] @countWork @Localizer["HEADER_LBL_NEW_CARD_JOB"]</span>.</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="/Admin/WorkflowActivity" class="list-group-item">
+                                            <div class="media">
+                                                <div class="media-left valign-middle"><i class="icon-check2 icon-bg-circle bg-green bg-accent-3"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading red darken-1 fs14 bold black"><span class="title fs12 black">@Localizer["Luồng việc"]</span></h6>
+                                                    <p class="font-medium-3 text-muted black" id="countWorkFlow"><span class="title fs12 black">@Localizer["HEADER_LBL_YOU_HAVE"] @countWorkFlow @Localizer[" luồng việc mới"]</span>.</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="/Admin/Project" class="list-group-item">
+                                            <div class="media">
+                                                <div class="media-left valign-middle"><i class="icon-check2 icon-bg-circle bg-green bg-accent-3"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading red darken-1 fs14 bold black"><span class="title fs12 black">@Localizer["HEADER_LBL_PROJECT"]</span></h6>
+                                                    <p class="font-medium-3 text-muted black" id="countProject"><span class="title fs12 black">@Localizer["HEADER_LBL_YOU_HAVE"] @countProject @Localizer["HEADER_LBL_COUNT_PROJECT"]</span>.</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="/Admin/Contract" class="list-group-item">
+                                            <div class="media">
+                                                <div class="media-left valign-middle"><i class="icon-check2 icon-bg-circle bg-green bg-accent-3"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading red darken-1 fs14 bold black"><span class="title fs12 black">@Localizer["HEADER_LBL_CONTRACT_SALE"]</span></h6>
+                                                    <p class="font-medium-3 text-muted black" id="contractSale"><span class="title fs12 black">@Localizer["HEADER_LBL_YOU_HAVE"] @countContract @Localizer["HEADER_LBL_COUNT_CONTRACT_SALE"]</span>.</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="/Admin/ContractPO" class="list-group-item">
+                                            <div class="media">
+                                                <div class="media-left valign-middle"><i class="icon-check2 icon-bg-circle bg-green bg-accent-3"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading red darken-1 fs14 bold black"><span class="title fs12 black">@Localizer["HEADER_LBL_PO"]</span></h6>
+                                                    <p class="font-medium-3 text-muted black" id="contractPO"><span class="title fs12 black">@Localizer["HEADER_LBL_YOU_HAVE"] @countContractPO @Localizer["HEADER_LBL_COUNT_PO"]</span>.</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <a href="/Admin/CMSItem" class="list-group-item">
+                                            <div class="media">
+                                                <div class="media-left valign-middle"><i class="icon-check2 icon-bg-circle bg-green bg-accent-3"></i></div>
+                                                <div class="media-body">
+                                                    <h6 class="media-heading red darken-1 fs14 bold black"><span class="title fs12 black">@Localizer["Tin tức nội bộ"]</span></h6>
+                                                    <p class="font-medium-3 text-muted black" id="cms"><span class="title fs12 black">@Localizer["HEADER_LBL_YOU_HAVE"] @countCms @Localizer["tin"]</span>.</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                    </div>
+                      <div class="col-xs-3" style="top:10px">
+            <li class="dropdown dropdown-user nav-item" style="bottom: -10px;right:-20px">
+                <a href="#" data-toggle="dropdown" style="padding-bottom: 0px; position: relative; display: flex; flex-direction: column; align-items: center;">
+                    <i class="fas fa-user fa-lg" style="color: #337AB7; font-size: 30px; margin-bottom: 5px; padding-bottom:5px"></i>
+                    @*<p class="user-name black bold fs14" style="text-align: center;">@ESEIM.AppContext.UserName</p>*@
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                    <a href="/Admin/AccountLogin" class="dropdown-item"><i class="icon-head"></i> <span class="title fs12 black">@Localizer["HEADER_LBL_INFO_PROFILE"]</span></a>
+                    <a onclick="openPopupConfirmDeleteAccount()" class="dropdown-item"><i class="fas fa-trash-alt fs15"></i> <span class="title fs12 black">Xóa tài khoản</span></a>
+                    <div class="dropdown-divider"></div>
+                    <a href="/Admin/Account/Logout" class="dropdown-item"><i class="icon-power3"></i> <span class="title fs12 black">@Localizer["HEADER_LBL_LOG_OUT"]</span></a>
+                </div>
+            </li>
+                    </div>
+                    
+                    
+                </div>
+                @* end mobile *@
             </ul>
             <!-- Begin logo mobi ...-->
-            <div class="mx-auto order-0 nav-item hidden-md-up">
+            @* <div class="mx-auto order-0 nav-item hidden-md-up">
                 <a class="navbar-brand mx-auto text-white" href="#">
                     <span style="font-family: Stencil">
                         <span style="font-size: 25px; padding-top:5px;">Vatco</span>
                     </span>
                 </a>
-            </div>
+            </div> *@
             <!-- End logo mobi ...-->
         </div>
         <div class="navbar-container container-fluid" style="margin-left: 320px;">
@@ -634,6 +751,7 @@
                 </div>
             </div>
         </div>
+        <div class="bg"></div>
     </div>
 </nav>
 <script>

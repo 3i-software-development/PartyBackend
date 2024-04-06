@@ -61,7 +61,7 @@ namespace III.Admin.Controllers
             _sharedResources = sharedResources;
         }
 
-        [Breadcrumb("ViewData.CrumbCardWorkHome", AreaName = "Admin", FromAction = "Index", FromController = typeof(MenuCenterController))]
+        [Breadcrumb("ViewData.CrumbCardWorkHome", AreaName = "Admin", FromAction = "Index", FromController = typeof(DashBoardController))]
         public IActionResult Index()
         {
             ViewData["CrumbDashBoard"] = _sharedResources["COM_CRUMB_DASH_BOARD"];

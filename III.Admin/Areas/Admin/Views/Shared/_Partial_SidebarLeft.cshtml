@@ -1,8 +1,10 @@
 ﻿ <!-- Left side column. contains the logo and sidebar -->
 @using ESEIM.Utils
 @using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Localization;
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IParameterService ParameterService
+
 @inject IHttpContextAccessor HttpContextAccessor
 @inject ILanguageService LanguageService
 @inject IViewLocalizer Localizer
@@ -11,6 +13,9 @@
     var isAllData = session.IsAllData;
     int countWarning = 0;
     int countNotifiCardjob = 0;
+      var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+     var listLanguage = LanguageService.GetListLanguages();
+    var curlLanguage = listLanguage.FirstOrDefault(x => x.Culture == requestCulture.RequestCulture.UICulture.Name);
 }
 <!-- <script src="https://kit.fontawesome.com/5a36b217b0.js" crossorigin="anonymous"></script> -->
 
@@ -595,6 +600,7 @@
                                     <span class="arrow"></span>
                                 </a>
                             </li>
+                            
                         </ul>
                     </div>
                     <div class="tab-pane" id="store">
@@ -1148,14 +1154,14 @@
                             </li>
                             @*Quản trị quyền mobile*@
                             <li class="nav-item">
-                                <a class="nav-link nav-toggle box-shadow-bottom1" href="/Admin/UserManageApp">
+                                @* <a class="nav-link nav-toggle box-shadow-bottom1" href="/Admin/UserManageApp">
                                     <i class="fa fa-mobile mr-0" style="font-size: 250%; margin-top: 10px;"></i>
                                     <span class="title bold margin_bottom_10 black fs12">
-                                        @*@Localizer["MENU_SETTING_ADMIN_MANAGEMENT"]*@
+                                        @Localizer["MENU_SETTING_ADMIN_MANAGEMENT"]
                                         Quản lý quyền ứng dụng
                                     </span>
                                     <span class="arrow"></span>
-                                </a>
+                                </a> *@
                                 <ul class="sub-menu left_-85 hidden" style="margin-top: -80px !important;">
                                     <li class="nav-item">
                                         <a href="/Admin/mobileResource" class="nav-link">
@@ -1215,13 +1221,11 @@
 
                             @*Thiết bị và hạ tầng*@
                             <li class="nav-item">
-                                <a class="nav-link nav-toggle box-shadow-bottom1" href="/Admin/IotHomeSetup">
+                               @*  <a class="nav-link nav-toggle box-shadow-bottom1" href="/Admin/IotHomeSetup">
                                     <i class="fa-solid fa-building mr-0" style="font-size: 250%; margin-top: 10px;"></i>
-
-                                    @*<img title bold="IOT" src="../../../lib/chat/image/icon_iot.png" alt="Lisst" style="width: 40px; height: 40px;">*@
                                     <span class="title bold margin_bottom_10 black fs12">@Localizer["MENU_SYS_EQUIPMENT_AND_INFRASTRUCTURE"]</span>
                                     <span class="arrow"></span>
-                                </a>
+                                </a> *@
                                 <ul class="sub-menu left_-85 hidden" style="margin-top:-85px !important;">
                                     <li class="nav-item">
                                         <a href="/Admin/ZoneSetup" class="nav-link">
@@ -1237,12 +1241,12 @@
                             </li>
                             @*CMS*@
                             <li class="nav-item">
-                                <a class="nav-link nav-toggle box-shadow-bottom1" href="/Admin/ContentManageHome">
+                               @*  <a class="nav-link nav-toggle box-shadow-bottom1" href="/Admin/ContentManageHome">
                                     <i class="fa-regular fa-bookmark mr-0" style="font-size: 250%; margin-top: 10px; color1: gray;"></i>
                                     <span class="title bold margin_bottom_10 black fs12">@Localizer["MENU_CMS_CONTENT_MANAGER"]</span>
                                     <span class="arrow"></span>
 
-                                </a>
+                                </a> *@
 
                                 <ul class="sub-menu left_-85 hidden" style="margin-top:-345px !important;">
                                     <li class="nav-item">
@@ -1403,198 +1407,270 @@
         </div>
     </div>
 </div>
-<div data-scroll-to-active="true" class="main-menu menu-dark menu-accordion menu-shadow" id="menu-mobile">
+<div data-scroll-to-active="true" class="main-menu menu-dark menu-accordion menu-shadow" style="width:100vw" id="menu-mobile">
     <div class="main-menu-content page-sidebar navbar-collapse" style="background-color:orangered;">
-        <ul id="main-menu-navigation" class="navigation navigation-main">
+        <ul id="main-menu-navigation" class="navigation navigation-main" style="max-height: 100vh;overflow:auto">
             <li class="nav-item pt20">
-                <a href="/Admin/DashBoard"><i class="icon-home"></i> @Localizer["MENU_DASHBOARD"]</a>
+                <a href="/Admin/DashBoard"><i class="icon-home"></i>Trang chủ</a>
             </li>
-            @*Quản trị nhân sự*@
+            @*Điều hành việc*@
             <li class="dotted-menu" />
             <li class="nav-item">
                 <a href="#">
-                    <i class="fa fa-users"></i><span class="menu-title bold">@Localizer["MENU_PERSONNEL"]</span>
+                    <i class="fa-regular fa-chart-bar"></i><span class="menu-title bold">Điều hành việc</span>
                 </a>
                 <ul class="menu-content">
                     <li class="nav-item">
-                        <a href="/Admin/HREmployee"><i class="fa fa-user"></i>@Localizer["MENU_HUMAN_RESOURCE_MANAGEMENT"]</a>
+                        <a href="#"><i class="fas fa-user"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold"> Công việc</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
+                        <ul class="menu-content">
+                            <li class="">
+                                <a href="/Admin/StaffRegistration"><i class="fa fa-calendar"></i> Thẻ việc</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/StaffLate"><i class="fas fa-user-clock"></i> Báo cáo kết quả thẻ việc</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/StaffSalary"><i class="fas fa-money-check-alt"></i> Cấu hình bộ dữ liệu</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/StaffTimekeeping"><i class="fas fa-user-circle"></i> Báo muộn/ Xin nghỉ</a>
+                            </li>
+                        </ul>
                     </li>
                     <li class="dottet-subMenu" />
                     <li class="nav-item">
-                        <a href="#"><i class="fas fa-user"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold">@Localizer["MENU_OW_EMPLOYEES"]</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
+                        <a href="#"><i class="fas fa-user"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold"> Luồng xử lý</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
                         <ul class="menu-content">
                             <li class="">
-                                <a href="/Admin/StaffRegistration"><i class="fa fa-calendar"></i> @Localizer["MENU_OW_EMPLOYEES_STAFF_CALENDAR"]</a>
+                                <a href="/Admin/StaffRegistration"><i class="fa fa-calendar"></i> Luồng xử lý</a>
                             </li>
                             <li class="dottet-sub-subMenu" />
                             <li class="">
-                                <a href="/Admin/StaffLate"><i class="fas fa-user-clock"></i> @Localizer["MENU_OW_EMPLOYEES_STAFF_LATE"]</a>
+                                <a href="/Admin/StaffLate"><i class="fas fa-user-clock"></i> Báo cáo kết quả hoạt động</a>
                             </li>
+                        </ul>
+                    </li>
+                </ul>
+            </li>
+            @*Số hoá*@
+            <li class="dotted-menu" />
+            <li class="nav-item">
+                <a href="#">
+                    <i class="fa-regular fa-newspaper"></i><span class="menu-title bold"> Số hoá</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="nav-item">
+                        <a href="/Admin/EDMSRepository"><i class="fa fa-suitcase"></i> Kho dữ liệu số</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="nav-item">
+                        <a href="/Admin/EDMSWareHouseProfileVouchersDocument"><i class="fa fa-suitcase"></i> Kho hồ sơ</a>
+                    </li>
+
+                    <li class="dottet-subMenu" />
+                    <li class="nav-item">
+                        <a href="/Admin/EDMSDiagramWarehouseDocument"><i class="fa fa-suitcase"></i> Sơ đồ kho</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="nav-item">
+                        <a href="/Admin/PackManager"><i class="fa fa-suitcase"></i> Hộp tài liệu</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="nav-item">
+                        <a href="/Admin/EDMSRepositoryReport"><i class="fa fa-suitcase"></i> Báo cáo thống kê</a>
+                    </li>
+
+                    <li class="dottet-subMenu" />
+                    <li class="nav-item">
+                        <a href="/Admin/SearchContentFile"><i class="fas fa-user-clock"></i> Truy xuất tài liệu</a>
+                    </li> 
+                </ul>
+            </li>
+            @*Sơ yếu lý lịch*@
+            <li class="dotted-menu" />
+            <li class="nav-item">
+                <a href="/Admin/UserJoinParty">
+                    <i class="fas fa-folder-open"></i><span class="menu-title bold">Sơ yếu lý lịch</span>
+                </a>
+            </li>
+            @*Dựng quy trình*@
+            <li class="dotted-menu" />
+            <li class="nav-item">
+                <a href="#">
+                    <i class="fa-solid fa-diagram-project"></i><span class="menu-title bold"> Dựng quy trình</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="">
+                        <a href="/Admin/Supplier"><i class="fa fa-users"></i> Thư viện ký hiệu</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/ContactSupplier"><i class="fas fa-phone"></i> Dựng quy trình</a>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="">
+                        <a href="/Admin/ContactSupplier"><i class="fas fa-phone"></i> Thuộc tính mở rộng</a>
+                    </li>
+                </ul>
+            </li>
+            @*Hệ thống*@
+            <li class="dotted-menu" />
+            <li class="nav-item">
+                <a href="#">
+                    <i class="fas fa-cogs"></i><span class="menu-title bold">Hệ thống</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="nav-item">
+                        <a href="#"><i class="fas fa-user"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold"> Quản trị người dùng</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
+                        <ul class="menu-content">
                             <li class="">
-                                <a href="/Admin/StaffSalary"><i class="fas fa-money-check-alt"></i>  @Localizer["MENU_OW_EMPLOYEES_STAFF_REGISTRATION"]</a>
+                                <a href="/Admin/User"><i class="fa fa-user"></i> Người dùng</a>
                             </li>
                             <li class="dottet-sub-subMenu" />
                             <li class="">
-                                <a href="/Admin/StaffTimekeeping"><i class="fas fa-user-circle"></i> @Localizer["MENU_OW_EMPLOYEES_STAFF_TIME_KEEPING"]</a>
+                                <a href="/Admin/Organization"><i class="fa-solid fa-code-branch"></i> Chi nhánh</a>
                             </li>
                             <li class="dottet-sub-subMenu" />
                             <li class="">
-                                <a href="/Admin/UserBusyOrFree"><i class="fas fa-user-circle"></i>  @Localizer["MENU_STAFF_BUSY_OR_FREE"]</a>
+                                <a href="/Admin/Department"><<i class="fa-solid fa-bars"></i> Phòng ban</a>
                             </li>
                             <li class="dottet-sub-subMenu" />
                             <li class="">
-                                <a href="/Admin/MapOnline"><i class="fas fa-user-circle"></i> @Localizer["MENU_EMPLOYEE_ONLINE_MAP"]</a>
+                                <a href="/Admin/GroupUser"><i class="fa-solid fa-users"></i> Nhóm người dùng</a>
                             </li>
                             <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/Role"><i class="fa-solid fa-person-circle-plus"></i>Vai trò</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/Function/"><i class="fa-solid fa-robot"></i>Chức năng</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/Application"><i class="fa-solid fa-laptop-file"></i>Ứng dụng</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/Resource"><i class="fa-solid fa-file"></i> Tài nguyên</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/Permission"><i class="fa-solid fa-person-circle-check"></i>Phân quyền</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/mobileResource"><i class="fa-solid fa-file-zipper"></i> Tài nguyên ứng dụng</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/mobileFunction"><i class="fa-solid fa-mobile-screen"></i>Chức năng ứng dụng</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/MobilePermission"><i class="fa-solid fa-person-circle-check"></i>Phân quyền ứng dụng</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="nav-item">
+                        <a href="#"><i class="fa-regular fa-folder-open"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold"> Quản lý nội dung</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
+                        <ul class="menu-content">
+                            <li class="">
+                                <a href="/Admin/CMSCategory"><i class="fa-solid fa-table-list"></i> Danh mục</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CMSDocument"><i class="fa-solid fa-book"></i>Danh sách văn bản</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CMSItem"><i class="fa-solid fa-blog"></i> Bài viết</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CMSComment"><i class="fa-solid fa-comment"></i> Ý kiến bạn đọc</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CMSLink"><i class="fa-solid fa-link"></i> Link liên kết</a>
+                            </li><li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CMSManagementSlide"><i class="fa-solid fa-file-powerpoint"></i> Quản lý slider</a>
+                            </li><li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CMSManagementBanner"><i class="fa-solid fa-flag"></i> Quản lý banner</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CMSVideo"><i class="fa-solid fa-play"></i> Quản lý video</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CMSTag"><i class="fa-solid fa-tags"></i> Quản lý tags</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="nav-item">
+                        <a href="/Admin/UserManual/"><i class="fa-solid fa-circle-info"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold"> Hướng dẫn sử dụng</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
+                    </li>
+                    <li class="dottet-subMenu" />
+                    <li class="nav-item">
+                        <a href="#"><i class="fa-solid fa-gear"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold"> Cài đặt hệ thống</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
+                        <ul class="menu-content">
+                            <li class="">
+                                <a href="/Admin/IconManager"><i class="fa-solid fa-icons"></i> Quản lý biểu tượng</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/GalaxyKeyword"><i class="fa-solid fa-pen-to-square"></i>Quản lý từ khoá</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/JcObjectType"><i class="fa-regular fa-object-group"></i> Loại đối tượng</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/CommonSetting"><i class="fa-solid fa-sliders"></i>Cài đặt thuộc tính</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/BackupDatabase"><i class="fa-solid fa-database"></i>Sao lưu dữ liệu</a>
+                            </li><li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/SettingStatusObject"><i class="fa-regular fa-circle-check"></i> Thiết lập trạng thái</a>
+                            </li><li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/TokenManager"><i class="fa-solid fa-gears"></i> Quản lý cấu hình dịch vụ hệ thống</a>
+                            </li>
+    
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a href="/Admin/EmployeeComSetting"><i class="fa fa-cogs"></i>@Localizer["MENU_SET_PROPERTIES"]</a>
-                    </li>
-                </ul>
-            </li>
-            @*Hợp đồng*@
-            <li class="dotted-menu" />
-            <li class="nav-item">
-                <a href="#">
-                    <i class="fa fa-suitcase"></i><span class="menu-title bold">@Localizer["MENU_CONTRACT_ORDER"]</span>
-                </a>
-                <ul class="menu-content">
-                    <li class="nav-item">
-                        <a href="/Admin/Contract"><i class="fa fa-suitcase"></i> @Localizer["MENU_CONTRACT_SALES"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/ContractPo"><i class="fa fa-suitcase"></i> @Localizer["MENU_CONTRACT_BUYER"]</a>
-                    </li>
-
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/SendRequestWorkPrice"><i class="fa fa-suitcase"></i> @Localizer["MENU_CONTRACT_REQUEST_PRICE"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/SendRequestImportProduct"><i class="fa fa-suitcase"></i> @Localizer["MENU_CONTRACT_REQUEST_IMPORT"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/ReportSendRequestImportProduct"><i class="fa fa-suitcase"></i> @Localizer["MENU_CONTRACT_TOTAL_REQUEST_ORDER"]</a>
-                    </li>
-
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/ContractProgress"><i class="fas fa-user-clock"></i>@Localizer["MENU_CONTRACT_TRACK_PROGRESS"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/ContractComSetting"><i class="fa fa-cogs"></i> @Localizer["MENU_SET_PROPERTIES"]</a>
-                    </li>
-                </ul>
-            </li>
-            @*Dự án*@
-            <li class="dotted-menu" />
-            <li class="nav-item">
-                <a href="#">
-                    <i class="fas fa-folder-open"></i><span class="menu-title bold">@Localizer["MENU_PROJECT"]</span>
-                </a>
-                <ul class="menu-content">
-                    <li class="nav-item">
-                        <a href="/Admin/Project"><i class="fas fa-building"></i>@Localizer["MENU_PROJECT_MANAGEMENT"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/ProjectProgress"><i class="fas fa-user-clock"></i>@Localizer["MENU_PROJECT_PROGRESS"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/ProjectManagement"><i class="fas fa-folder-open"></i>@Localizer["MENU_PROJECT_PROJECT_MN"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/ProjectComSetting"><i class="fa fa-cogs"></i>@Localizer["MENU_SET_PROPERTIES"]</a>
-                    </li>
-                </ul>
-            </li>
-            @*Nhà cung cấp*@
-            <li class="dotted-menu" />
-            <li class="nav-item">
-                <a href="#">
-                    <i class="fa fa-users"></i><span class="menu-title bold">@Localizer["MENU_SUPPLIER"]</span>
-                </a>
-                <ul class="menu-content">
-                    <li class="">
-                        <a href="/Admin/Supplier"><i class="fa fa-users"></i>@Localizer["MENU_SUPPLIER_LIST"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/ContactSupplier"><i class="fas fa-phone"></i>@Localizer["MENU_SUPPLIER_CONTACT"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/MapSupplier"><i class="fas fa-map-marker"></i>@Localizer["MENU_SUPPLIER_MAP"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/SupplierProgress"><i class="fas fa-user-clock"></i>@Localizer["MENU_SUPPLIER_TRACK_PROGRESS"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/SupplierComSetting"><i class="fa fa-cogs"></i> @Localizer["MENU_SET_PROPERTIES"]</a>
-                    </li>
-                </ul>
-            </li>
-            @*Khách hàng*@
-            <li class="dotted-menu" />
-            <li class="nav-item">
-                <a href="#">
-                    <i class="fa fa-users"></i><span class="menu-title bold">@Localizer["MENU_CUSTOMER"]</span>
-                </a>
-                <ul class="menu-content">
-                    <li class="">
-                        <a href="/Admin/Customer"><i class="fa fa-users"></i>@Localizer["MENU_CUSTOMER_LIST"]</a>
-                    </li>
-                    <li class="">
-                        <a href="/Admin/ImportCustomer"><i class="fas fa-upload"></i> @Localizer["Tải lên khách hàng"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/OrderRequestRaw"><i class="fas fa-user-cog"></i>@Localizer["MENU_CUSTOMER_REQUIREMENTS"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/ContactCustomer"><i class="fas fa-phone"></i>@Localizer["MENU_CONTACT_ADMIN"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/ReminderAttr"><i class="fas fa-clock"></i>@Localizer["MENU_CUSTOMER_REMINDER"]</a>
-                    </li>
-                    <li class="">
-                        <a href="/Admin/CustomerReminder"><i class="fa-solid fa-calendar"></i>@Localizer["MENU_CUSTOMER_EVENT"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="nav-item">
-                        <a href="/Admin/CustomerProgress"><i class="fas fa-user-clock"></i>@Localizer["MENU_CUSTOMER_TRACK_PROGRESS"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/MapCustomer"><i class="fas fa-map-marker"></i>@Localizer["MENU_CUSTOMER_MAP"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/ManagerPosition"><i class="fas fa-map-marker"></i>@Localizer["MENU_CUSTOMER_MANAGER_POSITION"]</a>
-                    </li>
-                    <li class="dottet-subMenu" />
-                    <li class="">
-                        <a href="/Admin/CustomerComSetting"><i class="fa fa-cogs"></i> @Localizer["MENU_SET_PROPERTIES"]</a>
+                        <a href="#"><i class="fa-solid fa-house-laptop"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold"> Thiết bị và hạ tầng</span></a>@*@Localizer["MENU_OW_EMPLOYEES")*@
+                        <ul class="menu-content">
+                            <li class="">
+                                <a href="/Admin/IotDeviceInfo"><i class="fa-solid fa-desktop"></i> Thiết bị</a>
+                            </li>
+                            <li class="dottet-sub-subMenu" />
+                            <li class="">
+                                <a href="/Admin/ZoneSetup"><i class="fa-solid fa-location-pin"></i>Khu vực</a>
+                            </li>
+                            
+                        </ul>
                     </li>
                 </ul>
             </li>
 
-            @*Thông báo*@
+            @*Hướng dẫn sử dụng*@
             <li class="dotted-menu" />
             <li class="nav-item">
                 <a href="#">
-                    <i class="fa fa-users"></i><span class="menu-title bold">@Localizer["MENU_CUSTOMER"]</span>
+                    <i class="fas fa-question-circle"></i><span class="menu-title bold">Hướng dẫn sử dụng</span>
                 </a>
                 <ul class="menu-content">
                     <li class="">
@@ -1613,11 +1689,11 @@
                 </ul>
             </li>
 
-            @*Tài sản*@
+            @*Chế độ tối*@
             <li class="dotted-menu" />
             <li class="nav-item">
                 <a href="#">
-                    <i class="fa fa-th-list"></i><span class="menu-title bold">@Localizer["MENU_ASSET"]</span>
+                    <i class="fas fa-question-circle"></i><span class="menu-title bold">Chế độ tối</span>
                 </a>
                 <ul class="menu-content">
                     <li class="">
@@ -1685,8 +1761,79 @@
                     </li>
                 </ul>
             </li>
-            @*Quản lý quỹ*@
+
+             @*ngôn ngữ*@
             <li class="dotted-menu" />
+            <li class="nav-item">
+                <a href="#">
+                    <i class="flag-icon @curlLanguage.Icon fs20"></i><span class="menu-title bold">Ngôn ngữ</span>
+                </a>
+                <ul class="menu-content">
+                    <li class="dropdown dropdown-language nav-item mr15" style="top: 0px;">
+                       @* <a id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle nav-link none-hover" style="padding-bottom: 0px; padding-top: 5px;">
+                            <i class="flag-icon @curlLanguage.Icon fs20"></i>
+                        </a>
+                        <span class="selected-language black fs12" style="margin-right:20px; line-height: 24px">@curlLanguage.DisplayName</span>*@
+                       
+                    </li>
+                    <div aria-labelledby="dropdown-flag" >
+                            @{
+                                foreach (var lang in LanguageService.GetListLanguages())
+                                {
+                                       <li class="dottet-subMenu" />
+                                    <a class="dropdown-item" onclick="onRedirect('@lang.Culture')">
+                                        <span class="flag-icon @lang.Icon"></span> @lang.DisplayName
+                                    </a>
+                                    
+                                }
+                            }
+                     </div>
+
+                </ul>
+            </li>
+
+
+         
+            @*Thoát*@
+   
+               @* <li class="nav-item">
+                    <a href="#">
+                        <i class="fas fa-sign-out-alt"></i><span class="menu-title bold">Thoát</span>
+                    </a>
+       
+                </li>*@
+
+
+            
+
+            @*Thoát*@
+           <li class="dotted-menu" />
+            <li class="nav-item">
+                <a href="/Admin/Account/Logout">
+            <i class="fa-solid fa-right-from-bracket"></i><span class="menu-title bold">Thoát</span>
+                </a>
+                
+            </li>
+             <li class="dotted-menu" />
+    <div class="app-menu" style="    display: flex;
+    font-size: 2rem;
+    padding: 2px;">
+                    <a href="">
+                        <i style="color: #b8c7ce;" class="fab fa-facebook-square"></i>
+                    </a>
+                    <a href="" class="pl5">
+                        <i style="color: #b8c7ce;" class="fab fa-google-drive"></i>
+                    </a>
+                    <a href="" class="pl5">
+                        <i style="color: #b8c7ce;" class="fas fa-dove"></i>
+                    </a>
+                    <a href="" class="pl5">
+                        <i style="color: #b8c7ce;" class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+              <!--
+                    @*Quản lý quỹ*@
+           <li class="dotted-menu" />
             <li class="nav-item">
                 <a href="#">
                     <i class="fas fa-coins"></i><span class="menu-title bold">@Localizer["MENU_FUND"]</span>
@@ -1757,9 +1904,9 @@
                     </li>
                     <li class="dottet-subMenu" />
                 </ul>
-            </li>
+            </li> -->
             @*Sản phẩm và dịch vụ*@
-            <li class="dotted-menu" />
+            <!-- <li class="dotted-menu" />
             <li class="nav-item">
                 <a href="#">
                     <i class="fas fa-shopping-cart"></i><span class="menu-title bold">@Localizer["MENU_PAS_SERVICES_MANAGEMENT"]</span>
@@ -1785,10 +1932,10 @@
                         <a href="/Admin/ServiceCategoryComSetting"><i class="fa fa-cogs"></i> @Localizer["MENU_SET_PROPERTIES"]</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
             @*Danh mục thiết bị và vật tư*@
-            <li class="dotted-menu" />
+            <!-- <li class="dotted-menu" />
             <li class="nav-item">
                 <a href="#">
                     <i class="fas fa-shopping-cart"></i><span class="menu-title bold">@Localizer["MENU_WAS_MATERIAL_PRODUCT_CATALOGUE"]</span>
@@ -1870,10 +2017,10 @@
                         <a href="/Admin/WarehouseComSetting"><i class="fas fa-cogs"></i> @Localizer["MENU_SET_PROPERTIES"]</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
             @*Quản lý nội dung*@
-            <li class="">
+            <!-- <li class="">
                 <a href="#"><i class="fas fa-list"></i><span data-i18n="nav.advance_cards.main" class="menu-title bold">@Localizer["MENU_SYS_MANA_CONTENT"]</span></a>
                 <ul class="menu-content">
                     <li class="">
@@ -1929,9 +2076,9 @@
                         <a href="/Admin/CMSTag"><i class="fa fa-info"></i> @Localizer["MENU_SYS_MANA_TAGS"]</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
             @*Cài đặt hệ thống*@
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a href="#">
                     <i class="fas fa-cogs"></i><span class="menu-title bold">@Localizer["MENU_SETTING_SYSTEM"]</span>
                 </a>
@@ -1949,9 +2096,9 @@
                         <a href="/Admin/JcObjectType"><i class="fa fa-group"></i> @Localizer["MENU__SYS_OBJ_TYPE"]</a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
             @*Quản trị người dùng*@
-            <li class="dotted-menu" />
+            <!-- <li class="dotted-menu" />
             <li class="nav-item">
                 <a href="#">
                     <i class="fa fa-users"></i><span class="menu-title bold">@Localizer["MENU_SETTING_ADMIN_MANAGEMENT"]</span>
@@ -1993,29 +2140,17 @@
                         <a href="/Admin/Permission"><i class="fa fa-cogs"></i> @Localizer["MENU_SETTING_SM_PERMISSION"]</a>
                     </li>
                 </ul>
-            </li>
-            <li class="dotted-menu" />
-            <li class="navigation-header" style="padding-top:5px"></li>
+            </li> -->
+            @*<li class="dotted-menu" />*@
+          @*  <li class="navigation-header" style="padding-top:5px"></li>
             <li class="">
                 <a href="/Admin/Account/Logout"><i class="fas fa-sign-out-alt"></i>@Localizer["MENU_LOGOUT"]</a>
-            </li>
-            <div class="app-menu">
-                <a href="">
-                    <i style="color: #b8c7ce;" class="fab fa-facebook-square"></i>
-                </a>
-                <a href="" class="pl5">
-                    <i style="color: #b8c7ce;" class="fab fa-google-drive"></i>
-                </a>
-                <a href="" class="pl5">
-                    <i style="color: #b8c7ce;" class="fas fa-dove"></i>
-                </a>
-                <a href="" class="pl5">
-                    <i style="color: #b8c7ce;" class="fab fa-linkedin-in"></i>
-                </a>
-            </div>
+            </li>*@
+               
         </ul>
     </div>
 </div>
+
 <script>
     var isAllData = "@(isAllData)" == "True" ? true : false;
     $('#UserManual').on('click', function () {

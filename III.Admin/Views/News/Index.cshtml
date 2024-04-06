@@ -1,0 +1,41 @@
+﻿@model III.Admin.Controllers.ModelViewPost
+@{
+    ViewData["Title"] = @Model.title;
+    Layout = "~/Views/Shared/_LayoutApp.cshtml";
+}
+<style>
+    .post {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+
+        .post h2 {
+            color: #333;
+        }
+
+        .post .content {
+            margin-top: 10px;
+            line-height: 1.6;
+        }
+
+        .post p {
+            font-style: italic;
+            color: #666;
+        }
+
+    .Title_post{
+        font-size:36px;
+        line-height: 50px;
+        color: #222;
+    }
+</style>
+
+<div class="post">
+    <h1 class="Title_post"><b>@Model.title</b></h1>
+
+    <div class="content">
+        @Html.Raw(Model.full_text)
+    </div>
+</div>

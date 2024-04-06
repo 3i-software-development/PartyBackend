@@ -1,7 +1,9 @@
 ﻿var ctxfolderRepository = "/views/admin/edmsRepository";
 var ctxfolderMessage = "/views/message-box";
 var ctxfolderCommonSetting = "/views/admin/commonSetting";
-var app = angular.module('App_ESEIM_REPOSITORY', ['App_ESEIM_DASHBOARD', 'App_ESEIM_FILE_PLUGIN', "ui.bootstrap", "ngRoute", "ngValidate", "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree", "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate", 'ngTagsInput', 'ngFileUpload'])
+var app = angular.module('App_ESEIM_REPOSITORY', ['App_ESEIM_DASHBOARD', 'App_ESEIM_FILE_PLUGIN', "ui.bootstrap", "ngRoute", "ngValidate",
+ "datatables", "datatables.bootstrap", 'datatables.colvis', "ui.bootstrap.contextMenu", 'datatables.colreorder', 'angular-confirm', "ngJsTree",
+  "treeGrid", "ui.select", "ngCookies", "pascalprecht.translate", 'ngTagsInput', 'ngFileUpload','monospaced.qrcode'])
     .directive('customOnChange', function () {
         return {
             restrict: 'A',
@@ -5696,10 +5698,13 @@ app.controller('extension', function ($scope, $rootScope, $compile, $uibModal, D
         Subject: '',
         HashTag: '',
         Group: '',
-        Type: ''
+        Type: '',
+        HardFileAddress:'',
+        HardFileCode:''
     };
     var data = para;
     if (data !== '' && data !== undefined && data !== null) {
+        $scope.showQR=false;
         switch (data.Type) {
             case 'LIST':
                 $scope.FileId = data.Object;
@@ -5709,6 +5714,10 @@ app.controller('extension', function ($scope, $rootScope, $compile, $uibModal, D
                         $scope.FileName = rs.Object.FileName;
                         if (rs.Object.MetaDataExt !== undefined && rs.Object.MetaDataExt !== null) {
                             $scope.model = JSON.parse(rs.Object.MetaDataExt);
+                            
+                            if($scope.model.HardFileAddress!=null&&$scope.model.HardFileAddress!=''&&$scope.model.HardFileAddress!=undefined){
+                                $scope.showQR=true;
+                            }
                         }
                     }
                 });
@@ -5721,7 +5730,6 @@ app.controller('extension', function ($scope, $rootScope, $compile, $uibModal, D
                 $scope.IsDashBoard = true;
                 break;
         }
-
         $scope.Type = data.Type;
     }
 
@@ -5798,7 +5806,7 @@ app.controller('extension', function ($scope, $rootScope, $compile, $uibModal, D
     $scope.save = function () {
         switch ($scope.Type) {
             case 'LIST':
-                if ($scope.model.KeyWord !== '' || $scope.model.Subject !== '' || $scope.model.HashTag !== '' || $scope.model.Group !== '' || $scope.model.Type !== '') {
+                if ($scope.model.KeyWord !== '' || $scope.model.Subject !== '' || $scope.model.HashTag !== '' || $scope.model.Group !== '' || $scope.model.Type !== ''|| $scope.model.HardFileAddress !== ''|| $scope.model.HardFileCode !== '') {
 
                     var metaDataExt = JSON.stringify($scope.model);
                     dataserviceRepository.updateMetaData($scope.FileId, metaDataExt, function (rs) {
@@ -5811,7 +5819,7 @@ app.controller('extension', function ($scope, $rootScope, $compile, $uibModal, D
                 break;
 
             case 'DETAIL':
-                if ($scope.model.KeyWord !== '' || $scope.model.Subject !== '' || $scope.model.HashTag !== '' || $scope.model.Group !== '' || $scope.model.Type !== '') {
+                if ($scope.model.KeyWord !== '' || $scope.model.Subject !== '' || $scope.model.HashTag !== '' || $scope.model.Group !== '' || $scope.model.HardFileAddress !== ''|| $scope.model.HardFileCode !== '') {
                     $rootScope.DocumentExt = $scope.model;
                 }
                 break;

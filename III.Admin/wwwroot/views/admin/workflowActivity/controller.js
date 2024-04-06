@@ -692,7 +692,12 @@ app.factory('dataservice', function ($http) {
 
         //File workflow
         getFileWfInst: function (data, callback) {
-            $http.post('/Admin/WorkflowActivity/GetFileWfInst?wfInstCode=' + data).then(callback);
+            
+            var Activity=''
+            if(data.ActInsCode!=''&&data.ActInsCode!=null&&data.ActInsCode!=undefined){
+                Activity='&ActInsCode='+data.ActInsCode
+            }
+            $http.post('/Admin/WorkflowActivity/GetFileWfInst?wfInstCode=' + data.wfInstCode + Activity).then(callback);
         },
 
         //Command extra
@@ -950,12 +955,13 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider) {
     });
 });
 
-app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataservice, $filter, myService, $location) {
+app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataservice, $filter, myService, $location) {
     
-    // $('.menu-toggle').addClass('hidden');
-    // $(".content-wrapper").removeClass("padding-right-80");
-    // $(".content-wrapper").addClass("padding-right-90");
-    // $("#breadcrumb").appendTo("#breadcrumb-container");
+    $(".content-wrapper").removeClass("padding-right-80");
+    $(".content-wrapper").addClass("padding-right-90");
+    $("#breadcrumb").appendTo("#breadcrumb-container");
+    $('.main-menu').removeClass('hidden');
+
     var itemmmm;
     var canvas2;
     var dataweb = "";
@@ -970,6 +976,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     $scope.isShowDiagram = false;
     $scope.isShowCard = false;
     $scope.isShowListWf = true;
+    $scope.checkHiddenFileWfActivity=false;
 
     $scope.showDiagram = function () {
         $scope.isShowDiagram = true;
@@ -993,7 +1000,8 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
 
     $scope.model = {
         WfInst: "",
-        WfCode: ""
+        WfCode: "",
+        checkHiddenFileWfActivity:false
     };
     $scope.modelSearch = {
         WfInst: "",
@@ -1292,68 +1300,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         $scope.isShowDiagram = true;
         $scope.isShowCard = false;
         $scope.isShowListWf = false;
-        //for (var i = 0; i < $scope.lstWfInst.length; i++) {
-        //    if ($scope.lstWfInst[i].Code === code) {
-        //        $scope.lstWfInst[i].IsSelected = true;
-        //        if ($scope.checkDraw.ActCode === code) {
-        //            $scope.checkDraw.CntDraw += 1;
-        //        } else {
-        //            $scope.checkDraw.ActCode = code;
-        //            $scope.checkDraw.CntDraw = 0;
-        //        }
-        //    } else {
-        //        $scope.lstWfInst[i].IsSelected = false;
-        //    }
-        //}
-
-        //$rootScope.reloadGridCard();
-        //dataservice.getInstance(code, function (rs) {
-        //    rs = rs.data;
-        //    $scope.lstActInst = rs;
-        //})
-        //dataservice.getCardOfWf(code, function (rs) {
-        //    rs = rs.data;
-        //    $scope.lstCard = rs;
-        //})
-        //dataservice.getResultAttrData(code, function (rs) {
-        //    rs = rs.data;
-        //    $scope.lstResultAttrData = rs;
-        //    //console.log(rs);
-        //    //var html = ""
-        //    //for (var i = 0; i < rs.length; i++) {
-        //    //    if (rs[i].LstActResult.length == 0) {
-        //    //        html += '<tr>'
-        //    //        html += '<td class="text-center">' + (i + 1) + '</td>';
-        //    //        html += '<td class="text-center"></td>';
-        //    //        html += '<td class=""></td>';
-        //    //        html += '<td class="text-center fs13">' + rs[i].CreatedBy + '</td>';
-        //    //        html += '</tr>';
-        //    //    }
-        //    //    else {
-        //    //        html += '<tr>'
-        //    //        html += '<td rowspan="' + (rs[i].LstActResult.length) + '" class="text-center">' + (i + 1) + '</td>';
-        //    //        html += '<td>' + rs[i].LstActResult[0].Activity +'</td>';
-        //    //        html += '<td class="">';
-        //    //        html += '<div class="fs13">' + rs[i].LstActResult[0].Content + '</div>';
-        //    //        html += '</td > ';
-        //    //        html += '<td rowspan="' + (rs[i].LstActResult.length) + '" class="text-center fs13">' + rs[i].CreatedBy + '</br><span class="fs12" style="color: green;">' + rs[i].CreatedTime + '</span>' + '</td>';
-        //    //        html += '</tr>';
-
-        //    //        for (var j = 1; j < rs[i].LstActResult.length; j++) {
-        //    //            html += '<tr>'
-        //    //            html += '<td>' + rs[i].LstActResult[j].Activity + '</td>';
-        //    //            html += '<td class="">';
-        //    //            html += '<div class="fs13">' + rs[i].LstActResult[j].Content + '</div>';
-        //    //            html += '</td > ';
-        //    //            html += '</tr>';
-        //    //        }
-        //    //    }
-
-
-        //    //}
-        //    //document.getElementById("rowReport1TrBody").innerHTML = html;
-
-        //});
+        
         drawWfInstance(code);
     };
 
@@ -1585,45 +1532,6 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         }, 700);
     }
 
-    //Instance Activity
-    // $scope.editInstAct = function (id, objCode) {
-    //     console.log(id, objCode)
-    //     dataservice.checkPermissionEditActivityById(id, function (rs) {
-    //         rs = rs.data;
-    //         if (!rs) {
-    //             return App.toastrError(caption.WFAI_MSG_U_NOT_PERMISSION);
-    //         }
-    //         dataservice.getItemActInst(id, function (rs) {
-    //             $rootScope.IsLock = rs.data.IsLock;
-    //             $rootScope.ActCatCode = rs.data.DataActInst.ActivityCode
-    //             var modalInstance = $uibModal.open({
-    //                 animation: true,
-    //                 templateUrl: ctxfolder + '/add-activity-instance.html',
-    //                 controller: 'edit-activity-instance',
-    //                 backdrop: 'static',
-    //                 keyboard: false,
-    //                 size: '50',
-    //                 resolve: {
-    //                     para: function () {
-    //                         return {
-    //                             Data: rs.data,
-    //                             ObjCode: objCode
-    //                         }
-    //                     }
-    //                 }
-    //             });
-    //             modalInstance.result.then(function (d) {
-    //                 dataservice.getInstance($rootScope.WfInstCode, function (rs) {
-    //                     rs = rs.data;
-    //                     $scope.lstActInst = rs;
-    //                 })
-    //                 afterEditActInst(d);
-    //                 $scope.search();
-    //             }, function () {
-    //             });
-    //         })
-    //     })
-    // }
 
     function afterEditActInst(obj) {
         dataservice.getDetailActInst(obj.ActInstCode, function (rs) {
@@ -2700,6 +2608,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
 
                 var rowData = $scope.dt.dtInstanceList.DataTable.row($(this).closest('tr')).data(); // Lấy dữ liệu của hàng
                 var childRow = $scope.dt.dtInstanceList.DataTable.row($(this).closest('tr')).child; // Lấy child của hàng
+
                 formatRow(rowData);
                 $scope.editWorkflow();
             });
@@ -2716,49 +2625,49 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         var objectName = full.ObjectName != "" ? ': ' + full.ObjectName + '</a>' : "";
 
         if (full.Status != "Dừng lại")
-            status = '<div class="d-inline mr10"><span class="badge-customer badge-customer-success">' + full.Status + '</span></div>';
+            status = '<div class="d-inline mr10"><p class="badge-customer badge-customer-success">' + full.Status + '</p></div>';
         else
             status = '<div class="d-inline mr10"><span class="badge-customer badge-customer-orange">' + full.Status + '</span></div>';
-        var wfName = data.length > 40 ? data.substr(0, 40) + " ..." : data;
+        var wfName = data;
         return '<div title="' + data + '" class="fs14 d-inline mr10"><a class="text-underline" ng-click="editWfInst(\'' + full.WfCode + '\')"><span class="text-underline" style="color:#ab7474">#' + full.WfCode + '</span>: ' + wfName + '</a></div><div class="d-inline">' + createdTime + status + '<div class="d-inline">' + objectType + objectName + '</div></div>';
     }).withOption('sClass', ''));
-    vm.dtColumnsList.push(DTColumnBuilder.newColumn('ListFile').withTitle('{{"WFAI_TAB_FILE" | translate}}').withOption('sClass', '').renderWith(function (data, type, full) {
-        if (data == "") {
-            return;
-        }
-        var lstFile = JSON.parse(data);
-        var domFiles = "";
-        if (lstFile.length > 5) {
-            for (var i = 0; i < 5; i++) {
-                var fileName = lstFile[i].FileName;
-                var dataView = fileName.length > 20 ? fileName.substr(0, 20) + " ..." : fileName;
-                if (fileName.length > 0) {
-                    dataView = '<span href="javascript:;" role="button" title=\'' + fileName + '\'>' + dataView + '</span>';
-                } else {
-                    return dataView;
-                }
+    // vm.dtColumnsList.push(DTColumnBuilder.newColumn('ListFile').withTitle('{{"WFAI_TAB_FILE" | translate}}').withOption('sClass', '').renderWith(function (data, type, full) {
+    //     if (data == "") {
+    //         return;
+    //     }
+    //     var lstFile = JSON.parse(data);
+    //     var domFiles = "";
+    //     if (lstFile.length > 5) {
+    //         for (var i = 0; i < 5; i++) {
+    //             var fileName = lstFile[i].FileName;
+    //             var dataView = fileName.length > 20 ? fileName.substr(0, 20) + " ..." : fileName;
+    //             if (fileName.length > 0) {
+    //                 dataView = '<span href="javascript:;" role="button" title=\'' + fileName + '\'>' + dataView + '</span>';
+    //             } else {
+    //                 return dataView;
+    //             }
 
-                domFiles += '<div class="mt5"><span class="fa fa-file"><a class="text-underline text-wrap ml5">' + dataView + '</a></span></div>';
-            }
-            var more = '<a class="text-underline pull-right" ng-click="moreFile(' + full.WfCode + ')">More...</a>'
-            return domFiles + more;
-        }
-        else {
-            for (var i = 0; i < lstFile.length; i++) {
-                var fileName = lstFile[i].FileName;
-                var dataView = fileName.length > 20 ? fileName.substr(0, 20) + " ..." : fileName;
-                if (fileName.length > 0) {
-                    dataView = '<span href="javascript:;" role="button" title=\'' + fileName + '\'>' + dataView + '</span>';
-                }
-                if (lstFile[i].Type == "SHARE") {
-                    domFiles += '<div class="mt5"> <span class="fa fa-file pr5"></span> <a class="text-underline text-wrap ml5">' + dataView + '</a></div>'
-                } else {
-                    domFiles += '<div class="mt5"> <span class="fa fa-file pr5"><a class="text-underline text-wrap ml5">' + dataView + '</a></span>'
-                }
-            }
-            return domFiles;
-        }
-    }));
+    //             domFiles += '<div class="mt5"><span class="fa fa-file"><a class="text-underline text-wrap ml5">' + dataView + '</a></span></div>';
+    //         }
+    //         var more = '<a class="text-underline pull-right" ng-click="moreFile(' + full.WfCode + ')">More...</a>'
+    //         return domFiles + more;
+    //     }
+    //     else {
+    //         for (var i = 0; i < lstFile.length; i++) {
+    //             var fileName = lstFile[i].FileName;
+    //             var dataView = fileName.length > 20 ? fileName.substr(0, 20) + " ..." : fileName;
+    //             if (fileName.length > 0) {
+    //                 dataView = '<span href="javascript:;" role="button" title=\'' + fileName + '\'>' + dataView + '</span>';
+    //             }
+    //             if (lstFile[i].Type == "SHARE") {
+    //                 domFiles += '<div class="mt5"> <span class="fa fa-file pr5"></span> <a class="text-underline text-wrap ml5">' + dataView + '</a></div>'
+    //             } else {
+    //                 domFiles += '<div class="mt5"> <span class="fa fa-file pr5"><a class="text-underline text-wrap ml5">' + dataView + '</a></span>'
+    //             }
+    //         }
+    //         return domFiles;
+    //     }
+    // }));
     vm.dtColumnsList.push(DTColumnBuilder.newColumn('ListCard').withTitle('{{"WFAI_BTN_JOB_CARD" | translate}}').withOption('sClass', 'w20 nowrap text-center').renderWith(function (data, type, full) {
         var lstAct = JSON.parse(full.ListAct);
         return lstAct.length > 0 ? '<button title="Xem danh sách hoạt động" ng-click="showActivityList(\'' + full.WfCode + '\')" style = "width: 32px; height: 32px; padding: 0px; border: none;color: #183153; background: transparent" class1="btn btn-icon-only primary btn-circle btn-outline blue"><i class="fas fa-tasks-alt fs25" style="line-height:32px"></i></button>' : '';
@@ -2803,9 +2712,12 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         var lstAct = JSON.parse(full.ListAct);
         $scope.listActs = lstAct;
         $scope.isEditWorkflow = true;
-        console.log($scope.isEditWorkflow,$scope.listActs);
+        $scope.model.checkHiddenFileWfActivity=false;
+        //console.log($scope.isEditWorkflow,$scope.listActs);
         $scope.full=full;
-        $scope.$apply()
+        $timeout(function() {
+            $scope.$apply();
+        });
     }
 
     $scope.search = function () {
@@ -2917,8 +2829,8 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         window.open(url, '_blank');
     }
 
-    $scope.moreFile = function (wfCode) {
-
+    $scope.moreFile = function (wfCode,ActInsCode) {
+        
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: ctxfolder + "/more-file.html",
@@ -2928,13 +2840,18 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
             backdrop: 'static',
             resolve: {
                 para: function () {
-                    return wfCode;
+                    return {
+                        wfInstCode: wfCode,
+                        ActInsCode: ActInsCode
+                    };
                 }
             }
         });
         modalInstance.result.then(function (d) {
-
-        }, function () { });
+            
+        }, function () {
+            
+         });
     }
 
     $scope.reidrectToObject = function (objectType, objectCode) {
@@ -4014,19 +3931,22 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     }
 
     $scope.isEditWorkflow = false;
-    $scope.editWorkflow = function(){   
-        if ($scope.isEditWorkflow == true) {
+    $scope.editWorkflow = function () {
+        if ($scope.isEditWorkflow) {
+            if ($(window).width() < 600) {
+                $('#main-table').css('opacity', '0.2');
+            }
             $('#main-table').css('width', '50%');
-        }else{
-            $('#main-table').css('width', '');
+        } else {
+            $('#main-table').css('opacity', '');
+            $('#main-table').css('width', ''); // Reset the width to its default value
         }
-        
-        //setTimeout(() => $scope.$apply());     
-        //setTimeout(() => $scope.$apply());
     }
 
+
+
     $scope.checkHiddenInforWf = false;
-    $scope.checkHiddenFileHistory = false;
+    $scope.checkHiddenFileWfActivityHistory = false;
     $scope.checkHiddenCmdTo = false;
     $scope.checkHiddenEmployee = false;
     $scope.checkHiddenObject = false;
@@ -4047,7 +3967,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
 
     // document.getElementById("toggleFileHistory").addEventListener("click", function() {
     //     $scope.$apply(function() {
-    //         $scope.checkHiddenFileHistory = !$scope.checkHiddenFileHistory;
+    //         $scope.checkHiddenFileWfActivityHistory = !$scope.checkHiddenFileWfActivityHistory;
     //         toggleContent("FileHistory");
     //     });
     // });
@@ -5229,6 +5149,7 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
 
     $scope.isAll = true;
 
+    
 
     $rootScope.isAccepted = true;
 
@@ -5449,8 +5370,8 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
             if (!$rootScope.isAccepted) {
                 return App.toastrError(caption.WFAI_MSG_PLS_ACCEPT_ACT);
             }
-            var data = CKEDITOR.instances['description'].getData();
-            $scope.model.Desc = data;
+            //var data = CKEDITOR.instances['description'].getData();
+            //$scope.model.Desc = data;
 
             $scope.model.StartTime = null;
             $scope.model.EndTime = null;
@@ -6159,16 +6080,16 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
         }
     }
 
-    var editor;
-    function ckEditer() {
-        editor = CKEDITOR.replace('description', {
-            cloudServices_tokenUrl: '/MobileApp/Token',
-            cloudServices_uploadUrl: '/MobileApp/UploadFile',
-            filebrowserBrowseUrl: '',
-            filebrowserUploadUrl: '/MobileApp/Upload',
-            embed_provider: '/uploader/upload.php'
-        });
-    }
+    //var editor;
+    //function ckEditer() {
+    //    editor = CKEDITOR.replace('description', {
+    //        cloudServices_tokenUrl: '/MobileApp/Token',
+    //        cloudServices_uploadUrl: '/MobileApp/UploadFile',
+    //        filebrowserBrowseUrl: '',
+    //        filebrowserUploadUrl: '/MobileApp/Upload',
+    //        embed_provider: '/uploader/upload.php'
+    //    });
+    //}
 
     function displayJSON(canvas) {
         var writer = new draw2d.io.json.Writer();
@@ -6213,7 +6134,7 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
 
     setTimeout(function () {
         loadDate();
-        ckEditer();
+        /*ckEditer();*/
         setModalDraggable('.modal-dialog');
     }, 200);
 
@@ -9846,7 +9767,7 @@ app.controller('fileActivity', function ($scope, $rootScope, $compile, $uibModal
             url: "/Admin/WorkflowActivity/JTableFile",
             beforeSend: function (jqXHR, settings) {
                 App.blockUI({
-                    target: "#contentMain",
+                    target: "#tblDataWorkflowFile",
                     boxed: true,
                     message: 'loading...'
                 });
@@ -9858,7 +9779,7 @@ app.controller('fileActivity', function ($scope, $rootScope, $compile, $uibModal
                 d.ToDate = $scope.model.ToDate;
             },
             complete: function () {
-                App.unblockUI("#contentMain");
+                App.unblockUI("#tblDataWorkflowFile");
                 heightTableManual(250, "#tblDataWorkflowFile");
                 $scope.selectAll = false;
             }
@@ -9896,7 +9817,6 @@ app.controller('fileActivity', function ($scope, $rootScope, $compile, $uibModal
     vm.dtColumns.push(DTColumnBuilder.newColumn("Id").withTitle(titleHtml).notSortable().renderWith(function (data, type, full, meta) {
         $scope.selected[data] = false;
         var dataRs = '<label class="mt-checkbox"><input type="checkbox" ng-model="selected[' + full.Id + ']" ng-change="toggleOne(selected)"/><span></span></label>';
-        $scope.$apply();
         return dataRs;
     }).withOption('sClass', ''));
     vm.dtColumns.push(DTColumnBuilder.newColumn('FileName').withTitle($translate("WFAI_LIST_COL_TITLE")).renderWith(function (data, type, full) {
@@ -11602,14 +11522,42 @@ app.controller('send-notifi-act', function ($scope, $rootScope, $compile, $uibMo
 
 app.controller('more-file', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataservice, para) {
     $scope.cancel = function () {
+        $rootScope.IsOpenModal=false;
         $uibModalInstance.close(true);
     }
+        var excel = ['.XLSM', '.XLSX', '.XLS'];
+        var document = ['.TXT'];
+        var word = ['.DOCX', '.DOC'];
+        var pdf = ['.PDF'];
+        var powerPoint = ['.PPS', '.PPTX', '.PPT'];
+        var image = ['.JPG', '.PNG', '.TIF', '.TIFF'];
 
+    $scope.IsOpenModal=true;
     $scope.initData = function () {
         dataservice.getFileWfInst(para, function (rs) {
-            rs = rs.data;
-            $scope.lstFile = rs;
-        })
+                rs = rs.data;
+                $scope.lstFile = rs;
+                $scope.lstFile.forEach(element => {
+                    var icon = '<i style="color: rgb(42,42,42);font-size: 15px;" class="fas fa-align-justify pr5" aria-hidden="true"></i>';
+
+                    if (excel.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                        icon = '<i style="color: rgb(106,170,89);font-size: 15px;" class="fa fa-file-excel-o pr5" aria-hidden="true"></i>';
+                    } else if (word.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                        icon = '<i style="color: rgb(13,118,206);font-size: 15px;" class="fa fa-file-word-o pr5" aria-hidden="true"></i>';
+                    } else if (document.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                        icon = '<i style="color: rgb(0,0,0);font-size: 15px;" class="fa fa-file-text-o pr5" aria-hidden="true"></i>';
+                    } else if (pdf.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                        icon = '<i style="color: rgb(226,165,139);font-size: 15px;" class="fa fa-file-pdf-o pr5" aria-hidden="true"></i>';
+                    } else if (powerPoint.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                        icon = '<i style="color: rgb(226,165,139);font-size: 15px;" class="fa fa-file-powerpoint-o pr5" aria-hidden="true"></i>';
+                    } else if (image.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                        icon = '<i style="color: rgb(42,42,42);font-size: 15px;" class="fa fa-picture-o pr5" aria-hidden="true"></i>';
+                    }
+
+                    element.icon=icon;
+                });
+                console.log(rs)
+        }) 
     }
 
     $scope.initData();
@@ -11642,7 +11590,7 @@ app.controller('more-file', function ($scope, $rootScope, $compile, $uibModal, $
             rs = rs.data;
             if (rs.Error) {
                 if (rs.ID === -1) {
-                    App.toastrError(rs.Title);
+                    //App.toastrError(rs.Title);
                     setTimeout(function () {
                         window.open('/Admin/Excel#', '_blank');
                     }, 2000);
@@ -11665,7 +11613,7 @@ app.controller('more-file', function ($scope, $rootScope, $compile, $uibModal, $
                 rs = rs.data;
                 if (rs.Error) {
                     if (rs.ID === -1) {
-                        App.toastrError(rs.Title);
+                        //App.toastrError(rs.Title);
                         setTimeout(function () {
                             window.open('/Admin/Docman#', '_blank');
                         }, 2000);
@@ -11689,7 +11637,225 @@ app.controller('more-file', function ($scope, $rootScope, $compile, $uibModal, $
                 rs = rs.data;
                 if (rs.Error) {
                     if (rs.ID === -1) {
+                        //App.toastrError(rs.Title);
+                        setTimeout(function () {
+                            window.open('/Admin/PDF#', '_blank');
+                        }, 2000);
+                    } else {
                         App.toastrError(rs.Title);
+                    }
+                    return null;
+                } else {
+                    window.open('/Admin/PDF#', '_blank');
+                }
+            });
+        }
+    };
+
+    $scope.view = function (id, fileType, cloudId) {
+        var isImage = false;
+        var image = ['.JPG', '.PNG', '.TIF', '.TIFF'];
+        if (image.indexOf(fileType.toUpperCase()) !== -1) {
+            isImage = true;
+        }
+        if (cloudId != null && cloudId != "") {
+            //SHOW LÊN MÀN HÌNH LUÔN
+            // window.open(" https://drive.google.com/file/d/" + userModel.CloudFileId + "/view", "_blank");
+            //$scope.openViewer("https://drive.google.com/file/d/"+userModel.CloudFileId + "/view");3
+            dataservice.createTempFile(id, false, "", function (rs) {
+                rs = rs.data;
+                rs.Object = encodeURI(rs.Object);
+                if (rs.Error == false) {
+                    if (isImage == false) {
+                        window.open(rs.Object, '_blank')
+                        //$scope.openViewer("https://docs.google.com/gview?url=" + window.location.origin + '/' + rs.Object + '&embedded=true', isImage);
+                    } else
+                        $scope.openViewer(rs.Object, isImage);
+                    //window.open('https://docs.google.com/gview?url=' + window.location.origin + '/' + rs.Object + '&embedded=true', '_blank');
+                }
+                else {
+
+                }
+            });
+        }
+        else {
+            dataservice.createTempFile(id, false, "", function (rs) {
+                rs = rs.data;
+                rs.Object = encodeURI(rs.Object);
+                if (rs.Error == false) {
+                    if (isImage == false) {
+                        var url = window.location.origin + '/' + rs.Object;
+                        window.open(url, '_blank')
+                        //$scope.openViewer("https://docs.google.com/gview?url=" + window.location.origin + '/' + rs.Object + '&embedded=true', isImage);
+                    }
+                    else
+                        $scope.openViewer(rs.Object, isImage);
+                    //window.open('https://docs.google.com/gview?url=' + window.location.origin + '/' + rs.Object + '&embedded=true', '_blank');
+                }
+                else {
+
+                }
+            });
+        }
+    }
+
+    $scope.getObjectFile = function (id) {
+        if (id === 0) {
+            App.toastrError(caption.COM_MSG_NOT_SUPPORT);
+            return null;
+        } else {
+            dataservice.getItemFile(id, true, function (rs) {
+                rs = rs.data;
+                if (rs.Error) {
+                    App.toastrError(rs.Title);
+                    return null;
+                }
+            });
+        }
+    };
+
+    $scope.openViewer = function (url, isImage) {
+        var data = {};
+        data.url = url;
+        data.isImage = isImage;
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolder + '/viewer.html',
+            controller: 'viewer',
+            backdrop: 'false',
+            size: '60',
+            resolve: {
+                para: function () {
+                    return data;
+                }
+            }
+        });
+    }
+
+    setTimeout(function () {
+        setModalDraggable(".modal-dialog");
+    }, 400);
+});
+app.controller('more-file-wf', function ($scope, $rootScope, $compile, dataservice) {
+    $scope.IsOpenModal=false;
+    var excel = ['.XLSM', '.XLSX', '.XLS'];
+        var document = ['.TXT'];
+        var word = ['.DOCX', '.DOC'];
+        var pdf = ['.PDF'];
+        var powerPoint = ['.PPS', '.PPTX', '.PPT'];
+        var image = ['.JPG', '.PNG', '.TIF', '.TIFF'];
+        
+    $scope.InitNotModal=function(WfCode){
+        var model = {
+            wfInstCode: WfCode
+        }
+        dataservice.getFileWfInst(model, function (rs) {
+            rs = rs.data;
+            $scope.lstFile = rs;
+            $scope.lstFile.forEach(element => {
+                element.iconClass = 'fas fa-align-justify pr5'; // Default icon class
+                element.iconColor = 'rgb(42,42,42)'; // Default icon color
+            
+                if (excel.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    element.iconClass = 'fa fa-file-excel-o pr5';
+                    element.iconColor = 'rgb(106,170,89)';
+                } else if (word.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    element.iconClass = 'fa fa-file-word-o pr5';
+                    element.iconColor = 'rgb(13,118,206)';
+                } else if (document.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    element.iconClass = 'fa fa-file-text-o pr5';
+                    element.iconColor = 'rgb(0,0,0)';
+                } else if (pdf.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    element.iconClass = 'fa fa-file-pdf-o pr5';
+                    element.iconColor = 'rgb(226,165,139)';
+                } else if (powerPoint.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    element.iconClass = 'fa fa-file-powerpoint-o pr5';
+                    element.iconColor = 'rgb(226,165,139)';
+                } else if (image.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    element.iconClass = 'fa fa-picture-o pr5';
+                    element.iconColor = 'rgb(42,42,42)';
+                }
+            });
+            
+        })
+    }
+
+    $scope.viewFile = function (id, fileType, cloudId) {
+        var excel = ['.XLSM', '.XLSX', '.XLS'];
+        var document = ['.TXT'];
+        var word = ['.DOCX', '.DOC'];
+        var pdf = ['.PDF'];
+        var image = ['.JPG', '.PNG', '.TIF', '.TIFF'];
+        if (excel.indexOf(fileType.toUpperCase()) !== -1) {
+            $scope.viewExcel(id, 2);
+        }
+        else if (word.indexOf(fileType.toUpperCase()) !== -1) {
+            $scope.viewWord(id, 2);
+        }
+        else if (pdf.indexOf(fileType.toUpperCase()) !== -1) {
+            $scope.viewPDF(id, 2);
+        }
+        else if (document.indexOf(fileType.toUpperCase()) !== -1 || image.indexOf(fileType.toUpperCase()) !== -1) {
+            $scope.view(id, fileType, cloudId);
+        }
+        else {
+            $scope.getObjectFile(0);
+        }
+    }
+
+    $scope.viewExcel = function (id, mode) {
+        dataservice.getItemFile(id, true, mode, function (rs) {
+            rs = rs.data;
+            if (rs.Error) {
+                if (rs.ID === -1) {
+                    //App.toastrError(rs.Title);
+                    setTimeout(function () {
+                        window.open('/Admin/Excel#', '_blank');
+                    }, 2000);
+                } else {
+                    App.toastrError(rs.Title);
+                }
+                return null;
+            } else {
+                window.open('/Admin/Excel#', '_blank');
+            }
+        });
+    };
+
+    $scope.viewWord = function (id, mode) {
+        if (id === 0) {
+            App.toastrError(caption.COM_MSG_NOT_SUPPORT);
+            return null;
+        } else {
+            dataservice.getItemFile(id, true, mode, function (rs) {
+                rs = rs.data;
+                if (rs.Error) {
+                    if (rs.ID === -1) {
+                        //App.toastrError(rs.Title);
+                        setTimeout(function () {
+                            window.open('/Admin/Docman#', '_blank');
+                        }, 2000);
+                    } else {
+                        App.toastrError(rs.Title);
+                    }
+                    return null;
+                } else {
+                    window.open('/Admin/Docman#', '_blank');
+                }
+            });
+        }
+    };
+
+    $scope.viewPDF = function (id, mode) {
+        if (id === 0) {
+            App.toastrError(caption.COM_MSG_NOT_SUPPORT);
+            return null;
+        } else {
+            dataservice.getItemFile(id, true, mode, function (rs) {
+                rs = rs.data;
+                if (rs.Error) {
+                    if (rs.ID === -1) {
+                        // App.toastrError(rs.Title);
                         setTimeout(function () {
                             window.open('/Admin/PDF#', '_blank');
                         }, 2000);

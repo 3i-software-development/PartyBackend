@@ -187,8 +187,9 @@ namespace III.Admin.Controllers
                         ordering = data.ordering,
                         gallery = "",
                         published = data.published.HasValue ? data.published.Value : true,
-                        multiple_language = data.multiple_language
-                    };
+                        multiple_language = data.multiple_language,
+                        json_editor = data.json_editor
+                };
 
                     _context.cms_items.Add(obj);
                     _context.SaveChanges();
@@ -265,6 +266,7 @@ namespace III.Admin.Controllers
                     model.published = data.published.HasValue ? data.published.Value : model.published;
                     model.modified = DateTime.Now;
                     model.ordering = data.ordering;
+                    model.json_editor = data.json_editor;
                     if (data.language != "CMS_LANGUAGE20211027001")
                     {
                         model.multiple_language = data.multiple_language;
@@ -327,6 +329,7 @@ namespace III.Admin.Controllers
             }
         }
         [HttpPost]
+        [AllowAnonymous]
         public object GetItem([FromBody] int id)
         {
             var obj = (from a in _context.cms_items
@@ -356,7 +359,8 @@ namespace III.Admin.Controllers
                            image_credits = a.image_credits,
                            a.hash_tag,
                            multiple_language = a.multiple_language,
-                           a.ordering
+                           a.ordering,
+                           a.json_editor
                        }).FirstOrDefault();
 
             RemoveUserInNotify(id.ToString(), EnumHelper<NotificationType>.GetDisplayValue(NotificationType.Cms), false);
@@ -368,7 +372,7 @@ namespace III.Admin.Controllers
         public object GetListItemByCateId(int catId)
         {
             var obj = (from a in _context.cms_items
-                       where a.cat_id == catId
+                       where a.cat_id == catId && a.published == true
                        orderby a.created descending
                        select new
                        {
@@ -382,7 +386,7 @@ namespace III.Admin.Controllers
                            alias = a.alias,
                            created = a.created.HasValue ? a.created.Value.ToString("dd/MM/yyyy") : "",
                            
-                       }).Take(3).ToList();
+                       }).ToList();
 
             RemoveUserInNotify(catId.ToString(), EnumHelper<NotificationType>.GetDisplayValue(NotificationType.Cms), false);
 
@@ -861,6 +865,8 @@ namespace III.Admin.Controllers
             public string Category { get; set; }
             public string hash_tag { get; set; }
             public string multiple_language { get; set; }
+
+            public string json_editor { get; set; }
         }
 
         public class CMSItemsJTableModel : JTableModel

@@ -8,11 +8,9 @@
             <div class="maxw991">
                 <div class="form-group">
                     <div class="box-search -adv ">
-                        <input style="background-color: #fff" type="text" class="form-control search-input" placeholder="Nhập từ kho&aacute; t&igrave;m kiếm" id="searchKeyWord" />
-                        <div class="adv" data-toggle="modal" data-target="#advsearch" onclick="showAdvSearch()">
-                            T&igrave;m kiếm n&acirc;ng cao
-                        </div>
-                        <button style="background-color: #fff" class="btn btn-search" onclick="searchProcedure()"> <span class="-ap icon-ion-ios-search-strong icon"></span> </button>
+                        <input style="background-color: #fff" type="text" ng-model="searchTitle" class="form-control search-input" placeholder="Nhập từ kho&aacute; t&igrave;m kiếm" id="searchKeyWord" />
+                        
+                        <button style="" class="btn btn-search" ng-click="searchProcedure()"> <span class="fa fa-search"></span> </button>
                     </div>
                 </div>
                 <div class="actions">
@@ -100,27 +98,13 @@
         <div class="container">
             <div class="list-news" id="new_post">
                 <div class="d-flex flex-row">
-                    <div class="item">
+                    <div class="item" ng-repeat="x in CmsItems.slice(0, 3)">
                         <div class="wrap">
-                            <a href="" class="post-title">{{CmsItems[0].title}}</a>
-                            <p class="post-date">Ngày {{CmsItems[0].created}}</p>
-
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="wrap">
-                            <a href="" class="post-title">{{CmsItems[1].title}}</a>
-                            <p class="post-date">Ngày {{CmsItems[1].created}}</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="wrap">
-                            <a href="" class="post-title">{{CmsItems[2].title}}</a>
-                            <p class="post-date">Ngày {{CmsItems[2].created}}</p>
+                            <a href="/News?id={{x.id}}" class="post-title">{{x.title}}</a>
+                            <p class="post-date">Ngày {{x.created}}</p>
                         </div>
                     </div>
                 </div>
-
 
             </div>
         </div>
@@ -132,13 +116,13 @@
             <div class="row">
 
                 <div class="col-8" id="listTitle">
-                    <div class="my-3 px-3 pt-2" style="background-color: #f5f5f5; ">
+                    <div class="my-3 px-3 pt-2" style="background-color: #f5f5f5;padding-bottom:2px; ">
                         <p style="color: black"><a href="">Giải đáp các thắc mắc xung quanh việc kết nạp Đảng và liên hệ trợ giúp</a></p>
                     </div>
-                    <div class="my-3 px-3 pt-2" style="background-color: #f5f5f5 ">
+                    <div class="my-3 px-3 pt-2" style="background-color: #f5f5f5; padding-bottom: 2px;">
                         <p style="color: black"><a href=""> Hướng dẫn sử dụng tính năng hồ sơ điện tử khi kết nạp Đảng</a></p>
                     </div>
-                    <div class="my-3 px-3 pt-2" style="background-color: #f5f5f5 ">
+                    <div class="my-3 px-3 pt-2" style="background-color: #f5f5f5; padding-bottom: 2px; ">
                         <p style="color: black">Góp ý, đánh giá</p>
                     </div>
                 </div>

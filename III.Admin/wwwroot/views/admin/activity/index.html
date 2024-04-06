@@ -109,6 +109,20 @@
         background-color: #EEEEEE;
         padding-left: 10px;
     }
+
+    @media (max-width:600px){
+        .activity-search{
+            width:100vw;
+            display:flex;
+            padding-bottom:5px;
+        }
+        .activity-search p{
+            display:none;
+        }
+            .activity-search .input-group-btn{
+                transform:translateY(0px)!important;
+            }
+    }
 </style>
 
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
@@ -131,18 +145,16 @@
                 </span>
             </div>
         </div>-->
-        <div class="col-md-8">
+        <div class="col-md-8 d-flex activity-search">
             <!--<label class="fw600 text-underline">{{'ACT_LBL_CATEGORY_NAME'| translate}}</label>-->
             <div class="input-group br24">
                 <input type="text" name="Name" ng-model="model.Name" placeholder="{{'ACT_LBL_CATEGORY_NAME'| translate}}..." class="form-control" ng-keydown="($event.keyCode == 13) && reloadActivity()" />
-                <span class="input-group-btn">
+                <span class="input-group-btn" style="transform:translateY(-16px); padding-right:5px">
                     <button type="button" ng-click="model.Name=''" class="btn btn-default no-shadow" style="">
                         <span class="glyphicon glyphicon-remove"></span>
                     </button>
                 </span>
             </div>
-        </div>
-        <div class="col-md-4 pr-0">
             <div class="btn-group actions">
                 <div class="text-center mt10 pr-2" ng-click="reloadActivity()">
                     <a class1="btn btn-icon-only btn-circle btn-outline purple-custom" ng-click="search()">
@@ -151,6 +163,9 @@
                     <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
                 </div>
             </div>
+        </div>
+        <div class="col-md-4 pr-0">
+  
             <div class="btn-group actions d-flex pull-right">
                 <div class="text-center mt10 pr-2">
                     <a class1="btn btn-icon-only btn-circle btn-outline green-custom" ng-click="addWorkflow()">
@@ -856,7 +871,7 @@
                                             <div class="pt-0" style="height: 200px;">
                                                 <div class="col-md-11 pr-0">
                                                     <label class="label-lg-content">{{'Bộ dữ liệu kết quả'|translate}}</label>
-                                                    <ui-select ng-model="model.ListGroupData" multiple theme="bootstrap" class="h-100 mh-100 br12">
+                                                    <ui-select ng-model="modelEditActivity.ListGroupData" multiple theme="bootstrap" class="h-100 mh-100 br12">
                                                         <ui-select-match placeholder="{{'Bộ dữ liệu kết quả'|translate}}...">{{$item.Name}}</ui-select-match>
                                                         <ui-select-choices repeat="x.Code as x in lstAttrGroup | filter:$select.search">
                                                             {{x.Name}}
@@ -1107,3 +1122,6 @@
     <pre id="json" ng-show="isShowJson" class="json_div" style="overflow:auto;position:absolute; top:140px; right:10px; width:350px; height:500px;background:white;border:1px solid gray"></pre>
     
 </div>
+<script>
+
+</script>

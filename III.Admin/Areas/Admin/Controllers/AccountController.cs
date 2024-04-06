@@ -35,6 +35,7 @@ namespace III.Admin.Controllers
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly ILanguageService _languageService;
         private readonly IStringLocalizer<AccountLoginController> _stringLocalizer;
+        private readonly IEmailConfiguration _emailConfiguration;
 
 
         public AccountController(
@@ -45,8 +46,8 @@ namespace III.Admin.Controllers
             IHostingEnvironment hostingEnvironment,
             ILogger<AccountController> logger,
             ILanguageService languageService,
-            IStringLocalizer<AccountLoginController> stringLocalizer
-            )
+            IStringLocalizer<AccountLoginController> stringLocalizer,
+            IEmailConfiguration emailConfiguration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -56,6 +57,7 @@ namespace III.Admin.Controllers
             _languageService = languageService;
             _logger = logger;
             _stringLocalizer = stringLocalizer;
+            _emailConfiguration = emailConfiguration;
         }
 
         [TempData]
@@ -415,8 +417,11 @@ namespace III.Admin.Controllers
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-
-                var msg = CommonUtil.SendMail("support@3i.com.vn", user.Email, "Forgot password", callbackUrl, "mail.3i.com.vn", 587, "support@3i.com.vn", "Vietnam@3i");
+                var email = _emailConfiguration.SmtpUsername;
+                var pass= _emailConfiguration.SmtpPassword;
+                var port = _emailConfiguration.SmtpPort;
+                var server = _emailConfiguration.SmtpServer;
+                var msg = CommonUtil.SendMail(email, user.Email, "Forgot password", callbackUrl, server, port, email, pass);
                 if (!msg.Error)
                     //return RedirectToAction(nameof(ForgotPasswordConfirmation));
                     return Redirect("ForgotPasswordConfirmation");

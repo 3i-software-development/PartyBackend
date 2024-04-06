@@ -51,6 +51,7 @@ namespace III.Admin.Controllers
             _stringLocalizer = stringLocalizer;
             _parameterService = parameterService;
         }
+
         [Authorize]
         public IActionResult Index()
         {
@@ -78,6 +79,25 @@ namespace III.Admin.Controllers
         }
 
 
+        //[AllowAnonymous]
+        //public async Task<IActionResult> CreateAccount()
+        //{
+        //    var msg = new JMessage() { Error = false };
+        //    for (int i=0; i<20; i++)
+        //    {
+        //        var user = new AspNetUser
+        //        {
+        //            UserName = "truongchibo" + i,
+        //            Email = "truongchibo"+i+"@gmail.com",
+        //            GivenName = "Trưởng chi bộ" + i,
+        //            Area = "User",
+        //            Active = true,
+        //        };
+        //        var result = await _userManager.CreateAsync(user,"123456");
+        //    }
+        //    return Ok(msg);
+        //}
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> Register2([FromBody] RegisterDto model)
@@ -92,14 +112,23 @@ namespace III.Admin.Controllers
                     msg.Title = "Tài khoản đã tồn tại";
                     return Ok(msg);
                 }
-                var user = new AspNetUser {
+                var user = await _userManager.FindByEmailAsync(model.Email);
+                //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                if (user != null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Email đã tồn tại";
+                    return Ok(msg);
+                }
+                user = new AspNetUser {
                     UserName = model.UserName,
                     Email = model.Email,
                     GivenName = model.GivenName,
                     PhoneNumber = model.PhoneNumber,
                     Gender = model.Gender,
                     Area = "User",
-                    Active=true
+                    Active=true,
+                    RegisterJoinGroupCode=model.RegisterJoinGroupCode
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -333,6 +362,21 @@ namespace III.Admin.Controllers
             var user = _context.PartyAdmissionProfiles.ToList();
             return user;
         }
+
+        public object GetGroupUser()
+        {
+            var query = (from x in _context.AdGroupUsers
+                         where (x.ParentCode.Equals("NHOM_CHI_BO")
+                                  && x.IsDeleted == false)
+                         select new
+                         {
+                             Code = x.GroupUserCode,
+                             x.Title
+                         });
+
+            return query.ToList();
+        }
+
         public async Task<object> GetPartyAdmissionProfileByResumeNumber(string resumeNumber)
         {
             var user = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.IsDeleted == false && x.ResumeNumber == resumeNumber);
@@ -535,6 +579,21 @@ namespace III.Admin.Controllers
             var rs = _context.WarningDisciplineds.Where(p => p.IsDeleted == false && p.ProfileCode == profileCode).ToList();
             return rs;
         }
+        public object GetProvince()
+        {
+            var rs = _context.Provinces.ToList();
+            return rs;
+        }
+        public object GetDistrictByProvinceId(int provinceId)
+        {
+            var rs = _context.Districts.Where(p =>  p.provinceId == provinceId).ToList();
+            return rs;
+        }
+        public object GetWardByDistrictId(int districtId)
+        {
+            var rs = _context.Wards.Where(p => p.districtId == districtId).ToList();
+            return rs;
+        }
         #endregion
 
         #region Update
@@ -658,6 +717,9 @@ namespace III.Admin.Controllers
 
             public string Username { get; set; }
             public string Status { get; set; }
+            public string GroupUserCode { get; set; }
+            public string PlaceWorking { get; set; }
+
         }
         [HttpPut]
         public async Task<object> UpdatePartyAdmissionProfile([FromBody] ModelViewPAMP model)
@@ -713,7 +775,10 @@ namespace III.Admin.Controllers
                 obj.CreatedPlace = model.CreatedPlace;
                 obj.UnderPostGraduateEducation = model.UnderPostGraduateEducation;
                 obj.WfInstCode = model.WfInstCode;
-               
+                obj.GroupUserCode = model.GroupUserCode;
+                obj.PlaceWorking= model.PlaceWorking;
+
+
                 _context.PartyAdmissionProfiles.Update(obj);
                 _context.SaveChanges();
 
@@ -1207,6 +1272,8 @@ namespace III.Admin.Controllers
                         + _context.PartyAdmissionProfiles.Count(x => x.ResumeNumber.Contains(ResumeCode));
                     obj.JsonStaus = new List<JsonLog>();
                     obj.JsonProfileLinks = new List<JsonFile>();
+                    obj.GroupUserCode = model.GroupUserCode;
+                    obj.PlaceWorking = model.PlaceWorking;
 
                     _context.PartyAdmissionProfiles.Add(obj);
 					_context.SaveChanges();
@@ -2288,6 +2355,7 @@ namespace III.Admin.Controllers
     public class RegisterDto
     {
         [Required]
+        [RegularExpression(@"^[0-9]{12}$", ErrorMessage = "Số căn cước phải có đúng 12 chữ số.")]
         public string UserName { get; set; }
 
         [Required]
@@ -2308,6 +2376,8 @@ namespace III.Admin.Controllers
 
         [Required]
         public string GivenName { get; set; }
+        [Required]
+        public string RegisterJoinGroupCode { get; set; }
     }
 
 

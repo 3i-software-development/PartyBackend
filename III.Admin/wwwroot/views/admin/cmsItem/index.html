@@ -1,4 +1,69 @@
 ﻿<style>
+    @media only screen and (max-width: 768px) {
+        .btn-group.actions .text-center {
+            margin-right: 0; /* Xóa margin bên phải */
+            margin-bottom: 5px; /* Tạo khoảng cách dưới */
+        }
+
+            .btn-group.actions .text-center a {
+                padding: 5px; /* Điều chỉnh padding của nút */
+            }
+
+            .btn-group.actions .text-center p {
+                margin-top: 5px; /* Điều chỉnh khoảng cách giữa nút và văn bản */
+            }
+
+        .title-cat {
+            font-size: 10px;
+        }
+
+        .form-control.ui-select-search.ng-pristine.ng-valid.ng-empty.ng-touched, .table td, .table th {
+            font-size: 10px !important;
+        }
+
+        .nav-tabs .nav-link, .nav-tabs a {
+            font-size: 12px;
+        }
+
+        #searchBox {
+            width: calc(100% - 20px);
+            right: 10px;
+        }
+    }
+
+    /* CSS dành cho các thiết bị có kích thước màn hình nhỏ hơn hoặc bằng 576px */
+    @media only screen and (max-width: 576px) {
+        .btn-group.actions .text-center {
+            margin-right: 0; /* Xóa margin bên phải */
+            margin-bottom: 5px; /* Tạo khoảng cách dưới */
+        }
+
+            .btn-group.actions .text-center a {
+                padding: 5px; /* Điều chỉnh padding của nút */
+            }
+
+            .btn-group.actions .text-center p {
+                margin-top: 5px; /* Điều chỉnh khoảng cách giữa nút và văn bản */
+            }
+
+        .title-cat {
+            font-size: 9px;
+        }
+
+        .form-control.ui-select-search.ng-pristine.ng-valid.ng-empty.ng-touched, .table td, .table th {
+            font-size: 9px !important;
+        }
+
+        .nav-tabs .nav-link, .nav-tabs a {
+            font-size: 10px;
+        }
+
+        #searchBox {
+            width: calc(100% - 10px);
+            right: 5px;
+        }
+    }
+
     .app-content {
         width: 100%;
     }
@@ -60,6 +125,7 @@
         .tab-common .nav-tabs .nav-link, .nav-tabs a:hover {
             color: black !important;
         }
+
     #contentMain {
         position: relative;
     }
@@ -75,12 +141,56 @@
             border: 1px solid #80808057 !important;
             box-shadow: 1px 3px 8px 0px #888888c2;
         }
+
     .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top {
         z-index: 1050 !important
     }
+
+    .navbar {
+        transition: all 0.4s ease;
+    }
+
+    /* Định dạng nút toggle */
+    .navbar-toggler {
+        border: none;
+    }
+
+        /* Hiệu ứng khi di chuột qua nút toggle */
+        .navbar-toggler:hover {
+            background-color: transparent;
+        }
+
+        /* Định dạng icon trong nút toggle */
+        .navbar-toggler .fas {
+            font-size: 1.2rem; /* Điều chỉnh kích thước của icon */
+        }
+
+    /* Định dạng các mục trong thanh navbar */
+    .navbar-nav .nav-link {
+        padding: 8px 15px; /* Điều chỉnh khoảng cách bên trong các mục */
+        transition: all 0.3s ease; /* Hiệu ứng chuyển động */
+    }
+
+        /* Hiệu ứng khi di chuột qua các mục trong thanh navbar */
+        .navbar-nav .nav-link:hover {
+            background-color: #f8f9fa; /* Màu nền khi di chuột qua */
+            color: #007bff; /* Màu chữ khi di chuột qua */
+        }
+
+    /* Định dạng cho các mục đã chọn trong thanh navbar */
+    .navbar-nav .nav-item.active .nav-link {
+        background-color: #007bff; /* Màu nền của mục đã chọn */
+        color: #fff; /* Màu chữ của mục đã chọn */
+    }
+
+    @media (max-width:600px){
+        .btn-group{
+            z-index:9!important;
+        }
+    }
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
-<div class="btn-group actions pt5 pb-1 pull-right d-flex mr5" style="margin-top: -50px;">
+<div class="btn-group actions pt5 pb-1 pull-right d-flex mr5" style="margin-top: -5px;">
     <div class="pr-2 text-center mt10">
         <a ng-click="showSearch()" class1="btn btn-icon-only btn-circle btn-outline gold-custom">
             <span><i class="fas fa-search fs30"></i></span>
@@ -104,25 +214,25 @@
                         <i ng-click="showSearch()" style="margin-top:9px !important; margin-right:5px !important; font-size:25px" class="fas fa-times pull-right h28 w28 close-input-search" role="button" title="Ẩn tìm kiếm"></i>
                     </div>
                     <!--<div class="col-md-4 pr-0">
-        <label class="fw600 text-underline">{{'CMS_ITEM_CURD_LBL_CATEGORY' | translate}}</label>
-        <div class="input-group search-group">
-            <ui-select tagging ng-model="model.Category" theme="bootstrap" ng-change="reload()">
-                <ui-select-match placeholder="{{'CMS_ITEM_COMBO_CATEGORY' | translate}}..."><b class="text-brown">{{$select.selected.Title}}</b></ui-select-match>
-                <ui-select-choices repeat="x.Id as x  in listParenCat | filter: $select.search">
-                    <div style="padding-left: {{30 * x.Level}}px">
-                        <i ng-show="x.HasChild" class="fa fa-folder-open icon-state-warning"></i>
-                        <i ng-show="!x.HasChild" class="fa fa-folder text-info"></i>
-                        {{x.Title}}
-                    </div>
-                </ui-select-choices>
-            </ui-select>
-            <span class="input-group-btn">
-                <button type="button" ng-click="model.Category='';reload()" class="btn btn-default no-shadow" style="">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
-            </span>
-        </div>
-    </div>-->
+                        <label class="fw600 text-underline">{{'CMS_ITEM_CURD_LBL_CATEGORY' | translate}}</label>
+                        <div class="input-group search-group">
+                            <ui-select tagging ng-model="model.Category" theme="bootstrap" ng-change="reload()">
+                                <ui-select-match placeholder="{{'CMS_ITEM_COMBO_CATEGORY' | translate}}..."><b class="text-brown">{{$select.selected.Title}}</b></ui-select-match>
+                                <ui-select-choices repeat="x.Id as x  in listParenCat | filter: $select.search">
+                                    <div style="padding-left: {{30 * x.Level}}px">
+                                        <i ng-show="x.HasChild" class="fa fa-folder-open icon-state-warning"></i>
+                                        <i ng-show="!x.HasChild" class="fa fa-folder text-info"></i>
+                                        {{x.Title}}
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                            <span class="input-group-btn">
+                                <button type="button" ng-click="model.Category='';reload()" class="btn btn-default no-shadow" style="">
+                                    <span class="glyphicon glyphicon-remove"></span>
+                                </button>
+                            </span>
+                        </div>
+                    </div>-->
                     <div class="col-lg-6 col-md-12 pr-0">
                         <label class="fw600 text-underline">{{'CMS_ITEM_CURD_LBL_TITLE' | translate}}</label>
                         <div class="input-group">
@@ -202,27 +312,50 @@
 
     </div>
 </div>
-<div class="row">
-    <div class="col-md-3 pl30" style="width: 20% !important ">
-        <div class="row" style="padding: 10px;border: 1px solid #e5dfdf !important;height:620px;overflow-y: auto;">
-            <div ng-repeat="x in listParenCat" ng-click="model.Category=x.Id;chooseCategory(x.Id)" role="button" ng-class="{'cat-active':x.Active}">
-                <div style="padding-left: {{30 * x.Level}}px" class="title-cat">
-                    <i ng-show="x.HasChild" class="fa fa-folder-open icon-state-warning"></i>
-                    <i ng-show="!x.HasChild" class="fa fa-folder text-info"></i>
-                    {{x.Title}}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-6 pl-2 pr-2">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="margin-top:40px">
+                    <i class="fas fa-bars"></i> <!-- Icon sử dụng Font Awesome -->
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row" style="padding: 10px; border: 1px solid #e5dfdf; height: auto; overflow-y: auto;">
+                                    <!-- Nội dung của thanh navbar -->
+                                    <div ng-repeat="x in listParenCat" ng-click="model.Category=x.Id;chooseCategory(x.Id)" role="button" ng-class="{'cat-active':x.Active}">
+                                        <div style="padding-left: {{15 * x.Level}}px" class="title-cat">
+                                            <i ng-show="x.HasChild" class="fa fa-folder-open icon-state-warning"></i>
+                                            <i ng-show="!x.HasChild" class="fa fa-folder text-info"></i>
+                                            {{x.Title}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <div class="col-lg-9 col-md-6 pl-2 pr-2">
+            <div class="container-fluid mt-2">
+                <div class="row">
+                    <div class="col-md-12">
+                        <table class="table dataTable table-hover table-striped"
+                               datatable
+                               dt-options="dtOptions"
+                               dt-columns="dtColumns"
+                               dt-instance="dtInstance"
+                               id="tblData"></table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-9" style="width: 80% !important ; font-family: Open Sans !important ; font-size: 11px">
-        <table class="table dataTable table-hover table-striped"
-               datatable
-               dt-options="dtOptions"
-               dt-columns="dtColumns"
-               dt-instance="dtInstance"
-               id="tblData"></table>
-    </div>
 </div>
+
 <script>
     setTimeout(function () {
         let isDown = false;

@@ -1601,7 +1601,7 @@ namespace III.Admin.Controllers
         }
 
         [HttpPost]
-        public JsonResult DeleteFile([FromBody] int id)
+        public object DeleteFile([FromBody] int id)
         {
             var msg = new JMessage { Error = false, Title = "" };
             try
@@ -1639,7 +1639,7 @@ namespace III.Admin.Controllers
                 msg.Object = ex.Message;
                 msg.Title = _sharedResources["COM_MSG_ERR"];//"Xóa file lỗi";
             }
-            return Json(msg);
+            return msg;
         }
 
         [HttpGet]

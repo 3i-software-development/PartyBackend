@@ -1113,4 +1113,10 @@
   <data name="EDMSR_CURL_BL_PACK_IN" xml:space="preserve">
     <value>ການຫຸ້ມຫໍ່ເຂົ້າ</value>
   </data>
+  <data name="EDMSR_TAB_FILE_HARD_ADDRESS" xml:space="preserve">
+    <value>ທີ່ຢູ່ໄຟລ໌ແຂງ</value>
+  </data>
+  <data name="EDMSR_TAB_FILE_HARD_CODE" xml:space="preserve">
+    <value>ລະຫັດໄຟລ໌ແຂງ</value>
+  </data>
 </root>

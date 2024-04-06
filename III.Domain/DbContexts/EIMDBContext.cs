@@ -31,6 +31,13 @@ namespace ESEIM.Models
 		public virtual DbSet<SwCustomerReq> SwCustomerReqs { get; set; }
         public virtual DbSet<SwModuleResource> SwModuleResources { get; set; }
         public virtual DbSet<CustomerModuleRequest> CustomerModuleRequests { get; set; }
+
+        public virtual DbSet<Province> Provinces { get; set; }
+
+        public virtual DbSet<District> Districts { get; set; }
+
+        public virtual DbSet<Ward> Wards { get; set; }
+
         /// <summary>
         /// Define Status Group
         /// </summary>

@@ -242,6 +242,8 @@
     <script src="~/lib/assets/global/plugins/angular-qrcode/angular-qrcode.js"></script>
     <script src="~/lib/assets/global/plugins/angular-ui-tab-scroll/angular-ui-tab-scroll.js"></script>
 
+    <script src="https://cdn.ckeditor.com/ckeditor5/41.2.0/super-build/ckeditor.js"></script>
+
     @RenderSection("plugin_style", false)
     @RenderSection("plugin_script", false)
     <script src="/lib/assets/global/scripts/app.js" type="text/javascript"></script>
@@ -252,6 +254,7 @@
     </script>
 </head>
 <body data-open="click" data-menu="vertical-menu" data-col="2-columns" class="vertical-layout vertical-menu 2-columns fixed-navbar" id="main-content-vatco">
+    
     @await Html.PartialAsync("_Partial_Header")
     @await Html.PartialAsync("_Partial_SidebarLeft")
     @await Html.PartialAsync("_Partial_SidebarRight")

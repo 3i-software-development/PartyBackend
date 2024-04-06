@@ -89,7 +89,7 @@
         }
     }
 
-    @media (max-width: 736px) {
+   /* @media (max-width: 736px) {
         .nav-left {
             width: 0%;
             float: left;
@@ -139,7 +139,7 @@
         .navbar-wrapper {
             background-image: url(/images/menu/Background.png) !important;
         }
-    }
+    }*/
 
     @media (min-width: 768px) and (max-width: 1024px) {
         .title-cms {
@@ -180,10 +180,10 @@
 
     /*CSS SCROLL*/
     /* width */
-    ::-webkit-scrollbar {
+   /* ::-webkit-scrollbar {
         width: 11px;
     }
-
+*/
     /* Track */
     ::-webkit-scrollbar-track {
         box-shadow: inset 0 0 1px grey;
@@ -249,6 +249,38 @@
         height:auto;
         overflow-y: auto !important;
     }
+    /*footer*/
+    nav-left, .nav-right {
+        width: 50%; 
+        float: left; 
+    }
+
+   
+    @media (max-width: 768px) {
+        .nav-right {
+            width: 100%;
+        }
+        .nav-left{
+            width:100%;
+           
+            margin-bottom:10px;
+        }
+        .input-search{
+            margin-bottom:30px;
+            padding-left:0 !important;
+        }
+        
+    }
+    @media(max-width:450px){
+        .nav-right {
+            width: 90%; 
+        }
+        .nav-right-content{
+            width:95vw!important;
+        }
+    }
+    
+    
 </style>
 <!--<div class="nav-left">
     <div class="nav-left-content">
@@ -261,11 +293,12 @@
     </div>
 </div>-->
 
+
 <div class="row">
     <div class="col-md-6" id="breadcrumb-sub">
     </div>
     <div class="col-md-4 d-flex">
-        <div class="input-group mr10">
+        <div class="input-search input-group mr10">
             <input ng-model="model.Content" class="form-control br24" type="text" placeholder="{{'USER_MANUAL_CONNENT_SEARCH' | translate }}" ng-keydown="($event.keyCode == 13) &amp;&amp; search()">
         </div>
         <div class="btn-group actions d-flex pull-right" style="flex-basis: 60px">
@@ -281,8 +314,8 @@
 </div>
 <div class="nav-left">
     <div class="input-group br24 search-group">
-        <div class="input-group br24 full-height">
-            <ui-select tagging ng-model="model.parent" theme="bootstrap" ng-change="reloadCmsCat(true)">
+        <div class=" input-group br24 full-height">
+            <ui-select class="input-content" tagging ng-model="model.parent" theme="bootstrap" ng-change="reloadCmsCat(true)">
                 <ui-select-match placeholder="{{'CMS_CAT_TXT_PARENT' | translate}}..."><div class="bold">{{$select.selected.Title}}</div></ui-select-match>
                 <ui-select-choices repeat="x.Id as x  in listParenCat | filter: $select.search">
                     <div style="padding-left: {{30 * x.Level}}px">
@@ -325,7 +358,7 @@
     </div>
 </div>
 <div class="nav-right">
-    <div class="nav-right-content pr-0" ng-show="markId != 0">
+    <div class="pagination-text nav-right-content pr-0" ng-show="markId != 0" style="width:200px">
         <a class="title-cms"><i ng-click="backMobile()" class="fa fa-caret-left pr10 pl5 fs20"></i>{{title}}</a>
         <div id="viewContent">
         </div>
@@ -359,7 +392,9 @@
 
         //$('.tree').treegrid('collapseAll');
     }, 1000);
+
 </script>
+
 
 
 

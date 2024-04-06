@@ -1,0 +1,335 @@
+﻿@model III.Admin.Controllers.ModelViewPost
+@{
+    ViewData["Title"] = @Model.title;
+    Layout = "~/Views/Shared/_LayoutPage.cshtml"; ;
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor.js Example</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@@editorjs/editorjs@latest/dist/editorjs.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+
+<body>
+    <style>
+        .edit-box {
+            width: 50%;
+            height: 100%;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            overflow: auto;
+        }
+
+        ol,
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 2px;
+            margin-left: 20px;
+        }
+
+        blockquote {
+            background-color: #f9f9f9;
+            border-left: 10px solid #ccc;
+            margin: 1.5em 10px;
+            padding: 0.5em 10px;
+        }
+
+        footer {
+            margin-top: 0.5em;
+            text-align: right;
+            font-style: italic;
+        }
+
+        .warning {
+            border: 2px solid #f00;
+            background-color: #ffe6e6;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+            .warning strong {
+                color: #f00;
+            }
+
+        ul.checklist {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+            ul.checklist li {
+                margin-bottom: 5px;
+            }
+
+                ul.checklist li.checked {
+                    text-decoration: line-through;
+                }
+
+        .tit-page {
+            text-align: center;
+        }
+
+        .save-btn {
+            transform: translateX(670%);
+            margin-top: 10px;
+        }
+
+        .ce-toolbar__settings-btn, .ce-toolbar__plus, .tc-add-column, .tc-add-row, .tc-toolbox {
+            display: none
+        }
+
+        .ce-table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+            .ce-table td, .ce-table th {
+                border: 1px solid #dddddd;
+                text-align: left;
+                padding: 8px;
+            }
+
+            .ce-table th {
+                background-color: #f2f2f2;
+            }
+
+        .ce-link {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+    <div id="editorjs">
+    </div>
+    <div id="editorjs-content">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/editorjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/paragraph@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/list@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/header@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/image@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/embed@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/quote@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/delimiter@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/warning@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/code@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/checklist@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/table@latest"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked"></script>
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-text-color-plugin@2.0.4/dist/bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@calumk/editorjs-nested-checklist@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-header-with-alignment@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/editorjs-paragraph-with-alignment@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/raw@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@@editorjs/link@latest"></script>
+    <script src="~/js/editorjs/tool.js"></script>
+    <script>
+        var outputData = @Json.Serialize(Model.full_text.ToString());
+        displayHTML(outputData);
+
+        function displayHTML(editorData) {
+            const editorContent = document.getElementById('editorjs-content');
+            var model = JSON.parse(editorData)
+            console.log(model)
+            convertToHTML(model, editorContent);
+        }
+
+        function convertToHTML(editorData, container) {
+            if (editorData && editorData.blocks && Array.isArray(editorData.blocks)) {
+                editorData.blocks.forEach(block => {
+                    const blockElement = document.createElement('div');
+                    blockElement.classList.add('ce-block'); // Thêm class CSS của Editor.js cho block
+
+                    // Xử lý từng loại block
+                    switch (block.type) {
+                        case 'paragraph':
+                            blockElement.textContent = block.data.text;
+                            blockElement.classList.add('ce-paragraph'); // Thêm class cho đoạn văn bản
+                            blockElement.style.fontSize = '18px';
+                            blockElement.style.wordWrap = 'break-word';
+                            blockElement.style.marginLeft = '100px';
+                            blockElement.style.marginRight = '100px';
+                            switch (block.data.alignment) {
+                                case 'left':
+                                    blockElement.style.textAlign = 'left';
+                                    break;
+                                case 'center':
+                                    blockElement.style.textAlign = 'center';
+                                    break;
+                                case 'right':
+                                    blockElement.style.textAlign = 'right';
+                                    break;
+                                case 'justify':
+                                    blockElement.style.textAlign = 'justify';
+                                    break;
+                                default:
+                                    blockElement.style.textAlign = 'left'; // Căn trái mặc định
+                            }
+                            break;
+                        case 'header':
+                            const headerElement = document.createElement('h' + block.data.level);
+                            headerElement.textContent = block.data.text;
+                            blockElement.appendChild(headerElement);
+                            blockElement.classList.add('ce-header'); // Thêm class cho header
+                            switch (block.data.alignment) {
+                                case 'left':
+                                    blockElement.style.textAlign = 'left';
+                                    break;
+                                case 'center':
+                                    blockElement.style.textAlign = 'center';
+                                    break;
+                                case 'right':
+                                    blockElement.style.textAlign = 'right';
+                                    break;
+                                case 'justify':
+                                    blockElement.style.textAlign = 'justify';
+                                    break;
+                                default:
+                                    blockElement.style.textAlign = 'left'; // Căn trái mặc định
+                            }
+                            break;
+                        case 'table':
+                            const tableElement = document.createElement('table');
+                            block.data.content.forEach(rowData => {
+                                const rowElement = document.createElement('tr');
+                                rowData.forEach(cellData => {
+                                    const cellElement = document.createElement('td');
+                                    cellElement.textContent = cellData;
+                                    rowElement.appendChild(cellElement);
+                                });
+                                tableElement.appendChild(rowElement);
+                            });
+                            blockElement.appendChild(tableElement);
+                            blockElement.classList.add('ce-table'); // Thêm class cho table
+                            break;
+                        case 'image':
+                            const imageElement = document.createElement('img');
+                            imageElement.src = block.data.file.url; // Assume image URL is in the "url" field
+                            imageElement.alt = block.data.caption; // Assume caption is in the "caption" field
+                            blockElement.appendChild(imageElement);
+                            blockElement.classList.add('ce-image'); // Thêm class cho image
+                            break;
+                        case 'list':
+                            const listType = block.data.style === 'ordered' ? 'ol' : 'ul'; // Xác định loại danh sách là ordered hoặc unordered
+                            const listElement = document.createElement(listType); // Tạo một thẻ ul hoặc ol tương ứng
+                            block.data.items.forEach(item => {
+                                const listItem = document.createElement('li'); // Tạo một thẻ li cho mỗi item trong danh sách
+                                listItem.textContent = item; // Đặt nội dung của thẻ li là item trong danh sách
+                                listElement.appendChild(listItem); // Thêm thẻ li vào thẻ ul hoặc ol
+                            });
+                            blockElement.appendChild(listElement); // Thêm thẻ ul hoặc ol vào block element
+                            blockElement.classList.add('ce-block'); // Thêm class cho danh sách
+                            break;
+
+                        case 'quote':
+                            const quoteElement = document.createElement('blockquote');
+                            quoteElement.textContent = block.data.text; // Assume quote text is in the "text" field
+                            if (block.data.caption) {
+                                const captionElement = document.createElement('footer');
+                                captionElement.textContent = block.data.caption; // Assume caption is in the "caption" field
+                                quoteElement.appendChild(captionElement);
+                            }
+                            blockElement.appendChild(quoteElement);
+                            blockElement.classList.add('ce-quote'); // Thêm class cho quote
+                            break;
+                        case 'delimiter':
+
+                            blockElement.classList.add('ce-delimiter'); // Thêm class cho delimiter
+                            break;
+                        case 'warning':
+                            const warningElement = document.createElement('div');
+                            warningElement.classList.add('warning'); // Thêm class cho warning
+                            const warningMessage = document.createElement('p');
+                            warningMessage.textContent = block.data.message; // Assume message is in the "message" field
+                            warningElement.appendChild(warningMessage);
+                            if (block.data.title) {
+                                const warningTitle = document.createElement('strong');
+                                warningTitle.textContent = block.data.title; // Assume title is in the "title" field
+                                warningElement.insertBefore(warningTitle, warningMessage); // Chèn tiêu đề trước thông báo
+                            }
+                            blockElement.appendChild(warningElement);
+                            break;
+                        case 'code':
+                            const codeWrapper = document.createElement('div');
+                            codeWrapper.innerHTML = block.data.code; // Assume code content is in the "code" field
+                            blockElement.appendChild(codeWrapper);
+                            blockElement.classList.add('ce-code'); // Thêm class cho block code
+                            break;
+                        case 'checklist':
+                            const checklistElement = document.createElement('ul');
+                            block.data.items.forEach(item => {
+                                const checkboxElement = document.createElement('input');
+                                checkboxElement.type = 'checkbox';
+                                const labelElement = document.createElement('label');
+                                labelElement.textContent = item.text;
+                                labelElement.prepend(checkboxElement);
+                                checklistElement.appendChild(labelElement);
+                            });
+                            blockElement.appendChild(checklistElement);
+                            blockElement.classList.add('ce-checklist'); // Thêm class cho block checklist
+                            break;
+                        case 'nestedchecklist':
+                            const nestedChecklistElement = document.createElement('ul'); // Tạo một thẻ ul cho nested checklist
+                            block.data.items.forEach(item => {
+                                const listItem = document.createElement('li'); // Tạo một thẻ li cho mỗi item trong nested checklist
+                                listItem.textContent = item.text; // Đặt nội dung của thẻ li là nội dung của item
+                                if (item.checked) {
+                                    listItem.classList.add('checked'); // Nếu item được kiểm tra, thêm class 'checked' vào thẻ li
+                                }
+                                if (item.items && item.items.length > 0) {
+                                    // Nếu có các mục lồng nhau, tái sử dụng đệ quy để tạo danh sách lồng nhau
+                                    const nestedList = document.createElement('ul');
+                                    item.items.forEach(subItem => {
+                                        const subListItem = document.createElement('li');
+                                        subListItem.textContent = subItem.text;
+                                        if (subItem.checked) {
+                                            subListItem.classList.add('checked');
+                                        }
+                                        nestedList.appendChild(subListItem);
+                                    });
+                                    listItem.appendChild(nestedList);
+                                }
+                                nestedChecklistElement.appendChild(listItem); // Thêm thẻ li vào thẻ ul
+                            });
+                            blockElement.appendChild(nestedChecklistElement); // Thêm thẻ ul vào block element
+                            blockElement.classList.add('ce-block'); // Thêm class cho nested checklist
+                            break;
+                        case 'raw':
+                            const rawWrapper = document.createElement('div');
+                            rawWrapper.innerHTML = block.data.html; // Assume code content is in the "code" field
+                            blockElement.appendChild(rawWrapper);
+                            blockElement.classList.add('ce-raw'); // Thêm class cho block code
+                            break;
+                        case 'link':
+                            const linkElement = document.createElement('a');
+                            linkElement.textContent = block.data.link;
+                            linkElement.href = block.data.url; // Đặt URL đích
+                            blockElement.appendChild(linkElement);
+                            linkElement.classList.add('ce-link'); // Thêm class cho đoạn văn bản
+
+
+                            break;
+                        // Thêm xử lý cho các loại block khác nếu cần
+                    }
+
+                    container.appendChild(blockElement);
+                });
+            } else {
+                console.error("Invalid editor data format");
+            }
+        }
+    </script>
+
+
+
+</body>
+
+</html>

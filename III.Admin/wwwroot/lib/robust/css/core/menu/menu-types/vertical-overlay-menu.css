@@ -77,4 +77,15 @@
 
 @media (max-width: 991px) {
   .vertical-overlay-menu .main-menu .main-menu-footer {
-    bottom: 0px; } }
+    bottom: 0px; }
+    .navbar-header i {
+        color: #337AB7 !important;
+        font-size: 2rem;
+    }
+    .navbar-header{
+        height:50px !important;
+    }
+    .sidebar-left{
+        display:none;
+    }
+}

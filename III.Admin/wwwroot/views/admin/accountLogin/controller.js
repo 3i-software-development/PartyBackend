@@ -29,6 +29,9 @@ app.factory('dataservice', function ($http) {
         update: function (data, callback) {
             submitFormUpload('/Admin/User/Update', data, callback);
         },
+        UploadImageAsync:function (data, callback) {
+            $http.post('/Admin/User/UploadImageAsync', data).then(callback);
+        },
         getItem: function (callback) {
             $http.post('/Admin/AccountLogin/Getitem/').then(callback);
         },
@@ -643,24 +646,27 @@ app.controller('infoAccount', function ($scope, $rootScope, $timeout, $compile, 
         fileuploader.trigger('click')
     }
     $scope.loadImageSign = function () {
-        var fileuploader = angular.element("#FileSign");
-        fileuploader.on('click', function () {
-        });
-        fileuploader.on('change', function (e) {
-            var reader = new FileReader();
-            reader.onload = function () {
-                document.getElementById('imageIdSign').src = reader.result;
-            }
-            var files = fileuploader[0].files;
-            var idxDot = files[0].name.lastIndexOf(".") + 1;
-            var extFile = files[0].name.substr(idxDot, files[0].name.length).toLowerCase();
-            if (extFile != "jpg" && extFile != "jpeg" && extFile != "png" && extFile != "gif" && extFile != "bmp") {
-                App.toastrError(caption.COM_MSG_INVALID_FORMAT);
-                return;
-            }
-            reader.readAsDataURL(files[0]);
-        });
-        fileuploader.trigger('click')
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolder + "/Signature.html",
+            controller: "signature",
+            size: "50",
+            backdrop: "static",
+          });
+          modalInstance.result.then(
+            function (imageData) {
+                var base64String = imageData.replace("data:image/png;base64,", "");
+                const imageDataModel = {
+                    Base64Data: base64String, // Dữ liệu base64 của hình ảnh
+                    Id:  $scope.model.Id // Id của người dùng
+                };
+              dataservice.UploadImageAsync(imageDataModel,function(){
+                document.getElementById("imageIdSign").src = imageData
+              });
+            },
+            function () {}
+          );
+
     }
     //Validate UiSelect
     function validationSelect(data) {
@@ -1197,4 +1203,60 @@ app.controller('tfaSetup', function ($scope, $rootScope, $compile, $uibModal, DT
             size: '25',
         });
     }
+});
+
+app.controller('signature', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataservice, $filter) {
+    
+    $scope.cancel = function () {
+        //$uibModalInstance.dismiss('cancel');
+        $uibModalInstance.close();
+    }
+    var signature;
+    var toolbarObj;
+    var saveBtn
+
+    let items = [
+        {
+            text: "Png",
+        },
+        {
+            text: "Jpeg",
+        },
+        {
+            text: "Svg",
+        },
+    ];
+
+    $scope.init=function(){
+        saveBtn = document.getElementById("save");
+        saveBtn.disabled = true;
+        signature = new ej.inputs.Signature(
+            {
+                maxStrokeWidth: 2,
+                change: function () {
+                    updateSaveBtn();
+                },
+            },
+            "#signature"
+        );
+    }
+
+    function updateSaveBtn() {
+        if (!signature.isEmpty()) {
+            saveBtn.disabled = false;
+        }
+    }
+
+    $scope.Save = function ()  {
+        // Lấy thẻ canvas từ Syncfusion EJ2
+        var canvas = signature.element;
+        // Lấy dữ liệu hình ảnh từ canvas dưới dạng base64
+        var imageData = canvas.toDataURL();
+        // Đóng modal
+        $uibModalInstance.close(imageData);
+    };
+
+    setTimeout(function() {
+        $scope.init()
+    }, 3000); // Chờ 3 giây (1000 milliseconds)
 });

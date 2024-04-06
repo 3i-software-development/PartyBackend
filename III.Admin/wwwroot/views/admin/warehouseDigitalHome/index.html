@@ -414,10 +414,47 @@
     .content-wrapper {
         margin-top: 80px;
     }
+    @media(max-width:450px) {
+        .nameMenu {
+            /*white-space: nowrap;*/
+            text-align:center;
+            margin:5px;
+            
+        }
+
+        .ozoho-apps-category.text-center {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 800px;
+            Điều chỉnh kích thước tối đa của phần tử cha theo ý muốn margin: 0 auto;
+            Để căn giữa phần tử cha
+        }
+
+            .ozoho-apps-category.text-center ul {
+                padding: 0;
+                margin: 0;
+                list-style: none;
+            }
+
+            .ozoho-apps-category.text-center li {
+                width: calc(50% - 16px);
+                Phần trăm chiều rộng của mỗi nút, trừ đi margin margin-bottom: 16px;
+                Khoảng cách giữa các nút
+            }
+
+            .ozoho-apps-category.text-center .icon-category {
+                max-width: 100px;
+                Điều chỉnh kích thước tối đa của biểu tượng height: auto;
+                Đảm bảo tỷ lệ khung hình
+            }
+    }
+       
+    
 </style>
 
 <div class="row border-responsive ohzoho-soft" id="contentMain">
-    <div class="pull-right mr25" style="margin-top: -45px;">
+    <div class="pull-right ml25" style="margin-top: -30px;">
         <div class="actions text-center pr15 pt15">
             <a class="" style="color: #337ab7;" ng-click="switchDiv()">
                 <span ng-if="switchOn">
@@ -449,10 +486,10 @@
         </div>
     </div>
     <br />
-    <div class="row mt20" style="display:flex" id="chartDigital">
-        <div class="" style="height: 375px !important;width:50% !important;margin-right:0.5%;">
+    <div class="row mt20" id="chartDigital">
+        <div class="col-md-6">
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 " style="width: 100% !important">
+                <div>
                     <div class="dashboard-stat2 ">
                         <div class="title1">
                             <div>
@@ -574,8 +611,8 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pl-0" style="width: 50% !important;margin-left:0.5%">
-            <div class="dashboard-stat2 notice2" style=" width: 100%;">
+        <div class="col-md-6">
+            <div class="dashboard-stat2 notice2">
                 <div class="title1">
                     <div>
                         <h0 class="fs14 text-header-box gach">{{'WDH_LBL_STOCK_OF_CHEMICALS' | translate}}</h0>

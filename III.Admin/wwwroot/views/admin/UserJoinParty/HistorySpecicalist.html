@@ -6,7 +6,7 @@
 <div class="mt-15" style="padding-left: 15px;">
     <div class="form-group row">
         <div class="col-md-3 pr-0">
-            <i class="fa fa-calendar"></i>
+            <i class="fa fa-calendar" id="monthYear" ng-click="openPopover('monthYear');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label class="displayInfo control-label require custom-title-code-bold">
                 Thời
                 gian
@@ -14,10 +14,8 @@
         </div>
         <div class="col-md-9" style="display: flex; padding-right: 8px;">
             <div class="br24 form-control custom-title-code-bold">
-                <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom"
-                    data-bs-content="VD: 01-01-2024">
-
-                </i>
+                <i class="fa fa-info-circle icon-clickable" id="monthYear" title="Popover Header" popover-placement="bottom-left"
+                uib-popover="Từ ngày: {{selectedWarningDisciplined.MonthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                     ng-model="selectedHistorySpecialist.MonthYear" type="text" placeholder="Thời gian" />
             </div>
@@ -25,7 +23,7 @@
     </div>
     <div class="form-group row">
         <div class="col-md-3 pr-0">
-            <i class="fa fa-pencil-square-o"></i>
+            <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label class="displayInfo control-label require custom-title-code-bold">
                 Nội
                 dung
@@ -33,12 +31,13 @@
         </div>
         <div class="col-md-9" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold">
-                <i class="fa fa-info-circle" data-bs-toggle="popover" title="Popover Header" data-bs-placement="bottom"
-                    data-bs-content="Nơi thường trú : phường Minh Khai, quận Bắc Từ Liêm, Hà Nội">
+                <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header" popover-placement="bottom-left"
+                uib-popover="Từ ngày: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
 
-                </i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                    ng-model="selectedHistorySpecialist.Content" type="text" placeholder="Nội dung" />
+                       ng-model="selectedHistorySpecialist.Content" type="text" placeholder="Nội dung" />
+                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                   ng-model="selectedHistorySpecialist.Content"></i>
             </div>
         </div>
     </div>

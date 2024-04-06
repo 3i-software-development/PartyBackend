@@ -52,7 +52,7 @@ body {
     color: #ccc;
 }
 
-.fa-lock {
+.fa-lock, .fa-eye-slash, .fa-eye {
     position: absolute;
     padding: 12px;
     color: #ccc;
@@ -74,853 +74,900 @@ body {
     }
 }
 
-    @media (min-width: 1500px) {
-        .login_panel {
-            width: 24.33333%;
-        }
-
-        #app-mobile {
-            visibility: hidden;
-            display: none;
-        }
-
-        .login_inner_container {
-            width: 116%;
-        }
-
-        input.login_textfield {
-            height: 35px;
-            padding-left: 30px;
-            margin: 0px;
-            z-index: 3;
-            color: #000000;
-            border-radius: 15px;
-            /*width: calc(100% - 30px);*/
-        }
-
-        .checkbox-default label {
-            display: inline-block;
-            position: relative;
-            padding-left: 20px;
-            font-weight: 400;
-            
-        }
-
-            .checkbox-default label::before {
-                cursor: pointer;
-                content: "";
-                display: inline-block;
-                position: absolute;
-                width: 17px;
-                height: 17px;
-                left: 0;
-                border: 1px solid darkgray;
-                background-color: #fff;
-                -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-            }
-
-            .checkbox-default label::after {
-                display: inline-block;
-                position: absolute;
-                width: 16px;
-                height: 16px;
-                top: 0;
-                left: 0;
-                padding-top: 1px;
-                font-size: 11px;
-                color: #999;
-            }
-
-        .form-horizontal .form-group {
-            margin-left: -55px;
-            margin-right: -5px;
-        }
-
-        .mbd1 {
-            margin-bottom: 5px !important;
-        }
-
-        .fsd1 {
-            font-size: 11px !important;
-        }
-
-        .fsd2 {
-            font-size: 15px !important;
-        }
-
-        .qr-block {
-            width: 200px !important;
-            height: 200px !important;
-        }
-
-        .mtd1 {
-            margin-top: 10px !important;
-        }
+@media (min-width: 1500px) {
+    .login_panel {
+        width: 24.33333%;
     }
 
-    @media (min-width: 1200px) and (max-width: 1500px) {
-        .login_panel {
-            width: 30.33333%;
-        }
-
-        #app-mobile {
-            visibility: hidden;
-            display: none;
-        }
-
-        .login_inner_container {
-            width: 116%;
-        }
-
-        input.login_textfield {
-            height: 35px;
-            padding-left: 30px;
-            margin: 0px;
-            z-index: 3;
-            color: #000000;
-            border-radius: 15px;
-        }
-
-        .checkbox-default label {
-            display: inline-block;
-            position: relative;
-            padding-left: 20px;
-            font-weight: 400;
-            color: #ffffff;
-        }
-
-            .checkbox-default label::before {
-                cursor: pointer;
-                content: "";
-                display: inline-block;
-                position: absolute;
-                width: 17px;
-                height: 17px;
-                left: 0;
-                border: 1px solid darkgray;
-                background-color: #fff;
-                -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-            }
-
-            .checkbox-default label::after {
-                display: inline-block;
-                position: absolute;
-                width: 16px;
-                height: 16px;
-                top: 0;
-                left: 0;
-                padding-top: 1px;
-                font-size: 11px;
-                color: #999;
-            }
-
-        .form-horizontal .form-group {
-            margin-left: -55px;
-            margin-right: -5px;
-        }
-
-        .mbd1 {
-            margin-bottom: 5px !important;
-        }
-
-        .fsd1 {
-            font-size: 11px !important;
-        }
-
-        .fsd2 {
-            font-size: 15px !important;
-        }
-
-        .qr-block {
-            width: 200px !important;
-            height: 200px !important;
-        }
-
-        .mtd1 {
-            margin-top: 10px !important;
-        }
+    #app-mobile {
+        visibility: hidden;
+        display: none;
     }
 
-    @media (min-width: 1024px) and (max-width: 1200px) {
-        .login_panel {
-            width: 33.33333%;
-        }
-
-        #app-web {
-            visibility: hidden;
-            display: none;
-        }
-
-        .login-text-app {
-            font-size: 24px !important;
-        }
-
-        .login_inner_container {
-            width: 116%;
-        }
-
-        input.login_textfield {
-            height: 35px;
-            padding-left: 30px;
-            margin: 0px;
-            z-index: 3;
-            color: #000000;
-            border-radius: 15px;
-        }
-
-        .checkbox-default label {
-            display: inline-block;
-            position: relative;
-            padding-left: 20px;
-            font-weight: 400;
-            color: #ffffff;
-        }
-
-            .checkbox-default label::before {
-                cursor: pointer;
-                content: "";
-                display: inline-block;
-                position: absolute;
-                width: 17px;
-                height: 17px;
-                left: 0;
-                border: 1px solid darkgray;
-                background-color: #fff;
-                -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-            }
-
-            .checkbox-default label::after {
-                display: inline-block;
-                position: absolute;
-                width: 16px;
-                height: 16px;
-                top: 0;
-                left: 0;
-                padding-top: 1px;
-                font-size: 11px;
-                color: #999;
-            }
-
-        .form-horizontal .form-group {
-            margin-left: -55px;
-            margin-right: -5px;
-        }
-
-        .mbd1 {
-            margin-bottom: 5px !important;
-        }
-
-        .fsd1 {
-            font-size: 11px !important;
-        }
-
-        .fsd2 {
-            font-size: 15px !important;
-        }
-
-        .qr-block {
-            width: 200px !important;
-            height: 200px !important;
-        }
-
-        .mtd1 {
-            margin-top: 10px !important;
-        }
+    .login_inner_container {
+        width: 116%;
     }
 
-    @media (min-width: 768px) and (max-width: 1024px) {
-        .login_panel {
-            width: 72%;
-        }
-
-        #app-web {
-            visibility: hidden;
-            display: none;
-        }
-
-        .login-text-app {
-            font-size: 35px !important;
-        }
-
-        .login_inner_container {
-            width: 110%;
-        }
-
-        input.login_textfield {
-            height: 70px;
-            padding-left: 60px;
-            margin: 0px;
-            z-index: 3;
-            color: #000000;
-            border-radius: 30px;
-            font-size: 30px;
-        }
-
-        .checkbox-default label {
-            display: inline-block;
-            position: relative;
-            padding-left: 40px;
-            font-weight: 400;
-            color: #ffffff;
-        }
-
-            .checkbox-default label::before {
-                cursor: pointer;
-                content: "";
-                display: inline-block;
-                position: absolute;
-                width: 35px;
-                height: 35px;
-                left: 0;
-                border: 1px solid darkgray;
-                background-color: #fff;
-                -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-            }
-
-            .checkbox-default label::after {
-                display: inline-block;
-                position: absolute;
-                width: 16px;
-                height: 16px;
-                top: 0;
-                left: 0;
-                padding-top: 1px;
-                font-size: 11px;
-                color: #999;
-            }
-
-        .btn-login {
-            width: 240px !important;
-            height: 70px !important;
-            border-radius: 30px !important;
-        }
-
-        .logo_swork {
-            width: 600px;
-        }
-
-        .icon {
-            font-size: 45px !important;
-        }
-
-        .wapter {
-            padding-top: 200px !important;
-        }
-
-        .form-horizontal .form-group {
-            margin-left: -35px;
-            margin-right: 15px;
-            margin-bottom: 25px;
-        }
-
-        .mbd1 {
-            margin-bottom: 35px !important;
-        }
-
-        .fsd1 {
-            font-size: 35px !important;
-        }
-
-        .fsd2 {
-            font-size: 30px !important;
-        }
-
-        .qr-block {
-            width: 400px !important;
-            height: 400px !important;
-        }
-
-        .window-logo {
-            width: 400px !important;
-        }
-
-        .mtd1 {
-            margin-top: 40px !important;
-        }
+    input.login_textfield {
+        height: 35px;
+        padding-left: 30px;
+        margin: 0px;
+        z-index: 3;
+        color: #000000;
+        border-radius: 15px;
+        /*width: calc(100% - 30px);*/
     }
 
-    @media (min-width: 565px) and (max-width: 768px) {
-        .login_panel {
-            width: 80%;
-        }
-
-        #app-web {
-            visibility: hidden;
-            display: none;
-        }
-
-        .login-text-app {
-            font-size: 35px !important;
-        }
-
-        .login_inner_container {
-            width: 110%;
-        }
-
-        input.login_textfield {
-            height: 70px;
-            padding-left: 60px;
-            margin: 0px;
-            z-index: 3;
-            color: #000000;
-            border-radius: 30px;
-            font-size: 30px;
-        }
-
-        .checkbox-default label {
-            display: inline-block;
-            position: relative;
-            padding-left: 40px;
-            font-weight: 400;
-            color: #ffffff;
-        }
-
-            .checkbox-default label::before {
-                cursor: pointer;
-                content: "";
-                display: inline-block;
-                position: absolute;
-                width: 35px;
-                height: 35px;
-                left: 0;
-                border: 1px solid darkgray;
-                background-color: #fff;
-                -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-            }
-
-            .checkbox-default label::after {
-                display: inline-block;
-                position: absolute;
-                width: 16px;
-                height: 16px;
-                top: 0;
-                left: 0;
-                padding-top: 1px;
-                font-size: 11px;
-                color: #999;
-            }
-
-        .btn-login {
-            width: 240px !important;
-            height: 70px !important;
-            border-radius: 30px !important;
-            font-size: 30px !important;
-        }
-
-        .logo_swork {
-            width: 600px;
-        }
-
-        .icon {
-            font-size: 45px !important;
-        }
-
-        .wapter {
-            padding-top: 200px !important;
-        }
-
-        .form-horizontal .form-group {
-            margin-left: -35px;
-            margin-right: 15px;
-            margin-bottom: 25px;
-        }
-
-        .mbd1 {
-            margin-bottom: 35px !important;
-        }
-
-        .fsd1 {
-            font-size: 35px !important;
-        }
-
-        .fsd2 {
-            font-size: 30px !important;
-        }
-
-        .qr-block {
-            width: 400px !important;
-            height: 400px !important;
-        }
-
-        .window-logo {
-            width: 400px !important;
-        }
-
-        .mtd1 {
-            margin-top: 40px !important;
-        }
+    .checkbox-default label {
+        display: inline-block;
+        position: relative;
+        padding-left: 20px;
+        font-weight: 400;
     }
 
-    @media (max-width: 565px) {
-        .login_panel {
-            width: 90%;
-        }
-
-        #app-web {
-            visibility: hidden;
-            display: none;
-        }
-
-        .login-text-app {
-            font-size: 35px !important;
-        }
-
-        .login_inner_container {
-            width: 110%;
-        }
-
-        input.login_textfield {
-            height: 70px;
-            padding-left: 60px;
-            margin: 0px;
-            z-index: 3;
-            color: #000000;
-            border-radius: 30px;
-            font-size: 30px;
-        }
-
-        .checkbox-default label {
+        .checkbox-default label::before {
+            cursor: pointer;
+            content: "";
             display: inline-block;
-            position: relative;
-            padding-left: 40px;
-            font-weight: 400;
-            color: #ffffff;
+            position: absolute;
+            width: 17px;
+            height: 17px;
+            left: 0;
+            border: 1px solid darkgray;
+            background-color: #fff;
+            -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
         }
 
-            .checkbox-default label::before {
-                cursor: pointer;
-                content: "";
-                display: inline-block;
-                position: absolute;
-                width: 35px;
-                height: 35px;
-                left: 0;
-                border: 1px solid darkgray;
-                background-color: #fff;
-                -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-                transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
-            }
-
-            .checkbox-default label::after {
-                display: inline-block;
-                position: absolute;
-                width: 16px;
-                height: 16px;
-                top: 0;
-                left: 0;
-                padding-top: 1px;
-                font-size: 11px;
-                color: #999;
-            }
-
-        .btn-login {
-            width: 240px !important;
-            height: 70px !important;
-            border-radius: 30px !important;
-            font-size: 30px !important;
+        .checkbox-default label::after {
+            display: inline-block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            padding-top: 1px;
+            font-size: 11px;
+            color: #999;
         }
 
-        .logo_swork {
-            width: 600px;
-        }
-
-        .icon {
-            font-size: 45px !important;
-        }
-
-        .wapter {
-            padding-top: 200px !important;
-        }
-
-        .form-horizontal .form-group {
-            margin-left: -35px;
-            margin-right: 15px;
-            margin-bottom: 25px;
-        }
-
-        .mbd1 {
-            margin-bottom: 35px !important;
-        }
-
-        .fsd1 {
-            font-size: 35px !important;
-        }
-
-        .fsd2 {
-            font-size: 30px !important;
-        }
-
-        .qr-block {
-            width: 400px !important;
-            height: 400px !important;
-        }
-
-        .window-logo {
-            width: 400px !important;
-        }
-
-        .mtd1 {
-            margin-top: 40px !important;
-        }
+    .form-horizontal .form-group {
+        margin-left: -55px;
+        margin-right: -5px;
     }
 
-    .login_panel_layout {
-        margin: 0 auto;
-        text-align: left
+    .mbd1 {
+        margin-bottom: 5px !important;
+    }
+
+    .fsd1 {
+        font-size: 11px !important;
+    }
+
+    .fsd2 {
+        font-size: 15px !important;
+    }
+
+    .qr-block {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+    .mtd1 {
+        margin-top: 10px !important;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1500px) {
+    .login_panel {
+        width: 30.33333%;
+    }
+
+    #app-mobile {
+        visibility: hidden;
+        display: none;
+    }
+
+    .login_inner_container {
+        width: 116%;
+    }
+
+    input.login_textfield {
+        height: 35px;
+        padding-left: 30px;
+        margin: 0px;
+        z-index: 3;
+        color: #000000;
+        border-radius: 15px;
+        font-size:20px
+    }
+    i{
+        font-size:17px;
+    }
+    .checkbox-default label {
+        display: inline-block;
+        position: relative;
+        padding-left: 20px;
+        font-weight: 400;
+        color: #ffffff;
+    }
+
+        .checkbox-default label::before {
+            cursor: pointer;
+            content: "";
+            display: inline-block;
+            position: absolute;
+            width: 17px;
+            height: 17px;
+            left: 0;
+            border: 1px solid darkgray;
+            background-color: #fff;
+            -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+        }
+
+        .checkbox-default label::after {
+            display: inline-block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            padding-top: 1px;
+            font-size: 11px;
+            color: #999;
+        }
+
+    .form-horizontal .form-group {
+        margin-left: -55px;
+        margin-right: -5px;
+    }
+
+    .mbd1 {
+        margin-bottom: 5px !important;
+    }
+
+    .fsd1 {
+        font-size: 11px !important;
+    }
+
+    .fsd2 {
+        font-size: 15px !important;
+    }
+
+    .qr-block {
+        width: 200px !important;
+        height: 200px !important;
+    }
+
+    .mtd1 {
+        margin-top: 10px !important;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1200px) {
+    .check-icon {
+        right: 20px;
+        top: 0;
+        position: absolute;
+    }
+    .login_panel {
+        width: 33.33333%;
+    }
+
+    .inner_container img {
+        width: 200px;
+    }
+    #app-web {
+        visibility: hidden;
+        display: none;
     }
 
     .login-text-app {
-        color: white;
+        font-size: 24px !important;
+    }
+
+    .login_inner_container {
+        width: 116%;
+    }
+
+    input.login_textfield {
+        height: 35px;
+        padding-left: 30px;
+        margin: 0px;
+        z-index: 3;
+        color: #000000;
+        border-radius: 15px;
+    }
+
+    .checkbox-default label {
         display: inline-block;
-        padding-bottom: 15px;
-        font-weight: bold;
-        font-size: 17px;
-        text-shadow: 0 0 3px #fff, 0 0 20px #fff, 0 0 30px #040404;
-        font-family: sans-serif;
+        position: relative;
+        padding-left: 20px;
+        font-weight: 400;
+        color: #ffffff;
     }
 
-    /*.login_inner_container {
-    width: 116%;
-}*/
-
-    .button:hover {
-        background: #8bd5f7;
-        color: #fff;
-        border: none;
-    }
-
-
-
-    @media only screen and (max-width: 768px),(max-device-width: 600px) {
-        html {
-            background: #FFF;
-            overflow: hidden
+        .checkbox-default label::before {
+            cursor: pointer;
+            content: "";
+            display: inline-block;
+            position: absolute;
+            width: 17px;
+            height: 17px;
+            left: 0;
+            border: 1px solid darkgray;
+            background-color: #fff;
+            -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
         }
 
-        .icon-3i {
-            display: none;
+        .checkbox-default label::after {
+            display: inline-block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            padding-top: 1px;
+            font-size: 11px;
+            color: #999;
         }
 
-        body {
-            background: url(../../../images/default/Background.png);
-            background-size: cover;
-            overflow: auto;
-            height: 100%;
-        }
+    .form-horizontal .form-group {
+        margin-left: -55px;
+        margin-right: -5px;
     }
 
-
-    @media only screen and (max-width: 420px),(max-device-width: 420px) {
-        .login_panel {
-            float: none;
-            z-index: 1;
-            overflow: auto;
-            margin-top: 10%;
-        }
+    .mbd1 {
+        margin-bottom: 5px !important;
     }
 
-    .validation-summary-errors ul, .validation-summary-errors li {
-        list-style: none;
-        display: inline;
-        padding: 0;
+    .fsd1 {
+        font-size: 11px !important;
     }
 
-    .input-validation-error {
-        border: 1px solid #a94442 !important;
+    .fsd2 {
+        font-size: 15px !important;
     }
 
-    .ui_logo3i {
-        bottom: 0;
-        position: fixed;
-        padding-bottom: 1%;
+    .qr-block {
+        width: 200px !important;
+        height: 200px !important;
     }
 
-    .ui_img_logo {
-        width: 100px;
-        height: 100px;
+    .mtd1 {
+        margin-top: 10px !important;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    body{
+        font-size:30px;
+    }
+    .login_panel {
+        width: 72%;
     }
 
-    .container_logo_store {
-        position: fixed;
-        left: 0;
+    .inner_container img {
+        width: 300px;
     }
 
-    .ui_applestore {
-        width: 55%;
+    #app-web {
+        visibility: hidden;
+        display: none;
     }
 
-    .ui_chplay {
-        width: 55%;
+    .login-text-app {
+        font-size: 30px !important;
     }
 
-    .checkbox-default input[type="checkbox"] {
-        opacity: 0;
+    .login_inner_container {
+        width: 110%;
     }
 
-        .checkbox-default input[type="checkbox"]:focus + label::before {
-            outline: 5px auto -webkit-focus-ring-color;
-            outline-offset: -2px;
-            outline: 0;
-        }
-
-        .checkbox-default input[type="checkbox"]:hover + label::before {
-            background: #eee;
-        }
-
-        .checkbox-default input[type="checkbox"]:checked + label::after {
-            font-family: 'FontAwesome';
-            content: "\f00c";
-        }
-
-        .checkbox-default input[type="checkbox"]:disabled + label {
-            opacity: 0.65;
-        }
-
-            .checkbox-default input[type="checkbox"]:disabled + label::before {
-                background-color: #eeeeee;
-                cursor: not-allowed;
-            }
-
-    .ui_applestore {
+    input.login_textfield {
+        height: 70px;
+        padding-left: 60px;
+        margin: 0px;
+        z-index: 3;
+        color: #000000;
+        border-radius: 30px;
+        font-size: 30px;
     }
 
-    .ui_chplay {
+    .checkbox-default label {
+        display: inline-block;
+        position: relative;
+        padding-left: 45px;
+        padding-right: 45px;
+        font-weight: 400;
+        color: #000000;
     }
 
-    .forget-password {
-        /* color: #fff; */
-    }
-
-        .forget-password:hover {
-            color: #fff;
+        .checkbox-default label::before {
+            cursor: pointer;
+            content: "";
+            display: inline-block;
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            left: 0;
+            border: 1px solid darkgray;
+            background-color: #fff;
+            -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
         }
 
-    .icon {
-        color: #0591E6;
+        .checkbox-default label::after {
+            display: inline-block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: -9px;
+            left: -1px;
+            padding-top: 1px;
+            font-size: 36px;
+            color: #999;
+        }
+
+    .btn-login {
+        width: 240px !important;
+        height: 70px !important;
+        float: inherit !important;
+        border-radius: 30px !important;
     }
 
     .logo_swork {
-        background: none !important;
-        border: 0 !important;
-        padding-bottom: 0px;
+        width: 600px;
     }
+
+    .icon {
+        font-size: 45px !important;
+    }
+
+    .wapter {
+        padding-top: 200px !important;
+    }
+
+    .form-horizontal .form-group {
+        margin-left: -35px;
+        margin-right: 15px;
+        margin-bottom: 25px;
+    }
+
+    .mbd1 {
+        margin-bottom: 35px !important;
+    }
+
+    .fsd1 {
+        font-size: 35px !important;
+    }
+
+    .fsd2 {
+        font-size: 30px !important;
+        padding-right: 10px;
+    }
+
+    .qr-block {
+        width: 400px !important;
+        height: 400px !important;
+    }
+
+    .window-logo {
+        width: 400px !important;
+    }
+
+    .mtd1 {
+        margin-top: 40px !important;
+    }
+
+    .check-icon {
+        right: 60px;
+        top: 0;
+        position: absolute;
+        line-height: 65px !important;
+        font-size: 40px !important;
+    }
+}
+
+@media (min-width: 565px) and (max-width: 768px) {
+    .login_panel {
+        width: 80%;
+    }
+
+    #app-web {
+        visibility: hidden;
+        display: none;
+    }
+
+    .login-text-app {
+        font-size: 35px !important;
+    }
+
+    .login_inner_container {
+        width: 110%;
+    }
+
+    input.login_textfield {
+        height: 70px;
+        padding-left: 60px;
+        margin: 0px;
+        z-index: 3;
+        color: #000000;
+        border-radius: 30px;
+        font-size: 30px;
+    }
+
+    .checkbox-default label {
+        display: inline-block;
+        position: relative;
+        padding-left: 40px;
+        font-weight: 400;
+        color: #ffffff;
+    }
+
+        .checkbox-default label::before {
+            cursor: pointer;
+            content: "";
+            display: inline-block;
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            left: 0;
+            border: 1px solid darkgray;
+            background-color: #fff;
+            -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+        }
+
+        .checkbox-default label::after {
+            display: inline-block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            padding-top: 1px;
+            font-size: 11px;
+            color: #999;
+        }
 
     .btn-login {
-        background-image: linear-gradient(to bottom, #92cb5b,#78a537);
+        width: 240px !important;
+        height: 70px !important;
+        border-radius: 30px !important;
+        font-size: 30px !important;
+    }
+
+    .logo_swork {
+        width: 600px;
+    }
+
+    .icon {
+        font-size: 45px !important;
+    }
+
+    .wapter {
+        padding-top: 200px !important;
+    }
+
+    .form-horizontal .form-group {
+        margin-left: -35px;
+        margin-right: 15px;
+        margin-bottom: 25px;
+    }
+
+    .mbd1 {
+        margin-bottom: 35px !important;
+    }
+
+    .fsd1 {
+        font-size: 35px !important;
+    }
+
+    .fsd2 {
+        font-size: 30px !important;
+    }
+
+    .qr-block {
+        width: 400px !important;
+        height: 400px !important;
+    }
+
+    .window-logo {
+        width: 400px !important;
+    }
+
+    .mtd1 {
+        margin-top: 40px !important;
+    }
+
+    .check-icon {
+        right: 60px;
+        top: 0;
+        position: absolute;
+        line-height: 35px !important;
+        font-size: 30px !important;
+    }
+}
+
+@media (max-width: 565px) {
+    .login_panel {
+        width: 90%;
+    }
+
+    #app-web {
+        visibility: hidden;
+        display: none;
+    }
+
+    .login-text-app {
+        font-size: 35px !important;
+    }
+
+    .login_inner_container {
+        width: 110%;
+    }
+
+    input.login_textfield {
+        height: 70px;
+        padding-left: 60px;
+        margin: 0px;
+        z-index: 3;
+        color: #000000;
+        border-radius: 30px;
+        font-size: 30px;
+    }
+
+    .checkbox-default label {
+        display: inline-block;
+        position: relative;
+        padding-left: 40px;
+        font-weight: 400;
+        color: #ffffff;
+    }
+
+        .checkbox-default label::before {
+            cursor: pointer;
+            content: "";
+            display: inline-block;
+            position: absolute;
+            width: 35px;
+            height: 35px;
+            left: 0;
+            border: 1px solid darkgray;
+            background-color: #fff;
+            -webkit-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            -o-transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+            transition: border 0.15s ease-in-out, color 0.15s ease-in-out;
+        }
+
+        .checkbox-default label::after {
+            display: inline-block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            top: 0;
+            left: 0;
+            padding-top: 1px;
+            font-size: 11px;
+            color: #999;
+        }
+
+    .btn-login {
+        width: 240px !important;
+        height: 70px !important;
+        border-radius: 30px !important;
+        font-size: 30px !important;
+    }
+
+    .logo_swork {
+        width: 600px;
+    }
+
+    .icon {
+        font-size: 45px !important;
+    }
+
+    .wapter {
+        padding-top: 200px !important;
+    }
+
+    .form-horizontal .form-group {
+        margin-left: -35px;
+        margin-right: 15px;
+        margin-bottom: 25px;
+    }
+
+    .mbd1 {
+        margin-bottom: 35px !important;
+    }
+
+    .fsd1 {
+        font-size: 35px !important;
+    }
+
+    .fsd2 {
+        font-size: 30px !important;
+    }
+
+    .qr-block {
+        width: 400px !important;
+        height: 400px !important;
+    }
+
+    .window-logo {
+        width: 400px !important;
+    }
+
+    .mtd1 {
+        margin-top: 40px !important;
+    }
+
+    .check-icon {
+        right: 60px;
+        top: 0;
+        position: absolute;
+        line-height: 35px !important;
+        font-size: 30px !important;
+    }
+}
+
+.login_panel_layout {
+    margin: 0 auto;
+    text-align: left
+}
+
+.login-text-app {
+    color: white;
+    display: inline-block;
+    padding-bottom: 15px;
+    font-weight: bold;
+    font-size: 17px;
+    text-shadow: 0 0 3px #fff, 0 0 20px #fff, 0 0 30px #040404;
+    font-family: sans-serif;
+}
+
+/*.login_inner_container {
+    width: 116%;
+}*/
+
+.button:hover {
+    background: #8bd5f7;
+    color: #fff;
+    border: none;
+}
+
+
+
+@media only screen and (max-width: 768px),(max-device-width: 600px) {
+    html {
+        background: #FFF;
+        overflow: hidden
+    }
+
+    .icon-3i {
+        display: none;
+    }
+
+    body {
+        background: url(../../../images/default/bg-party.png);
+        background-size: 213%;
+        background-position-y: center;
+        background-position-x: center;
+    }
+    .inner_container img{
+        width:300px;
+    }
+}
+
+
+@media only screen and (max-width: 420px),(max-device-width: 420px) {
+    .login_panel {
+        float: none;
+        z-index: 1;
+        overflow: auto;
+        margin-top: 10%;
+    }
+}
+
+.validation-summary-errors ul, .validation-summary-errors li {
+    list-style: none;
+    display: inline;
+    padding: 0;
+}
+
+.input-validation-error {
+    border: 1px solid #a94442 !important;
+}
+
+.ui_logo3i {
+    bottom: 0;
+    position: fixed;
+    padding-bottom: 1%;
+}
+
+.ui_img_logo {
+    width: 100px;
+    height: 100px;
+}
+
+.container_logo_store {
+    position: fixed;
+    left: 0;
+}
+
+.ui_applestore {
+    width: 55%;
+}
+
+.ui_chplay {
+    width: 55%;
+}
+
+.checkbox-default input[type="checkbox"] {
+    opacity: 0;
+}
+
+    .checkbox-default input[type="checkbox"]:focus + label::before {
+        outline: 5px auto -webkit-focus-ring-color;
+        outline-offset: -2px;
+        outline: 0;
+    }
+
+    .checkbox-default input[type="checkbox"]:hover + label::before {
+        background: #eee;
+    }
+
+    .checkbox-default input[type="checkbox"]:checked + label::after {
+        font-family: 'FontAwesome';
+        content: "\f00c";
+    }
+
+    .checkbox-default input[type="checkbox"]:disabled + label {
+        opacity: 0.65;
+    }
+
+        .checkbox-default input[type="checkbox"]:disabled + label::before {
+            background-color: #eeeeee;
+            cursor: not-allowed;
+        }
+
+.ui_applestore {
+}
+
+.ui_chplay {
+}
+
+.forget-password {
+    /* color: #fff; */
+}
+
+    .forget-password:hover {
+        color: #fff;
+    }
+
+.icon {
+    color: #0591E6;
+}
+
+.logo_swork {
+    background: none !important;
+    border: 0 !important;
+    padding-bottom: 0px;
+}
+
+.btn-login {
+    background-image: linear-gradient(to bottom, #92cb5b,#78a537);
+    /*background-image: linear-gradient(to bottom, #f7098d,#f7098d);*/
+    font-weight: bold;
+    border: none;
+    color: #ffffff;
+    -moz-transition: background 1s;
+    -o-transition: background 1s;
+    transition-property: background;
+    transition-duration: 1s;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    height: 35px;
+}
+
+    .btn-login:hover {
+        border-color: #F7F7F7;
+        color: #ffffff;
+        background-image: linear-gradient(to bottom, #92cb5b, #7faf41);
         /*background-image: linear-gradient(to bottom, #f7098d,#f7098d);*/
-        font-weight: bold;
-        border: none;
-        color: #ffffff;
-        -moz-transition: background 1s;
-        -o-transition: background 1s;
-        transition-property: background;
-        transition-duration: 1s;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        height: 35px;
     }
 
-        .btn-login:hover {
-            border-color: #F7F7F7;
-            color: #ffffff;
-            background-image: linear-gradient(to bottom, #92cb5b, #7faf41);
-            /*background-image: linear-gradient(to bottom, #f7098d,#f7098d);*/
-        }
+.btn-send-otp {
+    /* background-image: linear-gradient(to bottom, #92cb5b,#78a537); */
+    background: green;
+    font-weight: bold;
+    border: none;
+    color: #ffffff;
+    -moz-transition: background 1s;
+    -o-transition: background 1s;
+    transition-property: background;
+    transition-duration: 1s;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    height: 35px;
+}
 
-    .btn-send-otp {
-        /* background-image: linear-gradient(to bottom, #92cb5b,#78a537); */
-        background: green;
-        font-weight: bold;
-        border: none;
+    .btn-send-otp:hover {
+        border-color: #F7F7F7;
         color: #ffffff;
-        -moz-transition: background 1s;
-        -o-transition: background 1s;
-        transition-property: background;
-        transition-duration: 1s;
-        -webkit-touch-callout: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        height: 35px;
+        /* background-image: linear-gradient(to bottom, #92cb5b, #7faf41); */
+        background-image: linear-gradient(to bottom, #8e44ad,#8e44ad);
     }
 
-        .btn-send-otp:hover {
-            border-color: #F7F7F7;
-            color: #ffffff;
-            /* background-image: linear-gradient(to bottom, #92cb5b, #7faf41); */
-            background-image: linear-gradient(to bottom, #8e44ad,#8e44ad);
-        }
 
-
-    /*.text-danger {
+/*.text-danger {
     color: #f5f5f5;
 }*/
 
 
-    .navbar-inverse .navbar-nav > li > a {
-        color: #000;
+.navbar-inverse .navbar-nav > li > a {
+    color: #000;
+}
+
+.navbar-inverse .navbar-brand {
+    color: #000;
+}
+
+.navbar {
+    min-height: 0px !important;
+}
+
+.customCombobox {
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    background-color: #fff;
+    border: 1px solid #c2cad8;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+}
+
+.ulcustomCombobox {
+    display: none;
+    width: 100%;
+    border-radius: 0px;
+    background-color: white;
+    border-top: none;
+    margin: 0;
+    position: absolute;
+    z-index: 10;
+}
+
+    .ulcustomCombobox li {
+        border-top: 1px solid gray;
+        height: 22px;
     }
 
-    .navbar-inverse .navbar-brand {
-        color: #000;
-    }
-
-    .navbar {
-        min-height: 0px !important;
-    }
-
-    .customCombobox {
-        width: 100%;
-        height: 34px;
-        padding: 6px 12px;
-        background-color: #fff;
-        border: 1px solid #c2cad8;
-        border-radius: 4px;
-        -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
-    }
-
-    .ulcustomCombobox {
-        display: none;
-        width: 100%;
-        border-radius: 0px;
-        background-color: white;
-        border-top: none;
-        margin: 0;
-        position: absolute;
-        z-index: 10;
-    }
-
-        .ulcustomCombobox li {
-            border-top: 1px solid gray;
-            height: 22px;
+        .ulcustomCombobox li:hover {
+            background-color: lightblue;
+            cursor: pointer;
         }
 
-            .ulcustomCombobox li:hover {
-                background-color: lightblue;
-                cursor: pointer;
-            }
+.border-radius-15 {
+    border-radius: 15px;
+}
 
-    .border-radius-15 {
-        border-radius: 15px;
-    }
+.pr-0 {
+    padding-right: 0px;
+}
 
-    .pr-0 {
-        padding-right: 0px;
-    }
 .navbar-nav > li > .dropdown-menu {
     margin-top: 0;
     border-top-right-radius: 0;
@@ -1015,6 +1062,7 @@ body {
     border: 1px solid rgba(0, 0, 0, 0.15);
     border-radius: 0.18rem;
 }
+
 .dropdown .dropdown-menu .dropdown-item {
     padding: 10px 20px;
     width: auto;
@@ -1036,6 +1084,7 @@ a:not([href]):not([tabindex]) {
     background: none;
     border: 0;
 }
+
 .dropdown .dropdown-menu .dropdown-item {
     padding: 10px 20px;
     width: auto;
@@ -1057,9 +1106,9 @@ a:not([href]):not([tabindex]) {
     background: none;
     border: 0;
 }
+
 .check-icon {
     right: 60px;
     top: 0;
     position: absolute;
-    line-height: 35px !important;
 }

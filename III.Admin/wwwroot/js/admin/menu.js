@@ -126,8 +126,8 @@ function directPage(idTab) {
         location.replace("/Admin/MenuWfSystem");
     }
     if (idTab === "menu-system-operation") {
-        //location.replace("/Admin/MenuSystemSetting");
-        location.replace("/Admin/UserManageHome");
+        location.replace("/Admin/MenuSystemSetting");
+        //location.replace("/Admin/UserManageHome");
     }
     if (idTab === "menu-education") {
         //location.replace("/Admin/MenuSystemSetting");

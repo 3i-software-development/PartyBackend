@@ -4,7 +4,11 @@ using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using System.Web;
+using Aspose.Pdf.Operators;
+using Dropbox.Api.TeamLog;
 using ESEIM.Models;
 using ESEIM.Utils;
 using FTU.Utils.HelperNet;
@@ -17,7 +21,10 @@ using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using OpenXmlPowerTools;
+using Quartz.Util;
 using Syncfusion.DocIO.DLS;
+using static III.Admin.Controllers.WorkflowActivityController;
+using AppContext = ESEIM.AppContext;
 
 namespace III.Admin.Controllers
 {
@@ -171,6 +178,7 @@ namespace III.Admin.Controllers
 
                 if (edmsFile != null)
                 {
+                    var edmsRepoCatFiles = _context.EDMSRepoCatFiles.FirstOrDefault(x => x.FileCode.Equals(edmsFile.FileCode));
                     if (edmsFile.IsFileMaster == false)
                     {
                         msg.Error = true;
@@ -192,6 +200,23 @@ namespace III.Admin.Controllers
                         {
                             fileUpload.CopyTo(stream);
                             stream.Close();
+                        }
+                        if (docmodel.IsSign)
+                        {
+                            //Xóa file trên ftp
+                            var msg2 = DeleteFile(edmsRepoCatFiles.Id);
+                            if (msg2.Error == true)
+                            {
+                                return Json(msg2);
+                            }
+                            EDMSRepoCatFileModel model = new EDMSRepoCatFileModel();
+
+                            //Update to server and update to database
+                            msg2 = InsertFile(edmsFile, fileUpload);
+                            if (msg2.Error == true)
+                            {
+                                return Json(msg2);
+                            }
                         }
 
                         var path = _hostingEnvironment.WebRootPath + "/" + docmodel.File_Path;
@@ -264,7 +289,7 @@ namespace III.Admin.Controllers
                                 if (userRemove != null)
                                     listUserView.Remove(userRemove);
 
-                                edmsFile.IsEdit = true;
+                                //edmsFile.IsEdit = true;
                                 edmsFile.EditedFileBy = User.Identity.Name;
                                 edmsFile.EditedFileTime = DateTime.Now;
                                 edmsFile.ListUserView = JsonConvert.SerializeObject(listUserView);
@@ -364,7 +389,207 @@ namespace III.Admin.Controllers
 
             return Json(msg);
         }
+        [NonAction]
+        public JMessage InsertFile(EDMSFile obj, IFormFile fileUpload)
+        {
+            var msg = new JMessage { Error = false, Title = "" };
+            try
+            {
+                var mimeType = fileUpload.ContentType;
+                string extension = Path.GetExtension(fileUpload.FileName);
+                string urlFile = "";
+                string fileId = "";
+                var fileSize = fileUpload.Length;
+                if ((fileSize / 1048576.0) > 1000)
+                {
+                    msg.Error = true;
+                    msg.Title = _stringLocalizer["EDMSR_MSG_FILE_SIZE_LIMIT_UPLOAD"];
+                    return msg;
+                }
 
+                string reposCode = "";
+                string catCode = "";
+                string path = "";
+                string folderId = "";
+
+                var setting = _context.EDMSCatRepoSettings.FirstOrDefault(x => x.Id == 3484);
+                if (setting != null)
+                {
+                    reposCode = setting.ReposCode;
+                    path = setting.Path;
+                    folderId = setting.FolderId;
+                    catCode = setting.CatCode;
+                }
+                else
+                {
+                    msg.Error = true;
+                    msg.Title = _stringLocalizer["EDMSR_MSG_CHOOSE_DOC_SAVE"];
+                    return msg;
+                }
+
+                var getRepository = _context.EDMSRepositorys.FirstOrDefault(x => x.ReposCode == reposCode);
+                if (getRepository.Type == EnumHelper<TypeConnection>.GetDisplayValue(TypeConnection.Server))
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        fileUpload.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        urlFile = path + Path.Combine("/", fileUpload.FileName);
+                        var urlFilePreventive = path + Path.Combine("/", Guid.NewGuid().ToString().Substring(0, 8) + fileUpload.FileName);
+                        var urlEnd = HttpUtility.UrlPathEncode("ftp://" + getRepository.Server + urlFile);
+                        var urlEndPreventive = HttpUtility.UrlPathEncode("ftp://" + getRepository.Server + urlFilePreventive);
+                        var result = FileExtensions.UploadFileToFtpServer(urlEnd, urlEndPreventive, fileBytes, getRepository.Account, getRepository.PassWord);
+                        if (result.Status == WebExceptionStatus.ConnectFailure || result.Status == WebExceptionStatus.ProtocolError)
+                        {
+                            msg.Error = true;
+                            msg.Title = _sharedResources["COM_CONNECT_FAILURE"];
+                            return msg;
+                        }
+
+                        if (result.Status == WebExceptionStatus.Success)
+                        {
+                            if (result.IsSaveUrlPreventive)
+                            {
+                                urlFile = urlFilePreventive;
+                            }
+                        }
+                        else
+                        {
+                            msg.Error = true;
+                            msg.Title = _sharedResources["COM_MSG_ERR"];
+                            return msg;
+                        }
+                    }
+                }
+                else if (getRepository.Type == EnumHelper<TypeConnection>.GetDisplayValue(TypeConnection.GooglerDriver))
+                {
+                    var apiTokenService = _context.TokenManagers.FirstOrDefault(x => x.AccountCode == getRepository.Token);
+                    var json = apiTokenService.CredentialsJson;
+                    var user = apiTokenService.Email;
+                    var token = apiTokenService.RefreshToken;
+                    fileId = FileExtensions.UploadFileToDrive(json, token, fileUpload.FileName, fileUpload.OpenReadStream(), fileUpload.ContentType, folderId, user);
+                }
+
+                var edmsReposCatFile = _context.EDMSRepoCatFiles.FirstOrDefault(x => x.FileCode.Equals(obj.FileCode));
+
+                //{
+                //    FileCode = string.Concat("REPOSITORY", Guid.NewGuid().ToString()),
+                //    ReposCode = reposCode,
+                //    CatCode = catCode,
+                //    ObjectCode = obj.ObjectCode,
+                //    ObjectType = obj.ObjectType,
+                //    Path = path,
+                //    FolderId = folderId
+                //};
+                //_context.EDMSRepoCatFiles.Add(edmsReposCatFile);
+
+                /// created Index lucene
+                
+                if (Array.IndexOf(LuceneExtension.fileMimetypes, mimeType) >= 0 && (Array.IndexOf(LuceneExtension.fileExt, extension.ToUpper()) >= 0))
+                {
+                    if (!extension.ToUpper().Equals(".ZIP") && !extension.ToUpper().Equals(".RAR"))
+                    {
+                        var moduleObj = (EDMSCatRepoSetting)_upload.GetPathByModule("DB_LUCENE_INDEX").Object;
+                        var luceneCategory = _context.EDMSCategorys.FirstOrDefault(x => x.CatCode == moduleObj.CatCode);
+
+                        LuceneExtension.IndexFile(edmsReposCatFile.FileCode, fileUpload, luceneCategory.PathServerPhysic);
+                        //LuceneExtension.PythonIndexFile(PythonFileCode, content, Pathserver);
+                    }
+                }
+                //add File
+                var file = _context.EDMSFiles.FirstOrDefault(x => x.Id == obj.Id);
+                if(file!=null)
+                {
+                    file.FileSize = fileUpload.Length;
+                    file.FileName = fileUpload.FileName;
+                    file.Url = urlFile;
+                    file.MimeType = mimeType;
+                    file.CloudFileId = fileId;
+                }
+                else
+                {
+                    msg.Error = true;
+                    msg.Title = _sharedResources["COM_MSG_ERR"];
+                }
+                _context.EDMSFiles.Update(file);
+
+                if (docmodel.IsSign)
+                {
+                    var fileInst = _context.ActivityInstFiles.FirstOrDefault(x => !x.IsDeleted && x.ActivityInstCode == edmsReposCatFile.ObjectCode && x.FileID == obj.FileCode);
+                    if (fileInst != null)
+                    {
+                        var lstJsonSign = new List<JsonSignature>();
+                        if (!string.IsNullOrEmpty(fileInst.SignatureJson))
+                        {
+                            lstJsonSign = JsonConvert.DeserializeObject<List<JsonSignature>>(fileInst.SignatureJson);
+                        }
+                        var jsonSign = new JsonSignature
+                        {
+                            Signer = ESEIM.AppContext.UserName,
+                            SignTime = DateTime.Now,
+                            Actins = edmsReposCatFile.ObjectCode
+                        };
+                        lstJsonSign.Add(jsonSign);
+
+                        fileInst.SignatureJson = JsonConvert.SerializeObject(lstJsonSign);
+                        fileInst.FilePath = "";
+                        fileInst.IsSign = true;
+                        fileInst.LstUserSign += string.Join(",", ESEIM.AppContext.UserId);
+                        _context.ActivityInstFiles.Update(fileInst);
+                    }
+                }
+                
+                _context.SaveChanges();
+                msg.Title = _sharedResources["COM_ADD_FILE_SUCCESS"];
+                msg.Object = edmsReposCatFile.Id;
+            }
+            catch (Exception ex)
+            {
+                msg.Error = true;
+                msg.Object = ex;
+                msg.Title = _sharedResources["COM_MSG_ERR"];
+            }
+            return msg;
+        }
+        [NonAction]
+        public JMessage DeleteFile(int id)
+        {
+            var msg = new JMessage { Error = false, Title = "" };
+            try
+            {
+                var data = _context.EDMSRepoCatFiles.FirstOrDefault(x => x.Id == id);
+
+                var file = _context.EDMSFiles.FirstOrDefault(x => x.FileCode == data.FileCode);
+
+                LuceneExtension.DeleteIndexFile(file.FileCode, _hostingEnvironment.WebRootPath + "\\uploads\\luceneIndex");
+                var getRepository = _context.EDMSRepositorys.FirstOrDefault(x => x.ReposCode == data.ReposCode);
+                if (getRepository != null)
+                {
+                    if (getRepository.Type == EnumHelper<TypeConnection>.GetDisplayValue(TypeConnection.Server))
+                    {
+                        var urlEnd = HttpUtility.UrlPathEncode("ftp://" + getRepository.Server + file.Url);
+                        FileExtensions.DeleteFileFtpServer(urlEnd, getRepository.Account, getRepository.PassWord);
+                    }
+                    else if (getRepository.Type == EnumHelper<TypeConnection>.GetDisplayValue(TypeConnection.GooglerDriver))
+                    {
+                        var apiTokenService = _context.TokenManagers.FirstOrDefault(x => x.AccountCode == getRepository.Token);
+                        var json = apiTokenService.CredentialsJson;
+                        var user = apiTokenService.Email;
+                        var token = apiTokenService.RefreshToken;
+                        FileExtensions.DeleteFileGoogleServer(json, token, file.CloudFileId, user);
+                    }
+                }
+
+                msg.Title = String.Format(_sharedResources["COM_MSG_DELETE_SUCCESS"], _stringLocalizer[""]);// "Xóa thành công";
+            }
+            catch (Exception ex)
+            {
+                msg.Error = true;
+                msg.Object = ex.Message;
+                msg.Title = _sharedResources["COM_MSG_ERR"];//"Xóa file lỗi";
+            }
+            return msg;
+        }
         [NonAction]
         public JMessage LogFileByVersion(string path)
         {
@@ -522,7 +747,7 @@ namespace III.Admin.Controllers
                 throw;
             }
 
-            return Json(msg);
+            return msg;
         }
         #endregion
 

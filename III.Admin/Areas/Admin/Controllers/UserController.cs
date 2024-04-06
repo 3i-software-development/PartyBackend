@@ -31,6 +31,7 @@ using Newtonsoft.Json;
 using System.Globalization;
 using Microsoft.AspNetCore.Identity.UI.V3.Pages.Account.Manage.Internal;
 using SmartBreadcrumbs.Attributes;
+using Syncfusion.EJ2.FileManager.Base;
 
 namespace III.Admin.Controllers
 {
@@ -466,9 +467,68 @@ namespace III.Admin.Controllers
             }
             return Json(msg);
         }
+        public class ImageDataModel
+        {
+            public string Base64Data { get; set; }
+            public string Id { get; set; }
+        }
 
         [HttpPost]
-        public async Task<IActionResult> Update(AspNetUserCustom obj, IFormFile image, IFormFile imageSign)
+        public async Task<IActionResult> UploadImageAsync([FromBody] ImageDataModel imageDataModel)
+        {
+            try
+            {
+                // Kiểm tra xem dữ liệu có tồn tại không
+
+                var url = string.Empty;
+
+                if (string.IsNullOrEmpty(imageDataModel?.Base64Data))
+                {
+                    return BadRequest("Dữ liệu hình ảnh không hợp lệ");
+                }
+                var us = await _context.Users.FirstOrDefaultAsync(x => x.Id == imageDataModel.Id);
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads");
+
+                // Tạo thư mục nếu nó không tồn tại
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                // Tạo tên tệp duy nhất dựa trên thời gian hiện tại
+                string fileName = $"Signature"
+                 + "_"
+                 + Guid.NewGuid().ToString().Substring(0, 8)
+                 + ".png" ;
+
+                // Chuyển đổi dữ liệu base64 thành mảng byte của hình ảnh PNG
+                byte[] imageBytes = Convert.FromBase64String(imageDataModel.Base64Data.Replace("data:image/png;base64,", ""));
+
+                var pathUpload = Path.Combine(_hostingEnvironment.WebRootPath, "uploads\\images");
+                if (!Directory.Exists(pathUpload)) Directory.CreateDirectory(pathUpload);
+
+
+                // Trả về URL của hình ảnh đã tải lên
+                string imageUrl = Url.Content($"~/uploads/{fileName}");
+
+                var filePath = Path.Combine(pathUpload, fileName);
+
+                System.IO.File.WriteAllBytes(filePath, imageBytes);
+                
+                url = "/uploads/images/" + fileName;
+                us.SignImage = url;
+                _context.Update(us);
+                _context.SaveChanges();
+                return Ok(imageUrl);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Lỗi: {ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Update(AspNetUserCustom obj, IFormFile image, IFormFile imageSign, string base64Data)
         {
             var msg = new JMessage() { Error = false };
             try

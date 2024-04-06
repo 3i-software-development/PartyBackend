@@ -58,7 +58,7 @@ namespace III.Admin.Controllers
             _googleAPI = googleAPI;
             _sharedResources = sharedResources;
         }
-        [Breadcrumb("ViewData.CrumbWHDHome", AreaName = "Admin", FromAction = "Index", FromController = typeof(MenuCenterController))]
+        [Breadcrumb("ViewData.CrumbWHDHome", AreaName = "Admin", FromAction = "Index", FromController = typeof(DashBoardController))]
         public IActionResult Index()
         {
             ViewData["CrumbDashBoard"] = _sharedResources["COM_CRUMB_DASH_BOARD"];

@@ -194,10 +194,70 @@
             border: 1px solid #80808057 !important;
             box-shadow: 1px 3px 8px 0px #888888c2;
         }
+        @media (max-width: 600px){
+            .board-detail-search{
+                display:block!important;
+            }
+            .board-detail-body{
+                margin-top:60px!important;
+                    max-width:100%!important;
+                    overflow:auto!important;
+                    position:absolute!important;
+                    /*z-index:99!important;*/
+            }
+            #BoardDetail{
+                padding:0!important;
+            }
+            .btn-navLeft {
+                position: absolute !important;
+                z-index:100!important;
+                transform:translateX(-10px);
+            }
+            #mySidenav {
+                /*width: 100vw!important;*/
+                transform: translateX(24px);
+                z-index:100!important;
+            }
+            .title-board {
+                font-size: 15px !important;
+            }
+            .search-hight{
+                display:flex!important;
+            }
+                .search-hight .fs11{
+                    transform:translate(10px, -10px);
+                }
+            .portlet .input-group {
+                width: 95vw !important;
+            }
+           
+            .intext {
+                width: 95vw !important;
+            }
+            .insearch {
+                width: 95vw !important;
+            }
+            .board{
+                position:absolute!important;
+                z-index:99!important;
+            }
+            .title-board-1 {
+                padding: 10px 0px !important;
+            }
+            .title-board-2 {
+                position:fixed!important;
+                transform: translateY(40px) !important;
+            }
+            .title-board-3{
+                position:fixed!important;
+                right:0!important;
+            }
+          
+        }
 </style>
 <div class="board-detail-search d-flex">
     <div class="col-xl-9 col-lg-7 flex-grow-full" ng-show="!SearchAdvMode" style1="width: 70%;">
-        <div class="pull-left pr10 panel-log" ng-click="navLeft()" ng-show="!showNavLeft">
+        <div class="pull-left pr10 panel-log btn-navLeft" ng-click="navLeft()" ng-show="!showNavLeft">
             <button class="custom-btn-nav-left" style="background-color: transparent !important; border: none !important; box-shadow: none !important">
                 <i class="fa fa-chevron-up fs12" style="color: #183153"></i>
             </button>
@@ -242,7 +302,7 @@
                 </span>
             </div>
         </div>-->
-        <div class="pr-0 pb-1" ng-class="{'col-md-6 pt-1': !isTabSumary, 'col-xl-6 col-lg-12' : isTabSumary }">
+        <div class="pr-0 pb-1 intext" ng-class="{'col-md-6 pt-1': !isTabSumary, 'col-xl-6 col-lg-12' : isTabSumary }">
             <input class="form-control bold br24" ng-model="searchObj.CardName" placeholder="{{'CJ_TXT_SEARCH_CARD_TITLE' | translate}}..." ng-keydown="($event.keyCode == 13) && search()" />
         </div>
         <div class="pr-0 pb-1" ng-class="{'pt-1 col-md-3': !isTabSumary, 'col-xl-3 col-lg-6 pr-0' : isTabSumary }">
@@ -253,14 +313,14 @@
                 </span>
             </div>
         </div>
-        <div class="pr-0" ng-class="{'pt-1 col-md-3': !isTabSumary, 'col-xl-3 col-lg-6 pr-0' : isTabSumary }">
+        <div class="pr-0 search-hight" ng-class="{'pt-1 col-md-3': !isTabSumary, 'col-xl-3 col-lg-6 pr-0' : isTabSumary }">
             <div class="input-group date br24" id="ToDate">
                 <input class="form-control bold" ng-model="searchObj.ToDate" placeholder="{{'CJ_TXT_SEARCH_TO_DATE' | translate}}..." ng-change1="search()" />
                 <span class="input-group-addon">
                     <span class="fa fa-calendar"></span>
                 </span>
             </div>
-            <span><a class="fs11 text-underline pt10 pull-right" ng-click="SearchAdv()">{{'CJ_BTN_SEARCH_ADVANTAGE' | translate}}</a></span>
+            <span><a class="fs11 text-underline pt10 pull-right btn" ng-click="SearchAdv()">{{'CJ_BTN_SEARCH_ADVANTAGE' | translate}}</a></span>
         </div>
         <!--<div class="col-xl-7 col-lg-12 mb10" style1="width: 57%; margin-top: -10px;">
             <div class="input-group br24">
@@ -369,10 +429,10 @@
                         <i style="margin-top:25px !important; margin-right:15px !important; font-size:25px" ng-click="SearchAdv()" class="fas fa-times pull-right h28 w28 close-input-search" role="button" title="Ẩn tìm kiếm"></i>
                     </div>
                     <div class="row">
-                        <div class="pr-0 pb-1 col-md-4 pt-2">
-                            <input class="form-control br24" ng-model="searchAdv.CardName" placeholder="{{'CJ_TXT_SEARCH_CARD_TITLE' | translate}}..." ng-keydown="($event.keyCode == 13) && searchAdvantage()" />
+                        <div class=" pb-1 col-md-4 pt-2">
+                            <input class="form-control br24 insearch" ng-model="searchAdv.CardName" placeholder="{{'CJ_TXT_SEARCH_CARD_TITLE' | translate}}..." ng-keydown="($event.keyCode == 13) && searchAdvantage()" />
                         </div>
-                        <div class="col-md-2 pt-2 pr-0">
+                        <div class="col-md-2 pt-2 ">
                             <div class="input-group br24">
                                 <ui-select tagging ng-model="searchAdv.Status" theme="bootstrap">
                                     <ui-select-match placeholder="{{'CJ_CURD_TXT_SEARCH_STATUS' | translate}}..."><b>{{$select.selected.Value}}</b></ui-select-match>
@@ -387,7 +447,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="pr-0 col-md-2 pt-2">
+                        <div class=" col-md-2 pt-2">
                             <div class="input-group date br24" id="FromDateAdv">
                                 <input class="form-control" ng-model="searchAdv.FromDate" placeholder="{{'CJ_TXT_SEARCH_FROM_DATE' | translate}}..." />
                                 <span class="input-group-addon">
@@ -395,7 +455,7 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="pr-0 col-md-2 pt-2">
+                        <div class=" col-md-2 pt-2">
                             <div class="input-group date br24" id="ToDateAdv">
                                 <input class="form-control" ng-model="searchAdv.ToDate" placeholder="{{'CJ_TXT_SEARCH_TO_DATE' | translate}}..." />
                                 <span class="input-group-addon">
@@ -608,10 +668,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 title-board-1">
             <div class="board" ng-if="show.board && boardCode != null">
-                <a class="black bold fs18">{{modelDetail.BoardName}}</a>
-                <span class="badge-customer badge-customer-success">{{modelDetail.Completed}}%</span>
+                <a class="black bold fs18 title-board title-board-2">{{modelDetail.BoardName}}</a>
+                <span class="badge-customer badge-customer-success title-board-3">{{modelDetail.Completed}}%</span>
             </div>
         </div>
     </div>
