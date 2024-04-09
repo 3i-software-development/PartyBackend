@@ -2580,6 +2580,8 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
                 App.unblockUI("#contentMain");
                 $(".dataTables_scrollBody").addClass('scroller-sm-fade');
                 heightTableAuto();
+                reloadWfAct();
+                $rootScope.isReloadAct = false;
             }
         })
         .withPaginationType('full_numbers').withDOM("<'table-scrollable't>ip")
@@ -2680,7 +2682,8 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     vm.reloadDataList = reloadDataList;
     vm.dt.dtInstanceList = {};
 
-    function reloadDataList(resetPaging) {
+    function reloadDataList(resetPaging, reloadAct = false) {
+        $rootScope.isReloadAct = reloadAct;
         vm.dt.dtInstanceList.reloadData(callback, resetPaging);
     }
 
@@ -2707,8 +2710,23 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
         }
         vm.selectAll = true;
     }
-
+    $rootScope.reloadActWf = function() {
+        reloadDataList(false, true);
+    };
+    function reloadWfAct() {
+        var listdata = $('#tblDataWfInstance').DataTable().data();
+        var userModel = {};
+        for (var i = 0; i < listdata.length; i++) {
+            if (listdata[i].Id === $rootScope.wfListActId) {
+                userModel = listdata[i];
+                break;
+            }
+        }
+        formatRow(userModel);
+    }
+    $rootScope.wfListActId = '';
     function formatRow(full) {
+        $rootScope.wfListActId = full.Id;
         var lstAct = JSON.parse(full.ListAct);
         $scope.listActs = lstAct;
         $scope.isEditWorkflow = true;
@@ -4491,7 +4509,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
         return mess;
     };
     $scope.CloseAll=function(act1){
-        if(!act1.IsApprovable){
+        if(!act1.IsApprovable && !window.isAllData){
             act1.checkHiddenActWf = false;
             App.toastrError(caption.WFAI_MSG_U_NOT_PER_APPROVE_ACT);
             return
@@ -5129,7 +5147,7 @@ app.controller('setting-transition', function ($scope, $rootScope, $compile, $ui
 
 app.controller('edit-activity-instance', function ($scope, $rootScope, $compile, $uibModal, $confirm, dataservice, $translate, $filter) {
     $scope.tabnav = 'Section3'; // Initialize tabnav variable
-
+    $scope.isAllData = window.isAllData;
     $scope.saveTabNav = function(href) {
         $scope.tabnav = href; // Save href to tabnav variable
     };
@@ -5382,6 +5400,12 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
                 }
                 else {
                     App.toastrSuccess(rs.Title);
+                    if ($rootScope.reloadAct) {
+                        $rootScope.reloadAct();
+                    }
+                    else {
+                        $rootScope.reloadActWf();
+                    }
                     if ($scope.statusOld != $scope.model.Status) {
                         dataservice.updateStatusActInst($scope.model.ActivityInstCode, $scope.model.Status, function (rs1) {
                             rs1 = rs1.data;

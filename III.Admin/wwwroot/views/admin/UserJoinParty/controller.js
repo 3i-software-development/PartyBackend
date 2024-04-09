@@ -212,6 +212,9 @@ app.factory('dataserviceJoinParty', function ($http) {
         insertAwardAndUpdate: function (data, callback) {
             $http.post('/Admin/UserJoinParty/InsertAwardOnly', data).then(callback);
         },
+        getStatus: function (callback) {
+            $http.get('/Admin/SettingStatusObject/GetStatus').then(callback);
+        },
 
 
         getListFile: function (data, callback) {
@@ -264,6 +267,8 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
     };
     var culture = $cookies.get('_CULTURE') || 'vi-VN';
     $translate.use(culture);
+    $rootScope.reloadAct = function () {
+    };
     $rootScope.$on('$translateChangeSuccess', function () {
         caption = caption[culture];
         $.extend($.validator.messages, {
@@ -347,7 +352,8 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
     });
 });
 
-app.config(function ($routeProvider, $validatorProvider, $translateProvider) {
+app.config(function ($routeProvider, $validatorProvider, $translateProvider, $locationProvider) {
+    $locationProvider.hashPrefix('');
     $translateProvider.useUrlLoader('/Admin/WorkflowActivity/Translation');
     //$translateProvider.preferredLanguage('en-US');
     caption = $translateProvider.translations();
@@ -389,6 +395,23 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     var vm = $scope;
     $scope.tabnav = 'Section3'; // Initialize tabnav variable
 
+    $scope.ListStatus = [{
+        Name: 'Chọn trạng thái',
+        Code: ''
+    },
+    {
+        Name: 'Mới đẩy lên',
+        Code: 'Mới đẩy lên'
+    },
+    {
+        Name: 'Mới cập nhật',
+        Code: 'Mới cập nhật'
+    },
+    {
+        Name: 'Đã duyệt',
+        Code: 'Đã duyệt'
+    }]
+
     $scope.ImportFile = function (data) {
         dataserviceJoinParty.Import(data, function (rs) {
             rs = rs.data;
@@ -417,6 +440,11 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         dataserviceJoinParty.GetLogStatusOfWFInst(requestData, function (response) {
             // Xử lý phản hồi từ API ở đây
             console.log(response.data); // In ra dữ liệu trả về từ API
+        });
+        dataserviceJoinParty.getStatus(function (response) {
+            // Xử lý phản hồi từ API ở đây
+            console.log(response.data); // In ra dữ liệu trả về từ API
+            $scope.ListStatus = response.data;
         });
     };
     $scope.callApi()
@@ -460,7 +488,11 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         }
 
     }
+    $rootScope.reloadAct = function () {
+        formatActIns($rootScope.resumeNumber);
+    };
     function formatActIns(resumeNumber) {
+        $rootScope.resumeNumber = resumeNumber;
         dataserviceJoinParty.GetActInstArranged(resumeNumber, function (rs) {
             console.log(rs.data)
             if (rs.data.ActArranged == []) {
@@ -511,7 +543,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
 
 
     $scope.CloseAll = function (act1) {
-        if (!act1.IsApprovable) {
+        if (!act1.IsApprovable && !window.isAllData) {
             act1.checkHiddenActWf = false;
             App.toastrError(caption.WFAI_MSG_U_NOT_PER_APPROVE_ACT);
             return
@@ -523,12 +555,12 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         act1.checkHiddenActWf = !actCheck;
     }
 
-    $scope.createWfInstance = function (ResumeNumber) {
+    $scope.createWfInstance = function (ResumeNumber, givenName) {
         $scope.modelWfInst = {
             WorkflowCode: "PARTY_ADMISSION_PROFILE",
             ObjectType: "TEST_JOIN_PARTY",
             ObjectInst: ResumeNumber,
-            WfInstName: "Quy trình khai báo và xét duyệt vào Đảng của Đảng uỷ Thành Phố Hà Nội",
+            WfInstName: `Quy trình khai báo và xét duyệt của đồng chí ${givenName} [ ${ResumeNumber} ]`,
             WfDesc: "",
             WfType: "WF_TYPE20240226102033",
             WfGroup: "WF_GROUP20240226092621"
@@ -550,6 +582,20 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
                 }
             });
         }
+    }
+    $scope.DeleteWFIns = function (wfInstCode) {
+        dataserviceJoinParty.DeleteWfInstance(wfInstCode, function (rs) {
+                rs = rs.data;
+                if (rs.Error) {
+                    App.toastrError(rs.Title);
+                }
+                else {
+                    App.toastrSuccess(rs.Title);
+                    isEditWorkflow = false;
+                    reloadData();
+                    $scope.editWorkflow();
+                }
+            });
     }
 
     $scope.selected = [];
@@ -581,23 +627,6 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         }
         vm.selectAll = true;
     }
-
-    $scope.ListStatus = [{
-        Name: 'Chọn trạng thái',
-        Code: ''
-    },
-    {
-        Name: 'Mới đẩy lên',
-        Code: 'Mới đẩy lên'
-    },
-    {
-        Name: 'Mới cập nhật',
-        Code: 'Mới cập nhật'
-    },
-    {
-        Name: 'Đã duyệt',
-        Code: 'Đã duyệt'
-    }]
     $scope.ListGender = [{
         Name: 'Chọn giới tính',
         Code: null
@@ -802,13 +831,13 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
             var wfbtn = '';
             if (full.WfInstCode == null || full.WfInstCode == undefined || full.WfInstCode == '') {
                 wfbtn = `<a title="{{'Tạo luồng'| translate}}" style="width: 25px; height: 25px; padding: 0px; color: #008000"
-                            ng-click="createWfInstance('${full.resumeNumber}')">
+                            ng-click="createWfInstance('${full.resumeNumber}', '${full.CurrentName}')">
                                 <i class="fa-regular fa-light fa-circle-play fs25"></i>
                         </a>`
             }
             else {
                 wfbtn = `<a title="{{'Xóa luồng'| translate}}" style="width: 25px; height: 25px; padding: 0px;color: #FF0000"
-                            ng-click="DeleteWFIns('${full.resumeNumber}')">
+                            ng-click="DeleteWFIns('${full.WfInstCode}')">
                                 <i class="fa-regular fa-light fa-circle-stop fs25 "></i>
                         </a>`
             }
@@ -830,27 +859,30 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         }));
     vm.reloadData = reloadData;
     vm.dtInstance = {};
-        setTimeout(function() {
-            
-        }, 200);
-        $("#PostFromDate").datepicker({
-            inline: false,
-            autoclose: true,
-            format: "dd/mm/yyyy",
-            fontAwesome: true,
-        }).on('changeDate', function(selected) {
-            var maxDate = new Date(selected.date.valueOf());
-            $('#PostToDate').datepicker('setStartDate', maxDate);
-        });
-        $("#PostToDate").datepicker({
-            inline: false,
-            autoclose: true,
-            format: "dd/mm/yyyy",
-            fontAwesome: true,
-        }).on('changeDate', function(selected) {
-            var maxDate = new Date(selected.date.valueOf());
-            $('#PostFromDate').datepicker('setEndDate', maxDate);
-        });
+    setTimeout(function () {
+        try {
+            $("#PostFromDate").datepicker({
+                inline: false,
+                autoclose: true,
+                format: "dd/mm/yyyy",
+                fontAwesome: true,
+            }).on('changeDate', function (selected) {
+                var maxDate = new Date(selected.date.valueOf());
+                $('#PostToDate').datepicker('setStartDate', maxDate);
+            });
+            $("#PostToDate").datepicker({
+                inline: false,
+                autoclose: true,
+                format: "dd/mm/yyyy",
+                fontAwesome: true,
+            }).on('changeDate', function (selected) {
+                var maxDate = new Date(selected.date.valueOf());
+                $('#PostFromDate').datepicker('setEndDate', maxDate);
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }, 200);
 });
 
 app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $filter) {
@@ -1017,342 +1049,342 @@ app.directive("voiceRecognition", function () {
     };
 });
 
-app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $http) {
-     //Autocomplete
-     $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
-     $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo']
-     $scope.filteredItems = [];
- 
-     //Autocomplete công việc
-     $scope.filterItems = function () {
-         $scope.filteredItems = $scope.itemEmployees.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.NowEmployee.toLowerCase());
-         });
-     };
- 
-     $scope.selectItem = function (item) {
-         $scope.infUser.NowEmployee = item;
-         $scope.filteredItems = [];
-     };
- 
-     $('body').on('click', function (event) {
-         // Nếu click vào ô input, trả về ngay
-         if ($(event.target).is('input[type="text"]')) {
-             return;
-         }
- 
-         // Kiểm tra xem phần tử được click có là con của ul.autocomplete-list hay không
-         if (!$(event.target).closest('ul.autocomplete-list').length) {
-             // Xử lý sự kiện click ở đây cho các phần tử không phải là con của ul.autocomplete-list
- 
-             $scope.filteredItemReligions = [];
-             $scope.FilterGender = [];
-             $scope.filteredItems = [];
-             $scope.FilterNation = [];
-             $scope.FilterGeneralEducation = [];
-             $scope.FilterUndergraduate = [];
-             $scope.FilterRankAcademic = [];
-             $scope.FilterForeignLanguage = [];
-             $scope.FilterMinorityLanguage = [];
-             $scope.FilterPoliticalTheory = [];
-             $scope.FilterIt = [];
-             $scope.Filterplace = [];
-             $scope.FilterRelation = [];
-             $scope.FilterCountry = [];
-             $scope.$digest();
-         }
- 
-     });
-     //Autocomplete tôn giáo
-     $scope.filteredItemReligions = [];
-     $scope.filterItemReligions = function () {
-         $scope.filteredItemReligions = $scope.itemReligions.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.Religion.toLowerCase());
-         });
-     };
- 
-     $scope.selectItemReligion = function (item) {
-         $scope.infUser.Religion = item;
-         $scope.filteredItemReligions = [];
-     };
-    
-     //Autocomplete
-     $scope.Gender = ['Nam', 'Nữ', 'Khác'];
-     $scope.itemEmployees = [
-         'Bác sĩ', 'Luật sư', 'Giáo viên', 'Kỹ sư', 'Nhân viên kinh doanh', 'Quản lý dự án', 'Nhân viên bán hàng', 'Chuyên viên tài chính', 'Kỹ thuật viên IT', 'Nhân viên marketing', 'Nhà hàng khách sạn', 'Thợ xây', 'Nghệ sĩ/ nghệ nhân', 'Nhân viên quản lý nhân sự', 'Chuyên viên tư vấn', 'Nhân viên kế toán', 'Y tá/ điều dưỡng',
-         'Chuyên viên tài sản', 'Nhân viên chăm sóc khách hàng', 'Nhân viên sản xuất/ vận hành máy', 'Nhà thiết kế đồ họa', 'Nhân viên văn phòng', 'Nhà khoa học dữ liệu', 'Chuyên viên bảo mật mạng', 'Nhà hàng trưởng', 'Nhân viên dịch vụ khách hàng', 'Công an', 'Nhà xuất bản/ biên tập viên', 'Nhà đào tạo/ huấn luyện viên', 'Nhân viên quản lý sản xuất'];
-     $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo'];
-     $scope.Nation = ['Kinh', 'Tày', 'Thái', 'Mường', 'HMông', 'Dao', 'Khơ Me', 'Nùng', 'Hoa', 'Gia Rai', 'Ê Đê', 'Ba Na', 'Xơ Đăng', 'Sán Chay', 'Cơ Tu', 'Chăm', 'Sán Dìu', 'Cống', 'Bố Y', 'Giáy', 'Lào', 'Sán Rìu', 'Hrê', 'MNông', 'XTiêng', 'Bru-Vân Kiều', 'Thổ', 'Gié-Triêng', 'Co Lao', 'Tà Ôi', 'Mạ', 'Hà Nhì', 'Chơ Ro', 'La Chí', 'Phù Lá', 'La Ha', 'La Hủ', 'Lự', 'Lô Lô', 'Chứt', 'Mảng', 'Pà Thẻn', 'Cờ Lao', 'Bốn', 'Cống', 'Si La', 'Pu Péo', 'Rơ Măm', 'La Hu', 'Kháng', 'Ô Đu', 'Sách', 'Lô Lô Chóe', 'Chứt'];
-     $scope.ForeignLanguage = [
-         'Không', 'TOEIC - 0 đến 150', 'TOEIC - 150 đến 300', 'TOEIC - 300 đến 450', 'TOEIC - 450 đến 600', 'TOEIC - 600 đến 750', 'TOEIC - 750 đến 900', 'IELTS - Dưới 4.0', 'IELTS - 4.0 đến 4.5', 'IELTS - 4.5 đến 5.0', 'IELTS - 5.0 đến 5.5', 'IELTS - 5.5 đến 6.0', 'IELTS - 6.0 đến 6.5', 'IELTS - 6.5 đến 7.0', 'IELTS - 7.0 đến 7.5', 'IELTS - 7.5 đến 8.0', 'IELTS - 8.0 đến 8.5', 'IELTS - 8.5 đến 9.0', 'Tiếng Nhật - N1', 'Tiếng Nhật - N2', 'Tiếng Nhật - N3', 'Tiếng Nhật - N4', 'Tiếng Nhật - N5', 'Tiếng Trung - HSK 1', 'Tiếng Trung - HSK 2', 'Tiếng Trung - HSK 3', 'Tiếng Trung - HSK 4', 'Tiếng Trung - HSK 5', 'Tiếng Trung - HSK 6',
-         'Tiếng Đức - Goethe-Zertifikat A1', 'Tiếng Đức - Goethe-Zertifikat A2', 'Tiếng Đức - Goethe-Zertifikat B1', 'Tiếng Đức - Goethe-Zertifikat B2', 'Tiếng Đức - Goethe-Zertifikat C1', 'Tiếng Đức - Goethe-Zertifikat C2', 'Tiếng Pháp - DELF A1', 'Tiếng Pháp - DELF A2', 'Tiếng Pháp - DELF B1', 'Tiếng Pháp - DELF B2', 'Tiếng Pháp - DALF C1', 'Tiếng Pháp - DALF C2', 'Tiếng Tây Ban Nha - DELE A1', 'Tiếng Tây Ban Nha - DELE A2', 'Tiếng Tây Ban Nha - DELE B1', 'Tiếng Tây Ban Nha - DELE B2', 'Tiếng Tây Ban Nha - DELE C1', 'Tiếng Tây Ban Nha - DELE C2', 'Tiếng Ý - CELI A1', 'Tiếng Ý - CELI A2', 'Tiếng Ý - CELI 1', 'Tiếng Ý - CELI 2', 'Tiếng Ý - CELI 3', 'Tiếng Ý - CELI 4', 'Tiếng Ý - CELI 5',
-         'Tiếng Hàn - TOPIK 1', 'Tiếng Hàn - TOPIK 2', 'Tiếng Hàn - TOPIK 3', 'Tiếng Hàn - TOPIK 4', 'Tiếng Hàn - TOPIK 5', 'Tiếng Hàn - TOPIK 6', 'Tiếng Nga - ТРКИ 1', 'Tiếng Nga - ТРКИ 2', 'Tiếng Nga - ТРКИ 3', 'Tiếng Nga - ТРКИ 4', 'Tiếng Nga - ТРКИ 5'
-     ];
-     $scope.Undergraduate = [
-         "Đại học Quốc gia Hà Nội",
-         "Đại học Quốc gia TP.Hồ Chí Minh",
-         "Đại học Bách khoa Hà Nội",
-         "Đại học Khoa học Xã hội và Nhân văn TP.Hồ Chí Minh",
-         "Đại học Ngoại thương",
-         "Đại học Y Hà Nội",
-         "Đại học Sư phạm Hà Nội",
-         "Đại học Công nghệ",
-         "Đại học Nông nghiệp",
-         "Đại học Tôn Đức Thắng",
-         "Đại học Sư phạm TP.Hồ Chí Minh",
-         "Đại học Tài chính - Marketing",
-         "Đại học Y dược TP.Hồ Chí Minh",
-         "Đại học Mở TP.Hồ Chí Minh",
-         "Đại học Giao thông Vận tải",
-         "Cao đẳng Công nghệ Thủ Đức",
-         "Cao đẳng Kinh tế - Công nghệ Hà Nội",
-         "Cao đẳng Sư phạm Đà Nẵng",
-         "Cao đẳng Kỹ thuật Công nghệ Cần Thơ",
-         "Cao đẳng Công nghệ Thông tin TP.Hồ Chí Minh",
-         "Cao đẳng Sư phạm TP.Hồ Chí Minh",
-         "Cao đẳng Y dược Huế",
-         "Cao đẳng Nghệ thuật Hà Nội",
-         "Cao đẳng Thương mại và Du lịch Hà Nội",
-         "RMIT University Việt Nam",
-         "British University Vietnam",
-         "University of London - Royal Holloway",
-         "Troy University",
-         "Fulbright University Vietnam",
-         "Vietnam National University - International School",
-         "Hanoi University of Science and Technology - School of International Education",
-         "Hoa Sen University - International School",
-         "Foreign Trade University - International School",
-         "University of Science - Vietnam National University, HCMC - International School"
-     ];
-     $scope.RankAcademic = [
-         "Không",
-         "Cử nhân",
-         "Thạc sĩ",
-         "Tiến sĩ",
-         "Cử nhân cao học",
-         "Thạc sĩ chuyên sâu",
-         "Chứng chỉ chuyên ngành",
-         "Cử nhân khoa học",
-         "Cử nhân xã hội",
-         "Phó giáo sư",
-         "Giáo sư"
-     ];
-     $scope.PoliticalTheory = ["Không", "Cao cấp lý luận chính trị", "Trung cấp lý luận chính trị", "Sơ cấp lý luận chính trị"];
-     $scope.It = ["Không", "Chứng chỉ CNTT cơ bản", "Chứng chỉ CNTT cao cấp", "chứng chỉ tin học MOS", "Chứng chỉ tin học IC3"];
-     $scope.place = ["An Giang", "Bà Rịa - Vũng Tàu", "Bạc Liêu", "Bắc Giang", "Bắc Kạn", "Bắc Ninh",
-         "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau",
-         "Cần Thơ", "Cao Bằng", "Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai",
-         "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương",
-         "Hải Phòng", "Hậu Giang", "Hòa Bình", "Hưng Yên", "Khánh Hòa", "Kiên Giang",
-         "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định",
-         "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình",
-         "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La",
-         "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế",
-         "Tiền Giang", "TP. Hồ Chí Minh", "Trà Vinh", "Tuyên Quang", "Vĩnh Long",
-         "Vĩnh Phúc", "Yên Bái"];
- 
-     $scope.MinorityLanguage = ["Không", "Tiếng Tày", "Tiếng Nùng", "Tiếng Mông", "Tiếng Dao", "Tiếng H'Mông", "Tiếng Khơ Mú", "Tiếng Xơ Đăng", "Tiếng Chăm", "Tiếng Bru-Vân Kiều", "Tiếng Ê Đê", "Tiếng Sán Dìu", "Tiếng Hrê", "Tiếng Co Tu", "Tiếng Ra Glai", "Tiếng Xtiêng", "Tiếng Giáy", "Tiếng Cơ Ho", "Tiếng M'Nông", "Tiếng Thổ", "Tiếng Chơ Ro", "Tiếng Hà Nhì", "Tiếng La Hu", "Tiếng Ô Đu", "Tiếng X'áng", "Tiếng Kháng",
-         "Tiếng Cống", "Tiếng Si La", "Tiếng Chứt", "Tiếng Hà Lang", "Tiếng Xinh Mun", "Tiếng Maa", "Tiếng Sơ Rục", "Tiếng Hơ Lô", "Tiếng Mảng", "Tiếng Ơ Đu", "Tiếng Hà Nhì", "Tiếng Jơ Lơng", "Tiếng Bố Y", "Tiếng Lự", "Tiếng Sán Chay", "Tiếng Sán Dìu", "Tiếng Hán Nôm", "Tiếng Hoa", "Tiếng Khmer", "Tiếng Bahnar", "Tiếng Jrai", "Tiếng Raglai", "Tiếng Bru", "Tiếng Hre", "Tiếng Mnong", "Tiếng Chru", "Tiếng Halang", "Tiếng Pu Peo",
-         "Tiếng Pà Thẻn", "Tiếng Arem", "Tiếng Xinh Mun", "Tiếng Puoc", "Tiếng Ta Oi", "Tiếng Pa Then", "Tiếng Tày Thanh"];
-     $scope.GeneralEducation = ["Không", "10/10", "12/12", "9/12"];
- 
-     $scope.Relation = ["Ông nội", "Bà nội", "Bà ngoại", "Ông ngoại", "Bố đẻ", "Mẹ đẻ", "Em trai", "Vợ (Chồng)", "Con trai", "Con gái", "Ông nội vợ (Chồng)", "Bà nội vợ (Chồng)", "Ông ngoại vợ (chồng)",
-         "Bà ngoại vợ (chồng)", "Bố vợ (chồng)", "Mẹ vợ (chồng)", "Em trai vợ (chồng)"];
- 
-     $scope.Country = ["Afghanistan", "Albania",
-         "Algeria", "Andorra", "Angola", "Antigua và Barbuda", "Argentina", "Armenia", "Úc", "Áo", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Bỉ", "Belize", "Bénin", "Bhutan", "Bolivia", "Bosnia và Herzegovina", "Botswana", "Brasil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Campuchia", "Cameroon", "Canada",
-         "Cộng hòa Trung Phi", "Chad", "Chile", "Trung Quốc", "Colombia", "Comoros", "Cộng hòa Congo", "Cộng hòa Dân chủ Congo", "Costa Rica", "Croatia", "Cuba", "Síp", "Cộng hòa Séc", "Đan Mạch", "Djibouti", "Dominica", "Cộng hòa Dominica", "Đông Timor", "Ecuador", "Ai Cập", "El Salvador", "Guinea Xích Đạo", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Phần Lan", "Pháp", "Gabon", "Gambia", "Georgia", "Đức", "Ghana", "Hy Lạp", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "Ấn Độ", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Ý", "Jamaica", "Nhật Bản", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Triều Tiên", "Hàn Quốc", "Kosovo",
-         "Kuwait", "Kyrgyzstan", "Lào", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Quần đảo Marshall", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro",
-         "Morocco", "Mozambique", "Myanmar (Miến Điện)", "Namibia", "Nauru", "Nepal", "Hà Lan", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Na Uy", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Ba Lan", "Bồ Đào Nha", "Qatar", "Romania", "Nga", "Rwanda", "Saint Kitts và Nevis", "Saint Lucia", "Saint Vincent và Grenadines", "Samoa", "San Marino", "Sao Tome và Principe",
-         "Ả Rập Saudi", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Quần đảo Solomon", "Somalia", "Nam Phi", "Nam Sudan", "Tây Ban Nha", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Thụy Điển", "Thụy Sĩ", "Syria", "Tajikistan", "Tanzania", "Thái Lan", "Đông Timor", "Togo", "Tonga", "Trinidad và Tobago", "Tunisia", "Thổ Nhĩ Kỳ", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine",
-         "Các Tiểu vương quốc Ả Rập Thống nhất", "Vương quốc Anh", "Hoa Kỳ", "Uruguay", "Uzbekistan", "Vanuatu", "Thành Vatican", "Venezuela", "Việt Nam", "Yemen", "Zambia", "Zimbabwe"];
-     // ===================================
-     $scope.filteredItems = [];
-     //Autocomplete công việc
-     $scope.filterItems = function () {
-         $scope.filteredItems = $scope.itemEmployees.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.NowEmployee.toLowerCase());
-         });
-     };
- 
-     $scope.selectItem = function (item) {
-         $scope.infUser.NowEmployee = item;
-         $scope.filteredItems = [];
-     };
-     //Autocomplete tôn giáo
-     $scope.filteredItemReligions = [];
-     $scope.filterItemReligions = function () {
-         $scope.filteredItemReligions = $scope.itemReligions.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.Religion.toLowerCase());
-         });
-     };
- 
-     $scope.selectItemReligion = function (item) {
-         $scope.infUser.Religion = item;
-         $scope.filteredItemReligions = [];
-     };
-     //Autocomplete dân tộc
-     $scope.FilterNation = [];
-     $scope.filterNation = function () {
-         // Dân tộc
-         $scope.FilterNation = $scope.Nation.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.Nation.toLowerCase());
-         });
-     };
-     $scope.SelectNation = function (item) {
-         $scope.infUser.Nation = item;
-         $scope.FilterNation = [];
- 
-     };
-     //Autocomplete ngoại ngữ
-     $scope.FilterForeignLanguage = [];
-     $scope.filterForeignLanguage = function () {
-         // Ngoại ngữ
-         $scope.FilterForeignLanguage = $scope.ForeignLanguage.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.LevelEducation.ForeignLanguage.toLowerCase());
-         });
-     };
-     $scope.SelectForeignLanguage = function (item) {
-         $scope.infUser.LevelEducation.ForeignLanguage = item;
-         $scope.FilterForeignLanguage = [];
- 
-     };
- 
-     //Autocomplete giáo dục  đại học
-     $scope.FilterUndergraduate = [];
-     $scope.filterUndergraduate = function () {
-         // đại học - cao đẳng
-         $scope.FilterUndergraduate = $scope.Undergraduate.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.LevelEducation.Undergraduate.toLowerCase());
-         });
-     };
-     $scope.SelectUndergraduate = function (item) {
-         $scope.infUser.LevelEducation.Undergraduate = item;
-         $scope.FilterUndergraduate = [];
- 
-     };
- 
-     //Autocomplete giới tính
-     $scope.FilterGender = [];
- 
-     $scope.filterSex = function () {
-         // giới tính
-         $scope.FilterGender = $scope.Gender.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.Sex.toLowerCase());
-         });
-     };
- 
-     $scope.SelectSex = function (item) {
-         $scope.infUser.Sex = item;
-         $scope.FilterGender = [];
- 
-     };
-     //Autocomplete hàm học
-     $scope.FilterRankAcademic = [];
-     $scope.filterRankAcademic = function () {
-         // hàm học
-         $scope.FilterRankAcademic = $scope.RankAcademic.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.LevelEducation.RankAcademic.toLowerCase());
-         });
-     };
-     $scope.SelectRankAcademic = function (item) {
-         $scope.infUser.LevelEducation.RankAcademic = item;
-         $scope.FilterRankAcademic = [];
- 
-     };
- 
-     //Autocomplete lý luận chính trị
-     $scope.FilterPoliticalTheory = [];
-     $scope.filterPoliticalTheory = function () {
-         // lý luận chính trị
-         $scope.FilterPoliticalTheory = $scope.PoliticalTheory.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.LevelEducation.PoliticalTheory.toLowerCase());
-         });
-     };
-     $scope.SelectPoliticalTheory = function (item) {
-         $scope.infUser.LevelEducation.PoliticalTheory = item;
-         $scope.FilterPoliticalTheory = [];
- 
-     };
-     //Autocomplete tin học
-     $scope.FilterIt = [];
-     $scope.filterIt = function () {
-         // lý luận chính trị
-         $scope.FilterIt = $scope.It.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.LevelEducation.It.toLowerCase());
-         });
-     };
-     $scope.SelectIt = function (item) {
-         $scope.infUser.LevelEducation.It = item;
-         $scope.FilterIt = [];
- 
-     };
- 
-     //Autocomplete nơi tạo
-     $scope.Filterplace = [];
- 
-     $scope.filterplace = function () {
-         // giới tính
-         $scope.Filterplace = $scope.place.filter(function (item) {
-             return item.toLowerCase().includes($scope.PlaceCreatedTime.place.toLowerCase());
-         });
-     };
- 
-     $scope.Selectplace = function (item) {
-         $scope.PlaceCreatedTime.place = item;
-         $scope.Filterplace = [];
- 
-     };
-     //Autocomplete tiếng dân tộc thiểu số
-     $scope.FilterMinorityLanguage = [];
-     $scope.filterMinorityLanguage = function () {
-         //tiếng dân tộc thiểu số
-         $scope.FilterMinorityLanguage = $scope.MinorityLanguage.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.LevelEducation.MinorityLanguage.toLowerCase());
-         });
-     };
-     $scope.SelectMinorityLanguage = function (item) {
-         $scope.infUser.LevelEducation.MinorityLanguage = item;
-         $scope.FilterMinorityLanguage = [];
-     };
-     //Autocomplete giáo dục phổ thông
-     $scope.FilterGeneralEducation = [];
-     $scope.filterGeneralEducation = function () {
-         // phổ thông
-         $scope.FilterGeneralEducation = $scope.GeneralEducation.filter(function (item) {
-             return item.toLowerCase().includes($scope.infUser.LevelEducation.GeneralEducation.toLowerCase());
-         });
-     };
-     $scope.SelectGeneralEducation = function (item) {
-         $scope.infUser.LevelEducation.GeneralEducation = item;
-         $scope.FilterGeneralEducation = [];
- 
-     };
-     //Autocomplete quan hệ
-     $scope.FilterRelation = [];
-     $scope.filterRelation = function () {
-         //tiếng dân tộc thiểu số
-         $scope.FilterRelation = $scope.Relation.filter(function (item) {
-             return item.toLowerCase().includes($scope.selectedFamily.Relation.toLowerCase());
-         });
-     };
-     $scope.SelectRelation = function (item) {
-         $scope.selectedFamily.Relation = item;
-         $scope.FilterRelation = [];
-     };
-     //Autocomplete nước ngoài
-     $scope.FilterCountry = [];
-     $scope.filterCountry = function () {
-         //tiếng dân tộc thiểu số
-         $scope.FilterCountry = $scope.Country.filter(function (item) {
-             return item.toLowerCase().includes($scope.selectedGoAboard.Country.toLowerCase());
-         });
-     };
-     $scope.SelectCountry = function (item) {
-         $scope.selectedGoAboard.Country = item;
-         $scope.FilterCountry = [];
-     };
- 
+app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $uibModal, $http) {
+    //Autocomplete
+    $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
+    $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo']
+    $scope.filteredItems = [];
+
+    //Autocomplete công việc
+    $scope.filterItems = function () {
+        $scope.filteredItems = $scope.itemEmployees.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.NowEmployee.toLowerCase());
+        });
+    };
+
+    $scope.selectItem = function (item) {
+        $scope.infUser.NowEmployee = item;
+        $scope.filteredItems = [];
+    };
+
+    $('body').on('click', function (event) {
+        // Nếu click vào ô input, trả về ngay
+        if ($(event.target).is('input[type="text"]')) {
+            return;
+        }
+
+        // Kiểm tra xem phần tử được click có là con của ul.autocomplete-list hay không
+        if (!$(event.target).closest('ul.autocomplete-list').length) {
+            // Xử lý sự kiện click ở đây cho các phần tử không phải là con của ul.autocomplete-list
+
+            $scope.filteredItemReligions = [];
+            $scope.FilterGender = [];
+            $scope.filteredItems = [];
+            $scope.FilterNation = [];
+            $scope.FilterGeneralEducation = [];
+            $scope.FilterUndergraduate = [];
+            $scope.FilterRankAcademic = [];
+            $scope.FilterForeignLanguage = [];
+            $scope.FilterMinorityLanguage = [];
+            $scope.FilterPoliticalTheory = [];
+            $scope.FilterIt = [];
+            $scope.Filterplace = [];
+            $scope.FilterRelation = [];
+            $scope.FilterCountry = [];
+            $scope.$digest();
+        }
+
+    });
+    //Autocomplete tôn giáo
+    $scope.filteredItemReligions = [];
+    $scope.filterItemReligions = function () {
+        $scope.filteredItemReligions = $scope.itemReligions.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.Religion.toLowerCase());
+        });
+    };
+
+    $scope.selectItemReligion = function (item) {
+        $scope.infUser.Religion = item;
+        $scope.filteredItemReligions = [];
+    };
+
+    //Autocomplete
+    $scope.Gender = ['Nam', 'Nữ', 'Khác'];
+    $scope.itemEmployees = [
+        'Bác sĩ', 'Luật sư', 'Giáo viên', 'Kỹ sư', 'Nhân viên kinh doanh', 'Quản lý dự án', 'Nhân viên bán hàng', 'Chuyên viên tài chính', 'Kỹ thuật viên IT', 'Nhân viên marketing', 'Nhà hàng khách sạn', 'Thợ xây', 'Nghệ sĩ/ nghệ nhân', 'Nhân viên quản lý nhân sự', 'Chuyên viên tư vấn', 'Nhân viên kế toán', 'Y tá/ điều dưỡng',
+        'Chuyên viên tài sản', 'Nhân viên chăm sóc khách hàng', 'Nhân viên sản xuất/ vận hành máy', 'Nhà thiết kế đồ họa', 'Nhân viên văn phòng', 'Nhà khoa học dữ liệu', 'Chuyên viên bảo mật mạng', 'Nhà hàng trưởng', 'Nhân viên dịch vụ khách hàng', 'Công an', 'Nhà xuất bản/ biên tập viên', 'Nhà đào tạo/ huấn luyện viên', 'Nhân viên quản lý sản xuất'];
+    $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo'];
+    $scope.Nation = ['Kinh', 'Tày', 'Thái', 'Mường', 'HMông', 'Dao', 'Khơ Me', 'Nùng', 'Hoa', 'Gia Rai', 'Ê Đê', 'Ba Na', 'Xơ Đăng', 'Sán Chay', 'Cơ Tu', 'Chăm', 'Sán Dìu', 'Cống', 'Bố Y', 'Giáy', 'Lào', 'Sán Rìu', 'Hrê', 'MNông', 'XTiêng', 'Bru-Vân Kiều', 'Thổ', 'Gié-Triêng', 'Co Lao', 'Tà Ôi', 'Mạ', 'Hà Nhì', 'Chơ Ro', 'La Chí', 'Phù Lá', 'La Ha', 'La Hủ', 'Lự', 'Lô Lô', 'Chứt', 'Mảng', 'Pà Thẻn', 'Cờ Lao', 'Bốn', 'Cống', 'Si La', 'Pu Péo', 'Rơ Măm', 'La Hu', 'Kháng', 'Ô Đu', 'Sách', 'Lô Lô Chóe', 'Chứt'];
+    $scope.ForeignLanguage = [
+        'Không', 'TOEIC - 0 đến 150', 'TOEIC - 150 đến 300', 'TOEIC - 300 đến 450', 'TOEIC - 450 đến 600', 'TOEIC - 600 đến 750', 'TOEIC - 750 đến 900', 'IELTS - Dưới 4.0', 'IELTS - 4.0 đến 4.5', 'IELTS - 4.5 đến 5.0', 'IELTS - 5.0 đến 5.5', 'IELTS - 5.5 đến 6.0', 'IELTS - 6.0 đến 6.5', 'IELTS - 6.5 đến 7.0', 'IELTS - 7.0 đến 7.5', 'IELTS - 7.5 đến 8.0', 'IELTS - 8.0 đến 8.5', 'IELTS - 8.5 đến 9.0', 'Tiếng Nhật - N1', 'Tiếng Nhật - N2', 'Tiếng Nhật - N3', 'Tiếng Nhật - N4', 'Tiếng Nhật - N5', 'Tiếng Trung - HSK 1', 'Tiếng Trung - HSK 2', 'Tiếng Trung - HSK 3', 'Tiếng Trung - HSK 4', 'Tiếng Trung - HSK 5', 'Tiếng Trung - HSK 6',
+        'Tiếng Đức - Goethe-Zertifikat A1', 'Tiếng Đức - Goethe-Zertifikat A2', 'Tiếng Đức - Goethe-Zertifikat B1', 'Tiếng Đức - Goethe-Zertifikat B2', 'Tiếng Đức - Goethe-Zertifikat C1', 'Tiếng Đức - Goethe-Zertifikat C2', 'Tiếng Pháp - DELF A1', 'Tiếng Pháp - DELF A2', 'Tiếng Pháp - DELF B1', 'Tiếng Pháp - DELF B2', 'Tiếng Pháp - DALF C1', 'Tiếng Pháp - DALF C2', 'Tiếng Tây Ban Nha - DELE A1', 'Tiếng Tây Ban Nha - DELE A2', 'Tiếng Tây Ban Nha - DELE B1', 'Tiếng Tây Ban Nha - DELE B2', 'Tiếng Tây Ban Nha - DELE C1', 'Tiếng Tây Ban Nha - DELE C2', 'Tiếng Ý - CELI A1', 'Tiếng Ý - CELI A2', 'Tiếng Ý - CELI 1', 'Tiếng Ý - CELI 2', 'Tiếng Ý - CELI 3', 'Tiếng Ý - CELI 4', 'Tiếng Ý - CELI 5',
+        'Tiếng Hàn - TOPIK 1', 'Tiếng Hàn - TOPIK 2', 'Tiếng Hàn - TOPIK 3', 'Tiếng Hàn - TOPIK 4', 'Tiếng Hàn - TOPIK 5', 'Tiếng Hàn - TOPIK 6', 'Tiếng Nga - ТРКИ 1', 'Tiếng Nga - ТРКИ 2', 'Tiếng Nga - ТРКИ 3', 'Tiếng Nga - ТРКИ 4', 'Tiếng Nga - ТРКИ 5'
+    ];
+    $scope.Undergraduate = [
+        "Đại học Quốc gia Hà Nội",
+        "Đại học Quốc gia TP.Hồ Chí Minh",
+        "Đại học Bách khoa Hà Nội",
+        "Đại học Khoa học Xã hội và Nhân văn TP.Hồ Chí Minh",
+        "Đại học Ngoại thương",
+        "Đại học Y Hà Nội",
+        "Đại học Sư phạm Hà Nội",
+        "Đại học Công nghệ",
+        "Đại học Nông nghiệp",
+        "Đại học Tôn Đức Thắng",
+        "Đại học Sư phạm TP.Hồ Chí Minh",
+        "Đại học Tài chính - Marketing",
+        "Đại học Y dược TP.Hồ Chí Minh",
+        "Đại học Mở TP.Hồ Chí Minh",
+        "Đại học Giao thông Vận tải",
+        "Cao đẳng Công nghệ Thủ Đức",
+        "Cao đẳng Kinh tế - Công nghệ Hà Nội",
+        "Cao đẳng Sư phạm Đà Nẵng",
+        "Cao đẳng Kỹ thuật Công nghệ Cần Thơ",
+        "Cao đẳng Công nghệ Thông tin TP.Hồ Chí Minh",
+        "Cao đẳng Sư phạm TP.Hồ Chí Minh",
+        "Cao đẳng Y dược Huế",
+        "Cao đẳng Nghệ thuật Hà Nội",
+        "Cao đẳng Thương mại và Du lịch Hà Nội",
+        "RMIT University Việt Nam",
+        "British University Vietnam",
+        "University of London - Royal Holloway",
+        "Troy University",
+        "Fulbright University Vietnam",
+        "Vietnam National University - International School",
+        "Hanoi University of Science and Technology - School of International Education",
+        "Hoa Sen University - International School",
+        "Foreign Trade University - International School",
+        "University of Science - Vietnam National University, HCMC - International School"
+    ];
+    $scope.RankAcademic = [
+        "Không",
+        "Cử nhân",
+        "Thạc sĩ",
+        "Tiến sĩ",
+        "Cử nhân cao học",
+        "Thạc sĩ chuyên sâu",
+        "Chứng chỉ chuyên ngành",
+        "Cử nhân khoa học",
+        "Cử nhân xã hội",
+        "Phó giáo sư",
+        "Giáo sư"
+    ];
+    $scope.PoliticalTheory = ["Không", "Cao cấp lý luận chính trị", "Trung cấp lý luận chính trị", "Sơ cấp lý luận chính trị"];
+    $scope.It = ["Không", "Chứng chỉ CNTT cơ bản", "Chứng chỉ CNTT cao cấp", "chứng chỉ tin học MOS", "Chứng chỉ tin học IC3"];
+    $scope.place = ["An Giang", "Bà Rịa - Vũng Tàu", "Bạc Liêu", "Bắc Giang", "Bắc Kạn", "Bắc Ninh",
+        "Bến Tre", "Bình Định", "Bình Dương", "Bình Phước", "Bình Thuận", "Cà Mau",
+        "Cần Thơ", "Cao Bằng", "Đà Nẵng", "Đắk Lắk", "Đắk Nông", "Điện Biên", "Đồng Nai",
+        "Đồng Tháp", "Gia Lai", "Hà Giang", "Hà Nam", "Hà Nội", "Hà Tĩnh", "Hải Dương",
+        "Hải Phòng", "Hậu Giang", "Hòa Bình", "Hưng Yên", "Khánh Hòa", "Kiên Giang",
+        "Kon Tum", "Lai Châu", "Lâm Đồng", "Lạng Sơn", "Lào Cai", "Long An", "Nam Định",
+        "Nghệ An", "Ninh Bình", "Ninh Thuận", "Phú Thọ", "Phú Yên", "Quảng Bình",
+        "Quảng Nam", "Quảng Ngãi", "Quảng Ninh", "Quảng Trị", "Sóc Trăng", "Sơn La",
+        "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thừa Thiên Huế",
+        "Tiền Giang", "TP. Hồ Chí Minh", "Trà Vinh", "Tuyên Quang", "Vĩnh Long",
+        "Vĩnh Phúc", "Yên Bái"];
+
+    $scope.MinorityLanguage = ["Không", "Tiếng Tày", "Tiếng Nùng", "Tiếng Mông", "Tiếng Dao", "Tiếng H'Mông", "Tiếng Khơ Mú", "Tiếng Xơ Đăng", "Tiếng Chăm", "Tiếng Bru-Vân Kiều", "Tiếng Ê Đê", "Tiếng Sán Dìu", "Tiếng Hrê", "Tiếng Co Tu", "Tiếng Ra Glai", "Tiếng Xtiêng", "Tiếng Giáy", "Tiếng Cơ Ho", "Tiếng M'Nông", "Tiếng Thổ", "Tiếng Chơ Ro", "Tiếng Hà Nhì", "Tiếng La Hu", "Tiếng Ô Đu", "Tiếng X'áng", "Tiếng Kháng",
+        "Tiếng Cống", "Tiếng Si La", "Tiếng Chứt", "Tiếng Hà Lang", "Tiếng Xinh Mun", "Tiếng Maa", "Tiếng Sơ Rục", "Tiếng Hơ Lô", "Tiếng Mảng", "Tiếng Ơ Đu", "Tiếng Hà Nhì", "Tiếng Jơ Lơng", "Tiếng Bố Y", "Tiếng Lự", "Tiếng Sán Chay", "Tiếng Sán Dìu", "Tiếng Hán Nôm", "Tiếng Hoa", "Tiếng Khmer", "Tiếng Bahnar", "Tiếng Jrai", "Tiếng Raglai", "Tiếng Bru", "Tiếng Hre", "Tiếng Mnong", "Tiếng Chru", "Tiếng Halang", "Tiếng Pu Peo",
+        "Tiếng Pà Thẻn", "Tiếng Arem", "Tiếng Xinh Mun", "Tiếng Puoc", "Tiếng Ta Oi", "Tiếng Pa Then", "Tiếng Tày Thanh"];
+    $scope.GeneralEducation = ["Không", "10/10", "12/12", "9/12"];
+
+    $scope.Relation = ["Ông nội", "Bà nội", "Bà ngoại", "Ông ngoại", "Bố đẻ", "Mẹ đẻ", "Em trai", "Vợ (Chồng)", "Con trai", "Con gái", "Ông nội vợ (Chồng)", "Bà nội vợ (Chồng)", "Ông ngoại vợ (chồng)",
+        "Bà ngoại vợ (chồng)", "Bố vợ (chồng)", "Mẹ vợ (chồng)", "Em trai vợ (chồng)"];
+
+    $scope.Country = ["Afghanistan", "Albania",
+        "Algeria", "Andorra", "Angola", "Antigua và Barbuda", "Argentina", "Armenia", "Úc", "Áo", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Bỉ", "Belize", "Bénin", "Bhutan", "Bolivia", "Bosnia và Herzegovina", "Botswana", "Brasil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Campuchia", "Cameroon", "Canada",
+        "Cộng hòa Trung Phi", "Chad", "Chile", "Trung Quốc", "Colombia", "Comoros", "Cộng hòa Congo", "Cộng hòa Dân chủ Congo", "Costa Rica", "Croatia", "Cuba", "Síp", "Cộng hòa Séc", "Đan Mạch", "Djibouti", "Dominica", "Cộng hòa Dominica", "Đông Timor", "Ecuador", "Ai Cập", "El Salvador", "Guinea Xích Đạo", "Eritrea", "Estonia", "Ethiopia", "Fiji", "Phần Lan", "Pháp", "Gabon", "Gambia", "Georgia", "Đức", "Ghana", "Hy Lạp", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "Ấn Độ", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Ý", "Jamaica", "Nhật Bản", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Triều Tiên", "Hàn Quốc", "Kosovo",
+        "Kuwait", "Kyrgyzstan", "Lào", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Macedonia", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Quần đảo Marshall", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro",
+        "Morocco", "Mozambique", "Myanmar (Miến Điện)", "Namibia", "Nauru", "Nepal", "Hà Lan", "New Zealand", "Nicaragua", "Niger", "Nigeria", "Na Uy", "Oman", "Pakistan", "Palau", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Ba Lan", "Bồ Đào Nha", "Qatar", "Romania", "Nga", "Rwanda", "Saint Kitts và Nevis", "Saint Lucia", "Saint Vincent và Grenadines", "Samoa", "San Marino", "Sao Tome và Principe",
+        "Ả Rập Saudi", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Quần đảo Solomon", "Somalia", "Nam Phi", "Nam Sudan", "Tây Ban Nha", "Sri Lanka", "Sudan", "Suriname", "Swaziland", "Thụy Điển", "Thụy Sĩ", "Syria", "Tajikistan", "Tanzania", "Thái Lan", "Đông Timor", "Togo", "Tonga", "Trinidad và Tobago", "Tunisia", "Thổ Nhĩ Kỳ", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine",
+        "Các Tiểu vương quốc Ả Rập Thống nhất", "Vương quốc Anh", "Hoa Kỳ", "Uruguay", "Uzbekistan", "Vanuatu", "Thành Vatican", "Venezuela", "Việt Nam", "Yemen", "Zambia", "Zimbabwe"];
+    // ===================================
+    $scope.filteredItems = [];
+    //Autocomplete công việc
+    $scope.filterItems = function () {
+        $scope.filteredItems = $scope.itemEmployees.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.NowEmployee.toLowerCase());
+        });
+    };
+
+    $scope.selectItem = function (item) {
+        $scope.infUser.NowEmployee = item;
+        $scope.filteredItems = [];
+    };
+    //Autocomplete tôn giáo
+    $scope.filteredItemReligions = [];
+    $scope.filterItemReligions = function () {
+        $scope.filteredItemReligions = $scope.itemReligions.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.Religion.toLowerCase());
+        });
+    };
+
+    $scope.selectItemReligion = function (item) {
+        $scope.infUser.Religion = item;
+        $scope.filteredItemReligions = [];
+    };
+    //Autocomplete dân tộc
+    $scope.FilterNation = [];
+    $scope.filterNation = function () {
+        // Dân tộc
+        $scope.FilterNation = $scope.Nation.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.Nation.toLowerCase());
+        });
+    };
+    $scope.SelectNation = function (item) {
+        $scope.infUser.Nation = item;
+        $scope.FilterNation = [];
+
+    };
+    //Autocomplete ngoại ngữ
+    $scope.FilterForeignLanguage = [];
+    $scope.filterForeignLanguage = function () {
+        // Ngoại ngữ
+        $scope.FilterForeignLanguage = $scope.ForeignLanguage.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.ForeignLanguage.toLowerCase());
+        });
+    };
+    $scope.SelectForeignLanguage = function (item) {
+        $scope.infUser.LevelEducation.ForeignLanguage = item;
+        $scope.FilterForeignLanguage = [];
+
+    };
+
+    //Autocomplete giáo dục  đại học
+    $scope.FilterUndergraduate = [];
+    $scope.filterUndergraduate = function () {
+        // đại học - cao đẳng
+        $scope.FilterUndergraduate = $scope.Undergraduate.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.Undergraduate.toLowerCase());
+        });
+    };
+    $scope.SelectUndergraduate = function (item) {
+        $scope.infUser.LevelEducation.Undergraduate = item;
+        $scope.FilterUndergraduate = [];
+
+    };
+
+    //Autocomplete giới tính
+    $scope.FilterGender = [];
+
+    $scope.filterSex = function () {
+        // giới tính
+        $scope.FilterGender = $scope.Gender.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.Sex.toLowerCase());
+        });
+    };
+
+    $scope.SelectSex = function (item) {
+        $scope.infUser.Sex = item;
+        $scope.FilterGender = [];
+
+    };
+    //Autocomplete hàm học
+    $scope.FilterRankAcademic = [];
+    $scope.filterRankAcademic = function () {
+        // hàm học
+        $scope.FilterRankAcademic = $scope.RankAcademic.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.RankAcademic.toLowerCase());
+        });
+    };
+    $scope.SelectRankAcademic = function (item) {
+        $scope.infUser.LevelEducation.RankAcademic = item;
+        $scope.FilterRankAcademic = [];
+
+    };
+
+    //Autocomplete lý luận chính trị
+    $scope.FilterPoliticalTheory = [];
+    $scope.filterPoliticalTheory = function () {
+        // lý luận chính trị
+        $scope.FilterPoliticalTheory = $scope.PoliticalTheory.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.PoliticalTheory.toLowerCase());
+        });
+    };
+    $scope.SelectPoliticalTheory = function (item) {
+        $scope.infUser.LevelEducation.PoliticalTheory = item;
+        $scope.FilterPoliticalTheory = [];
+
+    };
+    //Autocomplete tin học
+    $scope.FilterIt = [];
+    $scope.filterIt = function () {
+        // lý luận chính trị
+        $scope.FilterIt = $scope.It.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.It.toLowerCase());
+        });
+    };
+    $scope.SelectIt = function (item) {
+        $scope.infUser.LevelEducation.It = item;
+        $scope.FilterIt = [];
+
+    };
+
+    //Autocomplete nơi tạo
+    $scope.Filterplace = [];
+
+    $scope.filterplace = function () {
+        // giới tính
+        $scope.Filterplace = $scope.place.filter(function (item) {
+            return item.toLowerCase().includes($scope.PlaceCreatedTime.place.toLowerCase());
+        });
+    };
+
+    $scope.Selectplace = function (item) {
+        $scope.PlaceCreatedTime.place = item;
+        $scope.Filterplace = [];
+
+    };
+    //Autocomplete tiếng dân tộc thiểu số
+    $scope.FilterMinorityLanguage = [];
+    $scope.filterMinorityLanguage = function () {
+        //tiếng dân tộc thiểu số
+        $scope.FilterMinorityLanguage = $scope.MinorityLanguage.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.MinorityLanguage.toLowerCase());
+        });
+    };
+    $scope.SelectMinorityLanguage = function (item) {
+        $scope.infUser.LevelEducation.MinorityLanguage = item;
+        $scope.FilterMinorityLanguage = [];
+    };
+    //Autocomplete giáo dục phổ thông
+    $scope.FilterGeneralEducation = [];
+    $scope.filterGeneralEducation = function () {
+        // phổ thông
+        $scope.FilterGeneralEducation = $scope.GeneralEducation.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.LevelEducation.GeneralEducation.toLowerCase());
+        });
+    };
+    $scope.SelectGeneralEducation = function (item) {
+        $scope.infUser.LevelEducation.GeneralEducation = item;
+        $scope.FilterGeneralEducation = [];
+
+    };
+    //Autocomplete quan hệ
+    $scope.FilterRelation = [];
+    $scope.filterRelation = function () {
+        //tiếng dân tộc thiểu số
+        $scope.FilterRelation = $scope.Relation.filter(function (item) {
+            return item.toLowerCase().includes($scope.selectedFamily.Relation.toLowerCase());
+        });
+    };
+    $scope.SelectRelation = function (item) {
+        $scope.selectedFamily.Relation = item;
+        $scope.FilterRelation = [];
+    };
+    //Autocomplete nước ngoài
+    $scope.FilterCountry = [];
+    $scope.filterCountry = function () {
+        //tiếng dân tộc thiểu số
+        $scope.FilterCountry = $scope.Country.filter(function (item) {
+            return item.toLowerCase().includes($scope.selectedGoAboard.Country.toLowerCase());
+        });
+    };
+    $scope.SelectCountry = function (item) {
+        $scope.selectedGoAboard.Country = item;
+        $scope.FilterCountry = [];
+    };
+
     $scope.popoverLabels = [
         {
             "id": "currentName",
@@ -1585,6 +1617,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             return item.id === popoverId;
         });
         $scope.pp.id = matchedLabel.id;
+        $scope.pp.comment = matchedLabel.comment;
         $scope.popoverid = matchedLabel.id;
         if (matchedLabel) {
             $scope.popoverLabel = matchedLabel.labelText;
@@ -1596,6 +1629,30 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         if ($scope.pp.id !== '' && $scope.pp.comment !== '') {
             $scope.addJson();
         }
+    };
+
+    $scope.openModalComment = function (popoverId) {
+        matchedLabel = $scope.popoverLabels.find(function (item) {
+            return item.id === popoverId;
+        });
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolderJoinParty + '/comment.html',
+            controller: 'comment',
+            backdrop: 'static',
+            size: '25',
+            resolve: {
+                para: function () {
+                    return {
+                        matchedLabel: matchedLabel
+                    };
+                }
+            }
+        });
+        modalInstance.result.then(function (d) {
+
+        }, function () {
+        });
     };
 
     $scope.ImportFile = function (data) {
@@ -1914,7 +1971,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 }
             });
         }).catch(function (error) {
-            console.error('Lỗi khi tải dữ liệu JSON:', error);
+            console.log('Lỗi khi tải dữ liệu JSON:', error);
         });
     };
 
@@ -2068,24 +2125,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.getListFile();
 
             setTimeout(function () {
-                $("#PersonalHistorysFromDate").datepicker({
-                    inline: false,
-                    autoclose: true,
-                    format: "dd-mm-yyyy",
-                    fontAwesome: true,
-                }).on('changeDate', function (selected) {
-                    var maxDate = new Date(selected.date.valueOf());
-                    $('#PersonalHistorysToDate').datepicker('setStartDate', maxDate);
-                });
-                $("#PersonalHistorysToDate").datepicker({
-                    inline: false,
-                    autoclose: true,
-                    format: "dd-mm-yyyy",
-                    fontAwesome: true,
-                }).on('changeDate', function (selected) {
-                    var maxDate = new Date(selected.date.valueOf());
-                    $('#PersonalHistorysFromDate').datepicker('setEndDate', maxDate);
-                });
+                try {
+                    $("#PersonalHistorysFromDate").datepicker({
+                        inline: false,
+                        autoclose: true,
+                        format: "dd-mm-yyyy",
+                        fontAwesome: true,
+                    }).on('changeDate', function (selected) {
+                        var maxDate = new Date(selected.date.valueOf());
+                        $('#PersonalHistorysToDate').datepicker('setStartDate', maxDate);
+                    });
+                    $("#PersonalHistorysToDate").datepicker({
+                        inline: false,
+                        autoclose: true,
+                        format: "dd-mm-yyyy",
+                        fontAwesome: true,
+                    }).on('changeDate', function (selected) {
+                        var maxDate = new Date(selected.date.valueOf());
+                        $('#PersonalHistorysFromDate').datepicker('setEndDate', maxDate);
+                    });
+                } catch (e) {
+                    console.log(e);
+                }
 
             }, 500);
 
@@ -2895,7 +2956,19 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.Username != '' && $scope.Username != undefined) {
                 console.log($scope.model);
                 if ($scope.SaveJson == true) {
-                    $scope.ImportFile($scope.model);
+                    const body = {
+                        Profile: $scope.model,
+                        Families: $scope.Relationship,
+                        PersonalHistories: $scope.PersonalHistory,
+                        WorkingTracking: $scope.BusinessNDuty,
+                        HistorySpecialist: $scope.HistoricalFeatures,
+                        Awards: $scope.Laudatory,
+                        WarningDisciplineds: $scope.Disciplined,
+                        TrainingCertificatedPasses: $scope.PassedTrainingClasses,
+                        GoAboards: $scope.GoAboard,
+                        IntroducerOfParty: $scope.Introducer,
+                    };
+                    $scope.ImportFile(body);
                     return
                 }
                 dataserviceJoinParty.update($scope.model, function (result) {
@@ -3102,919 +3175,919 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         console.log("Vào");
     }
     //add
-        $scope.addToFamily = function () {
-            $scope.err = false
-            if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedFamily.Residence == null || $scope.selectedFamily.Residence == undefined || $scope.selectedFamily.Residence == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedFamily.Name == null || $scope.selectedFamily.Name == undefined || $scope.selectedFamily.Name == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedFamily.BirthYear == null || $scope.selectedFamily.BirthYear == undefined || $scope.selectedFamily.BirthYear == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedFamily.PoliticalAttitude == null || $scope.selectedFamily.PoliticalAttitude == undefined || $scope.selectedFamily.PoliticalAttitude == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedFamily.HomeTown == null || $scope.selectedFamily.HomeTown == undefined || $scope.selectedFamily.HomeTown == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedFamily.Job == null || $scope.selectedFamily.Job == undefined || $scope.selectedFamily.Job == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedFamily.WorkingProgress == null || $scope.selectedFamily.WorkingProgress == undefined || $scope.selectedFamily.WorkingProgress == '') {
-                $scope.err = true
-            }
-            if ($scope.err) {
-                App.toastrError("Bạn chưa nhập đủ thông tin")
-                return
-            }
-            var model = {}
-            model.Relation = $scope.selectedFamily.Relation;
-            model.Residence = $scope.selectedFamily.Residence;
-            model.PartyMember = $scope.selectedFamily.PartyMember;
-            model.Name = $scope.selectedFamily.Name;
-            model.BirthYear = $scope.selectedFamily.BirthYear;
-            model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
-            model.HomeTown = $scope.selectedFamily.HomeTown;
-            model.Job = $scope.selectedFamily.Job;
-            model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
-            model.Id = 0;
-            $scope.Relationship.push(model);
-            $scope.selectedFamily = {}
+    $scope.addToFamily = function () {
+        $scope.err = false
+        if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation == '') {
+            $scope.err = true
         }
-        $scope.addToAward = function () {
-            $scope.err = false
-            if ($scope.selectedLaudatory.MonthYear == null || $scope.selectedLaudatory.MonthYear == undefined || $scope.selectedLaudatory.MonthYear == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedLaudatory.GrantOfDecision == null || $scope.selectedLaudatory.GrantOfDecision == undefined || $scope.selectedLaudatory.GrantOfDecision == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedLaudatory.Reason == null || $scope.selectedLaudatory.Reason == undefined || $scope.selectedLaudatory.Reason == '') {
-                $scope.err = true
-            }
-
-            if ($scope.err) {
-                App.toastrError("Bạn chưa nhập đủ thông tin")
-                return
-            }
-            var model = {}
-            model.MonthYear = $scope.selectedLaudatory.MonthYear
-            model.GrantOfDecision = $scope.selectedLaudatory.GrantOfDecision
-            model.Reason = $scope.selectedLaudatory.Reason
-            model.ProfileCode = $scope.infUser.ResumeNumber;
-            $scope.Laudatory.push(model)
+        if ($scope.selectedFamily.Residence == null || $scope.selectedFamily.Residence == undefined || $scope.selectedFamily.Residence == '') {
+            $scope.err = true
         }
-        $scope.addToBusinessNDuty = function () {
-            $scope.err = false
-            if ($scope.selectedWorkingTracking.From == null || $scope.selectedWorkingTracking.From == undefined || $scope.selectedWorkingTracking.From == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedWorkingTracking.To == null || $scope.selectedWorkingTracking.To == undefined || $scope.selectedWorkingTracking.To == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedWorkingTracking.Work == null || $scope.selectedWorkingTracking.Work == undefined || $scope.selectedWorkingTracking.Work == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedWorkingTracking.Role == null || $scope.selectedWorkingTracking.Role == undefined || $scope.selectedWorkingTracking.Role == '') {
-                $scope.err = true
-            }
-
-            if ($scope.err) {
-                App.toastrError("Bạn chưa nhập đủ thông tin")
-                return
-            }
-            var model = {}
-            model.From = $scope.selectedWorkingTracking.From
-            model.To = $scope.selectedWorkingTracking.To
-            model.Work = $scope.selectedWorkingTracking.Work
-            model.Role = $scope.selectedWorkingTracking.Role
-
-            model.Id = 0;
-            $scope.BusinessNDuty.push(model)
+        if ($scope.selectedFamily.Name == null || $scope.selectedFamily.Name == undefined || $scope.selectedFamily.Name == '') {
+            $scope.err = true
         }
-        $scope.addToHistorySpecialist = function () {
-            $scope.err = false
-            if ($scope.selectedHistorySpecialist.MonthYear == null || $scope.selectedHistorySpecialist.MonthYear == undefined || $scope.selectedHistorySpecialist.MonthYear == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedHistorySpecialist.Content == null || $scope.selectedHistorySpecialist.Content == undefined || $scope.selectedHistorySpecialist.Content == '') {
-                $scope.err = true
-            }
-
-            if ($scope.err) {
-                App.toastrError("Bạn chưa nhập đủ thông tin")
-                return
-            }
-            var obj = {};
-            obj.MonthYear = $scope.selectedHistorySpecialist.MonthYear;
-            obj.Content = $scope.selectedHistorySpecialist.Content;
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-
-            obj.Id = 0;
-            $scope.HistoricalFeatures.push(obj)
+        if ($scope.selectedFamily.BirthYear == null || $scope.selectedFamily.BirthYear == undefined || $scope.selectedFamily.BirthYear == '') {
+            $scope.err = true
         }
-        $scope.addToDisciplined = function () {
-            $scope.err = false
-            if ($scope.selectedWarningDisciplined.MonthYear == null || $scope.selectedWarningDisciplined.MonthYear == undefined || $scope.selectedWarningDisciplined.MonthYear == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedWarningDisciplined.Reason == null || $scope.selectedWarningDisciplined.Reason == undefined || $scope.selectedWarningDisciplined.Reason == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedWarningDisciplined.GrantOfDecision == null || $scope.selectedWarningDisciplined.GrantOfDecision == undefined || $scope.selectedWarningDisciplined.GrantOfDecision == '') {
-                $scope.err = true
-            }
-
-            if ($scope.err) {
-                App.toastrError("Bạn chưa nhập đủ thông tin")
-                return
-            }
-            var obj = {};
-            obj.MonthYear = $scope.selectedWarningDisciplined.MonthYear;
-            obj.Reason = $scope.selectedWarningDisciplined.Reason;
-            obj.GrantOfDecision = $scope.selectedWarningDisciplined.GrantOfDecision;
-
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-            obj.Id = 0;
-            $scope.Disciplined.push(obj)
+        if ($scope.selectedFamily.PoliticalAttitude == null || $scope.selectedFamily.PoliticalAttitude == undefined || $scope.selectedFamily.PoliticalAttitude == '') {
+            $scope.err = true
         }
-        $scope.addToTrainingCertificatedPass = function () {
-            $scope.err = false
-            if ($scope.selectedTrainingCertificatedPass.From == null || $scope.selectedTrainingCertificatedPass.From == undefined || $scope.selectedTrainingCertificatedPass.From == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedTrainingCertificatedPass.To == null || $scope.selectedTrainingCertificatedPass.To == undefined || $scope.selectedTrainingCertificatedPass.To == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedTrainingCertificatedPass.SchoolName == null || $scope.selectedTrainingCertificatedPass.SchoolName == undefined || $scope.selectedTrainingCertificatedPass.SchoolName == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedTrainingCertificatedPass.Certificate == null || $scope.selectedTrainingCertificatedPass.Certificate == undefined || $scope.selectedTrainingCertificatedPass.Certificate == '') {
-                $scope.err = true
-            }
-            if ($scope.err) {
-                App.toastrError("Bạn chưa nhập đủ thông tin")
-                return
-            }
-            var obj = {};
-            obj.From = $scope.selectedTrainingCertificatedPass.From;
-            obj.To = $scope.selectedTrainingCertificatedPass.To;
-            obj.SchoolName = $scope.selectedTrainingCertificatedPass.SchoolName;
-            obj.Class = $scope.selectedTrainingCertificatedPass.Class;
-            obj.Certificate = $scope.selectedTrainingCertificatedPass.Certificate;
-
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-            obj.Id = 0;
-            $scope.PassedTrainingClasses.push(obj)
+        if ($scope.selectedFamily.HomeTown == null || $scope.selectedFamily.HomeTown == undefined || $scope.selectedFamily.HomeTown == '') {
+            $scope.err = true
         }
-        $scope.addToGoAboard = function () {
-            $scope.err = false
-            if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedGoAboard.To == null || $scope.selectedGoAboard.To == undefined || $scope.selectedGoAboard.To == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedGoAboard.Contact == null || $scope.selectedGoAboard.Contact == undefined || $scope.selectedGoAboard.Contact == '') {
-                $scope.err = true
-            }
-            if ($scope.selectedGoAboard.Country == null || $scope.selectedGoAboard.Country == undefined || $scope.selectedGoAboard.Country == '') {
-                $scope.err = true
-            }
-            if ($scope.err) {
-                App.toastrError("Bạn chưa nhập đủ thông tin")
-                return
-            }
-            var obj = {};
-            obj.From = $scope.selectedGoAboard.From;
-            obj.To = $scope.selectedGoAboard.To;
-            obj.Contact = $scope.selectedGoAboard.Contact;
-            obj.Country = $scope.selectedGoAboard.Country;
-
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-            obj.Id = 0;
-            $scope.GoAboard.push(obj)
+        if ($scope.selectedFamily.Job == null || $scope.selectedFamily.Job == undefined || $scope.selectedFamily.Job == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedFamily.WorkingProgress == null || $scope.selectedFamily.WorkingProgress == undefined || $scope.selectedFamily.WorkingProgress == '') {
+            $scope.err = true
+        }
+        if ($scope.err) {
+            App.toastrError("Bạn chưa nhập đủ thông tin")
+            return
+        }
+        var model = {}
+        model.Relation = $scope.selectedFamily.Relation;
+        model.Residence = $scope.selectedFamily.Residence;
+        model.PartyMember = $scope.selectedFamily.PartyMember;
+        model.Name = $scope.selectedFamily.Name;
+        model.BirthYear = $scope.selectedFamily.BirthYear;
+        model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
+        model.HomeTown = $scope.selectedFamily.HomeTown;
+        model.Job = $scope.selectedFamily.Job;
+        model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
+        model.Id = 0;
+        $scope.Relationship.push(model);
+        $scope.selectedFamily = {}
+    }
+    $scope.addToAward = function () {
+        $scope.err = false
+        if ($scope.selectedLaudatory.MonthYear == null || $scope.selectedLaudatory.MonthYear == undefined || $scope.selectedLaudatory.MonthYear == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedLaudatory.GrantOfDecision == null || $scope.selectedLaudatory.GrantOfDecision == undefined || $scope.selectedLaudatory.GrantOfDecision == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedLaudatory.Reason == null || $scope.selectedLaudatory.Reason == undefined || $scope.selectedLaudatory.Reason == '') {
+            $scope.err = true
         }
 
-        //Update
-        $scope.selectedFamily = {};
-        $scope.selectedWarningDisciplined = {};
-        $scope.selectedHistorySpecialist = {};
-        $scope.selectedWorkingTracking = {};
-        $scope.selectedTrainingCertificatedPass = {};
-        $scope.selectedGoAboard = {};
+        if ($scope.err) {
+            App.toastrError("Bạn chưa nhập đủ thông tin")
+            return
+        }
+        var model = {}
+        model.MonthYear = $scope.selectedLaudatory.MonthYear
+        model.GrantOfDecision = $scope.selectedLaudatory.GrantOfDecision
+        model.Reason = $scope.selectedLaudatory.Reason
+        model.ProfileCode = $scope.infUser.ResumeNumber;
+        $scope.Laudatory.push(model)
+    }
+    $scope.addToBusinessNDuty = function () {
+        $scope.err = false
+        if ($scope.selectedWorkingTracking.From == null || $scope.selectedWorkingTracking.From == undefined || $scope.selectedWorkingTracking.From == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedWorkingTracking.To == null || $scope.selectedWorkingTracking.To == undefined || $scope.selectedWorkingTracking.To == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedWorkingTracking.Work == null || $scope.selectedWorkingTracking.Work == undefined || $scope.selectedWorkingTracking.Work == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedWorkingTracking.Role == null || $scope.selectedWorkingTracking.Role == undefined || $scope.selectedWorkingTracking.Role == '') {
+            $scope.err = true
+        }
 
-        $scope.selectFamily = function (x) {
-            $scope.selectedFamily = x;
-        };
-        $scope.selectWarningDisciplined = function (x) {
-            $scope.selectedWarningDisciplined = x;
-        };
-        $scope.selectHistorySpecialist = function (x) {
-            $scope.selectedHistorySpecialist = x;
-        };
-        $scope.selectWorkingTracking = function (x) {
-            $scope.selectedWorkingTracking = x;
-        };
-        $scope.selectTrainingCertificatedPass = function (x) {
-            $scope.selectedTrainingCertificatedPass = x;
-        };
-        $scope.selectGoAboard = function (x) {
-            $scope.selectedGoAboard = x;
-        };
+        if ($scope.err) {
+            App.toastrError("Bạn chưa nhập đủ thông tin")
+            return
+        }
+        var model = {}
+        model.From = $scope.selectedWorkingTracking.From
+        model.To = $scope.selectedWorkingTracking.To
+        model.Work = $scope.selectedWorkingTracking.Work
+        model.Role = $scope.selectedWorkingTracking.Role
 
-        //Delete
+        model.Id = 0;
+        $scope.BusinessNDuty.push(model)
+    }
+    $scope.addToHistorySpecialist = function () {
+        $scope.err = false
+        if ($scope.selectedHistorySpecialist.MonthYear == null || $scope.selectedHistorySpecialist.MonthYear == undefined || $scope.selectedHistorySpecialist.MonthYear == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedHistorySpecialist.Content == null || $scope.selectedHistorySpecialist.Content == undefined || $scope.selectedHistorySpecialist.Content == '') {
+            $scope.err = true
+        }
 
-        $scope.deleteFamily = function (index) {
-            if ($scope.Relationship[index].Id == undefined || $scope.Relationship[index].Id == 0) {
-                $scope.Relationship.splice(index, 1);
-            }
-            else {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/UserProfile/DeleteFamily?Id=" + $scope.Relationship[index].Id,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                    success: function (result) {
-                        if (result.Error) {
-                            App.toastrError(result.Title);
-                        } else {
-                            App.toastrSuccess(result.Title);
-                            $scope.Relationship.splice(index, 1);
-                            $scope.$apply()
-                        }
+        if ($scope.err) {
+            App.toastrError("Bạn chưa nhập đủ thông tin")
+            return
+        }
+        var obj = {};
+        obj.MonthYear = $scope.selectedHistorySpecialist.MonthYear;
+        obj.Content = $scope.selectedHistorySpecialist.Content;
+        obj.ProfileCode = $scope.infUser.ResumeNumber;
 
-                    },
-                    error: function (error) {
-                        App.toastrSuccess(error);
-                    }
-                });
-            }
+        obj.Id = 0;
+        $scope.HistoricalFeatures.push(obj)
+    }
+    $scope.addToDisciplined = function () {
+        $scope.err = false
+        if ($scope.selectedWarningDisciplined.MonthYear == null || $scope.selectedWarningDisciplined.MonthYear == undefined || $scope.selectedWarningDisciplined.MonthYear == '') {
+            $scope.err = true
         }
-        $scope.deleteHistorySpecialist = function (index) {
-            if ($scope.HistoricalFeatures[index].Id == undefined || $scope.HistoricalFeatures[index].Id == 0) {
-                $scope.HistoricalFeatures.splice(index, 1);
-            } else {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/UserProfile/DeleteHistorySpecialist?id=" + $scope.HistoricalFeatures[index].Id,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                    success: function (result) {
-                        console.log(result.Title);
-                        if (result.Error) {
-                            App.toastrError(result.Title);
-                        } else {
-                            App.toastrSuccess(result.Title);
-                            $scope.HistoricalFeatures.splice(index, 1);
-                            $scope.$apply()
-                        }
-                    },
-                    error: function (error) {
-                        App.toastrSuccess(error);
-                    }
-                });
-            }
+        if ($scope.selectedWarningDisciplined.Reason == null || $scope.selectedWarningDisciplined.Reason == undefined || $scope.selectedWarningDisciplined.Reason == '') {
+            $scope.err = true
         }
-        $scope.deleteWarningDisciplined = function (index) {
-            if ($scope.Disciplined[index].Id == undefined || $scope.Disciplined[index].Id == 0) {
-                $scope.Disciplined.splice(index, 1);
-            } else {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/UserProfile/DeleteWarningDisciplined?id=" + $scope.Disciplined[index].Id,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                    success: function (result) {
-                        console.log(result.Title);
-                        if (result.Error) {
-                            App.toastrError(result.Title);
-                        } else {
-                            App.toastrSuccess(result.Title);
-                            $scope.Disciplined.splice(index, 1);
-                            $scope.$apply()
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error.Title);
-                    }
-                });
-            }
+        if ($scope.selectedWarningDisciplined.GrantOfDecision == null || $scope.selectedWarningDisciplined.GrantOfDecision == undefined || $scope.selectedWarningDisciplined.GrantOfDecision == '') {
+            $scope.err = true
         }
-        $scope.deleteTrainingCertificatedPass = function (index) {
-            if ($scope.PassedTrainingClasses[index].Id == undefined || $scope.PassedTrainingClasses[index].Id == 0) {
-                $scope.PassedTrainingClasses.splice(index, 1);
-            } else {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/UserProfile/DeleteTrainingCertificatedPass?id=" + $scope.PassedTrainingClasses[index].Id,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (result) {
-                        if (result.Error) {
-                            App.toastrError(result.Title);
-                        } else {
-                            App.toastrSuccess(result.Title);
-                            $scope.PassedTrainingClasses.splice(index, 1);
-                            $scope.$apply()
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error.Title);
-                    }
-                });
-            }
+
+        if ($scope.err) {
+            App.toastrError("Bạn chưa nhập đủ thông tin")
+            return
         }
-        $scope.deleteWorkingTracking = function (index) {
-            if ($scope.BusinessNDuty[index].Id == undefined || $scope.BusinessNDuty[index].Id == 0) {
-                $scope.BusinessNDuty.splice(index, 1);
-            } else {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/UserProfile/DeleteWorkingTracking?id=" + $scope.BusinessNDuty[index].Id,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                    success: function (result) {
-                        console.log(result.Title);
-                        if (result.Error) {
-                            App.toastrError(result.Title);
-                        } else {
-                            App.toastrSuccess(result.Title);
-                            $scope.BusinessNDuty.splice(index, 1);
-                            $scope.$apply();
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error.Title);
-                    }
-                });
-            }
+        var obj = {};
+        obj.MonthYear = $scope.selectedWarningDisciplined.MonthYear;
+        obj.Reason = $scope.selectedWarningDisciplined.Reason;
+        obj.GrantOfDecision = $scope.selectedWarningDisciplined.GrantOfDecision;
+
+        obj.ProfileCode = $scope.infUser.ResumeNumber;
+        obj.Id = 0;
+        $scope.Disciplined.push(obj)
+    }
+    $scope.addToTrainingCertificatedPass = function () {
+        $scope.err = false
+        if ($scope.selectedTrainingCertificatedPass.From == null || $scope.selectedTrainingCertificatedPass.From == undefined || $scope.selectedTrainingCertificatedPass.From == '') {
+            $scope.err = true
         }
-        $scope.deleteIntroducer = function (e) {
-            console.log(e);
-            var isDeleted = confirm("Ban co muon xoa?");
-            if (isDeleted) {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/UserProfile/DeleteIntroducerOfParty?profileCode=" + $scope.infUser.ResumeNumber,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                    success: function (result) {
-                        console.log(result.Title);
-                        if (result.Error) {
-                            App.toastrError(result.Title);
-                        } else {
-                            App.toastrSuccess(result.Title);
-                        }
-                    },
-                    error: function (error) {
-                        console.log(error.Title);
-                    }
-                });
-            }
+        if ($scope.selectedTrainingCertificatedPass.To == null || $scope.selectedTrainingCertificatedPass.To == undefined || $scope.selectedTrainingCertificatedPass.To == '') {
+            $scope.err = true
         }
-        $scope.deleteAward = function (index) {
-            if ($scope.Laudatory[index].Id == undefined || $scope.Laudatory[index].Id == 0) {
-                $scope.Laudatory.splice(index, 1);
-            } else {
-                $.ajax({
-                    type: "DELETE",
-                    url: "/UserProfile/DeleteAward?id=" + $scope.Laudatory[index].Id,
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                    success: function (result) {
-                        if (result.Error) {
-                            App.toastrError(result.Title);
-                        } else {
-                            App.toastrSuccess(result.Title);
-                            $scope.Laudatory.splice(index, 1);
-                            $scope.$apply();
-                        }
-                    },
-                    error: function (result) {
+        if ($scope.selectedTrainingCertificatedPass.SchoolName == null || $scope.selectedTrainingCertificatedPass.SchoolName == undefined || $scope.selectedTrainingCertificatedPass.SchoolName == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedTrainingCertificatedPass.Certificate == null || $scope.selectedTrainingCertificatedPass.Certificate == undefined || $scope.selectedTrainingCertificatedPass.Certificate == '') {
+            $scope.err = true
+        }
+        if ($scope.err) {
+            App.toastrError("Bạn chưa nhập đủ thông tin")
+            return
+        }
+        var obj = {};
+        obj.From = $scope.selectedTrainingCertificatedPass.From;
+        obj.To = $scope.selectedTrainingCertificatedPass.To;
+        obj.SchoolName = $scope.selectedTrainingCertificatedPass.SchoolName;
+        obj.Class = $scope.selectedTrainingCertificatedPass.Class;
+        obj.Certificate = $scope.selectedTrainingCertificatedPass.Certificate;
+
+        obj.ProfileCode = $scope.infUser.ResumeNumber;
+        obj.Id = 0;
+        $scope.PassedTrainingClasses.push(obj)
+    }
+    $scope.addToGoAboard = function () {
+        $scope.err = false
+        if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedGoAboard.To == null || $scope.selectedGoAboard.To == undefined || $scope.selectedGoAboard.To == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedGoAboard.Contact == null || $scope.selectedGoAboard.Contact == undefined || $scope.selectedGoAboard.Contact == '') {
+            $scope.err = true
+        }
+        if ($scope.selectedGoAboard.Country == null || $scope.selectedGoAboard.Country == undefined || $scope.selectedGoAboard.Country == '') {
+            $scope.err = true
+        }
+        if ($scope.err) {
+            App.toastrError("Bạn chưa nhập đủ thông tin")
+            return
+        }
+        var obj = {};
+        obj.From = $scope.selectedGoAboard.From;
+        obj.To = $scope.selectedGoAboard.To;
+        obj.Contact = $scope.selectedGoAboard.Contact;
+        obj.Country = $scope.selectedGoAboard.Country;
+
+        obj.ProfileCode = $scope.infUser.ResumeNumber;
+        obj.Id = 0;
+        $scope.GoAboard.push(obj)
+    }
+
+    //Update
+    $scope.selectedFamily = {};
+    $scope.selectedWarningDisciplined = {};
+    $scope.selectedHistorySpecialist = {};
+    $scope.selectedWorkingTracking = {};
+    $scope.selectedTrainingCertificatedPass = {};
+    $scope.selectedGoAboard = {};
+
+    $scope.selectFamily = function (x) {
+        $scope.selectedFamily = x;
+    };
+    $scope.selectWarningDisciplined = function (x) {
+        $scope.selectedWarningDisciplined = x;
+    };
+    $scope.selectHistorySpecialist = function (x) {
+        $scope.selectedHistorySpecialist = x;
+    };
+    $scope.selectWorkingTracking = function (x) {
+        $scope.selectedWorkingTracking = x;
+    };
+    $scope.selectTrainingCertificatedPass = function (x) {
+        $scope.selectedTrainingCertificatedPass = x;
+    };
+    $scope.selectGoAboard = function (x) {
+        $scope.selectedGoAboard = x;
+    };
+
+    //Delete
+
+    $scope.deleteFamily = function (index) {
+        if ($scope.Relationship[index].Id == undefined || $scope.Relationship[index].Id == 0) {
+            $scope.Relationship.splice(index, 1);
+        }
+        else {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteFamily?Id=" + $scope.Relationship[index].Id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+                    if (result.Error) {
                         App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.Relationship.splice(index, 1);
+                        $scope.$apply()
                     }
-                });
-            }
-        }
-        //getGoAboardById
-        $scope.getGoAboardById = function () {
-            $scope.id = 2;
-            dataserviceJoinParty.getGoAboardById($scope.id, function (rs) {
-                rs = rs.data;
-                console.log(rs.data);
 
-            })
-
-            console.log($scope.id);
-        }
-        $scope.getTrainingCertificatedPassById = function () {
-            $scope.id = 2;
-            dataserviceJoinParty.getTrainingCertificatedPassById($scope.id, function (rs) {
-                rs = rs.data;
-                console.log(rs.data);
-            })
-            console.log($scope.id);
-        }
-        //getGetPersonalHistoryById
-        $scope.getPersonalHistoryById = function () {
-            $scope.id = 2;
-            dataserviceJoinParty.getPersonalHistoryById($scope.id, function (rs) {
-                rs = rs.data;
-                console.log(rs.data);
-            })
-            console.log($scope.id);
-        }
-
-        //getGoAboardById
-        $scope.getGoAboardById = function () {
-            $scope.id = 2;
-            dataserviceJoinParty.getGoAboardById($scope.id, function (rs) {
-                rs = rs.data;
-                console.log(rs.data);
-
-            })
-
-            console.log($scope.id);
-        }
-
-        $scope.uploadFile = async function () {
-            var file = document.getElementById("FileItem").files[0];
-            if (file == null || file == undefined || file == "") {
-                App.toastrError("Bạn chưa chọn file");
-            }
-            else {
-                var formdata = new FormData();
-                formdata.append("files", file);
-
-                var requestOptions = {
-                    method: 'POST',
-                    body: formdata,
-                    redirect: 'follow'
-                };
-                var resultImp = await fetch("/UserProfile/Import", requestOptions);
-                var txt = await resultImp.text();
-
-                $scope.JSONobjj = handleTextUpload(txt);
-                if ($scope.JSONobjj = []) {
-                    App.toastrError("File bạn tải không hợp lệ");
-                } else {
-                    App.toastrSuccess("Tải file thành công")
+                },
+                error: function (error) {
+                    App.toastrSuccess(error);
                 }
-                console.log($scope.JSONobj);
-            }
-        };
-
-        function handleTextUpload(txt) {
-            $scope.defaultRTE.value = txt;
-            setTimeout(function () {
-                var listPage = document.querySelectorAll(".Section0 > div > table");
-                //Page2 Lịch sử bản thân
-                var listTagpinPage1 = listPage[1].querySelectorAll("tbody > tr > td > p");
-                var objPage1 = Array.from(listTagpinPage1).filter(function (element) {
-                    // Kiểm tra xem thuộc tính của thẻ <p> có chứa văn bản không
-                    var textContent = element.textContent.trim();
-                    return textContent.length > 0 && /\+/.test(textContent);
-                });
-
-                //đối tượng lưu thông tin lịch sử bản thân dưới bằng mảng
-
-                for (let i = 0; i < objPage1.length; i++) {
-                    var PersonHis = {};
-                    // Sửa lỗi ở đây, sử dụng indexOf thay vì search và sửa lỗi về cú pháp của biểu thức chấm phẩy
-                    PersonHis['Begin'] = objPage1[i].innerText.split(':')[0].substr(objPage1[i].innerText.indexOf('-') - 8, 7).trim(),
-                        PersonHis['End'] = objPage1[i].innerText.split(':')[0].substr(objPage1[i].innerText.indexOf('-') + 1, 7).trim(),
-                        // Sửa lỗi ở đây, sử dụng split(':') để tách thời gian và thông tin
-                        PersonHis['Content'] = objPage1[i].innerText.split(':')[1];
-                    $scope.PersonalHistory.push(PersonHis);
+            });
+        }
+    }
+    $scope.deleteHistorySpecialist = function (index) {
+        if ($scope.HistoricalFeatures[index].Id == undefined || $scope.HistoricalFeatures[index].Id == 0) {
+            $scope.HistoricalFeatures.splice(index, 1);
+        } else {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteHistorySpecialist?id=" + $scope.HistoricalFeatures[index].Id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+                    console.log(result.Title);
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.HistoricalFeatures.splice(index, 1);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    App.toastrSuccess(error);
                 }
-                console.log('PersonalHistory', $scope.PersonalHistory)
+            });
+        }
+    }
+    $scope.deleteWarningDisciplined = function (index) {
+        if ($scope.Disciplined[index].Id == undefined || $scope.Disciplined[index].Id == 0) {
+            $scope.Disciplined.splice(index, 1);
+        } else {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteWarningDisciplined?id=" + $scope.Disciplined[index].Id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+                    console.log(result.Title);
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.Disciplined.splice(index, 1);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
+    }
+    $scope.deleteTrainingCertificatedPass = function (index) {
+        if ($scope.PassedTrainingClasses[index].Id == undefined || $scope.PassedTrainingClasses[index].Id == 0) {
+            $scope.PassedTrainingClasses.splice(index, 1);
+        } else {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteTrainingCertificatedPass?id=" + $scope.PassedTrainingClasses[index].Id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.PassedTrainingClasses.splice(index, 1);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
+    }
+    $scope.deleteWorkingTracking = function (index) {
+        if ($scope.BusinessNDuty[index].Id == undefined || $scope.BusinessNDuty[index].Id == 0) {
+            $scope.BusinessNDuty.splice(index, 1);
+        } else {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteWorkingTracking?id=" + $scope.BusinessNDuty[index].Id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+                    console.log(result.Title);
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.BusinessNDuty.splice(index, 1);
+                        $scope.$apply();
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
+    }
+    $scope.deleteIntroducer = function (e) {
+        console.log(e);
+        var isDeleted = confirm("Ban co muon xoa?");
+        if (isDeleted) {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteIntroducerOfParty?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+                    console.log(result.Title);
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
+    }
+    $scope.deleteAward = function (index) {
+        if ($scope.Laudatory[index].Id == undefined || $scope.Laudatory[index].Id == 0) {
+            $scope.Laudatory.splice(index, 1);
+        } else {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAward?id=" + $scope.Laudatory[index].Id,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.Laudatory.splice(index, 1);
+                        $scope.$apply();
+                    }
+                },
+                error: function (result) {
+                    App.toastrError(result.Title);
+                }
+            });
+        }
+    }
+    //getGoAboardById
+    $scope.getGoAboardById = function () {
+        $scope.id = 2;
+        dataserviceJoinParty.getGoAboardById($scope.id, function (rs) {
+            rs = rs.data;
+            console.log(rs.data);
+
+        })
+
+        console.log($scope.id);
+    }
+    $scope.getTrainingCertificatedPassById = function () {
+        $scope.id = 2;
+        dataserviceJoinParty.getTrainingCertificatedPassById($scope.id, function (rs) {
+            rs = rs.data;
+            console.log(rs.data);
+        })
+        console.log($scope.id);
+    }
+    //getGetPersonalHistoryById
+    $scope.getPersonalHistoryById = function () {
+        $scope.id = 2;
+        dataserviceJoinParty.getPersonalHistoryById($scope.id, function (rs) {
+            rs = rs.data;
+            console.log(rs.data);
+        })
+        console.log($scope.id);
+    }
+
+    //getGoAboardById
+    $scope.getGoAboardById = function () {
+        $scope.id = 2;
+        dataserviceJoinParty.getGoAboardById($scope.id, function (rs) {
+            rs = rs.data;
+            console.log(rs.data);
+
+        })
+
+        console.log($scope.id);
+    }
+
+    $scope.uploadFile = async function () {
+        var file = document.getElementById("FileItem").files[0];
+        if (file == null || file == undefined || file == "") {
+            App.toastrError("Bạn chưa chọn file");
+        }
+        else {
+            var formdata = new FormData();
+            formdata.append("files", file);
+
+            var requestOptions = {
+                method: 'POST',
+                body: formdata,
+                redirect: 'follow'
+            };
+            var resultImp = await fetch("/UserProfile/Import", requestOptions);
+            var txt = await resultImp.text();
+
+            $scope.JSONobjj = handleTextUpload(txt);
+            if ($scope.JSONobjj = []) {
+                App.toastrError("File bạn tải không hợp lệ");
+            } else {
+                App.toastrSuccess("Tải file thành công")
+            }
+            console.log($scope.JSONobj);
+        }
+    };
+
+    function handleTextUpload(txt) {
+        $scope.defaultRTE.value = txt;
+        setTimeout(function () {
+            var listPage = document.querySelectorAll(".Section0 > div > table");
+            //Page2 Lịch sử bản thân
+            var listTagpinPage1 = listPage[1].querySelectorAll("tbody > tr > td > p");
+            var objPage1 = Array.from(listTagpinPage1).filter(function (element) {
+                // Kiểm tra xem thuộc tính của thẻ <p> có chứa văn bản không
+                var textContent = element.textContent.trim();
+                return textContent.length > 0 && /\+/.test(textContent);
+            });
+
+            //đối tượng lưu thông tin lịch sử bản thân dưới bằng mảng
+
+            for (let i = 0; i < objPage1.length; i++) {
+                var PersonHis = {};
+                // Sửa lỗi ở đây, sử dụng indexOf thay vì search và sửa lỗi về cú pháp của biểu thức chấm phẩy
+                PersonHis['Begin'] = objPage1[i].innerText.split(':')[0].substr(objPage1[i].innerText.indexOf('-') - 8, 7).trim(),
+                    PersonHis['End'] = objPage1[i].innerText.split(':')[0].substr(objPage1[i].innerText.indexOf('-') + 1, 7).trim(),
+                    // Sửa lỗi ở đây, sử dụng split(':') để tách thời gian và thông tin
+                    PersonHis['Content'] = objPage1[i].innerText.split(':')[1];
+                $scope.PersonalHistory.push(PersonHis);
+            }
+            console.log('PersonalHistory', $scope.PersonalHistory)
 
 
 
-                //Page3 Những nơi công tác và chức vụ đã qua
-                var datapage2 = Array.from(listPage[2].querySelectorAll('tr:nth-child(2) > td > p'))
-                    .filter(function (element) {
-                        return element.textContent.trim().length > 0;
-                    })
-                    .map(function (element) {
-                        return element.innerText.trim();
-                    });
-
-                var datapage2 = Array.from(listPage[2].querySelectorAll("tr:nth-child(n+2)"));
-                var pElementP2s = [];
-                datapage2.forEach(function (datapage2Element) {
-                    var pInTr = Array.from(datapage2Element.querySelectorAll("td > p")).filter(function (ele) {
-                        return ele.innerText.trim().length > 0;
-                    }).map(function (element) {
-                        return element.innerText.trim();
-                    });;
-                    pElementP2s.push(pInTr);
+            //Page3 Những nơi công tác và chức vụ đã qua
+            var datapage2 = Array.from(listPage[2].querySelectorAll('tr:nth-child(2) > td > p'))
+                .filter(function (element) {
+                    return element.textContent.trim().length > 0;
                 })
-
-                for (let i = 0; i < pElementP2s.length; i++) {
-                    if (pElementP2s[i].length != 0) {
-                        var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
-                        var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);
-                        var BusinessNDutyObj = {
-                            From: begin,
-                            To: end,
-                            Work: pElementP2s[i][1],
-                            Role: pElementP2s[i][2]
-                        };
-                        $scope.BusinessNDuty.push(BusinessNDutyObj);
-                    }
-                }
-                console.log('BusinessNDuty', pElementP2s)
-
-                //pag4: những lớp đào tạo bồi dưỡng đã qa
-                var datapage4 = Array.from(listPage[4].querySelectorAll('tr:nth-child(n+2)'));
-                var pElementP4s = [];
-                datapage4.forEach(function (e) {
-                    var pInTr = Array.from(e.querySelectorAll("td > p")).filter(function (ele) {
-                        return ele.innerText.trim().length > 0;
-                    }).map(function (element) {
-                        return element.innerText.trim();
-                    });
-                    pElementP4s.push(pInTr);
+                .map(function (element) {
+                    return element.innerText.trim();
                 });
 
-                console.log(pElementP4s)
+            var datapage2 = Array.from(listPage[2].querySelectorAll("tr:nth-child(n+2)"));
+            var pElementP2s = [];
+            datapage2.forEach(function (datapage2Element) {
+                var pInTr = Array.from(datapage2Element.querySelectorAll("td > p")).filter(function (ele) {
+                    return ele.innerText.trim().length > 0;
+                }).map(function (element) {
+                    return element.innerText.trim();
+                });;
+                pElementP2s.push(pInTr);
+            })
 
-                let check = 0;
-
-                for (let i = 0; i < pElementP4s.length; i++) {
-                    if (pElementP4s[i].length == 4) {
-                        var obj = {
-                            SchoolName: pElementP4s[i][0],
-                            Class: pElementP4s[i][1],
-                            From: pElementP4s[i][2].substring(0, pElementP4s[i][2].indexOf('đến')),
-                            To: pElementP4s[i][2].substring(pElementP4s[i][2].lastIndexOf('đến') + 4).trim(),
-                            Certificate: pElementP4s[i][1]
-                        };
-                        $scope.PassedTrainingClasses.push(obj);
-                    }
-                    //check = 1;
+            for (let i = 0; i < pElementP2s.length; i++) {
+                if (pElementP2s[i].length != 0) {
+                    var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
+                    var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);
+                    var BusinessNDutyObj = {
+                        From: begin,
+                        To: end,
+                        Work: pElementP2s[i][1],
+                        Role: pElementP2s[i][2]
+                    };
+                    $scope.BusinessNDuty.push(BusinessNDutyObj);
                 }
-                // if (check === 1) {
-                //     var ttpd = document.getElementById("TTPD")
-                //     var llgd = document.getElementById("LLGD")
-                //     var lsbt = document.getElementById("LSBT")
-                //     var gtvd = document.getElementById("GTVD")
+            }
+            console.log('BusinessNDuty', pElementP2s)
 
-                //     console.log(llgd)
-
-                //     llgd.style.opacity = 1;
-                //     llgd.style.pointerEvents = "auto";
-
-                //     lsbt.style.opacity = 1;
-                //     lsbt.style.pointerEvents = "auto";
-
-                //     gtvd.style.opacity = 1;
-                //     gtvd.style.pointerEvents = "auto";
-
-                //     ttpd.style.display = "block";
-
-                //     check = 0;
-                // }
-                console.log('PassedTrainingClasses', $scope.PassedTrainingClasses)
-
-
-
-                var data = Array.from(listPage[3].querySelectorAll('td > p')).filter(function (ele) {
+            //pag4: những lớp đào tạo bồi dưỡng đã qa
+            var datapage4 = Array.from(listPage[4].querySelectorAll('tr:nth-child(n+2)'));
+            var pElementP4s = [];
+            datapage4.forEach(function (e) {
+                var pInTr = Array.from(e.querySelectorAll("td > p")).filter(function (ele) {
                     return ele.innerText.trim().length > 0;
                 }).map(function (element) {
                     return element.innerText.trim();
                 });
-                function isTime(e) {
-                    return (e.includes('Ngày') && e.includes('tháng') && e.includes('năm')) ? true : false;
-                }
+                pElementP4s.push(pInTr);
+            });
 
-                for (let i = 0; i < data.length; i++) {
+            console.log(pElementP4s)
+
+            let check = 0;
+
+            for (let i = 0; i < pElementP4s.length; i++) {
+                if (pElementP4s[i].length == 4) {
                     var obj = {
-                        time: null,
-                        content: null
+                        SchoolName: pElementP4s[i][0],
+                        Class: pElementP4s[i][1],
+                        From: pElementP4s[i][2].substring(0, pElementP4s[i][2].indexOf('đến')),
+                        To: pElementP4s[i][2].substring(pElementP4s[i][2].lastIndexOf('đến') + 4).trim(),
+                        Certificate: pElementP4s[i][1]
                     };
-                    if (isTime(data[i])) {
-                        obj.MonthYear = data[i].substr(data[i].indexOf("Ngày") + 4, 4).trim() + '-' +
-                            data[i].substr(data[i].indexOf("tháng") + 5, 4).trim() + '-' +
-                            data[i].substr(data[i].indexOf("năm") + 4, 5),
-                            obj.Content = data[i + 1];
-                    }
-                    if (obj.MonthYear != null && obj.Content != null) {
-                        $scope.HistoricalFeatures.push(obj);
-                    }
+                    $scope.PassedTrainingClasses.push(obj);
                 }
-                console.log("HistoricalFeatures:", $scope.HistoricalFeatures);
-                //Page 5 Di nuoc nguoai
-                var datapage5 = Array.from(listPage[5].querySelectorAll("tr:nth-child(n+2)"));
-                var pElementP5s = [];
-                datapage5.forEach(function (datapage5Elemnt) {
-                    var pInTr = Array.from(datapage5Elemnt.querySelectorAll("td > p")).filter(function (ele) {
-                        return ele.innerText.trim().length > 0;
-                    }).map(function (element) {
-                        return element.innerText.trim();
-                    });
-                    pElementP5s.push(pInTr);
-                })
-                for (let i = 0; i < pElementP5s.length; i++) {
-                    if (pElementP5s[i].length == 3) {
-                        var GoAboardObj = {
-                            From: pElementP5s[i][0].substring(pElementP5s[i][0].indexOf("Từ") + 2, pElementP5s[i][0].indexOf("đến")).trim(),
-                            To: pElementP5s[i][0].substring(pElementP5s[i][0].indexOf("đến") + 3).trim(),
-                            Contact: pElementP5s[i][1],
-                            Country: pElementP5s[i][2]
-                        };
-                        $scope.GoAboard.push(GoAboardObj);
-                    }
-                }
-                console.log('GoAboard', $scope.GoAboard)
-                //Page6 Khen thuong
-                var datapage6 = Array.from(listPage[6].querySelectorAll("tr:nth-child(n+2)"));
-                var pElementP6s = [];
-                datapage6.forEach(function (datapage6Elemnt) {
-                    var pInTr = Array.from(datapage6Elemnt.querySelectorAll("td > p")).filter(function (ele) {
-                        return ele.innerText.trim().length > 0;
-                    }).map(function (element) {
-                        return element.innerText.trim();
-                    });
-                    pElementP6s.push(pInTr);
-                })
-                for (let i = 0; i < pElementP6s.length; i++) {
-                    if (pElementP6s[i].length == 3) {
-                        var obj = {
-                            MonthYear: pElementP6s[i][0].trim(),
-                            Reason: pElementP6s[i][1],
-                            GrantOfDecision: pElementP6s[i][2]
-                        };
-                        $scope.Laudatory.push(obj);
-                    }
-                }
-                console.log('Laudatory', $scope.Laudatory)
-                //Page7 ki luat
-                //phan van giua 2 truong hop: neu bi ki luat thi lay binh thuonng con neeu ko bij thi se de trong
-                var datapage7 = Array.from(listPage[7].querySelectorAll("tr:nth-child(n+2)"));
-                var pElementP7s = [];
-                datapage7.forEach(function (datapage7Elemnt) {
-                    var pInTr = Array.from(datapage7Elemnt.querySelectorAll("td > p")).filter(function (ele) {
-                        return ele.innerText.trim().length > 0;
-                    }).map(function (element) {
-                        return element.innerText.trim();
-                    });
-                    if (pInTr.length == 3) {
-                        pElementP7s.push(pInTr);
-                    }
-                })
+                //check = 1;
+            }
+            // if (check === 1) {
+            //     var ttpd = document.getElementById("TTPD")
+            //     var llgd = document.getElementById("LLGD")
+            //     var lsbt = document.getElementById("LSBT")
+            //     var gtvd = document.getElementById("GTVD")
 
-                for (let i = 0; i < pElementP7s.length; i++) {
-                    var DisciplinedObj = {
-                        MonthYear: pElementP7s[i][0] ? pElementP7s[i][0] : 'None',
-                        Reason: pElementP7s[i][0] ? pElementP7s[i][1] : "None",
-                        GrantOfDecision: pElementP7s[i][0] ? pElementP7s[i][2] : "None",
-                    };
-                    $scope.Disciplined.push(DisciplinedObj);
-                }
-                console.log('Disciplined', $scope.Disciplined)
-                //Page8 Hoan canh gia dinh
-                var datapage8 = Array.from(listPage[8].querySelectorAll("tr:first-child>td"));
-                var pE8 = [];
-                datapage8.forEach(function (datapage8Elemnt) {
-                    var pInTr = Array.from(datapage8Elemnt.querySelectorAll("p")).filter(function (ele) {
-                        return ele.innerText.trim().length > 0;
-                    }).map(function (element) {
-                        return element.innerText.trim();
-                    });
-                    pE8.push(pInTr);
-                })
+            //     console.log(llgd)
 
-                let RelationshipIndex = 0;
-                for (let y = 0; y < pE8.length; y++) {
-                    for (let i = 0; i < pE8[y].length; i++) {
-                        if (pE8[y][i].startsWith('- Họ và tên:')) {
-                            $scope.Relationship[RelationshipIndex].Name = pE8[y][i].slice(('- Họ và tên:').length).trim()
-                        }
-                        if (pE8[y][i].startsWith('- Năm sinh:')) {
-                            //let regex = /^(\d{4})-(\d{4})(?:\(([^)]*)\))?$/;
-                            let match = pE8[y][i].slice(('- Năm sinh:').length).trim()//.match(regex);
+            //     llgd.style.opacity = 1;
+            //     llgd.style.pointerEvents = "auto";
 
-                            // if (match) {
-                            //     $scope.Relationship[RelationshipIndex].Year = {
-                            //         YearBirth: match[1],
-                            //         YearDeath: match[2],
-                            //         Reason: match[3] ? match[3].trim() : ''  // Kiểm tra xem có thông tin lý do không
-                            //     };
-                            // }
-                            $scope.Relationship[RelationshipIndex].BirthYear = match;
-                        }
-                        if (pE8[y][i].startsWith("- Quê quán:")) {
-                            $scope.Relationship[RelationshipIndex].HomeTown = pE8[y][i].slice(('- Quê quán:').length).trim()
-                        }
-                        if (pE8[y][i].startsWith("- Nơi cư trú:")) {
-                            $scope.Relationship[RelationshipIndex].Residence = pE8[y][i].slice(('- Nơi cư trú:').length).trim()
-                        }
-                        if (pE8[y][i].startsWith("- Nghề nghiệp:")) {
-                            $scope.Relationship[RelationshipIndex].Job = pE8[y][i].slice(('- Nghề nghiệp:').length).trim()
-                        }
-                        if (pE8[y][i].startsWith("- Đảng viên:")) {
-                            var partyMember = pE8[y][i].slice(('- Đảng viên:').length).trim()
-                            if (partyMember.toLowerCase() == "không") {
-                                $scope.Relationship[RelationshipIndex].PartyMember = false;
-                            }
-                            else $scope.Relationship[RelationshipIndex].PartyMember = true;
-                        }
-                        if (pE8[y][i].startsWith("- Quá trình công tác:")) {
-                            // let regex = /^(\d{4})-(.*)$/;
+            //     lsbt.style.opacity = 1;
+            //     lsbt.style.pointerEvents = "auto";
 
-                            $scope.Relationship[RelationshipIndex].WorkingProgress = '';
-                            for (j = i + 1; j <= pE8[y].length - 1 && !pE8[y][j].startsWith('-') && !pE8[y][j].startsWith('*'); j++) {
-                                let inputString = pE8[y][j];
-                                //let match = inputString.match(regex);
+            //     gtvd.style.opacity = 1;
+            //     gtvd.style.pointerEvents = "auto";
 
-                                //if (match) {
-                                //   let resultObject = {
-                                //     Year: match[1],
-                                //     Job: match[2].trim()  // Loại bỏ khoảng trắng ở đầu và cuối của công việc
-                                //   };
-                                //  $scope.Relationship[RelationshipIndex].WorkingProgress.push(resultObject);
-                                $scope.Relationship[RelationshipIndex].WorkingProgress += inputString + ',';
-                                i = j;
-                                //}
-                            }
-                        }
-                        if (pE8[y][i].startsWith("- Thái độ chính trị:")) {
-                            $scope.Relationship[RelationshipIndex].PoliticalAttitude = '';
-                            try {
-                                for (j = i + 1; j <= pE8[y].length - 1 && pE8[y][j].startsWith('+'); j++) {
-                                    $scope.Relationship[RelationshipIndex].PoliticalAttitude += (pE8[y][j].slice(1).trim()) + ',';
-                                    i = j;
-                                }
-                            }
-                            catch {
-                                console.log(pE8[y]);
-                            }
-                        }
-                        if ((pE8[y][i].startsWith('*'))) {
-                            let regex = /^\*(.+?):$/;
-                            let match = pE8[y][i].match(regex);
+            //     ttpd.style.display = "block";
 
-                            if (match) {
-                                let relationship = match[1];
-                                RelationshipIndex = $scope.Relationship.length;
-                                $scope.Relationship[RelationshipIndex] = {
-                                    Relation: relationship.trim(),
-                                    ClassComposition: '',
-                                    PartyMember: false,
-                                }
-                            }
-                        }
-                    }
-                }
-                console.log("Relationship:", $scope.Relationship);
-                //Page 9 Tự nhận xét
-                $scope.SelfComment = {
-                    context: Array.from(listPage[9].querySelectorAll("tr:first-child > td > p:first-child"))[0].innerText
+            //     check = 0;
+            // }
+            console.log('PassedTrainingClasses', $scope.PassedTrainingClasses)
+
+
+
+            var data = Array.from(listPage[3].querySelectorAll('td > p')).filter(function (ele) {
+                return ele.innerText.trim().length > 0;
+            }).map(function (element) {
+                return element.innerText.trim();
+            });
+            function isTime(e) {
+                return (e.includes('Ngày') && e.includes('tháng') && e.includes('năm')) ? true : false;
+            }
+
+            for (let i = 0; i < data.length; i++) {
+                var obj = {
+                    time: null,
+                    content: null
                 };
-                //Page 9 ket don
-                var datapage9 = Array.from(listPage[9].querySelectorAll("tr:last-child > td > p")).filter(function (element) {
-                    return element.innerText.trim().length > 0 && element.innerText.includes("ngày") && element.innerText.includes("tháng") && element.innerText.includes("năm");
+                if (isTime(data[i])) {
+                    obj.MonthYear = data[i].substr(data[i].indexOf("Ngày") + 4, 4).trim() + '-' +
+                        data[i].substr(data[i].indexOf("tháng") + 5, 4).trim() + '-' +
+                        data[i].substr(data[i].indexOf("năm") + 4, 5),
+                        obj.Content = data[i + 1];
+                }
+                if (obj.MonthYear != null && obj.Content != null) {
+                    $scope.HistoricalFeatures.push(obj);
+                }
+            }
+            console.log("HistoricalFeatures:", $scope.HistoricalFeatures);
+            //Page 5 Di nuoc nguoai
+            var datapage5 = Array.from(listPage[5].querySelectorAll("tr:nth-child(n+2)"));
+            var pElementP5s = [];
+            datapage5.forEach(function (datapage5Elemnt) {
+                var pInTr = Array.from(datapage5Elemnt.querySelectorAll("td > p")).filter(function (ele) {
+                    return ele.innerText.trim().length > 0;
                 }).map(function (element) {
                     return element.innerText.trim();
                 });
-                $scope.PlaceCreatedTime = {
-                    place: datapage9[0].trim()
-                    // createdTime: datapage9[0].substring(datapage9[0].indexOf('ngày') + 4, datapage9[0].indexOf('tháng')).trim() + '-'
-                    //     + datapage9[0].substring(datapage9[0].indexOf('tháng') + 5, datapage9[0].indexOf('năm')).trim() + '-'
-                    //     + datapage9[0].substring(datapage9[0].indexOf('năm') + 4).trim()
-                };
-                var obj = $scope.defaultRTE.getContent();
-                console.log(datapage9);
-                $scope.listPage = $(obj).find('> div > div > div').toArray();
-                $scope.listInfo1 = $($scope.listPage[0]).find('table > tbody > tr > td > p').toArray()
-                    .map(y => $(y).find('> span').toArray().map(t => $(t).text()));
-                //Lấy sdt 
-                $scope.listDetail8 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(1) > td > p:nth-child(27)').text();
-                console.log($scope.listDetail8);
-                $scope.listDetail1 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(2) > td > p:nth-child(n+7):nth-child(-n+15)').toArray()
-                    .map(t => $(t).text());
-                console.log($scope.listDetail1);
-
-                $scope.Detail1 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(2) > td > p:nth-child(16) > span:nth-child(2)').text()
-                //.map(z => $(z).text());
-
-                console.log($scope.listDetail2)
-                $scope.Detail2 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(2) > td > p:nth-child(16) > span:nth-child(4)').text()
-                console.log($scope.Detail1 + $scope.Detail2);
-                $scope.listDetail3 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(2) > td > p:nth-child(17)').text()
-
-                $scope.listDetail4 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(2) > td > p:nth-child(27) > span:last-child').text().split(',')
-
-                $scope.listDetail5 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(2) > td > p:nth-child(28) > span:nth-child(even)').toArray()
-                    .map(z => $(z).text());
-
-                $scope.listDetail6 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(2) > td > p:nth-child(n+19):nth-child(-n+26)').toArray()
-                    .map(t => $(t).text());
-                console.log($scope.listDetail6);
-                $scope.listDetail7 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(2) > td > p:nth-child(28) > span:nth-child(5)').toArray()
-                    .map(z => $(z).text());
-
-                $scope.listDetail9 = $($scope.listPage[0])
-                    .find('table > tbody > tr:nth-child(1) > td > p:nth-child(29)').text();
-
-                $scope.infUser.FirstName = $scope.listDetail1[0].split(":")[1] ? $scope.listDetail1[0].split(":")[1].trim() : "";
-                $scope.infUser.Sex = $scope.listDetail1[1].split(":")[1] ? $scope.listDetail1[1].split(":")[1].trim() : "";
-                $scope.infUser.LastName = $scope.listDetail1[2].split(":")[1] ? $scope.listDetail1[2].split(":")[1].trim() : "";
-                $scope.infUser.Birthday = $scope.listDetail1[3].split(":")[1] ? $scope.listDetail1[3].split(":")[1].trim() : "";
-                $scope.infUser.HomeTown = $scope.listDetail1[5].split(":")[1] ? $scope.listDetail1[5].split(":")[1].trim() : "";
-                $scope.infUser.PlaceofBirth = $scope.listDetail1[4].split(":")[1] ? $scope.listDetail1[4].split(":")[1].trim() : "";
-                $scope.infUser.Residence = $scope.listDetail1[7].split(":")[1] ? $scope.listDetail1[7].split(":")[1].trim() : "";
-                $scope.infUser.TemporaryAddress = $scope.listDetail1[8].split(":")[1] ? $scope.listDetail1[8].split(":")[1].trim() : "";
-
-                $scope.infUser.Nation = $scope.Detail1.trim();
-                $scope.infUser.Religion = $scope.Detail2.trim();
-
-                $scope.infUser.NowEmployee = $scope.listDetail3.split(":")[1] ? $scope.listDetail3.split(":")[1].trim() : "";
-
-                $scope.infUser.PlaceinGroup = $scope.listDetail4[0];
-                $scope.infUser.DateInGroup = $scope.listDetail4[1]//.match(/\d+/g).join('-');
-
-                $scope.infUser.PlaceInParty = $scope.listDetail5[0];
-                $scope.infUser.DateInParty = $scope.listDetail5[0]//.split(',')[1]//.match(/\d+/g).join('-');
-                $scope.infUser.PlaceRecognize = $scope.listDetail7[0]//.split(',')[0];
-                $scope.infUser.DateRecognize = $scope.listDetail7[0]//.split(',')[1]//.match(/\d+/g).join('-');
-                $scope.infUser.Presenter = $scope.listDetail5[2]//.trim();
-
-                $scope.infUser.Phone = $scope.listDetail8.split(":")[1] ? $scope.listDetail8.split(":")[1].trim() : "";
-                $scope.infUser.PhoneContact = $scope.listDetail9.split(":")[1] ? $scope.listDetail9.split(":")[1].trim() : "";
-                console.log($scope.infUser.Phone);
-                $scope.infUser.LevelEducation.GeneralEducation = $scope.listDetail6[0].split(":")[1] ? $scope.listDetail6[0].split(":")[1].trim() : "";
-                $scope.infUser.LevelEducation.VocationalTraining = $scope.listDetail6[1].split(":")[1] ? $scope.listDetail6[1].split(":")[1].trim() : "";
-                $scope.infUser.LevelEducation.Undergraduate = $scope.listDetail6[2].split(":")[1] ? $scope.listDetail6[2].split(":")[1].trim() : "";//.split(',');
-                $scope.infUser.LevelEducation.RankAcademic = $scope.listDetail6[3].split(":")[1] ? $scope.listDetail6[3].split(":")[1].trim() : "";
-                $scope.infUser.LevelEducation.PoliticalTheory = $scope.listDetail6[4].split(":")[1] ? $scope.listDetail6[4].split(":")[1].trim() : "";//.split(',');
-
-                $scope.infUser.LevelEducation.ForeignLanguage = $scope.listDetail6[5].split(":")[1] ? $scope.listDetail6[5].split(":")[1].trim() : "";
-                $scope.infUser.LevelEducation.It = $scope.listDetail6[6].split(":")[1] ? $scope.listDetail6[6].split(":")[1].trim() : "";//.split(',');
-                $scope.infUser.LevelEducation.MinorityLanguage = $scope.listDetail6[7].split(":")[1] ? $scope.listDetail6[7].split(":")[1].trim() : "";//.split(',');
-
-                //Nguoi gioi thieu
-                $scope.Introducer = {
-                    PersonIntroduced: $scope.infUser.Presenter,
-                    PlaceTimeJoinUnion: $scope.infUser.PlaceinGroup,
-                    PlaceTimeJoinParty: $scope.infUser.PlaceInParty,
-                    PlaceTimeRecognize: $scope.infUser.PlaceRecognize
-                };
-                console.log($scope.infUser);
-                var JSONobj = {
-                    InformationUser: $scope.infUser,
-                    Create: $scope.PlaceCreatedTime,
-                    PersonalHistory: $scope.PersonalHistory,
-                    BusinessNDuty: $scope.BusinessNDuty,
-                    PassedTrainingClasses: $scope.PassedTrainingClasses,
-                    GoAboard: $scope.GoAboard,
-                    Disciplined: $scope.Disciplined,
-                    SelfComment: $scope.SelfComment,
-                    Relationship: $scope.Relationship
+                pElementP5s.push(pInTr);
+            })
+            for (let i = 0; i < pElementP5s.length; i++) {
+                if (pElementP5s[i].length == 3) {
+                    var GoAboardObj = {
+                        From: pElementP5s[i][0].substring(pElementP5s[i][0].indexOf("Từ") + 2, pElementP5s[i][0].indexOf("đến")).trim(),
+                        To: pElementP5s[i][0].substring(pElementP5s[i][0].indexOf("đến") + 3).trim(),
+                        Contact: pElementP5s[i][1],
+                        Country: pElementP5s[i][2]
+                    };
+                    $scope.GoAboard.push(GoAboardObj);
                 }
+            }
+            console.log('GoAboard', $scope.GoAboard)
+            //Page6 Khen thuong
+            var datapage6 = Array.from(listPage[6].querySelectorAll("tr:nth-child(n+2)"));
+            var pElementP6s = [];
+            datapage6.forEach(function (datapage6Elemnt) {
+                var pInTr = Array.from(datapage6Elemnt.querySelectorAll("td > p")).filter(function (ele) {
+                    return ele.innerText.trim().length > 0;
+                }).map(function (element) {
+                    return element.innerText.trim();
+                });
+                pElementP6s.push(pInTr);
+            })
+            for (let i = 0; i < pElementP6s.length; i++) {
+                if (pElementP6s[i].length == 3) {
+                    var obj = {
+                        MonthYear: pElementP6s[i][0].trim(),
+                        Reason: pElementP6s[i][1],
+                        GrantOfDecision: pElementP6s[i][2]
+                    };
+                    $scope.Laudatory.push(obj);
+                }
+            }
+            console.log('Laudatory', $scope.Laudatory)
+            //Page7 ki luat
+            //phan van giua 2 truong hop: neu bi ki luat thi lay binh thuonng con neeu ko bij thi se de trong
+            var datapage7 = Array.from(listPage[7].querySelectorAll("tr:nth-child(n+2)"));
+            var pElementP7s = [];
+            datapage7.forEach(function (datapage7Elemnt) {
+                var pInTr = Array.from(datapage7Elemnt.querySelectorAll("td > p")).filter(function (ele) {
+                    return ele.innerText.trim().length > 0;
+                }).map(function (element) {
+                    return element.innerText.trim();
+                });
+                if (pInTr.length == 3) {
+                    pElementP7s.push(pInTr);
+                }
+            })
 
-                console.log($scope.listDetail1[0])
-                setTimeout(function () {
-                    $scope.$apply();
-                }, 100);
-            }, 100);
-        }
-        setTimeout(async function () {
-            //  loadDate();
-            // initialize Rich Text Editor component
-            $scope.defaultRTE = new ej.richtexteditor.RichTextEditor({
-                height: '850px'
+            for (let i = 0; i < pElementP7s.length; i++) {
+                var DisciplinedObj = {
+                    MonthYear: pElementP7s[i][0] ? pElementP7s[i][0] : 'None',
+                    Reason: pElementP7s[i][0] ? pElementP7s[i][1] : "None",
+                    GrantOfDecision: pElementP7s[i][0] ? pElementP7s[i][2] : "None",
+                };
+                $scope.Disciplined.push(DisciplinedObj);
+            }
+            console.log('Disciplined', $scope.Disciplined)
+            //Page8 Hoan canh gia dinh
+            var datapage8 = Array.from(listPage[8].querySelectorAll("tr:first-child>td"));
+            var pE8 = [];
+            datapage8.forEach(function (datapage8Elemnt) {
+                var pInTr = Array.from(datapage8Elemnt.querySelectorAll("p")).filter(function (ele) {
+                    return ele.innerText.trim().length > 0;
+                }).map(function (element) {
+                    return element.innerText.trim();
+                });
+                pE8.push(pInTr);
+            })
+
+            let RelationshipIndex = 0;
+            for (let y = 0; y < pE8.length; y++) {
+                for (let i = 0; i < pE8[y].length; i++) {
+                    if (pE8[y][i].startsWith('- Họ và tên:')) {
+                        $scope.Relationship[RelationshipIndex].Name = pE8[y][i].slice(('- Họ và tên:').length).trim()
+                    }
+                    if (pE8[y][i].startsWith('- Năm sinh:')) {
+                        //let regex = /^(\d{4})-(\d{4})(?:\(([^)]*)\))?$/;
+                        let match = pE8[y][i].slice(('- Năm sinh:').length).trim()//.match(regex);
+
+                        // if (match) {
+                        //     $scope.Relationship[RelationshipIndex].Year = {
+                        //         YearBirth: match[1],
+                        //         YearDeath: match[2],
+                        //         Reason: match[3] ? match[3].trim() : ''  // Kiểm tra xem có thông tin lý do không
+                        //     };
+                        // }
+                        $scope.Relationship[RelationshipIndex].BirthYear = match;
+                    }
+                    if (pE8[y][i].startsWith("- Quê quán:")) {
+                        $scope.Relationship[RelationshipIndex].HomeTown = pE8[y][i].slice(('- Quê quán:').length).trim()
+                    }
+                    if (pE8[y][i].startsWith("- Nơi cư trú:")) {
+                        $scope.Relationship[RelationshipIndex].Residence = pE8[y][i].slice(('- Nơi cư trú:').length).trim()
+                    }
+                    if (pE8[y][i].startsWith("- Nghề nghiệp:")) {
+                        $scope.Relationship[RelationshipIndex].Job = pE8[y][i].slice(('- Nghề nghiệp:').length).trim()
+                    }
+                    if (pE8[y][i].startsWith("- Đảng viên:")) {
+                        var partyMember = pE8[y][i].slice(('- Đảng viên:').length).trim()
+                        if (partyMember.toLowerCase() == "không") {
+                            $scope.Relationship[RelationshipIndex].PartyMember = false;
+                        }
+                        else $scope.Relationship[RelationshipIndex].PartyMember = true;
+                    }
+                    if (pE8[y][i].startsWith("- Quá trình công tác:")) {
+                        // let regex = /^(\d{4})-(.*)$/;
+
+                        $scope.Relationship[RelationshipIndex].WorkingProgress = '';
+                        for (j = i + 1; j <= pE8[y].length - 1 && !pE8[y][j].startsWith('-') && !pE8[y][j].startsWith('*'); j++) {
+                            let inputString = pE8[y][j];
+                            //let match = inputString.match(regex);
+
+                            //if (match) {
+                            //   let resultObject = {
+                            //     Year: match[1],
+                            //     Job: match[2].trim()  // Loại bỏ khoảng trắng ở đầu và cuối của công việc
+                            //   };
+                            //  $scope.Relationship[RelationshipIndex].WorkingProgress.push(resultObject);
+                            $scope.Relationship[RelationshipIndex].WorkingProgress += inputString + ',';
+                            i = j;
+                            //}
+                        }
+                    }
+                    if (pE8[y][i].startsWith("- Thái độ chính trị:")) {
+                        $scope.Relationship[RelationshipIndex].PoliticalAttitude = '';
+                        try {
+                            for (j = i + 1; j <= pE8[y].length - 1 && pE8[y][j].startsWith('+'); j++) {
+                                $scope.Relationship[RelationshipIndex].PoliticalAttitude += (pE8[y][j].slice(1).trim()) + ',';
+                                i = j;
+                            }
+                        }
+                        catch {
+                            console.log(pE8[y]);
+                        }
+                    }
+                    if ((pE8[y][i].startsWith('*'))) {
+                        let regex = /^\*(.+?):$/;
+                        let match = pE8[y][i].match(regex);
+
+                        if (match) {
+                            let relationship = match[1];
+                            RelationshipIndex = $scope.Relationship.length;
+                            $scope.Relationship[RelationshipIndex] = {
+                                Relation: relationship.trim(),
+                                ClassComposition: '',
+                                PartyMember: false,
+                            }
+                        }
+                    }
+                }
+            }
+            console.log("Relationship:", $scope.Relationship);
+            //Page 9 Tự nhận xét
+            $scope.SelfComment = {
+                context: Array.from(listPage[9].querySelectorAll("tr:first-child > td > p:first-child"))[0].innerText
+            };
+            //Page 9 ket don
+            var datapage9 = Array.from(listPage[9].querySelectorAll("tr:last-child > td > p")).filter(function (element) {
+                return element.innerText.trim().length > 0 && element.innerText.includes("ngày") && element.innerText.includes("tháng") && element.innerText.includes("năm");
+            }).map(function (element) {
+                return element.innerText.trim();
             });
-            // Render initialized Rich Text Editor.
-            $scope.defaultRTE.appendTo('#defaultRTE');
+            $scope.PlaceCreatedTime = {
+                place: datapage9[0].trim()
+                // createdTime: datapage9[0].substring(datapage9[0].indexOf('ngày') + 4, datapage9[0].indexOf('tháng')).trim() + '-'
+                //     + datapage9[0].substring(datapage9[0].indexOf('tháng') + 5, datapage9[0].indexOf('năm')).trim() + '-'
+                //     + datapage9[0].substring(datapage9[0].indexOf('năm') + 4).trim()
+            };
             var obj = $scope.defaultRTE.getContent();
-            obj.firstChild.contentEditable = 'false'
+            console.log(datapage9);
+            $scope.listPage = $(obj).find('> div > div > div').toArray();
+            $scope.listInfo1 = $($scope.listPage[0]).find('table > tbody > tr > td > p').toArray()
+                .map(y => $(y).find('> span').toArray().map(t => $(t).text()));
+            //Lấy sdt 
+            $scope.listDetail8 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(1) > td > p:nth-child(27)').text();
+            console.log($scope.listDetail8);
+            $scope.listDetail1 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(n+7):nth-child(-n+15)').toArray()
+                .map(t => $(t).text());
+            console.log($scope.listDetail1);
 
-        }, 50);
-    
+            $scope.Detail1 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(16) > span:nth-child(2)').text()
+            //.map(z => $(z).text());
+
+            console.log($scope.listDetail2)
+            $scope.Detail2 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(16) > span:nth-child(4)').text()
+            console.log($scope.Detail1 + $scope.Detail2);
+            $scope.listDetail3 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(17)').text()
+
+            $scope.listDetail4 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(27) > span:last-child').text().split(',')
+
+            $scope.listDetail5 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(28) > span:nth-child(even)').toArray()
+                .map(z => $(z).text());
+
+            $scope.listDetail6 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(n+19):nth-child(-n+26)').toArray()
+                .map(t => $(t).text());
+            console.log($scope.listDetail6);
+            $scope.listDetail7 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(2) > td > p:nth-child(28) > span:nth-child(5)').toArray()
+                .map(z => $(z).text());
+
+            $scope.listDetail9 = $($scope.listPage[0])
+                .find('table > tbody > tr:nth-child(1) > td > p:nth-child(29)').text();
+
+            $scope.infUser.FirstName = $scope.listDetail1[0].split(":")[1] ? $scope.listDetail1[0].split(":")[1].trim() : "";
+            $scope.infUser.Sex = $scope.listDetail1[1].split(":")[1] ? $scope.listDetail1[1].split(":")[1].trim() : "";
+            $scope.infUser.LastName = $scope.listDetail1[2].split(":")[1] ? $scope.listDetail1[2].split(":")[1].trim() : "";
+            $scope.infUser.Birthday = $scope.listDetail1[3].split(":")[1] ? $scope.listDetail1[3].split(":")[1].trim() : "";
+            $scope.infUser.HomeTown = $scope.listDetail1[5].split(":")[1] ? $scope.listDetail1[5].split(":")[1].trim() : "";
+            $scope.infUser.PlaceofBirth = $scope.listDetail1[4].split(":")[1] ? $scope.listDetail1[4].split(":")[1].trim() : "";
+            $scope.infUser.Residence = $scope.listDetail1[7].split(":")[1] ? $scope.listDetail1[7].split(":")[1].trim() : "";
+            $scope.infUser.TemporaryAddress = $scope.listDetail1[8].split(":")[1] ? $scope.listDetail1[8].split(":")[1].trim() : "";
+
+            $scope.infUser.Nation = $scope.Detail1.trim();
+            $scope.infUser.Religion = $scope.Detail2.trim();
+
+            $scope.infUser.NowEmployee = $scope.listDetail3.split(":")[1] ? $scope.listDetail3.split(":")[1].trim() : "";
+
+            $scope.infUser.PlaceinGroup = $scope.listDetail4[0];
+            $scope.infUser.DateInGroup = $scope.listDetail4[1]//.match(/\d+/g).join('-');
+
+            $scope.infUser.PlaceInParty = $scope.listDetail5[0];
+            $scope.infUser.DateInParty = $scope.listDetail5[0]//.split(',')[1]//.match(/\d+/g).join('-');
+            $scope.infUser.PlaceRecognize = $scope.listDetail7[0]//.split(',')[0];
+            $scope.infUser.DateRecognize = $scope.listDetail7[0]//.split(',')[1]//.match(/\d+/g).join('-');
+            $scope.infUser.Presenter = $scope.listDetail5[2]//.trim();
+
+            $scope.infUser.Phone = $scope.listDetail8.split(":")[1] ? $scope.listDetail8.split(":")[1].trim() : "";
+            $scope.infUser.PhoneContact = $scope.listDetail9.split(":")[1] ? $scope.listDetail9.split(":")[1].trim() : "";
+            console.log($scope.infUser.Phone);
+            $scope.infUser.LevelEducation.GeneralEducation = $scope.listDetail6[0].split(":")[1] ? $scope.listDetail6[0].split(":")[1].trim() : "";
+            $scope.infUser.LevelEducation.VocationalTraining = $scope.listDetail6[1].split(":")[1] ? $scope.listDetail6[1].split(":")[1].trim() : "";
+            $scope.infUser.LevelEducation.Undergraduate = $scope.listDetail6[2].split(":")[1] ? $scope.listDetail6[2].split(":")[1].trim() : "";//.split(',');
+            $scope.infUser.LevelEducation.RankAcademic = $scope.listDetail6[3].split(":")[1] ? $scope.listDetail6[3].split(":")[1].trim() : "";
+            $scope.infUser.LevelEducation.PoliticalTheory = $scope.listDetail6[4].split(":")[1] ? $scope.listDetail6[4].split(":")[1].trim() : "";//.split(',');
+
+            $scope.infUser.LevelEducation.ForeignLanguage = $scope.listDetail6[5].split(":")[1] ? $scope.listDetail6[5].split(":")[1].trim() : "";
+            $scope.infUser.LevelEducation.It = $scope.listDetail6[6].split(":")[1] ? $scope.listDetail6[6].split(":")[1].trim() : "";//.split(',');
+            $scope.infUser.LevelEducation.MinorityLanguage = $scope.listDetail6[7].split(":")[1] ? $scope.listDetail6[7].split(":")[1].trim() : "";//.split(',');
+
+            //Nguoi gioi thieu
+            $scope.Introducer = {
+                PersonIntroduced: $scope.infUser.Presenter,
+                PlaceTimeJoinUnion: $scope.infUser.PlaceinGroup,
+                PlaceTimeJoinParty: $scope.infUser.PlaceInParty,
+                PlaceTimeRecognize: $scope.infUser.PlaceRecognize
+            };
+            console.log($scope.infUser);
+            var JSONobj = {
+                InformationUser: $scope.infUser,
+                Create: $scope.PlaceCreatedTime,
+                PersonalHistory: $scope.PersonalHistory,
+                BusinessNDuty: $scope.BusinessNDuty,
+                PassedTrainingClasses: $scope.PassedTrainingClasses,
+                GoAboard: $scope.GoAboard,
+                Disciplined: $scope.Disciplined,
+                SelfComment: $scope.SelfComment,
+                Relationship: $scope.Relationship
+            }
+
+            console.log($scope.listDetail1[0])
+            setTimeout(function () {
+                $scope.$apply();
+            }, 100);
+        }, 100);
+    }
+    setTimeout(async function () {
+        //  loadDate();
+        // initialize Rich Text Editor component
+        $scope.defaultRTE = new ej.richtexteditor.RichTextEditor({
+            height: '850px'
+        });
+        // Render initialized Rich Text Editor.
+        $scope.defaultRTE.appendTo('#defaultRTE');
+        var obj = $scope.defaultRTE.getContent();
+        obj.firstChild.contentEditable = 'false'
+
+    }, 50);
+
 });
 
 app.controller('log-status-wf-full', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataserviceJoinParty, para) {
@@ -4033,6 +4106,62 @@ app.controller('log-status-wf-full', function ($scope, $rootScope, $compile, $ui
     setTimeout(function () {
         setModalDraggable(".modal-dialog");
     }, 400);
+});
+
+app.controller('comment', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataserviceJoinParty, para) {
+    $scope.cancel = function () {
+        $uibModalInstance.close();
+    }
+    $scope.pp = {
+        id: '',
+        comment: ''
+    };
+    $scope.commentTextarea = '';
+    $scope.init = function () {
+        const matchedLabel = para?.matchedLabel;
+        $scope.pp.id = matchedLabel?.id;
+        $scope.pp.comment = matchedLabel?.comment ?? '';
+        $scope.popoverid = matchedLabel?.id;
+        if (matchedLabel) {
+            $scope.popoverLabel = matchedLabel.labelText;
+            $scope.commentTextarea = matchedLabel.comment;
+        }
+    }
+    $scope.init();
+    $scope.submit = function () {
+        if ($scope.pp.id !== '' && $scope.pp.comment !== '') {
+            $scope.addJson();
+        }
+    };
+    $scope.addJson = function () {
+        console.log($scope.pp);
+        if ($scope.pp.id != null && $scope.pp.id != '' &&
+            $scope.pp.comment != null && $scope.pp.comment != ''
+        ) {
+            var data = {
+                ResumeNumber: $scope.infUser.ResumeNumber,
+                json: $scope.pp
+            }
+            dataserviceJoinParty.UpdateOrCreateJson(data, function (rs) {
+                rs = rs.data;
+                if (rs.Error) {
+                    App.toastrError(rs.Title);
+                    var $icon = $('#' + $scope.pp.id + '.fa.fa-info-circle');
+                    // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+                    if ($icon.length > 0) {
+                        $icon.css('color', 'red');
+                    }
+                }
+                else {
+                    App.toastrSuccess(rs.Title);
+                }
+            })
+        }
+    }
+
+    //setTimeout(function () {
+    //    setModalDraggable(".modal-dialog");
+    //}, 400);
 });
 
 app.directive("choosePosition", function (dataserviceJoinParty) {

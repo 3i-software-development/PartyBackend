@@ -374,7 +374,7 @@
                                 <div class="col-md-12">
                                     <div class="input-group br24-nobtn">
                                         <ui-select tagging ng-model="model.Status" theme="bootstrap" ng-change="changeSelect('Status')" 
-                                        ng-disabled="!permisstionApprove || !isAccepted || !isLockStatus">
+                                        ng-disabled="(!permisstionApprove && !isAllData) || !isAccepted || !isLockStatus">
                                             <ui-select-match placeholder="Trạng thái..."><b style="color: {{$select.selected.Color}}">{{$select.selected.Name}}</b></ui-select-match>
                                             <ui-select-choices repeat=" x.Code as x in lstStatus | filter: $select.search">
                                                 <p style="color: {{x.Color}}">{{x.Name}}</p>

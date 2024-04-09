@@ -1,0 +1,45 @@
+﻿<style>
+    .tag-wareHouseFile .tags {
+        height: 75px;
+        max-height: 75px;
+    }
+
+    tags-input .host {
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        height: 0;
+    }
+</style>
+
+<div class="modal-header h-30 no-color">
+    <!--<img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />-->
+    <span class="modal-title black" id="modal-title">
+        <i class="fa fa-info-circle"></i>&nbsp;{{popoverLabel}}
+    </span>
+</div>
+<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+</button>
+<div id="modal-body">
+    <div class="portlet-body form">
+        <div class="pl15 pr15 pb15">
+            <i class="fa fa-microphone" style="padding-right: 85px"></i>
+            <i class="fa fa-floppy-o" ng-click="submit()"></i>
+            <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment"></textarea>
+        </div>
+    </div>
+</div>
+<!--<div class="modal-footer mt40 mr10">
+
+    <div class="btn-group actions d-flex pull-right">
+        <div class="text-center">
+            <a class1="btn btn-icon-only btn-circle btn-outline green-custom" ng-click="save()" href="javascript:;">
+                <span><i class="fa-solid fa-plus fs30"></i></span>
+            </a>
+            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SAVE' | translate}}</p>
+        </div>
+    </div>
+</div>-->
+
+
+

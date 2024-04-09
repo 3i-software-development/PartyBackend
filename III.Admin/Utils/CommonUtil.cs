@@ -31,6 +31,7 @@ using MailKit;
 using System.Text.RegularExpressions;
 using System.Text;
 using RestSharp;
+using MimeKit.Text;
 
 namespace ESEIM.Utils
 {
@@ -110,7 +111,8 @@ namespace ESEIM.Utils
             return otp;
         }
 
-        public static JMessage SendMail(string from, string to, string title, string content, string host, int port, string userName, string passWord)
+        public static JMessage SendMail(string from, string to, string title, string content, string host, int port, string userName, string passWord,
+            TextFormat format = TextFormat.Text)
         {
             var msg = new JMessage { Error = false, Title = "" };
             try
@@ -119,7 +121,7 @@ namespace ESEIM.Utils
                 message.From.Add(new MailboxAddress(from));
                 message.To.Add(new MailboxAddress(to));
                 message.Subject = title;
-                message.Body = new TextPart
+                message.Body = new TextPart(format)
                 {
                     Text = content,
                 };

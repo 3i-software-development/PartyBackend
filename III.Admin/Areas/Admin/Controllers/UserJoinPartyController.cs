@@ -261,7 +261,7 @@ namespace III.Admin.Controllers
                                     && (jTablePara.FromAge == null || (jTablePara.FromAge <= (getYear - a.Birthday.Value.Year)))
                                     && (jTablePara.ToAge == null || (jTablePara.ToAge >= (getYear - a.Birthday.Value.Year)))
                                     && (string.IsNullOrEmpty(jTablePara.Name) || a.CurrentName.ToLower().Contains(jTablePara.Name.ToLower()))
-                                    && (string.IsNullOrEmpty(jTablePara.Status) || a.Status == jTablePara.Status)
+                                    && (string.IsNullOrEmpty(jTablePara.Status) || a.Status != null && a.Status.Contains(jTablePara.Status))
                                     && (string.IsNullOrEmpty(jTablePara.Username) || a.Username.ToLower().Contains(jTablePara.Username.ToLower()) || a.ResumeNumber.ToLower().Contains(jTablePara.Username.ToLower()))
 
                                     && (string.IsNullOrEmpty(jTablePara.Nation) || a.Nation.ToLower().Contains(jTablePara.Nation.ToLower()))

@@ -11,6 +11,7 @@ using ESEIM.Models;
 using ESEIM.Utils;
 using FTU.Utils.HelperNet;
 using III.Domain.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -62,6 +63,7 @@ namespace III.Admin.Controllers
             return Json(data);
         }
 
+        [AllowAnonymous]
         [HttpGet]
         public JsonResult GetStatus()
         {

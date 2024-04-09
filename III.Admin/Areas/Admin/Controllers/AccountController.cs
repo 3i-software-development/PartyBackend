@@ -21,6 +21,7 @@ using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using MimeKit.Text;
 
 namespace III.Admin.Controllers
 {
@@ -417,11 +418,12 @@ namespace III.Admin.Controllers
                 // visit https://go.microsoft.com/fwlink/?LinkID=532713
                 var code = await _userManager.GeneratePasswordResetTokenAsync(user);
                 var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+                var body = $"<html><body>Quan trọng: Click vào đường dẫn <a href=\"{callbackUrl}\">này</a> để đổi mật khẩu</body></html>";
                 var email = _emailConfiguration.SmtpUsername;
                 var pass= _emailConfiguration.SmtpPassword;
                 var port = _emailConfiguration.SmtpPort;
                 var server = _emailConfiguration.SmtpServer;
-                var msg = CommonUtil.SendMail(email, user.Email, "Forgot password", callbackUrl, server, port, email, pass);
+                var msg = CommonUtil.SendMail(email, user.Email, "Forgot password", body, server, port, email, pass, TextFormat.Html);
                 if (!msg.Error)
                     //return RedirectToAction(nameof(ForgotPasswordConfirmation));
                     return Redirect("ForgotPasswordConfirmation");

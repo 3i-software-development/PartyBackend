@@ -2267,6 +2267,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 $scope.GoAboard = response;
                 //$scope.$apply();
                 console.log($scope.GoAboard);
+                setTimeout(() => $scope.$apply());
             },
             error: function (error) {
                 console.log(error);
