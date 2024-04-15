@@ -34,6 +34,12 @@ app.factory('dataserviceJoinParty', function ($http) {
         $http(req).then(callback);
     };
     return {
+        GetReportProfile: function (data,callback) {
+            $http.post('/admin/UserJoinParty/GetReportProfile',data).then(callback);
+        },
+        GetAllProfile: function (callback) {
+            $http.get('/admin/UserJoinParty/GetAllProfile').then(callback);
+        },
         UpdateOrCreateJson: function (data, callback) {
             $http.post('/admin/UserJoinParty/UpdateOrCreateJson?ResumeNumber=' + data.ResumeNumber, data.json).then(callback);
         },
@@ -358,10 +364,13 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $lo
     //$translateProvider.preferredLanguage('en-US');
     caption = $translateProvider.translations();
     $routeProvider
-        .when('/', {
-            templateUrl: ctxfolderJoinParty + '/index.html',
-            controller: 'index'
-        })
+    .when('/', {
+        templateUrl: ctxfolderJoinParty + '/index.html',
+        controller: 'index'
+    }).when('/report', {
+        templateUrl: ctxfolderJoinParty + '/report.html',
+        controller: 'report'
+    })
         .when('/edit-user/:resumeNumber', {
             templateUrl: ctxfolderJoinParty + '/edit.html',
             controller: 'edit-user-join-party'
@@ -391,7 +400,137 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $lo
         }
     });
 });
+app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $location, $translate){
+    $scope.Report=function(){
+        console.log($scope.model);
+        //Validate
+        if(false){
+            return
+        }
+
+        //Call API
+        dataserviceJoinParty.GetReportProfile($scope.model,function(rs){
+            rs=rs.data;
+            console.log(rs);
+            rs.forEach(item=>{
+                $scope.downloadFile(item.Object,item.Title)
+            });
+        });
+    }
+    $scope.downloadFile = function (file, ResumeNumber) {
+        // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
+        var link = document.createElement("a");
+        link.href = file; // Đặt đường dẫn đến tệp Word
+        link.download = "Profile_" + ResumeNumber + ".docx"; // Đặt tên cho tệp khi được tải xuống
+        // Kích hoạt sự kiện nhấp vào liên kết
+        link.click();
+    }
+    $scope.model={
+        ListData:[],
+        Profile:{
+            CurrentName: true,
+            Birthday: true,
+            Gender: true,
+            Phone: true,
+            PlaceBirth: true,
+            HomeTown: true,
+            PermanentResidence: true,
+            TemporaryAddress: true,
+            Job: true,
+            Nation: true,
+            Religion: true,
+            SelfComment: true,
+            BirthName: true,
+            GeneralEducation: true,
+            UnderPostGraduateEducation: true,
+            Degree: true,
+            JobEducation: true,
+            ForeignLanguage: true,
+            MinorityLanguages: true,
+            PoliticalTheory: true,
+            ItDegree: true,
+            CreatedPlace: true,
+            GroupUser: true,
+            PlaceWorking: true
+        },
+        Family:{
+            "Relation": true,
+            "Name": true,
+            "BirthYear": true,
+            "PartyMember": true,
+            "PoliticalAttitude": true,
+            "HomeTown": true,
+            "Residence": true,
+            "Job": true,
+            "WorkingProgress": true
+        },
+        PersonHistory:{
+            "Begin": true,
+            "End": true,
+            "Content": true
+        },
+        WorkingTracking:{
+            "From": true,
+            "To": true,
+            "Work": true,
+            "Role": true
+        },
+        HistorySpecialist:{
+            "MonthYear": true,
+            "Content": true
+        },
+        Laudatory:{
+            "MonthYear": true,
+            "GrantOfDecision": true,
+            "Reason": true
+        },
+        WarningDisciplined:{
+            "MonthYear": true,
+            "GrantOfDecision": true,
+            "Reason": true
+        },
+        TrainingCertificatedPass: {
+            "From": true,
+            "Certificate": true,
+            "To": true,
+            "SchoolName": true,
+            "Class":true
+        },
+        GoAboard:{
+            "From": true,
+            "To": true,
+            "Contact": true,
+            Country: true
+        },
+        Introducer:{
+            "PersonIntroduced": true,
+            "PlaceTimeRecognize": true,
+            "PlaceTimeJoinUnion": true,
+            "PlaceTimeJoinParty": true
+        }
+    }
+
+    $scope.changeSelect=function(Profile){
+        if (!$scope.model.ListData.includes(Profile.Code)) {
+            $scope.model.ListData.push(Profile.Code);
+            console.log($scope.model.ListData);
+        } else {
+            console.log('Phần tử đã tồn tại trong mảng.');
+        }
+    }
+    $scope.init=function(){
+        dataserviceJoinParty.GetAllProfile(function(rs){
+            rs=rs.data
+            $scope.ListProfile=rs
+        })
+    }
+    $scope.init();
+});
+
 app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $location, $translate) {
+    $scope.report=function(){
+        $location.path('/report')
+    }
     var vm = $scope;
     $scope.tabnav = 'Section3'; // Initialize tabnav variable
 
@@ -1049,7 +1188,37 @@ app.directive("voiceRecognition", function () {
     };
 });
 
+app.controller('addSpecialHistory', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $uibModal, $http) {
+    $scope.cancel=function(){
+        $uibModalInstance.close('cancel');
+    }
+    $scope.listType=[
+        {
+            Code: "Bị xóa tên trong danh sách đảng viên"
+        },{
+            Code: "Được kết nạp lại vào Đảng"
+        },{
+            Code: "Được khôi phục đảng tịch"
+        },{
+            Code: "Bị xóa tên trong danh sách đảng viên"
+        },
+    ]
+})
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $uibModal, $http) {
+    $scope.addSpecialHistory=function(){
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolderJoinParty + '/addSpecialHistory.html',
+            controller: 'addSpecialHistory',
+            backdrop: 'static',
+            size: '40',
+        });
+        modalInstance.result.then(function (d) {
+
+        }, function () {
+
+        });
+    }
     //Autocomplete
     $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
     $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo']
@@ -2193,224 +2362,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             console.log(rs)
             $scope.GroupUsers = rs.data;
         })
-        $http.get('../views/front-end/user/Guide.json').then(function (response) {
+        $http.get('/Admin/GuilineManager/GetGuidelines/').then(function (response) {
             $scope.jsonParse = response.data;
-            console.log($scope.jsonParse);
         }).catch(function (error) {
-            console.error('Lỗi khi tải dữ liệu JSON:', error);
+
         });
 
     }
-    $scope.jsonParse = [
-        {
-            id: "currentName",
-            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
-        },
-        {
-            id: "gender",
-            guide: "Bạn cần chọn giới tính của mình, nếu không phải nam hoặc nữ hãy chọn khác. Ví dụ: Nam"
-        },
-        {
-            id: "firstName",
-            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
-        },
-        {
-            id: "dateOfBird",
-            guide: "Bạn cần nhập đầy đủ ngày-tháng-năm.Ví dụ: 12-04-1954"
-        },
-        {
-            id: "phone",
-            guide: "Bạn cần nhập đầy đủ số điện thoại.Ví dụ: 0397638979"
-        },
-        {
-            id: "noiSinh",
-            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
-        },
-        {
-            id: "queQuan",
-            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
-        },
-        {
-            id: "diaChiThuongTru",
-            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
-        },
-        {
-            id: "diaChiTamTru",
-            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
-        },
-        {
-            id: "job",
-            guide: "Bạn cần nhập đầy đủ công việc và vị trí tại công ty. Ví dụ: Chủ tịch Quốc hội nước CHXHCN Việt Nam"
-        },
-        {
-            id: "nation",
-            guide: "Bạn cần nhập tên đầy đủ của dân tộc.Ví dụ: Kinh"
-        },
-        {
-            id: "religion",
-            guide: "Bạn cần nhập đầy đủ tên của tôn giáo.Ví dụ: Phật giáo"
-        },
-        {
-            id: "selfComment",
-            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu"
-        },
-
-        {
-            id: "generalEducation",
-            guide: "Bạn cần điền số lớp đã học/số lớp giáo dục phổ thông khi bạn học.Ví dụ: 12/12"
-        },
-        {
-            id: "undergraduate",
-            guide: "Bạn cần nhập đầy đủ tên trường mình giáo dục đại học hoặc sau đại học.Ví dụ: Trường Đại học Văn hoá Sài Gòn, Trường Đại học Tài chính- Kế toán TP.Hồ Chí Minh "
-        },
-        {
-            id: "rankAcademic",
-            guide: "Bạn cần nhập đầy đủ học hàm.Ví dụ: Thạc sĩ"
-        },
-        {
-            id: "vocationalTraining",
-            guide: "Bạn cần nhập đầy đủ loại và nơi bạn học nghề.Ví dụ: Học may tại trường trường nghề Bách khoa Hà nội"
-        },
-        {
-            id: "foreignLanguage",
-            guide: "Bạn cần nhập đầy đủ các ngoại ngữ mà bạn biết.Ví dụ: tiếng Anh(Mĩ), tiếng Trung(Phồn thể)"
-        },
-        {
-            id: "minorityLanguage",
-            guide: "Bạn cần nhập đầy đủ các tiếng dân tộc thiểu số bạn biết.Ví dụ: tiếng Thái, tiếng Ê-đê"
-        },
-        {
-            id: "politicalTheory",
-            guide: "Bạn cần nhập đầy đủ bằng cấp lý luận chính trị.Ví dụ: Cao cấp lý luận chính trị"
-        },
-        {
-            id: "it",
-            guide: "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
-        },
-        {
-            id: "Relationship",
-            guide: "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
-        },
-        {
-            id: "Name",
-            guide: "Bạn cần nhập rõ tên của người thân. Ví dụ: 'Trịnh Ngọc Thái'"
-        },
-        {
-            id: "BirthYear",
-            guide: "Bạn cần nhập rõ ngày tháng năm sinh, năm mất (nếu có, kèm theo lý do) của người thân. Ví dụ: '16-09-1940 - 20-3-2010 - Mất do tuổi cao sức yếu'"
-        },
-
-        {
-            id: "PoliticalAttitude",
-            guide: "Bạn cần nhập rõ thái độ chính trị của người thân. Ví dụ: 'Ủng hộ Cách mạng, trung thành tuyệt đối với lý tưởng mà Đảng đề ra'"
-        },
-        {
-            id: "HomeTown",
-            guide: "Bạn cần nhập rõ quê quán của người thân. Ví dụ: 'xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
-        },
-        {
-            id: "Residence",
-            guide: "Bạn cần nhập rõ nơi cứ trú của người thân. Ví dụ: 'Số nhà 56, thôn 8, xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
-        },
-
-        {
-            id: "FamilyJob",
-            guide: "Bạn cần nhập chức vụ  của người thân. Ví dụ: 'Giáo Viên'"
-        },
-        {
-            id: "WorkingProgress",
-            guide: "Bạn cần nhập chi tiết về quá trình công tác của người thân. Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'"
-        },
-
-        {
-            id: "Role",
-            guide: "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
-        },
-
-        {
-            id: "Content",
-            guide: "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
-        },
-        {
-            id: "AwardReason",
-            guide: "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
-        },
-
-        {
-            id: "MonthYear",
-            guide: "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
-        },
-        {
-            id: "GrantOfDecision",
-            guide: "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
-        },
-        {
-            id: "DisciplineReason",
-            guide: "Bạn cần nhập lý do bị kỷ luật.Ví dụ: Gây rối trật tự, vi phạm quy định,..."
-        },
-        {
-            id: "SchoolName",
-            guide: "Bạn cần nhập tên trường bạn đã theo học.Ví dụ: Trường Đại học Sư Phạm Hà Nội"
-        },
-        {
-            id: "Class",
-            guide: "Bạn cần nhập tên lớp bạn đã theo học.Ví dụ: Lớp bổ túc kiến thức tin học văn phòng"
-        },
-
-        {
-            id: "Certificate",
-            guide: "Bạn cần nhập chứng chỉ mà bạn đã đạt được.Ví dụ: Chứng chỉ Tin học văn phòng"
-        },
-        {
-            id: "place",
-            guide: "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
-        },
-        {
-            id: "MenberFamilyName",
-            guide: "Bạn cần nhập họ va tên người thân của mình.Ví dụ: Nguyễn Văn A"
-        },
-        {
-            id: "Relation",
-            guide: "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố"
-        },
-        {
-            id: "selectedFamily.BirthYear",
-            guide: "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
-        },
-        {
-            id: "From",
-            guide: "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
-        },
-        {
-            id: "To",
-            guide: "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
-        },
-        {
-            id: "Contact",
-            guide: "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
-        },
-        {
-            id: "WhichCountry",
-            guide: "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
-        },
-        {
-            id: "PlaceTimeRecognize",
-            guide: "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
-        },
-        {
-            id: "PlaceTimeJoinParty",
-            guide: "Bạn có thể nhập ngày và nơi vào Đảng lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
-        },
-        {
-            id: "PlaceTimeJoinUnion",
-            guide: "Bạn cần nhập ngày và nơi vào Đoàn.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
-        },
-        {
-            id: "PersonIntroduced",
-            guide: "Bạn có thể ghi tên người giới thiệu vào Đảng và chức vụ của người giới thiệu. Ví dụ: Trịnh Ngọc Thái - Bí thư Đảng Uỷ "
-        },
-
-    ]
     $scope.onItemSelect = function (item) {
         $scope.GroupUser = item.Code;
     }
@@ -2429,8 +2387,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
         // Tiếp tục xử lý như bình thường
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
-            return item.id === id;
+            return item.Id === id;
         });
+        $scope.matchedItems[0].guide=$scope.matchedItems[0].Guide
     };
 
     $scope.createWfInstance = function () {

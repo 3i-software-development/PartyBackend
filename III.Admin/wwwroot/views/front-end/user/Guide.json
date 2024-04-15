@@ -1,217 +1,202 @@
 [
   {
-    "id": "currentName",
-    "guide": "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
+    "Id": "currentName",
+    "Guide": "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Hồ Gia Bảo"
   },
   {
-    "id": "gender",
-    "guide": "Bạn cần chọn giới tính của mình, nếu không phải nam hoặc nữ hãy chọn khác. Ví dụ: Nam"
+    "Id": "gender",
+    "Guide": "Bạn cần chọn giới tính của mình, nếu không phải nam hoặc nữ hãy chọn khác. Ví dụ: Nam"
   },
   {
-    "id": "firstName",
-    "guide": "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
+    "Id": "firstName",
+    "Guide": "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
   },
   {
-    "id": "dateOfBird",
-    "guide": "Bạn cần nhập đầy đủ ngày-tháng-năm.Ví dụ: 12-04-1954"
+    "Id": "dateOfBird",
+    "Guide": "Bạn cần nhập đầy đủ ngày-tháng-năm.Ví dụ: 12-04-1954"
   },
   {
-    "id": "phone",
-    "guide": "Bạn cần nhập đầy đủ số điện thoại.Ví dụ: 0397638979"
+    "Id": "phone",
+    "Guide": "Bạn cần nhập đầy đủ số điện thoại.Ví dụ: 0397638979"
   },
   {
-    "id": "noiSinh",
-    "guide": "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
+    "Id": "noiSinh",
+    "Guide": "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
   },
   {
-    "id": "queQuan",
-    "guide": "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
+    "Id": "queQuan",
+    "Guide": "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
   },
   {
-    "id": "diaChiThuongTru",
-    "guide": "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
+    "Id": "diaChiThuongTru",
+    "Guide": "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
   },
   {
-    "id": "diaChiTamTru",
-    "guide": "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
+    "Id": "diaChiTamTru",
+    "Guide": "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
   },
   {
-    "id": "job",
-    "guide": "Bạn cần nhập đầy đủ công việc và vị trí tại công ty. Ví dụ: Chủ tịch Quốc hội nước CHXHCN Việt Nam"
+    "Id": "job",
+    "Guide": "Bạn cần nhập đầy đủ công việc và vị trí tại công ty. Ví dụ: Chủ tịch Quốc hội nước CHXHCN Việt Nam"
   },
   {
-    "id": "nation",
-    "guide": "Bạn cần nhập tên đầy đủ của dân tộc.Ví dụ: Kinh"
+    "Id": "nation",
+    "Guide": "Bạn cần nhập tên đầy đủ của dân tộc.Ví dụ: Kinh"
   },
   {
-    "id": "religion",
-    "guide": "Bạn cần nhập đầy đủ tên của tôn giáo.Ví dụ: Phật giáo"
+    "Id": "religion",
+    "Guide": "Bạn cần nhập đầy đủ tên của tôn giáo.Ví dụ: Phật giáo"
   },
   {
-    "id": "selfComment",
-    "guide": "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu"
-  },
-
-  {
-    "id": "generalEducation",
-    "guide": "Bạn cần điền số lớp đã học/số lớp giáo dục phổ thông khi bạn học.Ví dụ: 12/12"
+    "Id": "selfComment",
+    "Guide": "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu"
   },
   {
-    "id": "undergraduate",
-    "guide": "Bạn cần nhập đầy đủ tên trường mình giáo dục đại học hoặc sau đại học.Ví dụ: Trường Đại học Văn hoá Sài Gòn, Trường Đại học Tài chính- Kế toán TP.Hồ Chí Minh "
+    "Id": "generalEducation",
+    "Guide": "Bạn cần điền số lớp đã học/số lớp giáo dục phổ thông khi bạn học.Ví dụ: 12/12"
   },
   {
-    "id": "rankAcademic",
-    "guide": "Bạn cần nhập đầy đủ học hàm.Ví dụ: Thạc sĩ"
+    "Id": "undergraduate",
+    "Guide": "Bạn cần nhập đầy đủ tên trường mình giáo dục đại học hoặc sau đại học.Ví dụ: Trường Đại học Văn hoá Sài Gòn, Trường Đại học Tài chính- Kế toán TP.Hồ Chí Minh "
   },
   {
-    "id": "vocationalTraining",
-    "guide": "Bạn cần nhập đầy đủ loại và nơi bạn học nghề.Ví dụ: Học may tại trường trường nghề Bách khoa Hà nội"
+    "Id": "rankAcademic",
+    "Guide": "Bạn cần nhập đầy đủ học hàm.Ví dụ: Thạc sĩ"
   },
   {
-    "id": "foreignLanguage",
-    "guide": "Bạn cần nhập đầy đủ các ngoại ngữ mà bạn biết.Ví dụ: tiếng Anh(Mĩ), tiếng Trung(Phồn thể)"
+    "Id": "vocationalTraining",
+    "Guide": "Bạn cần nhập đầy đủ loại và nơi bạn học nghề.Ví dụ: Học may tại trường trường nghề Bách khoa Hà nội"
   },
   {
-    "id": "minorityLanguage",
-    "guide": "Bạn cần nhập đầy đủ các tiếng dân tộc thiểu số bạn biết.Ví dụ: tiếng Thái, tiếng Ê-đê"
+    "Id": "foreignLanguage",
+    "Guide": "Bạn cần nhập đầy đủ các ngoại ngữ mà bạn biết.Ví dụ: tiếng Anh(Mĩ), tiếng Trung(Phồn thể)"
   },
   {
-    "id": "politicalTheory",
-    "guide": "Bạn cần nhập đầy đủ bằng cấp lý luận chính trị.Ví dụ: Cao cấp lý luận chính trị"
+    "Id": "minorityLanguage",
+    "Guide": "Bạn cần nhập đầy đủ các tiếng dân tộc thiểu số bạn biết.Ví dụ: tiếng Thái, tiếng Ê-đê"
   },
   {
-    "id": "it",
-    "guide": "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
+    "Id": "politicalTheory",
+    "Guide": "Bạn cần nhập đầy đủ bằng cấp lý luận chính trị.Ví dụ: Cao cấp lý luận chính trị"
   },
   {
-    "id": "relationship",
-    "guide": "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
+    "Id": "it",
+    "Guide": "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
   },
   {
-    "id": "Name",
-    "guide": "Bạn cần nhập rõ tên của người thân. Ví dụ: 'Trịnh Ngọc Thái'"
+    "Id": "Relationship",
+    "Guide": "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
   },
   {
-    "id": "dateOfBirdRelation",
-    "guide": "Bạn cần nhập rõ ngày tháng năm sinh, năm mất (nếu có, kèm theo lý do) của người thân. Ví dụ: '16-09-1940 - 20-3-2010 - Mất do tuổi cao sức yếu'"
-  },
-
-  {
-    "id": "politicalAttitude",
-    "guide": "Bạn cần nhập rõ thái độ chính trị của người thân. Ví dụ: 'Ủng hộ Cách mạng, trung thành tuyệt đối với lý tưởng mà Đảng đề ra'"
+    "Id": "Name",
+    "Guide": "Bạn cần nhập rõ tên của người thân. Ví dụ: 'Trịnh Ngọc Thái'"
   },
   {
-    "id": "homeTown",
-    "guide": "Bạn cần nhập rõ quê quán của người thân. Ví dụ: 'xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
+    "Id": "BirthYear",
+    "Guide": "Bạn cần nhập rõ ngày tháng năm sinh, năm mất (nếu có, kèm theo lý do) của người thân. Ví dụ: '16-09-1940 - 20-3-2010 - Mất do tuổi cao sức yếu'"
   },
   {
-    "id": "residence",
-    "guide": "Bạn cần nhập rõ nơi cứ trú của người thân. Ví dụ: 'Số nhà 56, thôn 8, xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
-  },
-
-  {
-    "id": "career",
-    "guide": "Bạn cần nhập chức vụ  của người thân. Ví dụ: 'Giáo Viên'"
+    "Id": "PoliticalAttitude",
+    "Guide": "Bạn cần nhập rõ thái độ chính trị của người thân. Ví dụ: 'Ủng hộ Cách mạng, trung thành tuyệt đối với lý tưởng mà Đảng đề ra'"
   },
   {
-    "id": "working",
-    "guide": "Bạn cần nhập chi tiết về quá trình công tác của người thân. Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'"
-  },
-
-  {
-    "id": "role",
-    "guide": "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
-  },
-
-  {
-    "id": "content",
-    "guide": "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
+    "Id": "HomeTown",
+    "Guide": "Bạn cần nhập rõ quê quán của người thân. Ví dụ: 'xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
   },
   {
-    "id": "AwardReason",
-    "guide": "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
-  },
-
-  {
-    "id": "MonthYear",
-    "guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+    "Id": "Residence",
+    "Guide": "Bạn cần nhập rõ nơi cứ trú của người thân. Ví dụ: 'Số nhà 56, thôn 8, xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
   },
   {
-    "id": "GrantOfDecision",
-    "guide": "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
+    "Id": "FamilyJob",
+    "Guide": "Bạn cần nhập chức vụ  của người thân. Ví dụ: 'Giáo Viên'"
   },
   {
-    "id": "DisciplineReason",
-    "guide": "Bạn cần nhập lý do bị kỷ luật.Ví dụ: Gây rối trật tự, vi phạm quy định,..."
+    "Id": "WorkingProgress",
+    "Guide": "Bạn cần nhập chi tiết về quá trình công tác của người thân. Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'"
   },
   {
-    "id": "SchoolName",
-    "guide": "Bạn cần nhập tên trường bạn đã theo học.Ví dụ: Trường Đại học Sư Phạm Hà Nội"
+    "Id": "Role",
+    "Guide": "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
   },
   {
-    "id": "Class",
-    "guide": "Bạn cần nhập tên lớp bạn đã theo học.Ví dụ: Lớp bổ túc kiến thức tin học văn phòng"
-  },
-
-  {
-    "id": "Certificate",
-    "guide": "Bạn cần nhập chứng chỉ mà bạn đã đạt được.Ví dụ: Chứng chỉ Tin học văn phòng"
+    "Id": "Content",
+    "Guide": "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
   },
   {
-    "id": "place",
-    "guide": "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
+    "Id": "AwardReason",
+    "Guide": "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
   },
   {
-    "id": "MenberFamilyName",
-    "guide": "Bạn cần nhập họ va tên người thân của mình.Ví dụ: Nguyễn Văn A"
+    "Id": "MonthYear",
+    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
   },
   {
-    "id": "Relation",
-    "guide": "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố, mẹ, ông nội, ông ngoại"
+    "Id": "GrantOfDecision",
+    "Guide": "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
   },
   {
-    "id": "BirthYear",
-    "guide": "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
+    "Id": "DisciplineReason",
+    "Guide": "Bạn cần nhập lý do bị kỷ luật.Ví dụ: Gây rối trật tự, vi phạm quy định,..."
   },
   {
-    "id": "From",
-    "guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+    "Id": "SchoolName",
+    "Guide": "Bạn cần nhập tên trường bạn đã theo học.Ví dụ: Trường Đại học Sư Phạm Hà Nội"
   },
   {
-    "id": "StartDateAboard",
-    "guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+    "Id": "Class",
+    "Guide": "Bạn cần nhập tên lớp bạn đã theo học.Ví dụ: Lớp bổ túc kiến thức tin học văn phòng"
   },
   {
-    "id": "To",
-    "guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+    "Id": "Certificate",
+    "Guide": "Bạn cần nhập chứng chỉ mà bạn đã đạt được.Ví dụ: Chứng chỉ Tin học văn phòng"
   },
   {
-    "id": "EndDateAboard",
-    "guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+    "Id": "place",
+    "Guide": "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
   },
   {
-    "id": "Contact",
-    "guide": "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
+    "Id": "MenberFamilyName",
+    "Guide": "Bạn cần nhập họ va tên người thân của mình.Ví dụ: Nguyễn Văn A"
   },
   {
-    "id": "WhichCountry",
-    "guide": "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
+    "Id": "Relation",
+    "Guide": "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố"
   },
   {
-    "id": "PlaceTimeRecognize",
-    "guide": "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+    "Id": "selectedFamily.BirthYear",
+    "Guide": "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
   },
   {
-    "id": "PlaceTimeJoinParty",
-    "guide": "Bạn có thể nhập ngày và nơi vào Đảng lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+    "Id": "From",
+    "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
   },
   {
-    "id": "PlaceTimeJoinUnion",
-    "guide": "Bạn cần nhập ngày và nơi vào Đoàn.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+    "Id": "To",
+    "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
-    "id": "PersonIntroduced",
-    "guide": "Bạn có thể ghi tên người giới thiệu vào Đảng và chức vụ của người giới thiệu. Ví dụ: Trịnh Ngọc Thái - Bí thư Đảng Uỷ "
+    "Id": "Contact",
+    "Guide": "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
+  },
+  {
+    "Id": "WhichCountry",
+    "Guide": "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
+  },
+  {
+    "Id": "PlaceTimeRecognize",
+    "Guide": "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+  },
+  {
+    "Id": "PlaceTimeJoinParty",
+    "Guide": "Bạn có thể nhập ngày và nơi vào Đảng lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+  },
+  {
+    "Id": "PlaceTimeJoinUnion",
+    "Guide": "Bạn cần nhập ngày và nơi vào Đoàn.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
+  },
+  {
+    "Id": "PersonIntroduced",
+    "Guide": "Bạn có thể ghi tên người giới thiệu vào Đảng và chức vụ của người giới thiệu. Ví dụ: Trịnh Ngọc Thái - Bí thư Đảng Uỷ "
   }
 ]

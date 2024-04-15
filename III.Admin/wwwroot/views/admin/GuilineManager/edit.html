@@ -1,0 +1,49 @@
+﻿<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+</button>
+<div class="modal-header white-custom height-50">
+    <i class="fa fa-plus-circle icon-insert " style="line-height: 30px"></i>
+    <span class="modal-title" id="modal-title" style="line-height: 30px">{{'Sửa gợi ý' | translate}}</span>
+</div>
+<div class="modal-body pb-0" id="modal-body">
+    <div class="portlet-body form">
+        <form name="addform" class="form-horizontal" method="post" ng-validate="validationOptions">
+            <div class="form-body">
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <i class="fa fa-barcode" aria-hidden="true"></i>
+                        <label class="control-label require custom-title-code-bold">{{"Mã gợi ý" | translate}}</label>
+                    </div>
+                    <div class="col-md-8 pl-0">
+                        <input type="text" class="form-control br24 custom-title-code-bold" ng-model="Id" placeholder="{{'ID' | translate}}..." readonly/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4">
+                        <i class="fa fa-info-circle" aria-hidden="true"></i>
+                        <label class="control-label require custom-title-code-bold">{{"Gợi ý" | translate}}</label>
+                    </div>
+                    <div class="col-md-8 pl-0">
+                        <input type="text" class="form-control br24 custom-title-code-bold" ng-model="model.Guide" placeholder="{{'Gợi ý' | translate}}..." />
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer" style="padding-right: 15px;">
+    <div class="btn-group pull-right actions d-flex">
+        <div class="text-center pr10">
+            <a data-dismiss="modal" ng-click="cancel()" class="fs30">
+                <span><i class="fas fa-times"></i></span>
+            </a>
+            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_CANCEL' | translate}}</p>
+        </div>
+        <div class="text-center">
+            <a class="fs30" ng-click="submit()">
+                <span><i class="fa-solid fa-plus"></i></span>
+            </a>
+            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SAVE' | translate}}</p>
+        </div>
+    </div>
+</div>

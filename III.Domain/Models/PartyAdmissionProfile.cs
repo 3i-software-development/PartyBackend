@@ -13,73 +13,98 @@ namespace ESEIM.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [Note("Họ và tên")]
         [StringLength(maximumLength: 50)]
         public string CurrentName { get; set; }
 
+        [Note("Tên khai sinh")]
         [StringLength(maximumLength: 50)]
         public string BirthName { get; set; }
 
+        [Note("Giới tính")]
         public int Gender { get; set; }
 
+        [Note("Dân tộc")]
         [StringLength(maximumLength: 50)]
         public string Nation { get; set; }
 
+        [Note("Tôn giáo")]
         [StringLength(maximumLength: 50)]
         public string Religion { get; set; }
 
+        [Note("Ngày sinh")]
         public DateTime? Birthday { get; set; }
 
+        [Note("Địa chỉ thường trú")]
         [StringLength(maximumLength: 200)]
         public string PermanentResidence { get; set; }
 
+        [Note("Số điện thoại")]
         [StringLength(maximumLength: 50)]
         public string Phone { get; set; }
 
         [StringLength(maximumLength: 255)]
         public string Picture { get; set; }
 
+        [Note("Quê quán")]
         [StringLength(maximumLength: 100)]
         public string HomeTown { get; set; }
 
+        [Note("Nơi sinh")]
         [StringLength(maximumLength: 100)]
         public string PlaceBirth { get; set; }
 
+        [Note("Nghề nghiệp hiện nay")]
         [StringLength(maximumLength: 50)]
         public string Job { get; set; }
 
+        [Note("Địa chỉ tạm trú")]
         [StringLength(maximumLength: 250)]
         public string TemporaryAddress { get; set; }
 
+        [Note("Giáo dục phổ thông")]
         [StringLength(maximumLength: 50)]
         public string GeneralEducation { get; set; }
 
+        [Note("Giáo dục nghề nghiệp")]
         [StringLength(maximumLength: 50)]
         public string JobEducation { get; set; }
 
+        [Note("Giáo dục đại học")]
         [StringLength(maximumLength: 50)]
         public string UnderPostGraduateEducation { get; set; }
 
+        [Note("Học hàm")]
         [StringLength(maximumLength: 50)]
         public string Degree { get; set; }
 
+        [Note("Lý luận chính trị")]
         [StringLength(maximumLength: 50)]
         public string PoliticalTheory { get; set; }
 
+        [Note("Ngoại ngữ")]
         [StringLength(maximumLength: 50)]
         public string ForeignLanguage { get; set; }
 
+        [Note("Tin học")]
         [StringLength(maximumLength: 50)]
         public string ItDegree { get; set; }
 
+        [Note("Tiếng dân tộc thiểu số")]
         [StringLength(maximumLength: 50)]
         public string MinorityLanguages { get; set; }
 
+        [Note("Số LL")]
         [StringLength(maximumLength: 50)]
         public string ResumeNumber { get; set; }
 
+        [Note("Tự nhận sét")]
         //public DateTime CreatedTime { get; set; }
         public string SelfComment { get; set; }
+
+        [Note("Nơi tạo")]
         public string CreatedPlace { get; set; }
+
         public int UserCode { get; set; }
         public bool IsDeleted { get; set; }
         public string CreatedBy { get; set; }
@@ -115,7 +140,9 @@ namespace ESEIM.Models
         [NotMapped]
         public List<JsonLog> JsonStaus { get; set; }
         public string WfInstCode { get; set; }
+        [Note("Nhóm chi bộ")]
         public string GroupUserCode { get; set; }
+        [Note("Địa giới hành chính")]
         public string PlaceWorking { get; set; }
 
        

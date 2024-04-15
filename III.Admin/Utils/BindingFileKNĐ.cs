@@ -1,12 +1,14 @@
 ﻿using Amazon.Runtime;
 using ESEIM.Models;
 using ESEIM.Utils;
+using III.Admin.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.TeamFoundation.Common;
 using OpenXmlPowerTools;
 using Syncfusion.DocIO.DLS;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using static III.Admin.Controllers.MobileLoginController;
 
 namespace III.Admin.Utils
@@ -417,5 +419,444 @@ namespace III.Admin.Utils
             }
         }
 
+    }
+
+    public static class BindingReportKND
+    {
+        public static async void BinddingPesonal(WTable table, IWSection section, string[] Pap, string[] Itroducer)
+        {
+            WTableRow row = table.Rows[1];
+            WTableCell cell = row.Cells[0] as WTableCell;
+
+            IWParagraph p;
+            IWTextRange text;
+            foreach (var Item in Pap)
+            {
+                p = cell.AddParagraph();
+                text = p.AppendText(Item);
+                SetStyle(text);
+            }
+            foreach (var Item in Itroducer)
+            {
+                p = cell.AddParagraph();
+                text = p.AppendText(Item);
+                SetStyle(text);
+            }
+        }
+        private static void SetStyle(IWTextRange text)
+        {
+            text.CharacterFormat.FontName = "Times New Roman";
+            text.CharacterFormat.FontSize = 14;
+        }
+        public static void BinđingPersonalHistory(WTable table, string[] workingTracking)
+        {
+            int count = table.Rows.Count; int countNow = 0;
+            if (workingTracking.Where(item=> item.StartsWith("Từ")).Count() > 0)
+            {
+                countNow++;
+            }
+            if(workingTracking.Where(item => item.StartsWith("Đến")).Count() > 0)
+            {
+                countNow++;
+            }
+            if(workingTracking.Where(item => item.StartsWith("Công việc")).Count() > 0)
+            {
+                countNow++;
+            }
+            if(workingTracking.Where(item => item.StartsWith("Chức vụ")).Count() > 0)
+            {
+                countNow++;
+            }
+            int countObject = 0;
+            int selectRow = 1;
+            WTableRow row=null;
+            foreach (var item in workingTracking)
+            {
+                if (countObject < countNow)
+                {
+                    countObject++;
+                }
+                else
+                {
+                    countObject = 1;
+                    selectRow++;
+                }
+
+                if (selectRow < count)
+                {
+                    row = table.Rows[selectRow];
+                }
+                else
+                {
+                    row= table.AddRow();
+                    count++;
+                }
+                IWTextRange text;
+
+                if (item.StartsWith("Từ") || item.StartsWith("Đến"))
+                {
+                    WTableCell cell = row.Cells[0] as WTableCell;
+                    IWParagraph p = cell.AddParagraph();
+                    text = p.AppendText(item);
+                    SetStyle(text); 
+                }
+                else if (item.StartsWith("Công việc") || item.StartsWith("Chức vụ"))
+                {
+                    WTableCell cell = row.Cells[1] as WTableCell;
+                    IWParagraph p = cell.AddParagraph();
+                    text = p.AppendText(item);
+                    SetStyle(text);
+                }
+            }
+            
+        }
+        public static void BinddingTrainingCertificatedPass(WTable table, string[] TrCP)
+        {
+            int count = table.Rows.Count; int countNow = 0;
+            if (TrCP.Where(item => item.StartsWith("Từ")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Đến")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Certificate")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Class")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("SchoolName")).Count() > 0)
+            {
+                countNow++;
+            }
+            int countObject = 0;
+            int selectRow = 1;
+            WTableRow row = null;
+            foreach (var item in TrCP)
+            {
+                if (countObject < countNow)
+                {
+                    countObject++;
+                }
+                else
+                {
+                    countObject = 1;
+                    selectRow++;
+                }
+
+                if (selectRow < count)
+                {
+                    row = table.Rows[selectRow];
+                }
+                else
+                {
+                    row = table.AddRow();
+                    count++;
+                }
+
+                IWTextRange text;
+                if (item.StartsWith("SchoolName"))
+                {
+                    setCellParagraph(row, 0, item, true);
+                }
+                if (item.StartsWith("Class"))
+                {
+                    setCellParagraph(row, 1, item, true);
+                }
+                if (item.StartsWith("Từ") || item.StartsWith("Đến"))
+                {
+                    setCellParagraph(row, 2, item);
+                }
+                if (item.StartsWith("Certificate"))
+                {
+                    setCellParagraph(row, 3, item, true);
+                }
+            }
+        }
+
+        private static void setCellParagraph(WTableRow row, int v, string item,bool IsSplit=false)
+        {
+            if (IsSplit)
+            {
+                int colonIndex = item.IndexOf(':');
+                if (colonIndex != -1 && colonIndex < item.Length - 1)
+                {
+                    // Trả về phần chuỗi sau dấu ":"
+                    item= item.Substring(colonIndex + 1).Trim();
+                }
+            }
+
+            WTableCell cell = row.Cells[v] as WTableCell;
+            IWParagraph p = cell.AddParagraph();
+            IWTextRange text = p.AppendText(" "+item);
+            SetStyle(text);
+        }
+
+        public static void BinddingFamily(WTable table,string[] TrCP)
+        {
+            int count = table.Rows.Count; int countNow = 0;
+            if (TrCP.Where(item => item.StartsWith("Thái độ chính trị")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Quê quán")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Nơi ở hiện nay")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Nghề nghiệp")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Quá trình công tác")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Relation")).Count() > 0)
+            {
+                countNow++;
+            }
+
+            if (TrCP.Where(item => item.StartsWith("Đảng viên")).Count() > 0)
+            {
+                countNow++;
+            }
+
+            if (TrCP.Where(item => item.StartsWith("BirthYear")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("Name")).Count() > 0)
+            {
+                countNow++;
+            }
+
+            int countObject = 0;
+            int selectRow = 1;
+            WTableRow row = null;
+            foreach (var item in TrCP)
+            {
+                if (countObject < countNow)
+                {
+                    countObject++;
+                }
+                else
+                {
+                    countObject = 1;
+                    selectRow++;
+                }
+
+                if (selectRow < count)
+                {
+                    row = table.Rows[selectRow];
+                }
+                else
+                {
+                    row = table.AddRow();
+                    count++;
+                }
+                IWTextRange text;
+                if (item.StartsWith("Relation"))
+                {
+                    setCellParagraph(row, 0, item, true);
+                }
+                if (item.StartsWith("Name"))
+                {
+                    setCellParagraph(row, 1, item,true);
+                }
+                if (item.StartsWith("BirthYear"))
+                {
+                    setCellParagraph(row, 2, item,true);
+                }
+                if (item.StartsWith("Thái độ chính trị")|| item.StartsWith("Quê quán")|| item.StartsWith("Nơi ở hiện nay")|| 
+                    item.StartsWith("Nghề nghiệp")|| item.StartsWith("Quá trình công tác")|| item.StartsWith("Đảng viên"))
+                {
+                    setCellParagraph(row, 3, item);
+                }
+                
+            }
+        }
+
+        public static void BinddingPersonalHistoriesAndSpecialHistory(WTable table, string[] personalHistories)
+        {
+            int count = table.Rows.Count; int countNow = 0;
+            if (personalHistories.Where(item => item.StartsWith("Từ")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (personalHistories.Where(item => item.StartsWith("Đến")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (personalHistories.Where(item => item.StartsWith("Content")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (personalHistories.Where(item => item.StartsWith("MonthYear")).Count() > 0)
+            {
+                countNow++;
+            }
+            int countObject = 0;
+            int selectRow = 1;
+            WTableRow row = null;
+            foreach (var item in personalHistories)
+            {
+                if (countObject < countNow)
+                {
+                    countObject++;
+                }
+                else
+                {
+                    countObject = 1;
+                    selectRow++;
+                }
+
+                if (selectRow < count)
+                {
+                    row = table.Rows[selectRow];
+                }
+                else
+                {
+                    row = table.AddRow();
+                    count++;
+                }
+                IWTextRange text;
+                if (item.StartsWith("Từ") || item.StartsWith("Đến"))
+                {
+                    setCellParagraph(row, 0, item);
+                }
+                else if (item.StartsWith("Content"))
+                {
+                    setCellParagraph(row, 1, item, true);
+                }
+                else if(item.StartsWith("MonthYear"))
+                {
+                    setCellParagraph(row, 0, item, true);
+                }
+            }
+        }
+
+        public static void BinddingAwards(WTable table, string[] awards)
+        {
+            int count = table.Rows.Count; int countNow = 0;
+            if (awards.Where(item => item.StartsWith("MonthYear")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (awards.Where(item => item.StartsWith("Reason")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (awards.Where(item => item.StartsWith("GrantOfDecision")).Count() > 0)
+            {
+                countNow++;
+            }
+            int countObject = 0;
+            int selectRow = 1;
+            WTableRow row = null;
+            foreach (var item in awards)
+            {
+                if (countObject < countNow)
+                {
+                    countObject++;
+                }
+                else
+                {
+                    countObject = 1;
+                    selectRow++;
+                }
+
+                if (selectRow < count)
+                {
+                    row = table.Rows[selectRow];
+                }
+                else
+                {
+                    row = table.AddRow();
+                    count++;
+                }
+                IWTextRange text;
+
+                if (item.StartsWith("MonthYear"))
+                {
+                    setCellParagraph(row, 0, item,true);
+                }
+                else if (item.StartsWith("Reason"))
+                {
+                    setCellParagraph(row, 1, item, true);
+                }
+                else if (item.StartsWith("GrantOfDecision"))
+                {
+                    setCellParagraph(row, 2, item, true);
+                }
+            }
+        }
+
+        public static void BinddingGoAboards(WTable table, string[] goAboards)
+        {
+            int count = table.Rows.Count; int countNow = 0;
+            if (goAboards.Where(item => item.StartsWith("Từ")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (goAboards.Where(item => item.StartsWith("Đến")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (goAboards.Where(item => item.StartsWith("Contact")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (goAboards.Where(item => item.StartsWith("Country")).Count() > 0)
+            {
+                countNow++;
+            }
+            int countObject = 0;
+            int selectRow = 1;
+            WTableRow row = null;
+            foreach (var item in goAboards)
+            {
+                if (countObject < countNow)
+                {
+                    countObject++;
+                }
+                else
+                {
+                    countObject = 1;
+                    selectRow++;
+                }
+
+                if (selectRow < count)
+                {
+                    row = table.Rows[selectRow];
+                }
+                else
+                {
+                    row = table.AddRow();
+                    count++;
+                }
+                IWTextRange text;
+
+                if (item.StartsWith("Từ")|| item.StartsWith("Đến"))
+                {
+                    setCellParagraph(row, 0, item, true);
+                }
+                else if (item.StartsWith("Contact"))
+                {
+                    setCellParagraph(row, 1, item, true);
+                }
+                else if (item.StartsWith("Country"))
+                {
+                    setCellParagraph(row, 2, item, true);
+                }
+            }
+        }
     }
 }

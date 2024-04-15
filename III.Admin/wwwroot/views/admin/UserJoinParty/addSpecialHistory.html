@@ -1,0 +1,132 @@
+<style>
+    .dataTables_wrapper .table-scrollable {
+        border: 1px solid #e7ecf1 !important;
+    }
+
+    .h-60 {
+        height: 60px;
+    }
+
+    .pl0 {
+        padding-left: 10px;
+    }
+
+    .p25 {
+        padding-left: 25px;
+    }
+
+    .pt5 {
+        padding-top: 5px;
+    }
+
+    .pr15 {
+        padding-right: 10px;
+    }
+
+    .pr15 {
+        padding-right: 15px;
+    }
+
+    .pr20 {
+        padding-right: 20px;
+    }
+
+    .pr5 {
+        padding-right: 5px;
+    }
+
+    .mt5 {
+        margin-top: 5px;
+    }
+
+    .mt15 {
+        margin-top: 15px;
+    }
+
+    .ml15 {
+        margin-left: 20px;
+    }
+
+    .mt23 {
+        margin-right: 60px;
+    }
+
+    .mt25 {
+        margin-top: 25px;
+    }
+
+    .w-100-percent {
+        width: 100%;
+    }
+
+    .w-30-percent {
+        width: 30%;
+    }
+
+    .bgWhite {
+        background: #FFF;
+    }
+
+    .labelbodergroup {
+        margin-left: 24px;
+        margin-top: -12px;
+        position: absolute;
+        background: linear-gradient(to bottom,#f2eee6,#FBFCFC );
+        border: 1px solid #e9dada;
+        border-radius: 4px;
+        font-size: 11px;
+        padding: 3px 10px !important;
+    }
+
+    .table_body {
+        background: linear-gradient(to bottom,#f2eee6,#FBFCFC );
+        border-radius: 4px !important;
+        border: 1px solid #e9dada;
+        padding-top: 15px;
+        box-shadow: 0px 5px 10px 2px rgba(127, 143, 166,0.2) !important;
+        padding-bottom: 15px;
+    }
+
+    .text-box-important {
+        background-color: #27ae60 !important;
+        color: #fcfdfd !important;
+        font-weight: bold;
+    }
+</style>
+<button type="button" class="close-modal" data-dismiss="modal" aria-hidden="true" ng-click="cancel()">
+</button>
+<div class="modal-header no-color">
+    <!--<img class="close icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />-->
+    <i class="fa fa-plus-circle black icon-insert"></i>
+    <span class="modal-title black custom-title" id="modal-title">{{'Thêm loại lịch sử khác'|translate}}</span>
+</div>
+<div class="modal-body" id="modal-body" style="padding-bottom: 0px;">
+    <div class="portlet-body form">
+        <form name="addform" class="form-horizontal " method="post" ng-validate="validationOptions">
+            <div class="form-body pt5 pl-0 pr-0">
+                <div class="row" style="height: 300px;">
+                    
+                    <div class="col-md-12">
+                        <ui-select tagging ng-model="Profile" theme="bootstrap" on-select="changeSelect($select.selected)">
+                            <ui-select-match placeholder="{{'Danh sách sơ yếu lý lịch'|translate}}...">{{$item.Name}}</ui-select-match>
+                            <ui-select-choices repeat=" x.Code as x in ListProfile | filter: $select.search">
+                                <strong class="ProfileCode">[{{x.Code}}]</strong>{{x.Name}}
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+
+                </div>
+                <div class="col-md-1 pr-0 pull-right">
+                    <div class="btn-group actions pull-right d-flex mt25 ml15">
+                        <div class="text-center mt10">
+                            <a ng-click="submit()" class1="btn btn-icon-only  btn-circle btn-outline green-custom">
+                                <span><i class="fa-solid fa-plus fs25"></i></span>
+                            </a>
+                            <p class="text-underline fs9 mb5 pt3"> {{'COM_BTN_SAVE' | translate}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -15,7 +15,10 @@ namespace ESEIM.Models
  
         [MaxLength(50)]
         public string Class { get; set; }
+        [Note("Từ")]
         public string From { get; set; }
+
+        [Note("Đến")]
         public string To { get; set; }
         [MaxLength(100)]
         public string Certificate { get; set; }
