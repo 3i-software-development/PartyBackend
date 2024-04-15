@@ -397,86 +397,111 @@ namespace III.Admin.Controllers
                 //Công tác và chức vụ Ok
                 ProfileSelected = GetTrueProperties(data.WorkingTracking);
 
-                profile = SelectProperties(_context.WorkingTrackings.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
-                    ProfileSelected).ToArray();
-
-                if (profile != null)
+                if (ProfileSelected.Count != 0)
                 {
-                    jsonParty.WorkingTracking = profile;
+
+                    profile = SelectProperties(_context.WorkingTrackings.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                        ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.WorkingTracking = profile;
+                    }
+
                 }
 
                 //Lịch sử bản thân
                 ProfileSelected = GetTrueProperties(data.PersonHistory);
 
-                profile = SelectProperties(_context.PersonalHistories.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.PersonalHistories.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
                     ProfileSelected).ToArray();
 
-                if (profile != null)
-                {
-                    jsonParty.PersonalHistories = profile;
+                    if (profile != null)
+                    {
+                        jsonParty.PersonalHistories = profile;
+                    }
                 }
-
                 //Đặc điểm lịch sử
                 ProfileSelected = GetTrueProperties(data.HistorySpecialist);
 
-                profile = SelectProperties(_context.HistorySpecialists.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.HistorySpecialists.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
                     ProfileSelected).ToArray();
 
-                if (profile != null)
-                {
-                    jsonParty.HistorySpecialist = profile;
+                    if (profile != null)
+                    {
+                        jsonParty.HistorySpecialist = profile;
+                    }
                 }
 
                 //Lớp đào tạo bồi dưỡng Ok
                 ProfileSelected = GetTrueProperties(data.TrainingCertificatedPass);
 
-                profile = SelectProperties(_context.TrainingCertificatedPasses.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.TrainingCertificatedPasses.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
                     ProfileSelected).ToArray();
 
-                if (profile != null)
-                {
-                    jsonParty.TrainingCertificatedPasses = profile;
+                    if (profile != null)
+                    {
+                        jsonParty.TrainingCertificatedPasses = profile;
+                    }
                 }
                 //Đi nước ngoài
                 ProfileSelected = GetTrueProperties(data.GoAboard);
 
-                profile = SelectProperties(_context.GoAboards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.GoAboards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
                     ProfileSelected).ToArray();
 
-                if (profile != null)
-                {
-                    jsonParty.GoAboards = profile;
+                    if (profile != null)
+                    {
+                        jsonParty.GoAboards = profile;
+                    }
                 }
 
                 //Khen thưởng Ok
                 ProfileSelected = GetTrueProperties(data.Laudatory);
 
-                profile = SelectProperties(_context.Awards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.Awards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
                     ProfileSelected).ToArray();
 
-                if (profile != null)
-                {
-                    jsonParty.Awards = profile;
+                    if (profile != null)
+                    {
+                        jsonParty.Awards = profile;
+                    }
                 }
                 //Kỉ luật Ok
                 ProfileSelected = GetTrueProperties(data.WarningDisciplined);
 
-                profile = SelectProperties(_context.WarningDisciplineds.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.WarningDisciplineds.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
                     ProfileSelected).ToArray();
 
-                if (profile != null)
-                {
-                    jsonParty.WarningDisciplineds = profile;
+                    if (profile != null)
+                    {
+                        jsonParty.WarningDisciplineds = profile;
+                    }
                 }
                 //Gia đình Ok
                 ProfileSelected = GetTrueProperties(data.Family);
 
-                profile = SelectProperties(_context.Families.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.Families.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
                     ProfileSelected).ToArray();
 
-                if (profile != null)
-                {
-                    jsonParty.Families = profile;
+                    if (profile != null)
+                    {
+                        jsonParty.Families = profile;
+                    }
                 }
                 
                 msg = GenergatePesonnal(jsonParty);
@@ -557,13 +582,10 @@ namespace III.Admin.Controllers
                     var p = section.AddParagraph() as WParagraph;
                     p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
                     WTextRange text = p.AppendText("Công tác và chức vụ đã qua") as WTextRange;
+                    SetStyleHeader(text);
 
-                    SetStyleHeader(text);
-                    table = section.AddTable() as WTable;
-                    table.ResetCells(2, 2);
-                    text = table[0, 0].AddParagraph().AppendText("Thời gian") as WTextRange;
-                    SetStyleHeader(text);
-                    text = table[0, 1].AddParagraph().AppendText("Công việc, chức vụ") as WTextRange;
+                    table = AddTable(section, 1, 2, "Thời gian", "Công việc, chức vụ");
+
                     SetStyleHeader(text);
 
                     BindingReportKND.BinđingPersonalHistory(table, jsonParty.WorkingTracking);
@@ -572,20 +594,11 @@ namespace III.Admin.Controllers
                 {
                     var p = section.AddParagraph() as WParagraph;
                     p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
-                    WTextRange text=p.AppendText("Lớp đào tạo và bồi dưỡng đã qua") as WTextRange;
-
+                    WTextRange text = p.AppendText("Lớp đào tạo và bồi dưỡng đã qua") as WTextRange;
                     SetStyleHeader(text);
 
-                    table = section.AddTable() as WTable; 
-                    table.ResetCells(2, 4);
+                    table = AddTable(section, 1, 4, "Tên trường", "Ngành học hoặc tên lớp học", "Từ tháng/năm đến tháng/năm","Văn bằng, chứng chỉ, trình độ gì", "Văn bằng, chứng chỉ, trình độ gì");
 
-                    text = table[0, 0].AddParagraph().AppendText("Tên trường") as WTextRange;
-                    SetStyleHeader(text);
-                    text = table[0, 1].AddParagraph().AppendText("Ngành học hoặc tên lớp học") as WTextRange;
-                    SetStyleHeader(text);
-                    text = table[0, 2].AddParagraph().AppendText("Từ tháng/năm đến tháng/năm") as WTextRange;
-                    SetStyleHeader(text);
-                    text = table[0, 3].AddParagraph().AppendText("Văn bằng, chứng chỉ, trình độ gì") as WTextRange;
                     SetStyleHeader(text);
 
                     BindingReportKND.BinddingTrainingCertificatedPass(table, jsonParty.TrainingCertificatedPasses);

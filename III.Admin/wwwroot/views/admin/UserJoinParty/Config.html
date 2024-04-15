@@ -1,0 +1,506 @@
+<style type="text/css">
+    .tag-wareHouseFile .tags {
+        height: 75px;
+        max-height: 75px;
+    }
+
+    .contentMainCategory {
+        max-height: 360px;
+        overflow: auto;
+        height: 360px;
+    }
+    tags-input .host {
+        position: relative;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        height: 0;
+    }
+</style>
+<div class="modal-header">
+    <img class="icon-remove" title="Close" src="/images/default/close.png" ng-click="cancel()" />
+    <i class="fa fa-edit icon-edit "></i>
+    <span class="modal-title " id="modal-title"> {{'Điều kiện tìm kiếm' | translate}}</span>
+</div>
+<div class="modal-body pb-0" id="modal-body">
+    <div class="portlet-body form">
+        <form name="editformfile" class="form-horizontal" method="post" ng-validate="validationOptionsFile">
+            <div class="form-body">
+                <div class="toggle-header">
+                    <div>
+                        <label>Thông tin chung</label>
+                    </div>
+                </div>
+                <div class="row pt10  groupCheck">
+                    <div class="col-md-4">
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.CurrentName">
+                            Họ và tên
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.Birthday">
+                            Ngày sinh
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.Gender">
+                            Giới tính
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.Phone">
+                            Số điện thoại
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.PlaceBirth">
+                            Nơi sinh
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.HomeTown">
+                            Quê quán
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.PermanentResidence">
+                            Địa chỉ thường trú
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.TemporaryAddress">
+                            Địa chỉ tạm trú
+                        </label><br>
+                    
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.Job">
+                            Công việc hiện tại
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.Nation">
+                            Dân tộc
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.Religion">
+                            Tôn giáo
+                        </label><br>
+                    
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.SelfComment">
+                            Tự nhận xét
+                        </label><br>
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.BirthName">
+                            Họ và tên khai sinh
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.GeneralEducation">
+                            Giáo dục phổ thông
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.UnderPostGraduateEducation">
+                            Giáo dục đại học
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.Degree">
+                            Học hàm
+                        </label><br>
+                        
+                    </div>
+    
+                    <div class="col-md-4">
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.JobEducation">
+                            Giáo dục nghề nghiệp
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.ForeignLanguage">
+                            Ngoại ngữ
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.MinorityLanguages">
+                            Tiếng dân tộc thiểu số
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.PoliticalTheory">
+                            Lý luận chính trị
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.ItDegree">
+                            Tin học
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.CreatedPlace">
+                            Nơi tạo
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.GroupUser">
+                            Nhóm chi bộ
+                        </label><br>
+                        
+                        <label>
+                            <input type="checkbox" ng-model="configProfile.Profile.PlaceWorking">
+                            Địa giới hành chính
+                        </label><br>
+                        
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header" id="LLGD">
+                        <div 
+                             ng-click="showFamily=!showFamily">
+                            <i ng-show="showFamily" class="fa fa-caret-down"></i>
+                            <i ng-show="!showFamily" class="fa fa-caret-right"></i>
+                            <label>Lý lịch gia đình</label>
+                        </div>
+                    </div>
+                    <div class="groupCheck" style="padding-left: 15px; font-size: 13px;" ng-show="showFamily">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.Relation" type="checkbox">
+                                    Quan hệ
+                                </label><br>
+                            
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.Name" type="checkbox">
+                                    Họ và tên
+                                </label><br>
+                            
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.BirthYear" type="checkbox">
+                                    Năm sinh, mất nếu có và lý do
+                                </label><br>
+                            
+                            </div>
+    
+                            <div class="col-md-4">
+    
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.PartyMember" type="checkbox">
+                                    Đảng viên
+                                </label><br>
+                            
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.PoliticalAttitude" type="checkbox">
+                                    Thái độ chính trị
+                                </label><br>
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.HomeTown" type="checkbox">
+                                    Quê quán
+                                </label><br>
+                            
+                            </div>
+    
+                            <div class="col-md-4">
+    
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.Residence" type="checkbox">
+                                    Nơi cư trú
+                                </label><br>
+                            
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.Job" type="checkbox">
+                                    Nghề nghiệp
+                                </label><br>
+                            
+                                <label>
+                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                           ng-model="configProfile.Family.WorkingProgress" type="checkbox">
+                                    Quá trình công tác
+                                </label><br>
+                            </div>   
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header">
+                        <div 
+                             ng-click="showWorkingProcess1=!showWorkingProcess1">
+                            <i ng-show="showWorkingProcess1" class="fa fa-caret-down"></i>
+                            <i ng-show="!showWorkingProcess1" class="fa fa-caret-right"></i>
+                            <label class="fs-18">Lịch sử bản thân</label>
+                    
+                        </div>
+                    </div>
+                    <div class="mt-15 groupCheck" style="padding-left: 15px;padding-right:10px;"
+                         ng-show="showWorkingProcess1">
+                         <div class="row">
+                            <div class="col-md-4">
+                                <label>
+                                    <input type="checkbox" ng-model="configProfile.PersonHistory.Begin">
+                                    Từ ngày
+                                </label>
+                            </div>
+                            <div class="col-md-4">
+                                <label>
+                                    <input type="checkbox" ng-model="configProfile.PersonHistory.End">
+                                    Đến ngày
+                                </label>
+                            </div>
+                            
+                            <div class="col-md-4">
+                                <label>
+                                    <input type="checkbox" ng-model="configProfile.PersonHistory.Content">
+                                    Nội dung
+                                </label>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header">
+                        <div 
+                        ng-click="showWorkingProcess2=!showWorkingProcess2">
+                       <i ng-show="showWorkingProcess2" class="fa fa-caret-down"></i>
+                       <i ng-show="!showWorkingProcess2" class="fa fa-caret-right"></i>
+                       <label class="fs-18">Công tác và chức vụ đã qua</label>
+                   </div>
+                    </div>
+                    <div class="mt-15 groupCheck" style="padding-left: 15px;padding-right:10px;"
+                         ng-show="showWorkingProcess2">
+                         <div class="row">
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.WorkingTracking.From">
+                                <label>Từ ngày</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.WorkingTracking.To">
+                                <label>Đến ngày</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.WorkingTracking.Work">
+                                <label>Nội dung</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.WorkingTracking.Role">
+                                <label>Chức vụ</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header">
+                        <div ng-click="showWorkingProcess3=!showWorkingProcess3">
+                            <i ng-show="showWorkingProcess3" class="fa fa-caret-down"></i>
+                            <i ng-show="!showWorkingProcess3" class="fa fa-caret-right"></i>
+                            <label class="fs-18">Đặc điểm lịch sử</label>
+                        </div>
+                    </div>
+                    <div class="mt-15 groupCheck" style="padding-left: 15px;padding-right:10px;"
+                         ng-show="showWorkingProcess3">
+                         <div class="row">
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.HistorySpecialist.MonthYear">
+                                <label>Thời gian</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.HistorySpecialist.Content">
+                                <label>Nội dung</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header">
+                        <div ng-click="showWorkingProcess4=!showWorkingProcess4">
+                            <i ng-show="showWorkingProcess4" class="fa fa-caret-down"></i>
+                            <i ng-show="!showWorkingProcess4" class="fa fa-caret-right"></i>
+                            <label class="fs-18">Khen thưởng</label>
+                        </div>
+                    </div>
+                    <div class="mt-15 groupCheck" style="padding-left: 15px;padding-right:10px;"
+                         ng-show="showWorkingProcess4">
+                         <div class="row">
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.Laudatory.MonthYear">
+                                <label>Tháng, năm</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.Laudatory.GrantOfDecision">
+                                <label>Quyết định</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.Laudatory.Reason">
+                                <label>Lý do, hình thức</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header">
+                        <div 
+                            ng-click="showWorkingProcess5=!showWorkingProcess5">
+                            <i ng-show="showWorkingProcess5" class="fa fa-caret-down"></i>
+                            <i ng-show="!showWorkingProcess5" class="fa fa-caret-right"></i>
+                            <label class="fs-18">Kỷ luật</label>
+                        </div>
+                    </div>
+                    <div class="mt-15 groupCheck" style="padding-left: 15px;padding-right:10px;"
+                         ng-show="showWorkingProcess5">
+                         <div class="row">
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.WarningDisciplined.MonthYear">
+                                <label>Tháng,
+                                    năm</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.WarningDisciplined.GrantOfDecision">
+                                <label>Cấp quyết định</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.WarningDisciplined.Reason">
+                                <label>Lý do,
+                                    hình thức</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header">
+                        <div 
+                            ng-click="showWorkingProcess6=!showWorkingProcess6" style="overflow:auto">
+                            <i ng-show="showWorkingProcess6" class="fa fa-caret-down"></i>
+                            <i ng-show="!showWorkingProcess6" class="fa fa-caret-right"></i>
+                            <label class="fs-18">Lớp đào tạo và bồi dưỡng đã qua</label>
+                        </div>
+                    </div>
+                    <div class="mt-15 groupCheck" style="padding-left: 15px;padding-right:10px;"
+                         ng-show="showWorkingProcess6">
+                         <div class="row">
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.TrainingCertificatedPass.From">
+                                <label>Từ ngày</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.TrainingCertificatedPass.To">
+                                <label>Đến ngày</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.TrainingCertificatedPass.SchoolName">
+                                <label>Tên trường</label><br>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.TrainingCertificatedPass.Class">
+                                <label>Ngành hoặc tên lớp học</label><br>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.TrainingCertificatedPass.Certificate">
+                                <label>Văn bằng chứng chỉ</label><br>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header">
+                        <div 
+                            ng-click="showWorkingProcess7=!showWorkingProcess7">
+                            <i ng-show="showWorkingProcess7" class="fa fa-caret-down"></i>
+                            <i ng-show="!showWorkingProcess7" class="fa fa-caret-right"></i>
+                            <label class="fs-18">Đi nước ngoài</label>
+                        </div>
+                    </div>
+                    <div class="mt-15 groupCheck" style="padding-left: 15px;padding-right:10px;"
+                         ng-show="showWorkingProcess7">
+                         <div class="row">
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.GoAboard.From">
+                                <label>Từ ngày</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.GoAboard.To">
+                                <label>Đến ngày</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.GoAboard.Contact">
+                                <label>Nội dung đi</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.GoAboard.Country">
+                                <label>Nước nào</label>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+    
+                <div class="row">
+                    <div class="toggle-header">
+                        <div ng-click="showDegree=!showDegree">
+                            <i ng-show="showDegree" class="fa fa-caret-down"></i>
+                            <i ng-show="!showDegree" class="fa fa-caret-right"></i>
+                            <label>Giới thiệu vào đảng</label>
+                        </div>
+                    </div>
+                    <div class="mt-15 groupCheck" style="padding-left: 15px;padding-right:10px;"
+                         ng-show="showDegree">
+                         <div class="row">
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.Introducer.PersonIntroduced">
+                                <label> Người
+                                    giới thiệu</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.Introducer.PlaceTimeJoinUnion">
+                                <label>Ngày và
+                                    nơi
+                                    vào Đoàn</label>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.Introducer.PlaceTimeJoinParty">
+                                <label>Ngày và nơi vào Đảng
+                                    lần
+                                    thứ nhất</label><br>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="checkbox" ng-model="configProfile.Introducer.PlaceTimeRecognize">
+                                <label>Ngày và nơi công nhận
+                                    chính thức lần đầu</label><br>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="btn-group pull-right actions d-flex mr25">
+        <div class="text-center ">
+            <a ng-click="submit()" class="btn btn-icon-only btn-circle btn-outline green-custom">
+                <span><i class="fa fa-save"></i></span>
+            </a>
+            <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SAVE' | translate}}</p>
+        </div>
+    </div>
+</div>

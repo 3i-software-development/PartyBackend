@@ -35,7 +35,10 @@ app.factory('dataserviceJoinParty', function ($http) {
     };
     return {
         GetReportProfile: function (data,callback) {
-            $http.post('/admin/UserJoinParty/GetReportProfile',data).then(callback);
+            $http.post('/admin/UserJoinParty/GetReportProfile',data).then(callback).catch(function(){
+                App.toastrError("Có lỗi xảy ra");
+                App.unblockUI("#contentMain");
+            });
         },
         GetAllProfile: function (callback) {
             $http.get('/admin/UserJoinParty/GetAllProfile').then(callback);
@@ -356,77 +359,8 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
         }
         $rootScope.IsTranslate = true;
     });
-});
-
-app.config(function ($routeProvider, $validatorProvider, $translateProvider, $locationProvider) {
-    $locationProvider.hashPrefix('');
-    $translateProvider.useUrlLoader('/Admin/WorkflowActivity/Translation');
-    //$translateProvider.preferredLanguage('en-US');
-    caption = $translateProvider.translations();
-    $routeProvider
-    .when('/', {
-        templateUrl: ctxfolderJoinParty + '/index.html',
-        controller: 'index'
-    }).when('/report', {
-        templateUrl: ctxfolderJoinParty + '/report.html',
-        controller: 'report'
-    })
-        .when('/edit-user/:resumeNumber', {
-            templateUrl: ctxfolderJoinParty + '/edit.html',
-            controller: 'edit-user-join-party'
-        })
-    $validatorProvider.setDefaults({
-        errorElement: 'span',
-        errorClass: 'help-block',
-        errorPlacement: function (error, element) {
-            if (element.parent('.input-group').length) {
-                error.insertAfter(element.parent());
-            } else if (element.prop('type') === 'radio' && element.parent('.radio-inline').length) {
-                error.insertAfter(element.parent().parent());
-            } else if (element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
-                error.appendTo(element.parent().parent());
-            } else {
-                error.insertAfter(element);
-            }
-        },
-        highlight: function (element) {
-            $(element).closest('.form-group').addClass('has-error');
-        },
-        unhighlight: function (element) {
-            $(element).closest('.form-group').removeClass('has-error');
-        },
-        success: function (label) {
-            label.closest('.form-group').removeClass('has-error');
-        }
-    });
-});
-app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $location, $translate){
-    $scope.Report=function(){
-        console.log($scope.model);
-        //Validate
-        if(false){
-            return
-        }
-
-        //Call API
-        dataserviceJoinParty.GetReportProfile($scope.model,function(rs){
-            rs=rs.data;
-            console.log(rs);
-            rs.forEach(item=>{
-                $scope.downloadFile(item.Object,item.Title)
-            });
-        });
-    }
-    $scope.downloadFile = function (file, ResumeNumber) {
-        // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
-        var link = document.createElement("a");
-        link.href = file; // Đặt đường dẫn đến tệp Word
-        link.download = "Profile_" + ResumeNumber + ".docx"; // Đặt tên cho tệp khi được tải xuống
-        // Kích hoạt sự kiện nhấp vào liên kết
-        link.click();
-    }
-    $scope.model={
-        ListData:[],
+    
+    $rootScope.configProfile={
         Profile:{
             CurrentName: true,
             Birthday: true,
@@ -509,15 +443,186 @@ app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOp
             "PlaceTimeJoinParty": true
         }
     }
+});
 
-    $scope.changeSelect=function(Profile){
-        if (!$scope.model.ListData.includes(Profile.Code)) {
-            $scope.model.ListData.push(Profile.Code);
-            console.log($scope.model.ListData);
+app.config(function ($routeProvider, $validatorProvider, $translateProvider, $locationProvider) {
+    $locationProvider.hashPrefix('');
+    $translateProvider.useUrlLoader('/Admin/WorkflowActivity/Translation');
+    //$translateProvider.preferredLanguage('en-US');
+    caption = $translateProvider.translations();
+    $routeProvider
+    .when('/', {
+        templateUrl: ctxfolderJoinParty + '/index.html',
+        controller: 'index'
+    }).when('/report', {
+        templateUrl: ctxfolderJoinParty + '/report.html',
+        controller: 'report'
+    })
+        .when('/edit-user/:resumeNumber', {
+            templateUrl: ctxfolderJoinParty + '/edit.html',
+            controller: 'edit-user-join-party'
+        })
+    $validatorProvider.setDefaults({
+        errorElement: 'span',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else if (element.prop('type') === 'radio' && element.parent('.radio-inline').length) {
+                error.insertAfter(element.parent().parent());
+            } else if (element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
+                error.appendTo(element.parent().parent());
+            } else {
+                error.insertAfter(element);
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        success: function (label) {
+            label.closest('.form-group').removeClass('has-error');
+        }
+    });
+});
+
+app.controller('Config', function ($scope, $rootScope, $compile, $uibModal, $confirm, dataservice, $translate, $filter,$uibModalInstance) {
+    $scope.cancel = function () {
+        $uibModalInstance.close();
+    }
+    
+    $scope.submit=function(){
+        $uibModalInstance.close("Save");
+    }
+});
+app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $location, $translate){
+    $scope.Config=function(){
+        //item, bookMark
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolderJoinParty + '/Config.html',
+            controller: 'Config',
+            backdrop: 'static',
+            windowClass: 'message-avoid-header',
+            size: '65'
+        });
+        modalInstance.result.then(function (d) {
+            if(d=="Save"){
+                var data=$scope.model.ListData;
+                $scope.model=$rootScope.configProfile;
+                $scope.model.ListData=data;
+                $scope.$apply()
+            }
+        }, function () {
+        });
+    }
+    $scope.Delete=function(item){
+        $scope.ListData=removeObjectFromArray($scope.ListData,item);
+        console.log($scope.ListData);
+    }
+    function removeObjectFromArray(array, objectToRemove) {
+        return array.filter(function(obj) {
+            return obj.Code !== objectToRemove.Code;
+        });
+    }
+    $scope.model={
+        ListData:[]
+    }
+    $scope.ListData=[];
+    function Validate(model) {
+        if (model.Profile === undefined ||
+            model.Family === undefined ||
+            model.PersonHistory === undefined ||
+            model.WorkingTracking === undefined ||
+            model.HistorySpecialist === undefined ||
+            model.Laudatory === undefined ||
+            model.WarningDisciplined === undefined ||
+            model.TrainingCertificatedPass === undefined ||
+            model.GoAboard === undefined ||
+            model.Introducer === undefined) {
+            return true; // Trả về true nếu có ít nhất một thuộc tính bị undefined
         } else {
-            console.log('Phần tử đã tồn tại trong mảng.');
+            return false; // Trả về false nếu tất cả các thuộc tính đã được định nghĩa
         }
     }
+    $scope.DownloadProfile=function(ResumeNumber){
+        //Validate
+        if(Validate($scope.model)){
+            App.toastrError("Bạn chưa chọn điều kiện xuất file");
+            return
+        }
+        var data=$scope.model;
+        data.ListData=[ResumeNumber]
+        dataserviceJoinParty.GetReportProfile(data,function(rs){
+            rs=rs.data;
+            console.log(rs);
+            rs.forEach(item=>{
+                if(!item.Error)
+                    $scope.downloadFile(item.Object,item.Title)
+            });
+            App.unblockUI("#contentMain");
+        });
+    }
+    $scope.Report=function(){
+        console.log($scope.model);
+        //Validate
+        if(Validate($scope.model)){
+            App.toastrError("Bạn chưa chọn điều kiện xuất file");
+            return
+        }
+        if($scope.ListData==[]){
+            App.toastrError("Bạn chưa chọn hồ sơ");
+            return
+        }
+
+        App.blockUI({
+            target: "#contentMain",
+            boxed: true,
+            message: 'loading...'
+        });
+        
+        $scope.model.ListData=$scope.ListData.filter(function(obj) {
+            // Trả về true nếu thuộc tính 'name' của đối tượng là một chuỗi
+            return typeof obj.Code === 'string';
+        }).map(function(obj) {
+            // Chỉ lấy ra thuộc tính 'name'
+            return obj.Code;
+        });
+        dataserviceJoinParty.GetReportProfile($scope.model,function(rs){
+            rs=rs.data;
+            console.log(rs);
+            rs.forEach(item=>{
+                if(!item.Error)
+                    $scope.downloadFile(item.Object,item.Title)
+            });
+            App.unblockUI("#contentMain");
+        });
+    }
+    $scope.downloadFile = function (file, ResumeNumber) {
+        // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
+        var link = document.createElement("a");
+        link.href = file; // Đặt đường dẫn đến tệp Word
+        link.download = "Profile_" + ResumeNumber + ".docx"; // Đặt tên cho tệp khi được tải xuống
+        // Kích hoạt sự kiện nhấp vào liên kết
+        link.click();
+    }
+    $scope.SelectProfile=function(Profile){
+        $scope.Profile=Profile;
+    }
+    $scope.changeSelect=function(){
+        if($scope.Profile==null){
+            App.toastrError("Bạn chưa chọn hồ sơ");
+            return
+        }
+        if (!$scope.ListData.includes($scope.Profile)) {
+            $scope.ListData.push($scope.Profile);
+        } else {
+            App.toastrError("Hồ sơ đã tồn tại");
+        }
+    }
+
     $scope.init=function(){
         dataserviceJoinParty.GetAllProfile(function(rs){
             rs=rs.data
