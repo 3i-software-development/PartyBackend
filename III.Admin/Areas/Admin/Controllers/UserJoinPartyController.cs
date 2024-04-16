@@ -43,6 +43,7 @@ using static III.Admin.Controllers.UserProfileController;
 using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
 using III.Admin.Utils;
 using Syncfusion.EJ2.Charts;
+using System.ComponentModel.DataAnnotations;
 
 namespace III.Admin.Controllers
 {
@@ -558,6 +559,131 @@ namespace III.Admin.Controllers
                 }
             }
             return trueProperties;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public object GetMemberPartyProfile(string ressumeNumber)
+        {
+            var msg = new JMessage { Error = false, Title = "" };
+
+            List<JMessage> filePath = new List<JMessage>();
+            //truy vấn
+            var jsonData = new converJsonPartyAdmission();
+
+            jsonData.Profile = _context.PartyAdmissionProfiles.Where(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false)
+                .Select(x => new ModelViewPAMP {
+                    CurrentName = x.CurrentName,
+                    BirthName = x.BirthName,
+                    Gender = x.Gender == 0 ? "Nam" : "Nữ",
+                    Nation = x.Nation,
+                    Religion = x.Religion,
+                    Birthday = x.Birthday.Value.ToShortDateString(),
+                    PermanentResidence = x.PermanentResidence,
+                    Phone = x.Phone,
+                    Picture = x.Picture,
+                    HomeTown = x.HomeTown,
+                    PlaceBirth = x.PlaceBirth,
+                    Job = x.Job,
+                    TemporaryAddress = x.TemporaryAddress,
+                    GeneralEducation = x.GeneralEducation,
+                    JobEducation = x.JobEducation,
+                    UnderPostGraduateEducation = x.UnderPostGraduateEducation,
+                    Degree = x.Degree,
+                    PoliticalTheory = x.PoliticalTheory,
+                    ForeignLanguage = x.ForeignLanguage,
+                    ItDegree = x.ItDegree,
+                    MinorityLanguages = x.MinorityLanguages,
+                    ResumeNumber = x.ResumeNumber,
+                    SelfComment = x.SelfComment,
+                    CreatedPlace = x.CreatedPlace,
+                    WfInstCode = x.WfInstCode,
+                    Username = x.Username,
+                    Status = x.Status,
+                    GroupUserCode = x.GroupUserCode,
+                    PlaceWorking = x.PlaceWorking
+                }).FirstOrDefault();
+            
+            jsonData.IntroducerOfParty = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false);
+            jsonData.WorkingTracking = _context.WorkingTrackings.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.TrainingCertificatedPasses = _context.TrainingCertificatedPasses.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.Families = _context.Families.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.Awards = _context.Awards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.WarningDisciplineds = _context.WarningDisciplineds.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.GoAboards = _context.GoAboards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.PersonalHistories = _context.PersonalHistories.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+
+            //tạo file
+            msg = CreatePartyMemberProfile(jsonData);
+            if (!msg.Error)
+            {
+                //lấy đường dẫn file
+                msg.Title = ressumeNumber;
+                filePath.Add(msg);
+            }
+            return filePath;
+        }
+
+
+        [NonAction]
+        private JMessage CreatePartyMemberProfile(converJsonPartyAdmission jsonParty)
+        {
+            var msg = new JMessage { Title = _sharedResources["COM_MSG_SUCCES_SAVE"], Error = false };
+
+            string path = "/files/Template/phieu-dang-vien.docx";
+            string rootPath = _hostingEnvironment.WebRootPath;
+            var filePath = string.Concat(rootPath, path);
+            var fileStream = new FileStream(filePath, FileMode.Open);
+
+            try
+            {
+                WordDocument document = new WordDocument(fileStream, Syncfusion.DocIO.FormatType.Docx);
+                IWSection section = document.Sections[0];
+
+                //binding file
+                BinddingPartyMemberProfile.BiddingPatyProfile(section, jsonParty);
+
+                #region Saving document
+                MemoryStream memoryStream = new MemoryStream();
+                //Save the document into memory stream
+                document.Save(memoryStream, Syncfusion.DocIO.FormatType.Docx);
+                //Closes the Word document instance
+                document.Close();
+
+                //Lưu 1 file sinh chữ ký
+                var pathVersion = "/uploads/files/fileVersion/";
+                var pathFileVersion = string.Concat(rootPath, pathVersion);
+                if (!Directory.Exists(pathFileVersion)) Directory.CreateDirectory(pathFileVersion);
+                var fileName = "FILE_VERSION_"
+                          + Guid.NewGuid().ToString().Substring(0, 8)
+                          + Path.GetExtension(path);
+                var fileVersionPath = string.Concat(pathFileVersion, fileName);
+                FileStream fileVersion = new FileStream(fileVersionPath, FileMode.Create, FileAccess.Write);
+                memoryStream.WriteTo(fileVersion);
+                fileVersion.Close();
+
+                //FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                //memoryStream.WriteTo(file);
+                //file.Close();
+
+                //signBytes.Close();
+                memoryStream.Position = 0;
+
+                msg.Object = string.Concat(pathVersion, fileName);
+                msg.Title = fileVersionPath;
+
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                msg.Error = true;
+                msg.Title = "Có lỗi xảy ra";
+                msg.Object = path;
+                //signBytes.Close();
+            }
+
+            fileStream.Dispose();
+            return msg;
         }
         [NonAction]
         private JMessage GenergatePesonnal(SelectedParty jsonParty)
@@ -1169,10 +1295,7 @@ namespace III.Admin.Controllers
     {
         public bool MonthYear { get; set; }
         public bool Content { get; set; }
-        public bool HasTrueAttribute()
-        {
-            return MonthYear || Content;
-        }
+        
     }
 
     public class LaudatoryBool
@@ -1180,10 +1303,7 @@ namespace III.Admin.Controllers
         public bool MonthYear { get; set; }
         public bool GrantOfDecision { get; set; }
         public bool Reason { get; set; }
-        public bool HasTrueAttribute()
-        {
-            return MonthYear || GrantOfDecision || Reason;
-        }
+        
     }
 
     public class WarningDisciplinedBool
@@ -1191,10 +1311,7 @@ namespace III.Admin.Controllers
         public bool MonthYear { get; set; }
         public bool GrantOfDecision { get; set; }
         public bool Reason { get; set; }
-        public bool HasTrueAttribute()
-        {
-            return MonthYear || GrantOfDecision || Reason;
-        }
+        
     }
 
     public class TrainingCertificatedPassBool
@@ -1212,10 +1329,7 @@ namespace III.Admin.Controllers
         public bool To { get; set; }
         public bool Contact { get; set; }
         public bool Country { get; set; }
-        public bool HasTrueAttribute()
-        {
-            return From || To || Contact || Country;
-        }
+        
     }
 
     public class IntroducerBool
@@ -1224,10 +1338,7 @@ namespace III.Admin.Controllers
         public bool PlaceTimeRecognize { get; set; }
         public bool PlaceTimeJoinUnion { get; set; }
         public bool PlaceTimeJoinParty { get; set; }
-        public bool HasTrueAttribute()
-        {
-            return PersonIntroduced || PlaceTimeRecognize || PlaceTimeJoinUnion || PlaceTimeJoinParty;
-        }
+        
     }
 
     public class DataModel

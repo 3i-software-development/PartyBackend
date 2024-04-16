@@ -1375,6 +1375,8 @@ namespace III.Admin.Controllers
                                 a.Content = x.Content;
                                 a.ProfileCode = x.ProfileCode;
                                 a.IsDeleted = false;
+                                if(!string.IsNullOrEmpty(x.Type))
+                                    a.Type = x.Type;
                                 _context.PersonalHistories.Update(a);
                             }
                             else

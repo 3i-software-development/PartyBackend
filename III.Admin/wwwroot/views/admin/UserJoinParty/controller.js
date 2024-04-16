@@ -253,6 +253,9 @@ app.factory('dataserviceJoinParty', function ($http) {
         UpdateOrCreateUserfileJson: function (data, callback) {
             $http.post('/Admin/UserJoinParty/UpdateOrCreateUserfileJson', data).then(callback);
         },
+        GetMemberPartyProfile:function (data, callback) {
+            $http.get('/Admin/UserJoinParty/GetMemberPartyProfile?ressumeNumber='+ data).then(callback);
+        },
     }
 });
 app.controller("ConvertJson", function ($scope, $rootScope, dataserviceJoinParty) {
@@ -444,7 +447,7 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 "PlaceTimeJoinParty": true
             }
         }
-        
+
     }
     $rootScope.initConfig()
 });
@@ -660,6 +663,17 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         }, function () {
         });
     }    
+    
+    $scope.GetMemberPartyProfile=function(resumeNumber){
+        dataserviceJoinParty.GetMemberPartyProfile(resumeNumber,function(rs){
+            rs=rs.data;
+            rs.forEach(item=>{
+                if(!item.Error)
+                    $scope.downloadFile(item.Object,item.Title)
+            });
+            console.log(rs);
+        });
+    }
     //Tải sơ yếu lý lịch trích lượt
     $scope.BriefCurriculumVitaeExport=function(ResumeNumber){
         var data=$rootScope.configProfile;
@@ -1145,6 +1159,10 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
             <a title="{{&quot;Tải file sơ yếu lý lịch đầy đủ&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
                 ng-click="ImportFile('${full.resumeNumber}')"><i class="fa fa-file-word-o  fs25"></i>
             </a>
+
+            <a title="{{&quot;Tải Phiếu đảng viên&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
+                ng-click="GetMemberPartyProfile('${full.resumeNumber}')"><i class="fa fa-file-word-o  fs25"></i>
+            </a>
             ${wfbtn}
             `
                 ;
@@ -1346,17 +1364,7 @@ app.controller('addSpecialHistory', function ($scope, $rootScope, $compile, $rou
     $scope.cancel=function(){
         $uibModalInstance.close('cancel');
     }
-    $scope.listType=[
-        {
-            Code: "Bị xóa tên trong danh sách đảng viên"
-        },{
-            Code: "Được kết nạp lại vào Đảng"
-        },{
-            Code: "Được khôi phục đảng tịch"
-        },{
-            Code: "Bị xóa tên trong danh sách đảng viên"
-        },
-    ]
+    
 })
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $uibModal, $http) {
     $scope.addSpecialHistory=function(){
@@ -1373,6 +1381,29 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
         });
     }
+    $scope.listType=[
+        {
+            Name:"Chưa phân loại",
+            Code:0
+        },{
+            Name: "Bị xóa tên trong danh sách đảng viên",
+            Code: "1"
+        },{
+            Name: "Được kết nạp lại vào Đảng lần 2",
+            repetitions:1,
+            Code: "2"
+        },{
+            Name: "Được khôi phục đảng tịch",
+            repetitions:1,
+            Code: "3"
+        },{
+            Name: "Bị xử lý theo pháp luật",
+            Code: "4"
+        },{
+            Name: "Làm việc trong chế độ cũ",
+            Code: "5"
+        },
+    ]
     //Autocomplete
     $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
     $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo']
@@ -2164,6 +2195,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             obj.Content = personalHistory.Content;
             obj.ProfileCode = $scope.infUser.ResumeNumber;
             obj.Id = personalHistory.Id;
+            obj.Type = personalHistory.Type;
             $scope.PersonalHistory.push(obj)
         });
         data.TrainingCertificatedPasses
@@ -2304,7 +2336,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
         $http.get(jsonUrl).then(function (response) {
             $scope.jsonGuide = response.data;
-            console.log($scope.jsonGuide);
+            if($scope.jsonData.length!=0)
             $.each($scope.jsonGuide, function (index, item) {
                 // Tìm thẻ <i> có id trùng với id của phần tử
                 var $icon = $('#' + item.id + '.fa.fa-info-circle');
@@ -2649,12 +2681,30 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         var data = $rootScope.ProjectCode;
         $rootScope.$emit('eventName', data);
     }
-
+    $scope.PersonHistoryType=0;
     //Lịch sử bản thân
     $scope.selectedPersonHistory = {}
+    //Chọn loại lịch sử
+    $scope.changeSelectType=function(item){
+        if(item.repetitions!=undefined){
+            var conut=$scope.PersonalHistory.filter(x=>{
+                return x.Type===item.Code;
+            }).length;
+            if(item.repetitions>=conut+1){
+                $scope.selectedPersonHistory.Type=item.Code;
+            }
+            else{
+                App.toastrError("Loại lịch sử này chỉ được thêm "+item.repetitions+" lần");
+                $scope.PersonHistoryType=0;
+            }
+        }else{
+            $scope.selectedPersonHistory.Type=item.Code;
+        }
+    }
 
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
+        $scope.PersonHistoryType=x.Type;
     };
 
     $scope.addToPersonalHistory = function () {
@@ -2679,6 +2729,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.Content = $scope.selectedPersonHistory.Content
         model.Id = 0;
         model.ProfileCode = $scope.selectedPersonHistory.ProfileCode;
+        model.Type = $scope.selectedPersonHistory.Type;
 
         $scope.PersonalHistory.push(model);
     }
@@ -2691,6 +2742,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             obj.End = personalHistory.End;
             obj.Content = personalHistory.Content;
             obj.ProfileCode = $scope.infUser.ResumeNumber;
+            if(personalHistory.Type!=undefined||personalHistory.Type!=null)
+                obj.Type = personalHistory.Type;
             obj.Id = personalHistory.Id;
             $scope.model.push(obj)
         });
