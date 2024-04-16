@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
+using SmartBreadcrumbs.Attributes;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,17 +15,26 @@ namespace III.Admin.Areas.Admin.Controllers
     public class GuilineManagerController : BaseController
     {
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IStringLocalizer<SharedResources> _sharedResources;
 
-        public GuilineManagerController(IHostingEnvironment hostingEnvironment)
+        public GuilineManagerController(IHostingEnvironment hostingEnvironment,
+            IStringLocalizer<SharedResources> sharedResources)
         {
             _hostingEnvironment = hostingEnvironment;
+            _sharedResources = sharedResources;
         }
 
+        [Breadcrumb("ViewData.CrumbGuilineManager", AreaName = "Admin", FromAction = "Index", FromController = typeof(SysTemSettingHomeController))]
+        [AllowAnonymous]
         public IActionResult Index()
         {
+            ViewData["CrumbDashBoard"] = _sharedResources["COM_CRUMB_DASH_BOARD"];
+            ViewData["CrumbMenuSystemSett"] = _sharedResources["COM_CRUMB_SYSTEM"];
+            ViewData["CrumbSystemSettHome"] = _sharedResources["COM_CRUMB_SYSTEM_SETTING"];
             ViewData["CrumbGuilineManager"] = "Quản lý gợi ý";
             return View();
         }
+
         private string _jsonFilePath = "/views/front-end/user/Guide.json"; // Đường dẫn đến tệp JSON
 
         [HttpGet]

@@ -1333,6 +1333,7 @@
     <Folder Include="wwwroot\lib\iot\" />
     <Folder Include="wwwroot\lib\mobile\font\" />
     <Folder Include="wwwroot\save\" />
+    <Folder Include="wwwroot\views\admin\Test\" />
     <Folder Include="wwwroot\views\front-end\NewFolder1\" />
   </ItemGroup>
 

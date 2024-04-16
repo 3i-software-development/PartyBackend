@@ -359,90 +359,94 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
         }
         $rootScope.IsTranslate = true;
     });
-    
-    $rootScope.configProfile={
-        Profile:{
-            CurrentName: true,
-            Birthday: true,
-            Gender: true,
-            Phone: true,
-            PlaceBirth: true,
-            HomeTown: true,
-            PermanentResidence: true,
-            TemporaryAddress: true,
-            Job: true,
-            Nation: true,
-            Religion: true,
-            SelfComment: true,
-            BirthName: true,
-            GeneralEducation: true,
-            UnderPostGraduateEducation: true,
-            Degree: true,
-            JobEducation: true,
-            ForeignLanguage: true,
-            MinorityLanguages: true,
-            PoliticalTheory: true,
-            ItDegree: true,
-            CreatedPlace: true,
-            GroupUser: true,
-            PlaceWorking: true
-        },
-        Family:{
-            "Relation": true,
-            "Name": true,
-            "BirthYear": true,
-            "PartyMember": true,
-            "PoliticalAttitude": true,
-            "HomeTown": true,
-            "Residence": true,
-            "Job": true,
-            "WorkingProgress": true
-        },
-        PersonHistory:{
-            "Begin": true,
-            "End": true,
-            "Content": true
-        },
-        WorkingTracking:{
-            "From": true,
-            "To": true,
-            "Work": true,
-            "Role": true
-        },
-        HistorySpecialist:{
-            "MonthYear": true,
-            "Content": true
-        },
-        Laudatory:{
-            "MonthYear": true,
-            "GrantOfDecision": true,
-            "Reason": true
-        },
-        WarningDisciplined:{
-            "MonthYear": true,
-            "GrantOfDecision": true,
-            "Reason": true
-        },
-        TrainingCertificatedPass: {
-            "From": true,
-            "Certificate": true,
-            "To": true,
-            "SchoolName": true,
-            "Class":true
-        },
-        GoAboard:{
-            "From": true,
-            "To": true,
-            "Contact": true,
-            Country: true
-        },
-        Introducer:{
-            "PersonIntroduced": true,
-            "PlaceTimeRecognize": true,
-            "PlaceTimeJoinUnion": true,
-            "PlaceTimeJoinParty": true
+    $rootScope.initConfig=function(){
+
+        $rootScope.configProfile={
+            Profile:{
+                CurrentName: true,
+                Birthday: true,
+                Gender: true,
+                Phone: true,
+                PlaceBirth: true,
+                HomeTown: true,
+                PermanentResidence: true,
+                TemporaryAddress: true,
+                Job: true,
+                Nation: true,
+                Religion: true,
+                SelfComment: true,
+                BirthName: true,
+                GeneralEducation: true,
+                UnderPostGraduateEducation: true,
+                Degree: true,
+                JobEducation: true,
+                ForeignLanguage: true,
+                MinorityLanguages: true,
+                PoliticalTheory: true,
+                ItDegree: true,
+                CreatedPlace: true,
+                GroupUser: true,
+                PlaceWorking: true
+            },
+            Family:{
+                "Relation": true,
+                "Name": true,
+                "BirthYear": true,
+                "PartyMember": true,
+                "PoliticalAttitude": true,
+                "HomeTown": true,
+                "Residence": true,
+                "Job": true,
+                "WorkingProgress": true
+            },
+            PersonHistory:{
+                "Begin": true,
+                "End": true,
+                "Content": true
+            },
+            WorkingTracking:{
+                "From": true,
+                "To": true,
+                "Work": true,
+                "Role": true
+            },
+            HistorySpecialist:{
+                "MonthYear": true,
+                "Content": true
+            },
+            Laudatory:{
+                "MonthYear": true,
+                "GrantOfDecision": true,
+                "Reason": true
+            },
+            WarningDisciplined:{
+                "MonthYear": true,
+                "GrantOfDecision": true,
+                "Reason": true
+            },
+            TrainingCertificatedPass: {
+                "From": true,
+                "Certificate": true,
+                "To": true,
+                "SchoolName": true,
+                "Class":true
+            },
+            GoAboard:{
+                "From": true,
+                "To": true,
+                "Contact": true,
+                Country: true
+            },
+            Introducer:{
+                "PersonIntroduced": true,
+                "PlaceTimeRecognize": true,
+                "PlaceTimeJoinUnion": true,
+                "PlaceTimeJoinParty": true
+            }
         }
+        
     }
+    $rootScope.initConfig()
 });
 
 app.config(function ($routeProvider, $validatorProvider, $translateProvider, $locationProvider) {
@@ -490,7 +494,7 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $lo
 
 app.controller('Config', function ($scope, $rootScope, $compile, $uibModal, $confirm, dataservice, $translate, $filter,$uibModalInstance) {
     $scope.cancel = function () {
-        $uibModalInstance.close();
+        $uibModalInstance.close("Close");
     }
     
     $scope.submit=function(){
@@ -509,11 +513,8 @@ app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOp
             size: '65'
         });
         modalInstance.result.then(function (d) {
-            if(d=="Save"){
-                var data=$scope.model.ListData;
-                $scope.model=$rootScope.configProfile;
-                $scope.model.ListData=data;
-                $scope.$apply()
+            if(d=="Close"){
+                $rootScope.initConfig();
             }
         }, function () {
         });
@@ -531,30 +532,18 @@ app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOp
         ListData:[]
     }
     $scope.ListData=[];
-    function Validate(model) {
-        if (model.Profile === undefined ||
-            model.Family === undefined ||
-            model.PersonHistory === undefined ||
-            model.WorkingTracking === undefined ||
-            model.HistorySpecialist === undefined ||
-            model.Laudatory === undefined ||
-            model.WarningDisciplined === undefined ||
-            model.TrainingCertificatedPass === undefined ||
-            model.GoAboard === undefined ||
-            model.Introducer === undefined) {
-            return true; // Trả về true nếu có ít nhất một thuộc tính bị undefined
-        } else {
-            return false; // Trả về false nếu tất cả các thuộc tính đã được định nghĩa
-        }
-    }
-    $scope.DownloadProfile=function(ResumeNumber){
-        //Validate
-        if(Validate($scope.model)){
-            App.toastrError("Bạn chưa chọn điều kiện xuất file");
+    
+    $scope.DownloadProfiles=function(IsAll){
+        var data=$rootScope.configProfile;
+        data.ListData=[]
+        $scope.ListData.forEach(item=>{
+            if(IsAll||item.IsDownload)
+               data.ListData.push(item.Code);
+        })
+        if(data.ListData==[]){
+            App.toastrError("Bạn chưa chọn file cần lấy");
             return
         }
-        var data=$scope.model;
-        data.ListData=[ResumeNumber]
         dataserviceJoinParty.GetReportProfile(data,function(rs){
             rs=rs.data;
             console.log(rs);
@@ -567,11 +556,11 @@ app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOp
     }
     $scope.Report=function(){
         console.log($scope.model);
-        //Validate
-        if(Validate($scope.model)){
-            App.toastrError("Bạn chưa chọn điều kiện xuất file");
-            return
-        }
+        // //Validate
+        // if(Validate($scope.model)){
+        //     App.toastrError("Bạn chưa chọn điều kiện xuất file");
+        //     return
+        // }
         if($scope.ListData==[]){
             App.toastrError("Bạn chưa chọn hồ sơ");
             return
@@ -582,7 +571,7 @@ app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOp
             boxed: true,
             message: 'loading...'
         });
-        
+        var data
         $scope.model.ListData=$scope.ListData.filter(function(obj) {
             // Trả về true nếu thuộc tính 'name' của đối tượng là một chuỗi
             return typeof obj.Code === 'string';
@@ -631,11 +620,63 @@ app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOp
     }
     $scope.init();
 });
-
+function Validate(model) {
+    if (model.Profile === undefined ||
+        model.Family === undefined ||
+        model.PersonHistory === undefined ||
+        model.WorkingTracking === undefined ||
+        model.HistorySpecialist === undefined ||
+        model.Laudatory === undefined ||
+        model.WarningDisciplined === undefined ||
+        model.TrainingCertificatedPass === undefined ||
+        model.GoAboard === undefined ||
+        model.Introducer === undefined) {
+        return true; // Trả về true nếu có ít nhất một thuộc tính bị undefined
+    } else {
+        return false; // Trả về false nếu tất cả các thuộc tính đã được định nghĩa
+    }
+}
 app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataserviceJoinParty, $location, $translate) {
     $scope.report=function(){
         $location.path('/report')
     }
+    $scope.Config=function(){
+        //item, bookMark
+        var modalInstance = $uibModal.open({
+            animation: true,
+            templateUrl: ctxfolderJoinParty + '/Config.html',
+            controller: 'Config',
+            backdrop: 'static',
+            windowClass: 'message-avoid-header',
+            size: '65'
+        });
+        modalInstance.result.then(function (d) {
+            if(d=="Save"){
+                var data=$scope.model.ListData;
+                $scope.modelExport=$rootScope.configProfile;
+                $scope.modelExport.ListData=data;
+                $scope.$apply()
+            }
+        }, function () {
+        });
+    }    
+    //Tải sơ yếu lý lịch trích lượt
+    $scope.BriefCurriculumVitaeExport=function(ResumeNumber){
+        var data=$rootScope.configProfile;
+
+        data.ListData=[ResumeNumber]
+        
+        dataserviceJoinParty.GetReportProfile(data,function(rs){
+            rs=rs.data;
+            console.log(rs);
+            rs.forEach(item=>{
+                if(!item.Error)
+                    $scope.downloadFile(item.Object,item.Title)
+            });
+            App.unblockUI("#contentMain");
+        });
+    }
+
     var vm = $scope;
     $scope.tabnav = 'Section3'; // Initialize tabnav variable
 
@@ -655,7 +696,6 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         Name: 'Đã duyệt',
         Code: 'Đã duyệt'
     }]
-
     $scope.ImportFile = function (data) {
         dataserviceJoinParty.Import(data, function (rs) {
             rs = rs.data;
@@ -1069,6 +1109,15 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     // vm.dtColumns.push(DTColumnBuilder.newColumn('resumeNumber').withOption('sClass', '').withTitle('{{"Mã hồ sơ" | translate}}').renderWith(function (data, type) {
     //     return data
     // }));<i class="fs24 h-25 fa-solid fa-diagram-project" style="font-size: 25px; padding-left: 25px;"></i>
+    vm.dtColumns.push(DTColumnBuilder.newColumn('resumeNumber').withOption('sClass', 'text-center w50').withTitle('{{"Sơ yếu lý lịch trích lược" | translate}}')
+    .renderWith(function (data, type, full) {
+        var wfbtn = '';
+        wfbtn = `
+        <a title="{{&quot;Tải file sơ yếu lý lịch đầy đủ&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
+                ng-click="BriefCurriculumVitaeExport('${data}')"><i class="fa fa-cloud-arrow-down fs25"></i>
+            </a>`
+        return wfbtn
+    }));
 
     vm.dtColumns.push(DTColumnBuilder.newColumn('action').notSortable().withOption('sClass', 'listaction w50 nowrap')
         .withTitle('{{ "COM_LIST_COL_ACTION" | translate }}').renderWith(function (data, type, full, meta) {
@@ -1093,7 +1142,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
                 ng-click="delete('${full.Id}')"><i class="fa-solid fa-trash  fs25"></i>
             </a>
             
-            <a title="{{&quot;Import File&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
+            <a title="{{&quot;Tải file sơ yếu lý lịch đầy đủ&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
                 ng-click="ImportFile('${full.resumeNumber}')"><i class="fa fa-file-word-o  fs25"></i>
             </a>
             ${wfbtn}
@@ -1328,7 +1377,27 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
     $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo']
     $scope.filteredItems = [];
-
+    $scope.ExportFileWord = function () {
+        dataserviceJoinParty.Import($scope.infUser.ResumeNumber, function (rs) {
+            rs = rs.data;
+            if (rs.Error) {
+                App.toastrError(rs.Title);
+                $uibModalInstance.close('cancel');
+            } else {
+                console.log(rs.Object);
+                $scope.downloadFileWord(rs.Object, $scope.infUser.ResumeNumber)
+                //window.open('/Admin/Docman#', '_blank');
+            }
+        });
+    }
+    $scope.downloadFileWord = function (file, ResumeNumber) {
+        // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
+        var link = document.createElement("a");
+        link.href = file; // Đặt đường dẫn đến tệp Word
+        link.download = "Profile_" + ResumeNumber + ".docx"; // Đặt tên cho tệp khi được tải xuống
+        // Kích hoạt sự kiện nhấp vào liên kết
+        link.click();
+    }
     //Autocomplete công việc
     $scope.filterItems = function () {
         $scope.filteredItems = $scope.itemEmployees.filter(function (item) {
