@@ -692,7 +692,6 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
                 if(!item.Error)
                     $scope.downloadFile(item.Object,item.Title)
             });
-            App.unblockUI("#contentMain");
         });
     }
 
@@ -1020,10 +1019,8 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
             rs.forEach(item=>{
                 if(!item.Error)
                     $scope.downloadFile(item.Object,item.Title)
-
             });
             $scope.reload()
-            App.unblockUI("#contentMain");
         });
     }
     var titleHtml = '<label class="mt-checkbox"><input type="checkbox" ng-model="selectAll" ng-click="toggleAll(selectAll, selected)"/><span></span></label>';

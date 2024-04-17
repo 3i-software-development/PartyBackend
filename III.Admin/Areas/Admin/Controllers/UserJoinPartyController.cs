@@ -513,7 +513,6 @@ namespace III.Admin.Controllers
                 {
                     try
                     {
-
                         profileParty.LastTimeReport = DateTime.Now;
                         _context.Update(profileParty);
                         _context.SaveChanges();
