@@ -363,7 +363,34 @@ namespace III.Admin.Controllers
                 Code= x.ResumeNumber
             }).ToList();
         }
-        
+        [NonAction]
+        private string GetPlaceWorking(string Place)
+        {
+            var result = "";
+            try
+            {
+                if (!string.IsNullOrEmpty(Place))
+                {
+                    var list = Place.Split("_").Select(x=>x!="undefined"?int.Parse(x):-1).ToList();
+                    var listAdress = new List<string>();
+                    var a = _context.Provinces.FirstOrDefault(x => x.provinceId == list[0]);
+                    if (a != null)
+                        listAdress.Add(a.name);
+                    var b = _context.Districts.FirstOrDefault(x => x.districtId == list[1]);
+                    if (b != null)
+                        listAdress.Add(b.name);
+                    var c = _context.Wards.FirstOrDefault(x => x.wardsId == list[2]);
+                    if (c != null)
+                        listAdress.Add(c.name);
+                    result=string.Join(", ",listAdress.Where(x=>!string.IsNullOrEmpty(x)).ToList());
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return result;
+        }
         [HttpPost]
         [AllowAnonymous]
         public object GetReportProfile([FromBody] DataModel data)
@@ -373,11 +400,49 @@ namespace III.Admin.Controllers
             List<JMessage> filePath = new List<JMessage>(); 
             foreach (var ressumeNumber in data.ListData)
             {
-                var profileParty = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false);
+                string Place = "";
+                var profileParty = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber);
+                if(profileParty != null)
+                {
+                    Place = GetPlaceWorking(profileParty.PlaceWorking);
+                }
                 List<string> ProfileSelected = GetTrueProperties(data.Profile);
 
+                var query = _context.PartyAdmissionProfiles.Select(x => new ModelViewPAMP
+                {
+                    CurrentName = x.CurrentName,
+                    BirthName = x.BirthName,
+                    Gender = x.Gender == 0 ? "Nam" : "Nữ",
+                    Nation = x.Nation,
+                    Religion = x.Religion,
+                    Birthday = x.Birthday.Value.ToShortDateString(),
+                    PermanentResidence = x.PermanentResidence,
+                    Phone = x.Phone,
+                    Picture = x.Picture,
+                    HomeTown = x.HomeTown,
+                    PlaceBirth = x.PlaceBirth,
+                    Job = x.Job,
+                    TemporaryAddress = x.TemporaryAddress,
+                    GeneralEducation = x.GeneralEducation,
+                    JobEducation = x.JobEducation,
+                    UnderPostGraduateEducation = x.UnderPostGraduateEducation,
+                    Degree = x.Degree,
+                    PoliticalTheory = x.PoliticalTheory,
+                    ForeignLanguage = x.ForeignLanguage,
+                    ItDegree = x.ItDegree,
+                    MinorityLanguages = x.MinorityLanguages,
+                    ResumeNumber = x.ResumeNumber,
+                    SelfComment = x.SelfComment,
+                    CreatedPlace = x.CreatedPlace,
+                    WfInstCode = x.WfInstCode,
+                    Username = x.Username,
+                    Status = x.Status,
+                    GroupUserCode = x.GroupUserCode,
+                    PlaceWorking = Place
+                }).Where(x => x.ResumeNumber == ressumeNumber);
+
                 //Thông tin cá nhân Ok
-                var profile = SelectProperties(_context.PartyAdmissionProfiles.Where(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false),
+                var profile = SelectProperties(query,
                     ProfileSelected).ToArray();
 
                 var jsonParty = new SelectedParty();
@@ -541,6 +606,7 @@ namespace III.Admin.Controllers
                     PropertyInfo property = typeof(T).GetProperty(propertyName);
                     if (property != null)
                     {
+                        
                         object value = property.GetValue(item);
                         string note = GetNote(property);
                         note = note == "" ? property.Name : note;

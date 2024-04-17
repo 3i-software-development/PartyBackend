@@ -447,7 +447,7 @@ namespace III.Admin.Utils
         private static void SetStyle(IWTextRange text)
         {
             text.CharacterFormat.FontName = "Times New Roman";
-            text.CharacterFormat.FontSize = 14;
+            text.CharacterFormat.FontSize = 12.5F;
         }
         public static void BinđingPersonalHistory(WTable table, string[] workingTracking)
         {
@@ -677,9 +677,22 @@ namespace III.Admin.Utils
                     setCellParagraph(row, 2, item,true);
                 }
                 if (item.StartsWith("Thái độ chính trị")|| item.StartsWith("Quê quán")|| item.StartsWith("Nơi ở hiện nay")|| 
-                    item.StartsWith("Nghề nghiệp")|| item.StartsWith("Quá trình công tác")|| item.StartsWith("Đảng viên"))
+                    item.StartsWith("Nghề nghiệp")|| item.StartsWith("Quá trình công tác"))
                 {
                     setCellParagraph(row, 3, item);
+                }
+                if (item.StartsWith("Đảng viên"))
+                {
+                    var a = "";
+                    if (item.Split(":")[1]==" True")
+                    {
+                        a = "Đảng viên: đúng";
+                    }
+                    else
+                    {
+                        a = "Đảng viên: sai";
+                    }
+                    setCellParagraph(row, 3, a);
                 }
                 
             }

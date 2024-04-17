@@ -15,7 +15,7 @@
             </div>
             <div class="col-md-8" style="display: flex; padding-left: 8px;">
                 <div class="br24 form-control custom-title-code-bold">
-                    <i class="fa fa-info-circle icon-clickable" id="from" title="Popover Header" popover-placement="bottom-left"
+                    <i class="fa fa-info-circle icon-clickable" id="Training-From" title="Popover Header" popover-placement="bottom-left"
                     uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                         ng-model="selectedTrainingCertificatedPass.From" type="text" placeholder="Từ ngày" />
@@ -32,7 +32,7 @@
             </div>
             <div class="col-md-8" style="display: flex; padding-right: 8px;">
                 <div class="br24 form-control custom-title-code-bold">
-                    <i class="fa fa-info-circle icon-clickable" id="to" title="Popover Header" popover-placement="bottom-left"
+                    <i class="fa fa-info-circle icon-clickable" id="Training-To" title="Popover Header" popover-placement="bottom-left"
                     uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                         ng-model="selectedTrainingCertificatedPass.To" type="text" placeholder="Đến ngày" />
@@ -42,7 +42,7 @@
     </div>
     <div class="form-group row">
         <div class="col-md-2 pr-0">
-            <i class="fa fa-pencil-square-o" id="schoolName" ng-click="openPopover('schoolName');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+            <i class="fa fa-pencil-square-o" id="schoolName" ng-click="openPopover('SchoolName');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label class="displayInfo control-label require custom-title-code-bold">
                 Tên
                 trường
@@ -50,7 +50,7 @@
         </div>
         <div class="col-md-10" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
-                <i class="fa fa-info-circle icon-clickable" id="schoolName" title="Popover Header" popover-placement="bottom-left"
+                <i class="fa fa-info-circle icon-clickable" id="SchoolName" title="Popover Header" popover-placement="bottom-left"
                 uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.SchoolName}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                        ng-model="selectedTrainingCertificatedPass.SchoolName" type="text" placeholder="Tên trường" />
@@ -69,7 +69,7 @@
         </div>
         <div class="col-md-10" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold"  style="white-space:nowrap">
-                <i class="fa fa-info-circle icon-clickable" id="class" title="Popover Header" popover-placement="bottom-left"
+                <i class="fa fa-info-circle icon-clickable" id="Class" title="Popover Header" popover-placement="bottom-left"
                 uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.Class}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                        ng-model="selectedTrainingCertificatedPass.Class" type="text" placeholder="Ngành học" />
@@ -80,7 +80,7 @@
     </div>
     <div class="form-group row">
         <div class="col-md-2 pr-0">
-            <i class="fa fa-pencil-square-o" id="certificate" ng-click="openPopover('certificate');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+            <i class="fa fa-pencil-square-o" id="Certificate" ng-click="openPopover('certificate');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
             <label class="displayInfo control-label require custom-title-code-bold">
                 Văn
                 bằng

@@ -96,15 +96,15 @@
     "Guide": "Bạn cần nhập rõ ngày tháng năm sinh, năm mất (nếu có, kèm theo lý do) của người thân. Ví dụ: '16-09-1940 - 20-3-2010 - Mất do tuổi cao sức yếu'"
   },
   {
-    "Id": "PoliticalAttitude",
+    "Id": "politicalAttitude",
     "Guide": "Bạn cần nhập rõ thái độ chính trị của người thân. Ví dụ: 'Ủng hộ Cách mạng, trung thành tuyệt đối với lý tưởng mà Đảng đề ra'"
   },
   {
-    "Id": "HomeTown",
+    "Id": "homeTown",
     "Guide": "Bạn cần nhập rõ quê quán của người thân. Ví dụ: 'xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
   },
   {
-    "Id": "Residence",
+    "Id": "residence",
     "Guide": "Bạn cần nhập rõ nơi cứ trú của người thân. Ví dụ: 'Số nhà 56, thôn 8, xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
   },
   {
@@ -112,15 +112,35 @@
     "Guide": "Bạn cần nhập chức vụ  của người thân. Ví dụ: 'Giáo Viên'"
   },
   {
-    "Id": "WorkingProgress",
+    "Id": "working",
     "Guide": "Bạn cần nhập chi tiết về quá trình công tác của người thân. Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'"
   },
   {
-    "Id": "Role",
+    "Id": "role",
     "Guide": "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
   },
   {
-    "Id": "Content",
+    "Id": "WorkingTracking-role",
+    "Guide": "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
+  },
+  {
+    "Id": "SpecialHistory-content",
+    "Guide": "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
+  },
+  {
+    "Id": "PersonHistory-content",
+    "Guide": "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
+  },
+  {
+    "Id": "WorkingTracking-content",
+    "Guide": "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
+  },
+  {
+    "Id": "HistorySpecialist-content",
+    "Guide": "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
+  },
+  {
+    "Id": "Laudatory-content",
     "Guide": "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
   },
   {
@@ -128,11 +148,23 @@
     "Guide": "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
   },
   {
-    "Id": "MonthYear",
+    "Id": "HistorySpecialist-MonthYear",
     "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
   },
   {
-    "Id": "GrantOfDecision",
+    "Id": "WarningDisciplined-MonthYear",
+    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+  },
+  {
+    "Id": "Laudatory-MonthYear",
+    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+  },
+  {
+    "Id": "WarningDisciplined-GrantOfDecision",
+    "Guide": "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
+  },
+  {
+    "Id": "Laudatory-GrantOfDecision",
     "Guide": "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
   },
   {
@@ -168,11 +200,43 @@
     "Guide": "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
   },
   {
-    "Id": "From",
+    "Id": "SpecialHistory-From",
     "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
   },
   {
-    "Id": "To",
+    "Id": "SpecialHistory-To",
+    "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+  },
+  {
+    "Id": "PersonHistory-From",
+    "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },
+  {
+    "Id": "PersonHistory-To",
+    "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+  },
+  {
+    "Id": "WorkingTracking-From",
+    "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },
+  {
+    "Id": "WorkingTracking-To",
+    "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+  },
+  {
+    "Id": "Training-From",
+    "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },
+  {
+    "Id": "Training-To",
+    "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+  },
+  {
+    "Id": "GoAboard-From",
+    "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },
+  {
+    "Id": "GoAboard-To",
     "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {

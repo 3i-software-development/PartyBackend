@@ -35,10 +35,7 @@ app.factory('dataserviceJoinParty', function ($http) {
     };
     return {
         GetReportProfile: function (data,callback) {
-            $http.post('/admin/UserJoinParty/GetReportProfile',data).then(callback).catch(function(){
-                App.toastrError("Có lỗi xảy ra");
-                App.unblockUI("#contentMain");
-            });
+            $http.post('/admin/UserJoinParty/GetReportProfile',data).then(callback);
         },
         GetAllProfile: function (callback) {
             $http.get('/admin/UserJoinParty/GetAllProfile').then(callback);
