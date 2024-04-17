@@ -313,7 +313,8 @@ namespace III.Admin.Controllers
                                  UnderPostGraduateEducation = a.UnderPostGraduateEducation,
                                  Degree = a.Degree,
                                  GeneralEducation = a.GeneralEducation,
-                                 Gender = a.Gender
+                                 Gender = a.Gender,
+                                 LastTimeReport=a.LastTimeReport.HasValue?a.LastTimeReport.Value.ToString("dd/MM/yyyy HH:mm"):"",
                              })
                              .OrderByDescending(x => x.Id); // Sắp xếp giảm dần theo Id
 
@@ -335,19 +336,20 @@ namespace III.Admin.Controllers
                     x.GeneralEducation,
                     x.TemporaryAddress,
                     x.BirthYear,
-                    x.Gender
+                    x.Gender,
+                    x.LastTimeReport
                 }).ToList();
                 int count = query_row_number.Count();
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
 
                 var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "UserCode", "Status", "Username",
-                    "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender");
+                    "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
             catch (Exception err)
             {
                 var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", "CreatedBy",
-                    "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender");
+                    "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
         }
@@ -371,6 +373,7 @@ namespace III.Admin.Controllers
             List<JMessage> filePath = new List<JMessage>(); 
             foreach (var ressumeNumber in data.ListData)
             {
+                var profileParty = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false);
                 List<string> ProfileSelected = GetTrueProperties(data.Profile);
 
                 //Thông tin cá nhân Ok
@@ -508,6 +511,17 @@ namespace III.Admin.Controllers
                 msg = GenergatePesonnal(jsonParty);
                 if (!msg.Error)
                 {
+                    try
+                    {
+
+                        profileParty.LastTimeReport = DateTime.Now;
+                        _context.Update(profileParty);
+                        _context.SaveChanges();
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
                     msg.Title = ressumeNumber;
                     filePath.Add(msg);
                 }
@@ -570,7 +584,7 @@ namespace III.Admin.Controllers
             List<JMessage> filePath = new List<JMessage>();
             //truy vấn
             var jsonData = new converJsonPartyAdmission();
-
+            var profile = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber);
             jsonData.Profile = _context.PartyAdmissionProfiles.Where(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false)
                 .Select(x => new ModelViewPAMP {
                     CurrentName = x.CurrentName,
@@ -1229,6 +1243,7 @@ namespace III.Admin.Controllers
         public string Degree { get; set; }
         public string GeneralEducation { get; set; }
         public int Gender { get; set; }
+        public string LastTimeReport { get; set; }
     }
 
     public class ResumeNumber

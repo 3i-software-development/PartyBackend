@@ -145,7 +145,10 @@ namespace ESEIM.Models
         [Note("Địa giới hành chính")]
         public string PlaceWorking { get; set; }
 
-       
+
+        public DateTime? LastTimeReport { get; set; }
+
+
     }
 
     public class JsonFile

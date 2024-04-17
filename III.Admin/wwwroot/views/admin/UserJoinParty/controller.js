@@ -1002,7 +1002,30 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     $scope.edit = function (id) {
         $location.path('/edit-user/' + id);
     }
+    $scope.ExportChecked=function(){
+        var trueKeys = [];
+        for (var key in $scope.Export) {
+            if ($scope.Export.hasOwnProperty(key) && $scope.Export[key] === true) {
+                trueKeys.push(key);
+            }
+        }
 
+        var data=$rootScope.configProfile;
+
+        data.ListData=trueKeys
+        
+        dataserviceJoinParty.GetReportProfile(data,function(rs){
+            rs=rs.data;
+            console.log(rs);
+            rs.forEach(item=>{
+                if(!item.Error)
+                    $scope.downloadFile(item.Object,item.Title)
+
+            });
+            $scope.reload()
+            App.unblockUI("#contentMain");
+        });
+    }
     var titleHtml = '<label class="mt-checkbox"><input type="checkbox" ng-model="selectAll" ng-click="toggleAll(selectAll, selected)"/><span></span></label>';
     vm.dtOptions = DTOptionsBuilder.newOptions()
         .withOption('ajax', {
@@ -1128,16 +1151,34 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     // vm.dtColumns.push(DTColumnBuilder.newColumn('resumeNumber').withOption('sClass', '').withTitle('{{"Mã hồ sơ" | translate}}').renderWith(function (data, type) {
     //     return data
     // }));<i class="fs24 h-25 fa-solid fa-diagram-project" style="font-size: 25px; padding-left: 25px;"></i>
-    vm.dtColumns.push(DTColumnBuilder.newColumn('resumeNumber').withOption('sClass', 'text-center w50').withTitle('{{"Sơ yếu lý lịch trích lược" | translate}}')
+    vm.dtColumns.push(DTColumnBuilder.newColumn('LastTimeReport').withOption('sClass', 'listaction text-center w50').withTitle('{{"Lý lịch trích lược" | translate}}')
     .renderWith(function (data, type, full) {
         var wfbtn = '';
         wfbtn = `
-        <a title="{{&quot;Tải file sơ yếu lý lịch đầy đủ&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
-                ng-click="BriefCurriculumVitaeExport('${data}')"><i class="fa fa-cloud-arrow-down fs25"></i>
-            </a>`
+        <div>
+        <input type="checkbox" style=" width: 20px; height: 20px;" ng-model="Export['${full.resumeNumber}']"/>
+        <a title="{{&quot;Xem trước file&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
+                ng-click="BriefCurriculumVitaeExport('${full.resumeNumber}')"><i class="fa fa-file-word-o fs25"></i>
+            </a>
+        </div>
+        `
+            if(data!=undefined&&data!=''){
+                wfbtn+=`<div>${data}</div>`;
+            }
         return wfbtn
     }));
-
+    $scope.Export=[]
+    vm.dtColumns.push(DTColumnBuilder.newColumn('resumeNumber').withOption('sClass', 'listaction text-center w20').withTitle('{{"Phiếu đảng viên" | translate}}')
+    .renderWith(function (data, type) {
+        var wfbtn = '';
+        wfbtn = `
+        
+        <a title="{{&quot;Tải Phiếu đảng viên&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
+            ng-click="GetMemberPartyProfile('${data}')"><i class="fa fa-file-word-o  fs25"></i>
+        </a> `
+        
+        return wfbtn
+    }));
     vm.dtColumns.push(DTColumnBuilder.newColumn('action').notSortable().withOption('sClass', 'listaction w50 nowrap')
         .withTitle('{{ "COM_LIST_COL_ACTION" | translate }}').renderWith(function (data, type, full, meta) {
             var wfbtn = '';
@@ -1165,9 +1206,6 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
                 ng-click="ImportFile('${full.resumeNumber}')"><i class="fa fa-file-word-o  fs25"></i>
             </a>
 
-            <a title="{{&quot;Tải Phiếu đảng viên&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
-                ng-click="GetMemberPartyProfile('${full.resumeNumber}')"><i class="fa fa-file-word-o  fs25"></i>
-            </a>
             ${wfbtn}
             `
                 ;
