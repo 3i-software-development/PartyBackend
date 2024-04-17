@@ -522,6 +522,11 @@ app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOp
         }, function () {
         });
     }
+    $scope.CheckAll=function(){
+        $scope.ListData.forEach(x=>{
+            x.IsDownload=true;
+        })
+    }
     $scope.Delete=function(item){
         $scope.ListData=removeObjectFromArray($scope.ListData,item);
         console.log($scope.ListData);
@@ -1381,29 +1386,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
         });
     }
-    $scope.listType=[
-        {
-            Name:"Chưa phân loại",
-            Code:0
-        },{
-            Name: "Bị xóa tên trong danh sách đảng viên",
-            Code: "1"
-        },{
-            Name: "Được kết nạp lại vào Đảng lần 2",
-            repetitions:1,
-            Code: "2"
-        },{
-            Name: "Được khôi phục đảng tịch",
-            repetitions:1,
-            Code: "3"
-        },{
-            Name: "Bị xử lý theo pháp luật",
-            Code: "4"
-        },{
-            Name: "Làm việc trong chế độ cũ",
-            Code: "5"
-        },
-    ]
+    
     //Autocomplete
     $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
     $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo']
@@ -2685,6 +2668,29 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     //Lịch sử bản thân
     $scope.selectedPersonHistory = {}
     //Chọn loại lịch sử
+    $scope.listType=[
+        {
+            Name:"Chưa phân loại",
+            Code:"0"
+        },{
+            Name: "Bị xóa tên trong danh sách đảng viên",
+            Code: "1"
+        },{
+            Name: "Được kết nạp lại vào Đảng lần 2",
+            repetitions:1,
+            Code: "2"
+        },{
+            Name: "Được khôi phục đảng tịch",
+            repetitions:1,
+            Code: "3"
+        },{
+            Name: "Bị xử lý theo pháp luật",
+            Code: "4"
+        },{
+            Name: "Làm việc trong chế độ cũ",
+            Code: "5"
+        },
+    ]
     $scope.changeSelectType=function(item){
         if(item.repetitions!=undefined){
             var conut=$scope.PersonalHistory.filter(x=>{
@@ -2695,7 +2701,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             }
             else{
                 App.toastrError("Loại lịch sử này chỉ được thêm "+item.repetitions+" lần");
-                $scope.PersonHistoryType=0;
+                $scope.PersonHistoryType="0";
+                $scope.$digest()
             }
         }else{
             $scope.selectedPersonHistory.Type=item.Code;

@@ -76,7 +76,9 @@
             <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');"
                 uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                 popover-trigger="outsideClick"></i>
-            <label class="displayInfo control-label require custom-title-code-bold">{{"Nội dung"}}</label>
+            <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType!=1&&PersonHistoryType!=2&&PersonHistoryType!=3">{{"Nội dung"}}</label>
+            <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType==1||PersonHistoryType==2||PersonHistoryType==3">{{"Tại chi bộ"}}</label>
+           
         </div>
         <div class="col-md-10" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
@@ -130,18 +132,27 @@
     <div class="table-wrapper">
         <div class="list-item">
             <table style="width:100%">
-                <tr>
+                <tr style="font-weight: bold;">
                     <th>Từ ngày</th>
                     <th>Đến ngày</th>
-                    <th>Nội dung</th>
+                    <th>Nội dung, Tại chi bộ</th>
                     <th>Phân loại</th>
                     <th>Xoá bỏ</th>
                 </tr>
                 <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)">
                     <td>{{x.Begin}}</td>
                     <td>{{x.End}}</td>
-                    <td>{{x.Content}}</td>
-                    <td>{{x.Type}}</td>
+                    <td>
+                        <span ng-if="x.Type==1||x.Type==2||x.Type==3">Tại chi bộ:</span>{{x.Content}}
+                    </td>
+                    <td>
+                        <span ng-if="x.Type == '0'||x.Type==null||x.Type==''">Chưa phân loại</span>
+                        <span ng-if="x.Type == '1'">Bị xóa tên trong danh sách đảng viên</span>
+                        <span ng-if="x.Type == '2'">Được kết nạp lại vào Đảng lần 2</span>
+                        <span ng-if="x.Type == '3'">Được khôi phục đảng tịch</span>
+                        <span ng-if="x.Type == '4'">Bị xử lý theo pháp luật</span>
+                        <span ng-if="x.Type == '5'">Làm việc trong chế độ cũ</span>
+                    </td>
                     <td style="text-align:center">
                         <i style="color:red" class="fa fa-trash" ng-click="deletePesonalHistory($index)"></i>
                     </td>

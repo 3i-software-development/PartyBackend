@@ -1,5 +1,10 @@
 <style>
-    
+    .font-weight-bold{
+        font-weight: bold;
+    }
+    .text-decoration-underline{
+        text-decoration: underline;
+    }
 </style>
 <form name="addReport" class="form-horizontal" method="post" ng-validate="validationOptionsAttr">
     <div class="form-body">
@@ -20,12 +25,12 @@
                         </a>
                         <p class="text-underline fs9 mb5 pt3">{{'Thêm xuống' | translate}}</p>
                     </div>
-                    <div class="text-center mt10 pr10">
+                    <!-- <div class="text-center mt10 pr10">
                         <a class="" ng-click="Report()">
                           <span><i class="fas fa-clipboard fs30"></i></span>
                         </a>
                         <p class="text-underline fs9 mb5 pt3">{{'Xuất file' | translate}}</p>
-                    </div>
+                    </div> -->
                     <div class="text-center mt10 pr10">
                         <a class="" ng-click="Config()">
                           <span><i class="fas fa-gears fs30"></i></span>
@@ -44,11 +49,11 @@
                 <table class="table table-bordered">
                     <thead class="thead-dark">
                         <tr>
-                            <th class="text-center">STT</th>
-                            <th class="text-center">Mã và tên người dùng</th>
-                            <th class="text-center">File kết quả</th>
-                            <th class="text-center">
-                                    <a ng-click="DownloadProfiles(false)">
+                            <th class="text-center font-weight-bold text-decoration-underline">STT</th>
+                            <th class="text-center font-weight-bold text-decoration-underline">Mã và tên người dùng</th>
+                            <th class="text-center font-weight-bold text-decoration-underline">File kết quả</th>
+                            <th class="text-center font-weight-bold text-decoration-underline">
+                                    <a ng-click="CheckAll()">
                                       <span><i class="fas fa-cloud-arrow-down fs24"></i></span>
                                     </a>
                             </th>
