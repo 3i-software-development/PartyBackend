@@ -2356,7 +2356,9 @@ namespace III.Admin.Controllers
 
         public string Import(IFormCollection data)
         {
-            if (data.Files.Count == 0)
+            try
+            {
+                if (data.Files.Count == 0)
                 return null;
             Stream stream = new MemoryStream();
             IFormFile file = data.Files[0];
@@ -2376,6 +2378,13 @@ namespace III.Admin.Controllers
             StreamReader reader = new StreamReader(outputStream);
             string value = reader.ReadToEnd().ToString();
             return value;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                Console.WriteLine("An error occurred while loading the Word document: " + ex.Message);
+                return null; // Or return an error message
+            }
         }
 
         static FormatType GetFormatType(string format)

@@ -304,6 +304,7 @@ namespace III.Admin.Controllers
                                  UserCode = a.UserCode,
                                  Status = a.Status,
                                  Username = a.Username,
+                                 Nation = a.Nation,
                                  CreatedBy = b != null ? b.GivenName : "",
                                  ProfileLink = a.ProfileLink,
                                  resumeNumber = a.ResumeNumber,
@@ -324,6 +325,7 @@ namespace III.Admin.Controllers
                     stt = index + 1,
                     x.Id,
                     x.CurrentName,
+                    x.Nation,
                     x.UserCode,
                     x.Status,
                     x.Username,
@@ -342,13 +344,13 @@ namespace III.Admin.Controllers
                 int count = query_row_number.Count();
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
 
-                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "UserCode", "Status", "Username",
-                    "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
+                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "Nation", "UserCode", "Status", "Username",
+                    "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender",  "LastTimeReport");
                 return Json(jdata);
             }
             catch (Exception err)
             {
-                var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", "CreatedBy",
+                var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", "Nation", "CreatedBy",
                     "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
@@ -411,9 +413,9 @@ namespace III.Admin.Controllers
                 var query = _context.PartyAdmissionProfiles.Select(x => new ModelViewPAMP
                 {
                     CurrentName = x.CurrentName,
+                    Nation = x.Nation,
                     BirthName = x.BirthName,
                     Gender = x.Gender == 0 ? "Nam" : "Nữ",
-                    Nation = x.Nation,
                     Religion = x.Religion,
                     Birthday = x.Birthday.Value.ToShortDateString(),
                     PermanentResidence = x.PermanentResidence,
@@ -653,9 +655,10 @@ namespace III.Admin.Controllers
             jsonData.Profile = _context.PartyAdmissionProfiles.Where(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false)
                 .Select(x => new ModelViewPAMP {
                     CurrentName = x.CurrentName,
+                    Nation = x.Nation,
                     BirthName = x.BirthName,
                     Gender = x.Gender == 0 ? "Nam" : "Nữ",
-                    Nation = x.Nation,
+
                     Religion = x.Religion,
                     Birthday = x.Birthday.Value.ToShortDateString(),
                     PermanentResidence = x.PermanentResidence,
@@ -1309,6 +1312,7 @@ namespace III.Admin.Controllers
         public string GeneralEducation { get; set; }
         public int Gender { get; set; }
         public string LastTimeReport { get; set; }
+        public string Nation { get; internal set; }
     }
 
     public class ResumeNumber
