@@ -260,6 +260,7 @@ namespace III.Admin.Controllers
                 var fromDate = !string.IsNullOrEmpty(jTablePara.FromDate) ? DateTime.ParseExact(jTablePara.FromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var toDate = !string.IsNullOrEmpty(jTablePara.ToDate) ? DateTime.ParseExact(jTablePara.ToDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var getYear = DateTime.Now.Year;
+                var session2 = HttpContext.GetSessionUser();
                 var query = (from a in _context.PartyAdmissionProfiles.Where(x => x.IsDeleted == false)
                              join b in _context.Users on a.CreatedBy equals b.UserName into b1
                              from b in b1.DefaultIfEmpty()
@@ -274,6 +275,7 @@ namespace III.Admin.Controllers
                              from wf in wf1.DefaultIfEmpty()
 
                              where (fromDate == null || (fromDate <= a.Birthday))
+                                    && (session2.ListGroupUser != null && session2.ListGroupUser.Contains(a.GroupUserCode) || session2.IsAllData)
                                     && (toDate == null || (toDate >= a.Birthday))
                                     && (jTablePara.FromAge == null || (jTablePara.FromAge <= (getYear - a.Birthday.Value.Year)))
                                     && (jTablePara.ToAge == null || (jTablePara.ToAge >= (getYear - a.Birthday.Value.Year)))

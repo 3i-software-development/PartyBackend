@@ -1033,6 +1033,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
             },
             type: 'POST',
             data: function (d) {
+                console.log($scope.searchModel);
                 d.FromDate = $scope.searchModel.FromDate,
                     d.ToDate = $scope.searchModel.ToDate,
                     d.FromAge = $scope.searchModel.FromAge,
@@ -2593,6 +2594,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
     $scope.onItemSelect = function (item) {
         $scope.GroupUser = item.Code;
+        console.log($scope.GroupUser);
     }
     $scope.getGroupUsers();
 
@@ -4259,8 +4261,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 if ($scope.pageInfo[i].innerText.trim().startsWith('Họ và tên khai sinh:')) {
                     $scope.infUser.FirstName = $scope.pageInfo[i].innerText.trim().slice(('Họ và tên khai sinh:').length).trim();
                 }
-                if ($scope.pageInfo[i].innerText.trim().startsWith('Ngày, tháng, năm sinh :')) {
-                    $scope.infUser.Birthday = $scope.pageInfo[i].innerText.trim().slice(('Ngày, tháng, năm sinh :').length).trim();
+
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Số điện thoại:')) {
+                    $scope.infUser.Phone = $scope.pageInfo[i].innerText.trim().slice(('Số điện thoại:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Ngày, tháng, năm sinh :')) {
+                    $scope.infUser.Birthday = ""
+                    $scope.infUser.Birthday = $scope.pageInfo[i].innerText.trim().slice(('Ngày, tháng, năm sinh :').length).trim();
                 }
 
                 if ($scope.pageInfo[i].innerText.trim().startsWith('Nơi sinh:')) {
@@ -4315,7 +4322,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 }
                 $scope.SelfComment.context = $scope.SelfComment.context
                 $scope.PlaceCreatedTime.place = datapage9[0]
-                console.log(datapage9[0]);
+                console.log($scope.infUser.Birthday);
             }
 
 

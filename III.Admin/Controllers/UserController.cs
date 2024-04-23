@@ -2154,6 +2154,7 @@ namespace III.Admin.Controllers
         {
             try
             {
+                /*var session = HttpContext.GetSessionUser();*/
                 int intBegin = (jTablePara.CurrentPage - 1) * jTablePara.Length;
                 var fromDate = !string.IsNullOrEmpty(jTablePara.FromDate) ? DateTime.ParseExact(jTablePara.FromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var toDate = !string.IsNullOrEmpty(jTablePara.ToDate) ? DateTime.ParseExact(jTablePara.ToDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
@@ -2161,6 +2162,7 @@ namespace III.Admin.Controllers
 
                             where (fromDate == null || (fromDate <= a.Birthday))
                                    && (toDate == null || (toDate >= a.Birthday))
+                                   /*&& session.ListGroupUser != null && session.ListGroupUser.Contains(a.GroupUserCode)*/
                                    && (string.IsNullOrEmpty(jTablePara.Name) || a.CurrentName.ToLower().Contains(jTablePara.Name.ToLower()))
                                    && (string.IsNullOrEmpty(jTablePara.Nation) || a.Nation.ToLower().Contains(jTablePara.Nation.ToLower()))
                                    && (string.IsNullOrEmpty(jTablePara.Religion) || a.Religion.ToLower().Contains(jTablePara.Religion.ToLower()))
