@@ -2580,7 +2580,9 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
                 App.unblockUI("#contentMain");
                 $(".dataTables_scrollBody").addClass('scroller-sm-fade');
                 heightTableAuto();
-                reloadWfAct();
+                if ($rootScope.isReloadAct) {
+                    reloadWfAct();
+                }
                 $rootScope.isReloadAct = false;
             }
         })
