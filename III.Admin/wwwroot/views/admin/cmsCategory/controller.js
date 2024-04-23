@@ -509,7 +509,7 @@ app.controller('addCmsCat', function ($scope, $rootScope, $compile, $uibModal, $
         if (code != 'CMS_LANGUAGE20211027001') {
             $scope.modelJson.title = "";
         }
-        CKEDITOR.instances['ckEditorItemCategory'].setData("");
+        dataEditor.setData("");
     }
     //$scope.listLanguage = [
     //    {
@@ -530,13 +530,13 @@ app.controller('addCmsCat', function ($scope, $rootScope, $compile, $uibModal, $
         }
     }
     $scope.submit = function () {
-        var check = CKEDITOR.instances['ckEditorItemCategory'];
+        var check = dataEditor;
         if (check !== undefined && $scope.model.language == "CMS_LANGUAGE20211027001") {
-            var data = CKEDITOR.instances['ckEditorItemCategory'].getData();
+            var data = dataEditor.getData();
             $scope.model.description = data;
         }
         else if (check !== undefined && $scope.model.language != "CMS_LANGUAGE20211027001") {
-            var data = CKEDITOR.instances['ckEditorItemCategory'].getData();
+            var data = dataEditor.getData();
             $scope.modelJson.content = data;
         }
         var json = null;
@@ -662,7 +662,7 @@ app.controller('addCmsCat', function ($scope, $rootScope, $compile, $uibModal, $
 
     setTimeout(function () {
         setModalDraggable('.modal-dialog');
-        ckEditer();
+        //ckEditer();
     }, 500);
 });
 app.controller('editCmsCat', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataserviceCmsCat, para) {
@@ -711,20 +711,20 @@ app.controller('editCmsCat', function ($scope, $rootScope, $compile, $uibModal, 
                 $scope.modelJson.title = "";
             }
             if (code != 'CMS_LANGUAGE20211027001') {
-                CKEDITOR.instances['ckEditorItemCategory'].setData($scope.modelJson.content);
+                dataEditor.setData($scope.modelJson.content);
             }
             else {
-                CKEDITOR.instances['ckEditorItemCategory'].setData($scope.model.description);
+                dataEditor.setData($scope.model.description);
             }
         }
         else {
             $scope.modelJson.content = "";
             $scope.modelJson.title = "";
             if (code !== 'CMS_LANGUAGE20211027001') {
-                CKEDITOR.instances['ckEditorItemCategory'].setData('');
+                dataEditor.setData('');
             }
             else {
-                CKEDITOR.instances['ckEditorItemCategory'].setData($scope.model.full_text);
+                dataEditor.setData($scope.model.full_text);
             }
         }
         $scope.modelJson.lgn = code;
@@ -751,7 +751,12 @@ app.controller('editCmsCat', function ($scope, $rootScope, $compile, $uibModal, 
         dataserviceCmsCat.getItem(para, function (rs) {
             rs = rs.data;
             $scope.model = rs;
-            $scope.jsonMultipleLanguage = JSON.parse($scope.model.multiple_language);
+            try {
+                $scope.jsonMultipleLanguage = JSON.parse($scope.model.multiple_language);
+            } catch (e) {
+                console.log(e);
+            }
+            dataEditor.setData($scope.model.description);
         });
         dataserviceCmsCat.getExtraFiled(function (rs) {
             rs = rs.data;
@@ -769,13 +774,13 @@ app.controller('editCmsCat', function ($scope, $rootScope, $compile, $uibModal, 
     $scope.initData();
 
     $scope.submit = function () {
-        var check = CKEDITOR.instances['ckEditorItemCategory'];
+        var check = dataEditor;
         if (check !== undefined && $scope.model.language == "CMS_LANGUAGE20211027001") {
-            var data = CKEDITOR.instances['ckEditorItemCategory'].getData();
+            var data = dataEditor.getData();
             $scope.model.description = data;
         }
         else if (check !== undefined && $scope.model.language != "CMS_LANGUAGE20211027001") {
-            var data = CKEDITOR.instances['ckEditorItemCategory'].getData();
+            var data = dataEditor.getData();
             $scope.modelJson.content = data;
         }
         var json = null;
@@ -899,6 +904,6 @@ app.controller('editCmsCat', function ($scope, $rootScope, $compile, $uibModal, 
 
     setTimeout(function () {
         setModalDraggable('.modal-dialog');
-        ckEditer();
+        //ckEditer();
     }, 500);
 });

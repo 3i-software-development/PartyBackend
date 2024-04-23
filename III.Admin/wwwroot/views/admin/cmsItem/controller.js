@@ -291,11 +291,11 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $ht
 app.controller('demoCmsItm', function ($scope, $rootScope, $compile, dataserviceCmsItem, $translate, $window, $filter) {
     var editor;
     setTimeout(function () {
-        editor = new EditorJS({
-            holder: "editorjs",
-            tools:tool,
-            data:$rootScope.JsonEdit
-        });
+        //editor = new EditorJS({
+        //    holder: "editorjs",
+        //    tools:tool,
+        //    data:$rootScope.JsonEdit
+        //});
     },3000);
 
     $scope.saveCms = function () {
@@ -955,7 +955,7 @@ app.controller('addCmsItm', function ($scope, $rootScope, $compile, $uibModal, $
             fontAwesome: true,
             pickerPosition: "bottom-left"
         });
-        ckEditer();
+        //ckEditer();
     });
 });
 
@@ -1286,7 +1286,7 @@ app.controller('editCmsItm', function ($scope, $rootScope, $compile, $uibModal, 
             fontAwesome: true,
             pickerPosition: "bottom-left"
         });
-        ckEditer();
+        //ckEditer();
     }, 500);
 });
 
