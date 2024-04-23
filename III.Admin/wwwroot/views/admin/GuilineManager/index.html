@@ -1,0 +1,91 @@
+﻿<style>
+    .breadcrumb > li {
+        font-size: 16px;
+        font-weight: 700;
+        color: black;
+        text-decoration: underline;
+    }
+
+    #contentMain {
+        position: relative;
+    }
+
+    #searchBox {
+        position: absolute;
+        z-index: 12;
+        width: calc(75% - 50px);
+        right: 50px;
+    }
+
+        #searchBox .bordered {
+            border: 1px solid #80808057 !important;
+            box-shadow: 1px 3px 8px 0px #888888c2;
+        }
+</style>
+<link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
+<div class="btn-group pull-right actions pt5 pb-1 d-flex" style="margin-top: -50px;">
+    <!-- <div class="text-center pr-2">
+        <a class="fs30" ng-click="add()">
+            <span><i class="fa-solid fa-plus"></i></span>
+        </a>
+        <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_ADD' | translate}}</p>
+    </div>
+    <div class="text-center pr-2">
+        <a ng-click="viewCmsDetail('DSNS_TKNS')" class="fs30">
+            <span><i class="fas fa-question " aria-hidden="true"></i></span>
+        </a>
+    </div> -->
+</div>
+<div class="row">
+     <table id="tbl" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Mã gợi ý</th>
+                <th>Tên gợi ý</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="item in ListGuide">
+                <td>{{ item.Id }}</td>
+                <td>{{ item.Guide }}</td>
+                <td>
+                    <!-- <button class="btn btn-danger" ng-click="delete(item.Id)">Xóa</button> -->
+                    <button class="btn btn-primary" ng-click="edit(item)">Sửa</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+</div>
+<table>
+
+</table>
+<script>
+    setTimeout(function () {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        $('.table-scrollable').mousedown(function (e) {
+            isDown = true;
+            startX = e.pageX - $('.table-scrollable').offset().left;
+            scrollLeft = $('.table-scrollable').scrollLeft();
+        });
+        $('.table-scrollable').mouseleave(function () {
+            isDown = false;
+        });
+        $('.table-scrollable').mouseup(function () {
+            isDown = false;
+        });
+        $('.table-scrollable').mousemove(function (e) {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - $('.table-scrollable').offset().left;
+            const walk = (x - startX) * 1; //scroll-fast
+            $('.table-scrollable').scrollLeft(scrollLeft - walk);
+            console.log(walk);
+        });
+    }, 1000);
+
+</script>

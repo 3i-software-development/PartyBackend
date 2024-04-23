@@ -127,7 +127,7 @@ namespace III.Admin.Controllers
         {
             var msg = new JMessage { Title = _sharedResources["COM_MSG_SUCCES_SAVE"], Error = false };
 
-            string path = "/files/Template/templateKNĐ.docx";
+            string path = "/files/Template/template1KNĐ.docx";
             string rootPath = _hostingEnvironment.WebRootPath;
             var filePath = string.Concat(rootPath, path);
             var fileStream = new FileStream(filePath, FileMode.Open);

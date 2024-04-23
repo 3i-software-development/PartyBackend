@@ -40,6 +40,10 @@ using Newtonsoft.Json;
 using Microsoft.AspNetCore.Hosting;
 using Amazon.SimpleNotificationService.Util;
 using static III.Admin.Controllers.UserProfileController;
+using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
+using III.Admin.Utils;
+using Syncfusion.EJ2.Charts;
+using System.ComponentModel.DataAnnotations;
 
 namespace III.Admin.Controllers
 {
@@ -73,15 +77,28 @@ namespace III.Admin.Controllers
         }
         public class converJsonPartyAdmission{
             public ModelViewPAMP Profile { get; set; }
-            public PersonalHistory[] PersonalHistories { get; set; }
-            public TrainingCertificatedPass[] TrainingCertificatedPasses { get; set; }
-            public WarningDisciplined[] WarningDisciplineds { get; set; }
-            public Award[] Awards { get; set; }
-            public Family[] Families { get; set; }
-            public GoAboard[] GoAboards { get; set; }
-            public HistorySpecialist[] HistorySpecialist { get; set; }
+            public List<PersonalHistory> PersonalHistories { get; set; }
+            public List<TrainingCertificatedPass> TrainingCertificatedPasses { get; set; }
+            public List<WarningDisciplined> WarningDisciplineds { get; set; }
+            public List<Award> Awards { get; set; }
+            public List<Family> Families { get; set; }
+            public List<GoAboard> GoAboards { get; set; }
+            public List<HistorySpecialist> HistorySpecialist { get; set; }
             public IntroducerOfParty IntroducerOfParty { get; set; }
-            public WorkingTracking[] WorkingTracking { get; set; }
+            public List<WorkingTracking> WorkingTracking { get; set; }
+        }
+        public class SelectedParty
+        {
+            public string[] Profile { get; set; }
+            public string[] PersonalHistories { get; set; }
+            public string[] TrainingCertificatedPasses { get; set; }
+            public string[] WarningDisciplineds { get; set; }
+            public string[] Awards { get; set; }
+            public string[] Families { get; set; }
+            public string[] GoAboards { get; set; }
+            public string[] HistorySpecialist { get; set; }
+            public string[] IntroducerOfParty { get; set; }
+            public string[] WorkingTracking { get; set; }
         }
         [HttpPost]
         public JMessage UpdateOrCreateUserfileJson([FromBody] converJsonPartyAdmission jsonData)
@@ -243,6 +260,7 @@ namespace III.Admin.Controllers
                 var fromDate = !string.IsNullOrEmpty(jTablePara.FromDate) ? DateTime.ParseExact(jTablePara.FromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var toDate = !string.IsNullOrEmpty(jTablePara.ToDate) ? DateTime.ParseExact(jTablePara.ToDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var getYear = DateTime.Now.Year;
+                var session2 = HttpContext.GetSessionUser();
                 var query = (from a in _context.PartyAdmissionProfiles.Where(x => x.IsDeleted == false)
                              join b in _context.Users on a.CreatedBy equals b.UserName into b1
                              from b in b1.DefaultIfEmpty()
@@ -257,6 +275,7 @@ namespace III.Admin.Controllers
                              from wf in wf1.DefaultIfEmpty()
 
                              where (fromDate == null || (fromDate <= a.Birthday))
+                                    && (session2.ListGroupUser != null && session2.ListGroupUser.Contains(a.GroupUserCode) || session2.IsAllData)
                                     && (toDate == null || (toDate >= a.Birthday))
                                     && (jTablePara.FromAge == null || (jTablePara.FromAge <= (getYear - a.Birthday.Value.Year)))
                                     && (jTablePara.ToAge == null || (jTablePara.ToAge >= (getYear - a.Birthday.Value.Year)))
@@ -287,6 +306,7 @@ namespace III.Admin.Controllers
                                  UserCode = a.UserCode,
                                  Status = a.Status,
                                  Username = a.Username,
+                                 Nation = a.Nation,
                                  CreatedBy = b != null ? b.GivenName : "",
                                  ProfileLink = a.ProfileLink,
                                  resumeNumber = a.ResumeNumber,
@@ -296,7 +316,8 @@ namespace III.Admin.Controllers
                                  UnderPostGraduateEducation = a.UnderPostGraduateEducation,
                                  Degree = a.Degree,
                                  GeneralEducation = a.GeneralEducation,
-                                 Gender = a.Gender
+                                 Gender = a.Gender,
+                                 LastTimeReport=a.LastTimeReport.HasValue?a.LastTimeReport.Value.ToString("dd/MM/yyyy HH:mm"):"",
                              })
                              .OrderByDescending(x => x.Id); // Sắp xếp giảm dần theo Id
 
@@ -306,6 +327,7 @@ namespace III.Admin.Controllers
                     stt = index + 1,
                     x.Id,
                     x.CurrentName,
+                    x.Nation,
                     x.UserCode,
                     x.Status,
                     x.Username,
@@ -318,24 +340,636 @@ namespace III.Admin.Controllers
                     x.GeneralEducation,
                     x.TemporaryAddress,
                     x.BirthYear,
-                    x.Gender
+                    x.Gender,
+                    x.LastTimeReport
                 }).ToList();
                 int count = query_row_number.Count();
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
 
-                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "UserCode", "Status", "Username",
-                    "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender");
+                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "Nation", "UserCode", "Status", "Username",
+                    "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender",  "LastTimeReport");
                 return Json(jdata);
             }
             catch (Exception err)
             {
-                var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", "CreatedBy",
-                    "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender");
+                var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", "Nation", "CreatedBy",
+                    "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public object GetAllProfile()
+        { 
+            return _context.PartyAdmissionProfiles.Where(x=>!x.IsDeleted).Select(x => new { 
+                Name=x.CurrentName,
+                Code= x.ResumeNumber
+            }).ToList();
+        }
+        [NonAction]
+        private string GetPlaceWorking(string Place)
+        {
+            var result = "";
+            try
+            {
+                if (!string.IsNullOrEmpty(Place))
+                {
+                    var list = Place.Split("_").Select(x=>x!="undefined"?int.Parse(x):-1).ToList();
+                    var listAdress = new List<string>();
+                    var a = _context.Provinces.FirstOrDefault(x => x.provinceId == list[0]);
+                    if (a != null)
+                        listAdress.Add(a.name);
+                    var b = _context.Districts.FirstOrDefault(x => x.districtId == list[1]);
+                    if (b != null)
+                        listAdress.Add(b.name);
+                    var c = _context.Wards.FirstOrDefault(x => x.wardsId == list[2]);
+                    if (c != null)
+                        listAdress.Add(c.name);
+                    result=string.Join(", ",listAdress.Where(x=>!string.IsNullOrEmpty(x)).ToList());
+                }
+            }
+            catch(Exception ex)
+            {
 
+            }
+            return result;
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        public object GetReportProfile([FromBody] DataModel data)
+        {
+            var msg = new JMessage { Error = false, Title = "" };
+            var ListProfile = new List<SelectedParty>();
+            List<JMessage> filePath = new List<JMessage>(); 
+            foreach (var ressumeNumber in data.ListData)
+            {
+                string Place = "";
+                var profileParty = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber);
+                if(profileParty != null)
+                {
+                    Place = GetPlaceWorking(profileParty.PlaceWorking);
+                }
+                List<string> ProfileSelected = GetTrueProperties(data.Profile);
+
+                var query = _context.PartyAdmissionProfiles.Select(x => new ModelViewPAMP
+                {
+                    CurrentName = x.CurrentName,
+                    Nation = x.Nation,
+                    BirthName = x.BirthName,
+                    Gender = x.Gender == 0 ? "Nam" : "Nữ",
+                    Religion = x.Religion,
+                    Birthday = x.Birthday.Value.ToShortDateString(),
+                    PermanentResidence = x.PermanentResidence,
+                    Phone = x.Phone,
+                    Picture = x.Picture,
+                    HomeTown = x.HomeTown,
+                    PlaceBirth = x.PlaceBirth,
+                    Job = x.Job,
+                    TemporaryAddress = x.TemporaryAddress,
+                    GeneralEducation = x.GeneralEducation,
+                    JobEducation = x.JobEducation,
+                    UnderPostGraduateEducation = x.UnderPostGraduateEducation,
+                    Degree = x.Degree,
+                    PoliticalTheory = x.PoliticalTheory,
+                    ForeignLanguage = x.ForeignLanguage,
+                    ItDegree = x.ItDegree,
+                    MinorityLanguages = x.MinorityLanguages,
+                    ResumeNumber = x.ResumeNumber,
+                    SelfComment = x.SelfComment,
+                    CreatedPlace = x.CreatedPlace,
+                    WfInstCode = x.WfInstCode,
+                    Username = x.Username,
+                    Status = x.Status,
+                    GroupUserCode = x.GroupUserCode,
+                    PlaceWorking = Place
+                }).Where(x => x.ResumeNumber == ressumeNumber);
+
+                //Thông tin cá nhân Ok
+                var profile = SelectProperties(query,
+                    ProfileSelected).ToArray();
+
+                var jsonParty = new SelectedParty();
+
+                if (profile != null)
+                {
+                    jsonParty.Profile = (string[])profile;
+                }
+
+                // Người giới thiệu Ok
+                ProfileSelected = GetTrueProperties(data.Introducer);
+
+                profile = SelectProperties(_context.IntroducerOfParties.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    ProfileSelected).ToArray();
+
+                if (profile != null)
+                {
+                    jsonParty.IntroducerOfParty = (string[])profile;
+                }
+
+                //Công tác và chức vụ Ok
+                ProfileSelected = GetTrueProperties(data.WorkingTracking);
+
+                if (ProfileSelected.Count != 0)
+                {
+
+                    profile = SelectProperties(_context.WorkingTrackings.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                        ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.WorkingTracking = profile;
+                    }
+
+                }
+
+                //Lịch sử bản thân
+                ProfileSelected = GetTrueProperties(data.PersonHistory);
+
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.PersonalHistories.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.PersonalHistories = profile;
+                    }
+                }
+                //Đặc điểm lịch sử
+                ProfileSelected = GetTrueProperties(data.HistorySpecialist);
+
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.HistorySpecialists.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.HistorySpecialist = profile;
+                    }
+                }
+
+                //Lớp đào tạo bồi dưỡng Ok
+                ProfileSelected = GetTrueProperties(data.TrainingCertificatedPass);
+
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.TrainingCertificatedPasses.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.TrainingCertificatedPasses = profile;
+                    }
+                }
+                //Đi nước ngoài
+                ProfileSelected = GetTrueProperties(data.GoAboard);
+
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.GoAboards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.GoAboards = profile;
+                    }
+                }
+
+                //Khen thưởng Ok
+                ProfileSelected = GetTrueProperties(data.Laudatory);
+
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.Awards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.Awards = profile;
+                    }
+                }
+                //Kỉ luật Ok
+                ProfileSelected = GetTrueProperties(data.WarningDisciplined);
+
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.WarningDisciplineds.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.WarningDisciplineds = profile;
+                    }
+                }
+                //Gia đình Ok
+                ProfileSelected = GetTrueProperties(data.Family);
+
+                if (ProfileSelected.Count != 0)
+                {
+                    profile = SelectProperties(_context.Families.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    ProfileSelected).ToArray();
+
+                    if (profile != null)
+                    {
+                        jsonParty.Families = profile;
+                    }
+                }
+                
+                msg = GenergatePesonnal(jsonParty);
+                if (!msg.Error)
+                {
+                    try
+                    {
+                        profileParty.LastTimeReport = DateTime.Now;
+                        _context.Update(profileParty);
+                        _context.SaveChanges();
+                    }
+                    catch(Exception ex)
+                    {
+
+                    }
+                    msg.Title = ressumeNumber;
+                    filePath.Add(msg);
+                }
+
+            }
+
+            return filePath;
+        }
+
+        static IEnumerable<string> SelectProperties<T>(IEnumerable<T> items, List<string> propertiesToSelect,bool isNote=true)
+        {
+            PropertyInfo[] propertyInfos = typeof(T).GetProperties();
+
+            foreach (var item in items)
+            {
+                foreach (var propertyName in propertiesToSelect)
+                {
+                    PropertyInfo property = typeof(T).GetProperty(propertyName);
+                    if (property != null)
+                    {
+                        
+                        object value = property.GetValue(item);
+                        string note = GetNote(property);
+                        note = note == "" ? property.Name : note;
+                        yield return $"{note}: {value}";
+                    }
+                }
+            }
+        }
+
+        private static string GetNote(PropertyInfo property)
+        {
+            NoteAttribute attribute = (NoteAttribute)Attribute.GetCustomAttribute(property, typeof(NoteAttribute));
+            return attribute != null ? attribute.Note : "";
+        }
+
+        public static List<string> GetTrueProperties<T>(T obj)
+        {
+            Type type = typeof(T);
+            PropertyInfo[] properties = type.GetProperties();
+
+            List<string> trueProperties = new List<string>();
+
+            foreach (PropertyInfo property in properties)
+            {
+                bool value = (bool)property.GetValue(obj);
+                if (value)
+                {
+                    trueProperties.Add(property.Name);
+                }
+            }
+            return trueProperties;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public object GetMemberPartyProfile(string ressumeNumber)
+        {
+            var msg = new JMessage { Error = false, Title = "" };
+
+            List<JMessage> filePath = new List<JMessage>();
+            //truy vấn
+            var jsonData = new converJsonPartyAdmission();
+            var profile = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber);
+            jsonData.Profile = _context.PartyAdmissionProfiles.Where(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false)
+                .Select(x => new ModelViewPAMP {
+                    CurrentName = x.CurrentName,
+                    Nation = x.Nation,
+                    BirthName = x.BirthName,
+                    Gender = x.Gender == 0 ? "Nam" : "Nữ",
+
+                    Religion = x.Religion,
+                    Birthday = x.Birthday.Value.ToShortDateString(),
+                    PermanentResidence = x.PermanentResidence,
+                    Phone = x.Phone,
+                    Picture = x.Picture,
+                    HomeTown = x.HomeTown,
+                    PlaceBirth = x.PlaceBirth,
+                    Job = x.Job,
+                    TemporaryAddress = x.TemporaryAddress,
+                    GeneralEducation = x.GeneralEducation,
+                    JobEducation = x.JobEducation,
+                    UnderPostGraduateEducation = x.UnderPostGraduateEducation,
+                    Degree = x.Degree,
+                    PoliticalTheory = x.PoliticalTheory,
+                    ForeignLanguage = x.ForeignLanguage,
+                    ItDegree = x.ItDegree,
+                    MinorityLanguages = x.MinorityLanguages,
+                    ResumeNumber = x.ResumeNumber,
+                    SelfComment = x.SelfComment,
+                    CreatedPlace = x.CreatedPlace,
+                    WfInstCode = x.WfInstCode,
+                    Username = x.Username,
+                    Status = x.Status,
+                    GroupUserCode = x.GroupUserCode,
+                    PlaceWorking = x.PlaceWorking
+                }).FirstOrDefault();
+            
+            jsonData.IntroducerOfParty = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false);
+            jsonData.WorkingTracking = _context.WorkingTrackings.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.TrainingCertificatedPasses = _context.TrainingCertificatedPasses.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.Families = _context.Families.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.Awards = _context.Awards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.WarningDisciplineds = _context.WarningDisciplineds.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.GoAboards = _context.GoAboards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.PersonalHistories = _context.PersonalHistories.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+
+            //tạo file
+            msg = CreatePartyMemberProfile(jsonData);
+            if (!msg.Error)
+            {
+                //lấy đường dẫn file
+                msg.Title = ressumeNumber;
+                filePath.Add(msg);
+            }
+            return filePath;
+        }
+
+
+        [NonAction]
+        private JMessage CreatePartyMemberProfile(converJsonPartyAdmission jsonParty)
+        {
+            var msg = new JMessage { Title = _sharedResources["COM_MSG_SUCCES_SAVE"], Error = false };
+
+            string path = "/files/Template/phieu-dang-vien.docx";
+            string rootPath = _hostingEnvironment.WebRootPath;
+            var filePath = string.Concat(rootPath, path);
+            var fileStream = new FileStream(filePath, FileMode.Open);
+
+            try
+            {
+                WordDocument document = new WordDocument(fileStream, Syncfusion.DocIO.FormatType.Docx);
+                IWSection section = document.Sections[0];
+
+                //binding file
+                BinddingPartyMemberProfile.BiddingPatyProfile(section, jsonParty);
+
+                #region Saving document
+                MemoryStream memoryStream = new MemoryStream();
+                //Save the document into memory stream
+                document.Save(memoryStream, Syncfusion.DocIO.FormatType.Docx);
+                //Closes the Word document instance
+                document.Close();
+
+                //Lưu 1 file sinh chữ ký
+                var pathVersion = "/uploads/files/fileVersion/";
+                var pathFileVersion = string.Concat(rootPath, pathVersion);
+                if (!Directory.Exists(pathFileVersion)) Directory.CreateDirectory(pathFileVersion);
+                var fileName = "FILE_VERSION_"
+                          + Guid.NewGuid().ToString().Substring(0, 8)
+                          + Path.GetExtension(path);
+                var fileVersionPath = string.Concat(pathFileVersion, fileName);
+                FileStream fileVersion = new FileStream(fileVersionPath, FileMode.Create, FileAccess.Write);
+                memoryStream.WriteTo(fileVersion);
+                fileVersion.Close();
+
+                //FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                //memoryStream.WriteTo(file);
+                //file.Close();
+
+                //signBytes.Close();
+                memoryStream.Position = 0;
+
+                msg.Object = string.Concat(pathVersion, fileName);
+                msg.Title = fileVersionPath;
+
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                msg.Error = true;
+                msg.Title = "Có lỗi xảy ra";
+                msg.Object = path;
+                //signBytes.Close();
+            }
+
+            fileStream.Dispose();
+            return msg;
+        }
+        [NonAction]
+        private JMessage GenergatePesonnal(SelectedParty jsonParty)
+        {
+            var msg = new JMessage { Title = _sharedResources["COM_MSG_SUCCES_SAVE"], Error = false };
+
+            string path = "/files/Template/ReportKnd.docx";
+            string rootPath = _hostingEnvironment.WebRootPath;
+            var filePath = string.Concat(rootPath, path);
+            var fileStream = new FileStream(filePath, FileMode.Open);
+            
+            try
+            {
+                WordDocument document = new WordDocument(fileStream, Syncfusion.DocIO.FormatType.Docx);
+                IWSection section = document.Sections[0];
+
+                WTable table = section.Tables[0] as WTable;
+                BindingReportKND.BinddingPesonal(table,section,jsonParty.Profile, jsonParty.IntroducerOfParty);
+
+                if (jsonParty.WorkingTracking != null)
+                {
+                    var p = section.AddParagraph() as WParagraph;
+                    p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                    WTextRange text = p.AppendText("Công tác và chức vụ đã qua") as WTextRange;
+                    SetStyleHeader(text);
+
+                    table = AddTable(section, 1, 2, "Thời gian", "Công việc, chức vụ");
+
+                    SetStyleHeader(text);
+
+                    BindingReportKND.BinđingPersonalHistory(table, jsonParty.WorkingTracking);
+                }
+                if (jsonParty.TrainingCertificatedPasses != null)
+                {
+                    var p = section.AddParagraph() as WParagraph;
+                    p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                    WTextRange text = p.AppendText("Lớp đào tạo và bồi dưỡng đã qua") as WTextRange;
+                    SetStyleHeader(text);
+
+                    table = AddTable(section, 1, 4, "Tên trường", "Ngành học hoặc tên lớp học", "Từ tháng/năm đến tháng/năm","Văn bằng, chứng chỉ, trình độ gì", "Văn bằng, chứng chỉ, trình độ gì");
+
+                    SetStyleHeader(text);
+
+                    BindingReportKND.BinddingTrainingCertificatedPass(table, jsonParty.TrainingCertificatedPasses);
+                }
+                if (jsonParty.Families != null)
+                {
+                    var p = section.AddParagraph() as WParagraph;
+                    p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                    WTextRange text = p.AppendText("Gia đình") as WTextRange;
+
+                    SetStyleHeader(text);
+
+                    table = section.AddTable() as WTable;
+                    table.ResetCells(1, 4);
+
+                    text = table[0, 0].AddParagraph().AppendText("Quan hệ") as WTextRange;
+                    var cell = table[0,0] as WTableCell;
+                    cell.Width = 60;
+                    SetStyleHeader(text);
+
+                    text = table[0, 1].AddParagraph().AppendText("Họ và tên") as WTextRange;
+                    cell = table[0, 1] as WTableCell;
+                    cell.Width = 60;
+                    SetStyleHeader(text);
+
+                    text = table[0, 2].AddParagraph().AppendText("Năm sinh") as WTextRange;
+                    cell = table[0, 2] as WTableCell;
+                    cell.Width = 60;
+                    SetStyleHeader(text);
+
+                    text = table[0, 3].AddParagraph().AppendText("Quê quán, nơi ở hiện nay (trong, ngoài nước), nghề nghiệp, chức danh, chức vụ, đơn vị công tác") as WTextRange;
+
+                    cell = table[0, 3] as WTableCell;
+                    cell.Width = 170;
+                    SetStyleHeader(text);
+                    BindingReportKND.BinddingFamily(table, jsonParty.Families);
+                }
+
+                if (jsonParty.PersonalHistories != null)
+                {
+                    var p = section.AddParagraph() as WParagraph;
+                    p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                    WTextRange text = p.AppendText("Lịch sử bản thân") as WTextRange;
+                    SetStyleHeader(text);
+
+                    table = AddTable(section, 1, 2, "Từ ngày đến ngày", "Nội dung");
+
+                    BindingReportKND.BinddingPersonalHistoriesAndSpecialHistory(table, jsonParty.PersonalHistories);
+                }
+
+                if (jsonParty.Awards != null)
+                {
+                    var p = section.AddParagraph() as WParagraph;
+                    p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                    WTextRange text = p.AppendText("Khen thưởng") as WTextRange;
+                    SetStyleHeader(text);
+
+                    table = AddTable(section, 1, 3, "Tháng, năm", "Quyết định", "Lý do, hình thức");
+
+                    BindingReportKND.BinddingAwards(table, jsonParty.Awards);
+                }
+
+
+                if (jsonParty.WarningDisciplineds != null)
+                {
+                    var p = section.AddParagraph() as WParagraph;
+                    p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                    WTextRange text = p.AppendText("Kỷ luật") as WTextRange;
+                    SetStyleHeader(text);
+
+                    table = AddTable(section, 1, 3, "Tháng, năm", "Cấp quyết định", "Lý do, hình thức");
+
+                    BindingReportKND.BinddingAwards(table, jsonParty.WarningDisciplineds);
+                }
+
+
+                if (jsonParty.GoAboards != null)
+                {
+                    var p = section.AddParagraph() as WParagraph;
+                    p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                    WTextRange text = p.AppendText("Đi nước ngoài") as WTextRange;
+                    SetStyleHeader(text);
+
+                    table = AddTable(section, 1, 3, "Tháng, năm", "Nội dung đi", "Nước nào");
+
+                    BindingReportKND.BinddingGoAboards(table, jsonParty.GoAboards);
+                }
+
+                if (jsonParty.HistorySpecialist != null)
+                {
+                    var p = section.AddParagraph() as WParagraph;
+                    p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Center;
+                    WTextRange text = p.AppendText("Đặc điểm lịch sử") as WTextRange;
+                    SetStyleHeader(text);
+
+                    table = AddTable(section, 1, 2, "Thời gian", "Nội dung");
+
+                    BindingReportKND.BinddingPersonalHistoriesAndSpecialHistory(table, jsonParty.HistorySpecialist);
+                }
+                #region Saving document
+                MemoryStream memoryStream = new MemoryStream();
+                //Save the document into memory stream
+                document.Save(memoryStream, Syncfusion.DocIO.FormatType.Docx);
+                //Closes the Word document instance
+                document.Close();
+
+                //Lưu 1 file sinh chữ ký
+                var pathVersion = "/uploads/files/fileVersion/";
+                var pathFileVersion = string.Concat(rootPath, pathVersion);
+                if (!Directory.Exists(pathFileVersion)) Directory.CreateDirectory(pathFileVersion);
+                var fileName = "FILE_VERSION_"
+                          + Guid.NewGuid().ToString().Substring(0, 8)
+                          + Path.GetExtension(path);
+                var fileVersionPath = string.Concat(pathFileVersion, fileName);
+                FileStream fileVersion = new FileStream(fileVersionPath, FileMode.Create, FileAccess.Write);
+                memoryStream.WriteTo(fileVersion);
+                fileVersion.Close();
+
+                //FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                //memoryStream.WriteTo(file);
+                //file.Close();
+
+                //signBytes.Close();
+                memoryStream.Position = 0;
+
+                msg.Object = string.Concat(pathVersion, fileName);
+                msg.Title = fileVersionPath;
+
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                msg.Error = true;
+                msg.Title = "Có lỗi xảy ra";
+                msg.Object = path;
+                //signBytes.Close();
+            }
+
+            fileStream.Dispose();
+            return msg;
+        }
+
+
+        private WTable AddTable(IWSection section,int row, int cell,params string[] listTitle)
+        {
+            WTable table = section.AddTable() as WTable;
+            table.ResetCells(row, cell);
+            for(int i = 0; i < cell; i++)
+            {
+                WTextRange text = table[0, i].AddParagraph().AppendText(listTitle[i]) as WTextRange;
+                SetStyleHeader(text);
+            }
+            return table;
+        }
+
+        private void SetStyleHeader(WTextRange text)
+        {
+            text.CharacterFormat.FontName = "Times New Roman";
+            text.CharacterFormat.FontSize = 14;
+            text.CharacterFormat.Bold = true;
+        }
         #region search
 
 
@@ -679,10 +1313,132 @@ namespace III.Admin.Controllers
         public string Degree { get; set; }
         public string GeneralEducation { get; set; }
         public int Gender { get; set; }
+        public string LastTimeReport { get; set; }
+        public string Nation { get; internal set; }
     }
 
     public class ResumeNumber
     {
         public string ResumeNumberstring { get; set; }
+    }
+    public class ProfileBool
+    {
+        public bool CurrentName { get; set; }
+        public bool Birthday { get; set; }
+        public bool Gender { get; set; }
+        public bool Phone { get; set; }
+        public bool PlaceBirth { get; set; }
+        public bool HomeTown { get; set; }
+        public bool PermanentResidence { get; set; }
+        public bool TemporaryAddress { get; set; }
+        public bool Job { get; set; }
+        public bool Nation { get; set; }
+        public bool Religion { get; set; }
+        public bool SelfComment { get; set; }
+        public bool BirthName { get; set; }
+        public bool GeneralEducation { get; set; }
+        public bool UnderPostGraduateEducation { get; set; }
+        public bool Degree { get; set; }
+        public bool JobEducation { get; set; }
+        public bool ForeignLanguage { get; set; }
+        public bool MinorityLanguages { get; set; }
+        public bool PoliticalTheory { get; set; }
+        public bool ItDegree { get; set; }
+        public bool CreatedPlace { get; set; }
+        public bool GroupUser { get; set; }
+        public bool PlaceWorking { get; set; }
+    }
+
+    public class FamilyBool
+    {
+        public bool Relation { get; set; }
+        public bool Name { get; set; }
+        public bool BirthYear { get; set; }
+        public bool PartyMember { get; set; }
+        public bool PoliticalAttitude { get; set; }
+        public bool HomeTown { get; set; }
+        public bool Residence { get; set; }
+        public bool Job { get; set; }
+        public bool WorkingProgress { get; set; }
+    }
+
+    public class PersonHistoryBool
+    {
+        public bool Begin { get; set; }
+        public bool End { get; set; }
+        public bool Content { get; set; }
+    }
+
+    public class WorkingTrackingBool
+    {
+        public bool From { get; set; }
+        public bool To { get; set; }
+        public bool Work { get; set; }
+        public bool Role { get; set; }
+    }
+
+    public class HistorySpecialistBool
+    {
+        public bool MonthYear { get; set; }
+        public bool Content { get; set; }
+        
+    }
+
+    public class LaudatoryBool
+    {
+        public bool MonthYear { get; set; }
+        public bool GrantOfDecision { get; set; }
+        public bool Reason { get; set; }
+        
+    }
+
+    public class WarningDisciplinedBool
+    {
+        public bool MonthYear { get; set; }
+        public bool GrantOfDecision { get; set; }
+        public bool Reason { get; set; }
+        
+    }
+
+    public class TrainingCertificatedPassBool
+    {
+        public bool From { get; set; }
+        public bool Certificate { get; set; }
+        public bool To { get; set; }
+        public bool SchoolName { get; set; }
+        public bool Class { get; set; }
+    }
+
+    public class GoAboardBool
+    {
+        public bool From { get; set; }
+        public bool To { get; set; }
+        public bool Contact { get; set; }
+        public bool Country { get; set; }
+        
+    }
+
+    public class IntroducerBool
+    {
+        public bool PersonIntroduced { get; set; }
+        public bool PlaceTimeRecognize { get; set; }
+        public bool PlaceTimeJoinUnion { get; set; }
+        public bool PlaceTimeJoinParty { get; set; }
+        
+    }
+
+    public class DataModel
+    {
+        public List<String> ListData { get; set; }
+        public ProfileBool Profile { get; set; }
+        public FamilyBool Family { get; set; }
+        public PersonHistoryBool PersonHistory { get; set; }
+        public WorkingTrackingBool WorkingTracking { get; set; }
+        public HistorySpecialistBool HistorySpecialist { get; set; }
+        public LaudatoryBool Laudatory { get; set; }
+        public WarningDisciplinedBool WarningDisciplined { get; set; }
+        public TrainingCertificatedPassBool TrainingCertificatedPass { get; set; }
+        public GoAboardBool GoAboard { get; set; }
+        public IntroducerBool Introducer { get; set; }
     }
 }

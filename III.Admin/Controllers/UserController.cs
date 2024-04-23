@@ -595,7 +595,6 @@ namespace III.Admin.Controllers
             return rs;
         }
         #endregion
-
         #region Update
 
         [HttpPost]
@@ -643,83 +642,135 @@ namespace III.Admin.Controllers
             }
             return msg;
         }
+        [NonAction]
+        public string GetPlaceWorking(string Place)
+        {
+            var result = "";
+            try
+            {
+                if (!string.IsNullOrEmpty(Place))
+                {
+                    var list = Place.Split("_").Select(x => int.Parse(x)).ToList();
+                    var listAdress = new List<string>();
+                    var a = _context.Provinces.FirstOrDefault(x => x.provinceId == list[0]);
+                    if (a != null)
+                        listAdress.Add(a.name);
+                    var b = _context.Districts.FirstOrDefault(x => x.districtId == list[1]);
+                    if (b != null)
+                        listAdress.Add(b.name);
+                    var c = _context.Wards.FirstOrDefault(x => x.wardsId == list[2]);
+                    if (c != null)
+                        listAdress.Add(c.name);
+                    result = string.Join(',', listAdress.Select(x => !string.IsNullOrEmpty(x)));
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return result;
+        }
         public class ModelViewPAMP
         {
+            [Note("Họ và tên")]
             [StringLength(maximumLength: 50)]
             public string CurrentName { get; set; }
 
+            [Note("Tên khai sinh")]
             [StringLength(maximumLength: 50)]
             public string BirthName { get; set; }
 
+            [Note("Giới tính")]
             public string Gender { get; set; }
 
+            [Note("Dân tộc")]
             [StringLength(maximumLength: 50)]
             public string Nation { get; set; }
 
+            [Note("Tôn giáo")]
             [StringLength(maximumLength: 50)]
             public string Religion { get; set; }
 
+            [Note("Ngày sinh")]
             public string Birthday { get; set; }
 
+            [Note("Địa chỉ thường trú")]
             [StringLength(maximumLength: 200)]
             public string PermanentResidence { get; set; }
 
+            [Note("Số điện thoại")]
             [StringLength(maximumLength: 50)]
             public string Phone { get; set; }
 
             [StringLength(maximumLength: 255)]
             public string Picture { get; set; }
 
+            [Note("Quê quán")]
             [StringLength(maximumLength: 100)]
             public string HomeTown { get; set; }
 
+            [Note("Nơi sinh")]
             [StringLength(maximumLength: 100)]
             public string PlaceBirth { get; set; }
 
+            [Note("Nghề nghiệp hiện nay")]
             [StringLength(maximumLength: 50)]
             public string Job { get; set; }
 
+            [Note("Địa chỉ tạm trú")]
             [StringLength(maximumLength: 250)]
             public string TemporaryAddress { get; set; }
 
+            [Note("Giáo dục phổ thông")]
             [StringLength(maximumLength: 50)]
             public string GeneralEducation { get; set; }
 
+            [Note("Giáo dục nghề nghiệp")]
             [StringLength(maximumLength: 50)]
             public string JobEducation { get; set; }
 
+            [Note("Giáo dục đại học")]
             [StringLength(maximumLength: 50)]
             public string UnderPostGraduateEducation { get; set; }
 
+            [Note("Học hàm")]
             [StringLength(maximumLength: 50)]
             public string Degree { get; set; }
 
+            [Note("Lý luận chính trị")]
             [StringLength(maximumLength: 50)]
             public string PoliticalTheory { get; set; }
 
+            [Note("Ngoại ngữ")]
             [StringLength(maximumLength: 50)]
             public string ForeignLanguage { get; set; }
 
+            [Note("Tin học")]
             [StringLength(maximumLength: 50)]
             public string ItDegree { get; set; }
 
+            [Note("Tiếng dân tộc thiểu số")]
             [StringLength(maximumLength: 50)]
             public string MinorityLanguages { get; set; }
 
+            [Note("Số LL")]
             [StringLength(maximumLength: 50)]
             public string ResumeNumber { get; set; }
 
+            [Note("Tự nhận sét")]
             //public DateTime CreatedTime { get; set; }
             public string SelfComment { get; set; }
+
+            [Note("Nơi tạo")]
             public string CreatedPlace { get; set; }
+
             public string WfInstCode { get; set; }
-
-
+            [Note("Nhóm chi bộ")]
+            public string GroupUserCode { get; set; }
+            [Note("Địa giới hành chính")]
+            public string PlaceWorking { get; set; }
             public string Username { get; set; }
             public string Status { get; set; }
-            public string GroupUserCode { get; set; }
-            public string PlaceWorking { get; set; }
-
         }
         [HttpPut]
         public async Task<object> UpdatePartyAdmissionProfile([FromBody] ModelViewPAMP model)
@@ -1375,6 +1426,8 @@ namespace III.Admin.Controllers
                                 a.Content = x.Content;
                                 a.ProfileCode = x.ProfileCode;
                                 a.IsDeleted = false;
+                                if(!string.IsNullOrEmpty(x.Type))
+                                    a.Type = x.Type;
                                 _context.PersonalHistories.Update(a);
                             }
                             else
@@ -2101,6 +2154,7 @@ namespace III.Admin.Controllers
         {
             try
             {
+                /*var session = HttpContext.GetSessionUser();*/
                 int intBegin = (jTablePara.CurrentPage - 1) * jTablePara.Length;
                 var fromDate = !string.IsNullOrEmpty(jTablePara.FromDate) ? DateTime.ParseExact(jTablePara.FromDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                 var toDate = !string.IsNullOrEmpty(jTablePara.ToDate) ? DateTime.ParseExact(jTablePara.ToDate, "dd/MM/yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
@@ -2108,6 +2162,7 @@ namespace III.Admin.Controllers
 
                             where (fromDate == null || (fromDate <= a.Birthday))
                                    && (toDate == null || (toDate >= a.Birthday))
+                                   /*&& session.ListGroupUser != null && session.ListGroupUser.Contains(a.GroupUserCode)*/
                                    && (string.IsNullOrEmpty(jTablePara.Name) || a.CurrentName.ToLower().Contains(jTablePara.Name.ToLower()))
                                    && (string.IsNullOrEmpty(jTablePara.Nation) || a.Nation.ToLower().Contains(jTablePara.Nation.ToLower()))
                                    && (string.IsNullOrEmpty(jTablePara.Religion) || a.Religion.ToLower().Contains(jTablePara.Religion.ToLower()))
@@ -2303,7 +2358,9 @@ namespace III.Admin.Controllers
 
         public string Import(IFormCollection data)
         {
-            if (data.Files.Count == 0)
+            try
+            {
+                if (data.Files.Count == 0)
                 return null;
             Stream stream = new MemoryStream();
             IFormFile file = data.Files[0];
@@ -2323,6 +2380,13 @@ namespace III.Admin.Controllers
             StreamReader reader = new StreamReader(outputStream);
             string value = reader.ReadToEnd().ToString();
             return value;
+            }
+            catch (Exception ex)
+            {
+                // Log or handle the exception
+                Console.WriteLine("An error occurred while loading the Word document: " + ex.Message);
+                return null; // Or return an error message
+            }
         }
 
         static FormatType GetFormatType(string format)

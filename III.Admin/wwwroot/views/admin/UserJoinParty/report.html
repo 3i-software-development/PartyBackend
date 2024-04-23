@@ -1,0 +1,84 @@
+<style>
+    .font-weight-bold{
+        font-weight: bold;
+    }
+    .text-decoration-underline{
+        text-decoration: underline;
+    }
+</style>
+<form name="addReport" class="form-horizontal" method="post" ng-validate="validationOptionsAttr">
+    <div class="form-body">
+        <div class="pt-0 pb-10">
+            <div class="row">
+                <div class="col-md-8 pr-0">
+                    <ui-select tagging ng-model="Profile" theme="bootstrap" on-select="SelectProfile($select.selected)">
+                        <ui-select-match placeholder="{{'Danh sách sơ yếu lý lịch'|translate}}..."><strong class="ProfileCode">[{{$select.selected.Code}}]</strong>{{$select.selected.Name}}</ui-select-match>
+                        <ui-select-choices repeat="x in ListProfile | filter: $select.search">
+                            <strong class="ProfileCode">[{{x.Code}}]</strong>{{x.Name}}
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="col-md-4 pr-0 d-flex">
+                    <div class="text-center mt10 pr10">
+                        <a class="" ng-click="changeSelect()">
+                          <span><i class="fas fa-arrow-down fs30"></i></span>
+                        </a>
+                        <p class="text-underline fs9 mb5 pt3">{{'Thêm xuống' | translate}}</p>
+                    </div>
+                    <!-- <div class="text-center mt10 pr10">
+                        <a class="" ng-click="Report()">
+                          <span><i class="fas fa-clipboard fs30"></i></span>
+                        </a>
+                        <p class="text-underline fs9 mb5 pt3">{{'Xuất file' | translate}}</p>
+                    </div> -->
+                    <div class="text-center mt10 pr10">
+                        <a class="" ng-click="Config()">
+                          <span><i class="fas fa-gears fs30"></i></span>
+                        </a>
+                        <p class="text-underline fs9 mb5 pt3">{{'Điều kiện tìm kiếm' | translate}}</p>
+                    </div>
+                    <div class="text-center mt10 pr10">
+                        <a class="" ng-click="DownloadProfiles(false)">
+                          <span><i class="fas fa-cloud-arrow-down fs30"></i></span>
+                        </a>
+                        <p class="text-underline fs9 mb5 pt3">{{'Tải file' | translate}}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th class="text-center font-weight-bold text-decoration-underline">STT</th>
+                            <th class="text-center font-weight-bold text-decoration-underline">Mã và tên người dùng</th>
+                            <th class="text-center font-weight-bold text-decoration-underline">File kết quả</th>
+                            <th class="text-center font-weight-bold text-decoration-underline">
+                                    <a ng-click="CheckAll()">
+                                      <span><i class="fas fa-cloud-arrow-down fs24"></i></span>
+                                    </a>
+                            </th>
+                            <th class="text-center">Xóa</th>
+                            
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="x in ListData">
+                            <td>{{$index+1}}</td>
+                            <td><strong class="ProfileCode">[{{x.Code}}]</strong>{{x.Name}}</td>
+                            <td style="color: blue;">{{"Profile_" + x.Code + ".docx"}}</td>
+                            <td  class="text-center">
+                                <input type="checkbox" name="" id="" ng-model="x.IsDownload">
+                            </td>
+                            <td  class="text-center">
+                                <a class="" ng-click="Delete(x)">
+                                    <span style="color:red"><i class="fas fa-trash"></i></span>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+</form>

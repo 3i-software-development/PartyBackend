@@ -1341,7 +1341,7 @@
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold"
                                                  style="padding-right: 0px;">
-                                                <i class="fa fa-info-circle icon-clickable" id="From"
+                                                <i class="fa fa-info-circle icon-clickable" id="PersonHistory-From"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedPersonHistory.Begin}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
@@ -1360,7 +1360,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex;padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="To"
+                                                <i class="fa fa-info-circle icon-clickable" id="PersonHistory-To"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedPersonHistory.End}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
@@ -1380,7 +1380,7 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px;">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
+                                            <i class="fa fa-info-circle icon-clickable" id="PersonHistory-content" title="Popover Header"
                                                popover-placement="bottom-left"
                                                uib-popover="{{selectedPersonHistory.Content}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" 
                                                popover-trigger="'outsideClick'"></i>
@@ -1423,6 +1423,7 @@
                                     </div>
                                 </div>
                             </div>
+                            
                             <div class="toggle-header" style="display:flex; justify-content:space-between">
                                 <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                      ng-click="showWorkingProcess2=!showWorkingProcess2">
@@ -1449,7 +1450,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="From"
+                                                <i class="fa fa-info-circle icon-clickable" id="WorkingTracking-From"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedWorkingTracking.From}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -1469,7 +1470,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="To"
+                                                <i class="fa fa-info-circle icon-clickable" id="WorkingTracking-To"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -1490,7 +1491,7 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex;padding-left: 1px;">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
+                                            <i class="fa fa-info-circle icon-clickable" id="WorkingTracking-content" title="Popover Header"
                                                popover-placement="bottom-left"
                                                uib-popover="{{selectedWorkingTracking.Work}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}" 
                                                popover-trigger="'outsideClick'"></i>
@@ -1512,7 +1513,7 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex; padding-left: 1px;">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="role" title="Popover Header"
+                                            <i class="fa fa-info-circle icon-clickable" id="WorkingTracking-role" title="Popover Header"
                                                popover-placement="bottom-left"
                                                uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
@@ -1584,7 +1585,7 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex; padding-right: 1px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="MonthYear" title="Popover Header"
+                                            <i class="fa fa-info-circle icon-clickable" id="HistorySpecialist-MonthYear" title="Popover Header"
                                                popover-placement="bottom-left"
                                                uib-popover="{{selectedHistorySpecialist.MonthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
@@ -1606,7 +1607,7 @@
                                     </div>
                                     <div class="col-md-9" style="display: flex; padding-right: 1px;">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
+                                            <i class="fa fa-info-circle icon-clickable" id="HistorySpecialist-content" title="Popover Header"
                                                popover-placement="bottom-left"
                                                uib-popover="{{selectedHistorySpecialist.Content}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
@@ -1683,7 +1684,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="MonthYear"
+                                                <i class="fa fa-info-circle icon-clickable" id="Laudatory-MonthYear"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedLaudatory.MonthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -1703,7 +1704,7 @@
                                         </div>
                                         <div class="col-md-7" style="display: flex; padding-left: 1px; ">
                                             <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                                <i class="fa fa-info-circle icon-clickable" id="GrantOfDecision"
+                                                <i class="fa fa-info-circle icon-clickable" id="Laudatory-GrantOfDecision"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedLaudatory.GrantOfDecision}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -1806,7 +1807,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="MonthYear"
+                                                <i class="fa fa-info-circle icon-clickable" id="WarningDisciplined-MonthYear"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedWarningDisciplined.MonthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -1827,7 +1828,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 1px;">
                                             <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                                <i class="fa fa-info-circle icon-clickable" id="GrantOfDecision"
+                                                <i class="fa fa-info-circle icon-clickable" id="WarningDisciplined-GrantOfDecision"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedWarningDisciplined.GrantOfDecision}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -1932,7 +1933,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="From"
+                                                <i class="fa fa-info-circle icon-clickable" id="Training-From"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedTrainingCertificatedPass.From}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -1954,7 +1955,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="To"
+                                                <i class="fa fa-info-circle icon-clickable" id="Training-To"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedTrainingCertificatedPass.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -2109,7 +2110,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="From"
+                                                <i class="fa fa-info-circle icon-clickable" id="GoAboard-From"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedGoAboard.From}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -2131,7 +2132,7 @@
                                         </div>
                                         <div class="col-md-8" style="display: flex; padding-right: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="To"
+                                                <i class="fa fa-info-circle icon-clickable" id="GoAboard-To"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedGoAboard.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>

@@ -285,7 +285,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             console.log(rs)
             $scope.GroupUsers = rs.data;
         })
-        $http.get('/views/front-end/user/Guide.json').then(function (response) {
+        $http.get('/Admin/GuilineManager/GetGuidelines/').then(function (response) {
             $scope.jsonParse = response.data; // Gán dữ liệu từ tệp JSON vào biến $scope.jsonParse
             
         }).catch(function (error) {
@@ -362,217 +362,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.infUser.Religion = item;
         $scope.filteredItemReligions = [];
     };
-    $scope.jsonParse = [
-        {
-            id: "currentName",
-            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
-        },
-        {
-            id: "gender",
-            guide: "Bạn cần chọn giới tính của mình, nếu không phải nam hoặc nữ hãy chọn khác. Ví dụ: Nam"
-        },
-        {
-            id: "firstName",
-            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu. Ví dụ: Nguyễn Thị Kim Ngân"
-        },
-        {
-            id: "dateOfBird",
-            guide: "Bạn cần nhập đầy đủ ngày-tháng-năm.Ví dụ: 12-04-1954"
-        },
-        {
-            id: "phone",
-            guide: "Bạn cần nhập đầy đủ số điện thoại.Ví dụ: 0397638979"
-        },
-        {
-            id: "noiSinh",
-            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
-        },
-        {
-            id: "queQuan",
-            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: thôn Thượng,  xã Châu Hoá, huyện Giồng Trôm, tỉnh Bến Tre"
-        },
-        {
-            id: "diaChiThuongTru",
-            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
-        },
-        {
-            id: "diaChiTamTru",
-            guide: "Bạn cần nhập đầy đủ số nhà, đường,phường( xã), quận( huyện), tỉnh( thành phố).Ví dụ: nhà A3, ngõ 130 Đốc Ngữ, phường Vĩnh Phúc, quận Ba Đình, Hà Nội"
-        },
-        {
-            id: "job",
-            guide: "Bạn cần nhập đầy đủ công việc và vị trí tại công ty. Ví dụ: Chủ tịch Quốc hội nước CHXHCN Việt Nam"
-        },
-        {
-            id: "nation",
-            guide: "Bạn cần nhập tên đầy đủ của dân tộc.Ví dụ: Kinh"
-        },
-        {
-            id: "religion",
-            guide: "Bạn cần nhập đầy đủ tên của tôn giáo.Ví dụ: Phật giáo"
-        },
-        {
-            id: "selfComment",
-            guide: "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu"
-        },
-
-        {
-            id: "generalEducation",
-            guide: "Bạn cần điền số lớp đã học/số lớp giáo dục phổ thông khi bạn học.Ví dụ: 12/12"
-        },
-        {
-            id: "undergraduate",
-            guide: "Bạn cần nhập đầy đủ tên trường mình giáo dục đại học hoặc sau đại học.Ví dụ: Trường Đại học Văn hoá Sài Gòn, Trường Đại học Tài chính- Kế toán TP.Hồ Chí Minh "
-        },
-        {
-            id: "rankAcademic",
-            guide: "Bạn cần nhập đầy đủ học hàm.Ví dụ: Thạc sĩ"
-        },
-        {
-            id: "vocationalTraining",
-            guide: "Bạn cần nhập đầy đủ loại và nơi bạn học nghề.Ví dụ: Học may tại trường trường nghề Bách khoa Hà nội"
-        },
-        {
-            id: "foreignLanguage",
-            guide: "Bạn cần nhập đầy đủ các ngoại ngữ mà bạn biết.Ví dụ: tiếng Anh(Mĩ), tiếng Trung(Phồn thể)"
-        },
-        {
-            id: "minorityLanguage",
-            guide: "Bạn cần nhập đầy đủ các tiếng dân tộc thiểu số bạn biết.Ví dụ: tiếng Thái, tiếng Ê-đê"
-        },
-        {
-            id: "politicalTheory",
-            guide: "Bạn cần nhập đầy đủ bằng cấp lý luận chính trị.Ví dụ: Cao cấp lý luận chính trị"
-        },
-        {
-            id: "it",
-            guide: "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
-        },
-        {
-            id: "Relationship",
-            guide: "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
-        },
-        {
-            id: "Name",
-            guide: "Bạn cần nhập rõ tên của người thân. Ví dụ: 'Trịnh Ngọc Thái'"
-        },
-        {
-            id: "BirthYear",
-            guide: "Bạn cần nhập rõ ngày tháng năm sinh, năm mất (nếu có, kèm theo lý do) của người thân. Ví dụ: '16-09-1940 - 20-3-2010 - Mất do tuổi cao sức yếu'"
-        },
-
-        {
-            id: "PoliticalAttitude",
-            guide: "Bạn cần nhập rõ thái độ chính trị của người thân. Ví dụ: 'Ủng hộ Cách mạng, trung thành tuyệt đối với lý tưởng mà Đảng đề ra'"
-        },
-        {
-            id: "HomeTown",
-            guide: "Bạn cần nhập rõ quê quán của người thân. Ví dụ: 'xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
-        },
-        {
-            id: "Residence",
-            guide: "Bạn cần nhập rõ nơi cứ trú của người thân. Ví dụ: 'Số nhà 56, thôn 8, xã Trung Môn, huyện Yên Sơn, tỉnh Tuyên Quang'"
-        },
-
-        {
-            id: "FamilyJob",
-            guide: "Bạn cần nhập chức vụ  của người thân. Ví dụ: 'Giáo Viên'"
-        },
-        {
-            id: "WorkingProgress",
-            guide: "Bạn cần nhập chi tiết về quá trình công tác của người thân. Ví dụ: '1978-1999: Làm việc tại bộ chỉ huy quân sự tỉnh Vĩnh Phúc'"
-        },
-
-        {
-            id: "Role",
-            guide: "Bạn cần nhập chức vụ mà bạn đã làm. Ví dụ: Bí thư Chi bộ"
-        },
-
-        {
-            id: "content",
-            guide: "Bạn cần nhập nội dung. Ví dụ: Làm Bí thư tại Đảng bộ Xã Yên Sơn"
-        },
-        {
-            id: "AwardReason",
-            guide: "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
-        },
     
-        {
-            id: "MonthYear",
-            guide: "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
-        },
-        {
-            id: "GrantOfDecision",
-            guide: "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
-        },
-        {
-            id: "DisciplineReason",
-            guide: "Bạn cần nhập lý do bị kỷ luật.Ví dụ: Gây rối trật tự, vi phạm quy định,..."
-        },
-        {
-            id: "SchoolName",
-            guide: "Bạn cần nhập tên trường bạn đã theo học.Ví dụ: Trường Đại học Sư Phạm Hà Nội"
-        },
-        {
-            id: "Class",
-            guide: "Bạn cần nhập tên lớp bạn đã theo học.Ví dụ: Lớp bổ túc kiến thức tin học văn phòng"
-        },
-
-        {
-            id: "Certificate",
-            guide: "Bạn cần nhập chứng chỉ mà bạn đã đạt được.Ví dụ: Chứng chỉ Tin học văn phòng"
-        },
-        {
-            id: "place",
-            guide: "Bạn cần nhập tên tỉnh nơi mình khai thông tin.Ví dụ: Bến Tre"
-        },
-        {
-            id: "MenberFamilyName",
-            guide: "Bạn cần nhập họ va tên người thân của mình.Ví dụ: Nguyễn Văn A"
-        },
-        {
-            id: "Relation",
-            guide: "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố"
-        },
-        {
-            id: "selectedFamily.BirthYear",
-            guide: "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
-        },
-        {
-            id: "From",
-            guide: "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
-        },
-        {
-            id: "To",
-            guide: "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
-        },
-        {
-            id: "Contact",
-            guide: "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
-        },
-        {
-            id: "WhichCountry",
-            guide: "Bạn cần nhập tên Quốc Gia mà bạn đã đến. Ví dụ: Nhật Bản"
-        },
-        {
-            id: "PlaceTimeRecognize",
-            guide: "Bạn có thể nhập ngày và nơi công nhận lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
-        },
-        {
-            id: "PlaceTimeJoinParty",
-            guide: "Bạn có thể nhập ngày và nơi vào Đảng lần thứ nhất.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
-        },
-        {
-            id: "PlaceTimeJoinUnion",
-            guide: "Bạn cần nhập ngày và nơi vào Đoàn.Ví dụ: Hà Nội, ngày 2 tháng 9 năm 1970"
-        },
-        {
-            id: "PersonIntroduced",
-            guide: "Bạn có thể ghi tên người giới thiệu vào Đảng và chức vụ của người giới thiệu. Ví dụ: Trịnh Ngọc Thái - Bí thư Đảng Uỷ "
-        },
-
-    ]
-    //Autocomplete
     $scope.Gender = ['Nam', 'Nữ', 'Khác'];
     $scope.itemEmployees = [
         'Bác sĩ', 'Luật sư', 'Giáo viên', 'Kỹ sư', 'Nhân viên kinh doanh', 'Quản lý dự án', 'Nhân viên bán hàng', 'Chuyên viên tài chính', 'Kỹ thuật viên IT', 'Nhân viên marketing', 'Nhà hàng khách sạn', 'Thợ xây', 'Nghệ sĩ/ nghệ nhân', 'Nhân viên quản lý nhân sự', 'Chuyên viên tư vấn', 'Nhân viên kế toán', 'Y tá/ điều dưỡng',
@@ -864,8 +654,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
         // Tiếp tục xử lý như bình thường
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
-            return item.id === id;
+            return item.Id === id;
         });
+        $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide 
     };
     $scope.downloadFile = function () {
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
@@ -1020,8 +811,15 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.defaultRTE.value = txt;
         setTimeout(function () {
             var listPage = document.querySelectorAll(".Section0 > div > table");
+            console.log(listPage);
             //Page2 Lịch sử bản thân
             var listTagpinPage1 = listPage[1].querySelectorAll("tbody > tr > td > p");
+            $scope.pageInfo = document.querySelectorAll(".Section0 > div > table")[0].querySelectorAll("td > p");
+
+            for (var i = 0; i < $scope.pageInfo.length; i++) {
+                var text = $scope.pageInfo[i].innerText.trim();
+                console.log(i + ": " + text);
+            }
             var objPage1 = Array.from(listTagpinPage1).filter(function (element) {
                 // Kiểm tra xem thuộc tính của thẻ <p> có chứa văn bản không
                 var textContent = element.textContent.trim();
@@ -1380,41 +1178,123 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.listDetail9 = $($scope.listPage[0])
                 .find('table > tbody > tr:nth-child(1) > td > p:nth-child(29)').text();
 
-            $scope.infUser.FirstName = $scope.listDetail1[0].split(":")[1] ? $scope.listDetail1[0].split(":")[1].trim() : "";
-            $scope.infUser.Sex = $scope.listDetail1[1].split(":")[1] ? $scope.listDetail1[1].split(":")[1].trim() : "";
-            $scope.infUser.LastName = $scope.listDetail1[2].split(":")[1] ? $scope.listDetail1[2].split(":")[1].trim() : "";
-            $scope.infUser.Birthday = $scope.listDetail1[3].split(":")[1] ? $scope.listDetail1[3].split(":")[1].trim() : "";
-            $scope.infUser.HomeTown = $scope.listDetail1[5].split(":")[1] ? $scope.listDetail1[5].split(":")[1].trim() : "";
-            $scope.infUser.PlaceofBirth = $scope.listDetail1[4].split(":")[1] ? $scope.listDetail1[4].split(":")[1].trim() : "";
-            $scope.infUser.Residence = $scope.listDetail1[7].split(":")[1] ? $scope.listDetail1[7].split(":")[1].trim() : "";
-            $scope.infUser.TemporaryAddress = $scope.listDetail1[8].split(":")[1] ? $scope.listDetail1[8].split(":")[1].trim() : "";
 
-            $scope.infUser.Nation = $scope.Detail1.trim();
-            $scope.infUser.Religion = $scope.Detail2.trim();
+            for (let i = 0; i < $scope.pageInfo.length; i++) {
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Họ và tên đang dùng:')) {
+                    // $scope.Relationship[RelationshipIndex].Name = pE8[y][i].slice(('- Họ và tên:').length).trim()
+                    $scope.infUser.LastName = $scope.pageInfo[i].innerText.trim().slice(('Họ và tên đang dùng:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Nam, nữ:')) {
+                    $scope.infUser.Sex = $scope.pageInfo[i].innerText.trim().slice(('Nam, nữ:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Họ và tên khai sinh:')) {
+                    $scope.infUser.FirstName = $scope.pageInfo[i].innerText.trim().slice(('Họ và tên khai sinh:').length).trim();
+                }
 
-            $scope.infUser.NowEmployee = $scope.listDetail3.split(":")[1] ? $scope.listDetail3.split(":")[1].trim() : "";
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Số điện thoại:')) {
+                    $scope.infUser.Phone = $scope.pageInfo[i].innerText.trim().slice(('Số điện thoại:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Ngày, tháng, năm sinh :')) {
+                    $scope.infUser.Birthday = ""
+                    $scope.infUser.Birthday = $scope.pageInfo[i].innerText.trim().slice(('Ngày, tháng, năm sinh :').length).trim();
+                }
 
-            $scope.infUser.PlaceinGroup = $scope.listDetail4[0];
-            $scope.infUser.DateInGroup = $scope.listDetail4[1]//.match(/\d+/g).join('-');
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Nơi sinh:')) {
+                    $scope.infUser.PlaceofBirth = $scope.pageInfo[i].innerText.trim().slice(('Nơi sinh:').length).trim();
+                }
 
-            $scope.infUser.PlaceInParty = $scope.listDetail5[0];
-            $scope.infUser.DateInParty = $scope.listDetail5[0]//.split(',')[1]//.match(/\d+/g).join('-');
-            $scope.infUser.PlaceRecognize = $scope.listDetail7[0]//.split(',')[0];
-            $scope.infUser.DateRecognize = $scope.listDetail7[0]//.split(',')[1]//.match(/\d+/g).join('-');
-            $scope.infUser.Presenter = $scope.listDetail5[2]//.trim();
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Quê quán:')) {
+                    $scope.infUser.HomeTown = $scope.pageInfo[i].innerText.trim().slice(('Quê quán:').length).trim();
+                }
 
-            $scope.infUser.Phone = $scope.listDetail8.split(":")[1] ? $scope.listDetail8.split(":")[1].trim() : "";
-            $scope.infUser.PhoneContact = $scope.listDetail9.split(":")[1] ? $scope.listDetail9.split(":")[1].trim() : "";
-            console.log($scope.infUser.Phone);
-            $scope.infUser.LevelEducation.GeneralEducation = $scope.listDetail6[0].split(":")[1] ? $scope.listDetail6[0].split(":")[1].trim() : "";
-            $scope.infUser.LevelEducation.VocationalTraining = $scope.listDetail6[1].split(":")[1] ? $scope.listDetail6[1].split(":")[1].trim() : "";
-            $scope.infUser.LevelEducation.Undergraduate = $scope.listDetail6[2].split(":")[1] ? $scope.listDetail6[2].split(":")[1].trim() : "";//.split(',');
-            $scope.infUser.LevelEducation.RankAcademic = $scope.listDetail6[3].split(":")[1] ? $scope.listDetail6[3].split(":")[1].trim() : "";
-            $scope.infUser.LevelEducation.PoliticalTheory = $scope.listDetail6[4].split(":")[1] ? $scope.listDetail6[4].split(":")[1].trim() : "";//.split(',');
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Nơi thường trú :')) {
+                    $scope.infUser.Residence = $scope.pageInfo[i].innerText.trim().slice(('- Nơi thường trú :').length).trim();
+                }
 
-            $scope.infUser.LevelEducation.ForeignLanguage = $scope.listDetail6[5].split(":")[1] ? $scope.listDetail6[5].split(":")[1].trim() : "";
-            $scope.infUser.LevelEducation.It = $scope.listDetail6[6].split(":")[1] ? $scope.listDetail6[6].split(":")[1].trim() : "";//.split(',');
-            $scope.infUser.LevelEducation.MinorityLanguage = $scope.listDetail6[7].split(":")[1] ? $scope.listDetail6[7].split(":")[1].trim() : "";//.split(',');
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Nơi tạm trú :')) {
+                    $scope.infUser.TemporaryAddress = $scope.pageInfo[i].innerText.trim().slice(('- Nơi tạm trú :').length).trim();
+                }
+
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Nghề nghiệp hiện nay:')) {
+                    $scope.infUser.NowEmployee = $scope.pageInfo[i].innerText.trim().slice(('Nghề nghiệp hiện nay:').length).trim();
+                }
+
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Dân tộc:')) {
+                    $scope.infUser.Nation = $scope.pageInfo[i].innerText.trim().slice(('Dân tộc:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Tôn giáo:')) {
+                    $scope.infUser.Religion = $scope.pageInfo[i].innerText.trim().slice(('Tôn giáo:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Giáo dục phổ thông:')) {
+                    $scope.infUser.LevelEducation.GeneralEducation = $scope.pageInfo[i].innerText.trim().slice(('- Giáo dục phổ thông:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Giáo dục đại học và sau đại học:')) {
+                    $scope.infUser.LevelEducation.Undergraduate = $scope.pageInfo[i].innerText.trim().slice(('- Giáo dục đại học và sau đại học:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Học hàm:')) {
+                    $scope.infUser.LevelEducation.RankAcademic = $scope.pageInfo[i].innerText.trim().slice(('- Học hàm:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Giáo dục nghề nghiệp :')) {
+                    $scope.infUser.LevelEducation.VocationalTraining = $scope.pageInfo[i].innerText.trim().slice(('- Giáo dục nghề nghiệp :').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Ngoại ngữ:')) {
+                    $scope.infUser.LevelEducation.ForeignLanguage = $scope.pageInfo[i].innerText.trim().slice(('- Ngoại ngữ:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Tiếng dân tộc thiểu số:')) {
+                    $scope.infUser.LevelEducation.MinorityLanguage = $scope.pageInfo[i].innerText.trim().slice(('- Tiếng dân tộc thiểu số:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Lý luận chính trị:')) {
+                    $scope.infUser.LevelEducation.PoliticalTheory = $scope.pageInfo[i].innerText.trim().slice(('- Lý luận chính trị:').length).trim();
+                }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Tin học:')) {
+                    $scope.infUser.LevelEducation.It = $scope.pageInfo[i].innerText.trim().slice(('- Tin học:').length).trim();
+                }
+                $scope.SelfComment.context = $scope.SelfComment.context
+                $scope.PlaceCreatedTime.place = datapage9[0]
+                console.log($scope.infUser.Birthday);
+            }
+
+
+
+
+
+
+
+            // $scope.infUser.FirstName = $scope.listDetail1[0].split(":")[1] ? $scope.listDetail1[0].split(":")[1].trim() : "";
+            // $scope.infUser.Sex = $scope.listDetail1[1].split(":")[1] ? $scope.listDetail1[1].split(":")[1].trim() : "";
+            // $scope.infUser.LastName = $scope.listDetail1[2].split(":")[1] ? $scope.listDetail1[2].split(":")[1].trim() : "";
+            // $scope.infUser.Birthday = $scope.listDetail1[3].split(":")[1] ? $scope.listDetail1[3].split(":")[1].trim() : "";
+            // $scope.infUser.HomeTown = $scope.listDetail1[5].split(":")[1] ? $scope.listDetail1[5].split(":")[1].trim() : "";
+            // $scope.infUser.PlaceofBirth = $scope.listDetail1[4].split(":")[1] ? $scope.listDetail1[4].split(":")[1].trim() : "";
+            // $scope.infUser.Residence = $scope.listDetail1[7].split(":")[1] ? $scope.listDetail1[7].split(":")[1].trim() : "";
+            // $scope.infUser.TemporaryAddress = $scope.listDetail1[8].split(":")[1] ? $scope.listDetail1[8].split(":")[1].trim() : "";
+
+            // $scope.infUser.Nation = $scope.Detail1.trim();
+            // $scope.infUser.Religion = $scope.Detail2.trim();
+
+            // $scope.infUser.NowEmployee = $scope.listDetail3.split(":")[1] ? $scope.listDetail3.split(":")[1].trim() : "";
+
+            // $scope.infUser.PlaceinGroup = $scope.listDetail4[0];
+            // $scope.infUser.DateInGroup = $scope.listDetail4[1]//.match(/\d+/g).join('-');
+
+            // $scope.infUser.PlaceInParty = $scope.listDetail5[0];
+            // $scope.infUser.DateInParty = $scope.listDetail5[0]//.split(',')[1]//.match(/\d+/g).join('-');
+            // $scope.infUser.PlaceRecognize = $scope.listDetail7[0]//.split(',')[0];
+            // $scope.infUser.DateRecognize = $scope.listDetail7[0]//.split(',')[1]//.match(/\d+/g).join('-');
+            // $scope.infUser.Presenter = $scope.listDetail5[2]//.trim();
+
+            // $scope.infUser.Phone = $scope.listDetail8.split(":")[1] ? $scope.listDetail8.split(":")[1].trim() : "";
+            // $scope.infUser.PhoneContact = $scope.listDetail9.split(":")[1] ? $scope.listDetail9.split(":")[1].trim() : "";
+            // console.log($scope.infUser.Phone);
+            // $scope.infUser.LevelEducation.GeneralEducation = $scope.listDetail6[0].split(":")[1] ? $scope.listDetail6[0].split(":")[1].trim() : "";
+            // $scope.infUser.LevelEducation.VocationalTraining = $scope.listDetail6[1].split(":")[1] ? $scope.listDetail6[1].split(":")[1].trim() : "";
+            // $scope.infUser.LevelEducation.Undergraduate = $scope.listDetail6[2].split(":")[1] ? $scope.listDetail6[2].split(":")[1].trim() : "";//.split(',');
+            // $scope.infUser.LevelEducation.RankAcademic = $scope.listDetail6[3].split(":")[1] ? $scope.listDetail6[3].split(":")[1].trim() : "";
+            // $scope.infUser.LevelEducation.PoliticalTheory = $scope.listDetail6[4].split(":")[1] ? $scope.listDetail6[4].split(":")[1].trim() : "";//.split(',');
+
+            // $scope.infUser.LevelEducation.ForeignLanguage = $scope.listDetail6[5].split(":")[1] ? $scope.listDetail6[5].split(":")[1].trim() : "";
+            // $scope.infUser.LevelEducation.It = $scope.listDetail6[6].split(":")[1] ? $scope.listDetail6[6].split(":")[1].trim() : "";//.split(',');
+            // $scope.infUser.LevelEducation.MinorityLanguage = $scope.listDetail6[7].split(":")[1] ? $scope.listDetail6[7].split(":")[1].trim() : "";//.split(',');
 
             //Nguoi gioi thieu
             $scope.Introducer = {

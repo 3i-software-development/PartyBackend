@@ -11,19 +11,22 @@ namespace ESEIM.Models
 	{
 		[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
 		public int Id { get; set; }
-
+		[Note("Người giới thiệu")]
 		[StringLength(maximumLength: 150)]
 		public string PersonIntroduced { get; set; }
-
+		[Note("Ngày và nơi vào Đoàn")]
 		[StringLength(maximumLength: 150)]
 		public string PlaceTimeJoinUnion { get; set; }
-		
-		[StringLength(maximumLength: 150)]
+
+        [Note("Ngày và nơi vào Đảng lần thứ nhất")]
+        [StringLength(maximumLength: 150)]
 		public string PlaceTimeJoinParty { get; set; }
 		
 		[StringLength(maximumLength: 150)]
 
-		public string PlaceTimeRecognize { get; set; }
+        [Note("Ngày và nơi công nhận chính thức lần đầu")]
+        public string PlaceTimeRecognize { get; set; }
+
 		public string ProfileCode {  get; set; }
 		public bool IsDeleted { get; set; }
 

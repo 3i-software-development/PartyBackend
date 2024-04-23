@@ -10,8 +10,9 @@ namespace ESEIM.Models
     {
 		[Key]
 		public int Id { get; set; }
-
+        [Note("Từ")]
         public string From { get; set; }
+        [Note("Đến")]
         public string  To { get; set; }
         public string Contact { get; set; }
         public string Country { get; set; }
