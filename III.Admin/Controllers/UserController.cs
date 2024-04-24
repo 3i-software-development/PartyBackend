@@ -4,6 +4,7 @@ using ESEIM.Models;
 using ESEIM.Utils;
 using FTU.Utils.HelperNet;
 using Hot.Models.AccountViewModels;
+using III.Domain.Enums;
 using III.Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -23,8 +24,10 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Web;
 using static III.Admin.Controllers.AccountController;
 using static III.Admin.Controllers.MobileLoginController;
 
@@ -38,18 +41,24 @@ namespace III.Admin.Controllers
         private readonly SignInManager<AspNetUser> _signInManager;
         private readonly IStringLocalizer<AccountLoginController> _stringLocalizer;
         private readonly IParameterService _parameterService;
+        private readonly IStringLocalizer<SharedResources> _sharedResources;
+        private readonly IUploadService _upload;
 
         public UserProfileController(EIMDBContext context,
             UserManager<AspNetUser> userManager,
             SignInManager<AspNetUser> signInManager,
             IStringLocalizer<AccountLoginController> stringLocalizer,
-            IParameterService parameterService)
+            IParameterService parameterService,
+            IStringLocalizer<SharedResources> sharedResources,
+            IUploadService upload)
         {
             _context = context;
             _userManager = userManager;
             _signInManager = signInManager;
             _stringLocalizer = stringLocalizer;
             _parameterService = parameterService;
+            _sharedResources = sharedResources;
+            _upload = upload;
         }
 
         [Authorize]
@@ -106,7 +115,7 @@ namespace III.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var check = _userManager.FindByNameAsync(model.UserName).Result;
-                if (check!=null)
+                if (check != null)
                 {
                     msg.Error = true;
                     msg.Title = "Tài khoản đã tồn tại";
@@ -122,17 +131,18 @@ namespace III.Admin.Controllers
                         msg.Error = true;
                         msg.Title = "Email đã tồn tại";
                         return Ok(msg);
-                    } 
+                    }
                 }
-                user = new AspNetUser {
+                user = new AspNetUser
+                {
                     UserName = model.UserName,
                     Email = model.Email,
                     GivenName = model.GivenName,
                     PhoneNumber = model.PhoneNumber,
                     Gender = model.Gender,
                     Area = "User",
-                    Active=true,
-                    RegisterJoinGroupCode=model.RegisterJoinGroupCode
+                    Active = true,
+                    RegisterJoinGroupCode = model.RegisterJoinGroupCode
                 };
                 var result = await _userManager.CreateAsync(user, model.Password);
 
@@ -260,11 +270,11 @@ namespace III.Admin.Controllers
         #region Profile doc
 
         [HttpPost]
-        public async Task<object> fileUpload(IFormFile file,string ResumeNumber)
+        public async Task<object> fileUpload(IFormFile file, string ResumeNumber)
         {
             var msg = new JMessage() { Error = false };
 
-            if (file == null || file.Length == 0 || ResumeNumber==null|| ResumeNumber=="")
+            if (file == null || file.Length == 0 || ResumeNumber == null || ResumeNumber == "")
             {
                 msg.Error = true;
                 msg.Title = "Bạn chưa chọn file";
@@ -289,10 +299,10 @@ namespace III.Admin.Controllers
 
                 string newFileName = $"{user.ResumeNumber}_{DateTime.Now.ToString("ddMMyyyyHHmmss")}_{file.FileName}";
                 string filePath = Path.Combine(uploadPath, newFileName);
-                
+                var fileUpload = file;
                 using (var stream = new FileStream(filePath, FileMode.Create))
                 {
-                await file.CopyToAsync(stream);
+                    await file.CopyToAsync(stream);
                 }
                 user.JsonProfileLinks.Add(new JsonFile()
                 {
@@ -300,9 +310,146 @@ namespace III.Admin.Controllers
                     FileSize = file.Length
                 });
                 _context.PartyAdmissionProfiles.Update(user);
+
+
+                var mimeType = fileUpload.ContentType;
+                string extension = Path.GetExtension(fileUpload.FileName);
+                string urlFile = "";
+                string fileId = "";
+                var fileSize = fileUpload.Length;
+                if ((fileSize / 1048576.0) > 1000)
+                {
+                    msg.Error = true;
+                    msg.Title = _stringLocalizer["EDMSR_MSG_FILE_SIZE_LIMIT_UPLOAD"];
+                    return Json(msg);
+                }
+
+                string reposCode = "";
+                string catCode = "";
+                string path = "";
+                string folderId = "";
+
+                var setting = _context.EDMSCatRepoSettings.FirstOrDefault(x => x.Id == obj.CateRepoSettingId);
+                if (setting != null)
+                {
+                    reposCode = setting.ReposCode;
+                    path = setting.Path;
+                    folderId = setting.FolderId;
+                    catCode = setting.CatCode;
+                }
+                else
+                {
+                    msg.Error = true;
+                    msg.Title = _stringLocalizer["EDMSR_MSG_CHOOSE_DOC_SAVE"];
+                    return Json(msg);
+                }
+
+                var getRepository = _context.EDMSRepositorys.FirstOrDefault(x => x.ReposCode == reposCode);
+                if (getRepository.Type == EnumHelper<TypeConnection>.GetDisplayValue(TypeConnection.Server))
+                {
+                    using (var ms = new MemoryStream())
+                    {
+                        fileUpload.CopyTo(ms);
+                        var fileBytes = ms.ToArray();
+                        urlFile = path + Path.Combine("/", fileUpload.FileName);
+                        var urlFilePreventive = path + Path.Combine("/", Guid.NewGuid().ToString().Substring(0, 8) + fileUpload.FileName);
+                        var urlEnd = HttpUtility.UrlPathEncode("ftp://" + getRepository.Server + urlFile);
+                        var urlEndPreventive = HttpUtility.UrlPathEncode("ftp://" + getRepository.Server + urlFilePreventive);
+                        var result = FileExtensions.UploadFileToFtpServer(urlEnd, urlEndPreventive, fileBytes, getRepository.Account, getRepository.PassWord);
+                        if (result.Status == WebExceptionStatus.ConnectFailure || result.Status == WebExceptionStatus.ProtocolError)
+                        {
+                            msg.Error = true;
+                            msg.Title = _sharedResources["COM_CONNECT_FAILURE"];
+                            return Json(msg);
+                        }
+
+                        if (result.Status == WebExceptionStatus.Success)
+                        {
+                            if (result.IsSaveUrlPreventive)
+                            {
+                                urlFile = urlFilePreventive;
+                            }
+                        }
+                        else
+                        {
+                            msg.Error = true;
+                            msg.Title = _sharedResources["COM_MSG_ERR"];
+                            return Json(msg);
+                        }
+                    }
+                }
+                else if (getRepository.Type == EnumHelper<TypeConnection>.GetDisplayValue(TypeConnection.GooglerDriver))
+                {
+                    var apiTokenService = _context.TokenManagers.FirstOrDefault(x => x.AccountCode == getRepository.Token);
+                    var json = apiTokenService.CredentialsJson;
+                    var userDrive = apiTokenService.Email;
+                    var token = apiTokenService.RefreshToken;
+                    fileId = FileExtensions.UploadFileToDrive(json, token, fileUpload.FileName, fileUpload.OpenReadStream(), fileUpload.ContentType, folderId, userDrive);
+                }
+
+                var edmsReposCatFile = new EDMSRepoCatFile
+                {
+                    FileCode = string.Concat("REPOSITORY", Guid.NewGuid().ToString()),
+                    ReposCode = reposCode,
+                    CatCode = catCode,
+                    ObjectCode = user.ResumeNumber,
+                    ObjectType = "PARTY_PROFILE",
+                    Path = path,
+                    FolderId = folderId
+                };
+                _context.EDMSRepoCatFiles.Add(edmsReposCatFile);
+
+                /// created Index lucene
+                if (Array.IndexOf(LuceneExtension.fileMimetypes, mimeType) >= 0 && (Array.IndexOf(LuceneExtension.fileExt, extension.ToUpper()) >= 0))
+                {
+                    if (!extension.ToUpper().Equals(".ZIP") && !extension.ToUpper().Equals(".RAR"))
+                    {
+                        var moduleObj = (EDMSCatRepoSetting)_upload.GetPathByModule("DB_LUCENE_INDEX").Object;
+                        var luceneCategory = _context.EDMSCategorys.FirstOrDefault(x => x.CatCode == moduleObj.CatCode);
+
+                        LuceneExtension.IndexFile(edmsReposCatFile.FileCode, fileUpload, luceneCategory.PathServerPhysic);
+                        //LuceneExtension.PythonIndexFile(PythonFileCode, content, Pathserver);
+                    }
+                }
+                //add File
+                var emdsFile = new EDMSFile
+                {
+                    FileCode = edmsReposCatFile.FileCode,
+                    FileName = fileUpload.FileName,
+                    Desc = obj.Desc,
+                    ReposCode = reposCode,
+                    Tags = obj.Tags,
+                    FileSize = fileUpload.Length,
+                    FileTypePhysic = Path.GetExtension(fileUpload.FileName),
+                    NumberDocument = obj.NumberDocument,
+                    CreatedBy = AppContext.UserName,
+                    CreatedTime = DateTime.Now,
+                    Url = urlFile,
+                    MimeType = mimeType,
+                    CloudFileId = fileId,
+                    IsScan = obj.IsScan,
+                    MetaDataExt = obj.MetaDataExt,
+                };
+                _context.EDMSFiles.Add(emdsFile);
+
+                if (!string.IsNullOrEmpty(obj.RackCode) && obj.IsScan)
+                {
+                    var filePackCover = new EDMSFilePackCover
+                    {
+                        FileCode = edmsReposCatFile.FileCode,
+                        ObjPackCode = obj.ObjPackCode,
+                        RackCode = obj.RackCode,
+                        RackPosition = obj.RackPosition,
+                        CreatedBy = User.Identity.Name,
+                        CreatedTime = DateTime.Now
+                    };
+
+                    _context.EDMSFilePackCovers.Add(filePackCover);
+                }
+
                 _context.SaveChanges();
                 msg.Title = "Tải file lên thành công";
-                
+
                 return msg;
             }
             catch (Exception ex)
@@ -318,7 +465,7 @@ namespace III.Admin.Controllers
             var user = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ResumeNumber);
             return user;
         }
-        public object DeleteFile(string fileName,string ResumeNumber)
+        public object DeleteFile(string fileName, string ResumeNumber)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -327,10 +474,10 @@ namespace III.Admin.Controllers
                 var user = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ResumeNumber);
 
                 var files = user.JsonProfileLinks;
-                if (files.Count>0)
+                if (files.Count > 0)
                 {
-                    var file= files.FirstOrDefault(x => x.FileName == fileName);
-                    if(file != null)
+                    var file = files.FirstOrDefault(x => x.FileName == fileName);
+                    if (file != null)
                     {
                         user.JsonProfileLinks.Remove(file);
                         _context.PartyAdmissionProfiles.Update(user);
@@ -349,7 +496,7 @@ namespace III.Admin.Controllers
                     msg.Title = $"Không tìm thấy danh sách tải lên";
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.Error = true;
                 msg.Title = $"Internal server error: {ex.Message}";
@@ -386,7 +533,7 @@ namespace III.Admin.Controllers
             var user = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.IsDeleted == false && x.ResumeNumber == resumeNumber);
             if (user != null)
             {
-                foreach(var a in user.JsonStaus)
+                foreach (var a in user.JsonStaus)
                 {
                     var userCreatedBy = await _userManager.FindByNameAsync(a.CreatedBy);
                     if (userCreatedBy != null)
@@ -394,7 +541,7 @@ namespace III.Admin.Controllers
                         a.CreatedBy = userCreatedBy.GivenName;
                     }
                 }
-               
+
             }
 
             return user;
@@ -517,7 +664,7 @@ namespace III.Admin.Controllers
         }
         public object GetPersonalHistoryByProfileCode(string profileCode)
         {
-            var rs = _context.PersonalHistories.Where(p =>p.IsDeleted==false && p.ProfileCode == profileCode).ToList();
+            var rs = _context.PersonalHistories.Where(p => p.IsDeleted == false && p.ProfileCode == profileCode).ToList();
             return rs;
         }
         public object GetTrainingCertificatedPass()
@@ -590,7 +737,7 @@ namespace III.Admin.Controllers
         }
         public object GetDistrictByProvinceId(int provinceId)
         {
-            var rs = _context.Districts.Where(p =>  p.provinceId == provinceId).ToList();
+            var rs = _context.Districts.Where(p => p.provinceId == provinceId).ToList();
             return rs;
         }
         public object GetWardByDistrictId(int districtId)
@@ -796,7 +943,7 @@ namespace III.Admin.Controllers
                     return msg;
                 }
                 var obj = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.IsDeleted == false &&
-                x.ResumeNumber == model.ResumeNumber&& x.Username==model.Username);
+                x.ResumeNumber == model.ResumeNumber && x.Username == model.Username);
 
                 if (obj == null)
                 {
@@ -831,7 +978,7 @@ namespace III.Admin.Controllers
                 obj.UnderPostGraduateEducation = model.UnderPostGraduateEducation;
                 obj.WfInstCode = model.WfInstCode;
                 obj.GroupUserCode = model.GroupUserCode;
-                obj.PlaceWorking= model.PlaceWorking;
+                obj.PlaceWorking = model.PlaceWorking;
 
 
                 _context.PartyAdmissionProfiles.Update(obj);
@@ -852,7 +999,7 @@ namespace III.Admin.Controllers
             var msg = new JMessage() { Error = false };
             try
             {
-                var ptm= _context.PartyAdmissionProfiles.FirstOrDefault(x => x.IsDeleted == false && x.ResumeNumber == model.ProfileCode);
+                var ptm = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.IsDeleted == false && x.ResumeNumber == model.ProfileCode);
                 if (ptm == null)
                 {
                     msg.Error = true;
@@ -1006,7 +1153,7 @@ namespace III.Admin.Controllers
         public object UpdateTrainingCertificatedPass([FromBody] TrainingCertificatedPass model)
         {
             var msg = new JMessage() { Error = false };
-            
+
             try
             {
                 var pm = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.IsDeleted == false && x.ResumeNumber == model.ProfileCode);
@@ -1040,7 +1187,7 @@ namespace III.Admin.Controllers
         public object UpdateHistorySpecialist([FromBody] HistorySpecialist model)
         {
             var msg = new JMessage() { Error = false };
-            
+
             try
             {
 
@@ -1072,10 +1219,10 @@ namespace III.Admin.Controllers
         public object UpdateWarningDisciplined([FromBody] WarningDisciplined model)
         {
             var msg = new JMessage() { Error = false };
-            
+
             try
             {
-                
+
                 var pm = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.IsDeleted == false && x.ResumeNumber == model.ProfileCode);
                 if (pm == null)
                 {
@@ -1104,7 +1251,7 @@ namespace III.Admin.Controllers
         public object UpdateAward([FromBody] Award model)
         {
             var msg = new JMessage() { Error = false };
-            
+
             try
             {
                 var data = _context.PartyAdmissionProfiles.FirstOrDefault(a => a.IsDeleted == false && a.ResumeNumber == model.ProfileCode);
@@ -1173,7 +1320,7 @@ namespace III.Admin.Controllers
             var msg = new JMessage() { Error = false };
             try
             {
-            
+
                 foreach (var x in model)
                 {
                     var data = _context.PartyAdmissionProfiles.FirstOrDefault(a => a.IsDeleted == false && a.ResumeNumber == x.ProfileCode);
@@ -1205,10 +1352,10 @@ namespace III.Admin.Controllers
                                 a.Residence = x.Residence;
                                 a.Job = x.Job;
                                 a.PartyMember = x.PartyMember;
-                                
+
                                 a.PoliticalAttitude = x.PoliticalAttitude;
                                 a.WorkingProgress = x.WorkingProgress;
-                               
+
                                 a.IsDeleted = false;
                                 _context.Families.Update(a);
                             }
@@ -1219,7 +1366,7 @@ namespace III.Admin.Controllers
                                 return msg;
                             }
                         }
-                
+
                     }
                     else
                     {
@@ -1245,7 +1392,7 @@ namespace III.Admin.Controllers
             var msg = new JMessage() { Error = false };
             try
             {
-                var data=_context.PartyAdmissionProfiles.FirstOrDefault(a=> a.IsDeleted == false && a.ResumeNumber== model.ProfileCode); 
+                var data = _context.PartyAdmissionProfiles.FirstOrDefault(a => a.IsDeleted == false && a.ResumeNumber == model.ProfileCode);
                 if (data == null)
                 {
                     msg.Error = true;
@@ -1275,21 +1422,22 @@ namespace III.Admin.Controllers
             }
             return msg;
         }
-		[HttpPost]
-		public object InsertPartyAdmissionProfile([FromBody] ModelViewPAMP model)
-		{
-			var msg = new JMessage() { Error = false };
-			try
-			{
-				if(model!=null) {
+        [HttpPost]
+        public object InsertPartyAdmissionProfile([FromBody] ModelViewPAMP model)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                if (model != null)
+                {
                     if (string.IsNullOrEmpty(model.Username))
                     {
                         msg.Error = true;
                         msg.Title = "Chưa có tài khoản";
                         return msg;
                     }
-                    var user = _context.PartyAdmissionProfiles.FirstOrDefault(x =>x.IsDeleted == false && x.Username == model.Username);
-                    if (user!=null)
+                    var user = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.IsDeleted == false && x.Username == model.Username);
+                    if (user != null)
                     {
                         msg.Error = true;
                         msg.Title = "Tài khoản này đã có hồ sơ";
@@ -1299,7 +1447,7 @@ namespace III.Admin.Controllers
                     var obj = new PartyAdmissionProfile();
                     //    obj.CurrentName = currentName;
                     obj.CurrentName = model.CurrentName;
-                    obj.Birthday = !string.IsNullOrEmpty(model.Birthday) ? DateTime.ParseExact(model.Birthday, "dd-MM-yyyy", CultureInfo.InvariantCulture) : (DateTime?)null; 
+                    obj.Birthday = !string.IsNullOrEmpty(model.Birthday) ? DateTime.ParseExact(model.Birthday, "dd-MM-yyyy", CultureInfo.InvariantCulture) : (DateTime?)null;
                     obj.BirthName = model.BirthName;
                     obj.Gender = model.Gender == "Nam" ? 0 : 1;
                     obj.Nation = model.Nation;
@@ -1331,8 +1479,8 @@ namespace III.Admin.Controllers
                     obj.PlaceWorking = model.PlaceWorking;
 
                     _context.PartyAdmissionProfiles.Add(obj);
-					_context.SaveChanges();
-                    msg.Object= obj;
+                    _context.SaveChanges();
+                    msg.Object = obj;
                     msg.Title = "Thêm mới Sơ yêu lí lịch thành công";
                 }
                 else
@@ -1364,24 +1512,24 @@ namespace III.Admin.Controllers
                 }
                 if (!string.IsNullOrEmpty(model.PersonIntroduced) || !string.IsNullOrEmpty(model.PlaceTimeJoinUnion) || !string.IsNullOrEmpty(model.PlaceTimeJoinParty) || model.PlaceTimeRecognize != null)
                 {
-                    
-                        var a = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == model.ProfileCode);
-                        if (a != null)
-                        {
-                            a.PersonIntroduced = model.PersonIntroduced;
-                            a.PlaceTimeJoinUnion = model.PlaceTimeJoinUnion;
-                            a.PlaceTimeJoinParty = model.PlaceTimeJoinParty;
-                            a.PlaceTimeRecognize = model.PlaceTimeRecognize;
-                         
-                            a.IsDeleted = false;
-                            _context.IntroducerOfParties.Update(a);
-                        }
-                        else
-                        {
-                            _context.IntroducerOfParties.Add(model);
-                            
-                        }
-               
+
+                    var a = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == model.ProfileCode);
+                    if (a != null)
+                    {
+                        a.PersonIntroduced = model.PersonIntroduced;
+                        a.PlaceTimeJoinUnion = model.PlaceTimeJoinUnion;
+                        a.PlaceTimeJoinParty = model.PlaceTimeJoinParty;
+                        a.PlaceTimeRecognize = model.PlaceTimeRecognize;
+
+                        a.IsDeleted = false;
+                        _context.IntroducerOfParties.Update(a);
+                    }
+                    else
+                    {
+                        _context.IntroducerOfParties.Add(model);
+
+                    }
+
                 }
                 else
                 {
@@ -1406,7 +1554,8 @@ namespace III.Admin.Controllers
             var msg = new JMessage() { Error = false };
             try
             {
-                foreach (var x in model) {
+                foreach (var x in model)
+                {
                     var data = _context.PartyAdmissionProfiles.FirstOrDefault(a => a.ResumeNumber == x.ProfileCode);
                     if (data == null)
                     {
@@ -1430,7 +1579,7 @@ namespace III.Admin.Controllers
                                 a.Content = x.Content;
                                 a.ProfileCode = x.ProfileCode;
                                 a.IsDeleted = false;
-                                if(!string.IsNullOrEmpty(x.Type))
+                                if (!string.IsNullOrEmpty(x.Type))
                                     a.Type = x.Type;
                                 _context.PersonalHistories.Update(a);
                             }
@@ -1462,7 +1611,7 @@ namespace III.Admin.Controllers
             }
             return msg;
         }
-       
+
 
 
 
@@ -1474,26 +1623,26 @@ namespace III.Admin.Controllers
             try
             {
                 var check = _context.PartyAdmissionProfiles.FirstOrDefault(y => y.IsDeleted == false && y.ResumeNumber.Equals(x.ProfileCode));
-                if (check == null || x.ProfileCode==null)
+                if (check == null || x.ProfileCode == null)
                 {
                     msg.Error = true;
                     msg.Title = "Không tìm thấy hồ sơ";
                     return msg;
                 }
-                    if (!string.IsNullOrEmpty(x.From) || !string.IsNullOrEmpty(x.To) || !string.IsNullOrEmpty(x.Contact) || x.Country != null)
-                    {
-                            _context.GoAboards.Add(x);
+                if (!string.IsNullOrEmpty(x.From) || !string.IsNullOrEmpty(x.To) || !string.IsNullOrEmpty(x.Contact) || x.Country != null)
+                {
+                    _context.GoAboards.Add(x);
 
-                            _context.SaveChanges();
+                    _context.SaveChanges();
 
-                            msg.Title = "Thêm Đi nước ngoài thành công";
-                    }
-                    else
-                    {
-                        msg.Error = true;
-                        msg.Title = "Đi nước ngoài chưa hợp lệ";
-                        return msg;
-                    }
+                    msg.Title = "Thêm Đi nước ngoài thành công";
+                }
+                else
+                {
+                    msg.Error = true;
+                    msg.Title = "Đi nước ngoài chưa hợp lệ";
+                    return msg;
+                }
             }
             catch (Exception err)
             {
@@ -1552,7 +1701,7 @@ namespace III.Admin.Controllers
                         msg.Title = "Đi nước ngoài chưa hợp lệ";
                         return msg;
                     }
-                    
+
                 }
                 _context.SaveChanges();
 
@@ -1614,7 +1763,7 @@ namespace III.Admin.Controllers
                         return msg;
                     }
 
-                    
+
                 }
                 _context.SaveChanges();
 
@@ -1655,7 +1804,7 @@ namespace III.Admin.Controllers
                             {
                                 a.MonthYear = x.MonthYear;
                                 a.Content = x.Content;
-                      
+
                                 a.IsDeleted = false;
                                 _context.HistorySpecialists.Update(a);
                             }
@@ -1673,7 +1822,7 @@ namespace III.Admin.Controllers
                         msg.Title = "Đặc điểm lịch sử chưa hợp lệ";
                         return msg;
                     }
-                    
+
                 }
                 _context.SaveChanges();
                 msg.Title = "Thêm Đặc điểm lịch sử thành công";
@@ -1691,7 +1840,7 @@ namespace III.Admin.Controllers
             var msg = new JMessage() { Error = false };
             try
             {
-                
+
                 foreach (var x in model)
                 {
                     var data = _context.PartyAdmissionProfiles.FirstOrDefault(a => a.ResumeNumber == x.ProfileCode);
@@ -1732,7 +1881,7 @@ namespace III.Admin.Controllers
                         msg.Title = "Kỷ luật chưa hợp lệ";
                         return msg;
                     }
-              
+
                 }
                 _context.SaveChanges();
 
@@ -1792,7 +1941,7 @@ namespace III.Admin.Controllers
                         msg.Title = "Khen thưởng chưa hợp lệ";
                         return msg;
                     }
-                   
+
                 }
                 _context.SaveChanges();
                 msg.Title = "Thêm khen thưởng thành công";
@@ -1852,7 +2001,7 @@ namespace III.Admin.Controllers
                         msg.Title = "Quá trình công tác chưa hợp lệ";
                         return msg;
                     }
-                    
+
                 }
                 _context.SaveChanges();
                 msg.Title = "Thêm quá trình công tác thành công";
@@ -2255,7 +2404,7 @@ namespace III.Admin.Controllers
         }
 
         [HttpGet]
-        public object UpdateWfInstByResumeCode(string WfInstCode,string ResumeNumber)
+        public object UpdateWfInstByResumeCode(string WfInstCode, string ResumeNumber)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2277,13 +2426,13 @@ namespace III.Admin.Controllers
                 }
 
                 user.WfInstCode = wfInst.WfInstCode;
-                
+
                 _context.PartyAdmissionProfiles.Update(user);
                 _context.SaveChanges();
                 msg.Title = "Cập nhật luồng cho hồ sơ thành công";
 
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 msg.Error = true;
                 msg.Title = "Có lỗi xảy ra";
@@ -2365,25 +2514,25 @@ namespace III.Admin.Controllers
             try
             {
                 if (data.Files.Count == 0)
-                return null;
-            Stream stream = new MemoryStream();
-            IFormFile file = data.Files[0];
-            int index = file.FileName.LastIndexOf('.');
-            string type = index > -1 && index < file.FileName.Length - 1 ?
-                file.FileName.Substring(index) : ".docx";
-            file.CopyTo(stream);
-            stream.Position = 0;
+                    return null;
+                Stream stream = new MemoryStream();
+                IFormFile file = data.Files[0];
+                int index = file.FileName.LastIndexOf('.');
+                string type = index > -1 && index < file.FileName.Length - 1 ?
+                    file.FileName.Substring(index) : ".docx";
+                file.CopyTo(stream);
+                stream.Position = 0;
 
-            WordDocument document = WordDocument.Load(stream, GetFormatType(type.ToLower()));
-            //document.Save(streamSave);
+                WordDocument document = WordDocument.Load(stream, GetFormatType(type.ToLower()));
+                //document.Save(streamSave);
 
-            string sfdt = JsonConvert.SerializeObject(document);
+                string sfdt = JsonConvert.SerializeObject(document);
 
-            var outputStream = WordDocument.Save(sfdt, FormatType.Html);
-            outputStream.Position = 0;
-            StreamReader reader = new StreamReader(outputStream);
-            string value = reader.ReadToEnd().ToString();
-            return value;
+                var outputStream = WordDocument.Save(sfdt, FormatType.Html);
+                outputStream.Position = 0;
+                StreamReader reader = new StreamReader(outputStream);
+                string value = reader.ReadToEnd().ToString();
+                return value;
             }
             catch (Exception ex)
             {
@@ -2417,7 +2566,7 @@ namespace III.Admin.Controllers
                     throw new System.NotSupportedException("EJ2 DocumentEditor does not support this file format.");
             }
         }
-       
+
     }
 
     public class RegisterDto
@@ -2449,6 +2598,6 @@ namespace III.Admin.Controllers
     }
 
 
-    
+
 
 }

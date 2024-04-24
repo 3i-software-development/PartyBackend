@@ -7,7 +7,7 @@
     "sslPort": 0
     },
     "iisExpress": {
-      "applicationUrl": "http://localhost:6002/",
+      "applicationUrl": "http://localhost:6059/",
       "sslPort": 0
     }
   },
@@ -25,7 +25,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "http://localhost:6002/"
+      "applicationUrl": "http://localhost:6059/"
     },
     "IIS Vatco 68": {
       "commandName": "IIS",
