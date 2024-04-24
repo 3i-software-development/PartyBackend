@@ -8,8 +8,12 @@ namespace IdentityDemo.Models.AccountViewModels
 {
     public class ForgotPasswordViewModel
     {
+        //[Required]
+        //[EmailAddress]
+        //public string Email { get; set; }
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Phone]
+        [Display(Name = "Số điện thoại")]
+        public string PhoneNumber { get; set; }
     }
 }

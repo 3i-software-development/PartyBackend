@@ -812,7 +812,6 @@
     <None Include="wwwroot\views\admin\setCompanyMenuApp\controller.js" />
     <None Include="wwwroot\views\admin\swCustomerReq\controller.js" />
     <None Include="wwwroot\views\admin\swModule\controller.js" />
-    <None Include="wwwroot\views\admin\UserJoinParty\Index.cshtml" />
     <None Include="wwwroot\views\admin\vcCarPosition\controller.js" />
     <None Include="wwwroot\views\admin\vcTransporter\controller.js" />
   </ItemGroup>

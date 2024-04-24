@@ -112,13 +112,17 @@ namespace III.Admin.Controllers
                     msg.Title = "Tài khoản đã tồn tại";
                     return Ok(msg);
                 }
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
-                if (user != null)
+                var user = new AspNetUser();
+                if (!string.IsNullOrEmpty(model.Email))
                 {
-                    msg.Error = true;
-                    msg.Title = "Email đã tồn tại";
-                    return Ok(msg);
+                    user = await _userManager.FindByEmailAsync(model.Email);
+                    //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                    if (user != null)
+                    {
+                        msg.Error = true;
+                        msg.Title = "Email đã tồn tại";
+                        return Ok(msg);
+                    } 
                 }
                 user = new AspNetUser {
                     UserName = model.UserName,
@@ -2428,8 +2432,8 @@ namespace III.Admin.Controllers
         [Required]
         public string PhoneNumber { get; set; }
 
-        [Required]
-        [EmailAddress]
+        //[Required]
+        //[EmailAddress]
         public string Email { get; set; }
 
         [Required]

@@ -22,6 +22,10 @@ using System.Collections.Generic;
 using Microsoft.Extensions.Localization;
 using Newtonsoft.Json;
 using MimeKit.Text;
+using III.Admin.Utils;
+using III.Admin.ViewModels.Account;
+using static III.Admin.Controllers.MobileLoginController;
+using System.Web;
 
 namespace III.Admin.Controllers
 {
@@ -37,7 +41,7 @@ namespace III.Admin.Controllers
         private readonly ILanguageService _languageService;
         private readonly IStringLocalizer<AccountLoginController> _stringLocalizer;
         private readonly IEmailConfiguration _emailConfiguration;
-
+        private readonly IAwsService _awsService;
 
         public AccountController(
             UserManager<AspNetUser> userManager,
@@ -48,7 +52,8 @@ namespace III.Admin.Controllers
             ILogger<AccountController> logger,
             ILanguageService languageService,
             IStringLocalizer<AccountLoginController> stringLocalizer,
-            IEmailConfiguration emailConfiguration)
+            IEmailConfiguration emailConfiguration,
+            IAwsService awsService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -59,6 +64,7 @@ namespace III.Admin.Controllers
             _logger = logger;
             _stringLocalizer = stringLocalizer;
             _emailConfiguration = emailConfiguration;
+            _awsService = awsService;
         }
 
         [TempData]
@@ -156,7 +162,7 @@ namespace III.Admin.Controllers
                             user.IsOnline = 1;
                             user.LoginTime = DateTime.Now;
                             user.LoginFailCount = 0;
-                            
+
 
                             await _signInManager.SignInAsync(user, authenProps);
 
@@ -373,7 +379,7 @@ namespace III.Admin.Controllers
                 if (result.Succeeded)
                 {
                     return View();
-                } 
+                }
             }
 
             // If we got this far, something failed.
@@ -403,30 +409,40 @@ namespace III.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                //var user = await _userManager.FindByEmailAsync(model.Email);
+                ////if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                //if (user == null)
+                //{
+                //    // Don't reveal that the user does not exist or is not confirmed
+                //    //return RedirectToAction(nameof(ForgotPasswordConfirmation));
+                //    //return Redirect("ForgotPasswordConfirmation");
+                //    ModelState.AddModelError(string.Empty, "Email không có trong hệ thống");
+                //    return View(model);
+                //}
+
+                //// For more information on how to enable account confirmation and password reset please
+                //// visit https://go.microsoft.com/fwlink/?LinkID=532713
+                //var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                //var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
+                //var body = $"<html><body>Quan trọng: Click vào đường dẫn <a href=\"{callbackUrl}\">này</a> để đổi mật khẩu</body></html>";
+                //var email = _emailConfiguration.SmtpUsername;
+                //var pass= _emailConfiguration.SmtpPassword;
+                //var port = _emailConfiguration.SmtpPort;
+                //var server = _emailConfiguration.SmtpServer;
+                //var msg = CommonUtil.SendMail(email, user.Email, "Forgot password", body, server, port, email, pass, TextFormat.Html);
+                var user = _context.Users.FirstOrDefault(x => x.PhoneNumber == model.PhoneNumber);
                 if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     //return RedirectToAction(nameof(ForgotPasswordConfirmation));
                     //return Redirect("ForgotPasswordConfirmation");
-                    ModelState.AddModelError(string.Empty, "Email không có trong hệ thống");
+                    ModelState.AddModelError(string.Empty, "Số điện thoại không có trong hệ thống");
                     return View(model);
                 }
-
-                // For more information on how to enable account confirmation and password reset please
-                // visit https://go.microsoft.com/fwlink/?LinkID=532713
-                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var callbackUrl = Url.ResetPasswordCallbackLink(user.Id, code, Request.Scheme);
-                var body = $"<html><body>Quan trọng: Click vào đường dẫn <a href=\"{callbackUrl}\">này</a> để đổi mật khẩu</body></html>";
-                var email = _emailConfiguration.SmtpUsername;
-                var pass= _emailConfiguration.SmtpPassword;
-                var port = _emailConfiguration.SmtpPort;
-                var server = _emailConfiguration.SmtpServer;
-                var msg = CommonUtil.SendMail(email, user.Email, "Forgot password", body, server, port, email, pass, TextFormat.Html);
+                var msg = await _awsService.SendOtp(user.UserName, user.PhoneNumber);
                 if (!msg.Error)
                     //return RedirectToAction(nameof(ForgotPasswordConfirmation));
-                    return Redirect("ForgotPasswordConfirmation");
+                    return Redirect($"ForgotPasswordConfirmation?phoneNumber={user.PhoneNumber}");
                 else
                     return View();
             }
@@ -437,9 +453,34 @@ namespace III.Admin.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult ForgotPasswordConfirmation()
+        public async Task<IActionResult> ForgotPasswordConfirmation(string phoneNumber)
         {
-            return View();
+            var user = _context.Users.FirstOrDefault(x => x.PhoneNumber == phoneNumber);
+            var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var model = new ForgotPasswordConfirmationViewModel { UserName = user.UserName, Code = code };
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public IActionResult ForgotPasswordConfirmation(ForgotPasswordConfirmationViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var otpManager = _context.OTPManagers.FirstOrDefault(x => !x.IsDeleted && x.UserName == model.UserName && x.OTP == model.Otp);
+                if (otpManager != null)
+                {
+                    return Redirect($"ResetPassword?code={HttpUtility.UrlEncode(model.Code)}");
+                }
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Sai mã OTP");
+                }
+            }
+
+            // If we got this far, something failed, redisplay form
+            return View(model);
         }
 
         [HttpGet]
@@ -463,7 +504,8 @@ namespace III.Admin.Controllers
             {
                 return View(model);
             }
-            var user = await _userManager.FindByEmailAsync(model.Email);
+            //var user = await _userManager.FindByEmailAsync(model.Email);
+            var user = _context.Users.FirstOrDefault(x => x.PhoneNumber == model.PhoneNumber);
             if (user == null)
             {
                 // Don't reveal that the user does not exist
@@ -473,7 +515,11 @@ namespace III.Admin.Controllers
             if (result.Succeeded)
             {
                 //return RedirectToAction(nameof(ResetPasswordConfirmation));
-                return Redirect("ResetPasswordConfirmation");
+                return Redirect("Login");
+            }
+            else
+            {
+                ModelState.AddModelError(string.Empty, "Đổi mật khẩu thất bại");
             }
             AddErrors(result);
             return View();

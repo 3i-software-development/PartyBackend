@@ -8,18 +8,23 @@ namespace Localization.StarterWeb.ViewModels.Account
 {
     public class ResetPasswordViewModel
     {
+        //[Required]
+        //[EmailAddress]
+        //public string Email { get; set; }
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Phone]
+        [Display(Name = "Số điện thoại")]
+        public string PhoneNumber { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} phải có {2} ký tự.", MinimumLength = 6)]
         [DataType(DataType.Password)]
+        [Display(Name = "Mật khẩu")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Nhập lại mật khẩu")]
+        [Compare("Password", ErrorMessage = "Mật khẩu nhập lại không khớp.")]
         public string ConfirmPassword { get; set; }
 
         public string Code { get; set; }

@@ -5297,7 +5297,7 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
             validateDefaultDate($scope.model.sStartTime, $scope.model.sEndTime);
         }, 400);
 
-        $scope.interval = setInterval(sessionAct, 3000);
+        //$scope.interval = setInterval(sessionAct, 3000);
     }
 
     
@@ -5712,12 +5712,12 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
     //Real-time
 
     function sessionAct() {
-        dataservice.isUpdateNewData($rootScope.ActInstCode, function (rs) {
-            rs = rs.data;
-            if (rs) {
-                loadNewData();
-            }
-        })
+        //dataservice.isUpdateNewData($rootScope.ActInstCode, function (rs) {
+        //    rs = rs.data;
+        //    if (rs) {
+        //        loadNewData();
+        //    }
+        //})
     }
 
     function loadNewData() {

@@ -178,6 +178,7 @@ namespace ESEIM
             services.AddScoped<IUserLoginService, UserLoginService>();
             services.AddScoped<IParameterService, ParameterService>();
             services.AddScoped<IActionLogService, ActionLogService>();
+            services.AddScoped<IAwsService, AwsService>();
             services.AddScoped<IUploadService, UploadService>();
             services.AddScoped<ICardJobService, CardJobService>();
             services.AddScoped<IFCMPushNotification, FCMPushNotification>();
