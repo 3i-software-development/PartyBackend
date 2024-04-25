@@ -1,6 +1,6 @@
 ﻿var ctxfolder = "/views/front-end/user";
 var app = angular.module('App_ESEIM', ["ngRoute", 'ui.select', "ngAnimate", "ngSanitize", "ui.bootstrap"])
-app.factory('dataservice', function ($http){
+app.factory('dataservice', function ($http) {
     var headers = {
         "Content-Type": "application/json;odata=verbose",
         "Accept": "application/json;odata=verbose",
@@ -185,10 +185,10 @@ app.factory('dataservice', function ($http){
             $http.get('/UserProfile/GetProvince').then(callback);
         },
         getDistrictByProvinceId: function (data, callback) {
-            $http.get('/UserProfile/GetDistrictByProvinceId?provinceId='+ data).then(callback);
+            $http.get('/UserProfile/GetDistrictByProvinceId?provinceId=' + data).then(callback);
         },
         getWardByDistrictId: function (data, callback) {
-            $http.get('/UserProfile/GetWardByDistrictId?districtId='+ data).then(callback);
+            $http.get('/UserProfile/GetWardByDistrictId?districtId=' + data).then(callback);
         },
 
 
@@ -287,7 +287,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         })
         $http.get('/Admin/GuilineManager/GetGuidelines/').then(function (response) {
             $scope.jsonParse = response.data; // Gán dữ liệu từ tệp JSON vào biến $scope.jsonParse
-            
+
         }).catch(function (error) {
             console.error('Lỗi khi tải dữ liệu JSON');
         });
@@ -297,7 +297,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
     $scope.getGroupUsers();
 
-    
+
     $scope.$watch('Voice', function (newValue, oldValue) {
         //nếu có sự thay đổi thì dựa vào $scope.input để thêm 
     });
@@ -331,7 +331,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         // Kiểm tra xem phần tử được click có là con của ul.autocomplete-list hay không
         if (!$(event.target).closest('ul.autocomplete-list').length) {
             // Xử lý sự kiện click ở đây cho các phần tử không phải là con của ul.autocomplete-list
-           
+
             $scope.filteredItemReligions = [];
             $scope.FilterGender = [];
             $scope.filteredItems = [];
@@ -347,8 +347,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.FilterRelation = [];
             $scope.FilterCountry = [];
             $scope.$digest();
-        } 
-       
+        }
+
     });
     //Autocomplete tôn giáo
     $scope.filteredItemReligions = [];
@@ -362,7 +362,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.infUser.Religion = item;
         $scope.filteredItemReligions = [];
     };
-    
+
     $scope.Gender = ['Nam', 'Nữ', 'Khác'];
     $scope.itemEmployees = [
         'Bác sĩ', 'Luật sư', 'Giáo viên', 'Kỹ sư', 'Nhân viên kinh doanh', 'Quản lý dự án', 'Nhân viên bán hàng', 'Chuyên viên tài chính', 'Kỹ thuật viên IT', 'Nhân viên marketing', 'Nhà hàng khách sạn', 'Thợ xây', 'Nghệ sĩ/ nghệ nhân', 'Nhân viên quản lý nhân sự', 'Chuyên viên tư vấn', 'Nhân viên kế toán', 'Y tá/ điều dưỡng',
@@ -656,7 +656,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
             return item.Id === id;
         });
-        $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide 
+        $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide
     };
     $scope.downloadFile = function () {
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
@@ -739,7 +739,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
     };
     //lấy dữ liệu từ data lưu vào fileJson
-    $scope.saveToJson = function() {
+    $scope.saveToJson = function () {
         // Lấy dữ liệu từ form
         var data = $scope.infUser;
 
@@ -1345,13 +1345,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
         }
 
-        $scope.matchedItemss= $scope.jsonGuide.filter(function (item) {
+        $scope.matchedItemss = $scope.jsonGuide.filter(function (item) {
             return item.id === id;
         });
-        console.log('$scope.matchedItemss:',$scope.matchedItemss)
+        console.log('$scope.matchedItemss:', $scope.matchedItemss)
         $scope.$apply();
     };
-    
+
     $scope.getPartyAdmissionProfileByUsername = function () {
         if ($scope.UserName == null || $scope.UserName == undefined) {
             //thông báo không lấy được username
@@ -1402,8 +1402,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     $scope.status = JSON.parse(rs.Status).slice(-4);
                     $scope.infUser.ResumeNumber = rs.ResumeNumber;
                     $scope.GroupUser = rs.GroupUserCode;
-                    
-                    $scope.infUser.PlaceWorking=rs.PlaceWorking;
+
+                    $scope.infUser.PlaceWorking = rs.PlaceWorking;
                     console.log($scope.status);
 
                     // Tạo đường dẫn đến tệp JSON
@@ -1411,14 +1411,14 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
                     $http.get(jsonUrl).then(function (response) {
                         $scope.jsonGuide = response.data;
-                        $.each($scope.jsonGuide, function(index, item) {
-                        // Tìm thẻ <i> có id trùng với id của phần tử
-                        var $icon = $('#' + item.id+'.fa.fa-info-circle');
-                        // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
-                        if ($icon.length > 0) {
-                            $icon.css('color', 'red');
-                        }
-                    });
+                        $.each($scope.jsonGuide, function (index, item) {
+                            // Tìm thẻ <i> có id trùng với id của phần tử
+                            var $icon = $('#' + item.id + '.fa.fa-info-circle');
+                            // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+                            if ($icon.length > 0) {
+                                $icon.css('color', 'red');
+                            }
+                        });
                     }).catch(function (error) {
                         console.error('Lỗi khi tải dữ liệu JSON');
                     });
@@ -1444,8 +1444,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.ProfileList = [];
 
     $scope.initdata = function () {
-        dataservice.getProvince(function(rs){
-            $scope.ListProvince=rs.data;
+        dataservice.getProvince(function (rs) {
+            $scope.ListProvince = rs.data;
             console.log($scope.ListProvince);
         })
         $scope.getPartyAdmissionProfileByUsername()
@@ -1597,49 +1597,92 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.submitPartyAdmissionProfile = function () {
         $scope.err = false
+        var pattern = /^[0-9]+$/;
         if ($scope.infUser.LastName == "" || $scope.infUser.LastName == null || $scope.infUser.LastName == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Họ và tên trống")
+            return;
+
         } if ($scope.infUser.Birthday == "" || $scope.infUser.Birthday == null || $scope.infUser.Birthday == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Ngày sinh trống")
+            return;
+
         } if ($scope.infUser.FirstName == "" || $scope.infUser.FirstName == null || $scope.infUser.FirstName == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Họ và tên khai sinh trống")
+            return;
+
         } if ($scope.infUser.Sex == "" || $scope.infUser.Sex == null || $scope.infUser.Sex == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Giới tính trống")
+            return;
+
         } if ($scope.infUser.Nation == "" || $scope.infUser.Nation == null || $scope.infUser.Nation == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Dân tộc trống")
+            return;
+
         } if ($scope.infUser.Religion == "" || $scope.infUser.Religion == null || $scope.infUser.Religion == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Tôn giáo trống")
+            return;
+
         } if ($scope.infUser.Residence == "" || $scope.infUser.Residence == null || $scope.infUser.Residence == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Địa chỉ thường trú trống")
+            return;
+
         } if ($scope.infUser.PlaceofBirth == "" || $scope.infUser.PlaceofBirth == null || $scope.infUser.PlaceofBirth == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Nơi sinh trống")
+            return;
+
         } if ($scope.infUser.NowEmployee == "" || $scope.infUser.NowEmployee == null || $scope.infUser.NowEmployee == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Công việc hiện tại trống")
+            return;
+
         } if ($scope.infUser.HomeTown == "" || $scope.infUser.HomeTown == null || $scope.infUser.HomeTown == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Quê quán trống")
+            return;
+
         } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Địa chỉ tạm trú trống")
+            return;
+
         } if ($scope.infUser.LevelEducation.GeneralEducation == "" || $scope.infUser.LevelEducation.GeneralEducation == null || $scope.infUser.LevelEducation.GeneralEducation == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Giáo dục phổ thông trống")
+            return;
         } if ($scope.infUser.Phone == "" || $scope.infUser.Phone == null || $scope.infUser.Phone == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Số điện thoại trống")
+            return;
+
         } if ($scope.GroupUser == "" || $scope.GroupUser == null || $scope.GroupUser == undefined) {
             $scope.err = true
             App.toastrError("Bạn chưa chọn nhóm chi bộ để xử lý")
+            return;
+
+        } if ($scope.infUser.Phone.length != 10 || !pattern.test($scope.infUser.Phone)) {
+            $scope.err = true
+            App.toastrError("Vui lòng nhập số điện thoại hợp lệ")
+            return;
         }
+        if($scope.SelfComment.context === ""|| $scope.SelfComment.context == null || $scope.SelfComment.context == undefined){
+            $scope.err = true
+            App.toastrError("Không được để trường tự nhận xét trống")
+            return;
+        }
+        if($scope.model === ""|| $scope.model == null || $scope.model == undefined){
+            $scope.err = true
+            App.toastrError("Không được để trường địa giới hành chính trống")
+            return;
+        }
+console.log($scope.model );
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
         if ($scope.err == false) {
             if ($scope.UserName != null && $scope.UserName != undefined) {
@@ -1670,7 +1713,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 $scope.model.ResumeNumber = $scope.infUser.ResumeNumber;
                 $scope.model.Username = $scope.UserName;
                 $scope.model.GroupUserCode = $scope.GroupUser;
-                $scope.model.PlaceWorking=$scope.infUser.PlaceWorking
+                $scope.model.PlaceWorking = $scope.infUser.PlaceWorking
 
                 if ($scope.infUser.ResumeNumber != '' && $scope.infUser.ResumeNumber != undefined) {
                     console.log($scope.model);
@@ -2833,18 +2876,18 @@ app.directive("choosePosition", function (dataservice) {
     return {
         restrict: "AE",
         require: "ngModel",
-        templateUrl:ctxfolder+'/Posision.html',
-        scope:{
+        templateUrl: ctxfolder + '/Posision.html',
+        scope: {
             ngModelCtrl: '=',// Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
             provinces: '='
         },
         link: function (scope, element, attrs, ngModelCtrl) {
             console.log(scope.provinces);
-            scope.ditrict= [
-              ];
-            scope.Ward=[
-              ]
-              // Hàm phân tích ngModelCtrl
+            scope.ditrict = [
+            ];
+            scope.Ward = [
+            ]
+            // Hàm phân tích ngModelCtrl
             function parseNgModelValue(value) {
                 var parts = value.split('_'); // Tách giá trị thành các phần
                 var result = {
@@ -2860,18 +2903,18 @@ app.directive("choosePosition", function (dataservice) {
                 var value = scope.model.tinh_id + '_' + scope.model.huyen_id + '_' + scope.model.xaPhuong_id;
                 ngModelCtrl.$setViewValue(value);
                 ngModelCtrl.$render();
-                if(parseInt(scope.model.tinh_id)!=NaN)
-                dataservice.getDistrictByProvinceId(scope.model.tinh_id,function(rs){
-                    rs=rs.data
-                    scope.ditrict=rs;
-                    console.log(rs)
-                })
-                if(parseInt(scope.model.huyen_id)!=NaN)
-                dataservice.getWardByDistrictId(scope.model.huyen_id,function(rs){
-                    rs=rs.data
-                    scope.Ward=rs;
-                    console.log(rs)
-                })
+                if (parseInt(scope.model.tinh_id) != NaN)
+                    dataservice.getDistrictByProvinceId(scope.model.tinh_id, function (rs) {
+                        rs = rs.data
+                        scope.ditrict = rs;
+                        console.log(rs)
+                    })
+                if (parseInt(scope.model.huyen_id) != NaN)
+                    dataservice.getWardByDistrictId(scope.model.huyen_id, function (rs) {
+                        rs = rs.data
+                        scope.Ward = rs;
+                        console.log(rs)
+                    })
                 console.log(ngModelCtrl.$modelValue)
             }
 
@@ -2903,11 +2946,11 @@ app.directive("choosePosition", function (dataservice) {
                 if (level === 'tinh') {
                     scope.model.huyen_id = ''; // Xóa giá trị huyện khi chọn một tỉnh mới
                     scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một tỉnh mới
-                   
+
                 } else if (level === 'huyen') {
-                    scope.disableXa=false
+                    scope.disableXa = false
                     scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một huyện mới
-                    
+
                 }
             };
 

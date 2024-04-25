@@ -10,7 +10,63 @@
         <div class="row mt-action-5">
             <form name="editforms" class="form-horizontal" method="post" ng-validate="validationOptions">
                 <div class="col-md-12 pt-0 pl-0 pr-0">
-                    <div class="table-toolbar table_body">
+                    <div class="table-toolbar table_body" style="    display: flex;
+                    flex-direction: column-reverse;">
+                        <div class="col-md-12 p-0">
+                            <div class="col-md-5">
+                                <div class="form-group" ng-class=" {'has-error': errorAttrGroup}">
+                                    <div class="col-md-12">
+                                        <i class="fa fa-th-list" aria-hidden="true"></i>
+                                        <label class="control-label require bold">{{'ATTR_SETUP_LBL_DOCUMENT_TYPE'|translate}}</label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="input-group br24">
+                                            <ui-select tagging ng-model="modelAttr.AttrGroup" theme="bootstrap" on-select="changleSelect('AttrGroup')" ng-disabled="true">
+                                                <ui-select-match placeholder="{{'ATTR_SETUP_TXT_DATASET'|translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices repeat=" x.Code as x in lstAttrGroup | filter: $select.search">
+                                                    {{x.Name}}
+                                                </ui-select-choices>
+                                            </ui-select>
+                                            <span class="input-group-btn">
+                                                <button type="button" ng-click="addCommonSettingAttrGroup()" class="btn btn-default no-shadow">
+                                                    <span class="glyphicon glyphicon-plus"></span>
+                                                </button>
+                                            </span>
+                                        </div>
+                                        <span ng-show="errorAttrGroup" class="label-color validation-message">
+                                            {{'ATTR_SETUP_LBL_DATASET_EMPTY'|translate}}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="col-md-12">
+                                        <i class="fa fa-comment" aria-hidden="true"></i>
+                                        <label class="control-label bold">{{'ACT_CRUD_NOTE'|translate}}</label>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <textarea name="Note" rows="2" class="form-control br12" ng-model="modelAttr.Note" type="text" placeholder="{{'ACT_CRUD_NOTE'|translate}}..."></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-1 nowrap mt25 text-center">
+                                <div class="pull-right" ng-show="!isUpdate">
+                                    <a class1="btn btn-icon-only btn-outline btn-de btn-boder1" ng-click="submit()">
+                                        <span><i class="fa-solid fa-plus fs30"></i></span>
+                                    </a>
+                                    <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_ADD' | translate}}</p>
+                                </div>
+
+                                <div class="pull-right" ng-show="isUpdate">
+                                    <a class1="btn btn-icon-only btn-outline btn-de btn-boder1" ng-click="submit()">
+                                        <span><i class="fa-solid fa-plus fs30"></i></span>
+                                    </a>
+                                    <!--<p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SAVE' | translate}}</p>-->
+                                </div>
+                            </div>
+                        </div>
                         <div class="col-md-12 p-0">
                             <div class="col-md-3">
                                 <div class="form-group">
@@ -87,61 +143,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12 p-0">
-                            <div class="col-md-5">
-                                <div class="form-group" ng-class=" {'has-error': errorAttrGroup}">
-                                    <div class="col-md-12">
-                                        <i class="fa fa-th-list" aria-hidden="true"></i>
-                                        <label class="control-label require bold">{{'ATTR_SETUP_LBL_DOCUMENT_TYPE'|translate}}</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="input-group br24">
-                                            <ui-select tagging ng-model="modelAttr.AttrGroup" theme="bootstrap" on-select="changleSelect('AttrGroup')" ng-disabled="true">
-                                                <ui-select-match placeholder="{{'ATTR_SETUP_TXT_DATASET'|translate}}...">{{$select.selected.Name}}</ui-select-match>
-                                                <ui-select-choices repeat=" x.Code as x in lstAttrGroup | filter: $select.search">
-                                                    {{x.Name}}
-                                                </ui-select-choices>
-                                            </ui-select>
-                                            <span class="input-group-btn">
-                                                <button type="button" ng-click="addCommonSettingAttrGroup()" class="btn btn-default no-shadow">
-                                                    <span class="glyphicon glyphicon-plus"></span>
-                                                </button>
-                                            </span>
-                                        </div>
-                                        <span ng-show="errorAttrGroup" class="label-color validation-message">
-                                            {{'ATTR_SETUP_LBL_DATASET_EMPTY'|translate}}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <div class="col-md-12">
-                                        <i class="fa fa-comment" aria-hidden="true"></i>
-                                        <label class="control-label bold">{{'ACT_CRUD_NOTE'|translate}}</label>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <textarea name="Note" rows="2" class="form-control br12" ng-model="modelAttr.Note" type="text" placeholder="{{'ACT_CRUD_NOTE'|translate}}..."></textarea>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-1 nowrap mt25 text-center">
-                                <div class="pull-right" ng-show="!isUpdate">
-                                    <a class1="btn btn-icon-only btn-outline btn-de btn-boder1" ng-click="submit()">
-                                        <span><i class="fa-solid fa-plus fs30"></i></span>
-                                    </a>
-                                    <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_ADD' | translate}}</p>
-                                </div>
-
-                                <div class="pull-right" ng-show="isUpdate">
-                                    <a class1="btn btn-icon-only btn-outline btn-de btn-boder1" ng-click="submit()">
-                                        <span><i class="fa-solid fa-plus fs30"></i></span>
-                                    </a>
-                                    <!--<p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SAVE' | translate}}</p>-->
-                                </div>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
             </form>
