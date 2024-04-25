@@ -17,10 +17,14 @@
                                 <div class="form-group">
                                     <div class="col-md-12">
                                         <i class="fa fa-barcode" aria-hidden="true"></i>
-                                        <label class="control-label require bold">{{'ACT_CRUD_ATTR_CODE'|translate}}</label>
+                                        <label
+                                            class="control-label require bold">{{'ACT_CRUD_ATTR_CODE'|translate}}</label>
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" name="AttrCode" class="form-control br24" data-ng-model="modelAttr.AttrCode" placeholder="{{'ACT_CRUD_ATTR_CODE'|translate}}..." ng-disabled="isUpdate" />
+                                        <input type="text" name="AttrCode" class="form-control br24"
+                                            data-ng-model="modelAttr.AttrCode"
+                                            placeholder="{{'ACT_CRUD_ATTR_CODE'|translate}}..."
+                                            ng-disabled="isUpdate" />
                                     </div>
                                 </div>
                             </div>
@@ -28,10 +32,12 @@
                                 <div class="form-group ">
                                     <div class="col-md-12">
                                         <i class="fa fa-th-list" aria-hidden="true"></i>
-                                        <label class="control-label require bold">{{'ACT_CRUD_ATTR_NAME'|translate}}</label>
+                                        <label
+                                            class="control-label require bold">{{'ACT_CRUD_ATTR_NAME'|translate}}</label>
                                     </div>
                                     <div class="col-md-12">
-                                        <input type="text" class="form-control br24" ng-model="modelAttr.AttrName" name="AttrName" placeholder="{{'ACT_CRUD_ATTR_NAME'|translate}}..." />
+                                        <input type="text" class="form-control br24" ng-model="modelAttr.AttrName"
+                                            name="AttrName" placeholder="{{'ACT_CRUD_ATTR_NAME'|translate}}..." />
                                     </div>
                                 </div>
                             </div>
@@ -39,18 +45,23 @@
                                 <div class="form-group" ng-class=" {'has-error': errorAttrDataType}">
                                     <div class="col-md-12">
                                         <i class="fa fa-th-list" aria-hidden="true"></i>
-                                        <label class="control-label require bold">{{'ACT_CRUD_DATA_TYPE'|translate}}</label>
+                                        <label
+                                            class="control-label require bold">{{'ACT_CRUD_DATA_TYPE'|translate}}</label>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="input-group br24">
-                                            <ui-select tagging ng-model="modelAttr.AttrDataType" theme="bootstrap" on-select="changleSelect('AttrDataType')">
-                                                <ui-select-match placeholder="{{'ACT_CRUD_DATA_TYPE'|translate}}...">{{$select.selected.Name}}</ui-select-match>
-                                                <ui-select-choices repeat=" x.Code as x in ListATTRTYPE | filter: $select.search">
+                                            <ui-select tagging ng-model="modelAttr.AttrDataType" theme="bootstrap"
+                                                on-select="changleSelect('AttrDataType')">
+                                                <ui-select-match
+                                                    placeholder="{{'ACT_CRUD_DATA_TYPE'|translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices
+                                                    repeat=" x.Code as x in ListATTRTYPE | filter: $select.search">
                                                     {{x.Name}}
                                                 </ui-select-choices>
                                             </ui-select>
                                             <span class="input-group-btn">
-                                                <button type="button" ng-click="addCommonSettingAttrType()" class="btn btn-default no-shadow">
+                                                <button type="button" ng-click="addCommonSettingAttrType()"
+                                                    class="btn btn-default no-shadow">
                                                     <span class="glyphicon glyphicon-plus"></span>
                                                 </button>
                                             </span>
@@ -69,14 +80,18 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="input-group br24">
-                                            <ui-select tagging ng-model="modelAttr.AttrUnit" theme="bootstrap" on-select="changleSelect('AttrUnit')" ng-disabled="isDisabledUnit">
-                                                <ui-select-match placeholder="{{'ACT_CRUD_UNIT'|translate}}...">{{$select.selected.Name}}</ui-select-match>
-                                                <ui-select-choices repeat=" x.Code as x in ListATTRUNIT | filter: $select.search">
+                                            <ui-select tagging ng-model="modelAttr.AttrUnit" theme="bootstrap"
+                                                on-select="changleSelect('AttrUnit')" ng-disabled="isDisabledUnit">
+                                                <ui-select-match
+                                                    placeholder="{{'ACT_CRUD_UNIT'|translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                                <ui-select-choices
+                                                    repeat=" x.Code as x in ListATTRUNIT | filter: $select.search">
                                                     {{x.Name}}
                                                 </ui-select-choices>
                                             </ui-select>
                                             <span class="input-group-btn">
-                                                <button type="button" ng-click="addCommonSettingAttrUnit()" class="btn btn-default no-shadow">
+                                                <button type="button" ng-click="addCommonSettingAttrUnit()"
+                                                    class="btn btn-default no-shadow">
                                                     <span class="glyphicon glyphicon-plus"></span>
                                                 </button>
                                             </span>
@@ -87,15 +102,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-1 nowrap mt25 text-center">
+                            <div class="col-md-1 nowrap mt25 text-center" style="display: flex;align-items: center;height: 100%;padding-top: 1%;justify-content: center !important;
+                                ">
                                 <div class="pull-right" ng-show="!isUpdate">
                                     <a class1="btn btn-icon-only btn-outline btn-de btn-boder1" ng-click="submit()">
                                         <span><i class="fa-solid fa-arrow-down fs30"></i></i></span>
                                     </a>
-                                    <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_ADD' | translate}}</p>
+                                    <!-- <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_ADD' | translate}}</p> -->
                                 </div>
 
-                                <div class="pull-right" ng-show="isUpdate">
+                                <div class="pull-right" ng-show="isUpdate"
+                                    style="display: flex;align-items: center;height: 100%;">
                                     <a class1="btn btn-icon-only btn-outline btn-de btn-boder1" ng-click="submit()">
                                         <span><i class="fa-solid fa-arrow-down fs30"></i></i></span>
                                     </a>
@@ -108,18 +125,25 @@
                                 <div class="form-group" ng-class=" {'has-error': errorAttrGroup}">
                                     <div class="col-md-12">
                                         <i class="fa fa-th-list" aria-hidden="true"></i>
-                                        <label class="control-label require bold">{{'ATTR_SETUP_LBL_DATASET'|translate}}</label>
+                                        <label
+                                            class="control-label require bold">{{'ATTR_SETUP_LBL_DATASET'|translate}}</label>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="input-group br24">
-                                            <ui-select tagging ng-model="modelAttr.AttrGroup" theme="bootstrap" on-select="changleSelect('AttrGroup')">
-                                                <ui-select-match placeholder="{{'ATTR_SETUP_TXT_DATASET'|translate}}...">{{$select.selected.Name}}</ui-select-match>
-                                                <ui-select-choices repeat=" x.Code as x in lstAttrGroup | filter: $select.search">
-                                                    {{x.Name}}
+                                            <ui-select tagging ng-model="modelAttr.AttrGroup" theme="bootstrap"
+                                                on-select="changleSelect('AttrGroup')">
+                                                <ui-select-match
+                                                    placeholder="{{'ATTR_SETUP_TXT_DATASET'|translate}}...">
+                                                    {{$select.selected.Name}}
+                                                </ui-select-match>
+                                                <ui-select-choices
+                                                    repeat=" x.Code as x in lstAttrGroup | filter: $select.search">
+                                                    <span style="font-weight: bold;">{{x.Name}}</span>
                                                 </ui-select-choices>
                                             </ui-select>
                                             <span class="input-group-btn">
-                                                <button type="button" ng-click="addCommonSettingAttrGroup()" class="btn btn-default no-shadow">
+                                                <button type="button" ng-click="addCommonSettingAttrGroup()"
+                                                    class="btn btn-default no-shadow">
                                                     <span class="glyphicon glyphicon-plus"></span>
                                                 </button>
                                             </span>
@@ -138,25 +162,30 @@
                                         <label class="control-label bold">{{'ACT_CRUD_NOTE'|translate}}</label>
                                     </div>
                                     <div class="col-md-12">
-                                        <textarea name="Note" style="height: 35px !important;" rows="2" class="form-control br12" ng-model="modelAttr.Note" type="text" placeholder="{{'ACT_CRUD_NOTE'|translate}}..."></textarea>
+                                        <textarea name="Note" style="height: 35px !important;" rows="2"
+                                            class="form-control br12" ng-model="modelAttr.Note" type="text"
+                                            placeholder="{{'ACT_CRUD_NOTE'|translate}}..."></textarea>
                                     </div>
                                 </div>
                             </div>
-                            
+
                         </div>
                     </div>
                 </div>
             </form>
         </div>
 
-        <table class="table dataTable table-hover table-striped"
-               datatable
-               dt-options="dtOptions"
-               dt-columns="dtColumns"
-               dt-instance="dtInstance"
-               id="tblData"></table>
+        <table class="table dataTable table-hover table-striped" datatable dt-options="dtOptions" dt-columns="dtColumns"
+            dt-instance="dtInstance" id="tblData"></table>
     </div>
 </div>
-<style>textarea.form-control {
-     height: unset !important;
-}</style>
+<style>
+    textarea.form-control {
+        height: unset !important;
+    }
+
+    .ui-select-toggle {
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+</style>
