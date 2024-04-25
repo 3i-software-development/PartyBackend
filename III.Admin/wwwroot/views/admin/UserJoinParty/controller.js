@@ -2444,6 +2444,23 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.PersonalHistory = [];
 
         $scope.infUser = {
+            MarriedStatus: [
+                {
+                    id: 1,
+                    marriedStatus: 'DOC_THAN'
+                },
+                {
+                    id: 2,
+                    marriedStatus: 'LY_HON',
+                    decisionNumber: '1234',
+                    decisionDate: '25/04/2024',
+                    location: 'Ha Noi'
+                },
+                {
+                    id: 3,
+                    marriedStatus: 'KET_HON'
+                },
+            ],
             LevelEducation: {
                 Undergraduate: [],
                 PoliticalTheory: [],
@@ -2488,7 +2505,17 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         dataserviceJoinParty.GetPartyAdmissionProfileByResumeNumber($routeParams.resumeNumber, function (rs) {
             rs = rs.data;
             $scope.infUser.LastName = rs.CurrentName;
-
+            let marriedStatus = $scope.infUser.MarriedStatus;
+            if (rs.MarriedStatus) {
+                try {
+                    marriedStatus = JSON.parse(rs.MarriedStatus);
+                    console.log(marriedStatus.length);
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            $scope.infUser.MarriedStatus = marriedStatus;
+            console.log($scope.infUser.MarriedStatus);
             $scope.infUser.Birthday = DateParse(rs.Birthday)
             $scope.infUser.FirstName = rs.BirthName;
 
