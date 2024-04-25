@@ -922,6 +922,7 @@ namespace III.Admin.Controllers
             public string PlaceWorking { get; set; }
             public string Username { get; set; }
             public string Status { get; set; }
+            public string MarriedStatus { get; set; }
         }
         [HttpPut]
         public async Task<object> UpdatePartyAdmissionProfile([FromBody] ModelViewPAMP model)

@@ -442,7 +442,8 @@ namespace III.Admin.Controllers
                     Username = x.Username,
                     Status = x.Status,
                     GroupUserCode = x.GroupUserCode,
-                    PlaceWorking = Place
+                    PlaceWorking = Place,
+                    MarriedStatus = x.MarriedStatus,
                 }).Where(x => x.ResumeNumber == ressumeNumber);
 
                 //Thông tin cá nhân Ok
