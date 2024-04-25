@@ -1,0 +1,27 @@
+<div class="d-flex" style="align-items: center;">
+    <div class="w4" ng-if="model.maritalStatusId === 'Ly dị'">
+        <ui-select class="p0 br-24" ng-model="model.maritalStatusId" theme="bootstrap" class="displayInfo"
+            ng-change="onMaritalStatusSelect($select.selected)" style="border: none; height: 24.5px;width:100%;">
+            <ui-select-match class="br-24 ovf-hidden" style="height:24.5px"
+                placeholder="Chọn tình trạng hôn nhân">{{$select.selected}}</ui-select-match>
+            <ui-select-choices repeat="status in maritalStatuses | filter: $select.search">
+                <div>{{status}}</div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+    <div ng-if="model.maritalStatusId === 'Ly dị'">
+        <input type="text" ng-model="model.divorceDecisionNumber" placeholder="Số quyết định" style="width: 30%;margin-left: 5px;">
+        <input type="date" ng-model="model.divorceDecisionDate" placeholder="Ngày quyết định" style="width: 30%;margin-left: 5px;">
+        <input type="text" ng-model="model.divorceDecisionPlace" placeholder="Địa điểm quyết định" style="width: 30%;margin-left: 5px;">
+    </div>
+    <div style="width: 99%;"  ng-if="model.maritalStatusId != 'Ly dị'">
+        <ui-select class="p0 br-24" ng-model="model.maritalStatusId" theme="bootstrap" class="displayInfo"
+            ng-change="onMaritalStatusSelect($select.selected)" style="border: none; height: 24.5px;width:100%;">
+            <ui-select-match class="br-24 ovf-hidden" style="height:24.5px"
+                placeholder="Chọn tình trạng hôn nhân">{{$select.selected}}</ui-select-match>
+            <ui-select-choices repeat="status in maritalStatuses | filter: $select.search">
+                <div>{{status}}</div>
+            </ui-select-choices>
+        </ui-select>
+    </div>
+</div>

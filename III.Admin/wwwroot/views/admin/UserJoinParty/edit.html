@@ -695,6 +695,24 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4 pr-0">
+                                        <i class="fa fa-heart" id="MaritalStatusIcon"></i>
+                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                            Tình trạng hôn nhân
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                            <i class="fa fa-info-circle icon-clickable" data-bs-toggle="popover"
+                                                title="Thông tin tình trạng hôn nhân" data-bs-placement="bottom"
+                                                data-bs-content="Ví dụ: 'Đã kết hôn, Độc thân, Ly thân'" style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                                            <!-- Thêm directive cho chọn tình trạng hôn nhân -->
+                                            <choose-marital-status ng-model="infUser.MaritalStatus" marital-statuses="maritalStatusList" style="width: 100%;"></choose-marital-status>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">

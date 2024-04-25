@@ -53,6 +53,13 @@ app.factory('dataserviceJoinParty', function ($http) {
         getWardByDistrictId: function (data, callback) {
             $http.get('/UserProfile/GetWardByDistrictId?districtId=' + data).then(callback);
         },
+        getMaritalStatusByDivorceDecisionNumber: function (divorceDecisionNumber, callback) {
+            $http.get('/UserProfile/GetMaritalStatusByDivorceDecisionNumber?divorceDecisionNumber=' + divorceDecisionNumber).then(callback);
+        },
+
+        getMaritalStatusByDivorceDecisionDate: function (divorceDecisionDate, callback) {
+            $http.get('/UserProfile/GetMaritalStatusByDivorceDecisionDate?divorceDecisionDate=' + divorceDecisionDate).then(callback);
+        },
         GetGroupUser: function (callback) {
             $http.get('/UserProfile/GetGroupUser').then(callback);
         },
@@ -80,6 +87,12 @@ app.factory('dataserviceJoinParty', function ($http) {
 
         updateFamily: function (data, callback) {
             $http.post('/UserProfile/UpdateFamily/', data).then(callback);
+        },
+        getDistrictByProvinceId: function (data, callback) {
+            $http.get('/UserProfile/GetDistrictByProvinceId?provinceId=' + data).then(callback);
+        },
+        getWardByDistrictId: function (data, callback) {
+            $http.get('/UserProfile/GetWardByDistrictId?districtId=' + data).then(callback);
         },
         //PartyAdmissionProfile
 
@@ -386,7 +399,8 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 ItDegree: true,
                 CreatedPlace: true,
                 GroupUser: true,
-                PlaceWorking: true
+                PlaceWorking: true,
+                maritalStatus: true
             },
             Family: {
                 "Relation": true,
@@ -2194,7 +2208,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.infUser.WfInstCode = data.Profile.WfInstCode;
         $scope.GroupUser = data.Profile.GroupUserCode;
         $scope.infUser.PlaceWorking = data.Profile.PlaceWorking;
-
+        $scope.infUser.maritalStatus = data.Profile.maritalStatus
 
         data.Awards.forEach(function (laudatory) {
             var obj = {};
@@ -2405,6 +2419,14 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.ListProvince = rs.data;
             console.log($scope.ListProvince);
         })
+        $scope.maritalStatusList = [
+            'Đã kết hôn',
+            'Độc thân',
+            'Ly thân',
+            'Ly dị',
+            'Khác'
+            // Thêm các tình trạng hôn nhân khác nếu cần
+        ];
         $scope.ListStatus = [{
             Name: 'Mới đẩy lên',
             Code: 'Mới đẩy lên'
@@ -2495,7 +2517,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.infUser.WfInstCode = rs.WfInstCode;
             $scope.GroupUser = rs.GroupUserCode;
             $scope.infUser.PlaceWorking = rs.PlaceWorking;
-
+            $scope.infUser.maritalStatus = rs.maritalStatus;
+            console.log($scope.infUser.maritalStatus);
             $scope.Username = rs.Username;
             console.log($scope.infUser);
             //Get By Profilecode
@@ -3178,7 +3201,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.model.Username = $scope.Username;
             $scope.model.WfInstCode = $scope.infUser.WfInstCode;
             $scope.model.GroupUserCode = $scope.GroupUser;
-            $scope.model.PlaceWorking = $scope.infUser.PlaceWorking
+            $scope.model.PlaceWorking = $scope.infUser.PlaceWorking;
+            $scope.model.MaritalStatus = $scope.infUser.MaritalStatus;
+            console.log($scope.model.MaritalStatus);
 
             if ($scope.infUser.ResumeNumber != '' && $scope.infUser.ResumeNumber != undefined &&
                 $scope.Username != '' && $scope.Username != undefined) {
@@ -4567,3 +4592,82 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
         },
     };
 });
+
+app.directive("chooseMaritalStatus", function () {
+    return {
+        restrict: "AE",
+        require: "ngModel",
+        templateUrl: ctxfolderJoinParty + '/MaritalStatus.html',
+        scope: {
+            ngModelCtrl: '=',
+            maritalStatuses: '='
+        },
+        link: function (scope, element, attrs, ngModelCtrl) {
+            function parseNgModelValue(value) {
+                var parts = value.split('_'); // Tách giá trị thành các phần
+                var result = {
+                    maritalStatusId: parts[0], // Gán phần đầu tiên cho maritalStatusId
+                    divorceDecisionNumber: parts[1], // Gán phần thứ hai cho divorceDecisionNumber
+                    divorceDecisionDate: parts[2], // Gán phần thứ ba cho divorceDecisionDate
+                    divorceDecisionPlace: parts[3] // Gán phần thứ tư cho divorceDecisionPlace
+                };
+                return result;
+            }
+
+
+
+            // Hàm cập nhật giá trị ngModelCtrl
+            function updateNgModelValue() {
+                var value = scope.model.maritalStatusId + '_' + scope.model.divorceDecisionNumber + '_' + scope.model.divorceDecisionDate + '_' + scope.model.divorceDecisionPlace;
+                ngModelCtrl.$setViewValue(scope.model.maritalStatusId.toString());
+                ngModelCtrl.$render();
+            }
+
+            // Watchers để theo dõi thay đổi trong giá trị ngModelCtrl
+            scope.$watch(function () {
+                return ngModelCtrl.$modelValue;
+            }, function (newValue) {
+                if (newValue) {
+                    scope.model.maritalStatusId = newValue;
+                }
+            });
+
+            // Watchers để theo dõi thay đổi trong model tình trạng hôn nhân
+            scope.$watch('model.maritalStatusId', function (newValue) {
+                // Thực hiện cập nhật giá trị ngModelCtrl khi có thay đổi
+                updateNgModelValue();
+                // Reset các trường nhập liệu khi chọn tình trạng hôn nhân mới
+                if (newValue === 'divorce') { // Đảm bảo so sánh với chuỗi văn bản
+                    scope.model.divorceDecisionNumber = '';
+                    scope.model.divorceDecisionDate = '';
+                    scope.model.divorceDecisionPlace = '';
+                }
+            });
+
+
+            // Khởi tạo model
+            scope.model = {
+                maritalStatusId: '',
+                // Khởi tạo các trường nhập liệu cho ly hôn
+                divorceDecisionNumber: '',
+                divorceDecisionDate: '',
+                divorceDecisionPlace: ''
+            };
+        },
+    };
+});
+
+$scope.onMaritalStatusChange = function () {
+    // Thực hiện các xử lý cần thiết khi tình trạng hôn nhân thay đổi
+    // Ví dụ: kiểm tra xem tình trạng hôn nhân có phải là 'Ly dị' không và thực hiện các hành động tương ứng
+    if ($scope.model.maritalStatusId === 'Ly dị') {
+        // Hiển thị các trường nhập liệu cho số quyết định, ngày tháng và địa điểm quyết định
+    } else {
+        // Ẩn các trường nhập liệu
+        $scope.model.divorceDecisionNumber = '';
+        $scope.model.divorceDecisionDate = '';
+        $scope.model.divorceDecisionPlace = '';
+    }
+};
+
+
