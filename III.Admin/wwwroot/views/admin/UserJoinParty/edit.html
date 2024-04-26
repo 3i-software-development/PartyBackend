@@ -303,11 +303,13 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6 mb-10" style="display: flex; align-items: center; gap: 10px;justify-content: space-around;" >
+            <div class="col-md-6 mb-10"
+                style="display: flex; align-items: center; gap: 10px;justify-content: space-around;">
                 <div class="text-center ">
                     <a href="" ng-click="SaveJson ? uploadJsonFile() : uploadFile()">
                         <i class="fa fa-download" aria-hidden="true" style="font-size: 25px;"></i>
-                        <span style="font-size:16px; font-weight: bold;">{{ SaveJson ? 'Load dữ liệu JSON' : 'Tải dữ liệu xuống form' }}</span>
+                        <span style="font-size:16px; font-weight: bold;">{{ SaveJson ? 'Load dữ liệu JSON' : 'Tải dữ
+                            liệu xuống form' }}</span>
                     </a>
                 </div>
                 <div style="display: flex; align-items: center; gap: 10px;justify-content: center;">
@@ -318,21 +320,22 @@
                     <label style="font-size:16px; font-weight: bold;">
                         {{ SaveJson ? 'Lưu file Json' : 'Lưu Database' }}
                     </label>
-    
+
                 </div>
             </div>
             <!-- <div class="col-md-2 mb10">
 
             </div> -->
 
-            
+
 
             <!-- trạng thái -->
             <div class="col-md-4">
                 <div style="display:flex;justify-content: space-between;">
                     <div style="padding-left: 10px" ng-click="ExportFileWord()">
-                        <i class="fa-solid fa-file-word" style="color: #2a5699;font-size: 35px;"></i> <label style="font-size:16px; font-weight: bold;margin-left: 5px;" class="ng-binding">
-                           Xuất hồ sơ file word
+                        <i class="fa-solid fa-file-word" style="color: #2a5699;font-size: 35px;"></i> <label
+                            style="font-size:16px; font-weight: bold;margin-left: 5px;" class="ng-binding">
+                            Xuất hồ sơ file word
                         </label>
                     </div>
                     <div ng-click="submitPartyAdmissionProfile()">
@@ -697,7 +700,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0">
-                                        <i class="fa fa-heart" id="MaritalStatusIcon"></i>
+                                        <i class="fa fa-heart" id="MarriedStatusIcon"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Tình trạng hôn nhân
                                         </label>
@@ -706,13 +709,33 @@
                                         <div class="br24 form-control custom-title-code-bold" style="display:flex">
                                             <i class="fa fa-info-circle icon-clickable" data-bs-toggle="popover"
                                                 title="Thông tin tình trạng hôn nhân" data-bs-placement="bottom"
-                                                data-bs-content="Ví dụ: 'Đã kết hôn, Độc thân, Ly thân'" style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                            <!-- Thêm directive cho chọn tình trạng hôn nhân -->
-                                            <choose-marital-status ng-model="infUser.MaritalStatus" marital-statuses="maritalStatusList" style="width: 100%;"></choose-marital-status>
+                                                data-bs-content="Ví dụ: 'Đã kết hôn, Độc thân, Ly thân'"
+                                                style="vertical-align: 7px; display: flex; align-items: center;"></i>
+
+                                            <select style="border: unset;"
+                                                ng-model="infUser.MaritalStatus.marriedStatus"
+                                                ng-change="filterMarriedStatus()">
+                                                <option ng-repeat="status in infUser.MarriedStatus"
+                                                    value="{{status.id}}">{{status.marriedStatus}}</option>
+                                            </select>
+
+                                            <div style="display: flex;justify-content: space-around"
+                                                ng-if="infUser.MaritalStatus.marriedStatus === '2'">
+                                                <input style="width: 25%;" type="text" id="decision-number"
+                                                    placeholder="Số quyết định"
+                                                    ng-model="infUser.MaritalStatus.decisionNumber">
+                                                <input style="width: 35%;" type="text" id="start"
+                                                    ng-model="infUser.MaritalStatus.decisionDate"
+                                                    placeholder="Ngày quyết định">
+                                                <input style="width: 25%;" type="text" id="location"
+                                                    placeholder="Địa điểm quyết định"
+                                                    ng-model="infUser.MaritalStatus.location">
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
-                                
+
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group row">

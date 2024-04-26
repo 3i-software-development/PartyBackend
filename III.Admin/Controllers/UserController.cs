@@ -844,7 +844,7 @@ namespace III.Admin.Controllers
                 obj.WfInstCode = model.WfInstCode;
                 obj.GroupUserCode = model.GroupUserCode;
                 obj.PlaceWorking = model.PlaceWorking;
-
+                obj.MarriedStatus = model.MarriedStatus;
 
                 _context.PartyAdmissionProfiles.Update(obj);
                 _context.SaveChanges();

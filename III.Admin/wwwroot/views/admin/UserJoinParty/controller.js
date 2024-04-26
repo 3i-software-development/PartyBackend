@@ -400,7 +400,7 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 CreatedPlace: true,
                 GroupUser: true,
                 PlaceWorking: true,
-                maritalStatus: true
+                marriedStatus: true
             },
             Family: {
                 "Relation": true,
@@ -1487,6 +1487,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.filteredItems = [];
             $scope.FilterNation = [];
             $scope.FilterGeneralEducation = [];
+            $scope.filterMarriedStatus = []
             $scope.FilterUndergraduate = [];
             $scope.FilterRankAcademic = [];
             $scope.FilterForeignLanguage = [];
@@ -1760,6 +1761,18 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             return item.toLowerCase().includes($scope.infUser.LevelEducation.GeneralEducation.toLowerCase());
         });
     };
+    $scope.filterMarriedStatus = []
+    $scope.selectedMarriedStatus = ""
+    $scope.filterMarriedStatus = function () {
+        $scope.infUser.MaritalStatus.decisionNumber
+        $scope.infUser.MaritalStatus.decisionDate
+        $scope.infUser.MaritalStatus.location
+
+        $scope.filterMarriedStatus = $scope.marriedStatus.filter(function (item) {
+            return item.toLowerCase().includes($scope.infUser.MaritalStatus.marriedStatus.toLowerCase());
+        });
+    }
+
     $scope.SelectGeneralEducation = function (item) {
         $scope.infUser.LevelEducation.GeneralEducation = item;
         $scope.FilterGeneralEducation = [];
@@ -2208,7 +2221,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.infUser.WfInstCode = data.Profile.WfInstCode;
         $scope.GroupUser = data.Profile.GroupUserCode;
         $scope.infUser.PlaceWorking = data.Profile.PlaceWorking;
-        $scope.infUser.maritalStatus = data.Profile.maritalStatus
+        $scope.infUser.maritalStatus = Object.values($scope.infUser.MaritalStatus).join('_');
+        $scope.infUser.marriedStatus = data.Profile.marriedStatus
 
         data.Awards.forEach(function (laudatory) {
             var obj = {};
@@ -2427,6 +2441,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             'Khác'
             // Thêm các tình trạng hôn nhân khác nếu cần
         ];
+
+        // console.log($scope.infUser.marriedStatus);
         $scope.ListStatus = [{
             Name: 'Mới đẩy lên',
             Code: 'Mới đẩy lên'
@@ -2504,6 +2520,29 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.PlaceCreatedTime = {}
         dataserviceJoinParty.GetPartyAdmissionProfileByResumeNumber($routeParams.resumeNumber, function (rs) {
             rs = rs.data;
+            console.log(rs.MarriedStatus);
+            const parts = rs.MarriedStatus.split('_');
+            const decisionDate = new Date(parts[2]);
+
+            // Lấy ngày, tháng và năm từ đối tượng Date
+            const month = (decisionDate.getMonth() + 1).toString().padStart(2, '0'); // Tháng bắt đầu từ 0, nên cộng thêm 1 và định dạng lại
+            const day = decisionDate.getDate().toString().padStart(2, '0');
+            const year = decisionDate.getFullYear();
+
+            // Định dạng lại thành chuỗi ngày tháng năm có định dạng MM-DD-YYYY
+            const formattedDecisionDate = `${day}/${month}/${year}`;
+            // Tạo một đối tượng JSON hợp lệ từ các phần tử trong mảng parts
+            const MaritalStatus = {
+                marriedStatus: parts[0],
+                decisionNumber: parts[1],
+                decisionDate: formattedDecisionDate,
+                location: parts[3]
+            };
+
+            // Gán đối tượng JSON vào $scope.infUser.MaritalStatus
+            $scope.infUser.MaritalStatus = MaritalStatus;
+
+            console.log($scope.infUser.MaritalStatus.decisionDate);
             $scope.infUser.LastName = rs.CurrentName;
             let marriedStatus = $scope.infUser.MarriedStatus;
             if (rs.MarriedStatus) {
@@ -2518,7 +2557,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             console.log($scope.infUser.MarriedStatus);
             $scope.infUser.Birthday = DateParse(rs.Birthday)
             $scope.infUser.FirstName = rs.BirthName;
-
+            // const parts = rsmarriedStatus.split('_');
+            console.log($scope.infUser);
+            // $scope.infUser.MaritalStatus = `{'id': ${parts[0]}, 'decisionNumber': '${parts[1]}', 'decisionDate': '${parts[2]}', 'location': '${parts[3]}'}`;
             $scope.infUser.Sex = rs.Gender == 0 ? "Nam" : "Nữ";
             $scope.infUser.Nation = rs.Nation;
             $scope.infUser.Religion = rs.Religion;
@@ -2544,8 +2585,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.infUser.WfInstCode = rs.WfInstCode;
             $scope.GroupUser = rs.GroupUserCode;
             $scope.infUser.PlaceWorking = rs.PlaceWorking;
-            $scope.infUser.maritalStatus = rs.maritalStatus;
-            console.log($scope.infUser.maritalStatus);
+            // $scope.infUser.maritalStatus = rs.maritalStatus;
+            // console.log($scope.infUser.maritalStatus);
             $scope.Username = rs.Username;
             console.log($scope.infUser);
             //Get By Profilecode
@@ -2700,6 +2741,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             rs = rs.data;
             $scope.fileList = rs.JsonProfileLinks;
             //$scope.$apply();
+            // const parts = rsmarriedStatus.split('_');
+            console.log($scope.infUser);
+            // $scope.infUser.MaritalStatus = `{'id': ${parts[0]}, 'decisionNumber': '${parts[1]}', 'decisionDate': '${parts[2]}', 'location': '${parts[3]}'}`;
+
             console.log(rs);
         })
     }
@@ -3153,45 +3198,111 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     // AdmissionProfile
     $scope.submitPartyAdmissionProfile = function () {
         $scope.err = false
+        var pattern = /^[0-9]+$/;
         if ($scope.infUser.LastName == "" || $scope.infUser.LastName == null || $scope.infUser.LastName == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Họ và tên trống")
+            return;
+
         } if ($scope.infUser.Birthday == "" || $scope.infUser.Birthday == null || $scope.infUser.Birthday == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Ngày sinh trống")
+            return;
+
         } if ($scope.infUser.FirstName == "" || $scope.infUser.FirstName == null || $scope.infUser.FirstName == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Họ và tên khai sinh trống")
+            return;
+
         } if ($scope.infUser.Sex == "" || $scope.infUser.Sex == null || $scope.infUser.Sex == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Giới tính trống")
+            return;
+
         } if ($scope.infUser.Nation == "" || $scope.infUser.Nation == null || $scope.infUser.Nation == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Dân tộc trống")
+            return;
+
         } if ($scope.infUser.Religion == "" || $scope.infUser.Religion == null || $scope.infUser.Religion == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Tôn giáo trống")
+            return;
+
         } if ($scope.infUser.Residence == "" || $scope.infUser.Residence == null || $scope.infUser.Residence == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Địa chỉ thường trú trống")
+            return;
+
         } if ($scope.infUser.PlaceofBirth == "" || $scope.infUser.PlaceofBirth == null || $scope.infUser.PlaceofBirth == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Nơi sinh trống")
+            return;
+
         } if ($scope.infUser.NowEmployee == "" || $scope.infUser.NowEmployee == null || $scope.infUser.NowEmployee == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Công việc hiện tại trống")
+            return;
+
         } if ($scope.infUser.HomeTown == "" || $scope.infUser.HomeTown == null || $scope.infUser.HomeTown == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Quê quán trống")
+            return;
+
         } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Địa chỉ tạm trú trống")
+            return;
+
         } if ($scope.infUser.LevelEducation.GeneralEducation == "" || $scope.infUser.LevelEducation.GeneralEducation == null || $scope.infUser.LevelEducation.GeneralEducation == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Giáo dục phổ thông trống")
+            return;
         } if ($scope.infUser.Phone == "" || $scope.infUser.Phone == null || $scope.infUser.Phone == undefined) {
             $scope.err = true
             App.toastrError("Không được để trường Số điện thoại trống")
+            return;
+
+        } if ($scope.GroupUser == "" || $scope.GroupUser == null || $scope.GroupUser == undefined) {
+            $scope.err = true
+            App.toastrError("Bạn chưa chọn nhóm chi bộ để xử lý")
+            return;
+
+        } if ($scope.infUser.Phone.length != 10 || !pattern.test($scope.infUser.Phone)) {
+            $scope.err = true
+            App.toastrError("Vui lòng nhập số điện thoại hợp lệ")
+            return;
+        }
+        if ($scope.SelfComment.context === "" || $scope.SelfComment.context == null || $scope.SelfComment.context == undefined) {
+            $scope.err = true
+            App.toastrError("Không được để trường tự nhận xét trống")
+            return;
+        }
+        // if ($scope.model === "" || $scope.model == null || $scope.model == undefined) {
+        //     $scope.err = true
+        //     App.toastrError("Không được để trường địa giới hành chính trống")
+        //     return;
+        // }
+        if ($scope.infUser.MaritalStatus.marriedStatus === "" || $scope.infUser.MaritalStatus.marriedStatus == null || $scope.infUser.MaritalStatus.marriedStatus == undefined) {
+            $scope.err = true
+            App.toastrError("Không được để trường tình trạng hôn nhân trống")
+            return;
+        } else if ($scope.infUser.MaritalStatus.marriedStatus === '2') {
+            if ($scope.infUser.MaritalStatus.decisionNumber === "" || $scope.infUser.MaritalStatus.decisionNumber == null || $scope.infUser.MaritalStatus.decisionNumber == undefined) {
+                $scope.err = true
+                App.toastrError("Không được để trường số quyết định trống")
+                return;
+            }
+            if ($scope.infUser.MaritalStatus.decisionDate === "" || $scope.infUser.MaritalStatus.decisionDate == null || $scope.infUser.MaritalStatus.decisionDate == undefined) {
+                $scope.err = true
+                App.toastrError("Không được để trường ngày quyết định trống")
+                return;
+            }
+            if ($scope.infUser.MaritalStatus.location === "" || $scope.infUser.MaritalStatus.location == null || $scope.infUser.MaritalStatus.location == undefined) {
+                $scope.err = true
+                App.toastrError("Không được để trường địa điểm quyết định trống")
+                return;
+            }
         }
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
         if ($scope.err == true) {
@@ -3229,7 +3340,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.model.WfInstCode = $scope.infUser.WfInstCode;
             $scope.model.GroupUserCode = $scope.GroupUser;
             $scope.model.PlaceWorking = $scope.infUser.PlaceWorking;
-            $scope.model.MaritalStatus = $scope.infUser.MaritalStatus;
+            $scope.model.MarriedStatus = Object.values($scope.infUser.MaritalStatus).join('_');
+            // $scope.model.MarriedStatus = $scope.infUser.MarriedStatus;
             console.log($scope.model.MaritalStatus);
 
             if ($scope.infUser.ResumeNumber != '' && $scope.infUser.ResumeNumber != undefined &&
@@ -4696,5 +4808,7 @@ $scope.onMaritalStatusChange = function () {
         $scope.model.divorceDecisionPlace = '';
     }
 };
+
+
 
 
