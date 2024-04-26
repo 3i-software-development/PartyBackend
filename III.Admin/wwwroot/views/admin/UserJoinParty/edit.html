@@ -1244,18 +1244,29 @@
                                                 popover-trigger="outsideClick"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">Năm
                                                 sinh</label>
-                                        </div>
-                                        <div class="col-md-8" style="display: flex;">
-                                            <div class="br24 form-control custom-title-code-bold"
-                                                style="white-space:nowrap">
-                                                <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
-                                                    title="Popover Header" popover-placement="bottom-left"
-                                                    uib-popover="Năm sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                    popover-trigger="outsideClick"></i>
+                                            <!-- <input ng-change="updateAddressState()" type="checkbox"
+                                                ng-model="disableAddress" ng-change="changedisable()">Đã mất -->
 
-                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                    ng-model="selectedFamily.BirthYear" type="text"
-                                                    placeholder="Năm sinh" />
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div
+                                                style="display: flex; align-items: center;  flex-direction: row-reverse !important; gap: 1%;">
+                                                <div style="width: 19%;"><input ng-change="updateAddressState()"
+                                                        type="checkbox" ng-model="disableAddress"
+                                                        ng-change="changedisable()"><span style="font-weight: bold;">Đã
+                                                        mất</span>
+                                                </div>
+                                                <div class="br24 form-control custom-title-code-bold"
+                                                    style="white-space:nowrap">
+                                                    <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
+                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        uib-popover="Năm sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        popover-trigger="outsideClick"></i>
+
+                                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                        ng-model="selectedFamily.BirthYear" type="text"
+                                                        placeholder="Năm sinh" />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -1267,9 +1278,27 @@
                                                 viên</label>
                                         </div>
 
-                                        <div class="col-md-8" style="display: flex;">
-                                            <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                ng-model="selectedFamily.PartyMember" type="checkbox" placeholder="" />
+
+                                        <div class="col-md-8">
+                                            <div
+                                                style="display: flex; align-items: center;  flex-direction: row-reverse !important; gap: 1%;">
+                                                <div style="width: 19%;"><input type="checkbox"
+                                                        ng-model="selectedFamily.PartyMember"
+                                                        ng-change="changedis()"><span style="font-weight: bold;">
+                                                </div>
+                                                <div ng-show="PartyMember"
+                                                    class="br24 form-control custom-title-code-bold"
+                                                    style="white-space:nowrap">
+                                                    <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
+                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        uib-popover="Năm sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        popover-trigger="outsideClick"></i>
+
+                                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                        ng-model="selectedFamily.wordAt" type="text"
+                                                        placeholder="Công tác tại " />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -1322,7 +1351,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <div class="form-group row" ng-show="!disableAddress">
                                         <div class="col-md-4 pr-0 ">
                                             <i class="fa fa-home" id="residence" ng-click="openPopover('residence');"
                                                 uib-popover-template="'popoverTemplate.html'" popover-placement="right"
@@ -1389,7 +1418,9 @@
                                                     popover-trigger="outsideClick"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                     ng-model="selectedFamily.WorkingProgress" type="text"
-                                                    placeholder="Quá trình công tác" />
+                                                    placeholder="Quá trình công tác"
+                                                    ng-value="'Từ năm 18 tuổi đến năm'" />
+
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                                     ng-model="selectedFamily.WorkingProgress"></i>
                                             </div>
@@ -1438,7 +1469,8 @@
                                                             </td>
                                                             <td>
                                                                 <div><span>- Quê quán: {{x.HomeTown}}</span></div>
-                                                                <div><span>- Nơi cư trú: {{x.Residence}}</span></div>
+                                                                <div><span>- Nơi cư trú: {{x.Residence}}</span>
+                                                                </div>
                                                             </td>
                                                             <td>{{x.Job}}</td>
                                                             <td>{{x.WorkingProgress}}</td>
@@ -2189,7 +2221,8 @@
                                         ng-click="openPopover('PlaceTimeRecognize');"
                                         uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                         popover-trigger="outsideClick"></i>
-                                    <label class="displayInfo  custom-title-code-bold">Ngày và nơi công nhận chính thức
+                                    <label class="displayInfo  custom-title-code-bold">Ngày và nơi công nhận chính
+                                        thức
                                         lần thứ nhất</label>
                                 </div>
                                 <div class="col-md-8" style="display: flex;">
@@ -2216,6 +2249,13 @@
     </div>
 </div>
 </div>
+<style>
+    .address-input.disabled {
+        pointer-events: none;
+        background-color: #f2f2f2;
+        /* Thay đổi màu nền khi bị vô hiệu hóa */
+    }
+</style>
 
 <script type="text/ng-template" id="popoverTemplate.html">
     <div class="custom-popover-content">

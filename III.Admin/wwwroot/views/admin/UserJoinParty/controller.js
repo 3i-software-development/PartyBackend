@@ -3567,30 +3567,57 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         console.log("Vào");
     }
     //add
+
+    // $scope.disableAddress = false;
+    $scope.PartyMember = false
+    $scope.changedisable = function () {
+        $scope.disableAddress = !$scope.disableAddress
+    }
+    $scope.changedis = function () {
+        $scope.PartyMember = !$scope.PartyMember
+    }
     $scope.addToFamily = function () {
         $scope.err = false
-        if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation == '') {
+        if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation === '') {
             $scope.err = true
         }
-        if ($scope.selectedFamily.Residence == null || $scope.selectedFamily.Residence == undefined || $scope.selectedFamily.Residence == '') {
+
+        if ($scope.selectedFamily.Name == null || $scope.selectedFamily.Name == undefined || $scope.selectedFamily.Name === '') {
             $scope.err = true
         }
-        if ($scope.selectedFamily.Name == null || $scope.selectedFamily.Name == undefined || $scope.selectedFamily.Name == '') {
+        if ($scope.disableAddress == false) {
+            // $scope.err = true
+            if ($scope.selectedFamily.Residence == null || $scope.selectedFamily.Residence == undefined || $scope.selectedFamily.Residence === '') {
+                $scope.err = true
+            } else {
+                $scope.err = false
+            }
+        }
+        if ($scope.PartyMember == true) {
+            // $scope.err = true
+            if ($scope.selectedFamily.wordAt == null || $scope.selectedFamily.wordAt == undefined || $scope.selectedFamily.wordAt === '') {
+                $scope.err = true
+            } else {
+                $scope.err = false
+            }
+        }
+
+        console.log($scope.disableAddress);
+
+        if ($scope.selectedFamily.BirthYear == null || $scope.selectedFamily.BirthYear == undefined || $scope.selectedFamily.BirthYear === '') {
             $scope.err = true
         }
-        if ($scope.selectedFamily.BirthYear == null || $scope.selectedFamily.BirthYear == undefined || $scope.selectedFamily.BirthYear == '') {
-            $scope.err = true
-        }
+
         if ($scope.selectedFamily.PoliticalAttitude == null || $scope.selectedFamily.PoliticalAttitude == undefined || $scope.selectedFamily.PoliticalAttitude == '') {
             $scope.err = true
         }
-        if ($scope.selectedFamily.HomeTown == null || $scope.selectedFamily.HomeTown == undefined || $scope.selectedFamily.HomeTown == '') {
+        if ($scope.selectedFamily.HomeTown == null || $scope.selectedFamily.HomeTown == undefined || $scope.selectedFamily.HomeTown === '') {
             $scope.err = true
         }
-        if ($scope.selectedFamily.Job == null || $scope.selectedFamily.Job == undefined || $scope.selectedFamily.Job == '') {
+        if ($scope.selectedFamily.Job == null || $scope.selectedFamily.Job == undefined || $scope.selectedFamily.Job === '') {
             $scope.err = true
         }
-        if ($scope.selectedFamily.WorkingProgress == null || $scope.selectedFamily.WorkingProgress == undefined || $scope.selectedFamily.WorkingProgress == '') {
+        if ($scope.selectedFamily.WorkingProgress == null || $scope.selectedFamily.WorkingProgress == undefined || $scope.selectedFamily.WorkingProgress === '') {
             $scope.err = true
         }
         if ($scope.err) {
@@ -3610,7 +3637,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.Id = 0;
         $scope.Relationship.push(model);
         $scope.selectedFamily = {}
+        $scope.disableAddress = false
+        $scope.PartyMember = false
     }
+
     $scope.addToAward = function () {
         $scope.err = false
         if ($scope.selectedLaudatory.MonthYear == null || $scope.selectedLaudatory.MonthYear == undefined || $scope.selectedLaudatory.MonthYear == '') {
@@ -4808,6 +4838,7 @@ $scope.onMaritalStatusChange = function () {
         $scope.model.divorceDecisionPlace = '';
     }
 };
+
 
 
 
