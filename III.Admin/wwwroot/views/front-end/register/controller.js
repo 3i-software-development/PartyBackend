@@ -1,5 +1,5 @@
 ﻿var ctxfolder = "/views/front-end/register";
-var app = angular.module('App_ESEIM', ["ngRoute", 'ui.select'])
+var app = angular.module('App_ESEIM', ["ngRoute", 'ui.select', "ngValidate"])
 app.factory('dataservice', function ($http) {
     var headers = {
         "Content-Type": "application/json;odata=verbose",
@@ -29,6 +29,20 @@ app.factory('dataservice', function ($http) {
 
 app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice) {
 
+    //$rootScope.validationOptions = {
+    //    rules: {
+    //        PhoneNumber: {
+    //            required: true,
+    //            regx: /^[0|+|+84]+([\s0-9]{9,15})([\s#0-9]{5})?\b$/
+    //        },
+    //    },
+    //    messages: {
+    //        PhoneNumber: {
+    //            required: 'Số điện thoại không được bỏ trống',
+    //            regx: 'Số điện thoại sai định dạng',
+    //        },
+    //    }
+    //};
 });
 
 app.config(function ($routeProvider, $locationProvider) {
@@ -100,6 +114,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             Title += `<p style="font-size:13px;">Số điện thoại không được để trống</p></br>`
 
         }
+        if (!/^[0|+|+84]+([\s0-9]{9,15})([\s#0-9]{5})?\b$/.test(model.PhoneNumber)) {
+            msg.Error = true;
+            $scope.PhoneNumberError = true;
+            Title += `<p style="font-size:13px;">Số điện thoại sai định dạng</p></br>`
+        }
         if (!(model.Email == '' || model.Email == undefined || model.Email == null)
             && !isValidEmail(model.Email)) {
             msg.Error = true;
@@ -126,7 +145,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         } if (model.RegisterJoinGroupCode == '' || model.RegisterJoinGroupCode == undefined || model.RegisterJoinGroupCode == null) {
             msg.Error = true;
             $scope.RegisterJoinGroupCodeError = true;
-            Title += `<p style="font-size:13px;">Mật khẩu không được để trống</p></br>`
+            Title += `<p style="font-size:13px;">Nhóm chi bộ không được để trống</p></br>`
         }
         msg.Title = Title
         return msg;

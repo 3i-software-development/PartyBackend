@@ -1012,7 +1012,7 @@
                                     <div class="form-group row">
                                         <div class="col-md-4 pr-0 " style="white-space: nowrap; overflow: auto">
                                             <i class="fa fa-users"></i>
-                                            <label class="displayInfo control-label require custom-title-code-bold">
+                                            <label class="displayInfo control-label custom-title-code-bold">
                                                 Địa giới hành chính
                                             </label>
                                         </div>
@@ -1110,7 +1110,7 @@
                                                        uib-popover="{{selectedFamily.BirthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"  popover-trigger="'outsideClick'">
                                                     </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                           ng-model="selectedFamily.BirthYear" type="text"
+                                                           ng-model="selectedFamily.BirthYear" ng-change="changeBirthYear()" type="text"
                                                            placeholder="Năm sinh" />
                                                 </div>
                                             </div>
