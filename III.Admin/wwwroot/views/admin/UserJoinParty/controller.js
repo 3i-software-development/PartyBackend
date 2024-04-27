@@ -2521,26 +2521,30 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         dataserviceJoinParty.GetPartyAdmissionProfileByResumeNumber($routeParams.resumeNumber, function (rs) {
             rs = rs.data;
             console.log(rs.MarriedStatus);
-            const parts = rs.MarriedStatus.split('_');
-            const decisionDate = new Date(parts[2]);
+            if (rs.MarriedStatus != null) {
+                const parts = rs.MarriedStatus.split('_');
+                const decisionDate = new Date(parts[2]);
 
-            // Lấy ngày, tháng và năm từ đối tượng Date
-            const month = (decisionDate.getMonth() + 1).toString().padStart(2, '0'); // Tháng bắt đầu từ 0, nên cộng thêm 1 và định dạng lại
-            const day = decisionDate.getDate().toString().padStart(2, '0');
-            const year = decisionDate.getFullYear();
+                // Lấy ngày, tháng và năm từ đối tượng Date
+                const month = (decisionDate.getMonth() + 1).toString().padStart(2, '0'); // Tháng bắt đầu từ 0, nên cộng thêm 1 và định dạng lại
+                const day = decisionDate.getDate().toString().padStart(2, '0');
+                const year = decisionDate.getFullYear();
 
-            // Định dạng lại thành chuỗi ngày tháng năm có định dạng MM-DD-YYYY
-            const formattedDecisionDate = `${day}/${month}/${year}`;
-            // Tạo một đối tượng JSON hợp lệ từ các phần tử trong mảng parts
-            const MaritalStatus = {
-                marriedStatus: parts[0],
-                decisionNumber: parts[1],
-                decisionDate: formattedDecisionDate,
-                location: parts[3]
-            };
+                // Định dạng lại thành chuỗi ngày tháng năm có định dạng MM-DD-YYYY
+                const formattedDecisionDate = `${day}/${month}/${year}`;
+                // Tạo một đối tượng JSON hợp lệ từ các phần tử trong mảng parts
+                const MaritalStatus = {
+                    marriedStatus: parts[0],
+                    decisionNumber: parts[1],
+                    decisionDate: formattedDecisionDate,
+                    location: parts[3]
+                };
 
-            // Gán đối tượng JSON vào $scope.infUser.MaritalStatus
-            $scope.infUser.MaritalStatus = MaritalStatus;
+                // Gán đối tượng JSON vào $scope.infUser.MaritalStatus
+                $scope.infUser.MaritalStatus = MaritalStatus;
+            } else {
+                $scope.infUser.MaritalStatus = ""
+            }
 
             console.log($scope.infUser.MaritalStatus.decisionDate);
             $scope.infUser.LastName = rs.CurrentName;
