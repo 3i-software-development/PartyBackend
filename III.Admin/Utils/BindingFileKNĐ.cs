@@ -390,7 +390,7 @@ namespace III.Admin.Utils
                     text=p.AppendText("- Nơi cư trú: " + ph.Residence);
 
                     p = cell.AddParagraph();
-                    var ismember = ph.PartyMember == true ? "Có" : "Không";
+                    var ismember = ph.PartyMember;
                     text=p.AppendText("- Đảng viên: " + ismember);
 
                     p = cell.AddParagraph();
@@ -1154,7 +1154,7 @@ namespace III.Admin.Utils
                 SetStyle(text);
 
                 p = cell.AddParagraph() as WParagraph;
-                text = p.AppendText("-Là đảng viên:" + (item.PartyMember?"Đúng":"Không"));
+                text = p.AppendText("-Là đảng viên:" + item.PartyMember);
                 SetStyle(text);
                 selectRow++;
             }
