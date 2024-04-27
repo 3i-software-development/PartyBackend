@@ -1477,7 +1477,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     //insertFamily
 
-    $scope.selectedFamily = {}
+    $scope.selectedFamily = {
+        WorkingProgress: `Từ năm 18 tuổi đến năm`
+    };
     $scope.addToFamily = function () {
         if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation == '') {
             return
@@ -1677,11 +1679,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             App.toastrError("Không được để trường tự nhận xét trống")
             return;
         }
-        if($scope.model === ""|| $scope.model == null || $scope.model == undefined){
-            $scope.err = true
-            App.toastrError("Không được để trường địa giới hành chính trống")
-            return;
-        }
+        //if($scope.model === ""|| $scope.model == null || $scope.model == undefined){
+        //    $scope.err = true
+        //    App.toastrError("Không được để trường địa giới hành chính trống")
+        //    return;
+        //}
 console.log($scope.model );
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
         if ($scope.err == false) {
@@ -2318,7 +2320,9 @@ console.log($scope.model );
     //Insert
 
     //Update
-    $scope.selectedFamily = {};
+    $scope.selectedFamily = {
+        WorkingProgress: `Từ năm 18 tuổi đến năm`
+    };
     $scope.selectedPersonHistory = {};
     $scope.selectedWarningDisciplined = {};
     $scope.selectedHistorySpecialist = {};
@@ -2818,6 +2822,18 @@ console.log($scope.model );
         })
 
         console.log($scope.id);
+    }
+    // handle birth year logic
+    $scope.changeBirthYear = function() {
+        const year = Number($scope.selectedFamily.BirthYear);
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        if (year && year >= 1900 && year + 18 < currentYear) {
+            $scope.selectedFamily.WorkingProgress = `Từ năm ${year + 18} đến năm`;
+        }
+        else {
+            $scope.selectedFamily.WorkingProgress = `Từ năm 18 tuổi đến năm`;
+        }
     }
     //Add file
     $scope.getListFile = function () {

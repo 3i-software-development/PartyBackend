@@ -683,7 +683,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 ">
                                         <i class="fa fa-users" id="DGHC"></i>
-                                        <label class="displayInfo control-label require custom-title-code-bold">
+                                        <label class="displayInfo control-label custom-title-code-bold">
                                             Địa giới hành chính
                                         </label>
                                     </div>
@@ -1264,7 +1264,7 @@
                                                         popover-trigger="outsideClick"></i>
 
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-model="selectedFamily.BirthYear" type="text"
+                                                        ng-model="selectedFamily.BirthYear" ng-change="changeBirthYear()" type="text"
                                                         placeholder="Năm sinh" />
                                                 </div>
                                             </div>
@@ -1418,8 +1418,7 @@
                                                     popover-trigger="outsideClick"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                     ng-model="selectedFamily.WorkingProgress" type="text"
-                                                    placeholder="Quá trình công tác"
-                                                    ng-value="'Từ năm 18 tuổi đến năm'" />
+                                                    placeholder="Quá trình công tác" />
 
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                                     ng-model="selectedFamily.WorkingProgress"></i>

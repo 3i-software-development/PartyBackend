@@ -3097,7 +3097,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             } else {
                 App.toastrSuccess(result.Title);
                 $scope.getFamilyByProfileCode();
-                $scope.selectedFamily = {}
+                $scope.selectedFamily = {
+                    WorkingProgress: `Từ năm 18 tuổi đến năm`
+                };
             }
         })
 
@@ -3658,8 +3660,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.wordAt = $scope.selectedFamily.wordAt;
         model.die = $scope.disableAddress;
         $scope.Relationship.push(model);
-        console.log($scope.Relationship);
-        $scope.selectedFamily = {}
+        $scope.selectedFamily = {
+            WorkingProgress: `Từ năm 18 tuổi đến năm`
+        };
         $scope.disableAddress = false
         $scope.PartyMember = false
     }
@@ -3820,7 +3823,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
 
     //Update
-    $scope.selectedFamily = {};
+    $scope.selectedFamily = {
+        WorkingProgress: `Từ năm 18 tuổi đến năm`
+    };
     $scope.selectedWarningDisciplined = {};
     $scope.selectedHistorySpecialist = {};
     $scope.selectedWorkingTracking = {};
@@ -4094,7 +4099,18 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             console.log($scope.JSONobj);
         }
     };
-
+    // handle birth year logic
+    $scope.changeBirthYear = function () {
+        const year = Number($scope.selectedFamily.BirthYear);
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        if (year && year >= 1900 && year + 18 < currentYear) {
+            $scope.selectedFamily.WorkingProgress = `Từ năm ${year + 18} đến năm`;
+        }
+        else {
+            $scope.selectedFamily.WorkingProgress = `Từ năm 18 tuổi đến năm`;
+        }
+    }
     function handleTextUpload(txt) {
         $scope.defaultRTE.value = txt;
         setTimeout(function () {
