@@ -1074,6 +1074,45 @@
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-4 pr-0">
+                                            <i class="fa fa-heart" id="MarriedStatusIcon"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">
+                                                Tình trạng hôn nhân
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                                <i class="fa fa-info-circle icon-clickable" data-bs-toggle="popover"
+                                                    title="Thông tin tình trạng hôn nhân" data-bs-placement="bottom"
+                                                    data-bs-content="Ví dụ: 'Đã kết hôn, Độc thân, Ly thân'"
+                                                    style="vertical-align: 7px; display: flex; align-items: center;"></i>
+
+                                                <select style="border: unset;"
+                                                    ng-model="infUser.MaritalStatus.marriedStatus"
+                                                    ng-change="filterMarriedStatus()">
+                                                    <option ng-repeat="status in infUser.MarriedStatus"
+                                                        value="{{status.id}}">{{status.marriedStatus}}
+                                                    </option>
+                                                </select>
+
+                                                <div style="display: flex;justify-content: space-around"
+                                                    ng-if="infUser.MaritalStatus.marriedStatus === '2'">
+                                                    <input style="width: 25%;" type="text" id="decision-number"
+                                                        placeholder="Số quyết định"
+                                                        ng-model="infUser.MaritalStatus.decisionNumber">
+                                                    <input style="width: 35%;" type="text" id="start"
+                                                        ng-model="infUser.MaritalStatus.decisionDate"
+                                                        placeholder="Ngày quyết định">
+                                                    <input style="width: 25%;" type="text" id="location"
+                                                        placeholder="Địa điểm quyết định"
+                                                        ng-model="infUser.MaritalStatus.location">
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                             </div>
@@ -1148,44 +1187,74 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-md-4 pr-0"
-                                                style="padding-left: 7px; white-space:nowrap; overflow:auto">
-                                                <i class="fa fa-calendar"></i>
-                                                <label class="displayInfo control-label require custom-title-code-bold">
-                                                    Năm
-                                                    sinh, mất nếu có và lý do
-                                                </label>
+                                            <div class="col-md-4 pr-0">
+                                                <i class="fa fa-calendar-o" id="dateOfBirdRelation"
+                                                    ng-click="openPopover('dateOfBirdRelation');"
+                                                    uib-popover-template="'popoverTemplate.html'"
+                                                    popover-placement="right" popover-trigger="outsideClick"></i>
+                                                <label
+                                                    class="displayInfo control-label require custom-title-code-bold">Năm
+                                                    sinh - năm mất (nếu có) </label>
+                                                <!-- <input ng-change="updateAddressState()" type="checkbox"
+                                                                                    ng-model="disableAddress" ng-change="changedisable()">Đã mất -->
+
                                             </div>
-                                            <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold"
-                                                    style="white-space:nowrap">
-                                                    <i class="fa fa-info-circle icon-clickable" id="BirthYear"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="{{selectedFamily.BirthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="'outsideClick'">
-                                                    </i>
-                                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-model="selectedFamily.BirthYear"
-                                                        ng-change="changeBirthYear()" type="text"
-                                                        placeholder="Năm sinh" />
+                                            <div class="col-md-8">
+                                                <div
+                                                    style="display: flex; align-items: center;  flex-direction: row-reverse !important; gap: 1%;">
+                                                    <div style="width: 19%;"><input ng-change="updateAddressState()"
+                                                            type="checkbox" ng-model="disableAddress"
+                                                            ng-change="changedisable()"><span
+                                                            style="font-weight: bold;">Đã
+                                                            mất</span>
+                                                    </div>
+                                                    <div class="br24 form-control custom-title-code-bold"
+                                                        style="white-space:nowrap">
+                                                        <i class="fa fa-info-circle icon-clickable"
+                                                            id="dateOfBirdRelation" title="Popover Header"
+                                                            popover-placement="bottom-left"
+                                                            uib-popover="Năm sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                            popover-trigger="outsideClick"></i>
+
+                                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                            ng-model="selectedFamily.BirthYear"
+                                                            ng-change="changeBirthYear()" type="text"
+                                                            placeholder="Năm sinh" />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="form-group row">
-                                            <div class="col-md-4 pr-0 " style="padding-left: 7px; white-space:nowrap">
+                                            <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-user"></i>
-                                                <label class="displayInfo control-label require custom-title-code-bold">
-                                                    Đảng
-                                                    viên
-                                                </label>
+                                                <label
+                                                    class="displayInfo control-label require custom-title-code-bold">Đảng
+                                                    viên</label>
                                             </div>
 
-                                            <div class="col-md-8" style="display: flex;">
-                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                    ng-model="selectedFamily.PartyMember" type="checkbox"
-                                                    placeholder="" />
 
+                                            <div class="col-md-8">
+                                                <div
+                                                    style="display: flex; align-items: center;  flex-direction: row-reverse !important; gap: 1%;">
+                                                    <div style="width: 19%;"><input type="checkbox"
+                                                            ng-model="selectedFamily.PartyMember"
+                                                            ng-change="changedis()"><span style="font-weight: bold;">
+                                                    </div>
+                                                    <div ng-show="PartyMember"
+                                                        class="br24 form-control custom-title-code-bold"
+                                                        style="white-space:nowrap">
+                                                        <i class="fa fa-info-circle icon-clickable"
+                                                            id="dateOfBirdRelation" title="Popover Header"
+                                                            popover-placement="bottom-left"
+                                                            uib-popover="Năm sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                            popover-trigger="outsideClick"></i>
+
+                                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                            ng-model="selectedFamily.wordAt" type="text"
+                                                            placeholder="Công tác tại " />
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -1357,6 +1426,7 @@
                                                     </td>
                                                     <td>{{x.Name}}</td>
                                                     <td>
+                                                        {{x.die == true ?"Năm sinh - Năm mất" : ""}}
                                                         {{x.BirthYear}}
 
                                                     </td>
@@ -1367,7 +1437,9 @@
                                                     <td>{{x.Job}}</td>
                                                     <td>{{x.WorkingProgress}}</td>
                                                     <td>{{x.PoliticalAttitude}}</td>
-                                                    <td>{{x.PartyMember == 1?"Có" : "Không"}}</td>
+                                                    <td>{{x.PartyMember == 1?"Có (Sinh hoạt tại: " +x.wordAt +
+                                                        ")" : "Không"}}
+                                                    </td>
 
 
                                                     <td ng-click="deleteFamily($index)">

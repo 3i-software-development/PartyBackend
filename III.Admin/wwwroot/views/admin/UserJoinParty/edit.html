@@ -1264,7 +1264,8 @@
                                                         popover-trigger="outsideClick"></i>
 
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-model="selectedFamily.BirthYear" ng-change="changeBirthYear()" type="text"
+                                                        ng-model="selectedFamily.BirthYear"
+                                                        ng-change="changeBirthYear()" type="text"
                                                         placeholder="Năm sinh" />
                                                 </div>
                                             </div>
@@ -1463,7 +1464,7 @@
                                                             </td>
                                                             <td>{{x.Name}}</td>
                                                             <td>
-                                                                {{x.die == true ?"Đã mất" : ""}}
+                                                                {{x.die == true ?"Năm sinh - Năm mất" : ""}}
                                                                 {{x.BirthYear}}
 
                                                             </td>
@@ -1475,8 +1476,8 @@
                                                             <td>{{x.Job}}</td>
                                                             <td>{{x.WorkingProgress}}</td>
                                                             <td>{{x.PoliticalAttitude}}</td>
-                                                            <td>{{x.PartyMember == 1?"Có - sinh hoạt tại: " +x.wordAt :
-                                                                "Không"}}
+                                                            <td>{{x.PartyMember == 1?"Có (Sinh hoạt tại: " +x.wordAt +
+                                                                ")" : "Không"}}
 
                                                             </td>
 

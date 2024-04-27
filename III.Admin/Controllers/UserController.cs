@@ -1180,7 +1180,7 @@ namespace III.Admin.Controllers
         #region insert
 
         [HttpPost]
-        public object InsertFamily([FromBody] Family[] model)
+        public object InsertFamily([FromBody] FamilyModel[] model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -1196,14 +1196,31 @@ namespace III.Admin.Controllers
                         return msg;
                     }
                     if (!string.IsNullOrEmpty(x.Relation) || !string.IsNullOrEmpty(x.ClassComposition)
-                    || !string.IsNullOrEmpty(x.BirthYear) || !string.IsNullOrEmpty(x.HomeTown)
+                    || !string.IsNullOrEmpty(x.HomeTown)
                     || !string.IsNullOrEmpty(x.Residence) || !string.IsNullOrEmpty(x.Job)
-                    || !string.IsNullOrEmpty(x.WorkingProgress) || x.PartyMember != null)
-
+                    || !string.IsNullOrEmpty(x.WorkingProgress)
+                    || !string.IsNullOrEmpty(x.PartyMember)
+                    || !string.IsNullOrEmpty(x.BirthYear))
+                    
                     {
                         if (x.Id == 0)
                         {
-                            _context.Families.Add(x);
+                            var family = new Family
+                            {
+                                PoliticalAttitude = x.PoliticalAttitude,
+                                Relation = x.Relation,
+                                ClassComposition = x.ClassComposition,
+                                PartyMember = x.PartyMember,
+                                BirthYear = x.BirthYear,
+                                HomeTown = x.HomeTown,
+                                Residence = x.Residence,
+                                Job = x.Job,
+                                WorkingProgress = x.WorkingProgress,
+                                Name = x.Name,
+                                ProfileCode = x.ProfileCode,
+                                IsDeleted = false
+                            };
+                            _context.Families.Add(family);
                         }
                         else
                         {
@@ -1342,7 +1359,7 @@ namespace III.Admin.Controllers
                     obj.JsonProfileLinks = new List<JsonFile>();
                     obj.GroupUserCode = model.GroupUserCode;
                     obj.PlaceWorking = model.PlaceWorking;
-
+                   obj.MarriedStatus = model.MarriedStatus;
                     _context.PartyAdmissionProfiles.Add(obj);
                     _context.SaveChanges();
                     msg.Object = obj;
