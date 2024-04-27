@@ -1429,7 +1429,7 @@
                                     </div>
 
                                     <div class="pull-right">
-                                        <button class="btn" ng-click="addToFamily(x)" style="color:#0dcaf0">
+                                        <button class="btn" ng-click="addToFamily(x)">
                                             <i class="fa fa-plus"></i>
                                             <span>Thêm</span>
                                         </button>
@@ -1464,6 +1464,7 @@
                                                             </td>
                                                             <td>{{x.Name}}</td>
                                                             <td>
+                                                                {{x.die == true ?"Đã mất" : ""}}
                                                                 {{x.BirthYear}}
 
                                                             </td>
@@ -1475,8 +1476,10 @@
                                                             <td>{{x.Job}}</td>
                                                             <td>{{x.WorkingProgress}}</td>
                                                             <td>{{x.PoliticalAttitude}}</td>
-                                                            <td>{{x.PartyMember == 1?"Có" : "Không"}}</td>
+                                                            <td>{{x.PartyMember == 1?"Có - sinh hoạt tại: " +x.wordAt :
+                                                                "Không"}}
 
+                                                            </td>
 
                                                             <td>
                                                                 <button class="btn" ng-click="deleteFamily($index)"

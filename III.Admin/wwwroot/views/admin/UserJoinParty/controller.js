@@ -3077,9 +3077,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.Relationship.forEach(function (e) {
             var obj = {};
             obj.Relation = e.Relation;
-            obj.PartyMember = e.PartyMember;
+            obj.PartyMember = [e.wordAt, e.PartyMember].join('_');
             obj.Name = e.Name;
-            obj.BirthYear = e.BirthYear;
+            obj.BirthYear = [e.die, e.BirthYear].join('_');
             obj.Residence = e.Residence;
             obj.PoliticalAttitude = e.PoliticalAttitude;
             obj.HomeTown = e.HomeTown;
@@ -3446,7 +3446,27 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             contentType: "application/json; charset=utf-8",
             success: function (result) {
                 $scope.Relationship = result;
-                console.log($scope.Relationship);
+                console.log(result);
+
+                result.forEach(obj => {
+                    const parts = obj.BirthYear.split('_');
+                    if (parts.length >= 2) {
+                        obj.die = parts[0];
+                        obj.BirthYear = parts[1];
+                    } else {
+                        obj.die = false;
+                    }
+
+                    const partMember = obj.BirthYear.split('_');
+                    if (partMember.length >= 2) {
+                        obj.wordAt = parts[0];
+                        obj.PartyMember = parts[1];
+                    } else {
+                        obj.wordAt = false;
+                    }
+                });
+                console.log(result);
+
             },
             error: function (error) {
                 console.log(error);
@@ -3635,7 +3655,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.Job = $scope.selectedFamily.Job;
         model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
         model.Id = 0;
+        model.wordAt = $scope.selectedFamily.wordAt;
+        model.die = $scope.disableAddress;
         $scope.Relationship.push(model);
+        console.log($scope.Relationship);
         $scope.selectedFamily = {}
         $scope.disableAddress = false
         $scope.PartyMember = false
