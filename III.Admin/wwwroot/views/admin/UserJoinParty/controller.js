@@ -2521,7 +2521,15 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         dataserviceJoinParty.GetPartyAdmissionProfileByResumeNumber($routeParams.resumeNumber, function (rs) {
             rs = rs.data;
             console.log(rs.MarriedStatus);
-            if (rs.MarriedStatus != null) {
+            if (rs.MarriedStatus === null) {
+
+                $scope.infUser.MaritalStatus =
+                {
+                    id: 1,
+                    marriedStatus: 'DOC_THAN'
+                }
+
+            } else {
                 const parts = rs.MarriedStatus.split('_');
                 const decisionDate = new Date(parts[2]);
 
@@ -2542,8 +2550,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
                 // Gán đối tượng JSON vào $scope.infUser.MaritalStatus
                 $scope.infUser.MaritalStatus = MaritalStatus;
-            } else {
-                $scope.infUser.MaritalStatus = ""
             }
 
             console.log($scope.infUser.MaritalStatus.decisionDate);
@@ -3460,15 +3466,17 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                         obj.die = parts[0];
                         obj.BirthYear = parts[1];
                     } else {
-                        obj.die = false;
+                        obj.die = parts[0];
+                        obj.BirthYear = parts[1];
                     }
 
-                    const partMember = obj.BirthYear.split('_');
+                    const partMember = obj.PartyMember.split('_');
                     if (partMember.length >= 2) {
-                        obj.wordAt = parts[0];
-                        obj.PartyMember = parts[1];
+                        obj.wordAt = partMember[0];
+                        obj.PartyMember = true;
                     } else {
                         obj.wordAt = false;
+                        obj.PartyMember = partMember[1];
                     }
                 });
                 console.log(result);
@@ -4374,10 +4382,20 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     }
                     if (pE8[y][i].startsWith("- Đảng viên:")) {
                         var partyMember = pE8[y][i].slice(('- Đảng viên:').length).trim()
-                        if (partyMember.toLowerCase() == "không") {
-                            $scope.Relationship[RelationshipIndex].PartyMember = false;
+
+                        var parts = partyMember.split(/[(,)]/);
+                        $scope.Relationship[RelationshipIndex].PartyMember = parts[0]
+                        console.log($scope.Relationship[RelationshipIndex].PartyMember);
+                        if ($scope.Relationship[RelationshipIndex].PartyMember == "Có ") {
+                            $scope.Relationship[RelationshipIndex].PartyMember = true
                         }
-                        else $scope.Relationship[RelationshipIndex].PartyMember = true;
+                        else {
+                            $scope.Relationship[RelationshipIndex].PartyMember = false
+                        }
+                        if (parts.length > 1 && parts[1].includes(':')) {
+                            $scope.Relationship[RelationshipIndex].wordAt = "" + parts[1].split(':')[1].trim();
+                        }
+                        console.log($scope.Relationship[RelationshipIndex].PartyMember);
                     }
                     if (pE8[y][i].startsWith("- Quá trình công tác:")) {
                         // let regex = /^(\d{4})-(.*)$/;
@@ -4399,7 +4417,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                         }
                     }
                     if (pE8[y][i].startsWith("- Thái độ chính trị:")) {
-                        $scope.Relationship[RelationshipIndex].PoliticalAttitude = '';
+                        $scope.Relationship[RelationshipIndex].PoliticalAttitude = pE8[y][i].slice(('- Thái độ chính trị:').length).trim();
                         try {
                             for (j = i + 1; j <= pE8[y].length - 1 && pE8[y][j].startsWith('+'); j++) {
                                 $scope.Relationship[RelationshipIndex].PoliticalAttitude += (pE8[y][j].slice(1).trim()) + ',';
@@ -4557,9 +4575,41 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 if ($scope.pageInfo[i].innerText.trim().startsWith('- Tin học:')) {
                     $scope.infUser.LevelEducation.It = $scope.pageInfo[i].innerText.trim().slice(('- Tin học:').length).trim();
                 }
+                if ($scope.pageInfo[i].innerText.trim().startsWith('- Tình trạng hôn nhân :')) {
+                    // Loại bỏ phần tiêu đề và khoảng trắng dư thừa
+                    var info = $scope.pageInfo[i].innerText.trim().slice('- Tình trạng hôn nhân :'.length).trim();
+
+                    // Tách thông tin thành các phần con
+                    var parts = info.split(/[(,)]/);
+
+                    if (parts[0].trim() === 'LY_HON') {
+                        $scope.infUser.MaritalStatus.marriedStatus = "" + 2;
+                    } else if (parts[0].trim() === 'DOC_THAN') {
+                        $scope.infUser.MaritalStatus.marriedStatus = "" + 1;
+                    } else if (parts[0].trim() === 'KET_HON') {
+                        $scope.infUser.MaritalStatus.marriedStatus = "" + 3;
+                    } else {
+                        $scope.infUser.MaritalStatus.marriedStatus = "" + 1;
+                    }
+
+                    if (parts.length > 1 && parts[1].includes(':')) {
+                        $scope.infUser.MaritalStatus.decisionNumber = "" + parts[1].split(':')[1].trim(); // 123
+                    }
+
+                    // Kiểm tra xem phần tử parts[2] có chứa dấu ':' hay không trước khi sử dụng split
+                    if (parts.length > 2 && parts[2].includes(':')) {
+                        $scope.infUser.MaritalStatus.decisionDate = "" + parts[2].split(':')[1].trim(); // 10/03/2009
+                    }
+
+                    // Kiểm tra xem phần tử parts[3] có chứa dấu ':' hay không trước khi sử dụng split
+                    if (parts.length > 3 && parts[3].includes(':')) {
+                        $scope.infUser.MaritalStatus.location = "" + parts[3].split(':')[1].trim(); // HA noi
+                    }
+                }
                 $scope.SelfComment.context = $scope.SelfComment.context
                 $scope.PlaceCreatedTime.place = datapage9[0]
                 console.log($scope.infUser.Birthday);
+                console.log($scope.infUser.MaritalStatus);
             }
 
 
@@ -4805,82 +4855,7 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
     };
 });
 
-app.directive("chooseMaritalStatus", function () {
-    return {
-        restrict: "AE",
-        require: "ngModel",
-        templateUrl: ctxfolderJoinParty + '/MaritalStatus.html',
-        scope: {
-            ngModelCtrl: '=',
-            maritalStatuses: '='
-        },
-        link: function (scope, element, attrs, ngModelCtrl) {
-            function parseNgModelValue(value) {
-                var parts = value.split('_'); // Tách giá trị thành các phần
-                var result = {
-                    maritalStatusId: parts[0], // Gán phần đầu tiên cho maritalStatusId
-                    divorceDecisionNumber: parts[1], // Gán phần thứ hai cho divorceDecisionNumber
-                    divorceDecisionDate: parts[2], // Gán phần thứ ba cho divorceDecisionDate
-                    divorceDecisionPlace: parts[3] // Gán phần thứ tư cho divorceDecisionPlace
-                };
-                return result;
-            }
 
-
-
-            // Hàm cập nhật giá trị ngModelCtrl
-            function updateNgModelValue() {
-                var value = scope.model.maritalStatusId + '_' + scope.model.divorceDecisionNumber + '_' + scope.model.divorceDecisionDate + '_' + scope.model.divorceDecisionPlace;
-                ngModelCtrl.$setViewValue(scope.model.maritalStatusId.toString());
-                ngModelCtrl.$render();
-            }
-
-            // Watchers để theo dõi thay đổi trong giá trị ngModelCtrl
-            scope.$watch(function () {
-                return ngModelCtrl.$modelValue;
-            }, function (newValue) {
-                if (newValue) {
-                    scope.model.maritalStatusId = newValue;
-                }
-            });
-
-            // Watchers để theo dõi thay đổi trong model tình trạng hôn nhân
-            scope.$watch('model.maritalStatusId', function (newValue) {
-                // Thực hiện cập nhật giá trị ngModelCtrl khi có thay đổi
-                updateNgModelValue();
-                // Reset các trường nhập liệu khi chọn tình trạng hôn nhân mới
-                if (newValue === 'divorce') { // Đảm bảo so sánh với chuỗi văn bản
-                    scope.model.divorceDecisionNumber = '';
-                    scope.model.divorceDecisionDate = '';
-                    scope.model.divorceDecisionPlace = '';
-                }
-            });
-
-
-            // Khởi tạo model
-            scope.model = {
-                maritalStatusId: '',
-                // Khởi tạo các trường nhập liệu cho ly hôn
-                divorceDecisionNumber: '',
-                divorceDecisionDate: '',
-                divorceDecisionPlace: ''
-            };
-        },
-    };
-});
-
-$scope.onMaritalStatusChange = function () {
-    // Thực hiện các xử lý cần thiết khi tình trạng hôn nhân thay đổi
-    // Ví dụ: kiểm tra xem tình trạng hôn nhân có phải là 'Ly dị' không và thực hiện các hành động tương ứng
-    if ($scope.model.maritalStatusId === 'Ly dị') {
-        // Hiển thị các trường nhập liệu cho số quyết định, ngày tháng và địa điểm quyết định
-    } else {
-        // Ẩn các trường nhập liệu
-        $scope.model.divorceDecisionNumber = '';
-        $scope.model.divorceDecisionDate = '';
-        $scope.model.divorceDecisionPlace = '';
-    }
-};
 
 
 

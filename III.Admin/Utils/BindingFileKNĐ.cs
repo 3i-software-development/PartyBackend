@@ -132,6 +132,30 @@ namespace III.Admin.Utils
                     case ("- Tiếng dân tộc thiểu số:"):
                         text=p.AppendText(Pap.MinorityLanguages);
                         break;
+                    case ("- Tình trạng hôn nhân :"):
+                        string[] parts = Pap.MarriedStatus.Split('_');
+
+                        string maritalStatus = parts[0]; // Trạng thái hôn nhân
+                        if (parts[0] == "1")
+                        {
+                            maritalStatus = "DOC_THAN";
+                        }
+                        else if (parts[0] == "2")
+                        {
+                            maritalStatus = "LY_HON (Số quyết định: "+ parts[1]+", Ngày quyết định: "+ parts[2] +", địa điểm: " + parts[3]+")";
+                        }
+                        else if (parts[0] == "3")
+                        {
+                            maritalStatus = "KET_HON";
+                        }
+                        else {
+                            maritalStatus = "DOC_THAN";
+                        }
+
+                        Pap.MarriedStatus = maritalStatus;
+
+                        text = p.AppendText(Pap.MarriedStatus);
+                        break;
                     case ("Ngày và nơi vào Đoàn TNCSHCM:"):
                         if (Iop != null)
                         {
@@ -381,7 +405,19 @@ namespace III.Admin.Utils
                     text=p.AppendText("- Họ và tên: " + ph.Name);
 
                     p = cell.AddParagraph();
-                    text=p.AppendText("- Năm sinh: " + ph.BirthYear);
+                    string[] parts = ph.BirthYear.Split('_');
+
+                    string BirthYear = parts[0]; 
+                    if (parts.Length >1 && parts[0] == "true" )
+                    {
+                        ph.BirthYear = "Đã mất (" + parts[1] + ")";
+                    }
+                    else
+                    {
+                        ph.BirthYear =  parts[1];
+                    }
+
+                    text =p.AppendText("- Năm sinh: " + ph.BirthYear);
 
                     p = cell.AddParagraph();
                     text=p.AppendText("- Quê quán: " + ph.HomeTown);
@@ -391,27 +427,38 @@ namespace III.Admin.Utils
 
                     p = cell.AddParagraph();
                     var ismember = ph.PartyMember;
-                    text=p.AppendText("- Đảng viên: " + ismember);
+                    string[] partsMember = ph.PartyMember.Split('_');
+
+                    string PartyMember = partsMember[0];
+                    if (partsMember.Length > 1 && partsMember[1] == "true")
+                    {
+                        ph.PartyMember = "Có (Sinh hoạt tại: " + partsMember[0] + ")";
+                    }
+                    else
+                    {
+                        ph.PartyMember = "Không";
+                    }
+                    text =p.AppendText("- Đảng viên: " + ph.PartyMember);
 
                     p = cell.AddParagraph();
                     text=p.AppendText("- Nghề nghiệp: " + ph.Job);
 
                     p = cell.AddParagraph();
                     text=p.AppendText("- Quá trình công tác: ");
-
-                    if (!ph.PoliticalAttitude.IsNullOrEmpty())
-                    {
-                        p = cell.AddParagraph();
-                        text=p.AppendText(ph.PoliticalAttitude);
-                    }
-                    p = cell.AddParagraph();
-                    text=p.AppendText("- Thái độ chính trị: "); 
-
                     if (!ph.WorkingProgress.IsNullOrEmpty())
                     {
                         p = cell.AddParagraph();
-                        text=p.AppendText(ph.WorkingProgress);
+                        text = p.AppendText(ph.WorkingProgress);
                     }
+                    p = cell.AddParagraph();
+                    text = p.AppendText("- Thái độ chính trị: ");
+                    if (!ph.PoliticalAttitude.IsNullOrEmpty())
+                    {
+                        /*p = cell.AddParagraph();*/
+                        text = p.AppendText(ph.PoliticalAttitude);
+                    }
+                    p = cell.AddParagraph();
+                    
                 }
                 catch (Exception ex)
                 {
