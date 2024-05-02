@@ -45,7 +45,13 @@ namespace ESEIM.Models
 
 		public string ProfileCode { get; set; }
 		public bool IsDeleted {  get; set; }
-	}
+
+		[NotMapped]
+		public bool die { get; set; }
+        [NotMapped]
+        public string wordAt { get; set; }
+
+    }
     public class FamilyModel 
     {
         public int Id { get; set; }

@@ -728,6 +728,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     $scope.ImportFile = function (data) {
         dataserviceJoinParty.Import(data, function (rs) {
             rs = rs.data;
+            console.log(rs);
             if (rs.Error) {
                 App.toastrError(rs.Title);
                 $uibModalInstance.close('cancel');
@@ -2133,7 +2134,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             obj.Relation = e.Relation;
             obj.PartyMember = e.PartyMember;
             obj.Name = e.Name;
-            obj.BirthYear = e.BirthYear;
+            obj.BirthYear = [e.die, e.BirthYear].join('_');
             obj.Residence = e.Residence;
             obj.PoliticalAttitude = e.PoliticalAttitude;
             obj.HomeTown = e.HomeTown;
@@ -2269,7 +2270,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             .forEach(function (e) {
                 var obj = {};
                 obj.Relation = e.Relation;
-                obj.PartyMember = e.PartyMember;
+                obj.PartyMember = (e.PartyMember === "true") ? true : false;
                 obj.Name = e.Name;
                 obj.BirthYear = e.BirthYear;
                 obj.Residence = e.Residence;
@@ -2278,8 +2279,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 obj.Job = e.Job;
                 obj.WorkingProgress = e.WorkingProgress;
                 obj.ProfileCode = $scope.infUser.ResumeNumber;
+                obj.die = e.die;
+                obj.wordAt = e.wordAt;
+                console.log(obj.die, obj.wordAt);
+
                 //bj.Id=e.Id;
                 $scope.Relationship.push(obj)
+                console.log($scope.Relationship);
             });
         data.GoAboards.forEach(function (e) {
             var obj = {};
@@ -3296,9 +3302,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         //     return;
         // }
         if ($scope.infUser.MaritalStatus.marriedStatus === "" || $scope.infUser.MaritalStatus.marriedStatus == null || $scope.infUser.MaritalStatus.marriedStatus == undefined) {
-            $scope.err = true
-            App.toastrError("Không được để trường tình trạng hôn nhân trống")
-            return;
+            $scope.infUser.MaritalStatus.marriedStatus === '1'
         } else if ($scope.infUser.MaritalStatus.marriedStatus === '2') {
             if ($scope.infUser.MaritalStatus.decisionNumber === "" || $scope.infUser.MaritalStatus.decisionNumber == null || $scope.infUser.MaritalStatus.decisionNumber == undefined) {
                 $scope.err = true
@@ -3372,6 +3376,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                         GoAboards: $scope.GoAboard,
                         IntroducerOfParty: $scope.Introducer,
                     };
+                    console.log(body);
                     $scope.ImportFile(body);
                     return
                 }

@@ -716,7 +716,9 @@
                                                 ng-model="infUser.MaritalStatus.marriedStatus"
                                                 ng-change="filterMarriedStatus()">
                                                 <option ng-repeat="status in infUser.MarriedStatus"
-                                                    value="{{status.id}}">{{status.marriedStatus}}</option>
+                                                    value="{{status.id}}">{{status.marriedStatus == 'DOC_THAN' ?
+                                                    'Độc thân' : (status.marriedStatus == 'LY_HON' ? 'Đã ly dị' :
+                                                    'Đã kết hôn')}}</option>
                                             </select>
 
                                             <div style="display: flex;justify-content: space-around"
@@ -1461,6 +1463,14 @@
                                                         <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
                                                             <td>
                                                                 {{x.Relation}}
+                                                                <span
+                                                                    ng-if="(x.Relation.toLowerCase() === 'vợ (chồng)' || x.Relation.toLowerCase() === 'vợ' || x.Relation.toLowerCase() === 'chồng') && infUser.MaritalStatus.marriedStatus.split('_')[0] === '2'">
+                                                                    (Ly hôn theo quyết định
+                                                                    số: {{infUser.MaritalStatus.decisionNumber}}, Ngày:
+                                                                    {{infUser.MaritalStatus.decisionDate}},
+                                                                    Địa điểm: {{infUser.MaritalStatus.location}}
+                                                                </span>
+
                                                             </td>
                                                             <td>{{x.Name}}</td>
                                                             <td>

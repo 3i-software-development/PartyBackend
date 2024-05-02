@@ -1076,7 +1076,7 @@
                                     </div>
 
                                     <div class="form-group row">
-                                        <div class="col-md-4 pr-0">
+                                        <div class="col-md-4 pr-0" style="display: flex;align-items: baseline;">
                                             <i class="fa fa-heart" id="MarriedStatusIcon"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Tình trạng hôn nhân
@@ -1093,8 +1093,10 @@
                                                     ng-model="infUser.MaritalStatus.marriedStatus"
                                                     ng-change="filterMarriedStatus()">
                                                     <option ng-repeat="status in infUser.MarriedStatus"
-                                                        value="{{status.id}}">{{status.marriedStatus}}
-                                                    </option>
+                                                        value="{{status.id}}">{{status.marriedStatus == 'DOC_THAN' ?
+                                                        'Độc thân' : (status.marriedStatus == 'LY_HON' ? 'Đã ly dị' :
+                                                        'Đã
+                                                        kết hôn')}}</option>
                                                 </select>
 
                                                 <div style="display: flex;justify-content: space-around"
