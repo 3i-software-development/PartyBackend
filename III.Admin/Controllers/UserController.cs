@@ -297,7 +297,7 @@ namespace III.Admin.Controllers
                     Directory.CreateDirectory(uploadPath);
                 }
 
-                string newFileName = $"{user.ResumeNumber}_{DateTime.Now.ToString("ddMMyyyyHHmmss")}_{file.FileName}";
+                string newFileName = $"{user.Username}_{user.CurrentName}_{DateTime.Now.ToString("ddMMyyyyHHmmss")}_{file.FileName}";
                 string filePath = Path.Combine(uploadPath, newFileName);
                 var fileUpload = file;
                 using (var stream = new FileStream(filePath, FileMode.Create))

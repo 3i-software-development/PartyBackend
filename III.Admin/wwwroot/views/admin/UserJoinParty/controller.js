@@ -4018,7 +4018,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     }
                 },
                 error: function (error) {
-                    console.log(error.Title);
+                    console.log(error.Titlapplye);
                 }
             });
         }

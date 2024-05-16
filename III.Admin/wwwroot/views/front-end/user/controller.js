@@ -1706,10 +1706,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.submitPartyAdmissionProfile = function () {
 
-        $scope.infUser.MaritalStatus.marriedStatus = $scope.infUser.MaritalStatus.marriedStatus !== "" ? $scope.infUser.MaritalStatus.marriedStatus : "";
-        $scope.infUser.MaritalStatus.decisionNumber = $scope.infUser.MaritalStatus.decisionNumber !== "" ? $scope.infUser.MaritalStatus.decisionNumber : "";
-        $scope.infUser.MaritalStatus.decisionDate = $scope.infUser.MaritalStatus.decisionDate && $scope.infUser.MaritalStatus.decisionDate.trim() !== "" ? $scope.infUser.MaritalStatus.decisionDate : "";
-        $scope.infUser.MaritalStatus.location = $scope.infUser.MaritalStatus.location !== "" ? $scope.infUser.MaritalStatus.location : "";
 
         $scope.err = false
         var pattern = /^[0-9]+$/;
@@ -1824,6 +1820,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 return;
             }
         }
+        $scope.infUser.MaritalStatus.marriedStatus = $scope.infUser.MaritalStatus.marriedStatus !== "" ? $scope.infUser.MaritalStatus.marriedStatus : "";
+        $scope.infUser.MaritalStatus.decisionNumber = $scope.infUser.MaritalStatus.decisionNumber !== "" ? $scope.infUser.MaritalStatus.decisionNumber : "";
+        $scope.infUser.MaritalStatus.decisionDate = $scope.infUser.MaritalStatus.decisionDate && $scope.infUser.MaritalStatus.decisionDate.trim() !== "" ? $scope.infUser.MaritalStatus.decisionDate : "";
+        $scope.infUser.MaritalStatus.location = $scope.infUser.MaritalStatus.location !== "" ? $scope.infUser.MaritalStatus.location : "";
+
         console.log($scope.model);
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
         if ($scope.err == false) {
