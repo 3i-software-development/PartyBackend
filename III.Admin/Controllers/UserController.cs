@@ -609,6 +609,24 @@ namespace III.Admin.Controllers
             var rs = _context.Wards.Where(p => p.districtId == districtId).ToList();
             return rs;
         }
+
+
+        public object GetTinh(int id)
+        {
+            var rs = _context.Provinces.Where(p => p.provinceId == id).ToList();
+            return rs;
+        }
+
+        public object GetHuyen(int id)
+        {
+            var rs = _context.Districts.Where(p => p.districtId == id).ToList();
+            return rs;
+        }
+        public object GetXa(int id)
+        {
+            var rs = _context.Wards.Where(p => p.wardsId == id).ToList();
+            return rs;
+        }
         #endregion
         #region Update
 

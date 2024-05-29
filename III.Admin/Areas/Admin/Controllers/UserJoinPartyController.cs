@@ -686,7 +686,8 @@ namespace III.Admin.Controllers
                     Username = x.Username,
                     Status = x.Status,
                     GroupUserCode = x.GroupUserCode,
-                    PlaceWorking = x.PlaceWorking
+                    PlaceWorking = x.PlaceWorking,
+                    MarriedStatus = x.MarriedStatus,
                 }).FirstOrDefault();
             
             jsonData.IntroducerOfParty = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false);
@@ -697,6 +698,42 @@ namespace III.Admin.Controllers
             jsonData.WarningDisciplineds = _context.WarningDisciplineds.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
             jsonData.GoAboards = _context.GoAboards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
             jsonData.PersonalHistories = _context.PersonalHistories.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+
+
+            // Process BirthYear for each family member
+            foreach (var familyMember in jsonData.Families)
+            {
+                string[] parts = familyMember.BirthYear.Split('_'); // Assuming parts are separated by semicolon
+                string[] partParty = familyMember.PartyMember.Split('_'); // Assuming parts are separated by semicolon
+
+                familyMember.BirthYear = parts.Length > 1 ? parts[1] : familyMember.BirthYear;
+                if (parts[0] == "true")
+                {
+                    familyMember.BirthYear = parts[1]  ;
+                    familyMember.Name += "\n" + "(Đã mất - " + "mất tại: " + parts[2] + "- mất do:" + parts[3] + ")";
+                }
+                else
+                {
+                    familyMember.BirthYear = parts[1];
+                };
+                if (partParty[1] == "true")
+                {
+                    familyMember.PartyMember = "Có \n" + "+ Công tác tại: " + partParty[0] +"\n"+ "+ Thuộc chi bộ: " + partParty[2];
+                }
+                else
+                {
+                    familyMember.PartyMember = "không";
+                }
+                if (familyMember.Relation.ToLower() == "vợ" || familyMember.Relation.ToLower() == "chồng" || familyMember.Relation.ToLower() == "vợ (chồng)")
+                {
+                    string[] marriedParts = jsonData.Profile.MarriedStatus.Split('_');
+                    if (marriedParts[0] == "2")
+                    {
+                        familyMember.Name += $" (Đã Ly hôn theo quyết định số: {marriedParts[1]}, Ngày: {marriedParts[2]}, Địa điểm: {marriedParts[3]})";
+                    }
+                }
+
+            }
 
             //tạo file
             msg = CreatePartyMemberProfile(jsonData);

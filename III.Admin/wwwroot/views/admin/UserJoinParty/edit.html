@@ -182,11 +182,14 @@
         box-shadow: none;
         font-size: 15px;
     }
+        .ui-select-bootstrap div {
+            height: unset !important;
+        }
 
-    .ui-select-bootstrap .ui-select-choices-row.active>a {
-        color: #000;
-        text-wrap: nowrap;
-    }
+        .ui-select-bootstrap .ui-select-choices-row.active > a {
+            color: #000;
+            text-wrap: nowrap;
+        }
 
     .ui-select-bootstrap>.ui-select-choices {
         width: auto;
@@ -285,9 +288,7 @@
 <div class="portlet-body form row" style="margin-top: 15px">
     <!--<input type="button" ng-click="addJson()" value="add">-->
     <div class="col-lg-12" method="post">
-        <div class="d-flex;" style="    display: flex;
-        align-items: center;
-        height: 60px;">
+        <div class="d-flex;" style="    display: flex; align-items: center;height: 60px;">
             <div class="col-md-3 mb-10">
                 <div class="input-group br24">
                     <input class="form-control inputFile" placeholder="Chọn tệp" readonly />
@@ -407,7 +408,7 @@
                                                 popover-trigger="outsideClick">
 
                                             </i>
-                                            <input class="displayInfo" name="CusCode" ng-model="infUser.Birthday"
+                                            <input class="displayInfo" name="CusCode" ng-model="infUser.Birthday"  ng-change="changeHistory()"
                                                 type="text" placeholder="Ngày sinh" ng-required="true">
                                         </div>
 
@@ -522,7 +523,7 @@
                                                 popover-trigger="outsideClick">
                                             </i>
                                             <input class="displayInfo speechInput" style="border: #FFFF;" name="CusCode"
-                                                ng-model="infUser.HomeTown" type="text" placeholder="Quê quán"
+                                                ng-model="infUser.HomeTown" type="text" placeholder="Thôn ..., Xã ..., Huyện ..., Thành phố ..."
                                                 ng-required="true">
                                             <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                                 ng-model="infUser.HomeTown"></i>
@@ -552,7 +553,7 @@
                                             </i>
                                             <input class="displayInfo speechInput" style="border: #FFFF;" name="CusCode"
                                                 ng-model="infUser.Residence" type="text"
-                                                placeholder="Địa chỉ thường trú" ng-required="true">
+                                                placeholder="Học sinh trường ... Địa chỉ trường ...." ng-required="true">
                                             <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                                 ng-model="infUser.Residence"></i>
                                         </div>
@@ -1177,7 +1178,7 @@
                                 <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
                             </div>
                         </div>
-                        <div class="" style="padding-left: 20px; font-size: 13px;">
+                        <div class="" style="  font-size: 13px;">
                             <div class="row">
                                 <div class="col-md-6" style="padding-left: 15px;">
                                     <div class="form-group row">
@@ -1251,14 +1252,12 @@
 
                                         </div>
                                         <div class="col-md-8">
-                                            <div
-                                                style="display: flex; align-items: center;  flex-direction: row-reverse !important; gap: 1%;">
-                                                <div style="width: 19%;"><input ng-change="updateAddressState()"
+                                            <div style="display: flex; align-items: center;  gap: 1%;">
+                                                <div class="col-md-2"><input ng-change="updateAddressState()"
                                                         type="checkbox" ng-model="disableAddress"
-                                                        ng-change="changedisable()"><span style="font-weight: bold;">Đã
-                                                        mất</span>
+                                                        ng-change="changedisable()"><span style="font-weight: bold;">Đã mất</span>
                                                 </div>
-                                                <div class="br24 form-control custom-title-code-bold"
+                                                <div class="br24 form-control custom-title-code-bold col-md-10"
                                                     style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
                                                         title="Popover Header" popover-placement="bottom-left"
@@ -1274,6 +1273,47 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group row" ng-show="disableAddress">
+                                        <div class="col-md-4 pr-0 ">
+                                            <i class="fa fa-home" id="residence" ng-click="openPopover('residence');"
+                                               uib-popover-template="'popoverTemplate.html'" popover-placement="right"
+                                               popover-trigger="outsideClick"></i>
+                                            <label class="displayInfo control-label require custom-title-code-bold">
+                                                Lí do mất
+                                            </label>
+                                        </div>
+
+                                        <div class="col-md-4" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold"
+                                                 style="white-space: nowrap; padding-right: 35px;">
+                                                <i class="fa fa-info-circle icon-clickable" id="residence"
+                                                   title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="VD: Nơi mất của người thân là: Hà Nội "
+                                                   popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                       ng-model="selectedFamily.AddressDie" type="text"
+                                                       placeholder="Nơi mất" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.AddressDie"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold"
+                                                 style="white-space: nowrap; padding-right: 35px;">
+                                                <i class="fa fa-info-circle icon-clickable" id="residence"
+                                                   title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="Lý do mất của người thân ( VD: Do bệnh tật)"
+                                                   popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                       ng-model="selectedFamily.Reason" type="text"
+                                                       placeholder="Lí do mất" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="selectedFamily.Reason"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group row">
                                         <div class="col-md-4 pr-0 ">
                                             <i class="fa fa-user"></i>
@@ -1283,23 +1323,35 @@
 
 
                                         <div class="col-md-8">
-                                            <div
-                                                style="display: flex; align-items: center;  flex-direction: row-reverse !important; gap: 1%;">
-                                                <div style="width: 19%;"><input type="checkbox"
-                                                        ng-model="selectedFamily.PartyMember"
-                                                        ng-change="changedis()"><span style="font-weight: bold;">
+                                            <div style="display: flex; align-items: center; gap: 1%;">
+                                                <div class="col-md-2">
+                                                    <input type="checkbox"
+                                                           ng-model="selectedFamily.PartyMember"
+                                                           ng-change="changedis()"><span style="font-weight: bold;">
                                                 </div>
                                                 <div ng-show="PartyMember"
-                                                    class="br24 form-control custom-title-code-bold"
-                                                    style="white-space:nowrap">
+                                                     class="br24 form-control custom-title-code-bold col-md-6"
+                                                     style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
-                                                        title="Popover Header" popover-placement="bottom-left"
-                                                        uib-popover="Năm sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="outsideClick"></i>
+                                                       title="Popover Header" popover-placement="bottom-left"
+                                                       uib-popover="Năm sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                       popover-trigger="outsideClick"></i>
 
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-model="selectedFamily.wordAt" type="text"
-                                                        placeholder="Công tác tại " />
+                                                           ng-model="selectedFamily.wordAt" type="text"
+                                                           placeholder="Công tác tại " />
+                                                </div>
+                                                <div ng-show="PartyMember"
+                                                     class="br24 form-control custom-title-code-bold col-md-6"
+                                                     style="white-space:nowrap">
+                                                    <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
+                                                       title="Popover Header" popover-placement="bottom-left"
+                                                       uib-popover="Trước kia thuộc đảng bộ nào (VD: Đảng bộ 20)"
+                                                       popover-trigger="outsideClick"></i>
+
+                                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                           ng-model="selectedFamily.Party" type="text"
+                                                           placeholder="Thuộc đảng bộ nào " />
                                                 </div>
                                             </div>
                                         </div>
@@ -1431,9 +1483,13 @@
                                     </div>
 
                                     <div class="pull-right">
-                                        <button class="btn" ng-click="addToFamily(x)">
+                                        <button class="btn m-1" ng-click="addToFamily(x)">
                                             <i class="fa fa-plus"></i>
                                             <span>Thêm</span>
+                                        </button>
+                                        <button class="btn m-1" ng-click="deleteSelect()">
+                                            <i class="fa-solid fa-xmark"></i>
+                                            <span>Hủy</span>
                                         </button>
                                     </div>
                                 </div>
@@ -1441,8 +1497,8 @@
 
                             <div class="row">
                                 <div style="background-color: #fff; border-radius: 5px;">
-                                    <div class="" style="padding-left: 20px; font-size: 13px;">
-                                        <div class="table-wrapper">
+                                    <div class="" style="  font-size: 13px;">
+                                        <div class="table-wrapper" style="border: 1px solid #cccccc; margin-top: 10px;">
                                             <div class="list-item">
                                                 <table class="table">
                                                     <thead>
@@ -1463,33 +1519,45 @@
                                                         <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
                                                             <td>
                                                                 {{x.Relation}}
-                                                                <span
-                                                                    ng-if="(x.Relation.toLowerCase() === 'vợ (chồng)' || x.Relation.toLowerCase() === 'vợ' || x.Relation.toLowerCase() === 'chồng') && infUser.MaritalStatus.marriedStatus.split('_')[0] === '2'">
-                                                                    (Ly hôn theo quyết định
+                                                                
+
+                                                            </td>
+                                                            <td>{{x.Name}}
+                                                                <span ng-if="(x.Relation.toLowerCase() === 'vợ (chồng)' || x.Relation.toLowerCase() === 'vợ' || x.Relation.toLowerCase() === 'chồng') && infUser.MaritalStatus.marriedStatus.split('_')[0] === '2'">
+                                                                    (Đã Ly hôn theo quyết định
                                                                     số: {{infUser.MaritalStatus.decisionNumber}}, Ngày:
                                                                     {{infUser.MaritalStatus.decisionDate}},
                                                                     Địa điểm: {{infUser.MaritalStatus.location}}
                                                                 </span>
-
                                                             </td>
-                                                            <td>{{x.Name}}</td>
                                                             <td>
-                                                                {{x.die == true ?"Năm sinh - Năm mất" : ""}}
-                                                                {{x.BirthYear}}
-
+                                                               <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
+                                                                {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
+                                                                <div><span>- Năm sinh{{x.die == true ?"(Đã mất)" : ""}}: {{x.BirthYear}}</span></div>
+                                                                <div>
+                                                                    <span>{{x.die == true ?"- Nơi mất: "+ x.AddressDie : ""  }}</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span>{{x.die == true ?"- Lý do mất: "+ x.Reason : ""  }}</span>
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 <div><span>- Quê quán: {{x.HomeTown}}</span></div>
-                                                                <div><span>- Nơi cư trú: {{x.Residence}}</span>
+                                                                <div><span> {{x.die == false ? "- Nơi cư trú:" + x.Residence.trim() : "" }}</span>
                                                                 </div>
                                                             </td>
                                                             <td>{{x.Job}}</td>
                                                             <td>{{x.WorkingProgress}}</td>
                                                             <td>{{x.PoliticalAttitude}}</td>
-                                                            <td>{{x.PartyMember == true?"Có (Sinh hoạt tại: " +x.wordAt
-                                                                +
-                                                                ")" : "Không"}}
-
+                                                            <td>
+                                                                <!--{{x.PartyMember == true?"Có (Sinh hoạt tại: " +x.wordAt + ")" : "Không"}}-->
+                                                                <div><span>{{x.PartyMember == true ?"- Là đảng viên" : "- Không phải là đảng viên"}}</span></div>
+                                                                <div>
+                                                                    <span>{{x.PartyMember == true ?"    + Sinh hoạt tại chi bộ: "+ x.wordAt : ""  }}</span>
+                                                                </div>
+                                                                <div>
+                                                                    <span>{{x.PartyMember == true ?"    + Thuộc đảng bộ: "+ x.Party : ""  }}</span>
+                                                                </div>
                                                             </td>
 
                                                             <td>

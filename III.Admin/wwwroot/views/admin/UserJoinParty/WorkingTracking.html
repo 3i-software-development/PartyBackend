@@ -16,7 +16,7 @@
             <div class="col-md-8" style="display: flex; padding-left: 8px;">
                 <div class="br24 form-control custom-title-code-bold">
                     <i class="fa fa-info-circle icon-clickable" id="from" title="Popover Header" popover-placement="bottom-left"
-                    uib-popover="Từ ngày: {{selectedWorkingTracking.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                       uib-popover="Từ ngày: {{selectedWorkingTracking.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                            ng-model="selectedWorkingTracking.From" type="text"
                            placeholder="Từ ngày" />
@@ -34,7 +34,7 @@
             <div class="col-md-8" style="display: flex; padding-right: 8px;">
                 <div class="br24 form-control custom-title-code-bold">
                     <i class="fa fa-info-circle icon-clickable" id="to" title="Popover Header" popover-placement="bottom-left"
-                    uib-popover="Từ ngày: {{selectedWorkingTracking.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                       uib-popover="Từ ngày: {{selectedWorkingTracking.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                            ng-model="selectedWorkingTracking.To" type="text"
                            placeholder="Đến ngày" />
@@ -52,11 +52,11 @@
         </div>
         <div class="col-md-10" style="display: flex;">
 
-            
+
 
             <div class="br24 form-control custom-title-code-bold">
                 <i class="fa fa-info-circle icon-clickable" id="work" title="Popover Header" popover-placement="bottom-left"
-                uib-popover="Từ ngày: {{selectedWorkingTracking.Work}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                   uib-popover="Từ ngày: {{selectedWorkingTracking.Work}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                        ng-model="selectedWorkingTracking.Work" type="text"
                        placeholder="Nội dung" />
@@ -76,37 +76,38 @@
         <div class="col-md-10" style="display: flex;">
             <div class="br24 form-control custom-title-code-bold">
                 <i class="fa fa-info-circle icon-clickable" id="role" title="Popover Header" popover-placement="bottom-left"
-                uib-popover="Từ ngày: {{selectedWorkingTracking.Role}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
+                   uib-popover="Từ ngày: {{selectedWorkingTracking.Role}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                 <input class="displayInfo" style="border: #FFFF;" name="CusCode" ng-model="selectedWorkingTracking.Role" type="text" placeholder="Chức vụ" />
                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                    ng-model="selectedWorkingTracking.Role"></i>
             </div>
-</div>
-</div>
-<div class="pull-right">
-<button class="btn" ng-click="addToBusinessNDuty()" style="">
+        </div>
+    </div>
+    <div class="pull-right">
+        <button class="btn" ng-click="addToBusinessNDuty()" style="">
 
-<i class="fa fa-plus" ></i>
-<span>Thêm</span>
-</button>
-</div>
-<div class="list-item">
-<table>
-<tr>
-<th>Từ ngày</th>
-<th>Đến ngày</th>
-<th>Nội dung</th>
-<th>Chức vụ</th>
-<th>Xoá bỏ</th>
-</tr>
-<tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
-<td>{{x.From}}</td>
-<td>{{x.To}}</td>
-<td>{{x.Work}}</td>
-<td>{{x.Role}}</td>
-<td style="text-align:center">
-<i style="color:red" class="fa fa-trash" ng-click="deleteWorkingTracking($index)"></i>
-</td>
-</tr>
-</table>
+            <i class="fa fa-plus"></i>
+            <span>Thêm</span>
+        </button>
+    </div>
+    <div class="list-item">
+        <table>
+            <tr>
+                <th>Từ ngày</th>
+                <th>Đến ngày</th>
+                <th>Nội dung</th>
+                <th>Chức vụ</th>
+                <th>Xoá bỏ</th>
+            </tr>
+            <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
+                <td>{{x.From}}</td>
+                <td>{{x.To}}</td>
+                <td>{{x.Work}}</td>
+                <td>{{x.Role}}</td>
+                <td style="text-align:center">
+                    <i style="color:red" class="fa fa-trash" ng-click="deleteWorkingTracking($index)"></i>
+                </td>
+            </tr>
+        </table>
+    </div>
 </div>

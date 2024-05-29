@@ -27,105 +27,113 @@
 </div>
 <div class="mt-15" style="padding-left: 15px;">
     <div class="form-group row">
-        <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
-            <div class="col-md-4 pr-0" style="padding-left: 7px; ">
-                <i class="fa fa-calendar" id="startDate" ng-click="openPopover('startDate');"
-                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                    popover-trigger="outsideClick"></i>
-                <label class="displayInfo control-label require custom-title-code-bold">
-                    Từ
-                    ngày
-                </label>
-            </div>
-            <div class="col-md-8" style="display: flex; padding-left: 8px;">
-                <div class="br24 form-control custom-title-code-bold" style="padding-right: 0px;">
-                    <i class="fa fa-info-circle icon-clickable" id="PersonHistory-From" title="Popover Header"
-                        popover-placement="bottom-left"
-                        uib-popover="Từ ngày: {{selectedPersonHistory.Begin}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                        popover-trigger="outsideClick"></i>
+        <div>
+            <div class="form-group row">
+                <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
+                    <div class="col-md-4 pr-0" style="padding-left: 7px; ">
+                        <i class="fa fa-calendar" id="startDate" ng-click="openPopover('startDate');"
+                           uib-popover-template="'popoverTemplate.html'" popover-placement="right"
+                           popover-trigger="outsideClick"></i>
+                        <label class="displayInfo control-label require custom-title-code-bold">
+                            Từ
+                            ngày
+                        </label>
+                    </div>
+                    <div class="col-md-8" style="display: flex; padding-left: 8px;">
+                        <div class="br24 form-control custom-title-code-bold" style="padding-right: 0px;">
+                            <i class="fa fa-info-circle icon-clickable" id="PersonHistory-From" title="Popover Header"
+                               popover-placement="bottom-left"
+                               uib-popover="Từ ngày: {{selectedPersonHistory.Begin}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                               popover-trigger="outsideClick"></i>
 
-                    <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Begin" type="text"
-                        placeholder="Từ ngày" />
+                            <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Begin" type="text"
+                                   placeholder="Từ ngày" ng-change="changeHistory()" />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 row" style="padding-left: 0px;padding-right: 0px;">
+                    <div class="col-md-4 pr-0">
+                        <i class="fa fa-calendar" id="endDate" ng-click="openPopover('endDate');"
+                           uib-popover-template="'popoverTemplate.html'" popover-placement="right"
+                           popover-trigger="outsideClick"></i>
+                        <label class="displayInfo control-label require custom-title-code-bold">
+                            Đến
+                            ngày
+                        </label>
+                    </div>
+                    <div class="col-md-8" style="display: flex;padding-right: 0">
+                        <div class="br24 form-control custom-title-code-bold">
+                            <i class="fa fa-info-circle icon-clickable" id="PersonHistory-To" title="Popover Header"
+                               popover-placement="bottom-left"
+                               uib-popover="Đến ngày: {{selectedPersonHistory.End}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                               popover-trigger="outsideClick"></i>
+                            <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.End" type="text"
+                                   placeholder="Đến ngày" />
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-md-6 row" style="padding-left: 0px;padding-right: 0px;">
-            <div class="col-md-4 pr-0">
-                <i class="fa fa-calendar" id="endDate" ng-click="openPopover('endDate');"
-                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                    popover-trigger="outsideClick"></i>
-                <label class="displayInfo control-label require custom-title-code-bold">
-                    Đến
-                    ngày
-                </label>
-            </div>
-            <div class="col-md-8" style="display: flex;padding-right: 0">
-                <div class="br24 form-control custom-title-code-bold">
-                    <i class="fa fa-info-circle icon-clickable" id="PersonHistory-To" title="Popover Header"
-                        popover-placement="bottom-left"
-                        uib-popover="Đến ngày: {{selectedPersonHistory.End}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                        popover-trigger="outsideClick"></i>
-                    <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.End" type="text"
-                        placeholder="Đến ngày" />
+
+            <div class="form-group row">
+                <div class="col-md-2 pr-0">
+                    <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');"
+                       uib-popover-template="'popoverTemplate.html'" popover-placement="right"
+                       popover-trigger="outsideClick"></i>
+                    <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType!=1&&PersonHistoryType!=2&&PersonHistoryType!=3">{{"Nội dung"}}</label>
+                    <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType==1||PersonHistoryType==2||PersonHistoryType==3">{{"Tại chi bộ"}}</label>
+
+                </div>
+                <div class="col-md-10" style="display: flex;">
+                    <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
+                        <i class="fa fa-info-circle icon-clickable" id="PersonHistory-content" title="Popover Header"
+                           popover-placement="bottom-left"
+                           uib-popover="Nội dung: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                           popover-trigger="outsideClick"></i>
+                        <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Content" type="text"
+                               placeholder="Nội dung" />
+                        <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                           ng-model="selectedPersonHistory.Content"></i>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-md-2 pr-0">
-            <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');"
-                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                popover-trigger="outsideClick"></i>
-            <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType!=1&&PersonHistoryType!=2&&PersonHistoryType!=3">{{"Nội dung"}}</label>
-            <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType==1||PersonHistoryType==2||PersonHistoryType==3">{{"Tại chi bộ"}}</label>
-           
-        </div>
-        <div class="col-md-10" style="display: flex;">
-            <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                <i class="fa fa-info-circle icon-clickable" id="PersonHistory-content" title="Popover Header"
-                    popover-placement="bottom-left"
-                    uib-popover="Nội dung: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                    popover-trigger="outsideClick"></i>
-                <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Content" type="text"
-                    placeholder="Nội dung" />
-                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                    ng-model="selectedPersonHistory.Content"></i>
+            <div class="form-group row">
+                <div class="col-md-2 pr-0">
+                    <i class="fa fa-pencil-square-o" id="PersonHistory-content" ng-click="openPopover('content');"
+                       uib-popover-template="'popoverTemplate.html'" popover-placement="right"
+                       popover-trigger="outsideClick"></i>
+                    <label class="displayInfo control-label require custom-title-code-bold">Loại lịch sử</label>
+                </div>
+                <div class="col-md-10" style="display: flex;">
+                    <div class="br24 form-control custom-title-code-bold d-flex" style="white-space:nowrap">
+                        <i class="fa fa-info-circle icon-clickable" id="PersonHistory-Type" title="Popover Header"
+                           popover-placement="bottom-left"
+                           uib-popover="Nội dung: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                           popover-trigger="outsideClick"
+                           style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                        <ui-select ng-model="PersonHistoryType" theme="bootstrap" class="displayInfo"
+                                   on-select="changeSelectType($select.selected)"
+                                   style="border: none; height: 24.5px; display: inline-block;">
+                            <ui-select-match placeholder="Loại lịch sử"
+                                             style="height:24.5px">{{$select.selected.Name}}</ui-select-match>
+                            <ui-select-choices repeat="x.Code as x in listType | filter: $select.search">
+                                <div>{{x.Name}}</div>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="col-md-2 pr-0">
-            <i class="fa fa-pencil-square-o" id="PersonHistory-content" ng-click="openPopover('content');"
-                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                popover-trigger="outsideClick"></i>
-            <label class="displayInfo control-label require custom-title-code-bold">Loại lịch sử</label>
-        </div>
-        <div class="col-md-10" style="display: flex;">
-            <div class="br24 form-control custom-title-code-bold d-flex" style="white-space:nowrap">
-                <i class="fa fa-info-circle icon-clickable" id="PersonHistory-Type" title="Popover Header"
-                    popover-placement="bottom-left"
-                    uib-popover="Nội dung: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                    popover-trigger="outsideClick"
-                    style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                <ui-select ng-model="PersonHistoryType" theme="bootstrap" class="displayInfo"
-                    on-select="changeSelectType($select.selected)"
-                    style="border: none; height: 24.5px; display: inline-block;">
-                    <ui-select-match placeholder="Loại lịch sử"
-                        style="height:24.5px">{{$select.selected.Name}}</ui-select-match>
-                    <ui-select-choices repeat="x.Code as x in listType | filter: $select.search">
-                        <div>{{x.Name}}</div>
-                    </ui-select-choices>
-                </ui-select>
-            </div>
-        </div>
-    </div>
 
-    <div>
-        <div class="pull-right">
-            <button class="btn" ng-click="addToPersonalHistory()" style="">
-                <i class="fa fa-plus"></i>
-                <span>Thêm</span>
-            </button>
+
+            <div class="pull-right">
+                <button class="btn" ng-click="addToPersonalHistory()" style="">
+                    <i class="fa fa-plus"></i>
+                    <span>Thêm</span>
+                </button>
+                <button class="btn m-1" ng-click="deleteselectPersonHistory()">
+                    <i class="fa-solid fa-xmark"></i>
+                    <span>Hủy</span>
+                </button>
+            </div>
         </div>
     </div>
 

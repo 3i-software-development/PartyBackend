@@ -138,18 +138,18 @@ namespace III.Admin.Utils
                         string maritalStatus = parts[0]; // Trạng thái hôn nhân
                         if (parts[0] == "1")
                         {
-                            maritalStatus = "DOC_THAN";
+                            maritalStatus = "Độc Thân";
                         }
                         else if (parts[0] == "2")
                         {
-                            maritalStatus = "LY_HON (Số quyết định: "+ parts[1]+", Ngày quyết định: "+ parts[2] +", địa điểm: " + parts[3]+")";
+                            maritalStatus = "Đã ly hôn (Số quyết định: "+ parts[1]+", Ngày quyết định: "+ parts[2] +", địa điểm: " + parts[3]+")";
                         }
                         else if (parts[0] == "3")
                         {
-                            maritalStatus = "KET_HON";
+                            maritalStatus = "Đã kết hôn";
                         }
                         else {
-                            maritalStatus = "DOC_THAN";
+                            maritalStatus = "Độc thân";
                         }
 
                         Pap.MarriedStatus = maritalStatus;
@@ -408,9 +408,9 @@ namespace III.Admin.Utils
                     string[] parts = ph.BirthYear.Split('_');
 
                     string BirthYear = parts[0]; 
-                    if (parts.Length >1 && parts[0] == "true" )
+                    if (parts.Length > 3 && parts[0] == "true" )
                     {
-                        ph.BirthYear = "Đã mất (" + parts[1] + ")";
+                        ph.BirthYear =  parts[1] + "(Đã mất) \n" + "- Nơi mất: " + parts[2] + "\n" + "- Lý do mất: " + parts[3];
                     }
                     else
                     {
@@ -430,15 +430,15 @@ namespace III.Admin.Utils
                     string[] partsMember = ph.PartyMember.Split('_');
 
                     string PartyMember = partsMember[0];
-                    if (partsMember.Length > 1 && partsMember[1] == "true")
+                    if (partsMember.Length > 2 && partsMember[1] == "true")
                     {
-                        ph.PartyMember = "Có (Sinh hoạt tại: " + partsMember[0] + ")";
+                        ph.PartyMember = "Có\n" + "- Sinh hoạt tại chi bộ: " + partsMember[0] + "\n" +  "- Thuộc đảng bộ: " + partsMember[2];
                     }
                     else
                     {
                         ph.PartyMember = "Không";
                     }
-                    text =p.AppendText("- Đảng viên: " + ph.PartyMember);
+                    text =p.AppendText("- Đảng viên: " + ph.PartyMember );
 
                     p = cell.AddParagraph();
                     text=p.AppendText("- Nghề nghiệp: " + ph.Job);
@@ -995,8 +995,10 @@ namespace III.Admin.Utils
                             p.Replace("…………………………………………………", jsonParty.Profile.Degree, true, true);
                         break;
                     case "- Lý luận chính trị: ……………………. - Ngoại ngữ: ………………………………………………..":
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.PoliticalTheory))
+                            p.Replace("Lý luận chính trị: …………………….", "Lý luận chính trị: " + jsonParty.Profile.PoliticalTheory, true, true);
                         if (!string.IsNullOrEmpty(jsonParty.Profile.ForeignLanguage))
-                            p.Replace("………………………………………………..", jsonParty.Profile.ForeignLanguage, true, true);
+                            p.Replace("Ngoại ngữ: ………………………………………………..", "Ngoại ngữ: " + jsonParty.Profile.ForeignLanguage, true, true);
                         break;
                     case "- Tin học: ………………………………………………………………………………………………...":
                         if (!string.IsNullOrEmpty(jsonParty.Profile.ItDegree))

@@ -50,7 +50,14 @@ namespace ESEIM.Models
 		public bool die { get; set; }
         [NotMapped]
         public string wordAt { get; set; }
-
+        [NotMapped]
+        public string AddressDie { get; set; }
+        [NotMapped]
+        public string Party { get; set; }
+        [NotMapped]
+        public string Reason { get; set; }
+        [NotMapped]
+        public string MarriedStatus { get; set; }
     }
     public class FamilyModel 
     {
