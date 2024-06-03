@@ -59,6 +59,15 @@ app.factory('dataserviceJoinParty', function ($http) {
         GetTinh: function (data, callback) {
             $http.get('/UserProfile/GetTinh?id=' + data).then(callback);
         },
+        GetXaName: function (data, callback) {
+            $http.get('/UserProfile/GetXaName?name=' + data ).then(callback);
+        },
+        GetHuyenName: function (data, callback) {
+            $http.get('/UserProfile/GetHuyenName?name=' + data ).then(callback);
+        },
+        GetTinhName: function (data, callback) {
+            $http.get('/UserProfile/GetTinhName?name=' + data).then(callback);
+        },
         getWardByDistrictId: function (data, callback) {
             $http.get('/UserProfile/GetWardByDistrictId?districtId=' + data).then(callback);
         },
@@ -1148,6 +1157,8 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     vm.dtColumns.push(DTColumnBuilder.newColumn('TemporaryAddress').withOption('sClass', '').withTitle('{{"Địa chỉ" | translate}}').renderWith(function (data, type) {
         return data
     }));
+
+          
 
     vm.dtColumns.push(DTColumnBuilder.newColumn('UnderPostGraduateEducation').withOption('sClass', '')
         .withTitle('{{"Trình độ" | translate}}').renderWith(function (data, type, full) {
@@ -2451,6 +2462,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.ListProvince = rs.data;
             console.log($scope.ListProvince);
         })
+
         $scope.maritalStatusList = [
             'Đã kết hôn',
             'Độc thân',
@@ -2792,6 +2804,32 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         dataserviceJoinParty.getListFile($scope.infUser.ResumeNumber, function (rs) {
             rs = rs.data;
             const parts = rs.MarriedStatus.split('_');
+            if (rs.PermanentResidence != "" || rs.PermanentResidence != null || rs.PermanentResidence != undefined) {
+                var thon_Residence = rs.PermanentResidence.split('_');
+            }
+            if (rs.HomeTown != "" || rs.HomeTown != null || rs.HomeTown != undefined) {
+                var thon_HomeTown = rs.HomeTown.split('_');
+            }
+            if (rs.PlaceBirth != "" || rs.PlaceBirth != null || rs.PlaceBirth != undefined) {
+                var thon_PlaceofBirth = rs.PlaceBirth.split('_');
+            }
+            if (rs.TemporaryAddress != "" || rs.TemporaryAddress != null || rs.TemporaryAddress != undefined ) {
+                var thon_TemporaryAddress = rs.TemporaryAddress.split('_');
+            }
+            if (rs.CreatedPlace != "" || rs.CreatedPlace != null || rs.CreatedPlace != undefined) {
+                var place = rs.CreatedPlace.split('_');
+            }
+            $scope.thon_Residence = thon_Residence[3];
+            $scope.thon_HomeTown = thon_HomeTown[3];
+            $scope.thon_PlaceofBirth = thon_PlaceofBirth[3];
+            if (thon_TemporaryAddress && thon_TemporaryAddress.length === 4) {
+                $scope.thon_TemporaryAddress = thon_TemporaryAddress[3];
+            }
+            if (place && place.length === 2) {
+                $scope.PlaceCreatedTime.place = place[0];
+                $scope.placeAddress = place[1];
+            }
+
             const decisionDate = new Date(parts[2]);
 
             // Lấy ngày, tháng và năm từ đối tượng Date
@@ -2828,6 +2866,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             if (part.length >= 3) {
                 var formattedBirthday = part[0] + "/" + part[1] + "/" + part[2];
                 $scope.infUser.Birthday = formattedBirthday;
+            }
+
+
+            var placeAddress = $scope.placeAddress.split("-");
+            if (placeAddress.length >= 3) {
+                var formattedBirthday = placeAddress[0] + "/" + placeAddress[1] + "/" + placeAddress[2];
+                $scope.placeAddress = formattedBirthday;
             }
             // Gán đối tượng JSON vào $scope.infUser.MaritalStatus
             // $scope.infUser.MaritalStatus = MaritalStatus;
@@ -2960,28 +3005,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.Type = $scope.selectedPersonHistory.Type;
 
         $scope.PersonalHistory.push(model);
-        var parts = $scope.infUser.Birthday.split("/");
+        /*var parts = $scope.infUser.Birthday.split("/");
         const year2 = Number(parts[2]);
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
         if ($scope.PersonalHistory.length === 0) {
             if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
                 $scope.selectedPersonHistory.Begin = `9/${year2 + 6}`;
-                $scope.selectedPersonHistory.End = `8/${year2 + 7}`;
+               *//* $scope.selectedPersonHistory.End = `8/${year2 + 7}`;*//*
             }
             else {
                 $scope.selectedPersonHistory.Begin = `9/`;
-                $scope.selectedPersonHistory.End = `8/`;
+                *//*$scope.selectedPersonHistory.End = `8/`;*//*
             }
         } else {
             for (let i = 1; i <= 200; i++) {
                 if ($scope.PersonalHistory.length === i) {
                     $scope.selectedPersonHistory.Begin = `9/${year2 + 6 + i}`;
-                    $scope.selectedPersonHistory.End = `8/${year2 + 7 + i}`;
+                    *//*$scope.selectedPersonHistory.End = `8/${year2 + 7 + i}`;*//*
                     break;
                 }
             }
-        }
+        }*/
         $scope.changeHistory()
     }
 
@@ -3101,23 +3146,23 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     const year2 = Number(parts[2]);
                     const currentDate = new Date();
                     const currentYear = currentDate.getFullYear();
-                if (result.length === 0) {
-                    if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
-                        $scope.selectedPersonHistory.Begin = `9/${year2 + 6}`;
-                        $scope.selectedPersonHistory.End = `8/${year2 + 7}`;
+                if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
+
+                    /*$scope.selectedPersonHistory.End = `8/${year2 + 7}`;*/
+                    const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
+                    const yearEnd = Number(year3[1]);
+                    const monthEnd = Number(year3[0]);
+                    const currentDate = new Date();
+                    const currentYear = currentDate.getFullYear();
+                    if (monthEnd === 12) {
+                        $scope.selectedPersonHistory.Begin = `1/${yearEnd + 1}`;
+                    } else {
+                        $scope.selectedPersonHistory.Begin = `${monthEnd + 1}/${yearEnd}`;
                     }
-                    else {
-                        $scope.selectedPersonHistory.Begin = `9/`;
-                        $scope.selectedPersonHistory.End = `8/`;
-                    }
+                    /*$scope.selectedPersonHistory.End = `8/${yearEnd + 1}`;*/
+                    ;
                 } else {
-                    for (let i = 1; i <= 200; i++) {
-                        if (result.length === i) {
-                            $scope.selectedPersonHistory.Begin = `9/${year2 + 6 + i}`;
-                            $scope.selectedPersonHistory.End = `8/${year2 + 7 + i}`;
-                            break; 
-                        } 
-                    }
+                    $scope.selectedPersonHistory.Begin = $scope.selectedPersonHistory.End + 1
                 }
                 $scope.$apply()
                 setTimeout(function () {
@@ -3223,6 +3268,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             obj.WorkingProgress = e.WorkingProgress;
             obj.ProfileCode = $scope.infUser.ResumeNumber;
             obj.Id = e.Id;
+            obj.ClassComposition = [e.AddressBirth, e.class].join('_')
             $scope.model.push(obj)
 
         });
@@ -3340,7 +3386,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             var pattern = /^[0-9]+$/;
             var datePattern = /^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-\d{4}$/;
             var datePattern2 = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
-        var PlaceWorking = $scope.infUser.PlaceWorking.split("_");
+        /*var PlaceWorking = $scope.infUser.PlaceWorking.split("_");*/
             if ($scope.infUser.LastName == "" || $scope.infUser.LastName == null || $scope.infUser.LastName == undefined) {
                 $scope.err = true
                 App.toastrError("Không được để trường Họ và tên trống")
@@ -3384,7 +3430,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 return;
             }
 
-
+/*
             var Residence = $scope.infUser.Residence.toLowerCase().split(",");
                 if (Residence.length < 4) {
                     $scope.err = true;
@@ -3395,7 +3441,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.err = true;
                 App.toastrError("Bạn vui lòng nhập theo định dạng thôn, xã, huyện, TP ở Địa chỉ thường trú");
                 return;
-            }
+            }*/
             if ($scope.infUser.PlaceofBirth == "" || $scope.infUser.PlaceofBirth == null || $scope.infUser.PlaceofBirth == undefined) {
                 $scope.err = true
                 App.toastrError("Không được để trường Nơi sinh trống")
@@ -3411,10 +3457,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 App.toastrError("Không được để trường Quê quán trống")
                 return;
 
-            } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
+/*            } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
                 $scope.err = true
                 App.toastrError("Không được để trường Địa chỉ tạm trú trống")
-                return;
+                return;*/
 
             } if ($scope.infUser.LevelEducation.GeneralEducation == "" || $scope.infUser.LevelEducation.GeneralEducation == null || $scope.infUser.LevelEducation.GeneralEducation == undefined) {
                 $scope.err = true
@@ -3440,12 +3486,12 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 App.toastrError("Không được để trường tự nhận xét trống")
                 return;
             }
-            if (PlaceWorking[0] === "NaN" || PlaceWorking[1] === "NaN" || PlaceWorking[2] === "NaN" || PlaceWorking[0] === "undefined" || PlaceWorking[1] === "undefined" || PlaceWorking[2] === "undefined" ) {
+           /* if (PlaceWorking[0] === "NaN" || PlaceWorking[1] === "NaN" || PlaceWorking[2] === "NaN" || PlaceWorking[0] === "undefined" || PlaceWorking[1] === "undefined" || PlaceWorking[2] === "undefined" ) {
                         $scope.err = true
                         App.toastrError("Không được để trường Địa giới hành chính")
                         return;
-            }
-        var HomeTown = $scope.infUser.HomeTown.toLowerCase().split(",");
+            }*/
+       /* var HomeTown = $scope.infUser.HomeTown.toLowerCase().split(",");
         if (HomeTown.length < 4) {
                 $scope.err = true;
                 App.toastrError("Bạn vui lòng nhập đầy đủ thôn, xã, huyện, TP ở quê quán");
@@ -3455,17 +3501,17 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.err = true;
             App.toastrError("Bạn vui lòng nhập theo định dạng thôn, xã, huyện, TP ở ở quê quán");
                 return;
-            }
+            }*/
         
 
 
-            return new Promise((resolve, reject) => {
+           /* return new Promise((resolve, reject) => {
                 if ($scope.infUser.PlaceWorking.length > 0) {
                     $scope.tinhName = ''
                     $scope.huyenName = ''
                     $scope.xaName = ''
                     var PlaceWorking = $scope.infUser.PlaceWorking.split('_');
-                    if (Residence.length === 4) {
+                   if (Residence.length === 4) {
                         var provinceId = parseInt(PlaceWorking[0]);
                         var districtId = parseInt(PlaceWorking[1]);
                         var communeId = parseInt(PlaceWorking[2]);
@@ -3528,7 +3574,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     promises.push(promiseCommune);
 
                     Promise.all(promises)
-                        .then(() => {
+                        .then(() => {*/
                             if ($scope.infUser.MaritalStatus.marriedStatus === "" || $scope.infUser.MaritalStatus.marriedStatus == null || $scope.infUser.MaritalStatus.marriedStatus == undefined) {
                                 $scope.infUser.MaritalStatus.marriedStatus === '1'
                             } else if ($scope.infUser.MaritalStatus.marriedStatus === '2') {
@@ -3549,6 +3595,48 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                                 }
                             }
 
+                            if ($scope.thon_Residence === "" || $scope.thon_Residence == null || $scope.thon_Residence == undefined) {
+                                $scope.err = true
+                                App.toastrError("Không được để trường địa chỉ thôn trong địa chỉ thường chú trống")
+                                return;
+                            }
+                            if ($scope.thon_PlaceofBirth === "" || $scope.thon_PlaceofBirth == null || $scope.thon_PlaceofBirth == undefined) {
+                                $scope.err = true
+                                App.toastrError("Không được để trường địa chỉ thôn trong nơi sinh trống")
+                                return;
+                            }
+                            if ($scope.thon_HomeTown === "" || $scope.thon_HomeTown == null || $scope.thon_HomeTown == undefined) {
+                                $scope.err = true
+                                App.toastrError("Không được để trường địa chỉ thôn trong quê quán trống")
+                                return;
+                            }
+                            if ($scope.placeAddress === "" || $scope.placeAddress == null || $scope.placeAddress == undefined) {
+                                $scope.err = true
+                                App.toastrError("Không được để trường Ngày kết nạp đoàn trống")
+                                return;
+                            }
+/*
+                            if ($scope.infUser.PlaceofBirth != infUser.PlaceWorking) {
+                                $scope.err = true
+                                App.toastrError("Nơi sinh và địa giới hành chính khác nhau")
+                                return;
+                            }
+                            if ($scope.infUser.HomeTown != infUser.PlaceWorking) {
+                                $scope.err = true
+                                App.toastrError("Quê quán và địa giới hành chính khác nhau")
+                                return;
+                            }
+                            if ($scope.infUser.Residence != infUser.PlaceWorking) {
+                                $scope.err = true
+                                App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
+                                return;
+                            }
+                            if ($scope.infUser.Residence != infUser.PlaceWorking) {
+                                $scope.err = true
+                                App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
+                                return;
+                            }*/
+
                             if ($scope.err == true) {
                                 return
                             }
@@ -3568,6 +3656,29 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                                 App.toastrError("Sai định dạng ngày sinh DD/MM/YYYY")
                                 return;
                             }
+
+
+                            var partsPlaceAddress = $scope.placeAddress.split("/");
+                            if (partsPlaceAddress.length === 3) {
+                                var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
+                                $scope.placeAddress = formattedPlaceAddress;
+                            }
+                            else {
+                                $scope.err = true
+                                App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
+                                return;
+                            }   
+
+                            var partsPlaceAddress = $scope.placeAddress.split("-");
+                            if (partsPlaceAddress.length === 3) {
+                                $scope.placeAddress
+                            }
+                            else {
+                                $scope.err = true
+                                App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
+                                return;
+                            }
+
                             //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
                             if ($scope.Username != null && $scope.Username != undefined) {
                                 $scope.model = {}
@@ -3577,12 +3688,12 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                                 $scope.model.Gender = $scope.infUser.Sex;
                                 $scope.model.Nation = $scope.infUser.Nation;
                                 $scope.model.Religion = $scope.infUser.Religion;
-                                $scope.model.PermanentResidence = $scope.infUser.Residence;
+                                $scope.model.PermanentResidence = [$scope.infUser.Residence, $scope.thon_Residence].join('_');
                                 $scope.model.Phone = $scope.infUser.Phone;
-                                $scope.model.PlaceBirth = $scope.infUser.PlaceofBirth;
+                                $scope.model.PlaceBirth = [$scope.infUser.PlaceofBirth, $scope.thon_PlaceofBirth].join('_');
                                 $scope.model.Job = $scope.infUser.NowEmployee;
-                                $scope.model.HomeTown = $scope.infUser.HomeTown;
-                                $scope.model.TemporaryAddress = $scope.infUser.TemporaryAddress;
+                                $scope.model.HomeTown = [$scope.infUser.HomeTown, $scope.thon_HomeTown].join('_');
+                                $scope.model.TemporaryAddress = [$scope.infUser.TemporaryAddress, $scope.thon_TemporaryAddress].join('_') ;
                                 $scope.model.GeneralEducation = $scope.infUser.LevelEducation.GeneralEducation;
                                 $scope.model.JobEducation = $scope.infUser.LevelEducation.VocationalTraining;
                                 $scope.model.UnderPostGraduateEducation = $scope.infUser.LevelEducation.Undergraduate;
@@ -3593,7 +3704,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                                 $scope.model.ItDegree = $scope.infUser.LevelEducation.It;
                                 $scope.model.PoliticalTheory = $scope.infUser.LevelEducation.PoliticalTheory;
                                 $scope.model.SelfComment = $scope.SelfComment.context;
-                                $scope.model.CreatedPlace = $scope.PlaceCreatedTime.place;
+                                $scope.model.CreatedPlace = [$scope.PlaceCreatedTime.place, $scope.placeAddress].join('_');
                                 $scope.model.ResumeNumber = $scope.infUser.ResumeNumber;
                                 $scope.model.Status = $scope.infUser.Status;
                                 $scope.model.Username = $scope.Username;
@@ -3601,8 +3712,145 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                                 $scope.model.GroupUserCode = $scope.GroupUser;
                                 $scope.model.PlaceWorking = $scope.infUser.PlaceWorking;
                                 $scope.model.MarriedStatus = Object.values($scope.infUser.MaritalStatus).join('_');
-                                // $scope.model.MarriedStatus = $scope.infUser.MarriedStatus;
-                                console.log($scope.model.MaritalStatus);
+                                var promises = [];
+
+                                var PermanentResidence = $scope.infUser.Residence.split('_');
+                                if (PermanentResidence.length >= 3) {
+                                    var permanentResidencePromise = Promise.all([
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetTinh(PermanentResidence[0], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.PermanentResidenceTinh = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        }),
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetHuyen(PermanentResidence[1], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.PermanentResidenceHuyen = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        }),
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetXa(PermanentResidence[2], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.PermanentResidenceXa = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        })
+                                    ]);
+
+                                    promises.push(permanentResidencePromise);
+                                }
+
+                                var TemporaryAddress = $scope.infUser.TemporaryAddress.split('_');
+                                if (TemporaryAddress.length >= 3) {
+                                    var temporaryAddressPromise = Promise.all([
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetTinh(TemporaryAddress[0], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.TemporaryAddressTinh = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        }),
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetHuyen(TemporaryAddress[1], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.TemporaryAddressHuyen = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        }),
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetXa(TemporaryAddress[2], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.TemporaryAddressXa = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        })
+                                    ]);
+
+                                    promises.push(temporaryAddressPromise);
+                                }
+
+                                var HomeTown = $scope.infUser.HomeTown.split('_');
+                                if (HomeTown.length >= 3) {
+                                    var homeTownPromise = Promise.all([
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetTinh(HomeTown[0], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.HomeTownTinh = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        }),
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetHuyen(HomeTown[1], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.HomeTownHuyen = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        }),
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetXa(HomeTown[2], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.HomeTownXa = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        })
+                                    ]);
+
+                                    promises.push(homeTownPromise);
+                                }
+
+                                var PlaceofBirth = $scope.infUser.PlaceofBirth.split('_');
+                                if (PlaceofBirth.length >= 3) {
+                                    var placeofBirthPromise = Promise.all([
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetTinh(PlaceofBirth[0], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.PlaceofBirthTinh = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        }),
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetHuyen(PlaceofBirth[1], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.PlaceofBirthHuyen = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        }),
+                                        new Promise((resolve, reject) => {
+                                            dataserviceJoinParty.GetXa(PlaceofBirth[2], function (rs) {
+                                                if (rs.data && rs.data[0]) {
+                                                    $scope.PlaceofBirthXa = rs.data[0].name;
+                                                    resolve();
+                                                }
+                                            });
+                                        })
+                                    ]);
+
+                                    promises.push(placeofBirthPromise);
+                                }
+
+                                Promise.all(promises).then(() => {
+                                    $scope.AddressTextPermanentResidence = [$scope.PermanentResidenceXa, $scope.PermanentResidenceHuyen, $scope.PermanentResidenceTinh].join(",")
+                                    $scope.AddressTextTemporaryAddress = [$scope.TemporaryAddressXa, $scope.TemporaryAddressHuyen, $scope.TemporaryAddressTinh].join(",")
+                                    $scope.AddressTextHomeTown = [$scope.HomeTownXa, $scope.HomeTownHuyen, $scope.HomeTownTinh].join(",")
+                                    $scope.AddressTextPlaceofBirth = [$scope.PlaceofBirthXa, $scope.PlaceofBirthHuyen, $scope.PlaceofBirthTinh].join(",")
+
+                                    $scope.model.AddressText = [$scope.AddressTextPermanentResidence, $scope.AddressTextTemporaryAddress, $scope.AddressTextHomeTown, $scope.AddressTextPlaceofBirth].join("_");
+
+                              
 
                                 if ($scope.infUser.ResumeNumber != '' && $scope.infUser.ResumeNumber != undefined &&
                                     $scope.Username != '' && $scope.Username != undefined) {
@@ -3634,15 +3882,17 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
                                         }
                                     });
-                                }
+                                    }
+
+                                })
 
                                 console.log($scope.model);
                             }
-            });
+/*            });
                         
 
-                }
-            });
+            *//*    }*//*
+            });*/
 
             /*if ($scope.infUser.MaritalStatus.marriedStatus === "" || $scope.infUser.MaritalStatus.marriedStatus == null || $scope.infUser.MaritalStatus.marriedStatus == undefined) {
                 $scope.infUser.MaritalStatus.marriedStatus === '1'
@@ -3755,7 +4005,57 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             }*/
 
     }
+    function getAddressName(data) {
+        if (data.length >= 3) {
+            let errorOccurred = false;
 
+            return Promise.all([
+                new Promise((resolve) => {
+                    dataserviceJoinParty.GetTinh(data[0], function (rs) {
+                        if (rs.data && rs.data[0]) {
+                            $scope.dataTinh = rs.data[0].name;
+                            resolve();
+                        } else {
+                            errorOccurred = true;
+                            resolve();
+                        }
+                    });
+                }),
+                new Promise((resolve) => {
+                    dataserviceJoinParty.GetHuyen(data[1], function (rs) {
+                        if (rs.data && rs.data[0]) {
+                            $scope.datahHuyen = rs.data[0].name;
+                            resolve();
+                        } else {
+                            errorOccurred = true;
+                            resolve();
+                        }
+                    });
+                }),
+                new Promise((resolve) => {
+                    dataserviceJoinParty.GetXa(data[2], function (rs) {
+                        if (rs.data && rs.data[0]) {
+                            $scope.dataXa = rs.data[0].name;
+                            resolve();
+                        } else {
+                            errorOccurred = true;
+                            resolve();
+                        }
+                    });
+                })
+            ]).then(() => {
+                if (!errorOccurred) {
+                    return [$scope.dataXa, $scope.datahHuyen, $scope.dataTinh].join(",");
+                } else {
+                    console.error("Error occurred while fetching address data");
+                    return "Address not found";
+                }
+            });
+        } else {
+            console.error("Invalid address data");
+            return Promise.resolve("Invalid address data");
+        }
+    }
 
     $scope.submitIntroducer = function () {
         if ($scope.Username != null && $scope.Username != undefined) {
@@ -3839,6 +4139,14 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     } else {
                         obj.die = parts[0];
                         obj.BirthYear = parts[1];
+                    }
+
+                    if (obj.ClassComposition) {
+                        const partsClassComposition = obj.ClassComposition.split('_');
+                        if (partsClassComposition.length === 2) {
+                            obj.AddressBirth = partsClassComposition[0];
+                            obj.class = partsClassComposition[1];
+                        }
                     }
 
                     const partMember = obj.PartyMember.split('_');
@@ -4060,6 +4368,20 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 }
             }
         }
+        $scope.biologicalParents = ["Bố đẻ", "Mẹ đẻ", "Bố ruột", "Mẹ ruột", "Bố", "Mẹ"];
+        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation)) {
+            if ($scope.selectedFamily.AddressBirth == null || $scope.selectedFamily.AddressBirth == undefined || $scope.selectedFamily.AddressBirth === '') {
+                $scope.err = true;
+                App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
+                return
+            }
+            if ($scope.selectedFamily.class == null || $scope.selectedFamily.class == undefined || $scope.selectedFamily.class === '') {
+                $scope.err = true;
+                App.toastrError("Bạn cần nhập thông tin thành phần giao cấp vào trường hợp này")
+                return
+            }
+
+        }
 
         console.log($scope.disableAddress);
 
@@ -4079,6 +4401,25 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         if ($scope.selectedFamily.WorkingProgress == null || $scope.selectedFamily.WorkingProgress == undefined || $scope.selectedFamily.WorkingProgress === '') {
             $scope.err = true
         }
+
+        if ($scope.infUser.MaritalStatus.marriedStatus === "2" && $scope.infUser.Sex.toLowerCase() == "nam") {
+            const relationsToRestrict = ["Bố vợ", "Mẹ vợ", "Anh vợ", "Chị vợ", "Em vợ", "Ông ngoại vợ", "Bà ngoại vợ", "Ông nội vợ","Bà nội vợ","Cậu vợ", 
+                "Dì vợ","Bác vợ", "Chú vợ", "Thím vợ", "Cô vợ", "Dượng vợ"];
+            if (relationsToRestrict.includes($scope.selectedFamily.Relation)) {
+                $scope.err = true
+                App.toastrError("Đã ly hôn không cần nhập thành viên gia đình vợ cũ")
+                return; 
+            }
+        }
+        if ($scope.infUser.MaritalStatus.marriedStatus === "2" && $scope.infUser.Sex.toLowerCase() == "nữ") {
+            const relationsToRestrict = ["Bố chồng", "Mẹ chồng", "Anh chồng", "Chị chồng", "Em chồng", "Ông nội chồng", "Bà nội chồng", "Ông ngoại chồng", "Bà ngoại chồng", "Cậu Chồng",
+                "Dì Chồng", "Bác Chồng", "Chú Chồng", "Thím Chồng", "Cô Chồng", "Dượng Chồng"];
+            if (relationsToRestrict.includes($scope.selectedFamily.Relation)) {
+                $scope.err = true
+                App.toastrError("Đã ly hôn không cần nhập thành viên gia đình chồng cũ")
+                return;
+            }
+        }
         if ($scope.err) {
             App.toastrError("Bạn chưa nhập đủ thông tin")
             return
@@ -4088,7 +4429,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.Residence = $scope.selectedFamily.Residence;
         model.PartyMember = $scope.selectedFamily.PartyMember;
         model.Name = $scope.selectedFamily.Name;
-        model.BirthYear = $scope.selectedFamily.BirthYear;
+        model.BirthYear = $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie ;
         model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
         model.HomeTown = $scope.selectedFamily.HomeTown;
         model.Job = $scope.selectedFamily.Job;
@@ -4099,10 +4440,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.Reason = $scope.selectedFamily.Reason;
         model.Party = $scope.selectedFamily.Party;
         model.die = $scope.disableAddress;
+        model.AddressBirth = $scope.selectedFamily.AddressBirth
+        model.class = $scope.selectedFamily.class
         $scope.Relationship.push(model);
-        $scope.selectedFamily = {
-            WorkingProgress: `Từ năm 18 tuổi đến năm`
-        };
         $scope.disableAddress = false
         $scope.PartyMember = false
     }
@@ -4267,6 +4607,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     $scope.selectedFamily = {
         WorkingProgress: `Từ năm 18 tuổi đến năm`
     };
+
     $scope.selectedWarningDisciplined = {};
     $scope.selectedHistorySpecialist = {};
     $scope.selectedWorkingTracking = {};
@@ -4275,6 +4616,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     $scope.selectFamily = function (x) {
         $scope.selectedFamily = x;
+        var BirthYear = $scope.selectedFamily.BirthYear.split("-")
+        $scope.selectedFamily.BirthYear = BirthYear[0];
+        $scope.selectedFamily.BirthDie = BirthYear[1];
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
@@ -4577,29 +4921,23 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
         if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
-            $scope.selectedPersonHistory.Begin = `9/${year2 + 6}`;
-            $scope.selectedPersonHistory.End = `8/${year2 + 7}`;
+           
             const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
             const yearEnd = Number(year3[1]);
+            const monthEnd = Number(year3[0]);
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
-            $scope.selectedPersonHistory.Begin = `9/${yearEnd}`;
-            $scope.selectedPersonHistory.End = `8/${yearEnd + 1}`;
-            ;
+            if (monthEnd === 12) {
+                $scope.selectedPersonHistory.Begin = `1/${yearEnd + 1}`;
+            } else {
+                $scope.selectedPersonHistory.Begin = `${monthEnd + 1}/${yearEnd}`;
+            }
+            $scope.selectedPersonHistory.End = '';
         }
         else {
-            $scope.selectedPersonHistory.Begin = `9/`;
-            $scope.selectedPersonHistory.End = `8/`;
+            $scope.selectedPersonHistory.Begin = $scope.selectedPersonHistory.End;
         }
 
-        if ($scope.PersonalHistory && $scope.PersonalHistory.length > 0) {
-            const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
-            const yearEnd = Number(year3[1]);
-            const currentDate = new Date();
-            const currentYear = currentDate.getFullYear();
-            $scope.selectedPersonHistory.Begin = `9/${yearEnd}`;
-            $scope.selectedPersonHistory.End = `8/${yearEnd + 1}`;
-        }
     }
     function handleTextUpload(txt) {
         $scope.defaultRTE.value = txt;
@@ -5026,23 +5364,181 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     $scope.infUser.Birthday = ""
                     $scope.infUser.Birthday = $scope.pageInfo[i].innerText.trim().slice(('Ngày, tháng, năm sinh :').length).trim();
                 }
-
                 if ($scope.pageInfo[i].innerText.trim().startsWith('Nơi sinh:')) {
-                    $scope.infUser.PlaceofBirth = $scope.pageInfo[i].innerText.trim().slice(('Nơi sinh:').length).trim();
+                    var PlaceofBirthWord = $scope.pageInfo[i].innerText.trim().slice(('Nơi sinh:').length).trim();
+                    var PlaceofBirth = PlaceofBirthWord.split(',');
+                    if (PlaceofBirth.length == 4) {
+                        Promise.all([
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetTinhName(PlaceofBirth[3], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PlaceofBirthTinh_id = rs.data[0].provinceId;
+                                        resolve();
+                                    } 
+                                });
+                            }),
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetHuyenName(PlaceofBirth[2], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PlaceofBirthHuyen_id = rs.data[0].districtId;
+                                        resolve();
+                                    } 
+                                });
+                            }),
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetXaName(PlaceofBirth[1], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PlaceofBirthXa_id = rs.data[0].wardsId;
+                                        resolve();
+                                    } 
+                                });
+                            })
+                        ]).then(() => {
+                            $scope.$apply(() => {
+                                $scope.infUser.PlaceofBirth = [$scope.PlaceofBirthTinh_id, $scope.PlaceofBirthHuyen_id, $scope.PlaceofBirthXa_id, PlaceofBirth[0]].join("_");
+                                $scope.thon_PlaceofBirth = PlaceofBirth[0];
+                                console.log($scope.infUser.PlaceofBirth);
+                            });
+                        }).catch(error => {
+                            console.error(error);
+                        });
+                    }
                 }
 
+
                 if ($scope.pageInfo[i].innerText.trim().startsWith('Quê quán:')) {
-                    $scope.infUser.HomeTown = $scope.pageInfo[i].innerText.trim().slice(('Quê quán:').length).trim();
+                    var HomeTownWord = $scope.pageInfo[i].innerText.trim().slice(('Quê quán:').length).trim();
+                    var HomeTown = HomeTownWord.split(',');
+                    if (HomeTown.length == 4) {
+                        Promise.all([
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetTinhName(HomeTown[3], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.HomeTownTinh_id = rs.data[0].provinceId;
+                                        resolve();
+                                    } 
+                                });
+                            }),
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetHuyenName(HomeTown[2], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.HomeTownHuyen_id = rs.data[0].districtId;
+                                        resolve();
+                                    } 
+                                });
+                            }),
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetXaName(HomeTown[1], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.HomeTownXa_id = rs.data[0].wardsId;
+                                        resolve();
+                                    } 
+                                });
+                            })
+                        ]).then(() => {
+                            $scope.$apply(() => {
+                                $scope.infUser.HomeTown = [$scope.HomeTownTinh_id, $scope.HomeTownHuyen_id, $scope.HomeTownXa_id, HomeTown[0]].join("_");
+                                console.log($scope.infUser.HomeTown);
+                                $scope.thon_HomeTown = HomeTown[0];
+
+                            });
+                        }).catch(error => {
+                            console.error(error);
+                        });
+                    }
                 }
 
                 if ($scope.pageInfo[i].innerText.trim().startsWith('- Nơi thường trú :')) {
-                    $scope.infUser.Residence = $scope.pageInfo[i].innerText.trim().slice(('- Nơi thường trú :').length).trim();
+                    var ResidenceWord = $scope.pageInfo[i].innerText.trim().slice(('- Nơi thường trú :').length).trim();
+                    var Residence = ResidenceWord.split(',');
+                    if (Residence.length == 4) {
+                        Promise.all([
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetTinhName(Residence[3], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.ResidenceTinh_id = rs.data[0].provinceId;
+                                        resolve();
+                                    } 
+                                });
+                            }),
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetHuyenName(Residence[2], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.ResidenceHuyen_id = rs.data[0].districtId;
+                                        resolve();
+                                    } 
+                                });
+                            }),
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetXaName(Residence[1], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.ResidenceXa_id = rs.data[0].wardsId;
+                                        resolve();
+                                    } 
+                                });
+                            })
+                        ]).then(() => {
+                            $scope.$apply(() => {
+                                $scope.infUser.Residence = [$scope.ResidenceTinh_id, $scope.ResidenceHuyen_id, $scope.ResidenceXa_id, Residence[0]].join("_");
+                                console.log($scope.infUser.Residence);
+                                $scope.thon_Residence = Residence[0];
+
+                            });
+                        }).catch(error => {
+                            console.error(error);
+                        });
+                    }
                 }
 
                 if ($scope.pageInfo[i].innerText.trim().startsWith('- Nơi tạm trú :')) {
-                    $scope.infUser.TemporaryAddress = $scope.pageInfo[i].innerText.trim().slice(('- Nơi tạm trú :').length).trim();
+                    var TemporaryAddressWord = $scope.pageInfo[i].innerText.trim().slice(('- Nơi tạm trú :').length).trim();
+                    var TemporaryAddress = TemporaryAddressWord.split(',');
+                    if (TemporaryAddress.length == 4) {
+                        Promise.all([
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetTinhName(TemporaryAddress[3], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.TemporaryAddressTinh_id = rs.data[0].provinceId;
+                                        resolve();
+                                    } 
+                                });
+                            }),
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetHuyenName(TemporaryAddress[2], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.TemporaryAddressHuyen_id = rs.data[0].districtId;
+                                        resolve();
+                                    }
+                                });
+                            }),
+                            new Promise((resolve, reject) => {
+                                dataserviceJoinParty.GetXaName(TemporaryAddress[1], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.TemporaryAddressXa_id = rs.data[0].wardsId;
+                                        resolve();
+                                    } 
+                                });
+                            })
+                        ]).then(() => {
+                            $scope.$apply(() => {
+                                $scope.infUser.TemporaryAddress = [$scope.TemporaryAddressTinh_id, $scope.TemporaryAddressHuyen_id, $scope.TemporaryAddressXa_id, TemporaryAddress[0]].join("_");
+                                console.log($scope.infUser.TemporaryAddress);
+                                $scope.thon_TemporaryAddress = TemporaryAddress[0];
+
+                            });
+                        }).catch(error => {
+                            console.error(error);
+                        });
+                    }
                 }
 
+                if ($scope.pageInfo[i].innerText.trim().startsWith('Ngày và nơi vào Đoàn TNCSHCM:')) {
+                    var place = $scope.pageInfo[i].innerText.trim().slice(('Ngày và nơi vào Đoàn TNCSHCM:').length).trim();
+                    var partPlace = place.split(",");
+                    var cleanPlace = partPlace[1].replace("tại ", "").trim();
+                    $scope.PlaceCreatedTime.place = cleanPlace;
+                    $scope.placeAddress = partPlace[0];
+                }
                 if ($scope.pageInfo[i].innerText.trim().startsWith('Nghề nghiệp hiện nay:')) {
                     $scope.infUser.NowEmployee = $scope.pageInfo[i].innerText.trim().slice(('Nghề nghiệp hiện nay:').length).trim();
                 }
@@ -5109,7 +5605,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     }
                 }
                 $scope.SelfComment.context = $scope.SelfComment.context
-                $scope.PlaceCreatedTime.place = datapage9[0]
+                /*$scope.PlaceCreatedTime.place = datapage9[0]*/
 /*                console.log($scope.infUser.Birthday);
                 console.log($scope.infUser.MaritalStatus);*/
             }

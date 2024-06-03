@@ -149,6 +149,7 @@ namespace ESEIM.Models
         public DateTime? LastTimeReport { get; set; }
 
         public string MarriedStatus { get; set; }
+        public string AddressText { get; set; }
     }
 
     public class JsonFile

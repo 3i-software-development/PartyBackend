@@ -627,6 +627,25 @@ namespace III.Admin.Controllers
             var rs = _context.Wards.Where(p => p.wardsId == id).ToList();
             return rs;
         }
+
+        [HttpGet]
+        public object GetTinhName(string name)
+        {
+            var rs = _context.Provinces.Where(p => p.name.Trim() == name.Trim()).ToList();
+            return Json(rs);
+        }
+
+        public object GetHuyenName(string name)
+        {
+            var rs = _context.Districts.Where(p => p.name.Trim() == name.Trim()).ToList();
+            return Json(rs);
+
+        }
+        public object GetXaName(string name)
+        {
+            var rs = _context.Wards.Where(p => p.name.Trim() == name.Trim()).ToList();
+            return Json(rs);
+        }
         #endregion
         #region Update
 
@@ -805,6 +824,7 @@ namespace III.Admin.Controllers
             public string Username { get; set; }
             public string Status { get; set; }
             public string MarriedStatus { get; set; }
+            public string AddressText { get; set; }
         }
         [HttpPut]
         public async Task<object> UpdatePartyAdmissionProfile([FromBody] ModelViewPAMP model)
@@ -863,7 +883,7 @@ namespace III.Admin.Controllers
                 obj.GroupUserCode = model.GroupUserCode;
                 obj.PlaceWorking = model.PlaceWorking;
                 obj.MarriedStatus = model.MarriedStatus;
-
+                obj.AddressText = model.AddressText;
                 _context.PartyAdmissionProfiles.Update(obj);
                 _context.SaveChanges();
 
@@ -1378,6 +1398,7 @@ namespace III.Admin.Controllers
                     obj.GroupUserCode = model.GroupUserCode;
                     obj.PlaceWorking = model.PlaceWorking;
                    obj.MarriedStatus = model.MarriedStatus;
+                   obj.AddressText = model.AddressText;
                     _context.PartyAdmissionProfiles.Add(obj);
                     _context.SaveChanges();
                     msg.Object = obj;

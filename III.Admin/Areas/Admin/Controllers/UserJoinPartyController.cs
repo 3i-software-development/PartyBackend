@@ -688,6 +688,7 @@ namespace III.Admin.Controllers
                     GroupUserCode = x.GroupUserCode,
                     PlaceWorking = x.PlaceWorking,
                     MarriedStatus = x.MarriedStatus,
+                    AddressText = x.AddressText,
                 }).FirstOrDefault();
             
             jsonData.IntroducerOfParty = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false);

@@ -15,6 +15,7 @@ using ESEIM.Utils;
 using FTU.Utils.HelperNet;
 using III.Admin.Utils;
 using III.Domain.Enums;
+using III.Domain.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -156,6 +157,9 @@ namespace III.Admin.Controllers
                 IWSection section = document.Sections[0];
 
                 WTable table = section.Tables[0] as WTable;
+                BindingFileKNĐ.districts = _context.Districts.ToList();
+                BindingFileKNĐ.provinces = _context.Provinces.ToList();
+                BindingFileKNĐ.wards = _context.Wards.ToList();
                 BindingFileKNĐ.BinddingPesonal(table, Pap, Iop);
 
                 table = section.Tables[1] as WTable;

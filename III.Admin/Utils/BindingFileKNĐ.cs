@@ -1,8 +1,10 @@
 ﻿using Amazon.Runtime;
 using Aspose.Pdf;
+using DataConnection;
 using ESEIM.Models;
 using ESEIM.Utils;
 using III.Admin.Controllers;
+using III.Domain.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.TeamFoundation.Common;
 using OpenXmlPowerTools;
@@ -16,14 +18,16 @@ namespace III.Admin.Utils
 {
     public static class BindingFileKNĐ
     {
+        public static List<Province> provinces = new List<Province>();
+        public static List<District> districts = new List<District>();
+        public static List<Ward> wards = new List<Ward>();
         public static void BinddingPesonal(WTable table, PartyAdmissionProfile Pap, IntroducerOfParty Iop)
         {
-
+            convertProvinces(Pap, provinces, districts, wards);
             WTableCell cell = table[0, 0] as WTableCell;
             foreach (IWParagraph p in cell.Paragraphs)
             {
                 var a = p.Text.Trim();
-
                 IWTextRange text;
                 switch (a)
                 {
@@ -40,7 +44,7 @@ namespace III.Admin.Utils
                         break;
 
                     case ("Quê quán:"):
-                        text=p.AppendText(Pap.HomeTown);
+                            text =p.AppendText(Pap.HomeTown);
                         break;
 
                     case ("Số LL:"):
@@ -157,32 +161,98 @@ namespace III.Admin.Utils
                         text = p.AppendText(Pap.MarriedStatus);
                         break;
                     case ("Ngày và nơi vào Đoàn TNCSHCM:"):
-                        if (Iop != null)
-                        {
-                            text=p.AppendText(Iop.PlaceTimeJoinUnion);
-                        }
+                        text = p.AppendText(Pap.CreatedPlace);
                         break;
-                    case ("Ngày và nơi vào Đảng CSVN lần thứ nhất (nếu có):"):
-                        if (Iop != null)
-                        {
-                            text=p.AppendText(Iop.PlaceTimeJoinParty);
-                        }
-                        break;
-                    case ("Ngày và nơi công nhận chính thức lần thứ nhất (nếu có):"):
-                        if (Iop != null)
-                        {
-                            text=p.AppendText(Iop.PlaceTimeRecognize);
-                        }
-                        break;
+                        /*case ("Ngày và nơi vào Đoàn TNCSHCM:"):
+                            if (Iop != null)
+                            {
+                                text=p.AppendText(Iop.PlaceTimeJoinUnion);
+                            }
+                            break;
+                        case ("Ngày và nơi vào Đảng CSVN lần thứ nhất (nếu có):"):
+                            if (Iop != null)
+                            {
+                                text=p.AppendText(Iop.PlaceTimeJoinParty);
+                            }
+                            break;
+                        case ("Ngày và nơi công nhận chính thức lần thứ nhất (nếu có):"):
+                            if (Iop != null)
+                            {
+                                text=p.AppendText(Iop.PlaceTimeRecognize);
+                            }
+                            break;
 
-                    case ("Người giới thiệu vào Đảng lần thứ nhất (nếu có):"):
-                        if (Iop != null)
-                        {
-                            text=p.AppendText(Iop.PersonIntroduced);
-                        }
-                        break;
+                        case ("Người giới thiệu vào Đảng lần thứ nhất (nếu có):"):
+                            if (Iop != null)
+                            {
+                                text=p.AppendText(Iop.PersonIntroduced);
+                            }
+                            break;*/
                 }
             }
+        }
+
+        public static void convertProvinces(PartyAdmissionProfile Pap, List<Province> provinces, List<District> districts, List<Ward> wards)
+        {
+            string[] partsHomeTown = Pap.HomeTown.Split('_');
+            if (partsHomeTown.Length >= 4)
+            {
+                var tinh = int.Parse(partsHomeTown[0]);
+                var huyen = int.Parse(partsHomeTown[1]);
+                var xa = int.Parse(partsHomeTown[2]);
+                var tinhName = provinces.FirstOrDefault(x => x.provinceId == tinh);
+                var huyenName = districts.FirstOrDefault(x => x.districtId == huyen);
+                var xaName = wards.FirstOrDefault(x => x.wardsId == xa);
+                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                Pap.HomeTown = HomeTown;
+            }
+
+            string[] partsPlaceBirth = Pap.PlaceBirth.Split('_');
+            if (partsPlaceBirth.Length >= 4)
+            {
+                var tinh = int.Parse(partsPlaceBirth[0]);
+                var huyen = int.Parse(partsPlaceBirth[1]);
+                var xa = int.Parse(partsPlaceBirth[2]);
+                var tinhName = provinces.FirstOrDefault(x => x.provinceId == tinh);
+                var huyenName = districts.FirstOrDefault(x => x.districtId == huyen);
+                var xaName = wards.FirstOrDefault(x => x.wardsId == xa);
+                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                Pap.PlaceBirth = HomeTown;
+            }
+
+            string[] partsPermanentResidence = Pap.PermanentResidence.Split('_');
+            if (partsPlaceBirth.Length >= 4)
+            {
+                var tinh = int.Parse(partsPermanentResidence[0]);
+                var huyen = int.Parse(partsPermanentResidence[1]);
+                var xa = int.Parse(partsPermanentResidence[2]);
+                var tinhName = provinces.FirstOrDefault(x => x.provinceId == tinh);
+                var huyenName = districts.FirstOrDefault(x => x.districtId == huyen);
+                var xaName = wards.FirstOrDefault(x => x.wardsId == xa);
+                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                Pap.PermanentResidence = HomeTown;
+            }
+
+            string[] partsTemporaryAddress = Pap.TemporaryAddress.Split('_');
+            if (partsPlaceBirth.Length >= 4)
+            {
+                var tinh = int.Parse(partsTemporaryAddress[0]);
+                var huyen = int.Parse(partsTemporaryAddress[1]);
+                var xa = int.Parse(partsTemporaryAddress[2]);
+                var tinhName = provinces.FirstOrDefault(x => x.provinceId == tinh);
+                var huyenName = districts.FirstOrDefault(x => x.districtId == huyen);
+                var xaName = wards.FirstOrDefault(x => x.wardsId == xa);
+                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                Pap.TemporaryAddress = HomeTown;
+            }
+
+            string[] partsCreatedPlace = Pap.CreatedPlace.Split('_');
+            if (partsPlaceBirth.Length >= 2)
+            {
+                string HomeTown = "" + partsCreatedPlace[1] + ", tại " + partsCreatedPlace[0] ;
+                Pap.CreatedPlace = HomeTown;
+            }
+
         }
 
         //Lịch sử bản thân
@@ -928,7 +998,7 @@ namespace III.Admin.Utils
             foreach (IWParagraph p in section.Paragraphs)
             {
                 string a = p.Text.Trim();
-
+                string[] partAddressText = jsonParty.Profile.AddressText.Split('_');
                 switch (a)
                 {
                     case "01) Họ và tên đang dùng:………………………………………… 02) Nam, nữ…………………….":
@@ -940,17 +1010,17 @@ namespace III.Admin.Utils
                         p.Replace("04) Sinh ngày.../…/……….……", "04) Sinh ngày: " + jsonParty.Profile.Birthday, true, true);
                         break;
                     case "05) Nơi sinh:……………………………………………………………………………………………..":
-                        p.Replace("05) Nơi sinh:……………………………………………………………………………………………..", "05) Nơi sinh:" + jsonParty.Profile.PlaceBirth, true, true);
+                        p.Replace("05) Nơi sinh:……………………………………………………………………………………………..", "05) Nơi sinh:" + partAddressText[3], true, true);
                         break;
                     case "06) Quê quán:……………………………………………………………………………………………":
-                        p.Replace("06) Quê quán:…………………………………………………………………………………………", "06) Quê quán:" + jsonParty.Profile.HomeTown, true, true);
+                        p.Replace("06) Quê quán:…………………………………………………………………………………………", "06) Quê quán:" + partAddressText[2], true, true);
                         break;
                     case "07) Nơi thường trú:……………………………………………………………………………………...":
-                        p.Replace("07) Nơi thường trú:……………………………………………………………………………………..", "07) Nơi thường trú:" + jsonParty.Profile.PermanentResidence, true, true);
+                        p.Replace("07) Nơi thường trú:……………………………………………………………………………………..", "07) Nơi thường trú:" + partAddressText[0], true, true);
                         break;
                     case "Nơi tạm trú:………………………………………………………………………………………….":
                         if (!string.IsNullOrEmpty(jsonParty.Profile.TemporaryAddress))
-                            p.Replace("Nơi tạm trú:………………………………………………………………………………………….", "Nơi tạm trú:" + jsonParty.Profile.TemporaryAddress, true, true);
+                            p.Replace("Nơi tạm trú:………………………………………………………………………………………….", "Nơi tạm trú:" + partAddressText[1], true, true);
                         break;
                     case "08) Dân tộc:………………………………………… 09) Tôn giáo:…………………………………..":
                         p.Replace("08) Dân tộc:………………………………………", "08) Dân tộc:" + jsonParty.Profile.Nation, true, true);
@@ -1040,6 +1110,70 @@ namespace III.Admin.Utils
             table = section.Tables[3] as WTable;
             BindingFamily(table, jsonParty.Families);
         }
+
+        public static void convertProvinces(UserJoinPartyController.converJsonPartyAdmission jsonParty, List<Province> provinces1, List<District> districts1, List<Ward> wards1)
+        {
+            string[] partsHomeTown = jsonParty.Profile.HomeTown.Split('_');
+            if (partsHomeTown.Length >= 4)
+            {
+                var tinh = int.Parse(partsHomeTown[0]);
+                var huyen = int.Parse(partsHomeTown[1]);
+                var xa = int.Parse(partsHomeTown[2]);
+                var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
+                var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
+                var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
+                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                jsonParty.Profile.HomeTown = HomeTown;
+            }
+
+            string[] partsPlaceBirth = jsonParty.Profile.PlaceBirth.Split('_');
+            if (partsPlaceBirth.Length >= 4)
+            {
+                var tinh = int.Parse(partsPlaceBirth[0]);
+                var huyen = int.Parse(partsPlaceBirth[1]);
+                var xa = int.Parse(partsPlaceBirth[2]);
+                var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
+                var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
+                var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
+                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                jsonParty.Profile.PlaceBirth = HomeTown;
+            }
+
+            string[] partsPermanentResidence = jsonParty.Profile.PermanentResidence.Split('_');
+            if (partsPlaceBirth.Length >= 4)
+            {
+                var tinh = int.Parse(partsPermanentResidence[0]);
+                var huyen = int.Parse(partsPermanentResidence[1]);
+                var xa = int.Parse(partsPermanentResidence[2]);
+                var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
+                var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
+                var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
+                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                jsonParty.Profile.PermanentResidence = HomeTown;
+            }
+
+            string[] partsTemporaryAddress = jsonParty.Profile.TemporaryAddress.Split('_');
+            if (partsPlaceBirth.Length >= 4)
+            {
+                var tinh = int.Parse(partsTemporaryAddress[0]);
+                var huyen = int.Parse(partsTemporaryAddress[1]);
+                var xa = int.Parse(partsTemporaryAddress[2]);
+                var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
+                var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
+                var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
+                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                jsonParty.Profile.TemporaryAddress = HomeTown;
+            }
+
+            string[] partsCreatedPlace = jsonParty.Profile.CreatedPlace.Split('_');
+            if (partsPlaceBirth.Length >= 2)
+            {
+                string HomeTown = "" + partsCreatedPlace[1] + ", tại " + partsCreatedPlace[0];
+                jsonParty.Profile.CreatedPlace = HomeTown;
+            }
+
+        }
+
         //Được kết nạp lại vào Đảng
         private static void BindingPersonalHistories2(IWParagraph p, List<PersonalHistory> personalHistories)
         {
