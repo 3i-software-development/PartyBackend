@@ -27,6 +27,7 @@ namespace ESEIM.Models
 		public virtual DbSet<WarningDisciplined> WarningDisciplineds { get; set; }
 		public virtual DbSet<HistorySpecialist> HistorySpecialists { get; set; }
 		public virtual DbSet<PartyAdmissionProfile> PartyAdmissionProfiles { get; set; }
+		public virtual DbSet<PartyFamilyTime> PartyFamilyTimes { get; set; }
 		public virtual DbSet<PersonalHistory> PersonalHistories { get; set; }
 		public virtual DbSet<SwCustomerReq> SwCustomerReqs { get; set; }
         public virtual DbSet<SwModuleResource> SwModuleResources { get; set; }

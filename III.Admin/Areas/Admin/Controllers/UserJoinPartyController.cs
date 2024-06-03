@@ -75,7 +75,8 @@ namespace III.Admin.Controllers
             ViewData["UserJoinParty"] = "Hồ sơ lý lịch đảng viên";
             return View();
         }
-        public class converJsonPartyAdmission{
+        public class converJsonPartyAdmission
+        {
             public ModelViewPAMP Profile { get; set; }
             public List<PersonalHistory> PersonalHistories { get; set; }
             public List<TrainingCertificatedPass> TrainingCertificatedPasses { get; set; }
@@ -118,7 +119,7 @@ namespace III.Admin.Controllers
                 }
 
                 string content = JsonConvert.SerializeObject(jsonData);
-                System.IO.File.WriteAllText(_hostingEnvironment.WebRootPath + filePath,content );
+                System.IO.File.WriteAllText(_hostingEnvironment.WebRootPath + filePath, content);
                 rs.Title = filePath;
             }
             catch (Exception ex)
@@ -317,7 +318,7 @@ namespace III.Admin.Controllers
                                  Degree = a.Degree,
                                  GeneralEducation = a.GeneralEducation,
                                  Gender = a.Gender,
-                                 LastTimeReport=a.LastTimeReport.HasValue?a.LastTimeReport.Value.ToString("dd/MM/yyyy HH:mm"):"",
+                                 LastTimeReport = a.LastTimeReport.HasValue ? a.LastTimeReport.Value.ToString("dd/MM/yyyy HH:mm") : "",
                              })
                              .OrderByDescending(x => x.Id); // Sắp xếp giảm dần theo Id
 
@@ -347,7 +348,7 @@ namespace III.Admin.Controllers
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
 
                 var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "Nation", "UserCode", "Status", "Username",
-                    "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender",  "LastTimeReport");
+                    "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
             catch (Exception err)
@@ -361,10 +362,11 @@ namespace III.Admin.Controllers
         [HttpGet]
         [AllowAnonymous]
         public object GetAllProfile()
-        { 
-            return _context.PartyAdmissionProfiles.Where(x=>!x.IsDeleted).Select(x => new { 
-                Name=x.CurrentName,
-                Code= x.ResumeNumber
+        {
+            return _context.PartyAdmissionProfiles.Where(x => !x.IsDeleted).Select(x => new
+            {
+                Name = x.CurrentName,
+                Code = x.ResumeNumber
             }).ToList();
         }
         [NonAction]
@@ -375,7 +377,7 @@ namespace III.Admin.Controllers
             {
                 if (!string.IsNullOrEmpty(Place))
                 {
-                    var list = Place.Split("_").Select(x=>x!="undefined"?int.Parse(x):-1).ToList();
+                    var list = Place.Split("_").Select(x => x != "undefined" ? int.Parse(x) : -1).ToList();
                     var listAdress = new List<string>();
                     var a = _context.Provinces.FirstOrDefault(x => x.provinceId == list[0]);
                     if (a != null)
@@ -386,10 +388,10 @@ namespace III.Admin.Controllers
                     var c = _context.Wards.FirstOrDefault(x => x.wardsId == list[2]);
                     if (c != null)
                         listAdress.Add(c.name);
-                    result=string.Join(", ",listAdress.Where(x=>!string.IsNullOrEmpty(x)).ToList());
+                    result = string.Join(", ", listAdress.Where(x => !string.IsNullOrEmpty(x)).ToList());
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
 
             }
@@ -401,12 +403,12 @@ namespace III.Admin.Controllers
         {
             var msg = new JMessage { Error = false, Title = "" };
             var ListProfile = new List<SelectedParty>();
-            List<JMessage> filePath = new List<JMessage>(); 
+            List<JMessage> filePath = new List<JMessage>();
             foreach (var ressumeNumber in data.ListData)
             {
                 string Place = "";
                 var profileParty = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber);
-                if(profileParty != null)
+                if (profileParty != null)
                 {
                     Place = GetPlaceWorking(profileParty.PlaceWorking);
                 }
@@ -577,7 +579,7 @@ namespace III.Admin.Controllers
                         jsonParty.Families = profile;
                     }
                 }
-                
+
                 msg = GenergatePesonnal(jsonParty);
                 if (!msg.Error)
                 {
@@ -587,7 +589,7 @@ namespace III.Admin.Controllers
                         _context.Update(profileParty);
                         _context.SaveChanges();
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
 
                     }
@@ -600,7 +602,7 @@ namespace III.Admin.Controllers
             return filePath;
         }
 
-        static IEnumerable<string> SelectProperties<T>(IEnumerable<T> items, List<string> propertiesToSelect,bool isNote=true)
+        static IEnumerable<string> SelectProperties<T>(IEnumerable<T> items, List<string> propertiesToSelect, bool isNote = true)
         {
             PropertyInfo[] propertyInfos = typeof(T).GetProperties();
 
@@ -611,7 +613,7 @@ namespace III.Admin.Controllers
                     PropertyInfo property = typeof(T).GetProperty(propertyName);
                     if (property != null)
                     {
-                        
+
                         object value = property.GetValue(item);
                         string note = GetNote(property);
                         note = note == "" ? property.Name : note;
@@ -656,7 +658,8 @@ namespace III.Admin.Controllers
             var jsonData = new converJsonPartyAdmission();
             var profile = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber);
             jsonData.Profile = _context.PartyAdmissionProfiles.Where(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false)
-                .Select(x => new ModelViewPAMP {
+                .Select(x => new ModelViewPAMP
+                {
                     CurrentName = x.CurrentName,
                     Nation = x.Nation,
                     BirthName = x.BirthName,
@@ -690,7 +693,7 @@ namespace III.Admin.Controllers
                     MarriedStatus = x.MarriedStatus,
                     AddressText = x.AddressText,
                 }).FirstOrDefault();
-            
+
             jsonData.IntroducerOfParty = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false);
             jsonData.WorkingTracking = _context.WorkingTrackings.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
             jsonData.TrainingCertificatedPasses = _context.TrainingCertificatedPasses.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
@@ -710,7 +713,7 @@ namespace III.Admin.Controllers
                 familyMember.BirthYear = parts.Length > 1 ? parts[1] : familyMember.BirthYear;
                 if (parts[0] == "true")
                 {
-                    familyMember.BirthYear = parts[1]  ;
+                    familyMember.BirthYear = parts[1];
                     familyMember.Name += "\n" + "(Đã mất - " + "mất tại: " + parts[2] + "- mất do:" + parts[3] + ")";
                 }
                 else
@@ -719,7 +722,7 @@ namespace III.Admin.Controllers
                 };
                 if (partParty[1] == "true")
                 {
-                    familyMember.PartyMember = "Có \n" + "+ Công tác tại: " + partParty[0] +"\n"+ "+ Thuộc chi bộ: " + partParty[2];
+                    familyMember.PartyMember = "Có \n" + "+ Công tác tại: " + partParty[0] + "\n" + "+ Thuộc chi bộ: " + partParty[2];
                 }
                 else
                 {
@@ -817,14 +820,14 @@ namespace III.Admin.Controllers
             string rootPath = _hostingEnvironment.WebRootPath;
             var filePath = string.Concat(rootPath, path);
             var fileStream = new FileStream(filePath, FileMode.Open);
-            
+
             try
             {
                 WordDocument document = new WordDocument(fileStream, Syncfusion.DocIO.FormatType.Docx);
                 IWSection section = document.Sections[0];
 
                 WTable table = section.Tables[0] as WTable;
-                BindingReportKND.BinddingPesonal(table,section,jsonParty.Profile, jsonParty.IntroducerOfParty);
+                BindingReportKND.BinddingPesonal(table, section, jsonParty.Profile, jsonParty.IntroducerOfParty);
 
                 if (jsonParty.WorkingTracking != null)
                 {
@@ -846,7 +849,7 @@ namespace III.Admin.Controllers
                     WTextRange text = p.AppendText("Lớp đào tạo và bồi dưỡng đã qua") as WTextRange;
                     SetStyleHeader(text);
 
-                    table = AddTable(section, 1, 4, "Tên trường", "Ngành học hoặc tên lớp học", "Từ tháng/năm đến tháng/năm","Văn bằng, chứng chỉ, trình độ gì", "Văn bằng, chứng chỉ, trình độ gì");
+                    table = AddTable(section, 1, 4, "Tên trường", "Ngành học hoặc tên lớp học", "Từ tháng/năm đến tháng/năm", "Văn bằng, chứng chỉ, trình độ gì", "Văn bằng, chứng chỉ, trình độ gì");
 
                     SetStyleHeader(text);
 
@@ -864,7 +867,7 @@ namespace III.Admin.Controllers
                     table.ResetCells(1, 4);
 
                     text = table[0, 0].AddParagraph().AppendText("Quan hệ") as WTextRange;
-                    var cell = table[0,0] as WTableCell;
+                    var cell = table[0, 0] as WTableCell;
                     cell.Width = 60;
                     SetStyleHeader(text);
 
@@ -991,11 +994,11 @@ namespace III.Admin.Controllers
         }
 
 
-        private WTable AddTable(IWSection section,int row, int cell,params string[] listTitle)
+        private WTable AddTable(IWSection section, int row, int cell, params string[] listTitle)
         {
             WTable table = section.AddTable() as WTable;
             table.ResetCells(row, cell);
-            for(int i = 0; i < cell; i++)
+            for (int i = 0; i < cell; i++)
             {
                 WTextRange text = table[0, i].AddParagraph().AppendText(listTitle[i]) as WTextRange;
                 SetStyleHeader(text);
@@ -1283,7 +1286,7 @@ namespace III.Admin.Controllers
             try
             {
                 var check = _context.PartyAdmissionProfiles.FirstOrDefault(y => y.ResumeNumber == x.ProfileCode && y.IsDeleted == false);
-                if(check != null || x.ProfileCode==null)
+                if (check != null || x.ProfileCode == null)
                 {
                     msg.Error = true;
                     msg.Title = "Mã hồ sơ không tồn tại";
@@ -1328,9 +1331,74 @@ namespace III.Admin.Controllers
             }
             return msg;
         }
+
+        [HttpPut]
+        [AllowAnonymous]
+        public IActionResult UpdatePartyFamilyTime([FromBody] PartyFamilyTimeModel model)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                if (!string.IsNullOrEmpty(model.ResumeCode) && !string.IsNullOrEmpty(model.Relationship))
+                {
+                    var data = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == model.ResumeCode);
+                    if (data == null)
+                    {
+                        msg.Error = true;
+                        msg.Title = "Mã hồ sơ không tồn tại";
+                        return Ok(msg);
+                    }
+                    var a = _context.PartyFamilyTimes.FirstOrDefault(x => !x.IsDeleted && x.ResumeCode == model.ResumeCode
+                    && x.Relationship == model.Relationship);
+                    if (a != null)
+                    {
+                        a.LastTime = model.LastTime;
+                        a.UpdatedDate = DateTime.Now;
+                        a.UpdatedBy = ESEIM.AppContext.UserName;
+                        _context.PartyFamilyTimes.Update(a);
+                        _context.SaveChanges();
+                        msg.Title = "Cập nhật thời gian liền kề thành công";
+                    }
+                    else
+                    {
+                        _context.PartyFamilyTimes.Add(new PartyFamilyTime
+                        {
+                            ResumeCode = model.ResumeCode,
+                            Relationship = model.Relationship,
+                            LastTime = model.LastTime,
+                            CreatedBy = ESEIM.AppContext.UserName,
+                            CreatedDate = DateTime.Now,
+                            IsDeleted = false
+                        });
+                        _context.SaveChanges();
+                        msg.Title = "Thêm mới thời gian liền kề thành công";
+                    }
+                }
+                else
+                {
+                    msg.Error = true;
+                    msg.Title = "Lý lịch gia đình chưa hợp lệ";
+                }
+
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Cập nhật thời gian liền kề thất bại";
+            }
+            return Ok(msg);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult GetPartyFamilyTime(string resumeCode, string relationship)
+        {
+            var obj = _context.PartyFamilyTimes.FirstOrDefault(x => !x.IsDeleted && x.ResumeCode == resumeCode && x.Relationship == relationship);
+            return Ok(obj);
+        }
         #region Import
 
-       
+
 
         #endregion
     }
@@ -1420,7 +1488,7 @@ namespace III.Admin.Controllers
     {
         public bool MonthYear { get; set; }
         public bool Content { get; set; }
-        
+
     }
 
     public class LaudatoryBool
@@ -1428,7 +1496,7 @@ namespace III.Admin.Controllers
         public bool MonthYear { get; set; }
         public bool GrantOfDecision { get; set; }
         public bool Reason { get; set; }
-        
+
     }
 
     public class WarningDisciplinedBool
@@ -1436,7 +1504,7 @@ namespace III.Admin.Controllers
         public bool MonthYear { get; set; }
         public bool GrantOfDecision { get; set; }
         public bool Reason { get; set; }
-        
+
     }
 
     public class TrainingCertificatedPassBool
@@ -1454,7 +1522,7 @@ namespace III.Admin.Controllers
         public bool To { get; set; }
         public bool Contact { get; set; }
         public bool Country { get; set; }
-        
+
     }
 
     public class IntroducerBool
@@ -1463,7 +1531,7 @@ namespace III.Admin.Controllers
         public bool PlaceTimeRecognize { get; set; }
         public bool PlaceTimeJoinUnion { get; set; }
         public bool PlaceTimeJoinParty { get; set; }
-        
+
     }
 
     public class DataModel
