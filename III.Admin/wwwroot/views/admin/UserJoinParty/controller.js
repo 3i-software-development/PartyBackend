@@ -1801,11 +1801,20 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     };
     //Autocomplete quan hệ
     $scope.FilterRelation = [];
+    $scope.changedisHistory = false
     $scope.filterRelation = function () {
         //tiếng dân tộc thiểu số
         $scope.FilterRelation = $scope.Relation.filter(function (item) {
             return item.toLowerCase().includes($scope.selectedFamily.Relation.toLowerCase());
         });
+
+        $scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ", "bố vợ", "mẹ vợ", "bố chồng", "mẹ chồng",];
+        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
+            $scope.changedisHistory = true
+
+        } else {
+            $scope.changedisHistory = false
+        }
     };
     $scope.SelectRelation = function (item) {
         $scope.selectedFamily.Relation = item;
@@ -3148,16 +3157,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     const currentYear = currentDate.getFullYear();
                 if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
 
-                    /*$scope.selectedPersonHistory.End = `8/${year2 + 7}`;*/
-                    const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
-                    const yearEnd = Number(year3[1]);
-                    const monthEnd = Number(year3[0]);
-                    const currentDate = new Date();
-                    const currentYear = currentDate.getFullYear();
-                    if (monthEnd === 12) {
-                        $scope.selectedPersonHistory.Begin = `1/${yearEnd + 1}`;
+                    if ($scope.PersonalHistory.length != 0) {
+                        const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
+                        if (year3.lenght == 2) {
+                            var yearEnd = Number(year3[1]);
+                            var monthEnd = Number(year3[0]);
+                        } else if (year3.lenght == 3) {
+                            var yearEnd = Number(year3[2]);
+                            var monthEnd = Number(year3[1]);
+                        } else {
+                            $scope.selectedPersonHistory.Begin = `8/${year2 + 6}`;
+                            return
+                        }
+                        const currentDate = new Date();
+                        const currentYear = currentDate.getFullYear();
+                        if (monthEnd === 12) {
+                            $scope.selectedPersonHistory.Begin = `1/${yearEnd + 1}`;
+                        } else {
+                            $scope.selectedPersonHistory.Begin = `${monthEnd + 1}/${yearEnd}`;
+                        }
                     } else {
-                        $scope.selectedPersonHistory.Begin = `${monthEnd + 1}/${yearEnd}`;
+                        $scope.selectedPersonHistory.Begin = `8/${year2 + 6}`;
+
                     }
                     /*$scope.selectedPersonHistory.End = `8/${yearEnd + 1}`;*/
                     ;
@@ -4322,6 +4343,18 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.PartyMember = false;
         }
     }
+    $scope.changedisHistory = function () {
+        /*$scope.PartyMember = !$scope.PartyMember*/
+
+        $scope.biologicalParents = ["Bố đẻ", "Mẹ đẻ", "Bố ruột", "Mẹ ruột", "Bố", "Mẹ"];
+        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation)) {
+            $scope.changedisHistory = true
+
+        } else {
+            $scope.changedisHistory = false
+
+        }
+    }
     $scope.addToFamily = function () {
         $scope.err = false
         if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation === '') {
@@ -4403,18 +4436,18 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
 
         if ($scope.infUser.MaritalStatus.marriedStatus === "2" && $scope.infUser.Sex.toLowerCase() == "nam") {
-            const relationsToRestrict = ["Bố vợ", "Mẹ vợ", "Anh vợ", "Chị vợ", "Em vợ", "Ông ngoại vợ", "Bà ngoại vợ", "Ông nội vợ","Bà nội vợ","Cậu vợ", 
-                "Dì vợ","Bác vợ", "Chú vợ", "Thím vợ", "Cô vợ", "Dượng vợ"];
-            if (relationsToRestrict.includes($scope.selectedFamily.Relation)) {
+            const relationsToRestrict = ["bố vợ", "mẹ vợ", "anh vợ", "chị vợ", "em vợ", "ông ngoại vợ", "bà ngoại vợ", "ông nội vợ","bà nội vợ","cậu vợ", 
+                "dì vợ","bác vợ", "chú vợ", "thím vợ", "cô vợ", "dượng vợ"];
+            if (relationsToRestrict.includes($scope.selectedFamily.Relation.toLowerCase())) {
                 $scope.err = true
                 App.toastrError("Đã ly hôn không cần nhập thành viên gia đình vợ cũ")
                 return; 
             }
         }
         if ($scope.infUser.MaritalStatus.marriedStatus === "2" && $scope.infUser.Sex.toLowerCase() == "nữ") {
-            const relationsToRestrict = ["Bố chồng", "Mẹ chồng", "Anh chồng", "Chị chồng", "Em chồng", "Ông nội chồng", "Bà nội chồng", "Ông ngoại chồng", "Bà ngoại chồng", "Cậu Chồng",
-                "Dì Chồng", "Bác Chồng", "Chú Chồng", "Thím Chồng", "Cô Chồng", "Dượng Chồng"];
-            if (relationsToRestrict.includes($scope.selectedFamily.Relation)) {
+            const relationsToRestrict = ["bố chồng", "mẹ chồng", "anh chồng", "chị chồng", "em chồng", "ông nội chồng", "bà nội chồng", "ông ngoại chồng", "bà ngoại chồng", "cậu chồng",
+                "dì chồng", "bác chồng", "chú chồng", "thím chồng", "cô chồng", "dượng chồng"];
+            if (relationsToRestrict.includes($scope.selectedFamily.Relation.toLowerCase())) {
                 $scope.err = true
                 App.toastrError("Đã ly hôn không cần nhập thành viên gia đình chồng cũ")
                 return;
@@ -4429,11 +4462,15 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.Residence = $scope.selectedFamily.Residence;
         model.PartyMember = $scope.selectedFamily.PartyMember;
         model.Name = $scope.selectedFamily.Name;
-        model.BirthYear = $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie ;
+        if ($scope.selectedFamily.BirthDie) {
+            model.BirthYear = $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie;
+        } else {
+            model.BirthYear = $scope.selectedFamily.BirthYear;
+        }
         model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
         model.HomeTown = $scope.selectedFamily.HomeTown;
         model.Job = $scope.selectedFamily.Job;
-        model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
+        model.WorkingProgress = "Từ " + $scope.WorkingProgressStart + " đến " + $scope.WorkingProgressEnd + ": " + $scope.selectedFamily.WorkingProgress ;
         model.Id = 0;
         model.wordAt = $scope.selectedFamily.wordAt;
         model.AddressDie = $scope.selectedFamily.AddressDie;
@@ -4616,12 +4653,17 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     $scope.selectFamily = function (x) {
         $scope.selectedFamily = x;
+        var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
+        $scope.WorkingProgressStart = years[0];  
+        $scope.WorkingProgressEnd = years[1];  
+        $scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
         var BirthYear = $scope.selectedFamily.BirthYear.split("-")
         $scope.selectedFamily.BirthYear = BirthYear[0];
         $scope.selectedFamily.BirthDie = BirthYear[1];
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
+        $scope.filterRelation();
     };
 
 
@@ -4633,6 +4675,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.changedisable();
         $scope.changedis();
         $scope.$apply(); 
+        $scope.filterRelation();
+
     }
 
     $scope.selectWarningDisciplined = function (x) {
@@ -4906,12 +4950,14 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
         
-        if (year && year >= 1945 && year  < currentYear) {
-            $scope.selectedFamily.WorkingProgress = `Từ năm ${ year + 18 } đến năm`;
+        if (year && year >= 1945 && year < currentYear) {
+            $scope.WorkingProgressStart = year + 18
+            /*$scope.selectedFamily.WorkingProgress = `Từ năm ${ year + 18 } đến năm`;*/
             $scope.selectedFamily.PoliticalAttitude = `Luôn chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
         }
         else {
-            $scope.selectedFamily.WorkingProgress = `Từ năm 18 tuổi đến năm`;
+            $scope.WorkingProgressStart = 18
+            /*$scope.selectedFamily.WorkingProgress = `Từ năm 18 tuổi đến năm`;*/
             $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
         }
     }
@@ -4921,10 +4967,17 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
         if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
-           
             const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
-            const yearEnd = Number(year3[1]);
-            const monthEnd = Number(year3[0]);
+            if (year3.lenght == 2) {
+                var yearEnd = Number(year3[1]);
+                var monthEnd = Number(year3[0]);
+            } else if (year3.lenght == 3) {
+                var yearEnd = Number(year3[2]);
+                var monthEnd = Number(year3[1]);
+            } else {
+                $scope.selectedPersonHistory.Begin = `8/${year2 + 6}`;
+                return
+            }
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
             if (monthEnd === 12) {

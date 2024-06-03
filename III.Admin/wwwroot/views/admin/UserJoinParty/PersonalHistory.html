@@ -96,7 +96,7 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group row">
+            <!--<div class="form-group row">
                 <div class="col-md-2 pr-0">
                     <i class="fa fa-pencil-square-o" id="PersonHistory-content" ng-click="openPopover('content');"
                        uib-popover-template="'popoverTemplate.html'" popover-placement="right"
@@ -121,7 +121,7 @@
                         </ui-select>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
 
             <div class="pull-right">
@@ -144,7 +144,7 @@
                     <th>Từ ngày</th>
                     <th>Đến ngày</th>
                     <th>Nội dung, Tại chi bộ</th>
-                    <th>Phân loại</th>
+                   <!-- <th>Phân loại</th>-->
                     <th>Xoá bỏ</th>
                 </tr>
                 <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)">
@@ -153,14 +153,14 @@
                     <td>
                         <span ng-if="x.Type==1||x.Type==2||x.Type==3">Tại chi bộ:</span>{{x.Content}}
                     </td>
-                    <td>
+                    <!--<td>
                         <span ng-if="x.Type == '0'||x.Type==null||x.Type==''">Chưa phân loại</span>
                         <span ng-if="x.Type == '1'">Bị xóa tên trong danh sách đảng viên</span>
                         <span ng-if="x.Type == '2'">Được kết nạp lại vào Đảng lần 2</span>
                         <span ng-if="x.Type == '3'">Được khôi phục đảng tịch</span>
                         <span ng-if="x.Type == '4'">Bị xử lý theo pháp luật</span>
                         <span ng-if="x.Type == '5'">Làm việc trong chế độ cũ</span>
-                    </td>
+                    </td>-->
                     <td style="text-align:center">
                         <i style="color:red" class="fa fa-trash" ng-click="deletePesonalHistory($index)"></i>
                     </td>

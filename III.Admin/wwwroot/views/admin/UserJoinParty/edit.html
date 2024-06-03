@@ -1607,7 +1607,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row" ng-show="changedisHistory">
                                         <div class="col-md-4 pr-0">
                                             <i class="fa fa-map-marker" id="homeTown"
                                                ng-click="openPopover('homeTown');"
@@ -1632,14 +1632,14 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row">
+                                    <div class="form-group row" ng-show="changedisHistory">
                                         <div class="col-md-4 pr-0">
                                             <i class="fa fa-map-marker" id="homeTown"
                                                ng-click="openPopover('homeTown');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick"></i>
                                             <label class="displayInfo control-label custom-title-code-bold">
-                                               Thành phần giai cấp
+                                                Thành phần giai cấp
                                             </label>
                                         </div>
                                         <div class="col-md-8" style="display: flex; white-space:nowrap">
@@ -1721,7 +1721,41 @@
                                                 trình công tác
                                             </label>
                                         </div>
-                                        <div class="col-md-8" style="display: flex;">
+
+                                        <div class="col-md-4" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold"
+                                                 style="white-space: nowrap; padding-right: 35px;">
+                                                <i class="fa fa-info-circle icon-clickable" id="residence"
+                                                   title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="2012 "
+                                                   popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                       ng-model="WorkingProgressStart" type="text"
+                                                       placeholder="Từ ngày" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="WorkingProgressStart"></i>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-4" style="display: flex;">
+                                            <div class="br24 form-control custom-title-code-bold"
+                                                 style="white-space: nowrap; padding-right: 35px;">
+                                                <i class="fa fa-info-circle icon-clickable" id="residence"
+                                                   title="Popover Header" popover-placement="bottom-left"
+                                                   uib-popover="2016"
+                                                   popover-trigger="outsideClick"></i>
+                                                <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                       ng-model="WorkingProgressEnd" type="text"
+                                                       placeholder="Đến ngày" />
+                                                <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
+                                                   ng-model="WorkingProgressEnd"></i>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <div class="col-md-12" style="display: flex;">
                                             <div class=" br24 form-control custom-title-code-bold"
                                                  style="white-space:nowrap">
                                                 <i class="fa fa-info-circle icon-clickable" id="working"
@@ -1736,7 +1770,6 @@
                                                    ng-model="selectedFamily.WorkingProgress"></i>
                                             </div>
                                         </div>
-
                                     </div>
 
                                     <div class="pull-right">
