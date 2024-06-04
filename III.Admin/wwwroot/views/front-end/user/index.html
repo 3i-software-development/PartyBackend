@@ -1206,24 +1206,25 @@
                                 <div class="row">
                                     <div class="col-md-6" style="padding-left: 15px;">
                                         <div class="form-group row">
-                                            <div class="col-md-4 pr-0" style="padding-left: 7px; white-space: nowrap">
-                                                <i class="fa fa-user"></i>
-                                                <label class="displayInfo control-label require custom-title-code-bold">
-                                                    Quan
-                                                    hệ
-                                                </label>
+                                            <div class="col-md-4 pr-0">
+                                                <i class="fa fa-user" id="relationship"
+                                                    ng-click="openPopover('relationship');"
+                                                    uib-popover-template="'popoverTemplate.html'"
+                                                    popover-placement="right" popover-trigger="outsideClick"></i>
+                                                <label
+                                                    class="displayInfo control-label require custom-title-code-bold">Quan
+                                                    hệ</label>
                                             </div>
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold"
                                                     style="white-space:nowrap">
-                                                    <i class="fa fa-info-circle icon-clickable" id="Relation"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="{{selectedFamily.Relation}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="'outsideClick'">
-                                                    </i>
+                                                    <i class="fa fa-info-circle icon-clickable" id="relationship"
+                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        uib-popover="Quan hệ: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-change="filterRelation()" ng-model="selectedFamily.Relation"
-                                                        type="text" placeholder="Quan hệ" />
+                                                        ng-model="selectedFamily.Relation" type="text"
+                                                        ng-change="filterRelation()" placeholder="Quan hệ" />
                                                     <i class="fa fa-microphone" style="font-size: 20px;"
                                                         voice-recognition ng-model="selectedFamily.Relation"></i>
                                                     <ul class="autocomplete-list">
@@ -1232,32 +1233,36 @@
                                                             {{item}}
                                                         </li>
                                                     </ul>
+
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-md-4 pr-0" style="padding-left: 7px; white-space: nowrap">
-                                                <i class="fa fa-user"></i>
-                                                <label class="displayInfo control-label require custom-title-code-bold">
-                                                    Họ
-                                                    và tên
-                                                </label>
+                                            <div class="col-md-4 pr-0">
+                                                <i class="fa fa-user" id="MenberFamilyName"
+                                                    ng-click="openPopover('MenberFamilyName');"
+                                                    uib-popover-template="'popoverTemplate.html'"
+                                                    popover-placement="right" popover-trigger="outsideClick"></i>
+                                                <label
+                                                    class="displayInfo control-label require custom-title-code-bold">Họ
+                                                    và tên</label>
                                             </div>
-                                            <div class="col-md-8" style="display: flex;">
+                                            <div class="col-md-8">
                                                 <div class="br24 form-control custom-title-code-bold"
                                                     style="white-space:nowrap">
-                                                    <i class="fa fa-info-circle icon-clickable" id="Name"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="{{selectedFamily.Name}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="'outsideClick'">
+                                                    <i class="fa fa-info-circle icon-clickable" id="MenberFamilyName"
+                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        uib-popover="Họ tên của bạn là: {{selectedFamily.Name}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        popover-trigger="outsideClick"></i>
 
-                                                    </i>
-                                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                    <input class="displayInfo speechInput" name="CusCode"
                                                         ng-model="selectedFamily.Name" type="text"
-                                                        placeholder="Họ và tên" />
+                                                        placeholder="Họ và tên" ng-required="true">
+
                                                     <i class="fa fa-microphone" style="font-size: 20px;"
                                                         voice-recognition ng-model="selectedFamily.Name"></i>
                                                 </div>
+
                                             </div>
                                         </div>
                                         <div class="form-group row">
@@ -1270,14 +1275,14 @@
                                                     class="displayInfo control-label require custom-title-code-bold">Năm
                                                     sinh</label>
                                                 <!-- <input ng-change="updateAddressState()" type="checkbox"
-                                                    ng-model="disableAddress" ng-change="changedisable()">Đã mất -->
+                    ng-model="disableAddress" ng-change="changedisable()">Đã mất -->
 
                                             </div>
                                             <div class="col-md-8">
                                                 <div style="display: flex; align-items: center;  gap: 1%;">
                                                     <div class="col-md-2">
-                                                        <input ng-change="updateAddressState()" type="checkbox"
-                                                            ng-model="disableAddress" ng-change="changedisable()"><span
+                                                        <input type="checkbox" ng-model="disableAddress"
+                                                            ng-change="changedisable()"><span
                                                             style="font-weight: bold;">Đã mất</span>
                                                     </div>
                                                     <div class="br24 form-control custom-title-code-bold col-md-10"
@@ -1317,8 +1322,7 @@
                                                             popover-trigger="outsideClick"></i>
 
                                                         <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                            ng-model="selectedFamily.BirthDie"
-                                                            ng-change="changeBirthYear()" type="text"
+                                                            ng-model="BirthDie" ng-change="changeDie()" type="text"
                                                             placeholder="Năm mất" />
                                                     </div>
                                                 </div>
@@ -1378,7 +1382,7 @@
 
                                             <div class="col-md-8">
                                                 <div style="display: flex; align-items: center; gap: 1%;">
-                                                    <div class="col-md-2 p-0">
+                                                    <div class="col-md-2">
                                                         <input type="checkbox" ng-model="selectedFamily.PartyMember"
                                                             ng-change="changedis()"><span style="font-weight: bold;">
                                                     </div>
@@ -1412,23 +1416,23 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-md-4 pr-0 "
-                                                style="padding-left: 7px; white-space: nowrap; overflow: auto">
-                                                <i class="fa fa-user"></i>
-                                                <label class="displayInfo control-label require custom-title-code-bold">
-                                                    Thái
-                                                    độ chính trị
-                                                </label>
+                                            <div class="col-md-4 pr-0 ">
+                                                <i class="fa fa-user" id="politicalAttitude"
+                                                    ng-click="openPopover('politicalAttitude');"
+                                                    uib-popover-template="'popoverTemplate.html'"
+                                                    popover-placement="right" popover-trigger="outsideClick"></i>
+                                                <label
+                                                    class="displayInfo control-label require custom-title-code-bold">Thái
+                                                    độ chính trị</label>
                                             </div>
 
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold"
                                                     style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-clickable" id="politicalAttitude"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="{{selectedFamily.PoliticalAttitude}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="'outsideClick'">
-                                                    </i>
+                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        uib-popover="Thái độ chính trị của người thân là: {{selectedFamily.PoliticalAttitude}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.PoliticalAttitude" type="text"
                                                         placeholder="Thái độ chính trị" />
@@ -1436,37 +1440,48 @@
                                                         voice-recognition
                                                         ng-model="selectedFamily.PoliticalAttitude"></i>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6" style="padding-right: 10px">
+                                    <div class="col-md-6" style="padding-left: 15px;">
                                         <div class="form-group row">
-                                            <div class="col-md-4 pr-0" style="padding-left: 7px; white-space: nowrap">
-                                                <i class="fa fa-map-marker"></i>
+                                            <div class="col-md-4 pr-0 ">
+                                                <i class="fa fa-map-marker" id="homeTown"
+                                                    ng-click="openPopover('homeTown');"
+                                                    uib-popover-template="'popoverTemplate.html'"
+                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quê
                                                     quán
                                                 </label>
                                             </div>
-                                            <div class="col-md-8" style="display: flex;">
-                                                <div class="br24 form-control custom-title-code-bold"
+                                            <div class="col-md-8">
+                                                <div class="br24 form-control custom-title-code-bold mb-1"
                                                     style="white-space:nowrap">
-                                                    <i class="fa fa-info-circle icon-clickable" id="homeTown"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="{{selectedFamily.HomeTown}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="'outsideClick'">
-
+                                                    <i class="fa fa-info-circle icon-clickable" id="diaChiThuongTru"
+                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                        popover-trigger="outsideClick">
                                                     </i>
-                                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-model="selectedFamily.HomeTown" type="text"
-                                                        placeholder="Quê quán" />
+                                                    <input class="displayInfo speechInput" style="border: #FFFF;"
+                                                        name="CusCode" ng-model="selectedFamily.HomeTownVillage"
+                                                        type="text" placeholder="Nhập địa chỉ thôn" ng-required="true">
                                                     <i class="fa fa-microphone" style="font-size: 20px;"
-                                                        voice-recognition ng-model="selectedFamily.HomeTown"></i>
+                                                        voice-recognition ng-model="infUser.HomeTown"></i>
+                                                </div>
+                                                <div class="br24 form-control custom-title-code-bold"
+                                                    style="display:flex">
+                                                    <i class="fa fa-info-circle  icon-clickable"
+                                                        data-bs-toggle="popover" title="Popover Header"
+                                                        data-bs-placement="bottom" data-bs-content="Ví dụ: 'Hà Nội'"
+                                                        style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                                                    <choose-position ng-model="selectedFamily.HomeTown"
+                                                        provinces="ListProvince" style="width: 100%;"></choose-position>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+
+                                        <div class="form-group row" ng-show="changedisHistory">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-map-marker" id="homeTown"
                                                     ng-click="openPopover('homeTown');"
@@ -1491,7 +1506,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
+                                        <div class="form-group row" ng-show="changedisHistory">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-map-marker" id="homeTown"
                                                     ng-click="openPopover('homeTown');"
@@ -1515,9 +1530,13 @@
                                                 </div>
                                             </div>
                                         </div>
+
                                         <div class="form-group row" ng-show="!disableAddress">
-                                            <div class="col-md-4 pr-0 " style="padding-left: 7px; white-space: nowrap">
-                                                <i class="fa fa-home"></i>
+                                            <div class="col-md-4 pr-0 ">
+                                                <i class="fa fa-home" id="residence"
+                                                    ng-click="openPopover('residence');"
+                                                    uib-popover-template="'popoverTemplate.html'"
+                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nơi
                                                     cư trú
@@ -1528,10 +1547,9 @@
                                                 <div class="br24 form-control custom-title-code-bold"
                                                     style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-clickable" id="residence"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="{{selectedFamily.Residence}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="'outsideClick'">
-                                                    </i>
+                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        uib-popover="Nơi cư trú của người thân là: {{selectedFamily.Residence}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Residence" type="text"
                                                         placeholder="Nơi cư trú" />
@@ -1541,8 +1559,10 @@
                                             </div>
                                         </div>
                                         <div class="form-group row">
-                                            <div class="col-md-4 pr-0 " style="padding-left: 7px; white-space: nowrap">
-                                                <i class="fa fa-users"></i>
+                                            <div class="col-md-4 pr-0 ">
+                                                <i class="fa fa-users" id="career" ng-click="openPopover('career');"
+                                                    uib-popover-template="'popoverTemplate.html'"
+                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nghề
                                                     nghiệp
@@ -1552,12 +1572,11 @@
                                             <div class="col-md-8" style="display: flex;">
                                                 <div class="br24 form-control custom-title-code-bold"
                                                     style="white-space:nowrap">
-                                                    <i class="fa fa-info-circle icon-clickable" id="job"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="{{selectedFamily.FamilyJob}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="'outsideClick'">
+                                                    <i class="fa fa-info-circle icon-clickable" id="career"
+                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        uib-popover="Nghề nghiệp của người thân là: {{selectedFamily.Job}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        popover-trigger="outsideClick"></i>
 
-                                                    </i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                         ng-model="selectedFamily.Job" type="text"
                                                         placeholder="Nghề nghiệp" />
@@ -1567,31 +1586,81 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
-                                            <div class="col-md-4 pr-0 "
-                                                style="padding-left: 7px; white-space: nowrap; overflow: auto">
-                                                <i class="fa fa-user"></i>
+                                        <div class="form-group row ">
+                                            <div class="col-md-4 pr-0 ">
+                                                <i class="fa fa-user" id="working" ng-click="openPopover('working');"
+                                                    uib-popover-template="'popoverTemplate.html'"
+                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
-                                                    Quá
-                                                    trình công tác
+                                                    Quá trình công tác
                                                 </label>
                                             </div>
-                                            <div class="col-md-8" style="display: flex;">
-                                                <div class=" br24 form-control custom-title-code-bold"
-                                                    style="white-space:nowrap">
-                                                    <i class="fa fa-info-circle icon-clickable" id="working"
-                                                        popover-placement="bottom-left"
-                                                        uib-popover="{{selectedFamily.WorkingProgress}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                                        popover-trigger="'outsideClick'">
-                                                    </i>
-                                                    <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-model="selectedFamily.WorkingProgress" type="text"
-                                                        placeholder="Quá trình công tác" />
-                                                    <i class="fa fa-microphone" style="font-size: 20px;"
-                                                        voice-recognition ng-model="selectedFamily.WorkingProgress"></i>
+
+                                            <div class="col-md-8" style="display: flex; align-items:center; gap: 6px">
+                                                <div class="col-md-6 br24  custom-title-code-bold form-control "
+                                                    style="display: flex;">
+                                                    <div class="br24  custom-title-code-bold"
+                                                        style="white-space: nowrap; padding-right: 35px;">
+                                                        <i class="fa fa-info-circle icon-clickable" id="residence"
+                                                            title="Popover Header" popover-placement="bottom-left"
+                                                            uib-popover="2012 " popover-trigger="outsideClick"></i>
+                                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                            ng-model="WorkingProgressStart" type="text"
+                                                            placeholder="Từ ngày"
+                                                            ng-disabled="disableWorkingProgressYear"
+                                                            ng-change="updateWorkingProgressYear()" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;"
+                                                            voice-recognition ng-model="WorkingProgressStart"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-5 br24  custom-title-code-bold form-control "
+                                                    style="display: flex;">
+                                                    <div class="br24  custom-title-code-bold"
+                                                        style="white-space: nowrap; padding-right: 35px;">
+                                                        <i class="fa fa-info-circle icon-clickable" id="residence"
+                                                            title="Popover Header" popover-placement="bottom-left"
+                                                            uib-popover="2016" popover-trigger="outsideClick"></i>
+                                                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                                                            ng-model="WorkingProgressEnd" type="text"
+                                                            placeholder="Đến ngày"
+                                                            ng-disabled="disableWorkingProgressYear"
+                                                            ng-change="updateWorkingProgressYear()" />
+                                                        <i class="fa fa-microphone" style="font-size: 20px;"
+                                                            voice-recognition ng-model="WorkingProgressEnd"></i>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-1  custom-title-code-bold "
+                                                    style=" display: flex;align-items: center; flex-direction: row-reverse;">
+                                                    <div ng-click="saveWorkingProgressYear()">
+                                                        <i class="fas fa-plus fs-1" style="font-size: 25px;"></i>
+                                                    </div>
                                                 </div>
                                             </div>
 
+
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <div class="col-md-12" style="display: flex;">
+                                                <i class="fa fa-info-circle icon-clickable" id="working"
+                                                    style="margin-left: 30px; position: absolute; left: 0%; top: 8%;"
+                                                    title="Popover Header" popover-placement="bottom-left"
+                                                    uib-popover="Quá trình công tác của người thân là: {{selectedFamily.WorkingProgress}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                    popover-trigger="outsideClick"></i>
+                                                <textarea class="br24 form-control custom-title-code-bold"
+                                                    style="resize: block; padding-left:35px;" name="CusCode" rows="3"
+                                                    ng-model="selectedFamily.WorkingProgress" type="text"
+                                                    placeholder="Quá trình công tác">
+                </textarea>
+                                                <i class="fa fa-microphone"
+                                                    style="font-size: 20px;  position: absolute; right: 5%; top: 8%;"
+                                                    voice-recognition ng-model="selectedFamily.WorkingProgress"></i>
+                                                <!--<div class=" br24 form-control custom-title-code-bold"
+                     style="white-space:nowrap">
+
+
+                </div>-->
+                                            </div>
                                         </div>
 
                                         <div class="pull-right">
@@ -1604,11 +1673,9 @@
                                                 <span>Hủy</span>
                                             </button>
                                         </div>
-
-
                                     </div>
-
                                 </div>
+
                                 <div class="table-wrapper">
                                     <div class="list-item">
                                         <table>
@@ -1952,21 +2019,25 @@
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                <div class="d-flex"
+                                    ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                     <i class="fa fa-caret-right"></i>&nbsp;
                                     <!--<i ng-show="!showWorkingProcess3" class="fa fa-caret-right"></i>-->
                                     <label class="fs-18">Đặc điểm lịch sử</label>
                                     <div class="mt-checkbox-list pt5" style="margin-left: 15px">
                                         <label class="mt-checkbox"
-                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                            <input type="checkbox" ng-model="showWorkingProcess3" ng-checked="showWorkingProcess3">
+                                            style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess3"
+                                                ng-checked="showWorkingProcess3">
                                             <span></span>
                                         </label>
                                     </div>
                                 </div>
 
-                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
-                                    <i class="fas fa-save" style="font-size: 26px" ng-click="submitHistorySpecialist()"></i>
+                                <div
+                                    ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                    <i class="fas fa-save" style="font-size: 26px"
+                                        ng-click="submitHistorySpecialist()"></i>
                                 </div>
                             </div>
 
@@ -2057,13 +2128,15 @@
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex; justify-content:space-between">
-                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                <div class="d-flex"
+                                    ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                     <i class="fa fa-caret-right"></i>&nbsp;
                                     <label class="fs-18">Khen thưởng</label>
                                     <div class="mt-checkbox-list pt5" style="margin-left: 15px">
                                         <label class="mt-checkbox"
-                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                            <input type="checkbox" ng-model="showWorkingProcess4" ng-checked="showWorkingProcess4">
+                                            style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess4"
+                                                ng-checked="showWorkingProcess4">
                                             <span></span>
                                         </label>
                                     </div>
@@ -2186,13 +2259,15 @@
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                <div class="d-flex"
+                                    ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                     <i class="fa fa-caret-right"></i>&nbsp;
                                     <label class="fs-18">Kỷ luật</label>
                                     <div class="mt-checkbox-list pt5" style="margin-left: 15px">
                                         <label class="mt-checkbox"
-                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                            <input type="checkbox" ng-model="showWorkingProcess5" ng-checked="showWorkingProcess5">
+                                            style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess5"
+                                                ng-checked="showWorkingProcess5">
                                             <span></span>
                                         </label>
                                     </div>
@@ -2321,14 +2396,16 @@
                             </div>
                             <div class="toggle-header"
                                 style="display:flex ; justify-content:space-between; white-space:nowrap">
-                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                     style="overflow:auto">
+                                <div class="d-flex"
+                                    ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                    style="overflow:auto">
                                     <i class="fa fa-caret-right"></i>&nbsp;
                                     <label class="fs-18">Lớp đào tạo và bồi dưỡng đã qua</label>
                                     <div class="mt-checkbox-list pt5" style="margin-left: 15px">
                                         <label class="mt-checkbox"
-                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                            <input type="checkbox" ng-model="showWorkingProcess6" ng-checked="showWorkingProcess6">
+                                            style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess6"
+                                                ng-checked="showWorkingProcess6">
                                             <span></span>
                                         </label>
                                     </div>
@@ -2507,13 +2584,15 @@
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                <div class="d-flex"
+                                    ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                     <i class="fa fa-caret-right"></i>&nbsp;
                                     <label class="fs-18">Đi nước ngoài</label>
                                     <div class="mt-checkbox-list pt5" style="margin-left: 15px">
                                         <label class="mt-checkbox"
-                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                            <input type="checkbox" ng-model="showWorkingProcess7" ng-checked="showWorkingProcess7">
+                                            style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess7"
+                                                ng-checked="showWorkingProcess7">
                                             <span></span>
                                         </label>
                                     </div>
@@ -2668,12 +2747,13 @@
                             </div>
 
                             <div class="toggle-header" id="GTVD" style="display: flex; justify-content: space-between;">
-                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                <div class="d-flex"
+                                    ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                     <i class="fa fa-caret-right"></i>&nbsp;
                                     <label>Giới thiệu vào đảng</label>
                                     <div class="mt-checkbox-list pt5" style="margin-left: 15px">
                                         <label class="mt-checkbox"
-                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
                                             <input type="checkbox" ng-model="showDegree" ng-checked="showDegree">
                                             <span></span>
                                         </label>

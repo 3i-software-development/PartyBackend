@@ -2579,9 +2579,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             } else {
 
                 const parts = rs.MarriedStatus.split('_');
-
                 const decisionDate = new Date(parts[2]);
-
                 // Lấy ngày, tháng và năm từ đối tượng Date
                 const month = (decisionDate.getMonth() + 1).toString().padStart(2).trim(); // Tháng bắt đầu từ 0, nên cộng thêm 1 và định dạng lại
                 const day = decisionDate.getDate().toString().padStart(2).trim();
@@ -4405,10 +4403,15 @@ break;
     $scope.changedisable = function () {
         if ($scope.selectedFamily.die === true) {
             $scope.disableAddress = true;
+            $scope.selectedFamily.die = true
         } else if ($scope.selectedFamily.die === false) {
             $scope.disableAddress = false;
+            $scope.selectedFamily.die = false;
         }
+
+
     }
+
     $scope.changedis = function () {
         /*$scope.PartyMember = !$scope.PartyMember*/
         if ($scope.selectedFamily.PartyMember === true) {
@@ -4749,9 +4752,12 @@ break;
         //$scope.WorkingProgressEnd = years[1];
         //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
         var BirthYear = $scope.selectedFamily.BirthYear.split("-")
+        if (BirthYear.lenght == 2) {
+            $scope.selectedFamily.BirthYear = BirthYear[0];
+            $scope.BirthDie = BirthYear[1];
         $scope.disableWorkingProgressYear = true;
-        $scope.selectedFamily.BirthYear = BirthYear[0];
-        $scope.BirthDie = BirthYear[1];
+}
+
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
