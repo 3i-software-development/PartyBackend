@@ -4471,8 +4471,8 @@ break;
         model.Residence = $scope.selectedFamily.Residence;
         model.PartyMember = $scope.selectedFamily.PartyMember;
         model.Name = $scope.selectedFamily.Name;
-        if ($scope.selectedFamily.BirthDie) {
-            model.BirthYear = $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie;
+        if ($scope.BirthDie) {
+            model.BirthYear = "" + $scope.selectedFamily.BirthYear + " - " + $scope.BirthDie;
         } else {
             model.BirthYear = $scope.selectedFamily.BirthYear;
         }
@@ -4682,7 +4682,7 @@ break;
         var BirthYear = $scope.selectedFamily.BirthYear.split("-")
         $scope.disableWorkingProgressYear = true;
         $scope.selectedFamily.BirthYear = BirthYear[0];
-        $scope.selectedFamily.BirthDie = BirthYear[1];
+        $scope.BirthDie = BirthYear[1];
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
