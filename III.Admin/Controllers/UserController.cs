@@ -1272,7 +1272,7 @@ namespace III.Admin.Controllers
                                 a.Residence = x.Residence;
                                 a.Job = x.Job;
                                 a.PartyMember = x.PartyMember;
-
+                                a.ClassComposition = x.ClassComposition;
                                 a.PoliticalAttitude = x.PoliticalAttitude;
                                 a.WorkingProgress = x.WorkingProgress;
 
