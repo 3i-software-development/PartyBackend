@@ -32,23 +32,23 @@ namespace III.Admin.Utils
                 switch (a)
                 {
                     case "Họ và tên đang dùng:":
-                        text=p.AppendText(Pap.CurrentName);
+                        text = p.AppendText(Pap.CurrentName);
                         break;
 
                     case ("Họ và tên khai sinh:"):
-                        text=p.AppendText(Pap.BirthName);
+                        text = p.AppendText(Pap.BirthName);
                         break;
 
                     case ("Số điện thoại:"):
-                        text=p.AppendText(Pap.Phone);
+                        text = p.AppendText(Pap.Phone);
                         break;
 
                     case ("Quê quán:"):
-                            text =p.AppendText(Pap.HomeTown);
+                        text = p.AppendText(Pap.HomeTown);
                         break;
 
                     case ("Số LL:"):
-                        text=p.AppendText(Pap.ResumeNumber);
+                        text = p.AppendText(Pap.ResumeNumber);
                         break;
                         // Thêm các trường hợp khác tùy thuộc vào yêu cầu của bạn
                 }
@@ -62,79 +62,79 @@ namespace III.Admin.Utils
                 switch (a)
                 {
                     case ("Họ và tên khai sinh:"):
-                        text=p.AppendText(Pap.BirthName);
+                        text = p.AppendText(Pap.BirthName);
                         break;
 
                     case ("Nam, nữ:"):
-                        text=p.AppendText(Pap.Gender==0?"Nam":"Nữ");
+                        text = p.AppendText(Pap.Gender == 0 ? "Nam" : "Nữ");
                         break;
 
                     case ("Họ và tên đang dùng:"):
-                        text=p.AppendText(Pap.CurrentName);
+                        text = p.AppendText(Pap.CurrentName);
                         break;
 
                     case "Ngày, tháng, năm sinh :":
-                        text=p.AppendText(Pap.Birthday.Value.ToString("dd-MM-yyyy"));
+                        text = p.AppendText(Pap.Birthday.Value.ToString("dd-MM-yyyy"));
                         break;
 
                     case ("Nơi sinh:"):
-                        text=p.AppendText(Pap.PlaceBirth);
+                        text = p.AppendText(Pap.PlaceBirth);
                         break;
 
                     case ("Quê quán:"):
-                        text=p.AppendText(Pap.HomeTown);
+                        text = p.AppendText(Pap.HomeTown);
                         break;
 
                     case ("- Nơi thường trú :"):
-                        text=p.AppendText(Pap.PermanentResidence);
+                        text = p.AppendText(Pap.PermanentResidence);
                         break;
 
                     case ("- Nơi tạm trú :"):
-                        text=p.AppendText(Pap.TemporaryAddress);
+                        text = p.AppendText(Pap.TemporaryAddress);
                         break;
 
                     case ("Dân tộc:"):
-                        text=p.AppendText(Pap.Nation);
+                        text = p.AppendText(Pap.Nation);
                         break;
 
                     case ("Tôn giáo:"):
-                        text=p.AppendText(Pap.Religion);
+                        text = p.AppendText(Pap.Religion);
                         break;
 
                     case ("Nghề nghiệp hiện nay:"):
-                        text=p.AppendText(Pap.Job);
+                        text = p.AppendText(Pap.Job);
                         break;
 
                     case ("- Giáo dục phổ thông:"):
-                        text=p.AppendText(Pap.GeneralEducation);
+                        text = p.AppendText(Pap.GeneralEducation);
                         break;
 
                     case ("- Giáo dục nghề nghiệp :"):
-                        text=p.AppendText(Pap.JobEducation);
+                        text = p.AppendText(Pap.JobEducation);
                         break;
 
                     case ("- Giáo dục đại học và sau đại học:"):
-                        text=p.AppendText(Pap.Degree);
+                        text = p.AppendText(Pap.Degree);
                         break;
 
                     case ("- Học hàm:"):
-                        text=p.AppendText(Pap.UnderPostGraduateEducation);
+                        text = p.AppendText(Pap.UnderPostGraduateEducation);
                         break;
 
                     case ("- Lý luận chính trị:"):
-                        text=p.AppendText(Pap.PoliticalTheory);
+                        text = p.AppendText(Pap.PoliticalTheory);
                         break;
 
                     case ("- Ngoại ngữ:"):
-                        text=p.AppendText(Pap.ForeignLanguage);
+                        text = p.AppendText(Pap.ForeignLanguage);
                         break;
 
                     case ("- Tin học:"):
-                        text=p.AppendText(Pap.ItDegree);
+                        text = p.AppendText(Pap.ItDegree);
                         break;
 
                     case ("- Tiếng dân tộc thiểu số:"):
-                        text=p.AppendText(Pap.MinorityLanguages);
+                        text = p.AppendText(Pap.MinorityLanguages);
                         break;
                     case ("- Tình trạng hôn nhân :"):
                         string[] parts = Pap.MarriedStatus.Split('_');
@@ -146,13 +146,14 @@ namespace III.Admin.Utils
                         }
                         else if (parts[0] == "2")
                         {
-                            maritalStatus = "Đã ly hôn (Số quyết định: "+ parts[1]+", Ngày quyết định: "+ parts[2] +", địa điểm: " + parts[3]+")";
+                            maritalStatus = "Đã ly hôn (Số quyết định: " + parts[1] + ", Ngày quyết định: " + parts[2] + ", địa điểm: " + parts[3] + ")";
                         }
                         else if (parts[0] == "3")
                         {
                             maritalStatus = "Đã kết hôn";
                         }
-                        else {
+                        else
+                        {
                             maritalStatus = "Độc thân";
                         }
 
@@ -197,73 +198,73 @@ namespace III.Admin.Utils
             string[] partsHomeTown = Pap.HomeTown.Split('_');
             if (partsHomeTown.Length >= 4)
             {
-                var tinh = int.Parse(partsHomeTown[0]);
-                var huyen = int.Parse(partsHomeTown[1]);
-                var xa = int.Parse(partsHomeTown[2]);
+                var tinh = !string.IsNullOrEmpty(partsHomeTown[0]) ? int.Parse(partsHomeTown[0]) : 0;
+                var huyen = !string.IsNullOrEmpty(partsHomeTown[1]) ? int.Parse(partsHomeTown[1]) : 0;
+                var xa = !string.IsNullOrEmpty(partsHomeTown[2]) ? int.Parse(partsHomeTown[2]) : 0;
                 var tinhName = provinces.FirstOrDefault(x => x.provinceId == tinh);
                 var huyenName = districts.FirstOrDefault(x => x.districtId == huyen);
                 var xaName = wards.FirstOrDefault(x => x.wardsId == xa);
-                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                string HomeTown = $"{partsHomeTown[3]}, {xaName?.name ?? ""}, {huyenName?.name ?? ""}, {tinhName?.name ?? ""}";
                 Pap.HomeTown = HomeTown;
             }
 
             string[] partsPlaceBirth = Pap.PlaceBirth.Split('_');
             if (partsPlaceBirth.Length >= 4)
             {
-                var tinh = int.Parse(partsPlaceBirth[0]);
-                var huyen = int.Parse(partsPlaceBirth[1]);
-                var xa = int.Parse(partsPlaceBirth[2]);
+                var tinh = !string.IsNullOrEmpty(partsPlaceBirth[0]) ? int.Parse(partsPlaceBirth[0]) : 0;
+                var huyen = !string.IsNullOrEmpty(partsPlaceBirth[1]) ? int.Parse(partsPlaceBirth[1]) : 0;
+                var xa = !string.IsNullOrEmpty(partsPlaceBirth[2]) ? int.Parse(partsPlaceBirth[2]) : 0;
                 var tinhName = provinces.FirstOrDefault(x => x.provinceId == tinh);
                 var huyenName = districts.FirstOrDefault(x => x.districtId == huyen);
                 var xaName = wards.FirstOrDefault(x => x.wardsId == xa);
-                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                string HomeTown = $"{partsPlaceBirth[3]}, {xaName?.name ?? ""}, {huyenName?.name ?? ""}, {tinhName?.name ?? ""}";
                 Pap.PlaceBirth = HomeTown;
             }
 
             string[] partsPermanentResidence = Pap.PermanentResidence.Split('_');
             if (partsPlaceBirth.Length >= 4)
             {
-                var tinh = int.Parse(partsPermanentResidence[0]);
-                var huyen = int.Parse(partsPermanentResidence[1]);
-                var xa = int.Parse(partsPermanentResidence[2]);
+                var tinh = !string.IsNullOrEmpty(partsPermanentResidence[0]) ? int.Parse(partsPermanentResidence[0]) : 0;
+                var huyen = !string.IsNullOrEmpty(partsPermanentResidence[1]) ? int.Parse(partsPermanentResidence[1]) : 0;
+                var xa = !string.IsNullOrEmpty(partsPermanentResidence[2]) ? int.Parse(partsPermanentResidence[2]) : 0;
                 var tinhName = provinces.FirstOrDefault(x => x.provinceId == tinh);
                 var huyenName = districts.FirstOrDefault(x => x.districtId == huyen);
                 var xaName = wards.FirstOrDefault(x => x.wardsId == xa);
-                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                string HomeTown = $"{partsPermanentResidence[3]}, {xaName?.name ?? ""}, {huyenName?.name ?? ""}, {tinhName?.name ?? ""}";
                 Pap.PermanentResidence = HomeTown;
             }
 
             string[] partsTemporaryAddress = Pap.TemporaryAddress.Split('_');
             if (partsPlaceBirth.Length >= 4)
             {
-                var tinh = int.Parse(partsTemporaryAddress[0]);
-                var huyen = int.Parse(partsTemporaryAddress[1]);
-                var xa = int.Parse(partsTemporaryAddress[2]);
+                var tinh = !string.IsNullOrEmpty(partsTemporaryAddress[0]) ? int.Parse(partsTemporaryAddress[0]) : 0;
+                var huyen = !string.IsNullOrEmpty(partsTemporaryAddress[1]) ? int.Parse(partsTemporaryAddress[1]) : 0;
+                var xa = !string.IsNullOrEmpty(partsTemporaryAddress[2]) ? int.Parse(partsTemporaryAddress[2]) : 0;
                 var tinhName = provinces.FirstOrDefault(x => x.provinceId == tinh);
                 var huyenName = districts.FirstOrDefault(x => x.districtId == huyen);
                 var xaName = wards.FirstOrDefault(x => x.wardsId == xa);
-                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                string HomeTown = $"{partsTemporaryAddress[3]}, {xaName?.name ?? ""}, {huyenName?.name ?? ""}, {tinhName?.name ?? ""}";
                 Pap.TemporaryAddress = HomeTown;
             }
 
             string[] partsCreatedPlace = Pap.CreatedPlace.Split('_');
             if (partsPlaceBirth.Length >= 2)
             {
-                string HomeTown = "" + partsCreatedPlace[1] + ", tại " + partsCreatedPlace[0] ;
+                string HomeTown = "" + partsCreatedPlace[1] + ", tại " + partsCreatedPlace[0];
                 Pap.CreatedPlace = HomeTown;
             }
 
         }
 
         //Lịch sử bản thân
-        public static void BinđingPersonalHistory(WTable table,List<PersonalHistory> Ph)
+        public static void BinđingPersonalHistory(WTable table, List<PersonalHistory> Ph)
         {
             WTableCell cell = table[0, 0] as WTableCell;
             foreach (PersonalHistory ph in Ph)
             {
                 IWTextRange text;
                 IWParagraph p = cell.AddParagraph();
-                text=p.AppendText("+ Tháng "+ph.Begin+" - "+ ph.End +": "+ph.Content);
+                text = p.AppendText("+ Tháng " + ph.Begin + " - " + ph.End + ": " + ph.Content);
             }
         }
 
@@ -285,16 +286,16 @@ namespace III.Admin.Utils
                 IWTextRange text;
                 WTableCell cell = row.Cells[0] as WTableCell;
                 IWParagraph p = cell.AddParagraph();
-                text=p.AppendText("Từ "+TrCP[i].From + " đến " + TrCP[i].To);
+                text = p.AppendText("Từ " + TrCP[i].From + " đến " + TrCP[i].To);
 
 
                 cell = row.Cells[1] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].Work);
+                text = p.AppendText(TrCP[i].Work);
 
                 cell = row.Cells[2] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].Role);
+                text = p.AppendText(TrCP[i].Role);
 
             }
         }
@@ -311,12 +312,13 @@ namespace III.Admin.Utils
                     IWTextRange text;
                     IWParagraph p = cell.AddParagraph();
                     DateTime date = DateTime.Parse(ph.MonthYear);
-                    text=p.AppendText(date.ToString("'Ngày' dd 'tháng' MM 'năm' yyyy"));
+                    text = p.AppendText(date.ToString("'Ngày' dd 'tháng' MM 'năm' yyyy"));
 
                     p = cell.AddParagraph();
-                    text=p.AppendText(ph.Content);
+                    text = p.AppendText(ph.Content);
 
-                }catch (Exception ex)
+                }
+                catch (Exception ex)
                 {
 
                 }
@@ -344,20 +346,20 @@ namespace III.Admin.Utils
 
                 IWTextRange text;
 
-                text =p.AppendText(TrCP[i].SchoolName);
+                text = p.AppendText(TrCP[i].SchoolName);
 
 
                 cell = row.Cells[1] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].Class);
+                text = p.AppendText(TrCP[i].Class);
 
                 cell = row.Cells[2] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].From + " đến " + TrCP[i].To);
+                text = p.AppendText(TrCP[i].From + " đến " + TrCP[i].To);
 
                 cell = row.Cells[3] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].Certificate);
+                text = p.AppendText(TrCP[i].Certificate);
             }
         }
 
@@ -380,16 +382,16 @@ namespace III.Admin.Utils
                 IWTextRange text;
 
                 IWParagraph p = cell.AddParagraph();
-                text=p.AppendText("Từ " + TrCP[i].From + " đến " + TrCP[i].To);
+                text = p.AppendText("Từ " + TrCP[i].From + " đến " + TrCP[i].To);
 
 
                 cell = row.Cells[1] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].Contact);
+                text = p.AppendText(TrCP[i].Contact);
 
                 cell = row.Cells[2] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].Country);
+                text = p.AppendText(TrCP[i].Country);
 
             }
         }
@@ -413,16 +415,16 @@ namespace III.Admin.Utils
                 IWTextRange text;
 
                 IWParagraph p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].MonthYear);
+                text = p.AppendText(TrCP[i].MonthYear);
 
 
                 cell = row.Cells[1] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].Reason);
+                text = p.AppendText(TrCP[i].Reason);
 
                 cell = row.Cells[2] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].GrantOfDecision);
+                text = p.AppendText(TrCP[i].GrantOfDecision);
 
             }
         }
@@ -446,16 +448,16 @@ namespace III.Admin.Utils
 
                 IWTextRange text;
                 IWParagraph p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].MonthYear);
+                text = p.AppendText(TrCP[i].MonthYear);
 
 
                 cell = row.Cells[1] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].Reason);
+                text = p.AppendText(TrCP[i].Reason);
 
                 cell = row.Cells[2] as WTableCell;
                 p = cell.AddParagraph();
-                text=p.AppendText(TrCP[i].GrantOfDecision);
+                text = p.AppendText(TrCP[i].GrantOfDecision);
 
             }
         }
@@ -470,30 +472,30 @@ namespace III.Admin.Utils
                 {
                     IWTextRange text;
                     IWParagraph p = cell.AddParagraph();
-                    text=p.AppendText("*"+ ph.Relation+" :");
+                    text = p.AppendText("*" + ph.Relation + " :");
                     p = cell.AddParagraph();
-                    text=p.AppendText("- Họ và tên: " + ph.Name);
+                    text = p.AppendText("- Họ và tên: " + ph.Name);
 
                     p = cell.AddParagraph();
                     string[] parts = ph.BirthYear.Split('_');
 
-                    string BirthYear = parts[0]; 
-                    if (parts.Length > 3 && parts[0] == "true" )
+                    string BirthYear = parts[0];
+                    if (parts.Length > 3 && parts[0] == "true")
                     {
-                        ph.BirthYear =  parts[1] + "(Đã mất) \n" + "- Nơi mất: " + parts[2] + "\n" + "- Lý do mất: " + parts[3];
+                        ph.BirthYear = parts[1] + "(Đã mất) \n" + "- Nơi mất: " + parts[2] + "\n" + "- Lý do mất: " + parts[3];
                     }
                     else
                     {
-                        ph.BirthYear =  parts[1];
+                        ph.BirthYear = parts[1];
                     }
 
-                    text =p.AppendText("- Năm sinh: " + ph.BirthYear);
+                    text = p.AppendText("- Năm sinh: " + ph.BirthYear);
 
                     p = cell.AddParagraph();
-                    text=p.AppendText("- Quê quán: " + ph.HomeTown);
+                    text = p.AppendText("- Quê quán: " + ph.HomeTown);
 
                     p = cell.AddParagraph();
-                    text=p.AppendText("- Nơi cư trú: " + ph.Residence);
+                    text = p.AppendText("- Nơi cư trú: " + ph.Residence);
 
                     p = cell.AddParagraph();
                     var ismember = ph.PartyMember;
@@ -502,19 +504,19 @@ namespace III.Admin.Utils
                     string PartyMember = partsMember[0];
                     if (partsMember.Length > 2 && partsMember[1] == "true")
                     {
-                        ph.PartyMember = "Có\n" + "- Sinh hoạt tại chi bộ: " + partsMember[0] + "\n" +  "- Thuộc đảng bộ: " + partsMember[2];
+                        ph.PartyMember = "Có\n" + "- Sinh hoạt tại chi bộ: " + partsMember[0] + "\n" + "- Thuộc đảng bộ: " + partsMember[2];
                     }
                     else
                     {
                         ph.PartyMember = "Không";
                     }
-                    text =p.AppendText("- Đảng viên: " + ph.PartyMember );
+                    text = p.AppendText("- Đảng viên: " + ph.PartyMember);
 
                     p = cell.AddParagraph();
-                    text=p.AppendText("- Nghề nghiệp: " + ph.Job);
+                    text = p.AppendText("- Nghề nghiệp: " + ph.Job);
 
                     p = cell.AddParagraph();
-                    text=p.AppendText("- Quá trình công tác: ");
+                    text = p.AppendText("- Quá trình công tác: ");
                     if (!ph.WorkingProgress.IsNullOrEmpty())
                     {
                         p = cell.AddParagraph();
@@ -528,7 +530,7 @@ namespace III.Admin.Utils
                         text = p.AppendText(ph.PoliticalAttitude);
                     }
                     p = cell.AddParagraph();
-                    
+
                 }
                 catch (Exception ex)
                 {
@@ -569,25 +571,25 @@ namespace III.Admin.Utils
         public static void BinđingPersonalHistory(WTable table, string[] workingTracking)
         {
             int count = table.Rows.Count; int countNow = 0;
-            if (workingTracking.Where(item=> item.StartsWith("Từ")).Count() > 0)
+            if (workingTracking.Where(item => item.StartsWith("Từ")).Count() > 0)
             {
                 countNow++;
             }
-            if(workingTracking.Where(item => item.StartsWith("Đến")).Count() > 0)
+            if (workingTracking.Where(item => item.StartsWith("Đến")).Count() > 0)
             {
                 countNow++;
             }
-            if(workingTracking.Where(item => item.StartsWith("Công việc")).Count() > 0)
+            if (workingTracking.Where(item => item.StartsWith("Công việc")).Count() > 0)
             {
                 countNow++;
             }
-            if(workingTracking.Where(item => item.StartsWith("Chức vụ")).Count() > 0)
+            if (workingTracking.Where(item => item.StartsWith("Chức vụ")).Count() > 0)
             {
                 countNow++;
             }
             int countObject = 0;
             int selectRow = 1;
-            WTableRow row=null;
+            WTableRow row = null;
             foreach (var item in workingTracking)
             {
                 if (countObject < countNow)
@@ -606,7 +608,7 @@ namespace III.Admin.Utils
                 }
                 else
                 {
-                    row= table.AddRow();
+                    row = table.AddRow();
                     count++;
                 }
                 IWTextRange text;
@@ -616,7 +618,7 @@ namespace III.Admin.Utils
                     WTableCell cell = row.Cells[0] as WTableCell;
                     IWParagraph p = cell.AddParagraph();
                     text = p.AppendText(item);
-                    SetStyle(text); 
+                    SetStyle(text);
                 }
                 else if (item.StartsWith("Công việc") || item.StartsWith("Chức vụ"))
                 {
@@ -626,7 +628,7 @@ namespace III.Admin.Utils
                     SetStyle(text);
                 }
             }
-            
+
         }
         public static void BinddingTrainingCertificatedPass(WTable table, string[] TrCP)
         {
@@ -696,7 +698,7 @@ namespace III.Admin.Utils
             }
         }
 
-        private static void setCellParagraph(WTableRow row, int v, string item,bool IsSplit=false)
+        private static void setCellParagraph(WTableRow row, int v, string item, bool IsSplit = false)
         {
             if (IsSplit)
             {
@@ -704,17 +706,17 @@ namespace III.Admin.Utils
                 if (colonIndex != -1 && colonIndex < item.Length - 1)
                 {
                     // Trả về phần chuỗi sau dấu ":"
-                    item= item.Substring(colonIndex + 1).Trim();
+                    item = item.Substring(colonIndex + 1).Trim();
                 }
             }
 
             WTableCell cell = row.Cells[v] as WTableCell;
             IWParagraph p = cell.AddParagraph();
-            IWTextRange text = p.AppendText(" "+item);
+            IWTextRange text = p.AppendText(" " + item);
             SetStyle(text);
         }
 
-        public static void BinddingFamily(WTable table,string[] TrCP)
+        public static void BinddingFamily(WTable table, string[] TrCP)
         {
             int count = table.Rows.Count; int countNow = 0;
             if (TrCP.Where(item => item.StartsWith("Thái độ chính trị")).Count() > 0)
@@ -787,21 +789,21 @@ namespace III.Admin.Utils
                 }
                 if (item.StartsWith("Name"))
                 {
-                    setCellParagraph(row, 1, item,true);
+                    setCellParagraph(row, 1, item, true);
                 }
                 if (item.StartsWith("BirthYear"))
                 {
-                    setCellParagraph(row, 2, item,true);
+                    setCellParagraph(row, 2, item, true);
                 }
-                if (item.StartsWith("Thái độ chính trị")|| item.StartsWith("Quê quán")|| item.StartsWith("Nơi ở hiện nay")|| 
-                    item.StartsWith("Nghề nghiệp")|| item.StartsWith("Quá trình công tác"))
+                if (item.StartsWith("Thái độ chính trị") || item.StartsWith("Quê quán") || item.StartsWith("Nơi ở hiện nay") ||
+                    item.StartsWith("Nghề nghiệp") || item.StartsWith("Quá trình công tác"))
                 {
                     setCellParagraph(row, 3, item);
                 }
                 if (item.StartsWith("Đảng viên"))
                 {
                     var a = "";
-                    if (item.Split(":")[1]==" True")
+                    if (item.Split(":")[1] == " True")
                     {
                         a = "Đảng viên: đúng";
                     }
@@ -811,7 +813,7 @@ namespace III.Admin.Utils
                     }
                     setCellParagraph(row, 3, a);
                 }
-                
+
             }
         }
 
@@ -867,7 +869,7 @@ namespace III.Admin.Utils
                 {
                     setCellParagraph(row, 1, item, true);
                 }
-                else if(item.StartsWith("MonthYear"))
+                else if (item.StartsWith("MonthYear"))
                 {
                     setCellParagraph(row, 0, item, true);
                 }
@@ -917,7 +919,7 @@ namespace III.Admin.Utils
 
                 if (item.StartsWith("MonthYear"))
                 {
-                    setCellParagraph(row, 0, item,true);
+                    setCellParagraph(row, 0, item, true);
                 }
                 else if (item.StartsWith("Reason"))
                 {
@@ -975,7 +977,7 @@ namespace III.Admin.Utils
                 }
                 IWTextRange text;
 
-                if (item.StartsWith("Từ")|| item.StartsWith("Đến"))
+                if (item.StartsWith("Từ") || item.StartsWith("Đến"))
                 {
                     setCellParagraph(row, 0, item, true);
                 }
@@ -1002,7 +1004,7 @@ namespace III.Admin.Utils
                 switch (a)
                 {
                     case "01) Họ và tên đang dùng:………………………………………… 02) Nam, nữ…………………….":
-                        p.Replace("01) Họ và tên đang dùng:………………………………………", "01) Họ và tên đang dùng:" + jsonParty.Profile.CurrentName,true, true);
+                        p.Replace("01) Họ và tên đang dùng:………………………………………", "01) Họ và tên đang dùng:" + jsonParty.Profile.CurrentName, true, true);
                         p.Replace("02) Nam, nữ……………………", "02) Nam, nữ: " + jsonParty.Profile.Gender, true, true);
                         break;
                     case "03) Họ và tên khai sinh:…………………………………………... 04) Sinh ngày.../…/……….……":
@@ -1031,9 +1033,9 @@ namespace III.Admin.Utils
                         p.Replace("………………………\v…………………………………………………………………………………………………………….", jsonParty.Profile.Job, true, true);
                         break;
                     case "12) Ngày vào Đảng:…/…/…… Tại Chi bộ:…………………………………………………………..":
-                        if (jsonParty.IntroducerOfParty != null) 
+                        if (jsonParty.IntroducerOfParty != null)
                             p.Replace("12) Ngày vào Đảng:…/…/…… Tại Chi bộ:………………………………………………………….",
-                            "12) Ngày vào Đảng: "+jsonParty.IntroducerOfParty.PlaceTimeJoinParty, true, true);
+                            "12) Ngày vào Đảng: " + jsonParty.IntroducerOfParty.PlaceTimeJoinParty, true, true);
                         break;
                     case "Người giới thiệu thứ 1:…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….":
                         if (jsonParty.IntroducerOfParty != null)
@@ -1061,7 +1063,7 @@ namespace III.Admin.Utils
                             p.Replace("……………………………", jsonParty.Profile.UnderPostGraduateEducation, true, true);
                         break;
                     case "Học vị: …………………………………. - Học hàm: ………………………………………………….":
-                        if(!string.IsNullOrEmpty(jsonParty.Profile.Degree))
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.Degree))
                             p.Replace("…………………………………………………", jsonParty.Profile.Degree, true, true);
                         break;
                     case "- Lý luận chính trị: ……………………. - Ngoại ngữ: ………………………………………………..":
@@ -1106,7 +1108,7 @@ namespace III.Admin.Utils
 
             table = section.Tables[2] as WTable;
             BindingTrainingCertificatedPasses(table, jsonParty.TrainingCertificatedPasses);
-            
+
             table = section.Tables[3] as WTable;
             BindingFamily(table, jsonParty.Families);
         }
@@ -1230,7 +1232,7 @@ namespace III.Admin.Utils
         private static void BindingPersonalHistories1(IWParagraph p, List<ESEIM.Models.PersonalHistory> personalHistories)
         {
             var item = personalHistories.FirstOrDefault(x => x.Type == "1");
-            
+
             if (item != null)
             {
                 p.Replace("Thời gian: …………………………………", "Thời gian: " + item.Begin + "-" + item.End, true, true);
@@ -1246,7 +1248,7 @@ namespace III.Admin.Utils
             {
                 text += $"{item.Country}(Thời gian: {item.From}-{item.To}, Nội dung: {item.Contact}),";
             }
-            if(text!="")
+            if (text != "")
                 p.Replace(" …………………………\v………………………………………………………………………………………………………\v………………………………………………………………………………………………………", text, true, true);
         }
 
@@ -1258,7 +1260,7 @@ namespace III.Admin.Utils
                 text += $"{item.Reason}(Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision}),";
             }
             if (text != "")
-                p.Replace("……………………………………\v…………………………………………………………………………………………………………\v…………………………………………………………………………………………………………",text,true,true);
+                p.Replace("……………………………………\v…………………………………………………………………………………………………………\v…………………………………………………………………………………………………………", text, true, true);
         }
 
         private static void BindingWarning(IWParagraph p, List<WarningDisciplined> awards)
@@ -1431,7 +1433,7 @@ namespace III.Admin.Utils
                 SetStyle(text);
 
                 cell = row.Cells[1];
-                
+
                 p = cell.Paragraphs[0];
                 p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
                 text = p.AppendText("Công việc:" + item.Work);
