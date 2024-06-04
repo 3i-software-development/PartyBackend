@@ -1952,16 +1952,21 @@
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="showWorkingProcess3=!showWorkingProcess3">
-                                    <i ng-show="showWorkingProcess3" class="fa fa-caret-down"></i>
-                                    <i ng-show="!showWorkingProcess3" class="fa fa-caret-right"></i>
+                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                    <i class="fa fa-caret-right"></i>&nbsp;
+                                    <!--<i ng-show="!showWorkingProcess3" class="fa fa-caret-right"></i>-->
                                     <label class="fs-18">Đặc điểm lịch sử</label>
+                                    <div class="mt-checkbox-list pt5" style="margin-left: 15px">
+                                        <label class="mt-checkbox"
+                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess3" ng-checked="showWorkingProcess3">
+                                            <span></span>
+                                        </label>
+                                    </div>
                                 </div>
 
-                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="submitHistorySpecialist()">
-                                    <i class="fas fa-save" style="font-size: 26px"></i>
+                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                    <i class="fas fa-save" style="font-size: 26px" ng-click="submitHistorySpecialist()"></i>
                                 </div>
                             </div>
 
@@ -2052,11 +2057,16 @@
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex; justify-content:space-between">
-                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="showWorkingProcess4=!showWorkingProcess4">
-                                    <i ng-show="showWorkingProcess4" class="fa fa-caret-down"></i>
-                                    <i ng-show="!showWorkingProcess4" class="fa fa-caret-right"></i>
+                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                    <i class="fa fa-caret-right"></i>&nbsp;
                                     <label class="fs-18">Khen thưởng</label>
+                                    <div class="mt-checkbox-list pt5" style="margin-left: 15px">
+                                        <label class="mt-checkbox"
+                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess4" ng-checked="showWorkingProcess4">
+                                            <span></span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                     ng-click="submitAward()">
@@ -2176,11 +2186,16 @@
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="showWorkingProcess5=!showWorkingProcess5">
-                                    <i ng-show="showWorkingProcess5" class="fa fa-caret-down"></i>
-                                    <i ng-show="!showWorkingProcess5" class="fa fa-caret-right"></i>
+                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                    <i class="fa fa-caret-right"></i>&nbsp;
                                     <label class="fs-18">Kỷ luật</label>
+                                    <div class="mt-checkbox-list pt5" style="margin-left: 15px">
+                                        <label class="mt-checkbox"
+                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess5" ng-checked="showWorkingProcess5">
+                                            <span></span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                     ng-show="infUser.ResumeNumber!=''||infUser.ResumeNumber!=undefine||infUser.ResumeNumber!=null"
@@ -2306,11 +2321,17 @@
                             </div>
                             <div class="toggle-header"
                                 style="display:flex ; justify-content:space-between; white-space:nowrap">
-                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="showWorkingProcess6=!showWorkingProcess6" style="overflow:auto">
-                                    <i ng-show="showWorkingProcess6" class="fa fa-caret-down"></i>
-                                    <i ng-show="!showWorkingProcess6" class="fa fa-caret-right"></i>
+                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                     style="overflow:auto">
+                                    <i class="fa fa-caret-right"></i>&nbsp;
                                     <label class="fs-18">Lớp đào tạo và bồi dưỡng đã qua</label>
+                                    <div class="mt-checkbox-list pt5" style="margin-left: 15px">
+                                        <label class="mt-checkbox"
+                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess6" ng-checked="showWorkingProcess6">
+                                            <span></span>
+                                        </label>
+                                    </div>
                                 </div>
 
                                 <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
@@ -2486,11 +2507,16 @@
                                 </div>
                             </div>
                             <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="showWorkingProcess7=!showWorkingProcess7">
-                                    <i ng-show="showWorkingProcess7" class="fa fa-caret-down"></i>
-                                    <i ng-show="!showWorkingProcess7" class="fa fa-caret-right"></i>
+                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                    <i class="fa fa-caret-right"></i>&nbsp;
                                     <label class="fs-18">Đi nước ngoài</label>
+                                    <div class="mt-checkbox-list pt5" style="margin-left: 15px">
+                                        <label class="mt-checkbox"
+                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showWorkingProcess7" ng-checked="showWorkingProcess7">
+                                            <span></span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                     ng-click="submitGoAboard()">
@@ -2642,11 +2668,16 @@
                             </div>
 
                             <div class="toggle-header" id="GTVD" style="display: flex; justify-content: space-between;">
-                                <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                    ng-click="showDegree=!showDegree">
-                                    <i ng-show="showDegree" class="fa fa-caret-down"></i>
-                                    <i ng-show="!showDegree" class="fa fa-caret-right"></i>
+                                <div class="d-flex" ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
+                                    <i class="fa fa-caret-right"></i>&nbsp;
                                     <label>Giới thiệu vào đảng</label>
+                                    <div class="mt-checkbox-list pt5" style="margin-left: 15px">
+                                        <label class="mt-checkbox"
+                                               style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
+                                            <input type="checkbox" ng-model="showDegree" ng-checked="showDegree">
+                                            <span></span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                     ng-click="submitIntroducer()">
