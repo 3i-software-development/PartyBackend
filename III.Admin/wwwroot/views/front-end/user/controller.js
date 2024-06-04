@@ -2034,11 +2034,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
 
         var partsPlaceAddress = $scope.placeAddress.split("/");
+        var partsJoinDate = $scope.placeAddress.split("-");
         if (partsPlaceAddress.length === 3) {
             var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
             $scope.placeAddress = formattedPlaceAddress;
         }
-        else {
+        else if (partsJoinDate.length !== 3) {
             $scope.err = true
             App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
             return;
@@ -2070,13 +2071,18 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 $scope.model.TemporaryAddress = [$scope.infUser.TemporaryAddress, $scope.thon_TemporaryAddress].join('_');
                 $scope.model.GeneralEducation = $scope.infUser.LevelEducation.GeneralEducation;
                 $scope.model.JobEducation = $scope.infUser.LevelEducation.VocationalTraining;
-                $scope.model.UnderPostGraduateEducation = $scope.infUser.LevelEducation.Undergraduate;
+                const educations = $scope.infUser.LevelEducation.UnderPostGraduateEducation;
+                $scope.model.UnderPostGraduateEducation = educations && educations.constructor === Array ? '' : educations;
                 $scope.model.Degree = $scope.infUser.LevelEducation.RankAcademic;
                 $scope.model.Picture = '';
-                $scope.model.ForeignLanguage = $scope.infUser.LevelEducation.ForeignLanguage;
-                $scope.model.MinorityLanguages = $scope.infUser.LevelEducation.MinorityLanguage;
-                $scope.model.ItDegree = $scope.infUser.LevelEducation.It;
-                $scope.model.PoliticalTheory = $scope.infUser.LevelEducation.PoliticalTheory;
+                const fLanguages = $scope.infUser.LevelEducation.ForeignLanguage;
+                $scope.model.ForeignLanguage = fLanguages && fLanguages.constructor === Array ? '' : fLanguages;
+                const mLanguages = $scope.infUser.LevelEducation.MinorityLanguage;
+                $scope.model.MinorityLanguages = mLanguages && mLanguages.constructor === Array ? '' : mLanguages;
+                const its = $scope.infUser.LevelEducation.It;
+                $scope.model.ItDegree = its && its.constructor === Array ? '' : its;
+                const theories = $scope.infUser.LevelEducation.PoliticalTheory;
+                $scope.model.PoliticalTheory = theories && theories.constructor === Array ? '' : theories;
                 $scope.model.SelfComment = $scope.SelfComment.context;
                 $scope.model.CreatedPlace = [$scope.PlaceCreatedTime.place, $scope.placeAddress].join('_');
                 $scope.model.ResumeNumber = $scope.infUser.ResumeNumber;
@@ -2099,128 +2105,212 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 if (PermanentResidence.length >= 3) {
                     var permanentResidencePromise = Promise.all([
                         new Promise((resolve, reject) => {
-                            dataservice.GetTinh(PermanentResidence[0], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.PermanentResidenceTinh = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetTinh(PermanentResidence[0], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PermanentResidenceTinh = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         }),
                         new Promise((resolve, reject) => {
-                            dataservice.GetHuyen(PermanentResidence[1], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.PermanentResidenceHuyen = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetHuyen(PermanentResidence[1], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PermanentResidenceHuyen = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         }),
                         new Promise((resolve, reject) => {
-                            dataservice.GetXa(PermanentResidence[2], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.PermanentResidenceXa = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetXa(PermanentResidence[2], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PermanentResidenceXa = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         })
                     ]);
 
                     promises.push(permanentResidencePromise);
+
+                    permanentResidencePromise
+                    .then(() => console.log('permanentResidencePromise ok'))
+                    .catch((e) => console.log('permanentResidencePromise', e));
                 }
 
                 var TemporaryAddress = $scope.infUser.TemporaryAddress.split('_');
                 if (TemporaryAddress.length >= 3) {
-                    var temporaryAddressPromise = Promise.all([
-                        new Promise((resolve, reject) => {
-                            dataservice.GetTinh(TemporaryAddress[0], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.TemporaryAddressTinh = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
-                        }),
-                        new Promise((resolve, reject) => {
-                            dataservice.GetHuyen(TemporaryAddress[1], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.TemporaryAddressHuyen = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
-                        }),
-                        new Promise((resolve, reject) => {
-                            dataservice.GetXa(TemporaryAddress[2], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.TemporaryAddressXa = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
-                        })
-                    ]);
+                    const listPromise = [];
+                    if (TemporaryAddress[0]) {
+                        listPromise.push(new Promise((resolve, reject) => {
+                            try {
+                                dataservice.GetTinh(TemporaryAddress[0], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.TemporaryAddressTinh = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
+                        }));
+                    }
+                    if (TemporaryAddress[1]) {
+                        listPromise.push(new Promise((resolve, reject) => {
+                            try {
+                                dataservice.GetHuyen(TemporaryAddress[1], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.TemporaryAddressHuyen = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
+                        }));
+                    }
+                    if (TemporaryAddress[2]) {
+                        listPromise.push(new Promise((resolve, reject) => {
+                            try {
+                                dataservice.GetXa(TemporaryAddress[2], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.TemporaryAddressXa = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
+                        }));
+                    }
+                    if (listPromise.length > 0) {
+                        var temporaryAddressPromise = Promise.all(listPromise);
 
-                    promises.push(temporaryAddressPromise);
+                        promises.push(temporaryAddressPromise);
+
+                        temporaryAddressPromise
+                            .then(() => console.log('temporaryAddressPromise ok'))
+                            .catch((e) => console.log('temporaryAddressPromise', e));
+                    }
                 }
 
                 var HomeTown = $scope.infUser.HomeTown.split('_');
                 if (HomeTown.length >= 3) {
                     var homeTownPromise = Promise.all([
                         new Promise((resolve, reject) => {
-                            dataservice.GetTinh(HomeTown[0], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.HomeTownTinh = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetTinh(HomeTown[0], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.HomeTownTinh = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         }),
                         new Promise((resolve, reject) => {
-                            dataservice.GetHuyen(HomeTown[1], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.HomeTownHuyen = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetHuyen(HomeTown[1], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.HomeTownHuyen = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         }),
                         new Promise((resolve, reject) => {
-                            dataservice.GetXa(HomeTown[2], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.HomeTownXa = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetXa(HomeTown[2], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.HomeTownXa = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         })
                     ]);
 
                     promises.push(homeTownPromise);
+
+                    homeTownPromise
+                    .then(() => console.log('homeTownPromise ok'))
+                    .catch((e) => console.log('homeTownPromise', e));
                 }
 
                 var PlaceofBirth = $scope.infUser.PlaceofBirth.split('_');
                 if (PlaceofBirth.length >= 3) {
                     var placeofBirthPromise = Promise.all([
                         new Promise((resolve, reject) => {
-                            dataservice.GetTinh(PlaceofBirth[0], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.PlaceofBirthTinh = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetTinh(PlaceofBirth[0], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PlaceofBirthTinh = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         }),
                         new Promise((resolve, reject) => {
-                            dataservice.GetHuyen(PlaceofBirth[1], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.PlaceofBirthHuyen = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetHuyen(PlaceofBirth[1], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PlaceofBirthHuyen = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         }),
                         new Promise((resolve, reject) => {
-                            dataservice.GetXa(PlaceofBirth[2], function (rs) {
-                                if (rs.data && rs.data[0]) {
-                                    $scope.PlaceofBirthXa = rs.data[0].name;
-                                    resolve();
-                                }
-                            });
+                            try {
+                                dataservice.GetXa(PlaceofBirth[2], function (rs) {
+                                    if (rs.data && rs.data[0]) {
+                                        $scope.PlaceofBirthXa = rs.data[0].name;
+                                        resolve();
+                                    }
+                                });
+                            } catch (e) {
+                                console.log(e);
+                                resolve();
+                            }
                         })
                     ]);
 
                     promises.push(placeofBirthPromise);
+
+                    placeofBirthPromise
+                    .then(() => console.log('placeofBirthPromise ok'))
+                    .catch((e) => console.log('placeofBirthPromise', e));
                 }
 
                 Promise.all(promises).then(() => {
@@ -3778,9 +3868,9 @@ app.directive("choosePosition", function (dataservice) {
             function parseNgModelValue(value) {
                 var parts = value.split('_'); // Tách giá trị thành các phần
                 var result = {
-                    tinh_id: parseInt(parts[0]),
-                    huyen_id: parseInt(parts[1]),
-                    xaPhuong_id: parseInt(parts[2])
+                    tinh_id: parts[0] ? parseInt(parts[0]) : '',
+                    huyen_id: parts[1] ? parseInt(parts[1]) : '',
+                    xaPhuong_id: parts[2] ? parseInt(parts[2]) : ''
                 };
                 return result;
             }
