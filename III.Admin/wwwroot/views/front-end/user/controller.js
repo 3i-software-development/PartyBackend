@@ -2006,11 +2006,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             App.toastrError("Không được để trường địa chỉ thôn trong quê quán trống")
             return;
         }
-        if ($scope.placeAddress === "" || $scope.placeAddress == null || $scope.placeAddress == undefined) {
-            $scope.err = true
-            App.toastrError("Không được để trường Ngày kết nạp đoàn trống")
-            return;
-        }
+        //if ($scope.placeAddress === "" || $scope.placeAddress == null || $scope.placeAddress == undefined) {
+        //    $scope.err = true
+        //    App.toastrError("Không được để trường Ngày kết nạp đoàn trống")
+        //    return;
+        //}
 
         if ($scope.err == true) {
             return
@@ -2033,26 +2033,28 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
 
 
-        var partsPlaceAddress = $scope.placeAddress.split("/");
-        var partsJoinDate = $scope.placeAddress.split("-");
-        if (partsPlaceAddress.length === 3) {
-            var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
-            $scope.placeAddress = formattedPlaceAddress;
-        }
-        else if (partsJoinDate.length !== 3) {
-            $scope.err = true
-            App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
-            return;
-        }
+        if ($scope.placeAddress) {
+            var partsPlaceAddress = $scope.placeAddress.split("/");
+            var partsJoinDate = $scope.placeAddress.split("-");
+            if (partsPlaceAddress.length === 3) {
+                var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
+                $scope.placeAddress = formattedPlaceAddress;
+            }
+            else if (partsJoinDate.length !== 3) {
+                $scope.err = true
+                App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
+                return;
+            }
 
-        var partsPlaceAddress = $scope.placeAddress.split("-");
-        if (partsPlaceAddress.length === 3) {
-            $scope.placeAddress
-        }
-        else {
-            $scope.err = true
-            App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
-            return;
+            var partsPlaceAddress = $scope.placeAddress.split("-");
+            if (partsPlaceAddress.length === 3) {
+                $scope.placeAddress
+            }
+            else {
+                $scope.err = true
+                App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
+                return;
+            }
         }
         if ($scope.err == false) {
             if ($scope.UserName != null && $scope.UserName != undefined) {
@@ -2084,7 +2086,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 const theories = $scope.infUser.LevelEducation.PoliticalTheory;
                 $scope.model.PoliticalTheory = theories && theories.constructor === Array ? '' : theories;
                 $scope.model.SelfComment = $scope.SelfComment.context;
-                $scope.model.CreatedPlace = [$scope.PlaceCreatedTime.place, $scope.placeAddress].join('_');
+                $scope.model.CreatedPlace = [($scope.PlaceCreatedTime?.place ?? ''), $scope.placeAddress].join('_');
                 $scope.model.ResumeNumber = $scope.infUser.ResumeNumber;
                 $scope.model.Status = $scope.infUser.Status;
                 $scope.model.UserName = $scope.UserName;

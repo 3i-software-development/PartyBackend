@@ -3642,11 +3642,11 @@ break;
             App.toastrError("Không được để trường địa chỉ thôn trong quê quán trống")
             return;
         }
-        if ($scope.placeAddress === "" || $scope.placeAddress == null || $scope.placeAddress == undefined) {
-            $scope.err = true
-            App.toastrError("Không được để trường Ngày kết nạp đoàn trống")
-            return;
-        }
+        //if ($scope.placeAddress === "" || $scope.placeAddress == null || $scope.placeAddress == undefined) {
+        //    $scope.err = true
+        //    App.toastrError("Không được để trường Ngày kết nạp đoàn trống")
+        //    return;
+        //}
         /*
                                     if ($scope.infUser.PlaceofBirth != infUser.PlaceWorking) {
                                         $scope.err = true
@@ -3690,26 +3690,28 @@ break;
         }
 
 
-        var partsPlaceAddress = $scope.placeAddress.split("/");
-        var partsJoinDate = $scope.placeAddress.split("-");
-        if (partsPlaceAddress.length === 3) {
-            var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
-            $scope.placeAddress = formattedPlaceAddress;
-        }
-        else if (partsJoinDate.length !== 3) {
-            $scope.err = true
-            App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
-            return;
-        }
+        if ($scope.placeAddress) {
+            var partsPlaceAddress = $scope.placeAddress.split("/");
+            var partsJoinDate = $scope.placeAddress.split("-");
+            if (partsPlaceAddress.length === 3) {
+                var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
+                $scope.placeAddress = formattedPlaceAddress;
+            }
+            else if (partsJoinDate.length !== 3) {
+                $scope.err = true
+                App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
+                return;
+            }
 
-        var partsPlaceAddress = $scope.placeAddress.split("-");
-        if (partsPlaceAddress.length === 3) {
-            $scope.placeAddress
-        }
-        else {
-            $scope.err = true
-            App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
-            return;
+            var partsPlaceAddress = $scope.placeAddress.split("-");
+            if (partsPlaceAddress.length === 3) {
+                $scope.placeAddress
+            }
+            else {
+                $scope.err = true
+                App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
+                return;
+            }
         }
 
         //$http.post('/UserProfile/UpdatePartyAdmissionProfile/', model)
@@ -3796,10 +3798,11 @@ break;
 
             var TemporaryAddress = $scope.infUser.TemporaryAddress.split('_');
             if (TemporaryAddress.length >= 3) {
-                var temporaryAddressPromise = Promise.all([
-                    new Promise((resolve, reject) => {
+                const listPromise = [];
+                if (TemporaryAddress[0]) {
+                    listPromise.push(new Promise((resolve, reject) => {
                         try {
-                            dataserviceJoinParty.GetTinh(TemporaryAddress[0], function (rs) {
+                            dataservice.GetTinh(TemporaryAddress[0], function (rs) {
                                 if (rs.data && rs.data[0]) {
                                     $scope.TemporaryAddressTinh = rs.data[0].name;
                                     resolve();
@@ -3809,10 +3812,12 @@ break;
                             console.log(e);
                             resolve();
                         }
-                    }),
-                    new Promise((resolve, reject) => {
+                    }));
+                }
+                if (TemporaryAddress[1]) {
+                    listPromise.push(new Promise((resolve, reject) => {
                         try {
-                            dataserviceJoinParty.GetHuyen(TemporaryAddress[1], function (rs) {
+                            dataservice.GetHuyen(TemporaryAddress[1], function (rs) {
                                 if (rs.data && rs.data[0]) {
                                     $scope.TemporaryAddressHuyen = rs.data[0].name;
                                     resolve();
@@ -3822,10 +3827,12 @@ break;
                             console.log(e);
                             resolve();
                         }
-                    }),
-                    new Promise((resolve, reject) => {
+                    }));
+                }
+                if (TemporaryAddress[2]) {
+                    listPromise.push(new Promise((resolve, reject) => {
                         try {
-                            dataserviceJoinParty.GetXa(TemporaryAddress[2], function (rs) {
+                            dataservice.GetXa(TemporaryAddress[2], function (rs) {
                                 if (rs.data && rs.data[0]) {
                                     $scope.TemporaryAddressXa = rs.data[0].name;
                                     resolve();
@@ -3835,10 +3842,17 @@ break;
                             console.log(e);
                             resolve();
                         }
-                    })
-                ]);
+                    }));
+                }
+                if (listPromise.length > 0) {
+                    var temporaryAddressPromise = Promise.all(listPromise);
 
-                promises.push(temporaryAddressPromise);
+                    promises.push(temporaryAddressPromise);
+
+                    temporaryAddressPromise
+                        .then(() => console.log('temporaryAddressPromise ok'))
+                        .catch((e) => console.log('temporaryAddressPromise', e));
+                }
             }
 
             var HomeTown = $scope.infUser.HomeTown.split('_');
@@ -5960,9 +5974,9 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
             function parseNgModelValue(value) {
                 var parts = value.split('_'); // Tách giá trị thành các phần
                 var result = {
-                    tinh_id: parseInt(parts[0]),
-                    huyen_id: parseInt(parts[1]),
-                    xaPhuong_id: parseInt(parts[2])
+                    tinh_id: parts[0] ? parseInt(parts[0]) : '',
+                    huyen_id: parts[1] ? parseInt(parts[1]) : '',
+                    xaPhuong_id: parts[2] ? parseInt(parts[2]) : ''
                 };
                 return result;
             }
