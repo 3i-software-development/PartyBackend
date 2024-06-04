@@ -209,7 +209,16 @@ app.factory('dataservice', function ($http) {
         GetTinhName: function (data, callback) {
             $http.get('/UserProfile/GetTinhName?name=' + data).then(callback);
         },
-
+        GetMemberPartyProfile: function (data, callback) {
+            $http.get('/Admin/UserJoinParty/GetMemberPartyProfile?ressumeNumber=' + data).then(callback);
+        },
+        //Quá trình liền kề
+        updatePartyFamilyTime: function (data, callback) {
+            $http.put('/Admin/UserJoinParty/UpdatePartyFamilyTime', data).then(callback);
+        },
+        getPartyFamilyTime: function (resumeCode, relationship, callback) {
+            $http.get(`/Admin/UserJoinParty/GetPartyFamilyTime?resumeCode=${resumeCode}&relationship=${relationship}`).then(callback);
+        },
 
     }
 });
@@ -653,6 +662,15 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.FilterRelation = $scope.Relation.filter(function (item) {
             return item.toLowerCase().includes($scope.selectedFamily.Relation.toLowerCase());
         });
+
+        $scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ", "bố vợ", "mẹ vợ", "bố chồng", "mẹ chồng",];
+        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
+            $scope.changedisHistory = true
+
+        } else {
+            $scope.changedisHistory = false
+        }
+        $scope.changeBirthYear();
     };
     $scope.SelectRelation = function (item) {
         $scope.selectedFamily.Relation = item;
@@ -1593,9 +1611,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     //insertFamily
 
-    $scope.selectedFamily = {
-        WorkingProgress: `Từ năm 18 tuổi đến năm`
-    };
+
     $scope.PartyMember = false
     $scope.changedisable = function () {
         if ($scope.selectedFamily.die === true) {
@@ -1689,18 +1705,18 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
 
         if ($scope.infUser.MaritalStatus.marriedStatus === "2" && $scope.infUser.Sex.toLowerCase() == "nam") {
-            const relationsToRestrict = ["Bố vợ", "Mẹ vợ", "Anh vợ", "Chị vợ", "Em vợ", "Ông ngoại vợ", "Bà ngoại vợ", "Ông nội vợ", "Bà nội vợ", "Cậu vợ",
-                "Dì vợ", "Bác vợ", "Chú vợ", "Thím vợ", "Cô vợ", "Dượng vợ"];
-            if (relationsToRestrict.includes($scope.selectedFamily.Relation)) {
+            const relationsToRestrict = ["bố vợ", "mẹ vợ", "anh vợ", "chị vợ", "em vợ", "ông ngoại vợ", "bà ngoại vợ", "ông nội vợ", "bà nội vợ", "cậu vợ",
+                "dì vợ", "bác vợ", "chú vợ", "thím vợ", "cô vợ", "dượng vợ"];
+            if (relationsToRestrict.includes($scope.selectedFamily.Relation.toLowerCase())) {
                 $scope.err = true
                 App.toastrError("Đã ly hôn không cần nhập thành viên gia đình vợ cũ")
                 return;
             }
         }
         if ($scope.infUser.MaritalStatus.marriedStatus === "2" && $scope.infUser.Sex.toLowerCase() == "nữ") {
-            const relationsToRestrict = ["Bố chồng", "Mẹ chồng", "Anh chồng", "Chị chồng", "Em chồng", "Ông nội chồng", "Bà nội chồng", "Ông ngoại chồng", "Bà ngoại chồng", "Cậu Chồng",
-                "Dì Chồng", "Bác Chồng", "Chú Chồng", "Thím Chồng", "Cô Chồng", "Dượng Chồng"];
-            if (relationsToRestrict.includes($scope.selectedFamily.Relation)) {
+            const relationsToRestrict = ["bố chồng", "mẹ chồng", "anh chồng", "chị chồng", "em chồng", "ông nội chồng", "bà nội chồng", "ông ngoại chồng", "bà ngoại chồng", "cậu chồng",
+                "dì chồng", "bác chồng", "chú chồng", "thím chồng", "cô chồng", "dượng chồng"];
+            if (relationsToRestrict.includes($scope.selectedFamily.Relation.toLowerCase())) {
                 $scope.err = true
                 App.toastrError("Đã ly hôn không cần nhập thành viên gia đình chồng cũ")
                 return;
@@ -1729,11 +1745,16 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         model.Residence = $scope.selectedFamily.Residence;
         model.PartyMember = $scope.selectedFamily.PartyMember;
         model.Name = $scope.selectedFamily.Name;
-        model.BirthYear = $scope.selectedFamily.BirthYear;
+        model.BirthYear = $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie;
+        if ($scope.selectedFamily.BirthDie) {
+            model.BirthYear = $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie;
+        } else {
+            model.BirthYear = $scope.selectedFamily.BirthYear;
+        }
         model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
         model.HomeTown = $scope.selectedFamily.HomeTown;
         model.Job = $scope.selectedFamily.Job;
-        model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
+        model.WorkingProgress = "Từ " + $scope.WorkingProgressStart + " đến " + $scope.WorkingProgressEnd + ": " + $scope.selectedFamily.WorkingProgress;
         model.Id = 0;
         model.wordAt = $scope.selectedFamily.wordAt;
         model.AddressDie = $scope.selectedFamily.AddressDie;
@@ -1743,9 +1764,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         model.AddressBirth = $scope.selectedFamily.AddressBirth
         model.class = $scope.selectedFamily.class
         $scope.Relationship.push(model);
-        $scope.selectedFamily = {
-            WorkingProgress: `Từ năm 18 tuổi đến năm`
-        };
+
         $scope.disableAddress = false
         $scope.PartyMember = false
     }
@@ -1920,10 +1939,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             App.toastrError("Không được để trường Quê quán trống")
             return;
 
-        } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
-            $scope.err = true
-            App.toastrError("Không được để trường Địa chỉ tạm trú trống")
-            return;
+            // } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
+            //     $scope.err = true
+            //     App.toastrError("Không được để trường Địa chỉ tạm trú trống")
+            //     return;
 
         } if ($scope.infUser.LevelEducation.GeneralEducation == "" || $scope.infUser.LevelEducation.GeneralEducation == null || $scope.infUser.LevelEducation.GeneralEducation == undefined) {
             $scope.err = true
@@ -3022,9 +3041,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     //Insert
 
     //Update
-    $scope.selectedFamily = {
-        WorkingProgress: `Từ năm 18 tuổi đến năm`
-    };
+
     $scope.selectedPersonHistory = {};
     $scope.selectedWarningDisciplined = {};
     $scope.selectedHistorySpecialist = {};
@@ -3034,12 +3051,17 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.selectedGoAboard = {};
     $scope.selectFamily = function (x) {
         $scope.selectedFamily = x;
+        var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
+        $scope.WorkingProgressStart = years[0];
+        $scope.WorkingProgressEnd = years[1];
+        $scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
         var BirthYear = $scope.selectedFamily.BirthYear.split("-")
         $scope.selectedFamily.BirthYear = BirthYear[0];
         $scope.selectedFamily.BirthDie = BirthYear[1];
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
+        $scope.filterRelation();
     };
 
 
@@ -3051,6 +3073,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.changedisable();
         $scope.changedis();
         $scope.$apply();
+        $scope.filterRelation();
     }
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
@@ -3548,12 +3571,35 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
         if (year && year >= 1945 && year < currentYear) {
-            $scope.selectedFamily.WorkingProgress = `Từ năm ${year + 18} đến năm`;
+            if ($scope.selectedFamily.Relation !== 'Vợ' && $scope.selectedFamily.Relation !== 'Chồng') {
+                $scope.WorkingProgressStart = `năm ${year + 18}`;
+            }
+            else {
+                $scope.WorkingProgressStart = `T1/${year + 18}`;
+            }
+            //$scope.selectedFamily.WorkingProgress = `Từ năm ${ year + 18 } đến năm`;
             $scope.selectedFamily.PoliticalAttitude = `Luôn chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
         }
         else {
-            $scope.selectedFamily.WorkingProgress = `Từ năm 18 tuổi đến năm`;
+            $scope.WorkingProgressStart = 'năm 18 tuổi';
             $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
+        }
+    }
+
+
+    $scope.saveWorkingProgressYear = function () {
+        if ($scope.selectedFamily.WorkingProgress) {
+            $scope.selectedFamily.WorkingProgress += `\n`;
+        }
+        if ($scope.WorkingProgressStart && $scope.WorkingProgressEnd) {
+            $scope.selectedFamily.WorkingProgress += `Từ ${$scope.WorkingProgressStart} đến ${$scope.WorkingProgressEnd ?? ''}`;
+        }
+        $scope.WorkingProgressStart = $scope.WorkingProgressEnd;
+        if ($scope.selectedFamily.Relation !== 'Vợ' && $scope.selectedFamily.Relation !== 'Chồng') {
+            $scope.WorkingProgressEnd = 'năm ';
+        }
+        else {
+            $scope.WorkingProgressEnd = 'T1/';
         }
     }
 
@@ -3565,8 +3611,16 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
 
             const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
-            const yearEnd = Number(year3[1]);
-            const monthEnd = Number(year3[0]);
+            if (year3.lenght == 2) {
+                var yearEnd = Number(year3[1]);
+                var monthEnd = Number(year3[0]);
+            } else if (year3.lenght == 3) {
+                var yearEnd = Number(year3[2]);
+                var monthEnd = Number(year3[1]);
+            } else {
+                $scope.selectedPersonHistory.Begin = `8/${year2 + 6}`;
+                return
+            }
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
             if (monthEnd === 12) {
