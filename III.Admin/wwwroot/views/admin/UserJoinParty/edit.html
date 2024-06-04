@@ -1598,21 +1598,21 @@
                                                  style="white-space:nowrap">
                                                 <i class="fa fa-info-circle icon-clickable" id="diaChiThuongTru"
                                                    title="Popover Header" popover-placement="bottom-left"
-                                                   uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                   uib-popover="Quê quán của bạn là: {{selectedFamily.HomeTown}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick">
                                                 </i>
                                                 <input class="displayInfo speechInput" style="border: #FFFF;" name="CusCode"
                                                        ng-model="selectedFamily.HomeTownVillage" type="text"
                                                        placeholder="Nhập địa chỉ thôn" ng-required="true">
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                   ng-model="infUser.HomeTown"></i>
+                                                   ng-model="selectedFamily.HomeTown"></i>
                                             </div>
                                             <div class="br24 form-control custom-title-code-bold" style="display:flex">
                                                 <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
                                                    title="Popover Header" data-bs-placement="bottom"
                                                    data-bs-content="Ví dụ: 'Hà Nội'"
                                                    style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                                <choose-position ng-model="selectedFamily.HomeTown" provinces="ListProvince"
+                                                <choose-position ng-model="selectedFamily.HomeTown" provinces="ListProvince" value="selectedFamily.HomeTownValue" json="selectedFamily.HomeTownJson"
                                                                  style="width: 100%;"></choose-position>
                                             </div>
                                         </div>
@@ -1830,8 +1830,6 @@
                                                         <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
                                                             <td>
                                                                 {{x.Relation}}
-                                                                
-
                                                             </td>
                                                             <td>
                                                                 {{x.Name}}
@@ -1841,10 +1839,10 @@
                                                                     {{infUser.MaritalStatus.decisionDate}},
                                                                     Địa điểm: {{infUser.MaritalStatus.location}}
                                                                 </span>
-                                                                <p class="m-0" ng-if="biologicalParents.includes(x.Relation)">
-                                                                    - Nơi sinh: {{x.AddressBirth}}
+                                                                <p class="m-0" ng-if="x.BirthPlace">
+                                                                    - Nơi sinh: {{x.BirthPlace}}
                                                                 </p>
-                                                                <p class="m-0" ng-if="biologicalParents.includes(x.Relation)">
+                                                                <p class="m-0" ng-if="x.class">
                                                                     - Thành phần giai cấp: {{x.class}}
                                                                 </p>
                                                             </td>
@@ -1860,7 +1858,7 @@
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                <div><span>- Quê quán: {{x.HomeTown}}</span></div>
+                                                                <div><span>- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>
                                                                 <div><span> {{x.die == false ? "- Nơi cư trú:" + x.Residence.trim() : "" }}</span>
                                                                 </div>
                                                             </td>

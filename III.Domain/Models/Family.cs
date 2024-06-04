@@ -58,6 +58,10 @@ namespace ESEIM.Models
         public string Reason { get; set; }
         [NotMapped]
         public string MarriedStatus { get; set; }
+        public string HomeTownVillage { get; set; }
+        public string HomeTownValue { get; set; }
+        public string HomeTownJson { get; set; }
+        public string BirthPlace { get; set; }
     }
     public class FamilyModel 
     {
@@ -95,6 +99,10 @@ namespace ESEIM.Models
         public string Name { get; set; }
 
         public string ProfileCode { get; set; }
+        public string HomeTownVillage { get; set; }
+        public string HomeTownValue { get; set; }
+        public string HomeTownJson { get; set; }
+        public string BirthPlace { get; set; }
     }
 }
 

@@ -3294,11 +3294,15 @@ break;
             obj.Residence = e.Residence;
             obj.PoliticalAttitude = e.PoliticalAttitude;
             obj.HomeTown = e.HomeTown;
+            obj.HomeTownVillage = e.HomeTownVillage;
+            obj.HomeTownValue = e.HomeTownValue;
+            obj.HomeTownJson = e.HomeTownJson;
             obj.Job = e.Job;
             obj.WorkingProgress = e.WorkingProgress;
             obj.ProfileCode = $scope.infUser.ResumeNumber;
             obj.Id = e.Id;
-            obj.ClassComposition = [e.AddressBirth, e.class].join('_')
+            obj.ClassComposition = e.class;
+            obj.BirthPlace = e.BirthPlace;
             $scope.model.push(obj)
 
         });
@@ -3689,11 +3693,12 @@ break;
 
 
         var partsPlaceAddress = $scope.placeAddress.split("/");
+        var partsJoinDate = $scope.placeAddress.split("-");
         if (partsPlaceAddress.length === 3) {
             var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
             $scope.placeAddress = formattedPlaceAddress;
         }
-        else {
+        else if (partsJoinDate.length !== 3) {
             $scope.err = true
             App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
             return;
@@ -3748,28 +3753,43 @@ break;
             if (PermanentResidence.length >= 3) {
                 var permanentResidencePromise = Promise.all([
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetTinh(PermanentResidence[0], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.PermanentResidenceTinh = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetTinh(PermanentResidence[0], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.PermanentResidenceTinh = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     }),
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetHuyen(PermanentResidence[1], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.PermanentResidenceHuyen = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetHuyen(PermanentResidence[1], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.PermanentResidenceHuyen = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     }),
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetXa(PermanentResidence[2], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.PermanentResidenceXa = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetXa(PermanentResidence[2], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.PermanentResidenceXa = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     })
                 ]);
 
@@ -3780,28 +3800,43 @@ break;
             if (TemporaryAddress.length >= 3) {
                 var temporaryAddressPromise = Promise.all([
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetTinh(TemporaryAddress[0], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.TemporaryAddressTinh = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetTinh(TemporaryAddress[0], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.TemporaryAddressTinh = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     }),
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetHuyen(TemporaryAddress[1], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.TemporaryAddressHuyen = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetHuyen(TemporaryAddress[1], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.TemporaryAddressHuyen = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     }),
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetXa(TemporaryAddress[2], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.TemporaryAddressXa = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetXa(TemporaryAddress[2], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.TemporaryAddressXa = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     })
                 ]);
 
@@ -3812,28 +3847,43 @@ break;
             if (HomeTown.length >= 3) {
                 var homeTownPromise = Promise.all([
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetTinh(HomeTown[0], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.HomeTownTinh = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetTinh(HomeTown[0], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.HomeTownTinh = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     }),
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetHuyen(HomeTown[1], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.HomeTownHuyen = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetHuyen(HomeTown[1], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.HomeTownHuyen = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     }),
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetXa(HomeTown[2], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.HomeTownXa = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetXa(HomeTown[2], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.HomeTownXa = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     })
                 ]);
 
@@ -3844,28 +3894,43 @@ break;
             if (PlaceofBirth.length >= 3) {
                 var placeofBirthPromise = Promise.all([
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetTinh(PlaceofBirth[0], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.PlaceofBirthTinh = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetTinh(PlaceofBirth[0], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.PlaceofBirthTinh = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     }),
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetHuyen(PlaceofBirth[1], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.PlaceofBirthHuyen = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetHuyen(PlaceofBirth[1], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.PlaceofBirthHuyen = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     }),
                     new Promise((resolve, reject) => {
-                        dataserviceJoinParty.GetXa(PlaceofBirth[2], function (rs) {
-                            if (rs.data && rs.data[0]) {
-                                $scope.PlaceofBirthXa = rs.data[0].name;
-                                resolve();
-                            }
-                        });
+                        try {
+                            dataserviceJoinParty.GetXa(PlaceofBirth[2], function (rs) {
+                                if (rs.data && rs.data[0]) {
+                                    $scope.PlaceofBirthXa = rs.data[0].name;
+                                    resolve();
+                                }
+                            });
+                        } catch (e) {
+                            console.log(e);
+                            resolve();
+                        }
                     })
                 ]);
 
@@ -4171,13 +4236,14 @@ break;
                         obj.BirthYear = parts[1];
                     }
 
-                    if (obj.ClassComposition) {
-                        const partsClassComposition = obj.ClassComposition.split('_');
-                        if (partsClassComposition.length === 2) {
-                            obj.AddressBirth = partsClassComposition[0];
-                            obj.class = partsClassComposition[1];
-                        }
-                    }
+                    //if (obj.ClassComposition) {
+                    //    const partsClassComposition = obj.ClassComposition.split('_');
+                    //    if (partsClassComposition.length === 2) {
+                    //        obj.AddressBirth = partsClassComposition[0];
+                    //        obj.class = partsClassComposition[1];
+                    //    }
+                    //}
+                    obj.class = obj.ClassComposition;
 
                     const partMember = obj.PartyMember.split('_');
                     partMember[0]
@@ -4478,6 +4544,9 @@ break;
         }
         model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
         model.HomeTown = $scope.selectedFamily.HomeTown;
+        model.HomeTownVillage = $scope.selectedFamily.HomeTownVillage;
+        model.HomeTownValue = $scope.selectedFamily.HomeTownValue;
+        model.HomeTownJson = $scope.selectedFamily.HomeTownJson;
         model.Job = $scope.selectedFamily.Job;
         model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
         model.Id = 0;
@@ -4486,7 +4555,7 @@ break;
         model.Reason = $scope.selectedFamily.Reason;
         model.Party = $scope.selectedFamily.Party;
         model.die = $scope.disableAddress;
-        model.AddressBirth = $scope.selectedFamily.AddressBirth
+        model.BirthPlace = $scope.selectedFamily.AddressBirth;
         model.class = $scope.selectedFamily.class
         $scope.Relationship.push(model);
         const body = {
@@ -5871,7 +5940,9 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
         templateUrl: ctxfolderJoinParty + '/Posision.html',
         scope: {
             ngModelCtrl: '=',// Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
-            provinces: '='
+            provinces: '=',
+            value: '=',
+            json: '='
         },
         link: function (scope, element, attrs, ngModelCtrl) {
             console.log(scope.provinces);
@@ -5908,6 +5979,24 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
                         console.log(rs)
                     })
                 console.log(ngModelCtrl.$modelValue)
+                setTimeout(() => {
+                    scope.value = `${scope.model.xa_value ?? ''} ${scope.model.huyen_value ? `, ${scope.model.huyen_value}` : ''} ${scope.model.tinh_value ? `, ${scope.model.tinh_value}` : ''}`;
+                    const json = {
+                        tinh: {
+                            id: scope.model.tinh_id,
+                            name: scope.model.tinh_value
+                        },
+                        huyen: {
+                            id: scope.model.huyen_id,
+                            name: scope.model.huyen_value
+                        },
+                        xa: {
+                            id: scope.model.xaPhuong_id,
+                            name: scope.model.xa_value
+                        },
+                    };
+                    scope.json = JSON.stringify(json);
+                }, 100);
             }
 
             // Watchers để theo dõi thay đổi trong giá trị ngModelCtrl
@@ -5938,11 +6027,15 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
                 if (level === 'tinh') {
                     scope.model.huyen_id = ''; // Xóa giá trị huyện khi chọn một tỉnh mới
                     scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một tỉnh mới
+                    scope.model.tinh_value = selected.name;
 
                 } else if (level === 'huyen') {
                     scope.disableXa = false
                     scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một huyện mới
+                    scope.model.huyen_value = selected.name;
 
+                } else {
+                    scope.model.xa_value = selected.name;
                 }
             };
 

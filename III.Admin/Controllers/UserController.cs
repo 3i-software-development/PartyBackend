@@ -1251,6 +1251,10 @@ namespace III.Admin.Controllers
                                 PartyMember = x.PartyMember,
                                 BirthYear = x.BirthYear,
                                 HomeTown = x.HomeTown,
+                                HomeTownVillage = x.HomeTownVillage,
+                                HomeTownValue = x.HomeTownValue,
+                                HomeTownJson = x.HomeTownJson,
+                                BirthPlace = x.BirthPlace,
                                 Residence = x.Residence,
                                 Job = x.Job,
                                 WorkingProgress = x.WorkingProgress,
@@ -1269,12 +1273,16 @@ namespace III.Admin.Controllers
                                 a.Relation = x.Relation;
                                 a.BirthYear = x.BirthYear;
                                 a.HomeTown = x.HomeTown;
+                                a.HomeTownVillage = x.HomeTownVillage;
+                                a.HomeTownValue = x.HomeTownValue;
+                                a.HomeTownJson = x.HomeTownJson;
                                 a.Residence = x.Residence;
                                 a.Job = x.Job;
                                 a.PartyMember = x.PartyMember;
                                 a.ClassComposition = x.ClassComposition;
                                 a.PoliticalAttitude = x.PoliticalAttitude;
                                 a.WorkingProgress = x.WorkingProgress;
+                                a.BirthPlace = x.BirthPlace;
 
                                 a.IsDeleted = false;
                                 _context.Families.Update(a);
