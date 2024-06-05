@@ -1307,7 +1307,7 @@ namespace III.Admin.Utils
 
                 p = cell.Paragraphs[0];
                 p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
-                text = p.AppendText(item.Name);
+                text = p.AppendText(item.Name ?? "");
                 SetStyle(text);
 
                 cell = row.Cells[2];
@@ -1320,31 +1320,31 @@ namespace III.Admin.Utils
                 cell = row.Cells[3];
 
                 p = cell.Paragraphs[0] as WParagraph;
-                text = p.AppendText("-Quê quán:" + item.HomeTown);
+                text = p.AppendText("-Quê quán:" + (item.HomeTown ?? ""));
                 p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
                 SetStyle(text);
 
 
                 p = cell.AddParagraph() as WParagraph;
-                text = p.AppendText("-Nơi cư trú:" + item.Residence);
+                text = p.AppendText("-Nơi cư trú:" + (item.Residence ?? ""));
                 SetStyle(text);
 
 
                 p = cell.AddParagraph() as WParagraph;
-                text = p.AppendText("-Nghề nghiệp:" + item.Job);
+                text = p.AppendText("-Nghề nghiệp:" + (item.Job ?? ""));
                 SetStyle(text);
 
 
                 p = cell.AddParagraph() as WParagraph;
-                text = p.AppendText("-Quá trình công tác:" + item.WorkingProgress);
+                text = p.AppendText("-Quá trình công tác:" + (item.WorkingProgress ?? ""));
                 SetStyle(text);
 
                 p = cell.AddParagraph() as WParagraph;
-                text = p.AppendText("-Thái độ chính trị:" + item.PoliticalAttitude);
+                text = p.AppendText("-Thái độ chính trị:" + (item.PoliticalAttitude ?? ""));
                 SetStyle(text);
 
                 p = cell.AddParagraph() as WParagraph;
-                text = p.AppendText("-Là đảng viên:" + item.PartyMember);
+                text = p.AppendText("-Là đảng viên:" + (item.PartyMember ?? ""));
                 SetStyle(text);
                 selectRow++;
             }

@@ -342,6 +342,7 @@ namespace III.Admin.Controllers
                     x.Degree,
                     x.GeneralEducation,
                     x.TemporaryAddress,
+                    x.AddressText,
                     x.BirthYear,
                     x.Gender,
                     x.LastTimeReport
@@ -349,7 +350,7 @@ namespace III.Admin.Controllers
                 int count = query_row_number.Count();
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
 
-                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "Nation", "UserCode", "Status", "Username",
+                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "Nation", "UserCode", "Status", "Username", "AddressText",
                     "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
