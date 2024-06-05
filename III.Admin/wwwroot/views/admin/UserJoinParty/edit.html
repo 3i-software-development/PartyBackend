@@ -1420,17 +1420,17 @@
                                             <label class="displayInfo control-label require custom-title-code-bold">Năm
                                                 sinh</label>
                                             <!-- <input ng-change="updateAddressState()" type="checkbox"
-                                                ng-model="disableAddress" ng-change="changedisable()">Đã mất -->
+                                                ng-model="selectedFamily.disableAddress" ng-change="changedisable()">Đã mất -->
 
                                         </div>
                                         <div class="col-md-8">
                                             <div style="display: flex; align-items: center;  gap: 1%;">
                                                 <div class="col-md-2">
                                                     <input 
-                                                           type="checkbox" ng-model="disableAddress"
+                                                           type="checkbox" ng-model="selectedFamily.disableAddress"
                                                            ng-change="changedisable()"><span style="font-weight: bold;">Đã mất</span>
                                                 </div>
-                                                <div class="br24 form-control custom-title-code-bold col-md-10" ng-show="!disableAddress"
+                                                <div class="br24 form-control custom-title-code-bold col-md-10" ng-show="!selectedFamily.disableAddress"
                                                      style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
                                                        title="Popover Header" popover-placement="bottom-left"
@@ -1443,7 +1443,7 @@
                                                            placeholder="Năm sinh" />
                                                 </div>
 
-                                                <div class="br24 form-control custom-title-code-bold col-md-5" ng-show="disableAddress"
+                                                <div class="br24 form-control custom-title-code-bold col-md-5" ng-show="selectedFamily.disableAddress"
                                                      style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
                                                        title="Popover Header" popover-placement="bottom-left"
@@ -1456,7 +1456,7 @@
                                                            placeholder="Năm sinh" />
                                                 </div>
 
-                                                <div class="br24 form-control custom-title-code-bold col-md-5" ng-show="disableAddress"
+                                                <div class="br24 form-control custom-title-code-bold col-md-5" ng-show="selectedFamily.disableAddress"
                                                      style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
                                                        title="Popover Header" popover-placement="bottom-left"
@@ -1464,7 +1464,7 @@
                                                        popover-trigger="outsideClick"></i>
 
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                           ng-model="BirthDie"
+                                                           ng-model="selectedFamily.BirthDie"
                                                            ng-change="changeDie()" type="text"
                                                            placeholder="Năm mất" />
                                                 </div>
@@ -1472,7 +1472,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row" ng-show="disableAddress">
+                                    <div class="form-group row" ng-show="selectedFamily.disableAddress">
                                         <div class="col-md-4 pr-0 ">
                                             <i class="fa fa-home" id="residence" ng-click="openPopover('residence');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
@@ -1613,7 +1613,7 @@
                                                    data-bs-content="Ví dụ: 'Hà Nội'"
                                                    style="vertical-align: 7px; display: flex; align-items: center;"></i>
                                                 <choose-position ng-model="selectedFamily.HomeTown" provinces="ListProvince" value="selectedFamily.HomeTownValue" json="selectedFamily.HomeTownJson"
-                                                                 style="width: 100%;"></choose-position>
+                                                                 style="width: 100%;" ng-if="showFamilyHomeTown"></choose-position>
                                             </div>
                                         </div>
                                     </div>
@@ -1668,7 +1668,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group row" ng-show="!disableAddress">
+                                    <div class="form-group row" ng-show="!selectedFamily.disableAddress">
                                         <div class="col-md-4 pr-0 ">
                                             <i class="fa fa-home" id="residence" ng-click="openPopover('residence');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
@@ -1849,7 +1849,11 @@
                                                             <td>
                                                                <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
                                                                 {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
-                                                                <div><span>- Năm sinh{{x.die == true ?"(Đã mất)" : ""}}: {{x.BirthYear}}</span></div>
+                                                               <div><span>- Năm sinh{{x.die == true ?"(Đã mất)" : ""}}:
+                                                                {{x.BirthYear}} {{x.BirthDie?"-" + x.BirthDie :
+                                                                ""}}</span></div>
+                                                     
+
                                                                 <div>
                                                                     <span>{{x.die == true ?"- Nơi mất: "+ x.AddressDie : ""  }}</span>
                                                                 </div>
@@ -2020,27 +2024,33 @@
                                     <i class="fa fa-plus"></i>
                                     <span>Thêm</span>
                                 </button>
+                                <button class="btn m-1" ng-click="deleteSelectToBusinessNDuty()">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <span>Hủy</span>
+                                </button>
                             </div>
-                            <div class="list-item">
-                                <table>
-                                    <tr>
-                                        <th>Từ ngày</th>
-                                        <th>Đến ngày</th>
-                                        <th>Nội dung</th>
-                                        <th>Chức vụ</th>
-                                        <th>Xoá bỏ</th>
-                                    </tr>
-                                    <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
-                                        <td>{{x.From}}</td>
-                                        <td>{{x.To}}</td>
-                                        <td>{{x.Work}}</td>
-                                        <td>{{x.Role}}</td>
-                                        <td style="text-align:center">
-                                            <i style="color:red" class="fa fa-trash"
-                                                ng-click="deleteWorkingTracking($index)"></i>
-                                        </td>
-                                    </tr>
-                                </table>
+                            <div>
+                                <div class="list-item">
+                                    <table style="width: -webkit-fill-available; clear: both;">
+                                        <tr>
+                                            <th>Từ ngày</th>
+                                            <th>Đến ngày</th>
+                                            <th>Nội dung</th>
+                                            <th>Chức vụ</th>
+                                            <th>Xoá bỏ</th>
+                                        </tr>
+                                        <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
+                                            <td>{{x.From}}</td>
+                                            <td>{{x.To}}</td>
+                                            <td>{{x.Work}}</td>
+                                            <td>{{x.Role}}</td>
+                                            <td style="text-align:center">
+                                                <i style="color:red" class="fa fa-trash"
+                                                   ng-click="deleteWorkingTracking($index)"></i>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2104,14 +2114,13 @@
 
                                     <i class="fa fa-plus"></i>
                                     <span>Thêm</span>
+                                </button> <button class="btn m-1" ng-click="deleteSelectToHistorySpecialist()">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <span>Hủy</span>
                                 </button>
-                                <!--<button class="btn" ng-click="updateHistorySpecialist()" style="color:#0dcaf0">
-                <i class="fa fa-plus"></i>
-                <span>Sửa</span>
-            </button>-->
                             </div>
                             <div class="list-item">
-                                <table>
+                                <table style="width: -webkit-fill-available; clear: both;" >
                                     <tr>
                                         <th>Thời gian</th>
 
@@ -2221,14 +2230,13 @@
 
                                     <i class="fa fa-plus"></i>
                                     <span>Thêm</span>
+                                </button> <button class="btn m-1" ng-click="deleteSelectToAward()">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <span>Hủy</span>
                                 </button>
-                                <!-- <button class="btn" ng-click="updateLaudatory()" style="color:#0dcaf0">
-            <i class="fa fa-plus"></i>
-            <span>Sửa</span>
-            </button> -->
                             </div>
                             <div class="list-item">
-                                <table>
+                                <table style="width: -webkit-fill-available; clear: both;">
                                     <tr>
                                         <th>Ngày, tháng, năm</th>
                                         <th>Lý do, hình thức</th>
@@ -2339,15 +2347,13 @@
 
                                     <i class="fa fa-plus"></i>
                                     <span>Thêm</span>
+                                </button> <button class="btn m-1" ng-click="deleteSelectaddToDisciplined()">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <span>Hủy</span>
                                 </button>
-                                <!-- <button class="btn" ng-click="updateWarningDisciplined()" style="color:#0dcaf0">
-
-            <i class="fa fa-plus" ></i>
-            <span>Sửa</span>
-            </button> -->
                             </div>
                             <div class="list-item">
-                                <table>
+                                <table style="width: -webkit-fill-available; clear: both;">
                                     <tr>
                                         <th>Tháng, năm</th>
                                         <th>Lý do, hình thức</th>
@@ -2503,14 +2509,13 @@
 
                                     <i class="fa fa-plus"></i>
                                     <span>Thêm</span>
+                                </button><button class="btn m-1" ng-click="deleteSelectToTrainingCertificatedPass()">
+                                    <i class="fa-solid fa-xmark"></i>
+                                    <span>Hủy</span>
                                 </button>
-                                <!-- <button class="btn" ng-click="updateTrainingCertificatedPass()" style="color:#0dcaf0">
-            <i class="fa fa-plus"></i>
-            <span>Sửa</span>
-            </button> -->
                             </div>
                             <div class="list-item">
-                                <table>
+                                <table style="width: -webkit-fill-available; clear: both;">
                                     <tr>
                                         <th>Từ ngày</th>
                                         <th>Đến ngày</th>

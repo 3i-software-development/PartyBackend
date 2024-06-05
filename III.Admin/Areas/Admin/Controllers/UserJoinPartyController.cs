@@ -228,6 +228,7 @@ namespace III.Admin.Controllers
             public string Degree { get; set; }
             public string PoliticalTheory { get; set; }
             public string GeneralEducation { get; set; }
+            public string AddressText { get; set; }
         }
 
         [HttpPost]
@@ -318,6 +319,7 @@ namespace III.Admin.Controllers
                                  Degree = a.Degree,
                                  GeneralEducation = a.GeneralEducation,
                                  Gender = a.Gender,
+                                 AddressText = a.AddressText,
                                  LastTimeReport = a.LastTimeReport.HasValue ? a.LastTimeReport.Value.ToString("dd/MM/yyyy HH:mm") : "",
                              })
                              .OrderByDescending(x => x.Id); // Sắp xếp giảm dần theo Id
@@ -1422,6 +1424,7 @@ namespace III.Admin.Controllers
         public int Gender { get; set; }
         public string LastTimeReport { get; set; }
         public string Nation { get; internal set; }
+        public string AddressText { get; internal set; }
     }
 
     public class ResumeNumber

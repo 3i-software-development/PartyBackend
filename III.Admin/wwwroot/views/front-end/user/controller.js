@@ -1614,10 +1614,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.PartyMember = false
     $scope.changedisable = function () {
-        if ($scope.selectedFamily.die === true) {
-            $scope.disableAddress = true;
-        } else if ($scope.selectedFamily.die === false) {
-            $scope.disableAddress = false;
+        if ($scope.selectedFamily.disableAddress === true) {
+            $scope.selectedFamily.disableAddress = true;
+            $scope.selectedFamily.die = true
+        } else if ($scope.selectedFamily.disableAddress === false) {
+            $scope.selectedFamily.disableAddress = false;
+            $scope.selectedFamily.die = false
         }
     }
     $scope.changedis = function () {
@@ -1638,16 +1640,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         if ($scope.selectedFamily.Name == null || $scope.selectedFamily.Name == undefined || $scope.selectedFamily.Name === '') {
             $scope.err = true
         }
-        // if ($scope.disableAddress == false) {
-        //     // $scope.err = true
-        //     if ($scope.selectedFamily.Residence == null || $scope.selectedFamily.Residence == undefined || $scope.selectedFamily.Residence === '') {
-        //         $scope.err = true
-        //         return
-        //     }
-        // } else {
-
-        // }
-        if ($scope.disableAddress == true) {
+        if ($scope.selectedFamily.disableAddress == true) {
 
             if ($scope.selectedFamily.AddressDie == null || $scope.selectedFamily.AddressDie == undefined || $scope.selectedFamily.AddressDie === '') {
                 $scope.err = true
@@ -1684,8 +1677,22 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 }
             }
         }
+        $scope.biologicalParents = ["Bố đẻ", "Mẹ đẻ", "Bố ruột", "Mẹ ruột", "Bố", "Mẹ"];
+        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation)) {
+            if ($scope.selectedFamily.AddressBirth == null || $scope.selectedFamily.AddressBirth == undefined || $scope.selectedFamily.AddressBirth === '') {
+                $scope.err = true;
+                App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
+                return
+            }
+            if ($scope.selectedFamily.class == null || $scope.selectedFamily.class == undefined || $scope.selectedFamily.class === '') {
+                $scope.err = true;
+                App.toastrError("Bạn cần nhập thông tin thành phần giao cấp vào trường hợp này")
+                return
+            }
 
-        console.log($scope.disableAddress);
+        }
+
+        console.log($scope.selectedFamily.disableAddress);
 
         if ($scope.selectedFamily.BirthYear == null || $scope.selectedFamily.BirthYear == undefined || $scope.selectedFamily.BirthYear === '') {
             $scope.err = true
@@ -1722,20 +1729,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 return;
             }
         }
-        $scope.biologicalParents = ["Bố đẻ", "Mẹ đẻ", "Bố ruột", "Mẹ ruột", "Bố", "Mẹ"];
-        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation)) {
-            if ($scope.selectedFamily.AddressBirth == null || $scope.selectedFamily.AddressBirth == undefined || $scope.selectedFamily.AddressBirth === '') {
-                $scope.err = true;
-                App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
-                return
-            }
-            if ($scope.selectedFamily.class == null || $scope.selectedFamily.class == undefined || $scope.selectedFamily.class === '') {
-                $scope.err = true;
-                App.toastrError("Bạn cần nhập thông tin thành phần giao cấp vào trường hợp này")
-                return
-            }
-
-        }
         if ($scope.err) {
             App.toastrError("Bạn chưa nhập đủ thông tin")
             return
@@ -1745,28 +1738,58 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         model.Residence = $scope.selectedFamily.Residence;
         model.PartyMember = $scope.selectedFamily.PartyMember;
         model.Name = $scope.selectedFamily.Name;
-        model.BirthYear = $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie;
         if ($scope.selectedFamily.BirthDie) {
-            model.BirthYear = $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie;
+            model.BirthYear = "" + $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie;
         } else {
             model.BirthYear = $scope.selectedFamily.BirthYear;
         }
         model.PoliticalAttitude = $scope.selectedFamily.PoliticalAttitude;
         model.HomeTown = $scope.selectedFamily.HomeTown;
+        model.HomeTownVillage = $scope.selectedFamily.HomeTownVillage;
+        model.HomeTownValue = $scope.selectedFamily.HomeTownValue;
+        model.HomeTownJson = $scope.selectedFamily.HomeTownJson;
         model.Job = $scope.selectedFamily.Job;
-        model.WorkingProgress = "Từ " + $scope.WorkingProgressStart + " đến " + $scope.WorkingProgressEnd + ": " + $scope.selectedFamily.WorkingProgress;
+        model.WorkingProgress = $scope.selectedFamily.WorkingProgress;
         model.Id = 0;
         model.wordAt = $scope.selectedFamily.wordAt;
         model.AddressDie = $scope.selectedFamily.AddressDie;
         model.Reason = $scope.selectedFamily.Reason;
         model.Party = $scope.selectedFamily.Party;
-        model.die = $scope.disableAddress;
-        model.AddressBirth = $scope.selectedFamily.AddressBirth
+        model.die = $scope.selectedFamily.disableAddress;
+        model.BirthPlace = $scope.selectedFamily.AddressBirth;
         model.class = $scope.selectedFamily.class
         $scope.Relationship.push(model);
+        const body = {
+            LastTime: $scope.WorkingProgressEnd,
+            ResumeCode: $scope.infUser.ResumeNumber,
+            Relationship: $scope.selectedFamily.Relation
+        };
+        dataservice.updatePartyFamilyTime(body, function (result) {
+            result = result.data;
+            if (result.Error) {
+                App.toastrError(result.Title);
+            } else {
+                App.toastrSuccess(result.Title);
+            }
+        });
+        $scope.selectedFamily.disableAddress = false
+        $scope.disableWorkingProgressYear = false;
+        $scope.selectedFamily = {};
+        $scope.selectedFamily.HomeTown = "";
+        $scope.PartyMember = false;
+        $scope.resetFamilyHomeTown();
+    }
 
-        $scope.disableAddress = false
-        $scope.PartyMember = false
+    $scope.showFamilyHomeTown = true;
+    $scope.resetFamilyHomeTown = function () {
+        $scope.showFamilyHomeTown = false;
+        $scope.selectedFamily.HomeTownValue = '';
+        $scope.selectedFamily.HomeTown = '';
+        $scope.selectedFamily.HomeTownJson = '';
+        setTimeout(() => {
+            $scope.showFamilyHomeTown = true;
+            $scope.$apply();
+        }, 100);
     }
 
     $scope.FamilyWorkTracking = [];
@@ -1789,15 +1812,26 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             obj.Relation = e.Relation;
             obj.PartyMember = [e.wordAt, e.PartyMember, e.Party].join('_');
             obj.Name = e.Name;
-            obj.BirthYear = [e.die, e.BirthYear, e.AddressDie, e.Reason].join('_');
+            if (e.BirthDie) {
+                obj.BirthYear = [e.die, ("" + e.BirthYear + "-" + e.BirthDie), e.AddressDie, e.Reason].join('_');
+
+            } else {
+                obj.BirthYear = [e.die, e.BirthYear, e.AddressDie, e.Reason].join('_');
+
+            }
             obj.Residence = e.Residence;
             obj.PoliticalAttitude = e.PoliticalAttitude;
             obj.HomeTown = e.HomeTown;
+            obj.HomeTownVillage = e.HomeTownVillage;
+            obj.HomeTownValue = e.HomeTownValue;
+            obj.HomeTownJson = e.HomeTownJson;
             obj.Job = e.Job;
             obj.WorkingProgress = e.WorkingProgress;
             obj.ProfileCode = $scope.infUser.ResumeNumber;
             obj.Id = e.Id;
-            obj.ClassComposition = [e.AddressBirth, e.class].join('_')
+            obj.ClassComposition = e.class;
+            obj.BirthPlace = e.BirthPlace;
+            obj.DeathYear = e.BirthDie;
             $scope.model.push(obj)
 
         });
@@ -2150,8 +2184,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     promises.push(permanentResidencePromise);
 
                     permanentResidencePromise
-                    .then(() => console.log('permanentResidencePromise ok'))
-                    .catch((e) => console.log('permanentResidencePromise', e));
+                        .then(() => console.log('permanentResidencePromise ok'))
+                        .catch((e) => console.log('permanentResidencePromise', e));
                 }
 
                 var TemporaryAddress = $scope.infUser.TemporaryAddress.split('_');
@@ -2260,8 +2294,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     promises.push(homeTownPromise);
 
                     homeTownPromise
-                    .then(() => console.log('homeTownPromise ok'))
-                    .catch((e) => console.log('homeTownPromise', e));
+                        .then(() => console.log('homeTownPromise ok'))
+                        .catch((e) => console.log('homeTownPromise', e));
                 }
 
                 var PlaceofBirth = $scope.infUser.PlaceofBirth.split('_');
@@ -2311,8 +2345,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     promises.push(placeofBirthPromise);
 
                     placeofBirthPromise
-                    .then(() => console.log('placeofBirthPromise ok'))
-                    .catch((e) => console.log('placeofBirthPromise', e));
+                        .then(() => console.log('placeofBirthPromise ok'))
+                        .catch((e) => console.log('placeofBirthPromise', e));
                 }
 
                 Promise.all(promises).then(() => {
@@ -2497,8 +2531,14 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         model.Type = $scope.selectedPersonHistory.Type;
 
         $scope.PersonalHistory.push(model);
-        $scope.changeHistory()
+        $scope.deleteselectPersonHistory();
     }
+
+
+    $scope.deleteselectPersonHistory = function () {
+        $scope.selectedPersonHistory = {};
+        $scope.changeHistory()
+    };
 
     $scope.submitPersonalHistorys = function () {
 
@@ -2542,6 +2582,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         model.Reason = $scope.selectedWarningDisciplined.Reason
         model.Id = 0;
         $scope.Disciplined.push(model)
+        $scope.deleteSelectaddToDisciplined();
+
+    }
+
+    $scope.deleteSelectaddToDisciplined = function () {
+        $scope.selectedWarningDisciplined = {};
     }
 
     $scope.submitDisciplined = function () {
@@ -2589,6 +2635,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
         model.Id = 0;
         $scope.BusinessNDuty.push(model)
+        $scope.deleteSelectToBusinessNDuty();
+
+    }
+
+    $scope.deleteSelectToBusinessNDuty = function () {
+        $scope.selectedWorkingTracking = {};
     }
 
     $scope.submitBusinessNDuty = function () {
@@ -2632,6 +2684,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
         model.Id = 0;
         $scope.HistoricalFeatures.push(model)
+        $scope.deleteSelectToHistorySpecialist();
+    }
+
+    $scope.deleteSelectToHistorySpecialist = function () {
+        $scope.selectedHistorySpecialist = {};
     }
 
     $scope.submitHistorySpecialist = function () {
@@ -2682,9 +2739,14 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         model.Certificate = $scope.selectedTrainingCertificatedPass.Certificate
         model.Id = 0;
         $scope.PassedTrainingClasses.push(model)
+        $scope.deleteSelectToTrainingCertificatedPass()
+
     }
 
 
+    $scope.deleteSelectToTrainingCertificatedPass = function () {
+        $scope.selectedTrainingCertificatedPass = {};
+    }
     $scope.submitTrainingCertificatedPass = function () {
 
         $scope.model = [];
@@ -2730,6 +2792,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         model.Reason = $scope.selectedLaudatory.Reason
         model.Id = 0;
         $scope.Laudatory.push(model)
+        $scope.deleteSelectToAward();
+
+    }
+
+    $scope.deleteSelectToAward = function () {
+        $scope.selectedLaudatory = {}
     }
 
     $scope.submitAward = function () {
@@ -2787,6 +2855,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             console.log(rs);
         })
         console.log(model);
+        $scope.deleteSelectToGoAboard();
+
+    }
+
+
+    $scope.deleteSelectToGoAboard = function () {
+        $scope.selectedGoAboard = {};
     }
 
     $scope.submitGoAboard = function () {
@@ -2921,13 +2996,15 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         obj.die = false;
                     }
 
-                    if (obj.ClassComposition) {
-                        const partsClassComposition = obj.ClassComposition.split('_');
-                        if (partsClassComposition.length === 2) {
-                            obj.AddressBirth = partsClassComposition[0];
-                            obj.class = partsClassComposition[1];
-                        }
-                    }
+                    // if (obj.ClassComposition) {
+                    //     const partsClassComposition = obj.ClassComposition.split('_');
+                    //     if (partsClassComposition.length === 2) {
+                    //         obj.AddressBirth = partsClassComposition[0];
+                    //         obj.class = partsClassComposition[1];
+                    //     }
+                    // }
+
+                    obj.class = obj.ClassComposition;
 
                     if (obj.PartyMember === "true") {
                         obj.PartyMember = true;
@@ -3143,13 +3220,21 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.selectedGoAboard = {};
     $scope.selectFamily = function (x) {
         $scope.selectedFamily = x;
-        var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
-        $scope.WorkingProgressStart = years[0];
-        $scope.WorkingProgressEnd = years[1];
-        $scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
+        //var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
+        //$scope.WorkingProgressStart = years[0];
+        //$scope.WorkingProgressEnd = years[1];
+        //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
         var BirthYear = $scope.selectedFamily.BirthYear.split("-")
         $scope.selectedFamily.BirthYear = BirthYear[0];
         $scope.selectedFamily.BirthDie = BirthYear[1];
+        $scope.disableWorkingProgressYear = true;
+        if ($scope.selectedFamily.die === true) {
+            $scope.selectedFamily.disableAddress = true;
+            $scope.selectedFamily.die = true
+        } else if ($scope.selectedFamily.die === false) {
+            $scope.selectedFamily.disableAddress = false;
+            $scope.selectedFamily.die = false
+        }
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
@@ -3159,13 +3244,15 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.deleteSelect = function () {
         $scope.selectFamily($scope.selectedFamily);
+        $scope.disableWorkingProgressYear = false;
         $scope.selectedFamily = {};
-        $scope.disableAddress = false;
+        $scope.selectedFamily.disableAddress = false;
         $scope.PartyMember = false;
         $scope.changedisable();
         $scope.changedis();
-        $scope.$apply();
-        $scope.filterRelation();
+        //$scope.filterRelation();
+        $scope.resetFamilyHomeTown();
+        setTimeout(() => $scope.$apply());
     }
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
@@ -3858,7 +3945,9 @@ app.directive("choosePosition", function (dataservice) {
         templateUrl: ctxfolder + '/Posision.html',
         scope: {
             ngModelCtrl: '=',// Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
-            provinces: '='
+            provinces: '=',
+            value: '=',
+            json: '='
         },
         link: function (scope, element, attrs, ngModelCtrl) {
             console.log(scope.provinces);
@@ -3895,6 +3984,24 @@ app.directive("choosePosition", function (dataservice) {
                         console.log(rs)
                     })
                 console.log(ngModelCtrl.$modelValue)
+                setTimeout(() => {
+                    scope.value = `${scope.model.xa_value ?? ''} ${scope.model.huyen_value ? `, ${scope.model.huyen_value}` : ''} ${scope.model.tinh_value ? `, ${scope.model.tinh_value}` : ''}`;
+                    const json = {
+                        tinh: {
+                            id: scope.model.tinh_id,
+                            name: scope.model.tinh_value
+                        },
+                        huyen: {
+                            id: scope.model.huyen_id,
+                            name: scope.model.huyen_value
+                        },
+                        xa: {
+                            id: scope.model.xaPhuong_id,
+                            name: scope.model.xa_value
+                        },
+                    };
+                    scope.json = JSON.stringify(json);
+                }, 100);
             }
 
             // Watchers để theo dõi thay đổi trong giá trị ngModelCtrl
@@ -3925,11 +4032,15 @@ app.directive("choosePosition", function (dataservice) {
                 if (level === 'tinh') {
                     scope.model.huyen_id = ''; // Xóa giá trị huyện khi chọn một tỉnh mới
                     scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một tỉnh mới
+                    scope.model.tinh_value = selected.name;
 
                 } else if (level === 'huyen') {
                     scope.disableXa = false
                     scope.model.xaPhuong_id = ''; // Xóa giá trị xã/phường khi chọn một huyện mới
+                    scope.model.huyen_value = selected.name;
 
+                } else {
+                    scope.model.xa_value = selected.name;
                 }
             };
 
