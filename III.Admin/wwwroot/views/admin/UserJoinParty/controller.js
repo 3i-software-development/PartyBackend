@@ -1814,12 +1814,20 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             return item.toLowerCase().includes($scope.selectedFamily.Relation.toLowerCase());
         });
 
-        $scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ", "bố vợ", "mẹ vợ", "bố chồng", "mẹ chồng",];
+        $scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ", "bố vợ", "mẹ vợ", "bố chồng", "mẹ chồng"];
         if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
             $scope.changedisHistory = true
 
         } else {
             $scope.changedisHistory = false
+        }
+
+        $scope.biologicalParents = ["vợ", "chồng"];
+        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
+            $scope.changedisHistoryVC = true
+
+        } else {
+            $scope.changedisHistoryVC = false
         }
         $scope.changeBirthYear();
     };
@@ -4438,6 +4446,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
         }
     }
+
     $scope.addToFamily = function () {
         $scope.err = false
         if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation === '') {

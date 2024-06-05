@@ -663,12 +663,21 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             return item.toLowerCase().includes($scope.selectedFamily.Relation.toLowerCase());
         });
 
-        $scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ", "bố vợ", "mẹ vợ", "bố chồng", "mẹ chồng",];
+        $scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ", "bố vợ", "mẹ vợ", "bố chồng", "mẹ chồng"];
         if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
             $scope.changedisHistory = true
 
         } else {
             $scope.changedisHistory = false
+        }
+
+
+        $scope.biologicalParents = ["vợ", "chồng"];
+        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
+            $scope.changedisHistoryVC = true
+
+        } else {
+            $scope.changedisHistoryVC = false
         }
         $scope.changeBirthYear();
     };
@@ -1812,12 +1821,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             obj.Relation = e.Relation;
             obj.PartyMember = [e.wordAt, e.PartyMember, e.Party].join('_');
             obj.Name = e.Name;
+            /*obj.BirthYear = [e.die, e.BirthYear, e.AddressDie, e.Reason].join('_');*/
             if (e.BirthDie) {
                 obj.BirthYear = [e.die, ("" + e.BirthYear + "-" + e.BirthDie), e.AddressDie, e.Reason].join('_');
-
             } else {
                 obj.BirthYear = [e.die, e.BirthYear, e.AddressDie, e.Reason].join('_');
-
             }
             obj.Residence = e.Residence;
             obj.PoliticalAttitude = e.PoliticalAttitude;
@@ -1831,7 +1839,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             obj.Id = e.Id;
             obj.ClassComposition = e.class;
             obj.BirthPlace = e.BirthPlace;
-            obj.DeathYear = e.BirthDie;
             $scope.model.push(obj)
 
         });
@@ -3046,16 +3053,28 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 const currentYear = currentDate.getFullYear();
                 if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
 
-                    /*$scope.selectedPersonHistory.End = `8/${year2 + 7}`;*/
-                    const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
-                    const yearEnd = Number(year3[1]);
-                    const monthEnd = Number(year3[0]);
-                    const currentDate = new Date();
-                    const currentYear = currentDate.getFullYear();
-                    if (monthEnd === 12) {
-                        $scope.selectedPersonHistory.Begin = `1/${yearEnd + 1}`;
+                    if ($scope.PersonalHistory.length != 0) {
+                        const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
+                        if (year3.lenght == 2) {
+                            var yearEnd = Number(year3[1]);
+                            var monthEnd = Number(year3[0]);
+                        } else if (year3.lenght == 3) {
+                            var yearEnd = Number(year3[2]);
+                            var monthEnd = Number(year3[1]);
+                        } else {
+                            $scope.selectedPersonHistory.Begin = `8/${year2 + 6}`;
+                            return
+                        }
+                        const currentDate = new Date();
+                        const currentYear = currentDate.getFullYear();
+                        if (monthEnd === 12) {
+                            $scope.selectedPersonHistory.Begin = `1/${yearEnd + 1}`;
+                        } else {
+                            $scope.selectedPersonHistory.Begin = `${monthEnd + 1}/${yearEnd}`;
+                        }
                     } else {
-                        $scope.selectedPersonHistory.Begin = `${monthEnd + 1}/${yearEnd}`;
+                        $scope.selectedPersonHistory.Begin = `8/${year2 + 6}`;
+
                     }
                     /*$scope.selectedPersonHistory.End = `8/${yearEnd + 1}`;*/
                     ;
@@ -3211,11 +3230,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     //Update
 
-    $scope.selectedPersonHistory = {};
     $scope.selectedWarningDisciplined = {};
     $scope.selectedHistorySpecialist = {};
     $scope.selectedWorkingTracking = {};
-    $scope.selectedLaudatory = {};
     $scope.selectedTrainingCertificatedPass = {};
     $scope.selectedGoAboard = {};
     $scope.selectFamily = function (x) {
@@ -3225,9 +3242,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         //$scope.WorkingProgressEnd = years[1];
         //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
         var BirthYear = $scope.selectedFamily.BirthYear.split("-")
-        $scope.selectedFamily.BirthYear = BirthYear[0];
-        $scope.selectedFamily.BirthDie = BirthYear[1];
-        $scope.disableWorkingProgressYear = true;
+        if (BirthYear.length === 2) {
+            $scope.selectedFamily.BirthYear = BirthYear[0];
+            $scope.selectedFamily.BirthDie = BirthYear[1];
+            $scope.disableWorkingProgressYear = true;
+        }
         if ($scope.selectedFamily.die === true) {
             $scope.selectedFamily.disableAddress = true;
             $scope.selectedFamily.die = true
@@ -3235,12 +3254,14 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.selectedFamily.disableAddress = false;
             $scope.selectedFamily.die = false
         }
+
+
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
         $scope.filterRelation();
+        $scope.deleteS = false;
     };
-
 
     $scope.deleteSelect = function () {
         $scope.selectFamily($scope.selectedFamily);
@@ -3254,6 +3275,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.resetFamilyHomeTown();
         setTimeout(() => $scope.$apply());
     }
+
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
     };

@@ -32,23 +32,23 @@ namespace III.Admin.Utils
                 switch (a)
                 {
                     case "Họ và tên đang dùng:":
-                        text = p.AppendText(Pap.CurrentName);
+                        text = p.AppendText(Pap.CurrentName ?? "");
                         break;
 
                     case ("Họ và tên khai sinh:"):
-                        text = p.AppendText(Pap.BirthName);
+                        text = p.AppendText(Pap.BirthName ?? "");
                         break;
 
                     case ("Số điện thoại:"):
-                        text = p.AppendText(Pap.Phone);
+                        text = p.AppendText(Pap.Phone ?? "");
                         break;
 
                     case ("Quê quán:"):
-                        text = p.AppendText(Pap.HomeTown);
+                        text = p.AppendText(Pap.HomeTown ?? "");
                         break;
 
                     case ("Số LL:"):
-                        text = p.AppendText(Pap.ResumeNumber);
+                        text = p.AppendText(Pap.ResumeNumber ?? "");
                         break;
                         // Thêm các trường hợp khác tùy thuộc vào yêu cầu của bạn
                 }
@@ -62,7 +62,7 @@ namespace III.Admin.Utils
                 switch (a)
                 {
                     case ("Họ và tên khai sinh:"):
-                        text = p.AppendText(Pap.BirthName);
+                        text = p.AppendText(Pap.BirthName ?? "");
                         break;
 
                     case ("Nam, nữ:"):
@@ -70,7 +70,7 @@ namespace III.Admin.Utils
                         break;
 
                     case ("Họ và tên đang dùng:"):
-                        text = p.AppendText(Pap.CurrentName);
+                        text = p.AppendText(Pap.CurrentName ?? "");
                         break;
 
                     case "Ngày, tháng, năm sinh :":
@@ -78,63 +78,63 @@ namespace III.Admin.Utils
                         break;
 
                     case ("Nơi sinh:"):
-                        text = p.AppendText(Pap.PlaceBirth);
+                        text = p.AppendText(Pap.PlaceBirth ?? "");
                         break;
 
                     case ("Quê quán:"):
-                        text = p.AppendText(Pap.HomeTown);
+                        text = p.AppendText(Pap.HomeTown ?? "");
                         break;
 
                     case ("- Nơi thường trú :"):
-                        text = p.AppendText(Pap.PermanentResidence);
+                        text = p.AppendText(Pap.PermanentResidence ?? "");
                         break;
 
                     case ("- Nơi tạm trú :"):
-                        text = p.AppendText(Pap.TemporaryAddress);
+                        text = p.AppendText(Pap.TemporaryAddress ?? "");
                         break;
 
                     case ("Dân tộc:"):
-                        text = p.AppendText(Pap.Nation);
+                        text = p.AppendText(Pap.Nation ?? "");
                         break;
 
                     case ("Tôn giáo:"):
-                        text = p.AppendText(Pap.Religion);
+                        text = p.AppendText(Pap.Religion ?? "");
                         break;
 
                     case ("Nghề nghiệp hiện nay:"):
-                        text = p.AppendText(Pap.Job);
+                        text = p.AppendText(Pap.Job ?? "");
                         break;
 
                     case ("- Giáo dục phổ thông:"):
-                        text = p.AppendText(Pap.GeneralEducation);
+                        text = p.AppendText(Pap.GeneralEducation ?? "");
                         break;
 
                     case ("- Giáo dục nghề nghiệp :"):
-                        text = p.AppendText(Pap.JobEducation);
+                        text = p.AppendText(Pap.JobEducation ?? "");
                         break;
 
                     case ("- Giáo dục đại học và sau đại học:"):
-                        text = p.AppendText(Pap.Degree);
+                        text = p.AppendText(Pap.Degree ?? "");
                         break;
 
                     case ("- Học hàm:"):
-                        text = p.AppendText(Pap.UnderPostGraduateEducation);
+                        text = p.AppendText(Pap.UnderPostGraduateEducation ?? "");
                         break;
 
                     case ("- Lý luận chính trị:"):
-                        text = p.AppendText(Pap.PoliticalTheory);
+                        text = p.AppendText(Pap.PoliticalTheory ?? "");
                         break;
 
                     case ("- Ngoại ngữ:"):
-                        text = p.AppendText(Pap.ForeignLanguage);
+                        text = p.AppendText(Pap.ForeignLanguage ?? "");
                         break;
 
                     case ("- Tin học:"):
-                        text = p.AppendText(Pap.ItDegree);
+                        text = p.AppendText(Pap.ItDegree ?? "");
                         break;
 
                     case ("- Tiếng dân tộc thiểu số:"):
-                        text = p.AppendText(Pap.MinorityLanguages);
+                        text = p.AppendText(Pap.MinorityLanguages ?? "");
                         break;
                     case ("- Tình trạng hôn nhân :"):
                         string[] parts = Pap.MarriedStatus.Split('_');
@@ -159,10 +159,10 @@ namespace III.Admin.Utils
 
                         Pap.MarriedStatus = maritalStatus;
 
-                        text = p.AppendText(Pap.MarriedStatus);
+                        text = p.AppendText(Pap.MarriedStatus ?? "");
                         break;
                     case ("Ngày và nơi vào Đoàn TNCSHCM:"):
-                        text = p.AppendText(Pap.CreatedPlace);
+                        text = p.AppendText(Pap.CreatedPlace ?? "");
                         break;
                         /*case ("Ngày và nơi vào Đoàn TNCSHCM:"):
                             if (Iop != null)
@@ -474,6 +474,8 @@ namespace III.Admin.Utils
                     IWParagraph p = cell.AddParagraph();
                     text = p.AppendText("*" + ph.Relation + " :");
                     p = cell.AddParagraph();
+                   
+
                     text = p.AppendText("- Họ và tên: " + ph.Name);
 
                     p = cell.AddParagraph();
