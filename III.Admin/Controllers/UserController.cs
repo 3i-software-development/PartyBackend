@@ -678,6 +678,7 @@ namespace III.Admin.Controllers
                 obj.ClassComposition = model.ClassComposition;
                 obj.PartyMember = model.PartyMember;
                 obj.BirthYear = model.BirthYear;
+                obj.DeathYear = model.DeathYear;
                 obj.HomeTown = model.HomeTown;
                 obj.Residence = model.Residence;
                 obj.Job = model.Job;
@@ -1250,6 +1251,7 @@ namespace III.Admin.Controllers
                                 ClassComposition = x.ClassComposition,
                                 PartyMember = x.PartyMember,
                                 BirthYear = x.BirthYear,
+                                DeathYear = x.DeathYear,
                                 HomeTown = x.HomeTown,
                                 HomeTownVillage = x.HomeTownVillage,
                                 HomeTownValue = x.HomeTownValue,

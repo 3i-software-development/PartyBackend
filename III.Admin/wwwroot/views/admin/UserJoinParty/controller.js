@@ -2994,6 +2994,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     $scope.deleteselectPersonHistory = function () {
         $scope.selectedPersonHistory = {};
+        $scope.changeHistory()
     };
 
     $scope.addToPersonalHistory = function () {
@@ -3021,29 +3022,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         model.Type = $scope.selectedPersonHistory.Type;
 
         $scope.PersonalHistory.push(model);
-        /*var parts = $scope.infUser.Birthday.split("/");
-        const year2 = Number(parts[2]);
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-        if ($scope.PersonalHistory.length === 0) {
-            if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
-                $scope.selectedPersonHistory.Begin = `9/${year2 + 6}`;
-               *//* $scope.selectedPersonHistory.End = `8/${year2 + 7}`;*//*
-}
-else {
-$scope.selectedPersonHistory.Begin = `9/`;
-*//*$scope.selectedPersonHistory.End = `8/`;*//*
-                         }
-                      } else {
-                         for (let i = 1; i <= 200; i++) {
-                             if ($scope.PersonalHistory.length === i) {
-                                 $scope.selectedPersonHistory.Begin = `9/${year2 + 6 + i}`;
-                                 *//*$scope.selectedPersonHistory.End = `8/${year2 + 7 + i}`;*//*
-break;
-}
-}
-}*/
-        $scope.changeHistory()
+        $scope.deleteselectPersonHistory()
     }
 
     $scope.submitPersonalHistorys = function () {
@@ -3288,7 +3267,12 @@ break;
             obj.Relation = e.Relation;
             obj.PartyMember = [e.wordAt, e.PartyMember, e.Party].join('_');
             obj.Name = e.Name;
-            obj.BirthYear = [e.die, e.BirthYear, e.AddressDie, e.Reason].join('_');
+            /*obj.BirthYear = [e.die, e.BirthYear, e.AddressDie, e.Reason].join('_');*/
+            if (e.BirthDie) {
+                obj.BirthYear = [e.die, ("" + e.BirthYear + "-" + e.BirthDie), e.AddressDie, e.Reason].join('_');
+            } else {
+                obj.BirthYear = [e.die, e.BirthYear, e.AddressDie, e.Reason].join('_');
+            }
             obj.Residence = e.Residence;
             obj.PoliticalAttitude = e.PoliticalAttitude;
             obj.HomeTown = e.HomeTown;
@@ -4412,18 +4396,27 @@ break;
     }
     //add
 
-    // $scope.disableAddress = false;
+    // $scope.selectedFamily.disableAddress = false;
     $scope.PartyMember = false
-    $scope.changedisable = function () {
+    /*$scope.changedisable = function () {
         if ($scope.selectedFamily.die === true) {
-            $scope.disableAddress = true;
+            $scope.selectedFamily.disableAddress = true;
             $scope.selectedFamily.die = true
         } else if ($scope.selectedFamily.die === false) {
-            $scope.disableAddress = false;
+            $scope.selectedFamily.disableAddress = false;
             $scope.selectedFamily.die = false;
         }
 
 
+    }*/
+    $scope.changedisable = function () {
+        if ($scope.selectedFamily.disableAddress === true) {
+            $scope.selectedFamily.disableAddress = true;
+            $scope.selectedFamily.die = true
+        } else if ($scope.selectedFamily.disableAddress === false) {
+            $scope.selectedFamily.disableAddress = false;
+            $scope.selectedFamily.die = false
+        }
     }
 
     $scope.changedis = function () {
@@ -4456,7 +4449,7 @@ break;
         if ($scope.selectedFamily.Name == null || $scope.selectedFamily.Name == undefined || $scope.selectedFamily.Name === '') {
             $scope.err = true
         }
-        if ($scope.disableAddress == true) {
+        if ($scope.selectedFamily.disableAddress == true) {
 
             if ($scope.selectedFamily.AddressDie == null || $scope.selectedFamily.AddressDie == undefined || $scope.selectedFamily.AddressDie === '') {
                 $scope.err = true
@@ -4508,7 +4501,7 @@ break;
 
         }
 
-        console.log($scope.disableAddress);
+        console.log($scope.selectedFamily.disableAddress);
 
         if ($scope.selectedFamily.BirthYear == null || $scope.selectedFamily.BirthYear == undefined || $scope.selectedFamily.BirthYear === '') {
             $scope.err = true
@@ -4554,8 +4547,8 @@ break;
         model.Residence = $scope.selectedFamily.Residence;
         model.PartyMember = $scope.selectedFamily.PartyMember;
         model.Name = $scope.selectedFamily.Name;
-        if ($scope.BirthDie) {
-            model.BirthYear = "" + $scope.selectedFamily.BirthYear + " - " + $scope.BirthDie;
+        if ($scope.selectedFamily.BirthDie) {
+            model.BirthYear = "" + $scope.selectedFamily.BirthYear + " - " + $scope.selectedFamily.BirthDie;
         } else {
             model.BirthYear = $scope.selectedFamily.BirthYear;
         }
@@ -4571,7 +4564,7 @@ break;
         model.AddressDie = $scope.selectedFamily.AddressDie;
         model.Reason = $scope.selectedFamily.Reason;
         model.Party = $scope.selectedFamily.Party;
-        model.die = $scope.disableAddress;
+        model.die = $scope.selectedFamily.disableAddress;
         model.BirthPlace = $scope.selectedFamily.AddressBirth;
         model.class = $scope.selectedFamily.class
         $scope.Relationship.push(model);
@@ -4588,10 +4581,24 @@ break;
                 App.toastrSuccess(result.Title);
             }
         });
-        $scope.disableAddress = false
-        $scope.PartyMember = false
+        $scope.selectedFamily.disableAddress = false
+        $scope.disableWorkingProgressYear = false;
+        $scope.selectedFamily = {};
+        $scope.selectedFamily.HomeTown = "";
+        $scope.PartyMember = false;
+        $scope.resetFamilyHomeTown();
     }
-
+    $scope.showFamilyHomeTown = true;
+    $scope.resetFamilyHomeTown = function () {
+        $scope.showFamilyHomeTown = false;
+        $scope.selectedFamily.HomeTownValue = '';
+        $scope.selectedFamily.HomeTown = '';
+        $scope.selectedFamily.HomeTownJson = '';
+        setTimeout(() => {
+            $scope.showFamilyHomeTown = true;
+            $scope.$apply();
+        }, 100);
+    }
 
     $scope.addToAward = function () {
         $scope.err = false
@@ -4615,6 +4622,10 @@ break;
         model.Reason = $scope.selectedLaudatory.Reason
         model.ProfileCode = $scope.infUser.ResumeNumber;
         $scope.Laudatory.push(model)
+        $scope.deleteSelectToAward();
+    }
+    $scope.deleteSelectToAward = function () {
+        $scope.selectedLaudatory = {}
     }
     $scope.addToBusinessNDuty = function () {
         $scope.err = false
@@ -4643,6 +4654,11 @@ break;
 
         model.Id = 0;
         $scope.BusinessNDuty.push(model)
+        $scope.deleteSelectToBusinessNDuty();
+    }
+
+    $scope.deleteSelectToBusinessNDuty = function () {
+        $scope.selectedWorkingTracking = {};
     }
     $scope.addToHistorySpecialist = function () {
         $scope.err = false
@@ -4664,6 +4680,10 @@ break;
 
         obj.Id = 0;
         $scope.HistoricalFeatures.push(obj)
+        $scope.deleteSelectToHistorySpecialist();
+    }
+    $scope.deleteSelectToHistorySpecialist = function () {
+        $scope.selectedHistorySpecialist = {};
     }
     $scope.addToDisciplined = function () {
         $scope.err = false
@@ -4689,7 +4709,12 @@ break;
         obj.ProfileCode = $scope.infUser.ResumeNumber;
         obj.Id = 0;
         $scope.Disciplined.push(obj)
+        $scope.deleteSelectaddToDisciplined();
     }
+    $scope.deleteSelectaddToDisciplined = function () {
+        $scope.selectedWarningDisciplined = {};
+    }
+
     $scope.addToTrainingCertificatedPass = function () {
         $scope.err = false
         if ($scope.selectedTrainingCertificatedPass.From == null || $scope.selectedTrainingCertificatedPass.From == undefined || $scope.selectedTrainingCertificatedPass.From == '') {
@@ -4718,6 +4743,10 @@ break;
         obj.ProfileCode = $scope.infUser.ResumeNumber;
         obj.Id = 0;
         $scope.PassedTrainingClasses.push(obj)
+        $scope.deleteSelectToTrainingCertificatedPass()
+    }
+    $scope.deleteSelectToTrainingCertificatedPass = function () {
+        $scope.selectedTrainingCertificatedPass = {};
     }
     $scope.addToGoAboard = function () {
         $scope.err = false
@@ -4746,6 +4775,10 @@ break;
         obj.ProfileCode = $scope.infUser.ResumeNumber;
         obj.Id = 0;
         $scope.GoAboard.push(obj)
+        $scope.deleteSelectToGoAboard();
+    }
+    $scope.deleteSelectToGoAboard = function () {
+        $scope.selectedGoAboard = {};
     }
 
     //Update
@@ -4759,6 +4792,25 @@ break;
     $scope.selectedTrainingCertificatedPass = {};
     $scope.selectedGoAboard = {};
 
+    /* $scope.selectFamily = function (x) {
+         $scope.selectedFamily = x;
+         //var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
+         //$scope.WorkingProgressStart = years[0];
+         //$scope.WorkingProgressEnd = years[1];
+         //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
+         var BirthYear = $scope.selectedFamily.BirthYear.split("-")
+         if (BirthYear.lenght == 2) {
+             $scope.selectedFamily.BirthYear = BirthYear[0];
+             $scope.BirthDie = BirthYear[1];
+         $scope.disableWorkingProgressYear = true;
+ }
+ 
+         $scope.bienTam = angular.copy(x);
+         $scope.changedisable();
+         $scope.changedis();
+         $scope.filterRelation();
+     };*/
+
     $scope.selectFamily = function (x) {
         $scope.selectedFamily = x;
         //var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
@@ -4766,30 +4818,38 @@ break;
         //$scope.WorkingProgressEnd = years[1];
         //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
         var BirthYear = $scope.selectedFamily.BirthYear.split("-")
-        if (BirthYear.lenght == 2) {
+        if (BirthYear.length === 2) {
             $scope.selectedFamily.BirthYear = BirthYear[0];
-            $scope.BirthDie = BirthYear[1];
-        $scope.disableWorkingProgressYear = true;
-}
+            $scope.selectedFamily.BirthDie = BirthYear[1];
+            $scope.disableWorkingProgressYear = true;
+        }
+        if ($scope.selectedFamily.die === true) {
+            $scope.selectedFamily.disableAddress = true;
+            $scope.selectedFamily.die = true
+        } else if ($scope.selectedFamily.die === false) {
+            $scope.selectedFamily.disableAddress = false;
+            $scope.selectedFamily.die = false
+        }
 
+       
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
         $scope.filterRelation();
+        $scope.deleteS = false;
     };
-
 
     $scope.deleteSelect = function () {
         $scope.selectFamily($scope.selectedFamily);
         $scope.disableWorkingProgressYear = false;
         $scope.selectedFamily = {};
-        $scope.disableAddress = false;
+        $scope.selectedFamily.disableAddress = false;
         $scope.PartyMember = false;
         $scope.changedisable();
         $scope.changedis();
-        $scope.$apply();
-        $scope.filterRelation();
-
+        //$scope.filterRelation();
+        $scope.resetFamilyHomeTown();
+        setTimeout(() => $scope.$apply());
     }
 
     $scope.selectWarningDisciplined = function (x) {

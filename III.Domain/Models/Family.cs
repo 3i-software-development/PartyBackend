@@ -27,8 +27,9 @@ namespace ESEIM.Models
 
 		
 		public string BirthYear { get; set; }
+		public string DeathYear { get; set; }
 
-		[Note("Quê quán")]
+        [Note("Quê quán")]
 		public string HomeTown { get; set; }
 
 		[Note("Nơi ở hiện nay")]
@@ -82,6 +83,7 @@ namespace ESEIM.Models
 
 
         public string BirthYear { get; set; }
+        public string DeathYear { get; set; }
 
         [Note("Quê quán")]
         public string HomeTown { get; set; }
