@@ -492,9 +492,11 @@ namespace III.Admin.Utils
                     text = p.AppendText("- Năm sinh: " + ph.BirthYear);
 
                     p = cell.AddParagraph();
-                    text = p.AppendText("- Quê quán: " + ph.HomeTown);
+                    var HomeTown = "" + ph.HomeTownVillage + ", " + ph.HomeTownValue;
+                    text = p.AppendText("- Quê quán: " + HomeTown);
 
                     p = cell.AddParagraph();
+
                     text = p.AppendText("- Nơi cư trú: " + ph.Residence);
 
                     p = cell.AddParagraph();
@@ -1034,9 +1036,12 @@ namespace III.Admin.Utils
                         break;
                     case "12) Ngày vào Đảng:…/…/…… Tại Chi bộ:…………………………………………………………..":
                         if (jsonParty.IntroducerOfParty != null)
+                        
                             p.Replace("12) Ngày vào Đảng:…/…/…… Tại Chi bộ:………………………………………………………….",
-                            "12) Ngày vào Đảng: " + jsonParty.IntroducerOfParty.PlaceTimeJoinParty, true, true);
+                           "12) Ngày vào Đảng: " + jsonParty.IntroducerOfParty.PlaceTimeJoinParty, true, true);
+                        
                         break;
+                           
                     case "Người giới thiệu thứ 1:…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….":
                         if (jsonParty.IntroducerOfParty != null)
                             p.Replace("…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….",
@@ -1112,7 +1117,7 @@ namespace III.Admin.Utils
             table = section.Tables[3] as WTable;
             BindingFamily(table, jsonParty.Families);
         }
-
+/*
         public static void convertProvinces(UserJoinPartyController.converJsonPartyAdmission jsonParty, List<Province> provinces1, List<District> districts1, List<Ward> wards1)
         {
             string[] partsHomeTown = jsonParty.Profile.HomeTown.Split('_');
@@ -1175,7 +1180,7 @@ namespace III.Admin.Utils
             }
 
         }
-
+*/
         //Được kết nạp lại vào Đảng
         private static void BindingPersonalHistories2(IWParagraph p, List<PersonalHistory> personalHistories)
         {

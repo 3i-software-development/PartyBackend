@@ -1162,11 +1162,9 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         return data == 0 ? "Nam" : "Nữ";
     }));
 
-    vm.dtColumns.push(DTColumnBuilder.newColumn('TemporaryAddress').withOption('sClass', '').withTitle('{{"Địa chỉ" | translate}}').renderWith(function (data, type) {
+    vm.dtColumns.push(DTColumnBuilder.newColumn('AddressText').withOption('sClass', '').withTitle('{{"Địa chỉ" | translate}}').renderWith(function (data, type) {
         return data
     }));
-
-
 
     vm.dtColumns.push(DTColumnBuilder.newColumn('UnderPostGraduateEducation').withOption('sClass', '')
         .withTitle('{{"Trình độ" | translate}}').renderWith(function (data, type, full) {
@@ -3786,7 +3784,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 if (TemporaryAddress[0]) {
                     listPromise.push(new Promise((resolve, reject) => {
                         try {
-                            dataservice.GetTinh(TemporaryAddress[0], function (rs) {
+                            dataserviceJoinParty.GetTinh(TemporaryAddress[0], function (rs) {
                                 if (rs.data && rs.data[0]) {
                                     $scope.TemporaryAddressTinh = rs.data[0].name;
                                     resolve();
@@ -3801,7 +3799,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 if (TemporaryAddress[1]) {
                     listPromise.push(new Promise((resolve, reject) => {
                         try {
-                            dataservice.GetHuyen(TemporaryAddress[1], function (rs) {
+                            dataserviceJoinParty.GetHuyen(TemporaryAddress[1], function (rs) {
                                 if (rs.data && rs.data[0]) {
                                     $scope.TemporaryAddressHuyen = rs.data[0].name;
                                     resolve();
@@ -3816,7 +3814,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 if (TemporaryAddress[2]) {
                     listPromise.push(new Promise((resolve, reject) => {
                         try {
-                            dataservice.GetXa(TemporaryAddress[2], function (rs) {
+                            dataserviceJoinParty.GetXa(TemporaryAddress[2], function (rs) {
                                 if (rs.data && rs.data[0]) {
                                     $scope.TemporaryAddressXa = rs.data[0].name;
                                     resolve();
