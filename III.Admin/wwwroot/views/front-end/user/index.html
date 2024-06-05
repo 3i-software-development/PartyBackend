@@ -845,7 +845,7 @@
                                             <label class="displayInfo control-label  custom-title-code-bold">
                                                 Giáo
                                                 dục
-                                                đại học
+                                                đại học và sau đại học
                                             </label>
                                         </div>
                                         <div class="col-md-8">
@@ -1470,7 +1470,7 @@
                                                         name="CusCode" ng-model="selectedFamily.HomeTownVillage"
                                                         type="text" placeholder="Nhập địa chỉ thôn" ng-required="true">
                                                     <i class="fa fa-microphone" style="font-size: 20px;"
-                                                        voice-recognition ng-model="selectedFamily.HomeTown"></i>
+                                                        voice-recognition ng-model="selectedFamily.HomeTownVillage"></i>
                                                 </div>
                                                 <div class="br24 form-control custom-title-code-bold"
                                                     style="display:flex">
@@ -1478,10 +1478,14 @@
                                                         data-bs-toggle="popover" title="Popover Header"
                                                         data-bs-placement="bottom" data-bs-content="Ví dụ: 'Hà Nội'"
                                                         style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                                    <choose-position ng-model="selectedFamily.HomeTown"
+                                                    <!-- <choose-position ng-model="selectedFamily.HomeTown"
                                                         provinces="ListProvince" value="selectedFamily.HomeTownValue"
                                                         json="selectedFamily.HomeTownJson" style="width: 100%;"
-                                                        ng-if="showFamilyHomeTown"></choose-position>
+                                                        ng-if="showFamilyHomeTown"></choose-position> -->
+                                                    <choose-position ng-model="selectedFamily.HomeTown"
+                                                        value="selectedFamily.HomeTownValue"
+                                                        json="selectedFamily.HomeTownJson" provinces="ListProvince"
+                                                        style="width: 100%;"></choose-position>
                                                 </div>
                                             </div>
                                         </div>
@@ -1500,13 +1504,13 @@
                                                 <div class="br24 form-control custom-title-code-bold">
                                                     <i class="fa fa-info-circle icon-clickable" id="homeTown"
                                                         title="Popover Header" popover-placement="bottom-left"
-                                                        uib-popover="Nơi sinh của người thân là: {{selectedFamily.AddressBirth}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        uib-popover="Nơi sinh của người thân là: {{selectedFamily.BirthPlace}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                         popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-model="selectedFamily.AddressBirth" type="text"
+                                                        ng-model="selectedFamily.BirthPlace" type="text"
                                                         placeholder="Nơi sinh" />
                                                     <i class="fa fa-microphone" style="font-size: 20px;"
-                                                        voice-recognition ng-model="selectedFamily.AddressBirth"></i>
+                                                        voice-recognition ng-model="selectedFamily.BirthPlace"></i>
                                                 </div>
                                             </div>
                                         </div>
@@ -1525,13 +1529,13 @@
                                                 <div class="br24 form-control custom-title-code-bold">
                                                     <i class="fa fa-info-circle icon-clickable" id="homeTown"
                                                         title="Popover Header" popover-placement="bottom-left"
-                                                        uib-popover="Nơi sinh của người thân là: {{selectedFamily.AddressBirth}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        uib-popover="Nơi sinh của người thân là: {{selectedFamily.BirthPlace}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                         popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
-                                                        ng-model="selectedFamily.AddressBirth" type="text"
+                                                        ng-model="selectedFamily.BirthPlace" type="text"
                                                         placeholder="Nơi sinh" />
                                                     <i class="fa fa-microphone" style="font-size: 20px;"
-                                                        voice-recognition ng-model="selectedFamily.AddressBirth"></i>
+                                                        voice-recognition ng-model="selectedFamily.BirthPlace"></i>
                                                 </div>
                                             </div>
                                         </div>
