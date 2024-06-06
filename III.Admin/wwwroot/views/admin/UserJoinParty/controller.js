@@ -426,7 +426,8 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 CreatedPlace: true,
                 GroupUser: true,
                 PlaceWorking: true,
-                marriedStatus: true
+                marriedStatus: true,
+                AddressText: true
             },
             Family: {
                 "Relation": true,

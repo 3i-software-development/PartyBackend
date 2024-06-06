@@ -1322,7 +1322,8 @@ namespace III.Admin.Utils
                 cell = row.Cells[3];
 
                 p = cell.Paragraphs[0] as WParagraph;
-                text = p.AppendText("-Quê quán:" + (item.HomeTown ?? ""));
+                var ItemHomeTown = "" + (item.HomeTownVillage?? "") + ", " + (item.HomeTownValue??"");
+                text = p.AppendText("-Quê quán:" + ItemHomeTown);
                 p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
                 SetStyle(text);
 

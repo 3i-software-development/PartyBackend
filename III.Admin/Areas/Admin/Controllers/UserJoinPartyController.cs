@@ -449,6 +449,7 @@ namespace III.Admin.Controllers
                     GroupUserCode = x.GroupUserCode,
                     PlaceWorking = Place,
                     MarriedStatus = x.MarriedStatus,
+                    AddressText = x.AddressText,
                 }).Where(x => x.ResumeNumber == ressumeNumber);
 
                 //Thông tin cá nhân Ok
@@ -694,7 +695,7 @@ namespace III.Admin.Controllers
                     GroupUserCode = x.GroupUserCode,
                     PlaceWorking = x.PlaceWorking,
                     MarriedStatus = x.MarriedStatus,
-                    AddressText = x.AddressText,
+                    AddressText = x.AddressText
                 }).FirstOrDefault();
 
             jsonData.IntroducerOfParty = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false);

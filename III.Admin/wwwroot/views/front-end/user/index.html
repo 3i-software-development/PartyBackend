@@ -1239,8 +1239,7 @@
                                                     ng-click="openPopover('MenberFamilyName');"
                                                     uib-popover-template="'popoverTemplate.html'"
                                                     popover-placement="right" popover-trigger="outsideClick"></i>
-                                                <label
-                                                    class="displayInfo control-label require custom-title-code-bold">Họ
+                                                <label class="displayInfo control-label custom-title-code-bold">Họ
                                                     và tên</label>
                                             </div>
                                             <div class="col-md-8">
@@ -1264,15 +1263,12 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-calendar-o" id="dateOfBirdRelation"
-                                                    ng-click="openPopover('dateOfBirdRelation');"
-                                                    uib-popover-template="'popoverTemplate.html'"
-                                                    popover-placement="right" popover-trigger="outsideClick"></i>
+                                                    title="Popover Header" popover-placement="bottom-left"
+                                                    uib-popover="Nơi sinh của bạn là: {{selectedFamily.BirthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                    popover-trigger="outsideClick"></i>
                                                 <label
                                                     class="displayInfo control-label require custom-title-code-bold">Năm
                                                     sinh</label>
-                                                <!-- <input ng-change="updateAddressState()" type="checkbox"
-                    ng-model="disableAddress" ng-change="changedisable()">Đã mất -->
-
                                             </div>
                                             <div class="col-md-8">
                                                 <div style="display: flex; align-items: center;  gap: 1%;">
