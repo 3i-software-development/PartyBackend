@@ -50,7 +50,6 @@ namespace ESEIM.Models
         [StringLength(maximumLength: 100)]
         public string HomeTown { get; set; }
 
-        [Note("Nơi sinh")]
         [StringLength(maximumLength: 100)]
         public string PlaceBirth { get; set; }
 
@@ -111,45 +110,45 @@ namespace ESEIM.Models
         public string Username { get; set; }
         public string Status
         {
-            get
-            {
-                return JsonConvert.SerializeObject(JsonStaus);
-            }
+            get { return JsonConvert.SerializeObject(JsonStaus); }
             set
             {
                 JsonStaus = string.IsNullOrEmpty(value)
-                ? new List<JsonLog>()
-                : JsonConvert.DeserializeObject<List<JsonLog>>(value);
+                    ? new List<JsonLog>()
+                    : JsonConvert.DeserializeObject<List<JsonLog>>(value);
             }
         }
 
-        public string ProfileLink {
-            get
-            {
-                return JsonConvert.SerializeObject(JsonProfileLinks);
-            }
+        public string ProfileLink
+        {
+            get { return JsonConvert.SerializeObject(JsonProfileLinks); }
             set
             {
                 JsonProfileLinks = string.IsNullOrEmpty(value)
-                ? new List<JsonFile>()
-                : JsonConvert.DeserializeObject<List<JsonFile>>(value);
+                    ? new List<JsonFile>()
+                    : JsonConvert.DeserializeObject<List<JsonFile>>(value);
             }
         }
+
         [NotMapped]
         public List<JsonFile> JsonProfileLinks { get; set; }
+
         [NotMapped]
         public List<JsonLog> JsonStaus { get; set; }
         public string WfInstCode { get; set; }
+
         [Note("Nhóm chi bộ")]
         public string GroupUserCode { get; set; }
+
         [Note("Địa giới hành chính")]
         public string PlaceWorking { get; set; }
-
 
         public DateTime? LastTimeReport { get; set; }
 
         public string MarriedStatus { get; set; }
         public string AddressText { get; set; }
+
+        [Note("Nơi sinh")]
         public string BirthPlaceValue { get; set; }
         public string BirthPlaceVillage { get; set; }
         public string HomeTownValue { get; set; }
@@ -165,6 +164,7 @@ namespace ESEIM.Models
         public string FileName { get; set; }
         public long FileSize { get; set; }
     }
+
     public class PartyStatus
     {
         public string Title { get; set; }

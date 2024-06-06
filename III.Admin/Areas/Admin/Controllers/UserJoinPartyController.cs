@@ -429,7 +429,7 @@ namespace III.Admin.Controllers
                     Phone = x.Phone,
                     Picture = x.Picture,
                     HomeTown = x.HomeTown,
-                    PlaceBirth = x.PlaceBirth,
+                    PlaceBirth = x.PermanentResidence,
                     Job = x.Job,
                     TemporaryAddress = x.TemporaryAddress,
                     GeneralEducation = x.GeneralEducation,
@@ -450,14 +450,13 @@ namespace III.Admin.Controllers
                     PlaceWorking = Place,
                     MarriedStatus = x.MarriedStatus,
                     AddressText = x.AddressText,
-                    TemporaryAddressValue = x.TemporaryAddressValue,
+                    TemporaryAddressValue = $"{x.TemporaryAddressVillage}, {x.TemporaryAddressValue}",
                     TemporaryAddressVillage = x.TemporaryAddressVillage,
                     PermanentResidenceVillage = x.PermanentResidenceVillage,
-                    PermanentResidenceValue = x.PermanentResidenceValue,
+                    PermanentResidenceValue = $"{x.PermanentResidenceVillage}, {x.PermanentResidenceValue}",
                     HomeTownVillage = x.HomeTownVillage,
-                    HomeTownValue = x.HomeTownValue,
-                    BirthPlaceVillage = x.BirthPlaceVillage,
-                    BirthPlaceValue = x.BirthPlaceValue,
+                    HomeTownValue = $"{x.HomeTownVillage}, {x.HomeTownValue}",
+                    BirthPlaceValue = $"{x.BirthPlaceVillage}, {x.BirthPlaceValue}",
                 }).Where(x => x.ResumeNumber == ressumeNumber);
 
                 //Thông tin cá nhân Ok
@@ -1447,10 +1446,14 @@ namespace III.Admin.Controllers
         public bool Birthday { get; set; }
         public bool Gender { get; set; }
         public bool Phone { get; set; }
-        public bool PlaceBirth { get; set; }
-        public bool HomeTown { get; set; }
-        public bool PermanentResidence { get; set; }
-        public bool TemporaryAddress { get; set; }
+       /* public bool PlaceBirth { get; set; }*/
+        public bool BirthPlaceValue { get; set; }
+        /*public bool HomeTown { get; set; }*/
+        public bool HomeTownValue { get; set; }
+        /*public bool PermanentResidence { get; set; }*/
+        public bool PermanentResidenceValue { get; set; }
+        /*public bool TemporaryAddress { get; set; }*/
+        public bool TemporaryAddressValue { get; set; }
         public bool Job { get; set; }
         public bool Nation { get; set; }
         public bool Religion { get; set; }

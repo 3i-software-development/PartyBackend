@@ -763,8 +763,7 @@ namespace III.Admin.Controllers
             public string HomeTown { get; set; }
 
             [Note("Nơi sinh")]
-            [StringLength(maximumLength: 100)]
-            public string PlaceBirth { get; set; }
+            public string BirthPlaceValue { get; set; }
 
             [Note("Nghề nghiệp hiện nay")]
             [StringLength(maximumLength: 50)]
@@ -826,12 +825,16 @@ namespace III.Admin.Controllers
             public string Status { get; set; }
             public string MarriedStatus { get; set; }
             public string AddressText { get; set; }
-            public string BirthPlaceValue { get; set; }
+            [StringLength(maximumLength: 100)]
+            public string PlaceBirth { get; set; }
             public string BirthPlaceVillage { get; set; }
+            [Note("Quê quán")]
             public string HomeTownValue { get; set; }
             public string HomeTownVillage { get; set; }
+            [Note("Địa chỉ thường trú")]
             public string PermanentResidenceValue { get; set; }
             public string PermanentResidenceVillage { get; set; }
+            [Note("Địa chỉ tạm trú")]
             public string TemporaryAddressValue { get; set; }
             public string TemporaryAddressVillage { get; set; }
         }
@@ -1398,7 +1401,8 @@ namespace III.Admin.Controllers
                     obj.BirthName = model.BirthName;
                     obj.Gender = model.Gender == "Nam" ? 0 : 1;
                     obj.Nation = model.Nation;
-                    obj.Religion = model.Religion;
+                    /*obj.Religion = model.Religion;*/
+                    obj.PermanentResidenceValue = model.PermanentResidenceValue;
                     obj.PermanentResidence = model.PermanentResidence;
                     obj.Phone = model.Phone;
                     obj.Picture = model.Picture;
