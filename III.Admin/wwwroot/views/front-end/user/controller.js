@@ -2570,21 +2570,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
 
     $scope.deleteselectPersonHistory = function () {
-        $scope.err = false
-        if ($scope.selectedPersonHistory.Begin == null || $scope.selectedPersonHistory.Begin == undefined || $scope.selectedPersonHistory.Begin == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedPersonHistory.End == null || $scope.selectedPersonHistory.End == undefined || $scope.selectedPersonHistory.End == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedPersonHistory.Content == null || $scope.selectedPersonHistory.Content == undefined || $scope.selectedPersonHistory.Content == '') {
-            $scope.err = true
-        }
-
-        if ($scope.err) {
-            App.toastrError("Bạn chưa nhập đủ thông tin")
-            return
-        }
         $scope.selectedPersonHistory = {};
         $scope.changeHistory()
     };
@@ -2636,15 +2621,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
 
     $scope.deleteSelectaddToDisciplined = function () {
-        if ($scope.selectedWarningDisciplined.MonthYear == null || $scope.selectedWarningDisciplined.MonthYear == undefined || $scope.selectedWarningDisciplined.MonthYear == '') {
-            return
-        }
-        if ($scope.selectedWarningDisciplined.Reason == null || $scope.selectedWarningDisciplined.Reason == undefined || $scope.selectedWarningDisciplined.Reason == '') {
-            return
-        }
-        if ($scope.selectedWarningDisciplined.GrantOfDecision == null || $scope.selectedWarningDisciplined.GrantOfDecision == undefined || $scope.selectedWarningDisciplined.GrantOfDecision == '') {
-            return
-        }
         $scope.selectedWarningDisciplined = {};
     }
 
@@ -2698,18 +2674,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
 
     $scope.deleteSelectToBusinessNDuty = function () {
-        if ($scope.selectedWorkingTracking.From == null || $scope.selectedWorkingTracking.From == undefined || $scope.selectedWorkingTracking.From == '') {
-            return
-        }
-        if ($scope.selectedWorkingTracking.To == null || $scope.selectedWorkingTracking.To == undefined || $scope.selectedWorkingTracking.To == '') {
-            return
-        }
-        if ($scope.selectedWorkingTracking.Work == null || $scope.selectedWorkingTracking.Work == undefined || $scope.selectedWorkingTracking.Work == '') {
-            return
-        }
-        if ($scope.selectedWorkingTracking.Role == null || $scope.selectedWorkingTracking.Role == undefined || $scope.selectedWorkingTracking.Role == '') {
-            return
-        }
         $scope.selectedWorkingTracking = {};
     }
 
@@ -2758,12 +2722,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
 
     $scope.deleteSelectToHistorySpecialist = function () {
-        if ($scope.selectedHistorySpecialist.MonthYear == null || $scope.selectedHistorySpecialist.MonthYear == undefined || $scope.selectedHistorySpecialist.MonthYear == '') {
-            return
-        }
-        if ($scope.selectedHistorySpecialist.Content == null || $scope.selectedHistorySpecialist.Content == undefined || $scope.selectedHistorySpecialist.Content == '') {
-            return
-        }
         $scope.selectedHistorySpecialist = {};
     }
 
@@ -2821,18 +2779,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
 
     $scope.deleteSelectToTrainingCertificatedPass = function () {
-        if ($scope.selectedTrainingCertificatedPass.From == null || $scope.selectedTrainingCertificatedPass.From == undefined || $scope.selectedTrainingCertificatedPass.From == '') {
-            return
-        }
-        if ($scope.selectedTrainingCertificatedPass.To == null || $scope.selectedTrainingCertificatedPass.To == undefined || $scope.selectedTrainingCertificatedPass.To == '') {
-            return
-        }
-        if ($scope.selectedTrainingCertificatedPass.SchoolName == null || $scope.selectedTrainingCertificatedPass.SchoolName == undefined || $scope.selectedTrainingCertificatedPass.SchoolName == '') {
-            return
-        }
-        if ($scope.selectedTrainingCertificatedPass.Certificate == null || $scope.selectedTrainingCertificatedPass.Certificate == undefined || $scope.selectedTrainingCertificatedPass.Certificate == '') {
-            return
-        }
         $scope.selectedTrainingCertificatedPass = {};
     }
     $scope.submitTrainingCertificatedPass = function () {
@@ -2885,15 +2831,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
 
     $scope.deleteSelectToAward = function () {
-        if ($scope.selectedLaudatory.MonthYear == null || $scope.selectedLaudatory.MonthYear == undefined || $scope.selectedLaudatory.MonthYear == '') {
-            return
-        }
-        if ($scope.selectedLaudatory.GrantOfDecision == null || $scope.selectedLaudatory.GrantOfDecision == undefined || $scope.selectedLaudatory.GrantOfDecision == '') {
-            return
-        }
-        if ($scope.selectedLaudatory.Reason == null || $scope.selectedLaudatory.Reason == undefined || $scope.selectedLaudatory.Reason == '') {
-            return
-        }
         $scope.selectedLaudatory = {}
     }
 
@@ -2958,18 +2895,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
 
     $scope.deleteSelectToGoAboard = function () {
-        if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
-            return
-        }
-        if ($scope.selectedGoAboard.To == null || $scope.selectedGoAboard.To == undefined || $scope.selectedGoAboard.To == '') {
-            return
-        }
-        if ($scope.selectedGoAboard.Contact == null || $scope.selectedGoAboard.Contact == undefined || $scope.selectedGoAboard.Contact == '') {
-            return
-        }
-        if ($scope.selectedGoAboard.Country == null || $scope.selectedGoAboard.Country == undefined || $scope.selectedGoAboard.Country == '') {
-            return
-        }
         $scope.selectedGoAboard = {};
     }
 
@@ -3157,7 +3082,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
                     if ($scope.PersonalHistory.length === 0) {
                         $scope.selectedPersonHistory.Begin = `8/${year2 + 6}`;
-                       
+
                     } else {
                         const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
                         if (year3.lenght == 2) {
@@ -3180,7 +3105,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
                     }
                 } else {
-                    
+
                 }
                 //$scope.$apply();
                 console.log($scope.PersonalHistory);
@@ -3337,122 +3262,39 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.selectedTrainingCertificatedPass = {};
     $scope.selectedGoAboard = {};
     $scope.selectFamily = function (x) {
-        $scope.selectedFamily = x;
-        //var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
-        //$scope.WorkingProgressStart = years[0];
-        //$scope.WorkingProgressEnd = years[1];
-        //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
-        var BirthYear = $scope.selectedFamily.BirthYear.split("-")
-        if (BirthYear.length === 2) {
-            $scope.selectedFamily.BirthYear = BirthYear[0];
-            $scope.selectedFamily.BirthDie = BirthYear[1];
-            $scope.disableWorkingProgressYear = true;
-        }
-        if ($scope.selectedFamily.die === true) {
-            $scope.selectedFamily.disableAddress = true;
-            $scope.selectedFamily.die = true
-        } else if ($scope.selectedFamily.die === false) {
-            $scope.selectedFamily.disableAddress = false;
-            $scope.selectedFamily.die = false
-        }
-        if ($scope.selectedFamily.BirthPlace) {
-            $scope.selectedFamily.BirthPlace = $scope.selectedFamily.BirthPlace
-        }
+        if (x) {
+            $scope.selectedFamily = x;
+            //var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
+            //$scope.WorkingProgressStart = years[0];
+            //$scope.WorkingProgressEnd = years[1];
+            //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
+            var BirthYear = $scope.selectedFamily.BirthYear.split("-")
+            if (BirthYear.length === 2) {
+                $scope.selectedFamily.BirthYear = BirthYear[0];
+                $scope.selectedFamily.BirthDie = BirthYear[1];
+                $scope.disableWorkingProgressYear = true;
+            }
+            if ($scope.selectedFamily.die === true) {
+                $scope.selectedFamily.disableAddress = true;
+                $scope.selectedFamily.die = true
+            } else if ($scope.selectedFamily.die === false) {
+                $scope.selectedFamily.disableAddress = false;
+                $scope.selectedFamily.die = false
+            }
+            if ($scope.selectedFamily.BirthPlace) {
+                $scope.selectedFamily.BirthPlace = $scope.selectedFamily.BirthPlace
+            }
 
 
-        $scope.bienTam = angular.copy(x);
-        $scope.changedisable();
-        $scope.changedis();
-        $scope.filterRelation();
+            $scope.bienTam = angular.copy(x);
+            $scope.changedisable();
+            $scope.changedis();
+            $scope.filterRelation();
+        }
         $scope.deleteS = false;
     };
 
     $scope.deleteSelect = function () {
-        $scope.err = false
-        if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation === '') {
-            $scope.err = true
-            App.toastrError("Bạn cần nhập thông tin quan hệ")
-            return
-        }
-
-        if ($scope.selectedFamily.Name == null || $scope.selectedFamily.Name == undefined || $scope.selectedFamily.Name === '') {
-            $scope.err = true
-            App.toastrError("Bạn cần nhập thông tin Họ và tên")
-            return
-        }
-        if ($scope.selectedFamily.BirthYear == null || $scope.selectedFamily.BirthYear == undefined || $scope.selectedFamily.BirthYear === '') {
-            $scope.err = true
-            App.toastrError("Bạn cần nhập thông tin năm sinh")
-            return
-        }
-        if ($scope.selectedFamily.disableAddress == true) {
-            if ($scope.selectedFamily.AddressDie == null || $scope.selectedFamily.AddressDie == undefined || $scope.selectedFamily.AddressDie === '') {
-                $scope.err = true
-                App.toastrError("Bạn chưa nhập đủ thông tin ( địa chỉ người mất)")
-                return
-
-            }
-            if ($scope.selectedFamily.Reason == null || $scope.selectedFamily.Reason == undefined || $scope.selectedFamily.Reason === '') {
-                $scope.err = true
-                App.toastrError("Bạn chưa nhập đủ thông tin (Lí do mất)")
-                return
-
-            }
-        } else {
-            if ($scope.selectedFamily.Residence == null || $scope.selectedFamily.Residence == undefined || $scope.selectedFamily.Residence === '') {
-                $scope.err = true
-                App.toastrError("Bạn chưa nhập thông tin nơi cư trú")
-                return
-            }
-        }
-        if ($scope.PartyMember == true) {
-            // $scope.err = true
-            if ($scope.selectedFamily.wordAt == null || $scope.selectedFamily.wordAt == undefined || $scope.selectedFamily.wordAt === '') {
-                $scope.err = true
-                App.toastrError("Bạn chưa nhập đủ thông tin (Nơi công tác)")
-            } else {
-                $scope.err = false
-                if ($scope.selectedFamily.Party == null || $scope.selectedFamily.Party == undefined || $scope.selectedFamily.Party === '') {
-                    $scope.err = true
-                    App.toastrError("Bạn chưa nhập đủ thông tin (Thuộc đảng bộ nào ? )")
-                } else {
-                    $scope.err = false
-
-                }
-            }
-        }
-        $scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ"];
-        if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
-            if ($scope.selectedFamily.BirthPlace == null || $scope.selectedFamily.BirthPlace == undefined || $scope.selectedFamily.BirthPlace === '') {
-                $scope.err = true;
-                App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
-                return
-            }
-            if ($scope.selectedFamily.class == null || $scope.selectedFamily.class == undefined || $scope.selectedFamily.class === '') {
-                $scope.err = true;
-                App.toastrError("Bạn cần nhập thông tin thành phần giao cấp vào trường hợp này")
-                return
-            }
-
-        }
-
-
-        $scope.biologicalParents1 = ["vợ", "chồng"];
-        if ($scope.biologicalParents1.includes($scope.selectedFamily.Relation.toLowerCase())) {
-            if ($scope.selectedFamily.BirthPlace == null || $scope.selectedFamily.BirthPlace == undefined || $scope.selectedFamily.BirthPlace === '') {
-                $scope.err = true;
-                App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
-                return
-            }
-        }
-        if ($scope.selectedFamily.HomeTown == null || $scope.selectedFamily.HomeTown == undefined || $scope.selectedFamily.HomeTown === '') {
-            let part2 = $scope.selectedFamily.HomeTown.split("_");
-            if (part2[0] == '' || part2[1] == '' || part2[2] === '') {
-                $scope.err = true;
-                App.toastrError("Bạn cần nhập thông tin quê quán trường hợp này")
-                return
-            }
-        }
         $scope.selectFamily($scope.selectedFamily);
         $scope.disableWorkingProgressYear = false;
         $scope.selectedFamily = {};
@@ -3960,19 +3802,23 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         const year = Number(part[0]);
         const currentDate = new Date();
         const currentYear = currentDate.getFullYear();
+
         if (year && year >= 1945 && year < currentYear) {
+            $scope.selectedFamily.PoliticalAttitude = `Luôn chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
+        }
+        else {
+            $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
+        }
+        if (year && year < currentYear) {
             if ($scope.selectedFamily.Relation !== 'Vợ' && $scope.selectedFamily.Relation !== 'Chồng') {
                 $scope.WorkingProgressStart = `năm ${year + 18}`;
             }
             else {
                 $scope.WorkingProgressStart = `T1/${year + 18}`;
             }
-            //$scope.selectedFamily.WorkingProgress = `Từ năm ${ year + 18 } đến năm`;
-            $scope.selectedFamily.PoliticalAttitude = `Luôn chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
         }
         else {
             $scope.WorkingProgressStart = 'năm 18 tuổi';
-            $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
         }
     }
 
