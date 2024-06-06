@@ -1481,7 +1481,7 @@
                                                     <choose-position ng-model="selectedFamily.HomeTown"
                                                         value="selectedFamily.HomeTownValue"
                                                         json="selectedFamily.HomeTownJson" provinces="ListProvince"
-                                                        style="width: 100%;"></choose-position>
+                                                        style="width: 100%;" component="selectedFamilyHomeTownComp"></choose-position>
                                                 </div>
                                             </div>
                                         </div>
@@ -1767,7 +1767,7 @@
                                                                 x.Residence.trim() : "" }}</span>
                                                     </td>
                                                     <td>{{x.Job}}</td>
-                                                    <td>{{x.WorkingProgress}}</td>
+                                                    <td style="white-space: pre">{{x.WorkingProgress}}</td>
                                                     <td>{{x.PoliticalAttitude}}</td>
                                                     <td>
                                                         <div><span>{{x.PartyMember == true ?"Là đảng viên" :
