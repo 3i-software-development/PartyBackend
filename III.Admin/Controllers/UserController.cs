@@ -826,6 +826,8 @@ namespace III.Admin.Controllers
             public string Status { get; set; }
             public string MarriedStatus { get; set; }
             public string AddressText { get; set; }
+            public string BirthPlaceValue { get; set; }
+            public string BirthPlaceVillage { get; set; }
         }
         [HttpPut]
         public async Task<object> UpdatePartyAdmissionProfile([FromBody] ModelViewPAMP model)
@@ -885,6 +887,9 @@ namespace III.Admin.Controllers
                 obj.PlaceWorking = model.PlaceWorking;
                 obj.MarriedStatus = model.MarriedStatus;
                 obj.AddressText = model.AddressText;
+                obj.BirthPlaceValue = model.BirthPlaceValue;
+                obj.BirthPlaceVillage = model.BirthPlaceVillage;
+
                 _context.PartyAdmissionProfiles.Update(obj);
                 _context.SaveChanges();
 
@@ -1240,7 +1245,7 @@ namespace III.Admin.Controllers
                     || !string.IsNullOrEmpty(x.WorkingProgress)
                     || !string.IsNullOrEmpty(x.PartyMember)
                     || !string.IsNullOrEmpty(x.BirthYear))
-                    
+
                     {
                         if (x.Id == 0)
                         {
@@ -1407,8 +1412,11 @@ namespace III.Admin.Controllers
                     obj.JsonProfileLinks = new List<JsonFile>();
                     obj.GroupUserCode = model.GroupUserCode;
                     obj.PlaceWorking = model.PlaceWorking;
-                   obj.MarriedStatus = model.MarriedStatus;
-                   obj.AddressText = model.AddressText;
+                    obj.MarriedStatus = model.MarriedStatus;
+                    obj.AddressText = model.AddressText;
+                    obj.BirthPlaceValue = model.BirthPlaceValue;
+                    obj.BirthPlaceVillage = model.BirthPlaceVillage;
+
                     _context.PartyAdmissionProfiles.Add(obj);
                     _context.SaveChanges();
                     msg.Object = obj;

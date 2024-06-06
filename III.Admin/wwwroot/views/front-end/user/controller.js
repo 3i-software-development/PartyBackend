@@ -2136,6 +2136,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 $scope.model.PermanentResidence = [$scope.infUser.Residence, $scope.thon_Residence].join('_');
                 $scope.model.Phone = $scope.infUser.Phone;
                 $scope.model.PlaceBirth = [$scope.infUser.PlaceofBirth, $scope.thon_PlaceofBirth].join('_');
+                $scope.model.BirthPlaceValue = $scope.infUser.BirthPlaceValue;
+                $scope.model.BirthPlaceVillage = $scope.thon_PlaceofBirth;
                 $scope.model.Job = $scope.infUser.NowEmployee;
                 $scope.model.HomeTown = [$scope.infUser.HomeTown, $scope.thon_HomeTown].join('_');
                 $scope.model.TemporaryAddress = [$scope.infUser.TemporaryAddress, $scope.thon_TemporaryAddress].join('_');
@@ -4026,9 +4028,9 @@ app.directive("choosePosition", function (dataservice) {
             function parseNgModelValue(value) {
                 var parts = value.split('_'); // Tách giá trị thành các phần
                 var result = {
-                    tinh_id: parts[0] ? parseInt(parts[0]) : '',
-                    huyen_id: parts[1] ? parseInt(parts[1]) : '',
-                    xaPhuong_id: parts[2] ? parseInt(parts[2]) : ''
+                    tinh_id: parts[0] && /^\d+$/.test(parts[0]) ? parseInt(parts[0]) : '',
+                    huyen_id: parts[1] && /^\d+$/.test(parts[1]) ? parseInt(parts[1]) : '',
+                    xaPhuong_id: parts[2] && /^\d+$/.test(parts[2]) ? parseInt(parts[2]) : ''
                 };
                 return result;
             }
@@ -4084,6 +4086,9 @@ app.directive("choosePosition", function (dataservice) {
                     scope.model.tinh_id = parsedValue.tinh_id;
                     scope.model.huyen_id = parsedValue.huyen_id;
                     scope.model.xaPhuong_id = parsedValue.xaPhuong_id;
+                    if (!scope.model.tinh_id || !scope.model.huyen_id || !scope.model.xaPhuong_id) {
+                        updateNgModelValue();
+                    }
                 }
                 if (!scope.component) {
                     scope.component = {};

@@ -150,6 +150,8 @@ namespace ESEIM.Models
 
         public string MarriedStatus { get; set; }
         public string AddressText { get; set; }
+        public string BirthPlaceValue { get; set; }
+        public string BirthPlaceVillage { get; set; }
     }
 
     public class JsonFile
