@@ -3293,7 +3293,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
         $scope.deleteS = false;
     };
-
+    $scope.selectedFamilyHomeTownComp = {};
     $scope.deleteSelect = function () {
         $scope.selectFamily($scope.selectedFamily);
         $scope.disableWorkingProgressYear = false;
@@ -3303,7 +3303,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.changedisable();
         $scope.changedis();
         //$scope.filterRelation();
-        $scope.resetFamilyHomeTown();
+        //$scope.resetFamilyHomeTown();
+        if ($scope.selectedFamilyHomeTownComp) {
+            $scope.selectedFamilyHomeTownComp.resetModel();
+        }
         setTimeout(() => $scope.$apply());
     }
 
@@ -4008,14 +4011,17 @@ app.directive("choosePosition", function (dataservice) {
             ngModelCtrl: '=',// Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
             provinces: '=',
             value: '=',
-            json: '='
+            json: '=',
+            component: '='
         },
         link: function (scope, element, attrs, ngModelCtrl) {
             console.log(scope.provinces);
             scope.ditrict = [
             ];
             scope.Ward = [
-            ]
+            ];
+            scope.component = {
+            };
             // Hàm phân tích ngModelCtrl
             function parseNgModelValue(value) {
                 var parts = value.split('_'); // Tách giá trị thành các phần
@@ -4044,7 +4050,11 @@ app.directive("choosePosition", function (dataservice) {
                         scope.Ward = rs;
                         console.log(rs)
                     })
-                console.log(ngModelCtrl.$modelValue)
+                console.log(ngModelCtrl.$modelValue);
+                if (!scope.component) {
+                    scope.component = {};
+                }
+                scope.component.resetModel = resetModel;
                 setTimeout(() => {
                     scope.value = `${scope.model.xa_value ?? ''} ${scope.model.huyen_value ? `, ${scope.model.huyen_value}` : ''} ${scope.model.tinh_value ? `, ${scope.model.tinh_value}` : ''}`;
                     const json = {
@@ -4075,6 +4085,10 @@ app.directive("choosePosition", function (dataservice) {
                     scope.model.huyen_id = parsedValue.huyen_id;
                     scope.model.xaPhuong_id = parsedValue.xaPhuong_id;
                 }
+                if (!scope.component) {
+                    scope.component = {};
+                }
+                scope.component.resetModel = resetModel;
             });
 
             // Watchers để theo dõi thay đổi trong các mô hình tinh, huyen và xaPhuong
@@ -4104,7 +4118,17 @@ app.directive("choosePosition", function (dataservice) {
                     scope.model.xa_value = selected.name;
                 }
             };
-
+            function resetModel() {
+                scope.model = {
+                    tinh_id: '',
+                    huyen_id: '',
+                    xaPhuong_id: ''
+                };
+            }
+            if (!scope.component) {
+                scope.component = {};
+            }
+            scope.component.resetModel = resetModel;
         },
     };
 });
