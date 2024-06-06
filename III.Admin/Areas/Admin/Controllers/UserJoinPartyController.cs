@@ -450,6 +450,14 @@ namespace III.Admin.Controllers
                     PlaceWorking = Place,
                     MarriedStatus = x.MarriedStatus,
                     AddressText = x.AddressText,
+                    TemporaryAddressValue = x.TemporaryAddressValue,
+                    TemporaryAddressVillage = x.TemporaryAddressVillage,
+                    PermanentResidenceVillage = x.PermanentResidenceVillage,
+                    PermanentResidenceValue = x.PermanentResidenceValue,
+                    HomeTownVillage = x.HomeTownVillage,
+                    HomeTownValue = x.HomeTownValue,
+                    BirthPlaceVillage = x.BirthPlaceVillage,
+                    BirthPlaceValue = x.BirthPlaceValue,
                 }).Where(x => x.ResumeNumber == ressumeNumber);
 
                 //Thông tin cá nhân Ok

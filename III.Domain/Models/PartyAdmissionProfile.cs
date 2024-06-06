@@ -152,6 +152,12 @@ namespace ESEIM.Models
         public string AddressText { get; set; }
         public string BirthPlaceValue { get; set; }
         public string BirthPlaceVillage { get; set; }
+        public string HomeTownValue { get; set; }
+        public string HomeTownVillage { get; set; }
+        public string PermanentResidenceValue { get; set; }
+        public string PermanentResidenceVillage { get; set; }
+        public string TemporaryAddressValue { get; set; }
+        public string TemporaryAddressVillage { get; set; }
     }
 
     public class JsonFile

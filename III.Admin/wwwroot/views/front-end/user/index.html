@@ -564,8 +564,9 @@
                                                     title="Popover Header" data-bs-placement="bottom"
                                                     data-bs-content="Ví dụ: 'Hà Nội'"
                                                     style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                                <choose-position ng-model="infUser.PlaceofBirth" value="infUser.BirthPlaceValue"
-                                                    provinces="ListProvince" style="width: 100%;"></choose-position>
+                                                <choose-position ng-model="infUser.PlaceofBirth"
+                                                    value="infUser.BirthPlaceValue" provinces="ListProvince"
+                                                    style="width: 100%;"></choose-position>
                                             </div>
                                         </div>
                                     </div>
@@ -595,7 +596,8 @@
                                                     title="Popover Header" data-bs-placement="bottom"
                                                     data-bs-content="Ví dụ: 'Hà Nội'"
                                                     style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                                <choose-position ng-model="infUser.HomeTown" provinces="ListProvince"
+                                                <choose-position ng-model="infUser.HomeTown"
+                                                    value="infUser.HomeTownValue" provinces="ListProvince"
                                                     style="width: 100%;"></choose-position>
                                             </div>
                                         </div>
@@ -620,7 +622,7 @@
                                                     name="CusCode" ng-model="thon_Residence" type="text"
                                                     placeholder="Nhập địa chỉ thôn" ng-required="true">
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.Residence"></i>
+                                                    ng-model="infUser.thon_Residence"></i>
                                             </div>
                                             <div class="br24 form-control custom-title-code-bold" style="display:flex">
                                                 <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
@@ -628,7 +630,8 @@
                                                     data-bs-content="Ví dụ: 'Hà Nội'"
                                                     style="vertical-align: 7px; display: flex; align-items: center;"></i>
 
-                                                <choose-position ng-model="infUser.Residence" provinces="ListProvince"
+                                                <choose-position ng-model="infUser.Residence"
+                                                    value="infUser.ResidenceValue" provinces="ListProvince"
                                                     style="width: 100%;"></choose-position>
                                             </div>
 
@@ -658,7 +661,7 @@
                                                     name="CusCode" ng-model="thon_TemporaryAddress" type="text"
                                                     placeholder="Nhập địa chỉ thôn" ng-required="true">
                                                 <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                    ng-model="infUser.TemporaryAddress"></i>
+                                                    ng-model="infUser.thon_TemporaryAddress"></i>
                                             </div>
                                             <div class="br24 form-control custom-title-code-bold" style="display:flex">
                                                 <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
@@ -667,7 +670,8 @@
                                                     style="vertical-align: 7px; display: flex; align-items: center;"></i>
 
                                                 <choose-position ng-model="infUser.TemporaryAddress"
-                                                    provinces="ListProvince" style="width: 100%;"></choose-position>
+                                                    value="infUser.TemporaryAddressValue" provinces="ListProvince"
+                                                    style="width: 100%;"></choose-position>
                                             </div>
 
                                         </div>
@@ -1477,7 +1481,8 @@
                                                     <choose-position ng-model="selectedFamily.HomeTown"
                                                         value="selectedFamily.HomeTownValue"
                                                         json="selectedFamily.HomeTownJson" provinces="ListProvince"
-                                                        style="width: 100%;" component="selectedFamilyHomeTownComp"></choose-position>
+                                                        style="width: 100%;"
+                                                        component="selectedFamilyHomeTownComp"></choose-position>
                                                 </div>
                                             </div>
                                         </div>

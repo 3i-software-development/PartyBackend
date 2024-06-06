@@ -828,6 +828,12 @@ namespace III.Admin.Controllers
             public string AddressText { get; set; }
             public string BirthPlaceValue { get; set; }
             public string BirthPlaceVillage { get; set; }
+            public string HomeTownValue { get; set; }
+            public string HomeTownVillage { get; set; }
+            public string PermanentResidenceValue { get; set; }
+            public string PermanentResidenceVillage { get; set; }
+            public string TemporaryAddressValue { get; set; }
+            public string TemporaryAddressVillage { get; set; }
         }
         [HttpPut]
         public async Task<object> UpdatePartyAdmissionProfile([FromBody] ModelViewPAMP model)
@@ -889,6 +895,12 @@ namespace III.Admin.Controllers
                 obj.AddressText = model.AddressText;
                 obj.BirthPlaceValue = model.BirthPlaceValue;
                 obj.BirthPlaceVillage = model.BirthPlaceVillage;
+                obj.HomeTownValue = model.HomeTownValue;
+                obj.HomeTownVillage = model.HomeTownVillage;
+                obj.PermanentResidenceValue = model.PermanentResidenceValue;
+                obj.PermanentResidenceVillage = model.PermanentResidenceVillage;
+                obj.TemporaryAddressValue = model.TemporaryAddressValue;
+                obj.TemporaryAddressVillage = model.TemporaryAddressVillage;
 
                 _context.PartyAdmissionProfiles.Update(obj);
                 _context.SaveChanges();
@@ -1416,6 +1428,12 @@ namespace III.Admin.Controllers
                     obj.AddressText = model.AddressText;
                     obj.BirthPlaceValue = model.BirthPlaceValue;
                     obj.BirthPlaceVillage = model.BirthPlaceVillage;
+                    obj.HomeTownValue = model.HomeTownValue;
+                    obj.HomeTownVillage = model.HomeTownVillage;
+                    obj.PermanentResidenceValue = model.PermanentResidenceValue;
+                    obj.PermanentResidenceVillage = model.PermanentResidenceVillage;
+                    obj.TemporaryAddressValue = model.TemporaryAddressValue;
+                    obj.TemporaryAddressVillage = model.TemporaryAddressVillage;
 
                     _context.PartyAdmissionProfiles.Add(obj);
                     _context.SaveChanges();

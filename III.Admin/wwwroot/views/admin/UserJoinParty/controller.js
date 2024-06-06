@@ -427,7 +427,15 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 GroupUser: true,
                 PlaceWorking: true,
                 marriedStatus: true,
-                AddressText: true
+                AddressText: true,
+                TemporaryAddressValue :true ,
+                TemporaryAddressVillage :true,
+                PermanentResidenceVillage :true,
+                PermanentResidenceValue :true,
+                HomeTownVillage:true,
+                HomeTownValue: true,
+                BirthPlaceVillage :true,
+                BirthPlaceValue:true,
             },
             Family: {
                 "Relation": true,

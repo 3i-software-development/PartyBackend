@@ -2138,6 +2138,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 $scope.model.PlaceBirth = [$scope.infUser.PlaceofBirth, $scope.thon_PlaceofBirth].join('_');
                 $scope.model.BirthPlaceValue = $scope.infUser.BirthPlaceValue;
                 $scope.model.BirthPlaceVillage = $scope.thon_PlaceofBirth;
+                $scope.model.HomeTownValue = $scope.infUser.HomeTownValue;
+                $scope.model.HomeTownVillage = $scope.thon_HomeTown;
+                $scope.model.PermanentResidenceValue = $scope.infUser.ResidenceValue;
+                $scope.model.PermanentResidenceVillage = $scope.thon_Residence;
+                $scope.model.TemporaryAddressValue = $scope.infUser.TemporaryAddressValue;
+                $scope.model.TemporaryAddressVillage = $scope.thon_TemporaryAddress;
                 $scope.model.Job = $scope.infUser.NowEmployee;
                 $scope.model.HomeTown = [$scope.infUser.HomeTown, $scope.thon_HomeTown].join('_');
                 $scope.model.TemporaryAddress = [$scope.infUser.TemporaryAddress, $scope.thon_TemporaryAddress].join('_');
