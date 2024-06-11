@@ -813,7 +813,7 @@ namespace III.Admin.Controllers
             //public DateTime CreatedTime { get; set; }
             public string SelfComment { get; set; }
 
-            [Note("Nơi tạo")]
+            [Note("Ngày và nơi vào Đoàn TNCSHCM")]
             public string CreatedPlace { get; set; }
 
             public string WfInstCode { get; set; }

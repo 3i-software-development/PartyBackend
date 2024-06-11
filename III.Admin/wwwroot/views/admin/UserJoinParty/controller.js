@@ -425,7 +425,7 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 ItDegree: true,
                 CreatedPlace: true,
                 GroupUser: true,
-                PlaceWorking: true,
+                /*PlaceWorking: true,*/
                 marriedStatus: true,
                 AddressText: true,
                 TemporaryAddressValue :true ,
@@ -443,10 +443,12 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 "BirthYear": true,
                 "PartyMember": true,
                 "PoliticalAttitude": true,
-                "HomeTown": true,
+                "HomeTownValue": true,
                 "Residence": true,
                 "Job": true,
-                "WorkingProgress": true
+                "WorkingProgress": true,
+                "BirthPlace": true,
+                "ClassComposition": true
             },
             PersonHistory: {
                 "Begin": true,
@@ -1171,7 +1173,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         return data == 0 ? "Nam" : "Nữ";
     }));
 
-    vm.dtColumns.push(DTColumnBuilder.newColumn('AddressText').withOption('sClass', '').withTitle('{{"Địa chỉ" | translate}}').renderWith(function (data, type) {
+    vm.dtColumns.push(DTColumnBuilder.newColumn('PermanentResidenceValue').withOption('sClass', '').withTitle('{{"Địa chỉ" | translate}}').renderWith(function (data, type) {
         return data
     }));
 
@@ -3013,6 +3015,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     };
 
     $scope.addToPersonalHistory = function () {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
         $scope.err = false
         if ($scope.selectedPersonHistory.Begin == null || $scope.selectedPersonHistory.Begin == undefined || $scope.selectedPersonHistory.Begin == '') {
             $scope.err = true
@@ -3021,6 +3025,12 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.err = true
         }
         if ($scope.selectedPersonHistory.Content == null || $scope.selectedPersonHistory.Content == undefined || $scope.selectedPersonHistory.Content == '') {
+            $scope.err = true
+        }
+
+        if ($scope.selectedPersonHistory.End > currentYear || $scope.selectedPersonHistory.Begin > currentYear || $scope.selectedPersonHistory.Begin > $scope.selectedPersonHistory.End ) {
+            App.toastrError("Năm nhập vào không hợp lệ")
+            return
             $scope.err = true
         }
 
@@ -3725,6 +3735,14 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.model.PermanentResidence = [$scope.infUser.Residence, $scope.thon_Residence].join('_');
             $scope.model.Phone = $scope.infUser.Phone;
             $scope.model.PlaceBirth = [$scope.infUser.PlaceofBirth, $scope.thon_PlaceofBirth].join('_');
+            $scope.model.BirthPlaceValue = $scope.infUser.BirthPlaceValue;
+            $scope.model.BirthPlaceVillage = $scope.thon_PlaceofBirth;
+            $scope.model.HomeTownValue = $scope.infUser.HomeTownValue;
+            $scope.model.HomeTownVillage = $scope.thon_HomeTown;
+            $scope.model.PermanentResidenceValue = $scope.infUser.ResidenceValue;
+            $scope.model.PermanentResidenceVillage = $scope.thon_Residence;
+            $scope.model.TemporaryAddressValue = $scope.infUser.TemporaryAddressValue;
+            $scope.model.TemporaryAddressVillage = $scope.thon_TemporaryAddress;
             $scope.model.Job = $scope.infUser.NowEmployee;
             $scope.model.HomeTown = [$scope.infUser.HomeTown, $scope.thon_HomeTown].join('_');
             $scope.model.TemporaryAddress = [$scope.infUser.TemporaryAddress, $scope.thon_TemporaryAddress].join('_');
@@ -4457,6 +4475,22 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
 
     $scope.addToFamily = function () {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        var match = $scope.WorkingProgressEnd.match(/\d{4}/);
+        if (match) {
+            if (match[0] > currentYear) {
+                App.toastrError("Năm đến trong quá trình công tác không hợp lệ")
+                $scope.err = true
+                return
+            }
+
+            if (match[0] > $scope.selectedFamily.BirthDie && $scope.selectedFamily.disableAddress == true) {
+                App.toastrError("Năm đến trong quá trình công tác không hợp lệ không được vượt qua năm mất")
+                $scope.err = true
+                return
+            }
+        }
         $scope.err = false
         if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation === '') {
             $scope.err = true
@@ -4606,7 +4640,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
     $scope.showFamilyHomeTown = true;
     $scope.resetFamilyHomeTown = function () {
-       /* $scope.showFamilyHomeTown = false;*/
+        $scope.showFamilyHomeTown = false;
         $scope.selectedFamily.HomeTownValue = '';
         $scope.selectedFamily.HomeTown = '';
         $scope.selectedFamily.HomeTownJson = '';
@@ -4834,11 +4868,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         //$scope.WorkingProgressStart = years[0];
         //$scope.WorkingProgressEnd = years[1];
         //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
-        var BirthYear = $scope.selectedFamily.BirthYear.split("-")
-        if (BirthYear.length === 2) {
-            $scope.selectedFamily.BirthYear = BirthYear[0];
-            $scope.selectedFamily.BirthDie = BirthYear[1];
-            $scope.disableWorkingProgressYear = true;
+        if ($scope.selectedFamily.BirthYear) {
+            var BirthYear = $scope.selectedFamily.BirthYear.split("-")
+            if (BirthYear.length === 2) {
+                $scope.selectedFamily.BirthYear = BirthYear[0];
+                $scope.selectedFamily.BirthDie = BirthYear[1];
+                $scope.disableWorkingProgressYear = true;
+            }
         }
         if ($scope.selectedFamily.die === true) {
             $scope.selectedFamily.disableAddress = true;
@@ -4864,6 +4900,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.disableWorkingProgressYear = false;
         $scope.selectedFamily = {};
         $scope.selectedFamily.disableAddress = false;
+        $scope.WorkingProgressStart = "";
+        $scope.WorkingProgressEnd = "";
         $scope.PartyMember = false;
         $scope.changedisable();
         $scope.changedis();
@@ -5150,7 +5188,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
         }
         if (year  && year < currentYear) {
-            if ($scope.selectedFamily.Relation !== 'Vợ' && $scope.selectedFamily.Relation !== 'Chồng') {
+            if ($scope.selectedFamily.Relation.toLowerCase() !== 'vợ' && $scope.selectedFamily.Relation.toLowerCase() !== 'chồng') {
                 $scope.WorkingProgressStart = `năm ${year + 18}`;
             }
             else {
@@ -5173,11 +5211,11 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             }
         }
         $scope.WorkingProgressStart = $scope.WorkingProgressEnd;
-        if ($scope.selectedFamily.Relation !== 'Vợ' && $scope.selectedFamily.Relation !== 'Chồng') {
-            $scope.WorkingProgressEnd = 'năm ';
+        if ($scope.selectedFamily.Relation.toLowerCase() !== 'vợ' && $scope.selectedFamily.Relation.toLowerCase() !== 'chồng') {
+            $scope.WorkingProgressEnd = 'năm';
         }
         else {
-            $scope.WorkingProgressEnd = 'T1/';
+            $scope.WorkingProgressEnd = 'T';
         }
     }
     $scope.objWorkingProgress = null;
@@ -6069,24 +6107,22 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
             }
 
             // Hàm cập nhật giá trị ngModelCtrl
-            function updateNgModelValue() {
+            async function updateNgModelValue() {
                 var value = scope.model.tinh_id + '_' + scope.model.huyen_id + '_' + scope.model.xaPhuong_id;
                 ngModelCtrl.$setViewValue(value);
                 ngModelCtrl.$render();
                 if (parseInt(scope.model.tinh_id) != NaN)
-                    dataserviceJoinParty.getDistrictByProvinceId(scope.model.tinh_id, function (rs) {
-                        rs = rs.data
-                        scope.ditrict = rs;
-                        console.log(rs)
-                    })
+                    await getDistrict();
                 if (parseInt(scope.model.huyen_id) != NaN)
-                    dataserviceJoinParty.getWardByDistrictId(scope.model.huyen_id, function (rs) {
-                        rs = rs.data
-                        scope.Ward = rs;
-                        console.log(rs)
-                    })
+                    await getWard();
                 console.log(ngModelCtrl.$modelValue)
                 setTimeout(() => {
+                    const tinh = scope.provinces.find(x => x.provinceId === scope.model.tinh_id);
+                    scope.model.tinh_value = tinh?.name ?? '';
+                    const huyen = scope.ditrict.find(x => x.districtId === scope.model.huyen_id);
+                    scope.model.huyen_value = huyen?.name ?? '';
+                    const xa = scope.Ward.find(x => x.wardsId === scope.model.xaPhuong_id);
+                    scope.model.xa_value = xa?.name ?? '';
                     scope.value = `${scope.model.xa_value ?? ''} ${scope.model.huyen_value ? `, ${scope.model.huyen_value}` : ''} ${scope.model.tinh_value ? `, ${scope.model.tinh_value}` : ''}`;
                     const json = {
                         tinh: {
@@ -6105,6 +6141,24 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
                     scope.json = JSON.stringify(json);
                 }, 100);
             }
+            function getDistrict() {
+                return new Promise((resolve, reject) => {
+                    dataserviceJoinParty.getDistrictByProvinceId(scope.model.tinh_id, function (rs) {
+                        rs = rs.data
+                        scope.ditrict = rs;
+                        resolve();
+                    })
+                });
+            }
+            function getWard() {
+                return new Promise((resolve, reject) => {
+                    dataserviceJoinParty.getWardByDistrictId(scope.model.huyen_id, function (rs) {
+                        rs = rs.data
+                        scope.Ward = rs;
+                        resolve();
+                    })
+                });
+            }
 
             // Watchers để theo dõi thay đổi trong giá trị ngModelCtrl
             scope.$watch(function () {
@@ -6115,6 +6169,7 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
                     scope.model.tinh_id = parsedValue.tinh_id;
                     scope.model.huyen_id = parsedValue.huyen_id;
                     scope.model.xaPhuong_id = parsedValue.xaPhuong_id;
+                    updateNgModelValue();
                 }
             });
 

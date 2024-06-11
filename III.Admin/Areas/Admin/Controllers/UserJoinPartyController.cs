@@ -320,6 +320,7 @@ namespace III.Admin.Controllers
                                  GeneralEducation = a.GeneralEducation,
                                  Gender = a.Gender,
                                  AddressText = a.AddressText,
+                                 PermanentResidenceValue = $"{a.PermanentResidenceVillage}, {a.PermanentResidenceValue}",
                                  LastTimeReport = a.LastTimeReport.HasValue ? a.LastTimeReport.Value.ToString("dd/MM/yyyy HH:mm") : "",
                              })
                              .OrderByDescending(x => x.Id); // Sắp xếp giảm dần theo Id
@@ -343,6 +344,7 @@ namespace III.Admin.Controllers
                     x.GeneralEducation,
                     x.TemporaryAddress,
                     x.AddressText,
+                    x.PermanentResidenceValue,
                     x.BirthYear,
                     x.Gender,
                     x.LastTimeReport
@@ -350,7 +352,7 @@ namespace III.Admin.Controllers
                 int count = query_row_number.Count();
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
 
-                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "Nation", "UserCode", "Status", "Username", "AddressText",
+                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "Nation", "UserCode", "Status", "Username", "AddressText", "PermanentResidenceValue",
                     "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
@@ -399,6 +401,28 @@ namespace III.Admin.Controllers
 
             }
             return result;
+
+        }
+
+        [NonAction]
+        private string ReplaceCreatedPlace(string CreatedPlace)
+        {
+            try {
+                var Place = CreatedPlace.Split("_");
+                if (Place.Length >= 2)
+                {
+                    CreatedPlace = Place[1] + " tại " + Place[0];
+                }
+                else
+                {
+                    CreatedPlace = CreatedPlace ?? "";
+                }
+            } catch (Exception ex)
+            {
+                CreatedPlace =  "";
+            }
+
+            return CreatedPlace;
         }
         [HttpPost]
         [AllowAnonymous]
@@ -442,7 +466,7 @@ namespace III.Admin.Controllers
                     MinorityLanguages = x.MinorityLanguages,
                     ResumeNumber = x.ResumeNumber,
                     SelfComment = x.SelfComment,
-                    CreatedPlace = x.CreatedPlace,
+                    CreatedPlace = ReplaceCreatedPlace(x.CreatedPlace),
                     WfInstCode = x.WfInstCode,
                     Username = x.Username,
                     Status = x.Status,
@@ -458,6 +482,7 @@ namespace III.Admin.Controllers
                     HomeTownValue = $"{x.HomeTownVillage}, {x.HomeTownValue}",
                     BirthPlaceValue = $"{x.BirthPlaceVillage}, {x.BirthPlaceValue}",
                 }).Where(x => x.ResumeNumber == ressumeNumber);
+
 
                 //Thông tin cá nhân Ok
                 var profile = SelectProperties(query,
@@ -582,7 +607,13 @@ namespace III.Admin.Controllers
 
                 if (ProfileSelected.Count != 0)
                 {
-                    profile = SelectProperties(_context.Families.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false),
+                    var familes = _context.Families.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false)
+                        .Select(delegate (Family x)
+                        {
+                            x.HomeTownValue = $"{x.HomeTownVillage}, {x.HomeTownValue}";
+                            return x;
+                        });
+                    profile = SelectProperties(familes,
                     ProfileSelected).ToArray();
 
                     if (profile != null)
@@ -675,7 +706,6 @@ namespace III.Admin.Controllers
                     Nation = x.Nation,
                     BirthName = x.BirthName,
                     Gender = x.Gender == 0 ? "Nam" : "Nữ",
-
                     Religion = x.Religion,
                     Birthday = x.Birthday.Value.ToShortDateString(),
                     PermanentResidence = x.PermanentResidence,
@@ -702,7 +732,15 @@ namespace III.Admin.Controllers
                     GroupUserCode = x.GroupUserCode,
                     PlaceWorking = x.PlaceWorking,
                     MarriedStatus = x.MarriedStatus,
-                    AddressText = x.AddressText
+                    AddressText = x.AddressText,
+                    TemporaryAddressValue = $"{x.TemporaryAddressVillage}, {x.TemporaryAddressValue}",
+                    TemporaryAddressVillage = x.TemporaryAddressVillage,
+                    PermanentResidenceVillage = x.PermanentResidenceVillage,
+                    PermanentResidenceValue = $"{x.PermanentResidenceVillage}, {x.PermanentResidenceValue}",
+                    HomeTownVillage = x.HomeTownVillage,
+                    HomeTownValue = $"{x.HomeTownVillage}, {x.HomeTownValue}",
+                    BirthPlaceValue = $"{x.BirthPlaceVillage}, {x.BirthPlaceValue}",
+
                 }).FirstOrDefault();
 
             jsonData.IntroducerOfParty = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false);
@@ -1432,8 +1470,9 @@ namespace III.Admin.Controllers
         public string GeneralEducation { get; set; }
         public int Gender { get; set; }
         public string LastTimeReport { get; set; }
-        public string Nation { get; internal set; }
-        public string AddressText { get; internal set; }
+        public string Nation { get; set; }
+        public string AddressText { get; set; }
+        public string PermanentResidenceValue { get; set; }
     }
 
     public class ResumeNumber
@@ -1446,7 +1485,7 @@ namespace III.Admin.Controllers
         public bool Birthday { get; set; }
         public bool Gender { get; set; }
         public bool Phone { get; set; }
-       /* public bool PlaceBirth { get; set; }*/
+        /* public bool PlaceBirth { get; set; }*/
         public bool BirthPlaceValue { get; set; }
         /*public bool HomeTown { get; set; }*/
         public bool HomeTownValue { get; set; }
@@ -1469,7 +1508,7 @@ namespace III.Admin.Controllers
         public bool ItDegree { get; set; }
         public bool CreatedPlace { get; set; }
         public bool GroupUser { get; set; }
-        public bool PlaceWorking { get; set; }
+        /* public bool PlaceWorking { get; set; }*/
     }
 
     public class FamilyBool
@@ -1479,10 +1518,13 @@ namespace III.Admin.Controllers
         public bool BirthYear { get; set; }
         public bool PartyMember { get; set; }
         public bool PoliticalAttitude { get; set; }
-        public bool HomeTown { get; set; }
+        public bool HomeTownValue { get; set; }
         public bool Residence { get; set; }
         public bool Job { get; set; }
         public bool WorkingProgress { get; set; }
+        public bool ClassComposition { get; set; }
+        public bool BirthPlace { get; set; }
+
     }
 
     public class PersonHistoryBool

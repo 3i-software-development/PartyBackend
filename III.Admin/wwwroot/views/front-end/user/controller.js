@@ -1641,6 +1641,22 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
     }
     $scope.addToFamily = function () {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        var match = $scope.WorkingProgressEnd.match(/\d{4}/);
+        if (match) {
+            if (match[0] > currentYear) {
+                App.toastrError("Năm đến trong quá trình công tác không hợp lệ")
+                $scope.err = true
+                return
+            }
+
+            if (match[0] > $scope.selectedFamily.BirthDie && $scope.selectedFamily.disableAddress == true) {
+                App.toastrError("Năm đến trong quá trình công tác không hợp lệ không được vượt qua năm mất")
+                $scope.err = true
+                return
+            }
+        }
         $scope.err = false
         if ($scope.selectedFamily.Relation == null || $scope.selectedFamily.Relation == undefined || $scope.selectedFamily.Relation === '') {
             $scope.err = true
@@ -2549,6 +2565,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
 
     $scope.addToPersonalHistory = function () {
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
         $scope.err = false
         if ($scope.selectedPersonHistory.Begin == null || $scope.selectedPersonHistory.Begin == undefined || $scope.selectedPersonHistory.Begin == '') {
             $scope.err = true
@@ -2559,7 +2577,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         if ($scope.selectedPersonHistory.Content == null || $scope.selectedPersonHistory.Content == undefined || $scope.selectedPersonHistory.Content == '') {
             $scope.err = true
         }
-
+        if ($scope.selectedPersonHistory.End > currentYear || $scope.selectedPersonHistory.Begin > currentYear || $scope.selectedPersonHistory.Begin > $scope.selectedPersonHistory.End) {
+            App.toastrError("Năm nhập vào không hợp lệ")
+            $scope.err = true
+            return
+        }
         if ($scope.err) {
             App.toastrError("Bạn chưa nhập đủ thông tin")
             return
@@ -3305,6 +3327,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.deleteSelect = function () {
         $scope.selectFamily($scope.selectedFamily);
         $scope.disableWorkingProgressYear = false;
+        $scope.WorkingProgressStart = "";
+        $scope.WorkingProgressEnd = "";
         $scope.selectedFamily = {};
         $scope.selectedFamily.disableAddress = false;
         $scope.PartyMember = false;
@@ -3821,7 +3845,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
         }
         if (year && year < currentYear) {
-            if ($scope.selectedFamily.Relation !== 'Vợ' && $scope.selectedFamily.Relation !== 'Chồng') {
+            if ($scope.selectedFamily.Relation.toLowerCase() !== 'vợ' && $scope.selectedFamily.Relation.toLowerCase() !== 'chồng') {
                 $scope.WorkingProgressStart = `năm ${year + 18}`;
             }
             else {
@@ -3846,7 +3870,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             }
         }
         $scope.WorkingProgressStart = $scope.WorkingProgressEnd;
-        if ($scope.selectedFamily.Relation !== 'Vợ' && $scope.selectedFamily.Relation !== 'Chồng') {
+        if ($scope.selectedFamily.Relation.toLowerCase() !== 'vợ' && $scope.selectedFamily.Relation.toLowerCase() !== 'chồng') {
             $scope.WorkingProgressEnd = 'năm ';
         }
         else {
@@ -4042,28 +4066,26 @@ app.directive("choosePosition", function (dataservice) {
             }
 
             // Hàm cập nhật giá trị ngModelCtrl
-            function updateNgModelValue() {
+            async function updateNgModelValue() {
                 var value = scope.model.tinh_id + '_' + scope.model.huyen_id + '_' + scope.model.xaPhuong_id;
                 ngModelCtrl.$setViewValue(value);
                 ngModelCtrl.$render();
                 if (parseInt(scope.model.tinh_id) != NaN)
-                    dataservice.getDistrictByProvinceId(scope.model.tinh_id, function (rs) {
-                        rs = rs.data
-                        scope.ditrict = rs;
-                        console.log(rs)
-                    })
+                    await getDistrict();
                 if (parseInt(scope.model.huyen_id) != NaN)
-                    dataservice.getWardByDistrictId(scope.model.huyen_id, function (rs) {
-                        rs = rs.data
-                        scope.Ward = rs;
-                        console.log(rs)
-                    })
+                    await getWard();
                 console.log(ngModelCtrl.$modelValue);
                 if (!scope.component) {
                     scope.component = {};
                 }
                 scope.component.resetModel = resetModel;
                 setTimeout(() => {
+                    const tinh = scope.provinces.find(x => x.provinceId === scope.model.tinh_id);
+                    scope.model.tinh_value = tinh?.name ?? '';
+                    const huyen = scope.ditrict.find(x => x.districtId === scope.model.huyen_id);
+                    scope.model.huyen_value = huyen?.name ?? '';
+                    const xa = scope.Ward.find(x => x.wardsId === scope.model.xaPhuong_id);
+                    scope.model.xa_value = xa?.name ?? '';
                     scope.value = `${scope.model.xa_value ?? ''} ${scope.model.huyen_value ? `, ${scope.model.huyen_value}` : ''} ${scope.model.tinh_value ? `, ${scope.model.tinh_value}` : ''}`;
                     const json = {
                         tinh: {
@@ -4082,6 +4104,24 @@ app.directive("choosePosition", function (dataservice) {
                     scope.json = JSON.stringify(json);
                 }, 100);
             }
+            function getDistrict() {
+                return new Promise((resolve, reject) => {
+                    dataservice.getDistrictByProvinceId(scope.model.tinh_id, function (rs) {
+                        rs = rs.data
+                        scope.ditrict = rs;
+                        resolve();
+                    })
+                });
+            }
+            function getWard() {
+                return new Promise((resolve, reject) => {
+                    dataservice.getWardByDistrictId(scope.model.huyen_id, function (rs) {
+                        rs = rs.data
+                        scope.Ward = rs;
+                        resolve();
+                    })
+                });
+            }
 
             // Watchers để theo dõi thay đổi trong giá trị ngModelCtrl
             scope.$watch(function () {
@@ -4092,9 +4132,7 @@ app.directive("choosePosition", function (dataservice) {
                     scope.model.tinh_id = parsedValue.tinh_id;
                     scope.model.huyen_id = parsedValue.huyen_id;
                     scope.model.xaPhuong_id = parsedValue.xaPhuong_id;
-                    if (!scope.model.tinh_id || !scope.model.huyen_id || !scope.model.xaPhuong_id) {
-                        updateNgModelValue();
-                    }
+                    updateNgModelValue();
                 }
                 if (!scope.component) {
                     scope.component = {};

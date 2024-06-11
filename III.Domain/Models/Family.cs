@@ -30,7 +30,7 @@ namespace ESEIM.Models
 		public string DeathYear { get; set; }
 
         [Note("Quê quán")]
-		public string HomeTown { get; set; }
+        public string HomeTownValue { get; set; }
 
 		[Note("Nơi ở hiện nay")]
 		public string Residence { get; set; }
@@ -60,9 +60,9 @@ namespace ESEIM.Models
         [NotMapped]
         public string MarriedStatus { get; set; }
         public string HomeTownVillage { get; set; }
-        public string HomeTownValue { get; set; }
         public string HomeTownJson { get; set; }
         public string BirthPlace { get; set; }
+        public string HomeTown { get; set; }
     }
     public class FamilyModel 
     {

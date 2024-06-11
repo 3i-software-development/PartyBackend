@@ -284,12 +284,74 @@
     .autocomplete-list li:hover {
         background-color: #f0f0f0;
     }
+
+    @media (min-width:699px) {
+        .headerform {
+            display: flex;
+            align-items: center;
+            height: 60px;
+        }
+    }
+
+        .p-sm-40{
+            padding-right: 40px
+        }
+ 
+
+    ol.breadcrumb{
+        margin-bottom: 0 !important
+    }
+
+    .ui-select-bootstrap > .ui-select-choices, .ui-select-bootstrap > .ui-select-no-choice {
+        width: 126%;
+        height: auto;
+        max-height: 200px;
+        overflow-x: hidden;
+        margin-top: -1px;
+        left: -30px;
+    }
+
+    .template {
+        padding-left: 20px
+    }
+
+    @media(max-width:450px) {
+        .btn-load-file {
+            margin-top: 30px !important;
+        }
+
+        .input-upload {
+            width: 340px !important;
+        }
+
+        .inputFile {
+            width: 250px !important;
+        }
+
+        .template {
+            padding-left: 0
+        }
+
+        .min-h-sm {
+            height: 130px
+        }
+        .fs-sm-10{
+            font-size:10px
+        }
+    }
+
+    @media (min-width:699px) {
+        .d-md-flex {
+            display: flex
+        }
+    }
+
 </style>
 
 <div class="portlet-body form row" style="margin-top: 15px">
     <!--<input type="button" ng-click="addJson()" value="add">-->
     <div class="col-lg-12" method="post">
-        <div class="d-flex;" style="    display: flex; align-items: center;height: 60px;">
+        <div class=" headerform" >
             <div class="col-md-3 mb-10">
                 <div class="input-group br24">
                     <input class="form-control inputFile" placeholder="Chọn tệp" readonly />
@@ -305,12 +367,12 @@
                     </span>
                 </div>
             </div>
-            <div class="col-md-6 mb-10"
+            <div class="col-md-6 mb-10 fs-sm-10"
                 style="display: flex; align-items: center; gap: 10px;justify-content: space-around;">
                 <div class="text-center ">
                     <a href="" ng-click="SaveJson ? uploadJsonFile() : uploadFile()">
                         <i class="fa fa-download" aria-hidden="true" style="font-size: 25px;"></i>
-                        <span style="font-size:16px; font-weight: bold;">{{ SaveJson ? 'Load dữ liệu JSON' : 'Tải dữ
+                        <span style="font-weight: bold;">{{ SaveJson ? 'Load dữ liệu JSON' : 'Tải dữ
                             liệu xuống form' }}</span>
                     </a>
                 </div>
@@ -319,7 +381,7 @@
                         <input type="checkbox" ng-model="SaveJson">
                         <span style="height: 26px; width: 50px;" class="slider round"></span>
                     </label>
-                    <label style="font-size:16px; font-weight: bold;">
+                    <label style=" font-weight: bold;">
                         {{ SaveJson ? 'Lưu file Json' : 'Lưu Database' }}
                     </label>
 
@@ -332,16 +394,16 @@
 
 
             <!-- trạng thái -->
-            <div class="col-md-4">
+            <div class="col-md-4 fs-sm-10">
                 <div style="display:flex;justify-content: space-between;">
                     <div style="padding-left: 10px" ng-click="ExportFileWord()">
-                        <i class="fa-solid fa-file-word" style="color: #2a5699;font-size: 35px;"></i> <label
-                            style="font-size:16px; font-weight: bold;margin-left: 5px;" class="ng-binding">
+                        <i class="fa-solid fa-file-word" style="color: #2a5699;font-size: 25px;"></i> <label
+                            style=" font-weight: bold;margin-left: 5px;" class="ng-binding">
                             Xuất hồ sơ file word
                         </label>
                     </div>
                     <div ng-click="submitPartyAdmissionProfile()">
-                        <i class="fa fa-floppy-o fs-1" style="font-size: 35px;color: #43516c !important; "></i>
+                        <i class="fa fa-floppy-o fs-1" style="font-size: 25px;color: #43516c !important; "></i>
                     </div>
                 </div>
             </div>
@@ -355,11 +417,11 @@
         </div>
         <div>
             <form class="col-md-12"
-                style="border: 0px solid #e7ecf1 !important;box-shadow: 0 2px 3px 2px rgb(0 0 0 / 3%) !important;">
+                style="border: 0px solid #e7ecf1 !important; box-shadow: 0 2px 3px 2px rgb(0 0 0 / 3%) !important; margin-top: 17px;">
                 <div class="row mt-action-5">
                     <div class="ml-15">
                         <div class="row mt-15" style="padding-left: 15px; font-size: 12px;">
-                            <div class="col-md-6">
+                            <div class="col-xl-6 p-sm-40">
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0">
                                         <!-- Icon user -->
@@ -535,7 +597,7 @@
                                                title="Popover Header" data-bs-placement="bottom"
                                                data-bs-content="Ví dụ: 'Hà Nội'"
                                                style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                            <choose-position ng-model="infUser.PlaceofBirth" provinces="ListProvince"
+                                            <choose-position ng-model="infUser.PlaceofBirth" provinces="ListProvince"  value="infUser.BirthPlaceValue"
                                                              style="width: 100%;"></choose-position>
                                         </div>
                                     </div>
@@ -595,7 +657,7 @@
                                                title="Popover Header" data-bs-placement="bottom"
                                                data-bs-content="Ví dụ: 'Hà Nội'"
                                                style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                            <choose-position ng-model="infUser.HomeTown" provinces="ListProvince"
+                                            <choose-position ng-model="infUser.HomeTown" provinces="ListProvince" value="infUser.HomeTownValue"
                                                              style="width: 100%;"></choose-position>
                                         </div>
                                     </div>
@@ -657,7 +719,7 @@
                                                data-bs-content="Ví dụ: 'Hà Nội'"
                                                style="vertical-align: 7px; display: flex; align-items: center;"></i>
 
-                                            <choose-position ng-model="infUser.Residence" provinces="ListProvince"
+                                            <choose-position ng-model="infUser.Residence" provinces="ListProvince" value="infUser.ResidenceValue"
                                                              style="width: 100%;"></choose-position>
                                         </div>
 
@@ -722,7 +784,7 @@
                                                data-bs-content="Ví dụ: 'Hà Nội'"
                                                style="vertical-align: 7px; display: flex; align-items: center;"></i>
 
-                                            <choose-position ng-model="infUser.TemporaryAddress" provinces="ListProvince"
+                                            <choose-position ng-model="infUser.TemporaryAddress" provinces="ListProvince" value="infUser.TemporaryAddressValue" 
                                                              style="width: 100%;"></choose-position>
                                         </div>
 
@@ -884,7 +946,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-xl-6 p-sm-40">
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0">
                                         <i class="fa fa-user icon-clickable" id="firstName"
@@ -1182,7 +1244,7 @@
                                                    ng-change="filterplace()" ng-model="placeAddress" type="text"
                                                    placeholder="Ngày kết nạp đoàn TNCSHCM" />
                                             <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                               ng-model="PlaceCreatedTime.place"></i>
+                                               ng-model="placeAddress"></i>
                                             <ul class="autocomplete-list">
                                                 <li ng-repeat="item in Filterplace" ng-click="Selectplace(item)">
                                                     {{item}}
@@ -1288,7 +1350,7 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-12 " style="padding-inline-end: 30px;padding-inline-start: 30px;">
+        <div class="col-sm-12 " style="padding-inline-end: 30px;padding-inline-start: 30px;">
             <div class="tab" role="tabpanel" style="width:100%">
                 <ul class="nav nav-tabs" role="tablist">
                     <li role="presentation" class="active">
@@ -1352,7 +1414,7 @@
                         </div>
                         <div class="" style="  font-size: 13px;">
                             <div class="row">
-                                <div class="col-md-6" style="padding-left: 15px;">
+                                <div class="col-xl-6" style="padding-left: 15px;">
                                     <div class="form-group row">
                                         <div class="col-md-4 pr-0">
                                             <i class="fa fa-user" id="relationship"
@@ -1428,7 +1490,7 @@
                                                 <div class="col-md-2">
                                                     <input 
                                                            type="checkbox" ng-model="selectedFamily.disableAddress"
-                                                           ng-change="changedisable()"><span style="font-weight: bold;">Đã mất</span>
+                                                           ng-change="changedisable()"><span style="font-weight: bold; text-wrap: nowrap;">Đã mất</span>
                                                 </div>
                                                 <div class="br24 form-control custom-title-code-bold col-md-10" ng-show="!selectedFamily.disableAddress"
                                                      style="white-space:nowrap">
@@ -1581,7 +1643,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6" style="padding-left: 15px;">
+                                <div class="col-xl-6" style="padding-left: 15px;">
                                     <div class="form-group row">
                                         <div class="col-md-4 pr-0 ">
                                             <i class="fa fa-map-marker" id="homeTown"
@@ -1757,38 +1819,40 @@
                                             </label>
                                         </div>
 
-                                        <div class="col-md-8" style="display: flex; align-items:center; gap: 6px">
-                                            <div class="col-md-6 br24  custom-title-code-bold form-control " style="display: flex;">
-                                                <div class="br24  custom-title-code-bold"
+                                        <div class="col-md-8 d-md-flex" style=" align-items:center; gap: 6px">
+                                            <div class="col-md-6 br24  mb-1   custom-title-code-bold form-control "
+                                                 style="display: flex;">
+                                                <div class="br24 custom-title-code-bold"
                                                      style="white-space: nowrap; padding-right: 35px;">
                                                     <i class="fa fa-info-circle icon-clickable" id="residence"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="2012 "
-                                                       popover-trigger="outsideClick"></i>
+                                                       uib-popover="2012 " popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                            ng-model="WorkingProgressStart" type="text"
-                                                           placeholder="Từ ngày" ng-disabled="disableWorkingProgressYear"
+                                                           placeholder="Từ ngày"
+                                                           ng-disabled="disableWorkingProgressYear"
                                                            ng-change="updateWorkingProgressYear()" />
-                                                    <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                       ng-model="WorkingProgressStart"></i>
+                                                    <i class="fa fa-microphone" style="font-size: 20px;"
+                                                       voice-recognition ng-model="WorkingProgressStart"></i>
                                                 </div>
                                             </div>
-                                            <div class="col-md-5 br24  custom-title-code-bold form-control " style="display: flex;">
+                                            <div class="col-md-5 br24  mb-1  custom-title-code-bold form-control "
+                                                 style="display: flex;">
                                                 <div class="br24  custom-title-code-bold"
                                                      style="white-space: nowrap; padding-right: 35px;">
                                                     <i class="fa fa-info-circle icon-clickable" id="residence"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="2016"
-                                                       popover-trigger="outsideClick"></i>
+                                                       uib-popover="2016" popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                            ng-model="WorkingProgressEnd" type="text"
                                                            placeholder="Đến ngày"
                                                            ng-change="updateWorkingProgressYear()" />
-                                                    <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                                       ng-model="WorkingProgressEnd"></i>
+                                                    <i class="fa fa-microphone" style="font-size: 20px;"
+                                                       voice-recognition ng-model="WorkingProgressEnd"></i>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1  custom-title-code-bold " style=" display: flex;align-items: center; flex-direction: row-reverse;">
+                                            <div class="col-md-1  custom-title-code-bold "
+                                                 style=" display: flex;align-items: center; flex-direction: row-reverse;">
                                                 <div ng-click="saveWorkingProgressYear()">
                                                     <i class="fas fa-plus fs-1" style="font-size: 25px;"></i>
                                                 </div>

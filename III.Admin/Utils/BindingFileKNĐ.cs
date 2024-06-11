@@ -474,9 +474,25 @@ namespace III.Admin.Utils
                     IWParagraph p = cell.AddParagraph();
                     text = p.AppendText("*" + ph.Relation + " :");
                     p = cell.AddParagraph();
-                   
+                    if (ph.BirthPlace != null )
+                    {
+                        ph.BirthPlace = "\n" + "- Nơi sinh: " + ph.BirthPlace;
+                    }
+                    else
+                    {
+                        ph.BirthPlace = "";
+                    }
 
-                    text = p.AppendText("- Họ và tên: " + ph.Name);
+                    if (ph.ClassComposition != null)
+                    {
+                        ph.ClassComposition = "\n" + "- Thành phần giai cấp: " + ph.ClassComposition;
+                    }
+                    else
+                    {
+                        ph.ClassComposition = "";
+                    }
+
+                    text = p.AppendText("- Họ và tên: " + ph.Name + ph.BirthPlace + ph.ClassComposition);
 
                     p = cell.AddParagraph();
                     string[] parts = ph.BirthYear.Split('_');
@@ -723,11 +739,21 @@ namespace III.Admin.Utils
         public static void BinddingFamily(WTable table, string[] TrCP)
         {
             int count = table.Rows.Count; int countNow = 0;
+            TrCP = TrCP.Where(x => x != null).ToArray();
             if (TrCP.Where(item => item.StartsWith("Thái độ chính trị")).Count() > 0)
             {
                 countNow++;
             }
             if (TrCP.Where(item => item.StartsWith("Quê quán")).Count() > 0)
+            {
+                countNow++;
+            }
+
+            if (TrCP.Where(item => item.StartsWith("ClassComposition")).Count() > 0)
+            {
+                countNow++;
+            }
+            if (TrCP.Where(item => item.StartsWith("BirthPlace")).Count() > 0)
             {
                 countNow++;
             }
@@ -797,7 +823,69 @@ namespace III.Admin.Utils
                 }
                 if (item.StartsWith("BirthYear"))
                 {
-                    setCellParagraph(row, 2, item, true);
+                    var a = "";
+                    try
+                    {
+                        var item2 = item.Split(":")[1];
+                        var parts = item2.Split("_");
+                        if (parts.Length > 3 && parts[0] == " true")
+                        {
+
+                            a = parts[1] + "(Đã mất) \n" + "- Nơi mất: " + parts[2] + "\n" + "- Lý do mất: " + parts[3];
+                        }
+                        else
+                        {
+                            a = parts[1];
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+
+                    setCellParagraph(row, 2, a);
+                }
+                if (item.StartsWith("BirthPlace"))
+                {
+                    var a = "";
+                    try
+                    {
+                        var item2 = item.Split(":")[1];
+                        if (item2.Trim() == "")
+                        {
+                            a = "";
+                        }
+                        else
+                        {
+                            a = "Nơi sinh: " + item2;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    setCellParagraph(row, 3, a);
+                }
+                if (item.StartsWith("ClassComposition"))
+                {
+                    var a = "";
+                    try
+                    {
+                        var item2 = item.Split(":")[1];
+                        if (item2.Trim() == "")
+                        {
+                            a = "";
+                        }
+                        else
+                        {
+                            a = "Thành phần giai cấp: " + item2;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                    setCellParagraph(row, 3, a);
                 }
                 if (item.StartsWith("Thái độ chính trị") || item.StartsWith("Quê quán") || item.StartsWith("Nơi ở hiện nay") ||
                     item.StartsWith("Nghề nghiệp") || item.StartsWith("Quá trình công tác"))
@@ -807,13 +895,22 @@ namespace III.Admin.Utils
                 if (item.StartsWith("Đảng viên"))
                 {
                     var a = "";
-                    if (item.Split(":")[1] == " True")
+                    try
                     {
-                        a = "Đảng viên: đúng";
+                        var item2 = item.Split(":")[1];
+                        var item3 = item2.Split("_");
+                        if (item3[1] == "true")
+                        {
+                            a = "Đảng viên: Có" + "\n" + "- Sinh hoạt tại chi bộ: " + item3[0] + "\n" + "- Thuộc đảng bộ: " + item3[2];
+                        }
+                        else
+                        {
+                            a = "Đảng viên: Không";
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        a = "Đảng viên: sai";
+                        Console.WriteLine(ex.Message);
                     }
                     setCellParagraph(row, 3, a);
                 }
@@ -1004,7 +1101,6 @@ namespace III.Admin.Utils
             foreach (IWParagraph p in section.Paragraphs)
             {
                 string a = p.Text.Trim();
-                string[] partAddressText = jsonParty.Profile.AddressText.Split('_');
                 switch (a)
                 {
                     case "01) Họ và tên đang dùng:………………………………………… 02) Nam, nữ…………………….":
@@ -1016,17 +1112,17 @@ namespace III.Admin.Utils
                         p.Replace("04) Sinh ngày.../…/……….……", "04) Sinh ngày: " + jsonParty.Profile.Birthday, true, true);
                         break;
                     case "05) Nơi sinh:……………………………………………………………………………………………..":
-                        p.Replace("05) Nơi sinh:……………………………………………………………………………………………..", "05) Nơi sinh:" + partAddressText[3], true, true);
+                        p.Replace("05) Nơi sinh:……………………………………………………………………………………………..", "05) Nơi sinh:" + jsonParty.Profile.BirthPlaceValue, true, true);
                         break;
                     case "06) Quê quán:……………………………………………………………………………………………":
-                        p.Replace("06) Quê quán:…………………………………………………………………………………………", "06) Quê quán:" + partAddressText[2], true, true);
+                        p.Replace("06) Quê quán:…………………………………………………………………………………………", "06) Quê quán:" +jsonParty.Profile.HomeTownValue, true, true);
                         break;
                     case "07) Nơi thường trú:……………………………………………………………………………………...":
-                        p.Replace("07) Nơi thường trú:……………………………………………………………………………………..", "07) Nơi thường trú:" + partAddressText[0], true, true);
+                        p.Replace("07) Nơi thường trú:……………………………………………………………………………………..", "07) Nơi thường trú:" + jsonParty.Profile.PermanentResidenceValue, true, true);
                         break;
                     case "Nơi tạm trú:………………………………………………………………………………………….":
                         if (!string.IsNullOrEmpty(jsonParty.Profile.TemporaryAddress))
-                            p.Replace("Nơi tạm trú:………………………………………………………………………………………….", "Nơi tạm trú:" + partAddressText[1], true, true);
+                            p.Replace("Nơi tạm trú:………………………………………………………………………………………….", "Nơi tạm trú:" + jsonParty.Profile.TemporaryAddressValue, true, true);
                         break;
                     case "08) Dân tộc:………………………………………… 09) Tôn giáo:…………………………………..":
                         p.Replace("08) Dân tộc:………………………………………", "08) Dân tộc:" + jsonParty.Profile.Nation, true, true);
@@ -1038,12 +1134,12 @@ namespace III.Admin.Utils
                         break;
                     case "12) Ngày vào Đảng:…/…/…… Tại Chi bộ:…………………………………………………………..":
                         if (jsonParty.IntroducerOfParty != null)
-                        
+
                             p.Replace("12) Ngày vào Đảng:…/…/…… Tại Chi bộ:………………………………………………………….",
                            "12) Ngày vào Đảng: " + jsonParty.IntroducerOfParty.PlaceTimeJoinParty, true, true);
-                        
+
                         break;
-                           
+
                     case "Người giới thiệu thứ 1:…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….":
                         if (jsonParty.IntroducerOfParty != null)
                             p.Replace("…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….",
@@ -1119,70 +1215,70 @@ namespace III.Admin.Utils
             table = section.Tables[3] as WTable;
             BindingFamily(table, jsonParty.Families);
         }
-/*
-        public static void convertProvinces(UserJoinPartyController.converJsonPartyAdmission jsonParty, List<Province> provinces1, List<District> districts1, List<Ward> wards1)
-        {
-            string[] partsHomeTown = jsonParty.Profile.HomeTown.Split('_');
-            if (partsHomeTown.Length >= 4)
-            {
-                var tinh = int.Parse(partsHomeTown[0]);
-                var huyen = int.Parse(partsHomeTown[1]);
-                var xa = int.Parse(partsHomeTown[2]);
-                var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
-                var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
-                var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
-                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
-                jsonParty.Profile.HomeTown = HomeTown;
-            }
+        /*
+                public static void convertProvinces(UserJoinPartyController.converJsonPartyAdmission jsonParty, List<Province> provinces1, List<District> districts1, List<Ward> wards1)
+                {
+                    string[] partsHomeTown = jsonParty.Profile.HomeTown.Split('_');
+                    if (partsHomeTown.Length >= 4)
+                    {
+                        var tinh = int.Parse(partsHomeTown[0]);
+                        var huyen = int.Parse(partsHomeTown[1]);
+                        var xa = int.Parse(partsHomeTown[2]);
+                        var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
+                        var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
+                        var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
+                        string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                        jsonParty.Profile.HomeTown = HomeTown;
+                    }
 
-            string[] partsPlaceBirth = jsonParty.Profile.PlaceBirth.Split('_');
-            if (partsPlaceBirth.Length >= 4)
-            {
-                var tinh = int.Parse(partsPlaceBirth[0]);
-                var huyen = int.Parse(partsPlaceBirth[1]);
-                var xa = int.Parse(partsPlaceBirth[2]);
-                var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
-                var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
-                var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
-                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
-                jsonParty.Profile.PlaceBirth = HomeTown;
-            }
+                    string[] partsPlaceBirth = jsonParty.Profile.PlaceBirth.Split('_');
+                    if (partsPlaceBirth.Length >= 4)
+                    {
+                        var tinh = int.Parse(partsPlaceBirth[0]);
+                        var huyen = int.Parse(partsPlaceBirth[1]);
+                        var xa = int.Parse(partsPlaceBirth[2]);
+                        var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
+                        var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
+                        var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
+                        string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                        jsonParty.Profile.PlaceBirth = HomeTown;
+                    }
 
-            string[] partsPermanentResidence = jsonParty.Profile.PermanentResidence.Split('_');
-            if (partsPlaceBirth.Length >= 4)
-            {
-                var tinh = int.Parse(partsPermanentResidence[0]);
-                var huyen = int.Parse(partsPermanentResidence[1]);
-                var xa = int.Parse(partsPermanentResidence[2]);
-                var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
-                var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
-                var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
-                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
-                jsonParty.Profile.PermanentResidence = HomeTown;
-            }
+                    string[] partsPermanentResidence = jsonParty.Profile.PermanentResidence.Split('_');
+                    if (partsPlaceBirth.Length >= 4)
+                    {
+                        var tinh = int.Parse(partsPermanentResidence[0]);
+                        var huyen = int.Parse(partsPermanentResidence[1]);
+                        var xa = int.Parse(partsPermanentResidence[2]);
+                        var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
+                        var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
+                        var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
+                        string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                        jsonParty.Profile.PermanentResidence = HomeTown;
+                    }
 
-            string[] partsTemporaryAddress = jsonParty.Profile.TemporaryAddress.Split('_');
-            if (partsPlaceBirth.Length >= 4)
-            {
-                var tinh = int.Parse(partsTemporaryAddress[0]);
-                var huyen = int.Parse(partsTemporaryAddress[1]);
-                var xa = int.Parse(partsTemporaryAddress[2]);
-                var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
-                var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
-                var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
-                string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
-                jsonParty.Profile.TemporaryAddress = HomeTown;
-            }
+                    string[] partsTemporaryAddress = jsonParty.Profile.TemporaryAddress.Split('_');
+                    if (partsPlaceBirth.Length >= 4)
+                    {
+                        var tinh = int.Parse(partsTemporaryAddress[0]);
+                        var huyen = int.Parse(partsTemporaryAddress[1]);
+                        var xa = int.Parse(partsTemporaryAddress[2]);
+                        var tinhName = provinces1.FirstOrDefault(x => x.provinceId == tinh);
+                        var huyenName = districts1.FirstOrDefault(x => x.districtId == huyen);
+                        var xaName = wards1.FirstOrDefault(x => x.wardsId == xa);
+                        string HomeTown = "" + partsHomeTown[4] + ", " + xaName.name + ", " + huyenName.name + ", " + tinhName.name;
+                        jsonParty.Profile.TemporaryAddress = HomeTown;
+                    }
 
-            string[] partsCreatedPlace = jsonParty.Profile.CreatedPlace.Split('_');
-            if (partsPlaceBirth.Length >= 2)
-            {
-                string HomeTown = "" + partsCreatedPlace[1] + ", tại " + partsCreatedPlace[0];
-                jsonParty.Profile.CreatedPlace = HomeTown;
-            }
+                    string[] partsCreatedPlace = jsonParty.Profile.CreatedPlace.Split('_');
+                    if (partsPlaceBirth.Length >= 2)
+                    {
+                        string HomeTown = "" + partsCreatedPlace[1] + ", tại " + partsCreatedPlace[0];
+                        jsonParty.Profile.CreatedPlace = HomeTown;
+                    }
 
-        }
-*/
+                }
+        */
         //Được kết nạp lại vào Đảng
         private static void BindingPersonalHistories2(IWParagraph p, List<PersonalHistory> personalHistories)
         {
@@ -1322,11 +1418,22 @@ namespace III.Admin.Utils
                 cell = row.Cells[3];
 
                 p = cell.Paragraphs[0] as WParagraph;
-                var ItemHomeTown = "" + (item.HomeTownVillage?? "") + ", " + (item.HomeTownValue??"");
+                var ItemHomeTown = "" + (item.HomeTownVillage ?? "") + ", " + (item.HomeTownValue ?? "");
                 text = p.AppendText("-Quê quán:" + ItemHomeTown);
                 p.ParagraphFormat.HorizontalAlignment = Syncfusion.DocIO.DLS.HorizontalAlignment.Left;
                 SetStyle(text);
-
+                if(item.BirthPlace != null)
+                {
+                    p = cell.AddParagraph() as WParagraph;
+                    text = p.AppendText("-Nơi sinh:" + (item.BirthPlace ?? ""));
+                    SetStyle(text);
+                }
+                if (item.ClassComposition != null)
+                {
+                    p = cell.Paragraphs[0] as WParagraph;
+                    text = p.AppendText("-Thành phần giai cấp:" + (item.ClassComposition??""));
+                    SetStyle(text);
+                }
 
                 p = cell.AddParagraph() as WParagraph;
                 text = p.AppendText("-Nơi cư trú:" + (item.Residence ?? ""));

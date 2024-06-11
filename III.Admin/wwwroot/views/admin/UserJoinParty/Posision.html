@@ -1,9 +1,9 @@
 <div class="d-flex">
     <div class="w4">
         <ui-select class="p0 br-24" ng-model="model.tinh_id" theme="bootstrap" class="displayInfo"
-            ng-change="onItemSelect($select.selected,'tinh')" style="border: none; height: 24.5px;width:100%;">
-            <ui-select-match class="br-24 ovf-hidden"  style="height:24.5px"
-                placeholder="Chọn tỉnh">{{$select.selected.name}}</ui-select-match>
+                   ng-change="onItemSelect($select.selected,'tinh')" style="border: none; height: 24.5px;width:100%;">
+            <ui-select-match class="br-24 ovf-hidden" style="height:24.5px"
+                             placeholder="Chọn tỉnh">{{$select.selected.name}}</ui-select-match>
             <ui-select-choices repeat="x.provinceId as x in provinces | filter: $select.search">
                 <div>{{x.name}}</div>
             </ui-select-choices>
@@ -11,9 +11,9 @@
     </div>
     <div class="w4">
         <ui-select class="p0 br-24" ng-model="model.huyen_id" theme="bootstrap" class="displayInfo"
-            ng-change="onItemSelect($select.selected,'huyen')" style="border: none; height: 24.5px;width:100%;">
-            <ui-select-match class="br-24 ovf-hidden"  style="height:24.5px"
-                placeholder="Chọn huyện">{{$select.selected.name}}</ui-select-match>
+                   ng-change="onItemSelect($select.selected,'huyen')" style="border: none; height: 24.5px;width:100%;">
+            <ui-select-match class="br-24 ovf-hidden" style="height:24.5px"
+                             placeholder="Chọn huyện">{{$select.selected.name}}</ui-select-match>
             <ui-select-choices repeat="x.districtId as x in ditrict | filter: $select.search">
                 <div>{{x.name}}</div>
             </ui-select-choices>
@@ -21,12 +21,19 @@
     </div>
     <div class="w4">
         <ui-select class="p0 br-24" ng-model="model.xaPhuong_id" theme="bootstrap"
-            class="displayInfo" ng-change="onItemSelect($select.selected,'xa')" style="border: none; height: 24.5px;width:100%;">
-            <ui-select-match class="br-24 ovf-hidden"  style="height:24.5px"
-                placeholder="Chọn xã phường">{{$select.selected.name}}</ui-select-match>
+                   class="displayInfo" ng-change="onItemSelect($select.selected,'xa')" style="border: none; height: 24.5px;width:100%;">
+            <ui-select-match class="br-24 ovf-hidden" style="height:24.5px"
+                             placeholder="Chọn xã phường">{{$select.selected.name}}</ui-select-match>
             <ui-select-choices repeat="x.wardsId as x in Ward | filter: $select.search">
                 <div>{{x.name}}</div>
             </ui-select-choices>
         </ui-select>
     </div>
 </div>
+
+
+<style>
+    .ui-select-toggle {
+        margin: 0
+    }
+</style>
