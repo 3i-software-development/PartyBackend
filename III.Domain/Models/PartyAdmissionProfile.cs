@@ -14,79 +14,79 @@ namespace ESEIM.Models
         public int Id { get; set; }
 
         [Note("Họ và tên")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string CurrentName { get; set; }
 
         [Note("Tên khai sinh")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string BirthName { get; set; }
 
         [Note("Giới tính")]
         public int Gender { get; set; }
 
         [Note("Dân tộc")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string Nation { get; set; }
 
         [Note("Tôn giáo")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string Religion { get; set; }
 
         [Note("Ngày sinh")]
         public DateTime? Birthday { get; set; }
 
         [Note("Địa chỉ thường trú")]
-        [StringLength(maximumLength: 200)]
+        [StringLength(maximumLength: 500)]
         public string PermanentResidence { get; set; }
 
         [Note("Số điện thoại")]
         [StringLength(maximumLength: 50)]
         public string Phone { get; set; }
 
-        [StringLength(maximumLength: 255)]
+        [StringLength(maximumLength: 500)]
         public string Picture { get; set; }
 
         [Note("Quê quán")]
-        [StringLength(maximumLength: 100)]
+        [StringLength(maximumLength: 255)]
         public string HomeTown { get; set; }
 
         [StringLength(maximumLength: 100)]
         public string PlaceBirth { get; set; }
 
         [Note("Nghề nghiệp hiện nay")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string Job { get; set; }
 
         [Note("Địa chỉ tạm trú")]
-        [StringLength(maximumLength: 250)]
+        [StringLength(maximumLength: 500)]
         public string TemporaryAddress { get; set; }
 
         [Note("Giáo dục phổ thông")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string GeneralEducation { get; set; }
 
         [Note("Giáo dục nghề nghiệp")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 500)]
         public string JobEducation { get; set; }
 
         [Note("Giáo dục đại học")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 500)]
         public string UnderPostGraduateEducation { get; set; }
 
         [Note("Học hàm")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string Degree { get; set; }
 
         [Note("Lý luận chính trị")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 500)]
         public string PoliticalTheory { get; set; }
 
         [Note("Ngoại ngữ")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string ForeignLanguage { get; set; }
 
         [Note("Tin học")]
-        [StringLength(maximumLength: 50)]
+        [StringLength(maximumLength: 255)]
         public string ItDegree { get; set; }
 
         [Note("Tiếng dân tộc thiểu số")]

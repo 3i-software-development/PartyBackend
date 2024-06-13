@@ -13,10 +13,10 @@
     <link href="/lib/assets/global/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/css/front-end/site.css" rel="stylesheet" type="text/css" />
     <link rel="stylesheet" href="https://cdn.syncfusion.com/ej2/18.1.42/material.css">
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
-   
-    
+
+
     <script src="~/lib/robust/core/libraries/jquery.min.js" type="text/javascript"></script>
     <script src="~/lib/robust/vendors/js/ui/unison.min.js" type="text/javascript"></script>
     <script src="~/lib/assets/global/plugins/bootstrap/js/bootstrap.min.js"></script>
@@ -43,7 +43,7 @@
     <script src="/lib/assets/global/plugins/jquery-validation/jquery.validate.min.js" type="text/javascript"></script>
     <script src="/lib/assets/global/plugins/jquery-validation/angular-validate.min.js" type="text/javascript"></script>
     <script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.5.0.js"></script>
-    
+
     @*Toastr*@
     <link href="/lib/assets/global/plugins/bootstrap-toastr/toastr.css" rel="stylesheet">
     <script src="/lib/assets/global/plugins/bootstrap-toastr/toastr.js"></script>
@@ -63,7 +63,7 @@
     @await Html.PartialAsync("_Partial_Header")
     <div class="overlay-common" onclick="closeMenu()"></div>
     <div class="">
-        
+
         <div style="position: relative;" class="container-fluid" style="padding-right: 0">
             <div class="content-wrapper">
                 @await Html.PartialAsync("_Partial_Menu_Header")
@@ -75,38 +75,39 @@
     </div>
     <style>
         .overlay-common {
-    position: fixed;
-    top: 70px;
-    left: 0px;
-    bottom: 0px;
-    right: 0px;
-    background: rgba(0, 0, 0, 0.2);
-    z-index: 98;
-    display: none;
-}
-    .show {
-        display: block !important;
-    }
+            position: fixed;
+            top: 70px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            background: rgba(0, 0, 0, 0.2);
+            z-index: 98;
+            display: none;
+        }
+
+        .show {
+            display: block !important;
+        }
     </style>
     <script>
-function myFunction() {
-  var x = document.getElementById("myHeader");
-  var overlay = document.querySelector('.overlay-common');
-  if (x.className === "header-nav") {
-    x.className += " show";
-    overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
-  } else {
-    x.className = "header-nav";
-    overlay.style.display = "none";
-  }
-}
-function closeMenu() {
-    var x = document.getElementById("myHeader");
-    var overlay = document.querySelector('.overlay-common');
-    x.className = "header-nav";
-    overlay.style.display = "none";
-}
-</script>
+        function myFunction() {
+            var x = document.getElementById("myHeader");
+            var overlay = document.querySelector('.overlay-common');
+            if (x.className === "header-nav") {
+                x.className += " show";
+                overlay.style.display = (overlay.style.display === "block") ? "none" : "block";
+            } else {
+                x.className = "header-nav";
+                overlay.style.display = "none";
+            }
+        }
+        function closeMenu() {
+            var x = document.getElementById("myHeader");
+            var overlay = document.querySelector('.overlay-common');
+            x.className = "header-nav";
+            overlay.style.display = "none";
+        }
+    </script>
     @await Html.PartialAsync("_Partial_Footer")
 </body>
 </html>

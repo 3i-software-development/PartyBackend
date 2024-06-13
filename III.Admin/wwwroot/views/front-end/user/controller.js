@@ -224,6 +224,26 @@ app.factory('dataservice', function ($http) {
 });
 
 app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice) {
+   
+    $rootScope.$on('$translateChangeSuccess', function () {
+        $rootScope.IsTranslate = true;
+        caption = caption[culture] ? caption[culture] : caption;
+        $.extend($.validator.messages, {
+            min: caption.COM_VALIDATE_VALUE_MIN,
+        });
+        $rootScope.validationOptions = {
+            rules: {
+                LastName: {
+                    required: true
+                }
+            },
+            messages: {
+                LastName: {
+                    required: "Tiêu đề không được bỏ trống"
+                }
+            }
+        }
+    });
 
 });
 
@@ -337,7 +357,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.itemEmployees = ['Kinh doanh quần áo', 'Kinh doanh thực phẩm', 'Kinh doanh thiết bị máy móc', 'Làm việc ở ngân hàng', 'Grapes', 'Pineapple'];
     $scope.itemReligions = ['Không', 'Thiên Chúa giáo', 'Hồi giáo', 'Ấn Độ giáo', 'Do Thái giáo', 'Phật giáo', 'Đạo Cao Đài', 'Đạo Hoà Hảo']
     $scope.filteredItems = [];
-
     //Autocomplete công việc
     $scope.filterItems = function () {
         $scope.filteredItems = $scope.itemEmployees.filter(function (item) {
@@ -2142,6 +2161,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
         if ($scope.err == false) {
             if ($scope.UserName != null && $scope.UserName != undefined) {
+                if ($scope.forms.edit.validate()) {
                 $scope.model = {}
                 $scope.model.CurrentName = $scope.infUser.LastName;
                 $scope.model.Birthday = $scope.infUser.Birthday;
@@ -2448,6 +2468,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
                     }
                 })
+                }
+
 
             }
         }
@@ -2577,11 +2599,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         if ($scope.selectedPersonHistory.Content == null || $scope.selectedPersonHistory.Content == undefined || $scope.selectedPersonHistory.Content == '') {
             $scope.err = true
         }
-        if ($scope.selectedPersonHistory.End > currentYear || $scope.selectedPersonHistory.Begin > currentYear || $scope.selectedPersonHistory.Begin > $scope.selectedPersonHistory.End) {
+      /*  if ($scope.selectedPersonHistory.End > currentYear || $scope.selectedPersonHistory.Begin > currentYear || $scope.selectedPersonHistory.Begin > $scope.selectedPersonHistory.End) {
             App.toastrError("Năm nhập vào không hợp lệ")
             $scope.err = true
             return
-        }
+        }*/
         if ($scope.err) {
             App.toastrError("Bạn chưa nhập đủ thông tin")
             return
@@ -3115,10 +3137,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
                     } else {
                         const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
-                        if (year3.lenght == 2) {
+                        if (year3.length == 2) {
                             var yearEnd = Number(year3[1]);
                             var monthEnd = Number(year3[0]);
-                        } else if (year3.lenght == 3) {
+                        } else if (year3.length == 3) {
                             var yearEnd = Number(year3[2]);
                             var monthEnd = Number(year3[1]);
                         } else {
@@ -3886,14 +3908,14 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         if (year2 && year2 >= 1945 && year2 + 18 < currentYear) {
 
             const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
-            if (year3.lenght == 2) {
+            if (year3.length == 2) {
                 var yearEnd = Number(year3[1]);
                 var monthEnd = Number(year3[0]);
-            } else if (year3.lenght == 3) {
+            } else if (year3.length == 3) {
                 var yearEnd = Number(year3[2]);
                 var monthEnd = Number(year3[1]);
             } else {
-                $scope.selectedPersonHistory.Begin = `8/${year2 + 6}`;
+                $scope.selectedPersonHistory.Begin = `9/${year2 + 6}`;
                 return
             }
             const currentDate = new Date();
