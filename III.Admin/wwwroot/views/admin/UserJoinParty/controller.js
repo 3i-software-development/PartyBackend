@@ -323,7 +323,7 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
             min: caption.COM_VALIDATE_VALUE_MIN,
             //max: 'Max some message {0}'
         });
-       
+
         $rootScope.validationOptions = {
             rules: {
                 LastName: {
@@ -368,10 +368,10 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 GroupUser: {
                     required: true,
                 },
-            /*    PlaceofBirth: {
-                    required: true,
-                },*/
-                
+                /*    PlaceofBirth: {
+                        required: true,
+                    },*/
+
             },
             messages: {
                 LastName: {
@@ -416,11 +416,11 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 GroupUser: {
                     required: "Bạn không được bỏ trống trường nhóm chi bộ"
                 },
-          /*      GroupUser: {
-                    required: "Bạn không được để trống",
-                },*/
+                /*      GroupUser: {
+                          required: "Bạn không được để trống",
+                      },*/
 
-                
+
             }
         }
 
@@ -479,9 +479,10 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 }
             }
         }
-        
+
         $rootScope.IsTranslate = true;
     });
+    $rootScope.regexDate = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/\d{4}$/;
     $rootScope.initConfig = function () {
 
         $rootScope.configProfile = {
@@ -512,14 +513,14 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 /*PlaceWorking: true,*/
                 marriedStatus: true,
                 AddressText: true,
-                TemporaryAddressValue :true ,
-                TemporaryAddressVillage :true,
-                PermanentResidenceVillage :true,
-                PermanentResidenceValue :true,
-                HomeTownVillage:true,
+                TemporaryAddressValue: true,
+                TemporaryAddressVillage: true,
+                PermanentResidenceVillage: true,
+                PermanentResidenceValue: true,
+                HomeTownVillage: true,
                 HomeTownValue: true,
-                BirthPlaceVillage :true,
-                BirthPlaceValue:true,
+                BirthPlaceVillage: true,
+                BirthPlaceValue: true,
             },
             Family: {
                 "Relation": true,
@@ -626,6 +627,10 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $lo
             label.closest('.form-group').removeClass('has-error');
         }
     });
+    $validatorProvider.addMethod("date", function (value, element) {
+        const regex = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/\d{4}$/;
+        return this.optional(element) || regex.test(value?.toString() ?? "");
+    }, "Vui lòng nhập theo định dạng dd/MM/yyyy, ví dụ: 02/10/1996.");
 });
 
 app.controller('Config', function ($scope, $rootScope, $compile, $uibModal, $confirm, dataservice, $translate, $filter, $uibModalInstance) {
@@ -3113,11 +3118,11 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.err = true
         }
 
-/*        if ($scope.selectedPersonHistory.End > currentYear || $scope.selectedPersonHistory.Begin > currentYear || $scope.selectedPersonHistory.Begin > $scope.selectedPersonHistory.End ) {
-            App.toastrError("Năm nhập vào không hợp lệ")
-            return
-            $scope.err = true
-        }*/
+        /*        if ($scope.selectedPersonHistory.End > currentYear || $scope.selectedPersonHistory.Begin > currentYear || $scope.selectedPersonHistory.Begin > $scope.selectedPersonHistory.End ) {
+                    App.toastrError("Năm nhập vào không hợp lệ")
+                    return
+                    $scope.err = true
+                }*/
 
         if ($scope.err) {
             App.toastrError("Bạn chưa nhập đủ thông tin")
@@ -3251,7 +3256,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 const year2 = Number(parts[2]);
                 const currentDate = new Date();
                 const currentYear = currentDate.getFullYear();
-                if (year2  && year2 + 18 < currentYear) {
+                if (year2 && year2 + 18 < currentYear) {
 
                     if ($scope.PersonalHistory.length != 0) {
                         const year3 = $scope.PersonalHistory[$scope.PersonalHistory.length - 1].End.split("/")
@@ -3526,10 +3531,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
      
      
                  *//*        } if (!datePattern.test($scope.infUser.Birthday) || !datePattern2.test($scope.infUser.Birthday)) {
-                        $scope.err = true
-                        App.toastrError("Ngày tháng năm sinh không đúng định dạng")
-                        return;*//*
-}*/
+    $scope.err = true
+    App.toastrError("Ngày tháng năm sinh không đúng định dạng")
+    return;*//*
+   }*/
             /*if ($scope.infUser.FirstName == "" || $scope.infUser.FirstName == null || $scope.infUser.FirstName == undefined) {
                 $scope.err = true
                 App.toastrError("Không được để trường Họ và tên khai sinh trống")
@@ -3568,204 +3573,245 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                             App.toastrError("Bạn vui lòng nhập theo định dạng thôn, xã, huyện, TP ở Địa chỉ thường trú");
                             return;
                         }*//*
-            if ($scope.infUser.PlaceofBirth == "" || $scope.infUser.PlaceofBirth == null || $scope.infUser.PlaceofBirth == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường Nơi sinh trống")
-                return;
+if ($scope.infUser.PlaceofBirth == "" || $scope.infUser.PlaceofBirth == null || $scope.infUser.PlaceofBirth == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường Nơi sinh trống")
+return;
 
-            } if ($scope.infUser.NowEmployee == "" || $scope.infUser.NowEmployee == null || $scope.infUser.NowEmployee == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường Công việc hiện tại trống")
-                return;
+} if ($scope.infUser.NowEmployee == "" || $scope.infUser.NowEmployee == null || $scope.infUser.NowEmployee == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường Công việc hiện tại trống")
+return;
 
-            } if ($scope.infUser.HomeTown == "" || $scope.infUser.HomeTown == null || $scope.infUser.HomeTown == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường Quê quán trống")
-                return;
+} if ($scope.infUser.HomeTown == "" || $scope.infUser.HomeTown == null || $scope.infUser.HomeTown == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường Quê quán trống")
+return;
 
-                *//*            } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
-                                $scope.err = true
-                                App.toastrError("Không được để trường Địa chỉ tạm trú trống")
-                                return;*//*
+*//*            } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
+                                                            $scope.err = true
+                                                            App.toastrError("Không được để trường Địa chỉ tạm trú trống")
+                                                            return;*//*
 
-            } if ($scope.infUser.LevelEducation.GeneralEducation == "" || $scope.infUser.LevelEducation.GeneralEducation == null || $scope.infUser.LevelEducation.GeneralEducation == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường Giáo dục phổ thông trống")
-                return;
-            } if ($scope.infUser.Phone == "" || $scope.infUser.Phone == null || $scope.infUser.Phone == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường Số điện thoại trống")
-                return;
+} if ($scope.infUser.LevelEducation.GeneralEducation == "" || $scope.infUser.LevelEducation.GeneralEducation == null || $scope.infUser.LevelEducation.GeneralEducation == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường Giáo dục phổ thông trống")
+return;
+} if ($scope.infUser.Phone == "" || $scope.infUser.Phone == null || $scope.infUser.Phone == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường Số điện thoại trống")
+return;
 
-            } if ($scope.GroupUser == "" || $scope.GroupUser == null || $scope.GroupUser == undefined) {
-                $scope.err = true
-                App.toastrError("Bạn chưa chọn nhóm chi bộ để xử lý")
-                return;
+} if ($scope.GroupUser == "" || $scope.GroupUser == null || $scope.GroupUser == undefined) {
+$scope.err = true
+App.toastrError("Bạn chưa chọn nhóm chi bộ để xử lý")
+return;
 
-            } if ($scope.infUser.Phone.length != 10 || !pattern.test($scope.infUser.Phone)) {
-                $scope.err = true
-                App.toastrError("Vui lòng nhập số điện thoại hợp lệ")
-                return;
-            }
-            if ($scope.SelfComment.context === "" || $scope.SelfComment.context == null || $scope.SelfComment.context == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường tự nhận xét trống")
-                return;
-            }
-            *//* if (PlaceWorking[0] === "NaN" || PlaceWorking[1] === "NaN" || PlaceWorking[2] === "NaN" || PlaceWorking[0] === "undefined" || PlaceWorking[1] === "undefined" || PlaceWorking[2] === "undefined" ) {
-                         $scope.err = true
-                         App.toastrError("Không được để trường Địa giới hành chính")
-                         return;
-             }*//*
-            *//* var HomeTown = $scope.infUser.HomeTown.toLowerCase().split(",");
-             if (HomeTown.length < 4) {
-                     $scope.err = true;
-                     App.toastrError("Bạn vui lòng nhập đầy đủ thôn, xã, huyện, TP ở quê quán");
-                     return;
-                 }
-             if (HomeTown.length > 4) {
-                     $scope.err = true;
-                 App.toastrError("Bạn vui lòng nhập theo định dạng thôn, xã, huyện, TP ở ở quê quán");
-                     return;
-                 }*//*
+} if ($scope.infUser.Phone.length != 10 || !pattern.test($scope.infUser.Phone)) {
+$scope.err = true
+App.toastrError("Vui lòng nhập số điện thoại hợp lệ")
+return;
+}
+if ($scope.SelfComment.context === "" || $scope.SelfComment.context == null || $scope.SelfComment.context == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường tự nhận xét trống")
+return;
+}
+*//* if (PlaceWorking[0] === "NaN" || PlaceWorking[1] === "NaN" || PlaceWorking[2] === "NaN" || PlaceWorking[0] === "undefined" || PlaceWorking[1] === "undefined" || PlaceWorking[2] === "undefined" ) {
+                                                             $scope.err = true
+                                                             App.toastrError("Không được để trường Địa giới hành chính")
+                                                             return;
+                                                 }*//*
+*//* var HomeTown = $scope.infUser.HomeTown.toLowerCase().split(",");
+                            if (HomeTown.length < 4) {
+                                    $scope.err = true;
+                                    App.toastrError("Bạn vui lòng nhập đầy đủ thôn, xã, huyện, TP ở quê quán");
+                                    return;
+                                }
+                            if (HomeTown.length > 4) {
+                                    $scope.err = true;
+                                App.toastrError("Bạn vui lòng nhập theo định dạng thôn, xã, huyện, TP ở ở quê quán");
+                                    return;
+                                }*//*
 
 
 
-            *//* return new Promise((resolve, reject) => {
-                 if ($scope.infUser.PlaceWorking.length > 0) {
-                     $scope.tinhName = ''
-                     $scope.huyenName = ''
-                     $scope.xaName = ''
-                     var PlaceWorking = $scope.infUser.PlaceWorking.split('_');
-                    if (Residence.length === 4) {
-                         var provinceId = parseInt(PlaceWorking[0]);
-                         var districtId = parseInt(PlaceWorking[1]);
-                         var communeId = parseInt(PlaceWorking[2]);
-                         var promises = [];
-    
-    
-                         var promiseProvince = new Promise((resolve, reject) => {
-                             dataserviceJoinParty.GetTinh(provinceId, function (rs) {
-                                 $scope.provinceName = rs.data[0].name.toLowerCase();
-                                 console.log($scope.provinceName)
-                                 $scope.tinh = Residence[3].includes($scope.provinceName)
-                                 $scope.tinh1 = HomeTown[3].includes($scope.provinceName)
-                                 if ($scope.tinh === false || $scope.tinh1 === false) {
-                                     $scope.err = true;
-                                     App.toastrError("Tỉnh ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
-                                     reject();
-                                 } else {
-                                     $scope.err = false
-                                     resolve();
-                                 }
-                             });
-                         });
-                         var promiseDistrict = new Promise((resolve, reject) => {
-                             dataserviceJoinParty.GetHuyen(districtId, function (rs) {
-                                 $scope.districtname = rs.data[0].name.toLowerCase();
-                                 $scope.huyen = Residence[2].includes($scope.districtname)
-                                 $scope.huyen1 = HomeTown[2].includes($scope.districtname)
-                                 if ($scope.huyen === false || $scope.huyen1 === false ) {
-                                     $scope.err = true;
-                                     App.toastrError("Huyện ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
-                                     reject();
-                                     return;
-                                 } else {
-                                     $scope.err = false
-                                     resolve();
-                                 }
-                             });
-                         });
-                         var promiseCommune = new Promise((resolve, reject) => {
-                             dataserviceJoinParty.GetXa(communeId, function (rs) {
-                                 $scope.communeName = rs.data[0].name.toLowerCase();
-                                 $scope.xa = Residence[1].includes($scope.communeName)
-                                 $scope.xa1 = HomeTown[1].includes($scope.communeName)
-                                 if ($scope.xa === false|| $scope.xa === false) {
-                                     $scope.err = true;
-                                     App.toastrError("Xã ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
-                                     reject();
-                                     return;
-                                 } else {
-                                     $scope.err = false
-                                     resolve();
-                                 }
-                             });
-                         });
-                     } else {
-    
-                     }
-                     promises.push(promiseProvince);
-                     promises.push(promiseDistrict);
-                     promises.push(promiseCommune);
-    
-                     Promise.all(promises)
-                         .then(() => {*//*
-            if ($scope.infUser.MaritalStatus.marriedStatus === "" || $scope.infUser.MaritalStatus.marriedStatus == null || $scope.infUser.MaritalStatus.marriedStatus == undefined) {
-                $scope.infUser.MaritalStatus.marriedStatus === '1'
-            } else if ($scope.infUser.MaritalStatus.marriedStatus === '2') {
-                if ($scope.infUser.MaritalStatus.decisionNumber === "" || $scope.infUser.MaritalStatus.decisionNumber == null || $scope.infUser.MaritalStatus.decisionNumber == undefined) {
-                    $scope.err = true
-                    App.toastrError("Không được để trường số quyết định trống")
-                    return;
-                }
-                if ($scope.infUser.MaritalStatus.decisionDate === "" || $scope.infUser.MaritalStatus.decisionDate == null || $scope.infUser.MaritalStatus.decisionDate == undefined) {
-                    $scope.err = true
-                    App.toastrError("Không được để trường ngày quyết định trống")
-                    return;
-                }
-                if ($scope.infUser.MaritalStatus.location === "" || $scope.infUser.MaritalStatus.location == null || $scope.infUser.MaritalStatus.location == undefined) {
-                    $scope.err = true
-                    App.toastrError("Không được để trường địa điểm quyết định trống")
-                    return;
-                }
-            }
+*//* return new Promise((resolve, reject) => {
+                                            if ($scope.infUser.PlaceWorking.length > 0) {
+                                                $scope.tinhName = ''
+                                                $scope.huyenName = ''
+                                                $scope.xaName = ''
+                                                var PlaceWorking = $scope.infUser.PlaceWorking.split('_');
+                                               if (Residence.length === 4) {
+                                                    var provinceId = parseInt(PlaceWorking[0]);
+                                                    var districtId = parseInt(PlaceWorking[1]);
+                                                    var communeId = parseInt(PlaceWorking[2]);
+                                                    var promises = [];
+                               
+                               
+                                                    var promiseProvince = new Promise((resolve, reject) => {
+                                                        dataserviceJoinParty.GetTinh(provinceId, function (rs) {
+                                                            $scope.provinceName = rs.data[0].name.toLowerCase();
+                                                            console.log($scope.provinceName)
+                                                            $scope.tinh = Residence[3].includes($scope.provinceName)
+                                                            $scope.tinh1 = HomeTown[3].includes($scope.provinceName)
+                                                            if ($scope.tinh === false || $scope.tinh1 === false) {
+                                                                $scope.err = true;
+                                                                App.toastrError("Tỉnh ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
+                                                                reject();
+                                                            } else {
+                                                                $scope.err = false
+                                                                resolve();
+                                                            }
+                                                        });
+                                                    });
+                                                    var promiseDistrict = new Promise((resolve, reject) => {
+                                                        dataserviceJoinParty.GetHuyen(districtId, function (rs) {
+                                                            $scope.districtname = rs.data[0].name.toLowerCase();
+                                                            $scope.huyen = Residence[2].includes($scope.districtname)
+                                                            $scope.huyen1 = HomeTown[2].includes($scope.districtname)
+                                                            if ($scope.huyen === false || $scope.huyen1 === false ) {
+                                                                $scope.err = true;
+                                                                App.toastrError("Huyện ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
+                                                                reject();
+                                                                return;
+                                                            } else {
+                                                                $scope.err = false
+                                                                resolve();
+                                                            }
+                                                        });
+                                                    });
+                                                    var promiseCommune = new Promise((resolve, reject) => {
+                                                        dataserviceJoinParty.GetXa(communeId, function (rs) {
+                                                            $scope.communeName = rs.data[0].name.toLowerCase();
+                                                            $scope.xa = Residence[1].includes($scope.communeName)
+                                                            $scope.xa1 = HomeTown[1].includes($scope.communeName)
+                                                            if ($scope.xa === false|| $scope.xa === false) {
+                                                                $scope.err = true;
+                                                                App.toastrError("Xã ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
+                                                                reject();
+                                                                return;
+                                                            } else {
+                                                                $scope.err = false
+                                                                resolve();
+                                                            }
+                                                        });
+                                                    });
+                                                } else {
+                               
+                                                }
+                                                promises.push(promiseProvince);
+                                                promises.push(promiseDistrict);
+                                                promises.push(promiseCommune);
+                               
+                                                Promise.all(promises)
+                                                    .then(() => {*//*
+if ($scope.infUser.MaritalStatus.marriedStatus === "" || $scope.infUser.MaritalStatus.marriedStatus == null || $scope.infUser.MaritalStatus.marriedStatus == undefined) {
+$scope.infUser.MaritalStatus.marriedStatus === '1'
+} else if ($scope.infUser.MaritalStatus.marriedStatus === '2') {
+if ($scope.infUser.MaritalStatus.decisionNumber === "" || $scope.infUser.MaritalStatus.decisionNumber == null || $scope.infUser.MaritalStatus.decisionNumber == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường số quyết định trống")
+return;
+}
+if ($scope.infUser.MaritalStatus.decisionDate === "" || $scope.infUser.MaritalStatus.decisionDate == null || $scope.infUser.MaritalStatus.decisionDate == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường ngày quyết định trống")
+return;
+}
+if ($scope.infUser.MaritalStatus.location === "" || $scope.infUser.MaritalStatus.location == null || $scope.infUser.MaritalStatus.location == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường địa điểm quyết định trống")
+return;
+}
+}
 
-            if ($scope.thon_Residence === "" || $scope.thon_Residence == null || $scope.thon_Residence == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường địa chỉ thôn trong địa chỉ thường chú trống")
-                return;
-            }
-            if ($scope.thon_PlaceofBirth === "" || $scope.thon_PlaceofBirth == null || $scope.thon_PlaceofBirth == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường địa chỉ thôn trong nơi sinh trống")
-                return;
-            }
-            if ($scope.thon_HomeTown === "" || $scope.thon_HomeTown == null || $scope.thon_HomeTown == undefined) {
-                $scope.err = true
-                App.toastrError("Không được để trường địa chỉ thôn trong quê quán trống")
-                return;
-            }
-            //if ($scope.placeAddress === "" || $scope.placeAddress == null || $scope.placeAddress == undefined) {
-            //    $scope.err = true
-            //    App.toastrError("Không được để trường Ngày kết nạp đoàn trống")
-            //    return;
-            //}
-            *//*
-                                        if ($scope.infUser.PlaceofBirth != infUser.PlaceWorking) {
-                                            $scope.err = true
-                                            App.toastrError("Nơi sinh và địa giới hành chính khác nhau")
-                                            return;
-                                        }
-                                        if ($scope.infUser.HomeTown != infUser.PlaceWorking) {
-                                            $scope.err = true
-                                            App.toastrError("Quê quán và địa giới hành chính khác nhau")
-                                            return;
-                                        }
-                                        if ($scope.infUser.Residence != infUser.PlaceWorking) {
-                                            $scope.err = true
-                                            App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
-                                            return;
-                                        }
-                                        if ($scope.infUser.Residence != infUser.PlaceWorking) {
-                                            $scope.err = true
-                                            App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
-                                            return;
-                                        }*//*
+if ($scope.thon_Residence === "" || $scope.thon_Residence == null || $scope.thon_Residence == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường địa chỉ thôn trong địa chỉ thường chú trống")
+return;
+}
+if ($scope.thon_PlaceofBirth === "" || $scope.thon_PlaceofBirth == null || $scope.thon_PlaceofBirth == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường địa chỉ thôn trong nơi sinh trống")
+return;
+}
+if ($scope.thon_HomeTown === "" || $scope.thon_HomeTown == null || $scope.thon_HomeTown == undefined) {
+$scope.err = true
+App.toastrError("Không được để trường địa chỉ thôn trong quê quán trống")
+return;
+}
+//if ($scope.placeAddress === "" || $scope.placeAddress == null || $scope.placeAddress == undefined) {
+//    $scope.err = true
+//    App.toastrError("Không được để trường Ngày kết nạp đoàn trống")
+//    return;
+//}
+*//*
+                                                                            if ($scope.infUser.PlaceofBirth != infUser.PlaceWorking) {
+                                                                                $scope.err = true
+                                                                                App.toastrError("Nơi sinh và địa giới hành chính khác nhau")
+                                                                                return;
+                                                                            }
+                                                                            if ($scope.infUser.HomeTown != infUser.PlaceWorking) {
+                                                                                $scope.err = true
+                                                                                App.toastrError("Quê quán và địa giới hành chính khác nhau")
+                                                                                return;
+                                                                            }
+                                                                            if ($scope.infUser.Residence != infUser.PlaceWorking) {
+                                                                                $scope.err = true
+                                                                                App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
+                                                                                return;
+                                                                            }
+                                                                            if ($scope.infUser.Residence != infUser.PlaceWorking) {
+                                                                                $scope.err = true
+                                                                                App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
+                                                                                return;
+                                                                            }*//*
 
-            if ($scope.err == true) {
-                return
-            }
+if ($scope.err == true) {
+return
+}
+
+var parts = $scope.infUser.Birthday.split("/");
+if (parts.length === 3) {
+var formattedBirthday = parts[0] + "-" + parts[1] + "-" + parts[2];
+$scope.infUser.Birthday = formattedBirthday;
+}
+
+var parts = $scope.infUser.Birthday.split("-");
+if (parts.length === 3) {
+$scope.infUser.Birthday
+}
+else {
+$scope.err = true
+App.toastrError("Sai định dạng ngày sinh DD/MM/YYYY")
+return;
+}
+
+
+if ($scope.placeAddress) {
+var partsPlaceAddress = $scope.placeAddress.split("/");
+var partsJoinDate = $scope.placeAddress.split("-");
+if (partsPlaceAddress.length === 3) {
+var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
+$scope.placeAddress = formattedPlaceAddress;
+}
+else if (partsJoinDate.length !== 3) {
+$scope.err = true
+App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
+return;
+}
+
+var partsPlaceAddress = $scope.placeAddress.split("-");
+if (partsPlaceAddress.length === 3) {
+$scope.placeAddress
+}
+else {
+$scope.err = true
+App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
+return;
+}
+}*/
 
             var parts = $scope.infUser.Birthday.split("/");
             if (parts.length === 3) {
@@ -3784,47 +3830,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             }
 
 
-            if ($scope.placeAddress) {
-                var partsPlaceAddress = $scope.placeAddress.split("/");
-                var partsJoinDate = $scope.placeAddress.split("-");
-                if (partsPlaceAddress.length === 3) {
-                    var formattedPlaceAddress = partsPlaceAddress[0] + "-" + partsPlaceAddress[1] + "-" + partsPlaceAddress[2];
-                    $scope.placeAddress = formattedPlaceAddress;
-                }
-                else if (partsJoinDate.length !== 3) {
-                    $scope.err = true
-                    App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
-                    return;
-                }
-
-                var partsPlaceAddress = $scope.placeAddress.split("-");
-                if (partsPlaceAddress.length === 3) {
-                    $scope.placeAddress
-                }
-                else {
-                    $scope.err = true
-                    App.toastrError("Sai định dạng ngày kết nạp đoàn DD/MM/YYYY")
-                    return;
-                }
-            }*/
-
-            var parts = $scope.infUser.Birthday.split("/");
-            if (parts.length === 3) {
-                var formattedBirthday = parts[0] + "-" + parts[1] + "-" + parts[2];
-                $scope.infUser.Birthday = formattedBirthday;
-            }
-
-            var parts = $scope.infUser.Birthday.split("-");
-            if (parts.length === 3) {
-                $scope.infUser.Birthday
-            }
-            else {
-                $scope.err = true
-                App.toastrError("Sai định dạng ngày sinh DD/MM/YYYY")
-                return;
-            }
-               
-            
 
 
 
@@ -4870,7 +4875,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.deleteSelectaddToDisciplined();
     }
     $scope.deleteSelectaddToDisciplined = function () {
-       
+
         $scope.selectedWarningDisciplined = {};
     }
 
@@ -4995,7 +5000,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         if ($scope.selectedFamily.BirthPlace) {
             $scope.selectedFamily.BirthPlace = $scope.selectedFamily.BirthPlace
         }
-       
+
         $scope.bienTam = angular.copy(x);
         $scope.changedisable();
         $scope.changedis();
@@ -5295,7 +5300,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         else {
             $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
         }
-        if (year  && year < currentYear) {
+        if (year && year < currentYear) {
             if ($scope.selectedFamily.Relation.toLowerCase() !== 'vợ' && $scope.selectedFamily.Relation.toLowerCase() !== 'chồng') {
                 $scope.WorkingProgressStart = `năm ${year + 18}`;
             }
@@ -5358,6 +5363,30 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
 
     }
+
+    $scope.autoFormat = function (field) {
+        if (field === 'Birthday') {
+            if ($rootScope.regexDate.test($scope.infUser.Birthday)) {
+                $scope.infUser.Birthday = convertDateFormat($scope.infUser.Birthday);
+            }
+        }
+        if (field === 'placeAddress') {
+            if ($rootScope.regexDate.test($scope.placeAddress)) {
+                $scope.placeAddress = convertDateFormat($scope.placeAddress);
+            }
+        }
+    }
+    function convertDateFormat(dateString) {
+        var datePart = dateString.split('/');
+
+        // Reformat the date
+        var newDateString = datePart[0].padStart(2, '0') + '/' +
+            datePart[1].padStart(2, '0') + '/' +
+            datePart[2];
+
+        return newDateString;
+    }
+
     function handleTextUpload(txt) {
         $scope.defaultRTE.value = txt;
         setTimeout(function () {
@@ -6194,15 +6223,19 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
         scope: {
             ngModelCtrl: '=',// Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
             provinces: '=',
-            value: '=',
-            json: '='
+            value: '=?',
+            json: '=?',
+            required: '=?'
         },
         link: function (scope, element, attrs, ngModelCtrl) {
             console.log(scope.provinces);
             scope.ditrict = [
             ];
             scope.Ward = [
-            ]
+            ];
+            scope.errorProvince = false;
+            scope.errorDistrict = false;
+            scope.errorWard = false;
             // Hàm phân tích ngModelCtrl
             function parseNgModelValue(value) {
                 var parts = value.split('_'); // Tách giá trị thành các phần
@@ -6247,6 +6280,26 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
                         },
                     };
                     scope.json = JSON.stringify(json);
+                    if (scope.required == true) {
+                        if (scope.model.tinh_id == NaN || scope.model.tinh_id == '') {
+                            scope.errorProvince = true;
+                        }
+                        else {
+                            scope.errorProvince = false;
+                        }
+                        if (scope.model.huyen_id == NaN || scope.model.huyen_id == '') {
+                            scope.errorDistrict = true;
+                        }
+                        else {
+                            scope.errorDistrict = false;
+                        }
+                        if (scope.model.xaPhuong_id == NaN || scope.model.xaPhuong_id == '') {
+                            scope.errorWard = true;
+                        }
+                        else {
+                            scope.errorWard = false;
+                        }
+                    }
                 }, 100);
             }
             function getDistrict() {

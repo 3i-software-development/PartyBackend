@@ -4064,9 +4064,9 @@ app.directive("choosePosition", function (dataservice) {
         scope: {
             ngModelCtrl: '=',// Tạo một scope riêng để nhận giá trị ngModelCtrl từ bên ngoài
             provinces: '=',
-            value: '=',
-            json: '=',
-            component: '='
+            value: '=?',
+            json: '=?',
+            component: '=?'
         },
         link: function (scope, element, attrs, ngModelCtrl) {
             console.log(scope.provinces);
