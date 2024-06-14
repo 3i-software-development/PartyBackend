@@ -449,6 +449,30 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 },
                 selectedFamilyWorkingProgress: {
                     required: true,
+                },
+                selectedFamilyAddressDie: {
+                    required: true,
+                },
+                selectedFamilyReason: {
+                    required: true,
+                },
+                selectedFamilyParty: {
+                    required: true,
+                },
+                selectedFamilywordAt: {
+                    required: true,
+                },
+                selectedFamilyclass: {
+                    required: true,
+                },
+                selectedFamilyBirthPlace: {
+                    required: true,
+                },
+                selectedFamilyBirthDie:{
+                    required: true,
+                },
+                selectedFamilyResidence: {
+                    required: true,
                 }
 
             },
@@ -475,6 +499,30 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                     required: "Bạn không được để trống trường này",
                 },
                 selectedFamilyWorkingProgress: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedFamilyAddressDie: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedFamilyReason: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedFamilyParty: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedFamilywordAt: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedFamilyclass: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedFamilyBirthPlace: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedFamilyBirthDie: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedFamilyResidence: {
                     required: "Bạn không được để trống trường này",
                 }
             }
