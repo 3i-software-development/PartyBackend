@@ -1,5 +1,5 @@
 ﻿var ctxfolder = "/views/front-end/user";
-var app = angular.module('App_ESEIM', ["ngRoute", 'ui.select', "ngAnimate", "ngSanitize", "ui.bootstrap"])
+var app = angular.module('App_ESEIM', ["ngRoute", 'ui.select', "ngAnimate", "ngSanitize", "ui.bootstrap", "ngValidate"])
 app.factory('dataservice', function ($http) {
     var headers = {
         "Content-Type": "application/json;odata=verbose",
@@ -247,7 +247,7 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
 
 });
 
-app.config(function ($routeProvider, $locationProvider) {
+app.config(function ($routeProvider, $locationProvider, $validatorProvider) {
     $routeProvider
         .when('/', {
             templateUrl: ctxfolder + '/index.html',
@@ -257,6 +257,31 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: ctxfolder + '/index.html',
             controller: 'err'
         })
+    $validatorProvider.setDefaults({
+        errorElement: 'p',
+        errorClass: 'help-block',
+        errorPlacement: function (error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else if (element.prop('type') === 'radio' && element.parent('.radio-inline').length) {
+                error.insertAfter(element.parent().parent());
+            } else if (element.prop('type') === 'checkbox' || element.prop('type') === 'radio') {
+                error.appendTo(element.parent().parent());
+            } else {
+                error.insertAfter(element.closest('.form-control'));
+
+            }
+        },
+        highlight: function (element) {
+            $(element).closest('.form-group').addClass('has-error');
+        },
+        unhighlight: function (element) {
+            $(element).closest('.form-group').removeClass('has-error');
+        },
+        success: function (label) {
+            label.closest('.form-group').removeClass('has-error');
+        }
+    });
 });
 app.directive("voiceRecognition", function () {
     return {
