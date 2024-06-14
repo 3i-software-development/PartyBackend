@@ -5337,27 +5337,32 @@ return;
     };
     // handle birth year logic
     $scope.changeBirthYear = function () {
-        var part = $scope.selectedFamily.BirthYear.trim().split("-");
-        const year = Number(part[0]);
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
+        try {
+            var part = $scope.selectedFamily.BirthYear.trim().split("-");
+            const year = Number(part[0]);
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
 
-        if (year && year >= 1945 && year < currentYear) {
-            $scope.selectedFamily.PoliticalAttitude = `Luôn chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
-        }
-        else {
-            $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
-        }
-        if (year && year < currentYear) {
-            if ($scope.selectedFamily.Relation.toLowerCase() !== 'vợ' && $scope.selectedFamily.Relation.toLowerCase() !== 'chồng') {
-                $scope.WorkingProgressStart = `năm ${year + 18}`;
+            if (year && year >= 1945 && year < currentYear) {
+                $scope.selectedFamily.PoliticalAttitude = `Luôn chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
             }
             else {
-                $scope.WorkingProgressStart = `T1/${year + 18}`;
+                $scope.selectedFamily.PoliticalAttitude = `Không làm gì cho địch, chấp hành tốt mọi đường lối chủ trương của Đảng và nhà nước`;
             }
-        }
-        else {
-            $scope.WorkingProgressStart = 'năm 18 tuổi';
+            if (year && year < currentYear) {
+                if ($scope.selectedFamily.Relation.toLowerCase() !== 'vợ' && $scope.selectedFamily.Relation.toLowerCase() !== 'chồng') {
+                    $scope.WorkingProgressStart = `năm ${year + 18}`;
+                }
+                else {
+                    $scope.WorkingProgressStart = `T1/${year + 18}`;
+                }
+            }
+            else {
+                $scope.WorkingProgressStart = 'năm 18 tuổi';
+            }
+            $scope.forms.addFamily.validate();
+        } catch (e) {
+            console.log(e);
         }
     }
     $scope.saveWorkingProgressYear = function () {
