@@ -18,7 +18,7 @@
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "launchUrl": "http://localhost:6059/Admin/UserJoinParty",
+      "launchUrl": "http://localhost:6059/UserProfile",
       "applicationUrl": "http://localhost:6059"
     },
     "Localization": {
