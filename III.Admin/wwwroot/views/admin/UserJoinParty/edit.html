@@ -475,7 +475,6 @@
                                             <input class="displayInfo" name="Birthday" ng-model="infUser.Birthday" date="true" ng-change="changeHistory();autoFormat('Birthday')"
                                                    type="text" placeholder="Ngày sinh">
                                         </div>
-
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -1939,14 +1938,10 @@
 
                                                                     <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
                                                                     {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
-                                                                    m
                                                                     <div>
                                                                         <span>
                                                                             - Năm sinh{{x.die == true ?"(Đã mất)" : ""}}:
-                                                                            {{x.BirthYear}} {{
-x.BirthDie?"-" + x.BirthDie :
-                                                                ""
-                                                                            }}
+                                                                            {{x.BirthYear}} {{x.BirthDie?"-" + x.BirthDie : ""}}
                                                                         </span>
                                                                     </div>
 
