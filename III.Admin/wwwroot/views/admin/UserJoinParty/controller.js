@@ -368,6 +368,15 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 GroupUser: {
                     required: true,
                 },
+                location: {
+                    required: true,
+                },
+                decisionDate: {
+                    required: true,
+                },
+                decisionNumber: {
+                    required: true,
+                },
                 /*    PlaceofBirth: {
                         required: true,
                     },*/
@@ -415,6 +424,15 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 },
                 GroupUser: {
                     required: "Bạn không được bỏ trống trường nhóm chi bộ"
+                },
+                location: {
+                    required: "Bạn không được bỏ trống trường địa điểm ly hôn",
+                },
+                decisionDate: {
+                    required: "Bạn không được bỏ trống trường ngày ly hôn",
+                },
+                decisionNumber: {
+                    required: "Bạn không được bỏ trống trường số quyết định ly hôn",
                 },
                 /*      GroupUser: {
                           required: "Bạn không được để trống",
@@ -528,6 +546,237 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
             }
         }
 
+        $rootScope.validationOptionsPersonalHistory = {
+            rules: {
+                selectedPersonHistoryBegin: {
+                    required: true,
+                },
+                selectedPersonHistoryEnd: {
+                    required: true,
+                },
+                selectedPersonHistoryContent: {
+                    required: true,
+                }
+
+            },
+            messages: {
+                selectedPersonHistoryBegin: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedPersonHistoryEnd: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedPersonHistoryContent: {
+                    required: "Bạn không được để trống trường này",
+                }
+            }
+        }
+
+        $rootScope.validationOptionBusinessNDuty = {
+            rules: {
+                selectedWorkingTrackingFrom: {
+                    required: true,
+                },
+                selectedWorkingTrackingTo: {
+                    required: true,
+                },
+                selectedWorkingTrackingWork: {
+                    required: true,
+                },
+                selectedWorkingTrackingRole: {
+                    required: true,
+                }
+
+            },
+            messages: {
+                selectedWorkingTrackingFrom: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedWorkingTrackingTo: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedWorkingTrackingWork: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedWorkingTrackingRole: {
+                    required: "Bạn không được để trống trường này",
+                }
+            }
+        }
+
+        $rootScope.validationOptionsHistorySpecialist = {
+            rules: {
+                selectedHistorySpecialistMonthYear: {
+                    required: true,
+                },
+                selectedHistorySpecialistContent: {
+                    required: true,
+                }
+
+            },
+            messages: {
+                selectedHistorySpecialistMonthYear: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedHistorySpecialistContent: {
+                    required: "Bạn không được để trống trường này",
+                }
+            }
+        }
+
+
+        $rootScope.validationOptionsAward = {
+            rules: {
+                selectedLaudatoryMonthYear: {
+                    required: true,
+                },
+                selectedLaudatoryGrantOfDecision: {
+                    required: true,
+                },
+                selectedLaudatoryReason: {
+                    required: true,
+                }
+
+            },
+            messages: {
+                selectedLaudatoryMonthYear: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedLaudatoryGrantOfDecision: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedLaudatoryReason: {
+                    required: "Bạn không được để trống trường này",
+                }
+            }
+        }
+
+
+        $rootScope.validationOptionsDisciplined = {
+            rules: {
+                selectedWarningDisciplinedMonthYear: {
+                    required: true,
+                },
+                selectedWarningDisciplinedGrantOfDecision: {
+                    required: true,
+                },
+                selectedWarningDisciplinedReason: {
+                    required: true,
+                }
+
+            },
+            messages: {
+                selectedWarningDisciplinedMonthYear: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedWarningDisciplinedGrantOfDecision: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedWarningDisciplinedReason: {
+                    required: "Bạn không được để trống trường này",
+                }
+            }
+        }
+
+
+        $rootScope.validationOptionsCertificatedPass = {
+            rules: {
+                selectedTrainingCertificatedPassFrom: {
+                    required: true,
+                },
+                selectedTrainingCertificatedPassTo: {
+                    required: true,
+                },
+                selectedTrainingCertificatedPassSchoolName: {
+                    required: true,
+                },
+                selectedTrainingCertificatedPassClass: {
+                    required: true,
+                },
+                selectedTrainingCertificatedPassCertificate: {
+                    required: true,
+                }
+            },
+            messages: {
+                selectedTrainingCertificatedPassFrom: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedTrainingCertificatedPassTo: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedTrainingCertificatedPassSchoolName: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedTrainingCertificatedPassClass: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedTrainingCertificatedPassCertificate: {
+                    required: "Bạn không được để trống trường này",
+                }
+            }
+        }
+
+
+        $rootScope.validationOptionsGoAboard = {
+            rules: {
+                selectedGoAboardFrom: {
+                    required: true,
+                },
+                selectedGoAboardTo: {
+                    required: true,
+                },
+                selectedGoAboardContact: {
+                    required: true,
+                },
+                selectedGoAboardCountry: {
+                    required: true,
+                }
+            },
+            messages: {
+                selectedGoAboardFrom: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedGoAboardTo: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedGoAboardContact: {
+                    required: "Bạn không được để trống trường này",
+                },
+                selectedGoAboardCountry: {
+                    required: "Bạn không được để trống trường này",
+                }
+            }
+        }
+        $rootScope.validationOptionsIntroducer = {
+            rules: {
+                IntroducerPersonIntroduced: {
+                    required: true,
+                },
+                IntroducerPlaceTimeJoinUnion: {
+                    required: true,
+                },
+                IntroducerPlaceTimeRecognize: {
+                    required: true,
+                },
+                IntroducerPlaceTimeJoinParty: {
+                    required: true,
+                }
+            },
+            messages: {
+                IntroducerPersonIntroduced: {
+                    required: "Bạn không được để trống trường này",
+                },
+                IntroducerPlaceTimeJoinUnion: {
+                    required: "Bạn không được để trống trường này",
+                },
+                IntroducerPlaceTimeRecognize: {
+                    required: "Bạn không được để trống trường này",
+                },
+                IntroducerPlaceTimeJoinParty: {
+                    required: "Bạn không được để trống trường này",
+                }
+            }
+        }
         $rootScope.IsTranslate = true;
     });
     $rootScope.regexDate = /^(0?[1-9]|[12][0-9]|3[01])\/(0?[1-9]|1[0-2])\/\d{4}$/;
@@ -3153,39 +3402,34 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     };
 
     $scope.addToPersonalHistory = function () {
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-        $scope.err = false
-        if ($scope.selectedPersonHistory.Begin == null || $scope.selectedPersonHistory.Begin == undefined || $scope.selectedPersonHistory.Begin == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedPersonHistory.End == null || $scope.selectedPersonHistory.End == undefined || $scope.selectedPersonHistory.End == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedPersonHistory.Content == null || $scope.selectedPersonHistory.Content == undefined || $scope.selectedPersonHistory.Content == '') {
-            $scope.err = true
-        }
+        if ($scope.forms.personalHis.validate()) {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            $scope.err = false
+            if ($scope.selectedPersonHistory.Begin == null || $scope.selectedPersonHistory.Begin == undefined || $scope.selectedPersonHistory.Begin == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedPersonHistory.End == null || $scope.selectedPersonHistory.End == undefined || $scope.selectedPersonHistory.End == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedPersonHistory.Content == null || $scope.selectedPersonHistory.Content == undefined || $scope.selectedPersonHistory.Content == '') {
+                $scope.err = true
+            }
+            if ($scope.err) {
+                App.toastrError("Bạn chưa nhập đủ thông tin")
+                return
+            }
+            var model = {}
+            model.Begin = $scope.selectedPersonHistory.Begin
+            model.End = $scope.selectedPersonHistory.End
+            model.Content = $scope.selectedPersonHistory.Content
+            model.Id = 0;
+            model.ProfileCode = $scope.selectedPersonHistory.ProfileCode;
+            model.Type = $scope.selectedPersonHistory.Type;
 
-        /*        if ($scope.selectedPersonHistory.End > currentYear || $scope.selectedPersonHistory.Begin > currentYear || $scope.selectedPersonHistory.Begin > $scope.selectedPersonHistory.End ) {
-                    App.toastrError("Năm nhập vào không hợp lệ")
-                    return
-                    $scope.err = true
-                }*/
-
-        if ($scope.err) {
-            App.toastrError("Bạn chưa nhập đủ thông tin")
-            return
+            $scope.PersonalHistory.push(model);
+            $scope.deleteselectPersonHistory()
         }
-        var model = {}
-        model.Begin = $scope.selectedPersonHistory.Begin
-        model.End = $scope.selectedPersonHistory.End
-        model.Content = $scope.selectedPersonHistory.Content
-        model.Id = 0;
-        model.ProfileCode = $scope.selectedPersonHistory.ProfileCode;
-        model.Type = $scope.selectedPersonHistory.Type;
-
-        $scope.PersonalHistory.push(model);
-        $scope.deleteselectPersonHistory()
     }
 
     $scope.submitPersonalHistorys = function () {
@@ -3515,25 +3759,25 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
 
     $scope.submitHistorySpecialist = function () {
-        $scope.model = [];
-        $scope.HistoricalFeatures.forEach(function (historicalFeatures) {
-            var obj = {};
-            obj.MonthYear = historicalFeatures.MonthYear;
-            obj.Content = historicalFeatures.Content;
-            obj.ProfileCode = $scope.infUser.ResumeNumber;
-            obj.Id = historicalFeatures.Id;
-            $scope.model.push(obj)
-        });
-        dataserviceJoinParty.insertHistorySpecialist($scope.model, function (result) {
-            result = result.data;
-            if (result.Error) {
-                App.toastrError(result.Title);
-            } else {
-                App.toastrSuccess(result.Title);
-                $scope.getHistorySpecialistByProfileCode()
-            }
-        })
-        console.log($scope.model);
+            $scope.model = [];
+            $scope.HistoricalFeatures.forEach(function (historicalFeatures) {
+                var obj = {};
+                obj.MonthYear = historicalFeatures.MonthYear;
+                obj.Content = historicalFeatures.Content;
+                obj.ProfileCode = $scope.infUser.ResumeNumber;
+                obj.Id = historicalFeatures.Id;
+                $scope.model.push(obj)
+            });
+            dataserviceJoinParty.insertHistorySpecialist($scope.model, function (result) {
+                result = result.data;
+                if (result.Error) {
+                    App.toastrError(result.Title);
+                } else {
+                    App.toastrSuccess(result.Title);
+                    $scope.getHistorySpecialistByProfileCode()
+                }
+            })
+            console.log($scope.model);
     }
 
     $scope.submitAward = function () {
@@ -4341,26 +4585,28 @@ return;
     }
 
     $scope.submitIntroducer = function () {
-        if ($scope.Username != null && $scope.Username != undefined) {
-            $scope.model = {};
-            $scope.model.PersonIntroduced = $scope.Introducer.PersonIntroduced;
-            $scope.model.PlaceTimeJoinUnion = $scope.Introducer.PlaceTimeJoinUnion;
-            $scope.model.PlaceTimeJoinParty = $scope.Introducer.PlaceTimeJoinParty;
-            $scope.model.PlaceTimeRecognize = $scope.Introducer.PlaceTimeRecognize;
-            $scope.model.ProfileCode = $scope.infUser.ResumeNumber;
-            $scope.model.Id = $scope.Introducer.Id;
+        if ($scope.forms.Introducer.validate()) {
+            if ($scope.Username != null && $scope.Username != undefined) {
+                $scope.model = {};
+                $scope.model.PersonIntroduced = $scope.Introducer.PersonIntroduced;
+                $scope.model.PlaceTimeJoinUnion = $scope.Introducer.PlaceTimeJoinUnion;
+                $scope.model.PlaceTimeJoinParty = $scope.Introducer.PlaceTimeJoinParty;
+                $scope.model.PlaceTimeRecognize = $scope.Introducer.PlaceTimeRecognize;
+                $scope.model.ProfileCode = $scope.infUser.ResumeNumber;
+                $scope.model.Id = $scope.Introducer.Id;
 
-        };
-        dataserviceJoinParty.insertIntroducer($scope.model, function (result) {
-            result = result.data;
-            if (result.Error) {
-                App.toastrError(result.Title);
-            } else {
-                App.toastrSuccess(result.Title);
-                $scope.getIntroducerOfPartyByProfileCode()
-            }
-        })
-        console.log($scope.model);
+            };
+            dataserviceJoinParty.insertIntroducer($scope.model, function (result) {
+                result = result.data;
+                if (result.Error) {
+                    App.toastrError(result.Title);
+                } else {
+                    App.toastrSuccess(result.Title);
+                    $scope.getIntroducerOfPartyByProfileCode()
+                }
+            })
+            console.log($scope.model);
+        }
     }
     // //getById
     // $scope.getBusinessNDutyById = function () {
@@ -4812,115 +5058,124 @@ return;
     }
 
     $scope.addToAward = function () {
-        $scope.err = false
-        if ($scope.selectedLaudatory.MonthYear == null || $scope.selectedLaudatory.MonthYear == undefined || $scope.selectedLaudatory.MonthYear == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedLaudatory.GrantOfDecision == null || $scope.selectedLaudatory.GrantOfDecision == undefined || $scope.selectedLaudatory.GrantOfDecision == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedLaudatory.Reason == null || $scope.selectedLaudatory.Reason == undefined || $scope.selectedLaudatory.Reason == '') {
-            $scope.err = true
-        }
+        if ($scope.forms.Award.validate()) {
+            $scope.err = false
+            if ($scope.selectedLaudatory.MonthYear == null || $scope.selectedLaudatory.MonthYear == undefined || $scope.selectedLaudatory.MonthYear == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedLaudatory.GrantOfDecision == null || $scope.selectedLaudatory.GrantOfDecision == undefined || $scope.selectedLaudatory.GrantOfDecision == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedLaudatory.Reason == null || $scope.selectedLaudatory.Reason == undefined || $scope.selectedLaudatory.Reason == '') {
+                $scope.err = true
+            }
 
-        if ($scope.err) {
-            App.toastrError("Bạn chưa nhập đủ thông tin")
-            return
+            if ($scope.err) {
+                App.toastrError("Bạn chưa nhập đủ thông tin")
+                return
+            }
+            var model = {}
+            model.MonthYear = $scope.selectedLaudatory.MonthYear
+            model.GrantOfDecision = $scope.selectedLaudatory.GrantOfDecision
+            model.Reason = $scope.selectedLaudatory.Reason
+            model.ProfileCode = $scope.infUser.ResumeNumber;
+            $scope.Laudatory.push(model)
+            $scope.deleteSelectToAward();
         }
-        var model = {}
-        model.MonthYear = $scope.selectedLaudatory.MonthYear
-        model.GrantOfDecision = $scope.selectedLaudatory.GrantOfDecision
-        model.Reason = $scope.selectedLaudatory.Reason
-        model.ProfileCode = $scope.infUser.ResumeNumber;
-        $scope.Laudatory.push(model)
-        $scope.deleteSelectToAward();
     }
     $scope.deleteSelectToAward = function () {
         $scope.selectedLaudatory = {}
     }
     $scope.addToBusinessNDuty = function () {
-        $scope.err = false
-        if ($scope.selectedWorkingTracking.From == null || $scope.selectedWorkingTracking.From == undefined || $scope.selectedWorkingTracking.From == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedWorkingTracking.To == null || $scope.selectedWorkingTracking.To == undefined || $scope.selectedWorkingTracking.To == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedWorkingTracking.Work == null || $scope.selectedWorkingTracking.Work == undefined || $scope.selectedWorkingTracking.Work == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedWorkingTracking.Role == null || $scope.selectedWorkingTracking.Role == undefined || $scope.selectedWorkingTracking.Role == '') {
-            $scope.err = true
-        }
+        if ($scope.forms.BusinessNDuty.validate()) {
+            $scope.err = false
+            if ($scope.selectedWorkingTracking.From == null || $scope.selectedWorkingTracking.From == undefined || $scope.selectedWorkingTracking.From == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedWorkingTracking.To == null || $scope.selectedWorkingTracking.To == undefined || $scope.selectedWorkingTracking.To == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedWorkingTracking.Work == null || $scope.selectedWorkingTracking.Work == undefined || $scope.selectedWorkingTracking.Work == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedWorkingTracking.Role == null || $scope.selectedWorkingTracking.Role == undefined || $scope.selectedWorkingTracking.Role == '') {
+                $scope.err = true
+            }
 
-        if ($scope.err) {
-            App.toastrError("Bạn chưa nhập đủ thông tin")
-            return
-        }
-        var model = {}
-        model.From = $scope.selectedWorkingTracking.From
-        model.To = $scope.selectedWorkingTracking.To
-        model.Work = $scope.selectedWorkingTracking.Work
-        model.Role = $scope.selectedWorkingTracking.Role
+            if ($scope.err) {
+                App.toastrError("Bạn chưa nhập đủ thông tin")
+                return
+            }
+            var model = {}
+            model.From = $scope.selectedWorkingTracking.From
+            model.To = $scope.selectedWorkingTracking.To
+            model.Work = $scope.selectedWorkingTracking.Work
+            model.Role = $scope.selectedWorkingTracking.Role
 
-        model.Id = 0;
-        $scope.BusinessNDuty.push(model)
-        $scope.deleteSelectToBusinessNDuty();
+            model.Id = 0;
+            $scope.BusinessNDuty.push(model)
+            $scope.deleteSelectToBusinessNDuty();
+        }
     }
 
     $scope.deleteSelectToBusinessNDuty = function () {
         $scope.selectedWorkingTracking = {};
     }
     $scope.addToHistorySpecialist = function () {
-        $scope.err = false
-        if ($scope.selectedHistorySpecialist.MonthYear == null || $scope.selectedHistorySpecialist.MonthYear == undefined || $scope.selectedHistorySpecialist.MonthYear == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedHistorySpecialist.Content == null || $scope.selectedHistorySpecialist.Content == undefined || $scope.selectedHistorySpecialist.Content == '') {
-            $scope.err = true
-        }
+        if ($scope.forms.HistorySpecialist.validate()) {
 
-        if ($scope.err) {
-            App.toastrError("Bạn chưa nhập đủ thông tin")
-            return
-        }
-        var obj = {};
-        obj.MonthYear = $scope.selectedHistorySpecialist.MonthYear;
-        obj.Content = $scope.selectedHistorySpecialist.Content;
-        obj.ProfileCode = $scope.infUser.ResumeNumber;
+            $scope.err = false
+            if ($scope.selectedHistorySpecialist.MonthYear == null || $scope.selectedHistorySpecialist.MonthYear == undefined || $scope.selectedHistorySpecialist.MonthYear == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedHistorySpecialist.Content == null || $scope.selectedHistorySpecialist.Content == undefined || $scope.selectedHistorySpecialist.Content == '') {
+                $scope.err = true
+            }
 
-        obj.Id = 0;
-        $scope.HistoricalFeatures.push(obj)
-        $scope.deleteSelectToHistorySpecialist();
+            if ($scope.err) {
+                App.toastrError("Bạn chưa nhập đủ thông tin")
+                return
+            }
+            var obj = {};
+            obj.MonthYear = $scope.selectedHistorySpecialist.MonthYear;
+            obj.Content = $scope.selectedHistorySpecialist.Content;
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+
+            obj.Id = 0;
+            $scope.HistoricalFeatures.push(obj)
+            $scope.deleteSelectToHistorySpecialist();
+        }
     }
     $scope.deleteSelectToHistorySpecialist = function () {
         $scope.selectedHistorySpecialist = {};
     }
     $scope.addToDisciplined = function () {
-        $scope.err = false
-        if ($scope.selectedWarningDisciplined.MonthYear == null || $scope.selectedWarningDisciplined.MonthYear == undefined || $scope.selectedWarningDisciplined.MonthYear == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedWarningDisciplined.Reason == null || $scope.selectedWarningDisciplined.Reason == undefined || $scope.selectedWarningDisciplined.Reason == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedWarningDisciplined.GrantOfDecision == null || $scope.selectedWarningDisciplined.GrantOfDecision == undefined || $scope.selectedWarningDisciplined.GrantOfDecision == '') {
-            $scope.err = true
-        }
+        if ($scope.forms.Disciplined.validate()) {
+            $scope.err = false
+            if ($scope.selectedWarningDisciplined.MonthYear == null || $scope.selectedWarningDisciplined.MonthYear == undefined || $scope.selectedWarningDisciplined.MonthYear == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedWarningDisciplined.Reason == null || $scope.selectedWarningDisciplined.Reason == undefined || $scope.selectedWarningDisciplined.Reason == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedWarningDisciplined.GrantOfDecision == null || $scope.selectedWarningDisciplined.GrantOfDecision == undefined || $scope.selectedWarningDisciplined.GrantOfDecision == '') {
+                $scope.err = true
+            }
 
-        if ($scope.err) {
-            App.toastrError("Bạn chưa nhập đủ thông tin")
-            return
-        }
-        var obj = {};
-        obj.MonthYear = $scope.selectedWarningDisciplined.MonthYear;
-        obj.Reason = $scope.selectedWarningDisciplined.Reason;
-        obj.GrantOfDecision = $scope.selectedWarningDisciplined.GrantOfDecision;
+            if ($scope.err) {
+                App.toastrError("Bạn chưa nhập đủ thông tin")
+                return
+            }
+            var obj = {};
+            obj.MonthYear = $scope.selectedWarningDisciplined.MonthYear;
+            obj.Reason = $scope.selectedWarningDisciplined.Reason;
+            obj.GrantOfDecision = $scope.selectedWarningDisciplined.GrantOfDecision;
 
-        obj.ProfileCode = $scope.infUser.ResumeNumber;
-        obj.Id = 0;
-        $scope.Disciplined.push(obj)
-        $scope.deleteSelectaddToDisciplined();
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            obj.Id = 0;
+            $scope.Disciplined.push(obj)
+            $scope.deleteSelectaddToDisciplined();
+        }
     }
     $scope.deleteSelectaddToDisciplined = function () {
 
@@ -4928,66 +5183,70 @@ return;
     }
 
     $scope.addToTrainingCertificatedPass = function () {
-        $scope.err = false
-        if ($scope.selectedTrainingCertificatedPass.From == null || $scope.selectedTrainingCertificatedPass.From == undefined || $scope.selectedTrainingCertificatedPass.From == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedTrainingCertificatedPass.To == null || $scope.selectedTrainingCertificatedPass.To == undefined || $scope.selectedTrainingCertificatedPass.To == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedTrainingCertificatedPass.SchoolName == null || $scope.selectedTrainingCertificatedPass.SchoolName == undefined || $scope.selectedTrainingCertificatedPass.SchoolName == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedTrainingCertificatedPass.Certificate == null || $scope.selectedTrainingCertificatedPass.Certificate == undefined || $scope.selectedTrainingCertificatedPass.Certificate == '') {
-            $scope.err = true
-        }
-        if ($scope.err) {
-            App.toastrError("Bạn chưa nhập đủ thông tin")
-            return
-        }
-        var obj = {};
-        obj.From = $scope.selectedTrainingCertificatedPass.From;
-        obj.To = $scope.selectedTrainingCertificatedPass.To;
-        obj.SchoolName = $scope.selectedTrainingCertificatedPass.SchoolName;
-        obj.Class = $scope.selectedTrainingCertificatedPass.Class;
-        obj.Certificate = $scope.selectedTrainingCertificatedPass.Certificate;
+        if ($scope.forms.CertificatedPass.validate()) {
+            $scope.err = false
+            if ($scope.selectedTrainingCertificatedPass.From == null || $scope.selectedTrainingCertificatedPass.From == undefined || $scope.selectedTrainingCertificatedPass.From == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedTrainingCertificatedPass.To == null || $scope.selectedTrainingCertificatedPass.To == undefined || $scope.selectedTrainingCertificatedPass.To == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedTrainingCertificatedPass.SchoolName == null || $scope.selectedTrainingCertificatedPass.SchoolName == undefined || $scope.selectedTrainingCertificatedPass.SchoolName == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedTrainingCertificatedPass.Certificate == null || $scope.selectedTrainingCertificatedPass.Certificate == undefined || $scope.selectedTrainingCertificatedPass.Certificate == '') {
+                $scope.err = true
+            }
+            if ($scope.err) {
+                App.toastrError("Bạn chưa nhập đủ thông tin")
+                return
+            }
+            var obj = {};
+            obj.From = $scope.selectedTrainingCertificatedPass.From;
+            obj.To = $scope.selectedTrainingCertificatedPass.To;
+            obj.SchoolName = $scope.selectedTrainingCertificatedPass.SchoolName;
+            obj.Class = $scope.selectedTrainingCertificatedPass.Class;
+            obj.Certificate = $scope.selectedTrainingCertificatedPass.Certificate;
 
-        obj.ProfileCode = $scope.infUser.ResumeNumber;
-        obj.Id = 0;
-        $scope.PassedTrainingClasses.push(obj)
-        $scope.deleteSelectToTrainingCertificatedPass()
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            obj.Id = 0;
+            $scope.PassedTrainingClasses.push(obj)
+            $scope.deleteSelectToTrainingCertificatedPass()
+        }
     }
     $scope.deleteSelectToTrainingCertificatedPass = function () {
         $scope.selectedTrainingCertificatedPass = {};
     }
     $scope.addToGoAboard = function () {
-        $scope.err = false
-        if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedGoAboard.To == null || $scope.selectedGoAboard.To == undefined || $scope.selectedGoAboard.To == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedGoAboard.Contact == null || $scope.selectedGoAboard.Contact == undefined || $scope.selectedGoAboard.Contact == '') {
-            $scope.err = true
-        }
-        if ($scope.selectedGoAboard.Country == null || $scope.selectedGoAboard.Country == undefined || $scope.selectedGoAboard.Country == '') {
-            $scope.err = true
-        }
-        if ($scope.err) {
-            App.toastrError("Bạn chưa nhập đủ thông tin")
-            return
-        }
-        var obj = {};
-        obj.From = $scope.selectedGoAboard.From;
-        obj.To = $scope.selectedGoAboard.To;
-        obj.Contact = $scope.selectedGoAboard.Contact;
-        obj.Country = $scope.selectedGoAboard.Country;
+        if ($scope.forms.GoAboard.validate()) {
+            $scope.err = false
+            if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedGoAboard.To == null || $scope.selectedGoAboard.To == undefined || $scope.selectedGoAboard.To == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedGoAboard.Contact == null || $scope.selectedGoAboard.Contact == undefined || $scope.selectedGoAboard.Contact == '') {
+                $scope.err = true
+            }
+            if ($scope.selectedGoAboard.Country == null || $scope.selectedGoAboard.Country == undefined || $scope.selectedGoAboard.Country == '') {
+                $scope.err = true
+            }
+            if ($scope.err) {
+                App.toastrError("Bạn chưa nhập đủ thông tin")
+                return
+            }
+            var obj = {};
+            obj.From = $scope.selectedGoAboard.From;
+            obj.To = $scope.selectedGoAboard.To;
+            obj.Contact = $scope.selectedGoAboard.Contact;
+            obj.Country = $scope.selectedGoAboard.Country;
 
-        obj.ProfileCode = $scope.infUser.ResumeNumber;
-        obj.Id = 0;
-        $scope.GoAboard.push(obj)
-        $scope.deleteSelectToGoAboard();
+            obj.ProfileCode = $scope.infUser.ResumeNumber;
+            obj.Id = 0;
+            $scope.GoAboard.push(obj)
+            $scope.deleteSelectToGoAboard();
+        }
     }
     $scope.deleteSelectToGoAboard = function () {
         $scope.selectedGoAboard = {};
@@ -5421,6 +5680,24 @@ return;
         if (field === 'placeAddress') {
             if ($rootScope.regexDate.test($scope.placeAddress)) {
                 $scope.placeAddress = convertDateFormat($scope.placeAddress);
+            }
+        }
+
+        if (field === 'selectedLaudatoryMonthYear') {
+            if ($rootScope.regexDate.test($scope.selectedLaudatory.MonthYear)) {
+                $scope.selectedLaudatory.MonthYear = convertDateFormat($scope.selectedLaudatory.MonthYear);
+            }
+        }
+
+        if (field === 'selectedWarningDisciplinedMonthYear') {
+            if ($rootScope.regexDate.test($scope.selectedWarningDisciplined.MonthYear)) {
+                $scope.selectedWarningDisciplined.MonthYear = convertDateFormat($scope.selectedWarningDisciplined.MonthYear);
+            }
+        }
+
+        if (field === 'decisionDate') {
+            if ($rootScope.regexDate.test($scope.infUser.MaritalStatus.decisionDate)) {
+                $scope.infUser.MaritalStatus.decisionDate = convertDateFormat($scope.infUser.MaritalStatus.decisionDate);
             }
         }
     }
