@@ -39,7 +39,7 @@
                             popover-placement="bottom-left"
                             uib-popover="Quan hệ của người thân là: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                             popover-trigger="outsideClick"></i>
-                        <input class="displayInfo" style="border: #FFFF;" name="CusCode"
+                        <input class="displayInfo" style="border: #FFFF;" name="selectedFamilyRelation"
                             ng-model="selectedFamily.Relation" type="text" ng-change="filterRelation()"
                             placeholder="Quan hệ" />
                         <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition

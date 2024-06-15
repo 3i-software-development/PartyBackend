@@ -1401,7 +1401,7 @@ namespace III.Admin.Controllers
                     obj.BirthName = model.BirthName;
                     obj.Gender = model.Gender == "Nam" ? 0 : 1;
                     obj.Nation = model.Nation;
-                    /*obj.Religion = model.Religion;*/
+                    obj.Religion = model.Religion;
                     obj.PermanentResidenceValue = model.PermanentResidenceValue;
                     obj.PermanentResidence = model.PermanentResidence;
                     obj.Phone = model.Phone;
