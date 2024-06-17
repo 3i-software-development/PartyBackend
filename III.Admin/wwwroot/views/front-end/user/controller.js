@@ -4092,7 +4092,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.changedisable();
             $scope.changedis();
             $scope.filterRelation();
-            $scope.resetValidateFamily();
+            setTimeout(() => $scope.resetValidateFamily(), 150);
         }
         $scope.deleteS = false;
     };
@@ -4949,6 +4949,7 @@ app.directive("choosePosition", function (dataservice) {
                             scope.errorWard = false;
                         }
                     }
+                    setTimeout(() => scope.$apply());
                 }, 100);
             }
             function getDistrict() {

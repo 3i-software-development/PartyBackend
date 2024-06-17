@@ -54,7 +54,8 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
         messages: {
             PhoneNumber: {
                 required: 'Số điện thoại không được bỏ trống',
-                phoneVN: 'Số điện thoại không hợp lệ' // Custom message for invalid phone number
+                phoneVN: 'Số điện thoại không hợp lệ', // Custom message for invalid phone number
+                minlength: "Số điện thoại phải có ít nhất {0} ký tự"
             },
             Password: {
                 required: "Mật khẩu không được bỏ trống",

@@ -375,10 +375,7 @@
                     <a href="" ng-click="SaveJson ? uploadJsonFile() : uploadFile()">
                         <i class="fa fa-download" aria-hidden="true" style="font-size: 25px;"></i>
                         <span style="font-weight: bold;">
-                            {{
- SaveJson ? 'Load dữ liệu JSON' : 'Tải dữ
-                            liệu xuống form'
-                            }}
+                            {{ SaveJson ? 'Load dữ liệu JSON' : 'Tải dữ liệu xuống form' }}
                         </span>
                     </a>
                 </div>
@@ -1494,7 +1491,7 @@
                                                                ng-change="changedisable()"><span style="font-weight: bold; text-wrap: nowrap;">Đã mất</span>
                                                     </div>
                                                     <div style="display: block; width: 100%" class="col-md-10; pr-0" ng-if="!selectedFamily.disableAddress">
-                                                        <div class="br24 form-control custom-title-code-bold " 
+                                                        <div class="br24 form-control custom-title-code-bold "
                                                              style="white-space:nowrap">
                                                             <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
                                                                title="Popover Header" popover-placement="bottom-left"
@@ -1508,7 +1505,7 @@
                                                         </div>
                                                     </div>
                                                     <div style="display: block; margin-right:10px" ng-if="selectedFamily.disableAddress">
-                                                        <div class="br24 form-control custom-title-code-bold col-md-5" 
+                                                        <div class="br24 form-control custom-title-code-bold col-md-5"
                                                              style="white-space:nowrap">
                                                             <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
                                                                title="Popover Header" popover-placement="bottom-left"
@@ -1549,7 +1546,7 @@
                                                 </label>
                                             </div>
 
-                                            <div class="col-md-4" >
+                                            <div class="col-md-4">
                                                 <div class="br24 form-control custom-title-code-bold mb-1"
                                                      style="white-space: nowrap; padding-right: 35px;">
                                                     <i class="fa fa-info-circle icon-clickable" id="residence"
@@ -1564,7 +1561,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-4" >
+                                            <div class="col-md-4">
                                                 <div class="br24 form-control custom-title-code-bold mb-1"
                                                      style="white-space: nowrap; padding-right: 35px;">
                                                     <i class="fa fa-info-circle icon-clickable" id="residence"
@@ -1598,10 +1595,10 @@
                                                                ng-change="changedis()"><span style="font-weight: bold;">
                                                     </div>
 
-                                                        <div style="display: block;">
-                                                    <div ng-if="PartyMember"
-                                                         class="br24 form-control custom-title-code-bold col-md-6"
-                                                         style="white-space:nowrap">
+                                                    <div style="display: block;">
+                                                        <div ng-if="PartyMember"
+                                                             class="br24 form-control custom-title-code-bold col-md-6"
+                                                             style="white-space:nowrap">
 
                                                             <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
                                                                title="Popover Header" popover-placement="bottom-left"
@@ -1613,10 +1610,10 @@
                                                                    placeholder="Công tác tại " />
                                                         </div>
                                                     </div>
-                                                        <div style="display: block;">
-                                                    <div ng-if="PartyMember"
-                                                         class="br24 form-control custom-title-code-bold col-md-6"
-                                                         style="white-space:nowrap">
+                                                    <div style="display: block;">
+                                                        <div ng-if="PartyMember"
+                                                             class="br24 form-control custom-title-code-bold col-md-6"
+                                                             style="white-space:nowrap">
 
                                                             <i class="fa fa-info-circle icon-clickable" id="dateOfBirdRelation"
                                                                title="Popover Header" popover-placement="bottom-left"
@@ -1947,6 +1944,8 @@
                                                                 </td>
                                                                 <td>
 
+
+
                                                                     <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
                                                                     {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                                     <div>
@@ -1974,6 +1973,7 @@
                                                                 <td style="white-space: pre">{{x.WorkingProgress}}</td>
                                                                 <td>{{x.PoliticalAttitude}}</td>
                                                                 <td>
+
                                                                     <!--{{x.PartyMember == true?"Có (Sinh hoạt tại: " +x.wordAt + ")" : "Không"}}-->
                                                                     <div><span>{{x.PartyMember == true ?"- Là đảng viên" : "- Không phải là đảng viên"}}</span></div>
                                                                     <div>
@@ -2292,7 +2292,7 @@
                                                        ng-model="selectedLaudatory.GrantOfDecision" type="text"
                                                        placeholder="Cấp quyết định" />
                                                 <!-- <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                            ng-model="selectedLaudatory.GrantOfDecision"></i>-->
+                                                ng-model="selectedLaudatory.GrantOfDecision"></i>-->
                                             </div>
                                         </div>
                                     </div>
@@ -2408,7 +2408,7 @@
                                                        placeholder="Cấp quyết định" />
 
                                                 <!--<i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                           ng-model="selectedWarningDisciplined.GrantOfDecision"></i>-->
+                                                ng-model="selectedWarningDisciplined.GrantOfDecision"></i>-->
                                             </div>
                                         </div>
                                     </div>
@@ -2662,7 +2662,7 @@
                                             thiệu
                                         </label>
                                     </div>
-                                    <div class="col-md-8" >
+                                    <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="PersonIntroduced"
                                                title="Popover Header" popover-placement="bottom-left"
@@ -2687,7 +2687,7 @@
                                             Đoàn
                                         </label>
                                     </div>
-                                    <div class="col-md-8" >
+                                    <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinUnion"
                                                title="Popover Header" popover-placement="bottom-left"
@@ -2710,7 +2710,7 @@
                                             nhất
                                         </label>
                                     </div>
-                                    <div class="col-md-8" >
+                                    <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinParty"
                                                title="Popover Header" popover-placement="bottom-left"
