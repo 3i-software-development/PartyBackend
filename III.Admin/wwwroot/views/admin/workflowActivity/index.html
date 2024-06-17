@@ -209,11 +209,12 @@
         box-shadow: 1px 3px 8px 0px #888888c2;
     }
 
-    @media(max-width: 450px){
+    @media(max-width: 450px) {
         #searchBox {
-            left:-12px!important;
+            left: -12px !important;
         }
     }
+
     .main-menu-editWorkflow {
         position: absolute;
         right: -10px;
@@ -234,19 +235,20 @@
     }
 
 
-    @media (max-width : 600px){
-        .main-menu-editWorkflow{
-            top:45px!important;
-            width:100%!important;
-            z-index:2!important;
+    @media (max-width : 600px) {
+        .main-menu-editWorkflow {
+            top: 45px !important;
+            width: 100% !important;
+            z-index: 2 !important;
             right: 8px;
         }
-        .main-right-editWorkflow{
-            top:45px!important;
-            z-index:3!important;
+
+        .main-right-editWorkflow {
+            top: 45px !important;
+            z-index: 3 !important;
             right: 8px;
         }
-       
+
     }
 
 
@@ -277,12 +279,14 @@
         /* Màu nền khi hàng được chọn */
         font-size: large;
     }
+
     .table-scrollable {
-        max-height: 80vh; /* Chiều cao tối đa của phần tử chứa bảng */
-        max-width: 100%; /* Chiều rộng tối đa của phần tử chứa bảng */
-        overflow: auto; 
-      }
-      
+        max-height: 80vh;
+        /* Chiều cao tối đa của phần tử chứa bảng */
+        max-width: 100%;
+        /* Chiều rộng tối đa của phần tử chứa bảng */
+        overflow: auto;
+    }
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
 <link href="/lib/robust/css/core/menu/menu-types/vertical-menu.css" <div ng-show="isShowDiagram" class="parent_svg"
@@ -368,12 +372,12 @@
                 </ui-select>
             </div>
         </div>
-        <div class="create-box" ng-click="createWfInstance()">
+        <!-- <div class="create-box" ng-click="createWfInstance()">
             <button class="btn btn-border-black ml5">
                 <span class="fa fa-plus"></span>
                 {{'WFAI_BTN_CREATE_WFLI' | translate}}
             </button>
-        </div>
+        </div> -->
         <div class="create-box">
             <button class="btn btn-border-black ml5" ng-click="showJson()">
                 <span class="fa fa-bullseye"></span>
@@ -505,12 +509,12 @@
             </a>
             <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
         </div>
-        <div class="pr-2 text-center">
+        <!-- <div class="pr-2 text-center">
             <a class1="btn btn-icon-only btn-circle btn-outline green-custom" ng-click="createWfInstance()">
                 <i class="fa-solid fa-plus fs25"></i>
             </a>
             <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_ADD' | translate}}</p>
-        </div>
+        </div> -->
         <div class="text-center pr-2" style="margin-top: -10px;">
             <a ng-click="viewCmsDetail('DSNS_TKNS')" class="fs30">
                 <span><i class="fas fa-question " aria-hidden="true"></i></span>
@@ -534,7 +538,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label
-                                            class="label-lg-content text-underline">{{'WFAI_MSG_STREAM_NAME_INSTANCE_CODE' |
+                                            class="label-lg-content text-underline">{{'WFAI_MSG_STREAM_NAME_INSTANCE_CODE'
+                                            |
                                             translate}}</label>
                                         <input data-ng-model="modelSearch.WfInstName" class="form-control br24"
                                             name="WfInstName"
@@ -565,7 +570,8 @@
                                 <div class="col-md-6">
                                     <label class="fw600 text-underline">{{'WFAI_SEARCH_FROM_DATE'| translate}}</label>
                                     <div class='input-group br24 date'>
-                                        <input type='text' class="form-control input-date" ng-model="modelSearch.FromDate"
+                                        <input type='text' class="form-control input-date"
+                                            ng-model="modelSearch.FromDate"
                                             placeholder="{{'WFAI_SEARCH_FROM_DATE' | translate}}..." id='fromDate' />
                                         <span class="input-group-btn ">
                                             <button type="button" ng-click="modelSearch.FromDate='';"
@@ -612,7 +618,8 @@
                     <span class="bold">* {{'WFAI_LBL_ALL_WF' | translate}}: {{statiscalWf.SumWf}},</span>
                 </div>
                 <div class="col-md-4">
-                    <span class="text-danger bold">{{'WFAI_LBL_WF_PENDING' | translate}}: {{statiscalWf.PendingWf}},</span>
+                    <span class="text-danger bold">{{'WFAI_LBL_WF_PENDING' | translate}}:
+                        {{statiscalWf.PendingWf}},</span>
                 </div>
                 <div class="col-md-4">
                     <span class="text-green bold">{{'WFAI_LBL_WF_SUCCED' | translate}}: {{statiscalWf.SuccedWf}}</span>
@@ -624,7 +631,7 @@
             </div>
         </div>
     </div>
-   
+
 
     <div class="main-menu-editWorkflow" style="top: 64px;width:50%;height:80vh; display:flex; 
         background-color: #fff; box-shadow: -3px -2px 5px 0px rgb(0 0 0 / 30%)" ng-if="isEditWorkflow">
@@ -640,7 +647,7 @@
                 </div> -->
             </div>
             <div class="modal-body" style="padding-bottom: 0px;">
-                
+
                 <div class="row" ng-repeat="act in listActs">
                     <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
                         <div class="toggle-header" style="display: flex;  min-height: 40px;">
@@ -761,10 +768,12 @@
                 <div class="row">
                     <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
                         <div class="toggle-header" style="display: flex;  min-height: 40px;">
-                            <i ng-show="model.checkHiddenFileWfActivity" class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
-                            <i ng-show="!model.checkHiddenFileWfActivity" class="fa-solid fa-caret-right icon-scalet fs30 mt10"></i>
-                            <label ng-click="model.checkHiddenFileWfActivity=!model.checkHiddenFileWfActivity" class="label-lg"
-                                style="vertical-align: 7px;display: flex; align-items: center;">
+                            <i ng-show="model.checkHiddenFileWfActivity"
+                                class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
+                            <i ng-show="!model.checkHiddenFileWfActivity"
+                                class="fa-solid fa-caret-right icon-scalet fs30 mt10"></i>
+                            <label ng-click="model.checkHiddenFileWfActivity=!model.checkHiddenFileWfActivity"
+                                class="label-lg" style="vertical-align: 7px;display: flex; align-items: center;">
                                 <div>
                                     <div class="d-flex">
                                         <div style="display: inline-block; margin-left: 5px; font-weight: 500">

@@ -29,20 +29,50 @@ app.factory('dataservice', function ($http) {
 
 app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice) {
 
-    //$rootScope.validationOptions = {
-    //    rules: {
-    //        PhoneNumber: {
-    //            required: true,
-    //            regx: /^[0|+|+84]+([\s0-9]{9,15})([\s#0-9]{5})?\b$/
-    //        },
-    //    },
-    //    messages: {
-    //        PhoneNumber: {
-    //            required: 'Số điện thoại không được bỏ trống',
-    //            regx: 'Số điện thoại sai định dạng',
-    //        },
-    //    }
-    //};
+    $rootScope.validationOptions = {
+        rules: {
+            PhoneNumber: {
+                required: true,
+                phoneVN: true // Custom rule for Vietnamese phone numbers
+            },
+            Password: {
+                required: true,
+                minlength: 8 // Password must be at least 8 characters long
+            },
+            UserName: {
+                required: true,
+                idVN: true // Custom rule for Vietnamese ID numbers (CCCD)
+            },
+            ConfrimPassword: {
+                required: true,
+                equalTo: "#Password" // Check if it matches the Password field
+            },
+            GivenName: {
+                required: true
+            }
+        },
+        messages: {
+            PhoneNumber: {
+                required: 'Số điện thoại không được bỏ trống',
+                phoneVN: 'Số điện thoại không hợp lệ' // Custom message for invalid phone number
+            },
+            Password: {
+                required: "Mật khẩu không được bỏ trống",
+                minlength: "Mật khẩu phải có ít nhất 8 ký tự" // Message for short passwords
+            },
+            UserName: {
+                required: "Không được bỏ trống số CCCD",
+                idVN: "Số CCCD không hợp lệ" // Custom message for invalid ID
+            },
+            ConfrimPassword: {
+                required: "Không được bỏ trống xác nhận mật khẩu",
+                equalTo: "Xác nhận mật khẩu không khớp với mật khẩu" // Message for mismatch
+            },
+            GivenName: {
+                required: "Không được bỏ trống họ tên"
+            }
+        }
+    };
 });
 
 app.config(function ($routeProvider, $locationProvider) {
@@ -51,6 +81,13 @@ app.config(function ($routeProvider, $locationProvider) {
             templateUrl: ctxfolder + '/index.html',
             controller: 'index'
         })
+    $.validator.addMethod("phoneVN", function (value, element) {
+        return this.optional(element) || /^(0|\+84)[1-9][0-9]{8,9}$/.test(value);
+    }, "Số điện thoại không hợp lệ");
+
+    $.validator.addMethod("idVN", function (value, element) {
+        return this.optional(element) || /^[0-9]{9,12}$/.test(value);
+    }, "Số CCCD không hợp lệ");
 });
 
 app.controller('index', function ($scope, $rootScope, $compile, dataservice, $filter) {
@@ -77,20 +114,39 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
     $scope.Gender = "Nam"
     $scope.Register = function () {
-        var msg = ValidityState($scope.model)
-        if (msg.Error) {
-            App.toastrError(msg.Title)
-            return
+        if ($scope.model.RegisterJoinGroupCode == NaN || $scope.model.RegisterJoinGroupCode == '') {
+            $scope.errorGroupUser = true;
         }
-        $scope.model.Gender = $scope.Gender == "Nam" ? true : false
-        dataservice.Register($scope.model, function (rs) {
-            rs = rs.data;
-            if (rs.Error) {
-                App.toastrError(rs.Title)
-            } else {
-                App.toastrSuccess(rs.Title)
+        else {
+            $scope.errorGroupUser = false;
+
+        }
+        if ($scope.validateForm.validate()) {
+
+            var msg = ValidityState($scope.model)
+            if (msg.Error) {
+                App.toastrError(msg.Title)
+                return
             }
-        })
+            $scope.model.Gender = $scope.Gender == "Nam" ? true : false
+            dataservice.Register($scope.model, function (rs) {
+                rs = rs.data;
+                if (rs.Error) {
+                    App.toastrError(rs.Title)
+                } else {
+                    App.toastrSuccess(rs.Title)
+                    var loginUrl = "/UserProfile/Login";
+                    var username = $scope.model.UserName; // Assuming this is the username entered during registration
+                    var password = $scope.model.Password; // Assuming this is the password entered during registration
+
+                    // Construct query string parameters for autofill
+                    var queryParams = "?username=" + encodeURIComponent(username) + "&password=" + encodeURIComponent(password);
+
+                    // Redirect to login page with autofill parameters
+                    window.location.href = loginUrl + queryParams;
+                }
+            })
+        }
     }
     function ValidityState(model) {
         var msg = {

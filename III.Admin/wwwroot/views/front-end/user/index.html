@@ -332,6 +332,10 @@
         padding-left: 20px
     }
 
+    .help-block {
+        color: #e73d4a !important;
+    }
+
     @media(max-width:450px) {
         .btn-load-file {
             margin-top: 30px !important;
@@ -1155,7 +1159,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="form-group row">
+                                        <div class="form-group row" ng-class="{ 'has-error': errorGroupUser}">
                                             <div class="col-md-4 pr-0 " style="white-space: nowrap;">
                                                 <i class="fa fa-users"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
@@ -1172,7 +1176,8 @@
                                                     <ui-select ng-model="GroupUser" theme="bootstrap"
                                                         class="displayInfo" name="GroupUser"
                                                         ng-change="onItemSelect($select.selected)"
-                                                        style="border: none; height: 24.5px; display: inline-block;">
+                                                        style="border: none; height: 24.5px; display: inline-block;"
+                                                        ng-required="true">
                                                         <ui-select-match placeholder="Chọn nhóm chi bộ"
                                                             style="height:24.5px">{{$select.selected.Title}}</ui-select-match>
                                                         <ui-select-choices
@@ -1181,6 +1186,10 @@
                                                         </ui-select-choices>
                                                     </ui-select>
                                                 </div>
+                                                <span ng-show="errorGroupUser"
+                                                    class="label-color validation-message fs9">
+                                                    Chưa chọn nhóm chi bộ
+                                                </span>
 
                                             </div>
                                         </div>
@@ -1204,7 +1213,7 @@
                                         </div>
                                     </div> -->
 
-                                        <div class="form-group row">
+                                        <div class="form-group row" ng-class="{ 'has-error': errorMarital}">
                                             <div class="col-md-4 pr-0" style="display: flex;align-items: baseline;">
                                                 <i class="fa fa-heart" id="MarriedStatusIcon"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
@@ -1244,6 +1253,9 @@
                                                     </div>
 
                                                 </div>
+                                                <span ng-show="errorMarital" class="label-color validation-message fs9">
+                                                    Chưa chọn tình trạng hôn nhân
+                                                </span>
                                             </div>
                                         </div>
                                 </form>
@@ -1281,12 +1293,14 @@
                                                     style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-clickable" id="relationship"
                                                         title="Popover Header" popover-placement="bottom-left"
-                                                        uib-popover="Quan hệ: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        uib-popover="Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ... "
                                                         popover-trigger="outsideClick"></i>
+
                                                     <input class="displayInfo" style="border: #FFFF;"
                                                         name="selectedFamilyRelation" ng-model="selectedFamily.Relation"
                                                         type="text" ng-change="filterRelation()"
                                                         placeholder="Quan hệ" />
+
                                                     <i class="fa fa-microphone" style="font-size: 20px;"
                                                         voice-recognition ng-model="selectedFamily.Relation"></i>
                                                     <ul class="autocomplete-list">
@@ -1344,8 +1358,9 @@
                                                             style="font-weight: bold; text-wrap: nowrap;">Đã
                                                             mất</span>
                                                     </div>
-                                                    <div style="display: block;">
-                                                        <div class="br24 form-control custom-title-code-bold col-md-10"
+                                                    <div style="display: block;" class="col-md-10 pr-0"
+                                                        ng-if="!selectedFamily.disableAddress">
+                                                        <div class="br24 form-control custom-title-code-bold "
                                                             ng-if="!selectedFamily.disableAddress"
                                                             style="white-space:nowrap">
                                                             <i class="fa fa-info-circle icon-clickable"
@@ -1361,7 +1376,7 @@
                                                                 placeholder="Năm sinh" year="true" />
                                                         </div>
                                                     </div>
-                                                    <div style="display: block;">
+                                                    <div style="display: block;" ng-if="selectedFamily.disableAddress">
 
                                                         <div class="br24 form-control custom-title-code-bold col-md-5"
                                                             ng-if="selectedFamily.disableAddress"
@@ -1379,7 +1394,7 @@
                                                                 placeholder="Năm sinh" year="true" />
                                                         </div>
                                                     </div>
-                                                    <div style="display: block;">
+                                                    <div style="display: block;" ng-if="selectedFamily.disableAddress">
 
                                                         <div class="br24 form-control custom-title-code-bold col-md-5"
                                                             ng-if="selectedFamily.disableAddress"
@@ -1453,7 +1468,7 @@
 
 
                                             <div class="col-md-8">
-                                                <div style="display: flex; align-items: center; gap: 1%;">
+                                                <div style="display: flex; gap: 1%;">
                                                     <div class="col-md-2">
                                                         <input type="checkbox" ng-model="selectedFamily.PartyMember"
                                                             ng-change="changedis()"><span style="font-weight: bold;">
@@ -1576,7 +1591,7 @@
                                                     Nơi sinh
                                                 </label>
                                             </div>
-                                            <div class="col-md-8" style="display: flex; white-space:nowrap">
+                                            <div class="col-md-8" style="white-space:nowrap">
                                                 <div class="br24 form-control custom-title-code-bold">
                                                     <i class="fa fa-info-circle icon-clickable" id="homeTown"
                                                         title="Popover Header" popover-placement="bottom-left"
@@ -1602,7 +1617,7 @@
                                                     Nơi sinh
                                                 </label>
                                             </div>
-                                            <div class="col-md-8" style="display: flex; white-space:nowrap">
+                                            <div class="col-md-8" style=" white-space:nowrap">
                                                 <div class="br24 form-control custom-title-code-bold">
                                                     <i class="fa fa-info-circle icon-clickable" id="homeTown"
                                                         title="Popover Header" popover-placement="bottom-left"
@@ -1628,7 +1643,7 @@
                                                     Thành phần giai cấp
                                                 </label>
                                             </div>
-                                            <div class="col-md-8" style="display: flex; white-space:nowrap">
+                                            <div class="col-md-8" style="white-space:nowrap">
                                                 <div class="br24 form-control custom-title-code-bold">
                                                     <i class="fa fa-info-circle icon-clickable" id="homeTown"
                                                         title="Popover Header" popover-placement="bottom-left"
@@ -3074,10 +3089,8 @@
                             <tbody>
                                 <tr style="font-size:12px" ng-repeat="file in fileList">
                                     <td style="font-weight : 1000 ; color: dodgerblue ;">
-                                        <a href="wwwroot/uploads/{{ file.FileName }}" download="{{ file.FileName }}">
-                                            {{
-                                            file.FileName
-                                            }}
+                                        <a href="/uploads/{{ file.FileName }}" download="{{ file.FileName }}">
+                                            {{ file.FileName }}
                                         </a>
                                     </td>
                                     <td>{{ file.FileSize }}</td>

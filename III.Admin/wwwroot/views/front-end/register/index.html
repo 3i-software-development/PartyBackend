@@ -8,12 +8,13 @@
             </div>
         </div>
 
-        <form id="register-form" method="get" class="av-invalid pb-10">
+        <form id="register-form" method="get" class="av-invalid pb-10" ng-validate="validationOptions"
+            name="validateForm">
             <div class="form-group">
                 <label for="UserName">
                     <span>Số căn cước</span>
                 </label>
-                <input placeholder="Nhập số căn cước" required="" ng-model="model.UserName" type="text"
+                <input placeholder="Nhập số căn cước" name="UserName" ng-model="model.UserName" type="text"
                     class="form-control" value="">
             </div>
 
@@ -21,15 +22,15 @@
                 <label for="Password">
                     <span>Mật khẩu <span>
                 </label>
-                <input placeholder="Nhập mật khẩu" required="true" ng-model="model.Password" type="password"
-                    class="form-control" autocomplete="new-password">
+                <input placeholder="Nhập mật khẩu" name="Password" id="Password" ng-model="model.Password"
+                    type="password" class="form-control" autocomplete="new-password">
             </div>
             <div class="form-group">
                 <label for="ConfrimPassword">
                     <span>Xác Nhận Mật khẩu <span>
                 </label>
-                <input name="ConfrimPassword" required="true" placeholder="Nhập mật khẩu" required=""
-                    ng-model="model.ConfrimPassword" type="password" class="form-control rounded-input">
+                <input name="ConfrimPassword" placeholder="Nhập mật khẩu" ng-model="model.ConfrimPassword"
+                    type="password" class="form-control rounded-input">
             </div>
 
             <div class="form-group">
@@ -44,8 +45,8 @@
                 </label>
                 <div class="row">
                     <div class="col-md-12">
-                        <input name="GivenName" placeholder="Nhập họ và tên" required="" maxlength="250"
-                            ng-model="model.GivenName" type="text" class="form-control" value="">
+                        <input name="GivenName" placeholder="Nhập họ và tên" maxlength="250" ng-model="model.GivenName"
+                            type="text" class="form-control" value="">
                     </div>
                 </div>
 
@@ -54,7 +55,7 @@
                 <label for="PhoneNumber">
                     <span>Số điện thoại</span>
                 </label>
-                <input name="PhoneNumber" placeholder="Nhập số điện thoại" required="true" minlength="10" maxlength="11"
+                <input name="PhoneNumber" placeholder="Nhập số điện thoại" minlength="10" maxlength="11"
                     ng-model="model.PhoneNumber" type="text" class="form-control" value="">
             </div>
             <div class="form-group">
@@ -63,7 +64,7 @@
                         <span>Giới tính</span>
                     </label>
                     <div class="col-md-4">
-                        <input  type="radio" name="gender" ng-model="Gender" value="Nữ" id="female">
+                        <input type="radio" name="gender" ng-model="Gender" value="Nữ" id="female">
                         <label for="female">Nữ</label><br>
                     </div>
                     <div class="col-md-4">
@@ -72,18 +73,22 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group" style="margin-bottom: 10px;">
+            <div class="form-group" style="margin-bottom: 10px;" ng-class="{ 'has-error': errorGroupUser}">
                 <label for="RegisterJoinGroupCode">
                     <span>Nhóm chi bộ</span>
                 </label>
                 <div class="">
-                    <ui-select class="form-control p0 br-24" ng-model="model.RegisterJoinGroupCode" theme="bootstrap" class="displayInfo"
-                        ng-change="onItemSelect($select.selected)">
-                        <ui-select-match class="br-24 ovf-hidden" placeholder="Chọn nhóm chi bộ">{{$select.selected.Title}}</ui-select-match>
+                    <ui-select class="form-control p0 br-24" ng-model="model.RegisterJoinGroupCode" theme="bootstrap"
+                        class="displayInfo" ng-change="onItemSelect($select.selected)">
+                        <ui-select-match class="br-24 ovf-hidden"
+                            placeholder="Chọn nhóm chi bộ">{{$select.selected.Title}}</ui-select-match>
                         <ui-select-choices repeat="x.Code as x in GroupUsers | filter: $select.search">
                             <div>{{x.Title}}</div>
                         </ui-select-choices>
                     </ui-select>
+                    <span ng-show="errorGroupUser" class="label-color error">
+                        Chưa chọn nhóm chi bộ
+                    </span>
                 </div>
 
             </div>
@@ -110,53 +115,69 @@
     </div>
 </div>
 <style>
-    .lbl-term{
+    .lbl-term {
         font-weight: normal;
     }
-    .ui-select-toggle{
+
+    .ui-select-toggle {
         border-radius: 24px;
         height: 32px;
         width: 100%;
     }
-    .p0{
+
+    .p0 {
         padding: 0;
     }
-    .br-24{
+
+    .br-24 {
         border-radius: 24px;
     }
-    .ovf-hidden{
+
+    .ovf-hidden {
         overflow: hidden;
     }
+
     input[type="radio"] {
-        display: none; /* Ẩn radio button mặc định */
+        display: none;
+        /* Ẩn radio button mặc định */
     }
-    
+
     /* Tạo một custom checkbox */
-    input[type="radio"] + label {
+    input[type="radio"]+label {
         display: inline-block;
         position: relative;
-        padding-left: 25px; /* Khoảng cách giữa checkbox và label */
+        padding-left: 25px;
+        /* Khoảng cách giữa checkbox và label */
         cursor: pointer;
         font-weight: normal;
     }
-    
+
     /* Tạo hộp chọn tùy chỉnh */
-    input[type="radio"] + label:before {
+    input[type="radio"]+label:before {
         content: "";
         display: inline-block;
         width: 20px;
         height: 20px;
         border: 2px solid #999;
-        border-radius: 50%; /* Tạo hình tròn */
+        border-radius: 50%;
+        /* Tạo hình tròn */
         position: absolute;
         left: 0;
         top: 50%;
         transform: translateY(-50%);
     }
-    
+
     /* Hiệu ứng khi checked */
-    input[type="radio"]:checked + label:before {
-        background-color: #007bff; /* Màu nền khi được chọn */
-        border-color: #007bff; /* Màu viền khi được chọn */
+    input[type="radio"]:checked+label:before {
+        background-color: #007bff;
+        /* Màu nền khi được chọn */
+        border-color: #007bff;
+        /* Màu viền khi được chọn */
+    }
+
+    .error {
+        color: red;
+        font-size: 12px;
+        font-weight: bold;
     }
 </style>

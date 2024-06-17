@@ -129,9 +129,9 @@
     }
 
     /* Show the dropdown menu on hover */
-    .item-menu:hover .dropdown-menu {
+    /* .item-menu:hover .dropdown-menu {
         display: block;
-    }
+    } */
 
     .div-brand-menu {
         display: none;
@@ -200,4 +200,26 @@
         .div-brand-menu .nut-face {
             background-image: url("../../../images/default/images.jpg");
         }
+        .item-menu.active .dropdown-menu {
+    display: block;
+}
 </style>
+<script>
+    // Sử dụng jQuery để xử lý sự kiện click
+    $(document).ready(function() {
+        $('.item-menu').click(function(e) {
+            e.stopPropagation(); // Ngăn chặn sự lan truyền của sự kiện
+            $(this).toggleClass('active'); // Thêm hoặc xóa lớp 'active'
+        });
+
+        // Ngăn chặn sự kiện click của các phần tử con lan truyền lên đến menu cha
+        $('.dropdown-menu').click(function(e) {
+            e.stopPropagation();
+        });
+
+        // Đóng dropdown menu khi click bất kỳ đâu trên trang
+        $(document).click(function() {
+            $('.item-menu').removeClass('active');
+        });
+    });
+</script>
