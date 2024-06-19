@@ -20,8 +20,8 @@
 </style>
 <div class="" style="padding-left: 20px; font-size: 13px;">
     <div style="display:flex ; justify-content:end;margin:10px">
-        <div ng-click="submitPersonalHistorys()">
-            <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+        <div ng-click="submitPersonalHistorys()" class="d-flex flex-column" style="align-items: center; gap: 5px;width:unset">
+            <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i> <span  style="font-size: x-small;">Lưu lại</span>
         </div>
     </div>
 </div>
@@ -39,7 +39,7 @@
                             ngày
                         </label>
                     </div>
-                    <div class="col-md-6" >
+                    <div class="col-md-6 pr-0 pl-0" >
                         <div class="br24 form-control custom-title-code-bold" >
                             <i class="fa fa-info-circle icon-clickable" id="PersonHistory-From" title="Popover Header"
                                popover-placement="bottom-left"
@@ -47,12 +47,12 @@
                                popover-trigger="outsideClick"></i>
 
                             <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Begin" type="text" name="selectedPersonHistoryBegin"
-                                   placeholder="Từ ngày" ng-change="changeHistory()" />
+                                   placeholder="Từ ngày" ng-change="changeHistory()" monthOrDate="true" validateDateNow="true"/>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-6 pr-0 row" >
-                    <div class="col-md-6 pr-0">
+                <div class="col-md-6 " >
+                    <div class="col-md-6 pr-0 pl-0">
                         <i class="fa fa-calendar" id="endDate" ng-click="openPopover('endDate');"
                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                            popover-trigger="outsideClick"></i>
@@ -61,14 +61,14 @@
                             ngày
                         </label>
                     </div>
-                    <div class="col-md-6 pr-0" >
+                    <div class="col-md-6 pr-0 pl-0" >
                         <div class="br24 form-control custom-title-code-bold">
                             <i class="fa fa-info-circle icon-clickable" id="PersonHistory-To" title="Popover Header"
                                popover-placement="bottom-left"
                                uib-popover="Đến ngày: {{selectedPersonHistory.End}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                popover-trigger="outsideClick"></i>
                             <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.End" type="text" name="selectedPersonHistoryEnd"
-                                   placeholder="Đến ngày" />
+                                   placeholder="Đến ngày" monthOrDate="true" validateDateNow="true"/>
                         </div>
                     </div>
                 </div>

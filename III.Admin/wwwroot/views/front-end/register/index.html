@@ -11,36 +11,30 @@
         <form id="register-form" method="get" class="av-invalid pb-10" ng-validate="validationOptions"
             name="validateForm">
             <div class="form-group">
-                <label for="UserName">
-                    <span>Số căn cước</span>
+                <label for="PhoneNumber" class="control-label require">
+                    <span>Số điện thoại</span>
                 </label>
-                <input placeholder="Nhập số căn cước" name="UserName" ng-model="model.UserName" type="text"
-                    class="form-control" value="">
+                <input placeholder="Nhập số điện thoại" name="PhoneNumber" minlength="10" maxlength="11"
+                    ng-model="model.UserName" type="text" class="form-control" value="">
             </div>
 
             <div class="form-group">
-                <label for="Password">
+                <label for="Password" class="control-label require">
                     <span>Mật khẩu <span>
                 </label>
                 <input placeholder="Nhập mật khẩu" name="Password" id="Password" ng-model="model.Password"
                     type="password" class="form-control" autocomplete="new-password">
             </div>
             <div class="form-group">
-                <label for="ConfrimPassword">
+                <label for="ConfrimPassword" class=" control-label require">
                     <span>Xác Nhận Mật khẩu <span>
                 </label>
                 <input name="ConfrimPassword" placeholder="Nhập mật khẩu" ng-model="model.ConfrimPassword"
                     type="password" class="form-control rounded-input">
             </div>
 
-            <div class="form-group">
-                <label for="Email">Email</label>
-                <input name="Email" placeholder="Nhập email của bạn" ng-model="model.Email" autocomplete="new-password"
-                    class="form-control" value="">
-            </div>
-
-            <div class="form-group">
-                <label for="FullName">
+            <div class="form-group" class="control-label require">
+                <label for="FullName" class="control-label require">
                     <span>Họ tên</span>
                 </label>
                 <div class="row">
@@ -51,16 +45,23 @@
                 </div>
 
             </div>
+
             <div class="form-group">
-                <label for="PhoneNumber">
-                    <span>Số điện thoại</span>
+                <label for="UserName">
+                    <span>Căn cước công dân</span>
                 </label>
-                <input name="PhoneNumber" placeholder="Nhập số điện thoại" minlength="10" maxlength="11"
-                    ng-model="model.PhoneNumber" type="text" class="form-control" value="">
+                <input name="UserName" placeholder="Nhập căn cước công dân" length="12" ng-model="model.PhoneNumber"
+                    type="text" class="form-control" value="">
             </div>
             <div class="form-group">
+                <label for="Email">Email</label>
+                <input name="Email" placeholder="Nhập email của bạn" ng-model="model.Email" autocomplete="new-password"
+                    class="form-control" value="">
+            </div>
+
+            <div class="form-group">
                 <div class="row">
-                    <label for="Gender" class="col-md-4">
+                    <label for="Gender" class="col-md-4 control-label require">
                         <span>Giới tính</span>
                     </label>
                     <div class="col-md-4">
@@ -74,7 +75,7 @@
                 </div>
             </div>
             <div class="form-group" style="margin-bottom: 10px;" ng-class="{ 'has-error': errorGroupUser}">
-                <label for="RegisterJoinGroupCode">
+                <label for="RegisterJoinGroupCode" class="control-label require">
                     <span>Nhóm chi bộ</span>
                 </label>
                 <div class="">
@@ -177,7 +178,19 @@
 
     .error {
         color: red;
-        font-size: 12px;
         font-weight: bold;
+    }
+
+    @media screen and (min-width: 869px) {
+        .footer {
+            background: #903938;
+            color: #fff;
+            padding: 10px 0px;
+            text-align: center;
+            position: fixed;
+            bottom: 0 !important;
+            right: 0;
+            left: 0;
+        }
     }
 </style>

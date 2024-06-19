@@ -25,7 +25,7 @@
             <div class="input-group input-file">
                 <form id="fileForm" method="post" enctype="multipart/form-data">
                     <div style="display:flex">
-                        <input style="padding: 0px 0px 0px 0px;" id="file" name="file" type="file" class="file" data-show-upload="false" data-show-caption="true">
+                        <input style="padding: 0px 0px 0px 0px; width:100%" id="file" name="file" type="file" class="file" data-show-upload="false" data-show-caption="true">
                         <input type="hidden" id="fileInputCount" value="1">
                         <button class="btn btn-primary" ng-click="uploadExtensionFile()" style="border-radius: 10px; font-size: 16px; height: 30px" type="submit">Tải lên</button>
                     </div>
@@ -51,7 +51,7 @@
                     <tbody>
                         <tr style="font-size:12px" ng-repeat="file in fileList">
                             <td style="font-weight : 1000 ; color: dodgerblue ;">
-                                <a href="wwwroot/uploads/{{ file.FileName }}" download="{{ file.FileName }}"> {{ file.FileName }} </a>
+                                <a href="/uploads/{{ file.FileName }}" download="{{ file.FileName }}"> {{ file.FileName }} </a>
                             </td>
                             <td>{{ file.FileSize }}</td>
                             <td style="text-align:center">

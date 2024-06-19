@@ -1,6 +1,6 @@
 <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
-    <div ng-click="submitGoAboard()">
-        <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i>
+    <div ng-click="submitGoAboard()" class="d-flex flex-column" style="align-items: center; gap: 5px;width:unset">
+        <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i> <span  style="font-size: x-small;">Lưu lại</span>
     </div>
 </div>
 
@@ -14,30 +14,30 @@
                         Từ ngày
                     </label>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6 pr-0 pl-0">
                     <div class="br24 form-control custom-title-code-bold">
                         <i class="fa fa-info-circle icon-clickable" id="GoAboard-From" title="Popover Header" popover-placement="bottom-left"
                            uib-popover="Từ ngày: {{selectedGoAboard.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;"
                                name="selectedGoAboardFrom" ng-model="selectedGoAboard.From"
-                               type="text" placeholder="Từ ngày" />
+                               type="text" placeholder="Từ ngày" monthOrDate="true" validateDateNow="true" />
                     </div>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="col-md-6 pr-0">
+                <div class="col-md-6 pr-0 pl-0">
                     <i class="fa fa-calendar" id="To" ng-click="openPopover('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
                     <label class="displayInfo control-label require custom-title-code-bold">
                         Đến ngày
                     </label>
                 </div>
-                <div class="col-md-6 pr-0">
+                <div class="col-md-6 pr-0 pl-0">
                     <div class="br24 form-control custom-title-code-bold">
                         <i class="fa fa-info-circle icon-clickable" id="GoAboard-To" title="Popover Header" popover-placement="bottom-left"
                            uib-popover="Đến ngày: {{selectedGoAboard.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;"
                                name="selectedGoAboardTo" ng-model="selectedGoAboard.To"
-                               type="text" placeholder="Đến ngày" />
+                               type="text" placeholder="Đến ngày" monthOrDate="true" validateDateNow="true" />
                     </div>
                 </div>
             </div>

@@ -54,6 +54,10 @@ var config = {
         App.toastrError = function (msg) {
             toastr.clear();
             toastr['error'](msg);
+            errorSound.play().catch(err => {
+                console.error('Lỗi khi phát âm thanh:', err);
+            });
+
         };
     },
     clickScrollToTop: function () {
@@ -392,6 +396,10 @@ App.toastrWarning = function (msg) {
 App.toastrError = function (msg) {
     toastr.clear();
     toastr['error'](msg);
+    errorSound.play().catch(err => {
+        console.error('Lỗi khi phát âm thanh:', err);
+    });
+
 };
 
 function unlocFile() {

@@ -40,8 +40,9 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
                 minlength: 8 // Password must be at least 8 characters long
             },
             UserName: {
-                required: true,
-                idVN: true // Custom rule for Vietnamese ID numbers (CCCD)
+                // required: true,
+                idVN: true, // Custom rule for Vietnamese ID numbers (CCCD)
+                minlength: 12
             },
             ConfrimPassword: {
                 required: true,
@@ -62,8 +63,10 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
                 minlength: "Mật khẩu phải có ít nhất 8 ký tự" // Message for short passwords
             },
             UserName: {
-                required: "Không được bỏ trống số CCCD",
-                idVN: "Số CCCD không hợp lệ" // Custom message for invalid ID
+                // required: "Không được bỏ trống số CCCD",
+                idVN: "Số CCCD không hợp lệ", // Custom message for invalid ID
+                minlength: "Số CCCD phải có {0} ký tự"
+
             },
             ConfrimPassword: {
                 required: "Không được bỏ trống xác nhận mật khẩu",
@@ -111,7 +114,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
     $scope.getGrupUsers()
     $scope.onItemSelect = function (item) {
-        $scope.model.RegisterJoinGroupCode = item.Code;
+        if ($scope.model.RegisterJoinGroupCode != NaN || $scope.model.RegisterJoinGroupCode != '') {
+            $scope.errorGroupUser = false;
+        }
     }
     $scope.Gender = "Nam"
     $scope.Register = function () {
@@ -120,15 +125,14 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
         else {
             $scope.errorGroupUser = false;
-
         }
         if ($scope.validateForm.validate()) {
 
-            var msg = ValidityState($scope.model)
-            if (msg.Error) {
-                App.toastrError(msg.Title)
-                return
-            }
+            // var msg = ValidityState($scope.model)
+            // if (msg.Error) {
+            //     App.toastrError(msg.Title)
+            //     return
+            // }
             $scope.model.Gender = $scope.Gender == "Nam" ? true : false
             dataservice.Register($scope.model, function (rs) {
                 rs = rs.data;

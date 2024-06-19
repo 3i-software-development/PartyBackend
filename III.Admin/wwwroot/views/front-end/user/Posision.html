@@ -1,46 +1,47 @@
-<div class="d-flex">
-    <div class="w4 form-group" ng-class="{ 'has-error': errorProvince}">
-        <ui-select class="p0 br-24" ng-model="model.tinh_id" theme="bootstrap" class="displayInfo"
-            ng-change="onItemSelect($select.selected,'tinh')"
-            style="border: none; height: 24.5px;width:100%;margin-bottom: 5px;">
-            <ui-select-match class="br-24 ovf-hidden" style="height:24.5px;margin-bottom: 5px;"
-                placeholder="Chọn tỉnh">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="x.provinceId as x in provinces | filter: $select.search">
-                <div>{{x.name}}</div>
-            </ui-select-choices>
-        </ui-select>
-        <span ng-show="errorProvince" class="label-color validation-message fs9" style="margin-left: -25px;">
-            Chưa chọn tỉnh
-        </span>
-    </div>
-    <div class="w4 form-group" ng-class="{ 'has-error': errorDistrict}">
-        <ui-select class="p0 br-24" ng-model="model.huyen_id" theme="bootstrap" class="displayInfo"
-            ng-change="onItemSelect($select.selected,'huyen')"
-            style="border: none; height: 24.5px;width:100%;margin-bottom: 5px;">
-            <ui-select-match class="br-24 ovf-hidden" style="height:24.5px;margin-bottom: 5px;"
-                placeholder="Chọn huyện">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="x.districtId as x in ditrict | filter: $select.search">
-                <div>{{x.name}}</div>
-            </ui-select-choices>
-        </ui-select>
-        <span ng-show="errorDistrict" class="label-color validation-message fs9">
-            Chưa chọn huyện
-        </span>
-    </div>
-    <div class="w4 form-group" ng-class="{ 'has-error': errorWard}">
-        <ui-select class="p0 br-24 displayInfo" ng-model="model.xaPhuong_id" theme="bootstrap"
-            ng-change="onItemSelect($select.selected,'xa')"
-            style="border: none; height: 24.5px;width:100%;margin-bottom: 5px;">
-            <ui-select-match class="br-24 ovf-hidden" style="height:24.5px;margin-bottom: 5px;"
-                placeholder="Chọn xã phường">{{$select.selected.name}}</ui-select-match>
-            <ui-select-choices repeat="x.wardsId as x in Ward | filter: $select.search">
-                <div>{{x.name}}</div>
-            </ui-select-choices>
-        </ui-select>
-        <span ng-show="errorWard" class="label-color validation-message fs9" style="margin-left: 10px;">
-            Chưa chọn xã
-    </div>
+<!-- <div class="d-flex"> -->
+<div class="w4 form-group m-0" style="border-bottom:1px solid #C9CDCF" ng-class="{ 'has-error': errorProvince}">
+    <ui-select class="p0 m-0 br-24" ng-model="model.tinh_id" theme="bootstrap" class="displayInfo"
+        ng-change="onItemSelect($select.selected,'tinh')"
+        style="border: none; height: 24.5px;width:100%;margin-bottom: 5px;">
+        <ui-select-match class="br-24 ovf-hidden" style="height:24.5px;margin-bottom: 5px;"
+            placeholder="Chọn tỉnh">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="x.provinceId as x in provinces | filter: $select.search">
+            <div>{{x.name}}</div>
+        </ui-select-choices>
+    </ui-select>
+    <span ng-show="errorProvince" class="label-color validation-message fs9">
+        Chưa chọn tỉnh
+    </span>
 </div>
+<div class="w4 form-group m-0" style="border-bottom:1px solid #C9CDCF" ng-class="{ 'has-error': errorDistrict}">
+    <ui-select class="p0 br-24 m-0" ng-model="model.huyen_id" theme="bootstrap" class="displayInfo"
+        ng-change="onItemSelect($select.selected,'huyen')"
+        style="border: none; height: 24.5px;width:100%;margin-bottom: 5px;">
+        <ui-select-match class="br-24 ovf-hidden" style="height:24.5px;margin-bottom: 5px;"
+            placeholder="Chọn huyện">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="x.districtId as x in ditrict | filter: $select.search">
+            <div>{{x.name}}</div>
+        </ui-select-choices>
+    </ui-select>
+    <span ng-show="errorDistrict" class="label-color validation-message fs9">
+        Chưa chọn huyện
+    </span>
+</div>
+<div class="w4 form-group m-0" ng-class="{ 'has-error': errorWard}">
+    <ui-select class="p0 m-0 br-24 displayInfo" ng-model="model.xaPhuong_id" theme="bootstrap"
+        ng-change="onItemSelect($select.selected,'xa')"
+        style="border: none; height: 24.5px;width:100%;margin-bottom: 5px;">
+        <ui-select-match class="br-24 ovf-hidden" style="height:24.5px;margin-bottom: 5px;"
+            placeholder="Chọn xã phường">{{$select.selected.name}}</ui-select-match>
+        <ui-select-choices repeat="x.wardsId as x in Ward | filter: $select.search">
+            <div>{{x.name}}</div>
+        </ui-select-choices>
+    </ui-select>
+    <span ng-show="errorWard" class="label-color validation-message fs9">
+        Chưa chọn xã
+    </span>
+</div>
+<!-- </div> -->
 
 
 <style>

@@ -21,7 +21,7 @@
         border: 1px solid #000;
     }
 
-    .breadcrumb > li {
+    .breadcrumb>li {
         font-size: 16px;
         font-weight: 700;
         color: black;
@@ -32,8 +32,8 @@
         color: white;
     }
 
-    .tab .nav-tabs li.active > div,
-    .tab .nav-tabs > li.active > div:focus {
+    .tab .nav-tabs li.active>div,
+    .tab .nav-tabs>li.active>div:focus {
         border: none;
         color: purple;
         background: white;
@@ -51,11 +51,11 @@
         border-bottom-width: 0px !important;
     }
 
-        .tab .nav-tabs li {
-            border-right: 1px solid #ddd;
-        }
+    .tab .nav-tabs li {
+        border-right: 1px solid #ddd;
+    }
 
-            /*.tab .nav-tabs li:last-child {
+    /*.tab .nav-tabs li:last-child {
                 border-right: 0px solid #ddd;
             }
 
@@ -63,15 +63,15 @@
                 border-left: 1px solid #ddd;
             }*/
 
-            .tab .nav-tabs li div {
-                color: black;
-                background: white;
-                border-radius: 0;
-                margin-right: -1px;
-                padding: 5.5px 20px;
-                /*border-bottom: 1px solid #d3d3d3;*/
-                font-weight: 600;
-            }
+    .tab .nav-tabs li div {
+        color: black;
+        background: white;
+        border-radius: 0;
+        margin-right: -1px;
+        padding: 5.5px 20px;
+        /*border-bottom: 1px solid #d3d3d3;*/
+        font-weight: 600;
+    }
 
     .nav-tabs li:first-child div {
         border-radius: 5px 0 0 0px;
@@ -128,7 +128,8 @@
     </div>
 </div>
 <div class="portlet-body form">
-    <form ng-show="isShowHeader" name="addForm" class="form-horizontal userFormAreaHeader" method="post" ng-validate="validationOptionsCustomer">
+    <form ng-show="isShowHeader" name="addForm" class="form-horizontal userFormAreaHeader" method="post"
+        ng-validate="validationOptionsCustomer">
         <div class="form-body pt-0">
             <div class="row mt-action-5">
                 <div class="col-lg-8" ng-show="isShowHeader">
@@ -138,7 +139,9 @@
                             <label class="control-label require custom-title-code-bold">Họ và tên</label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control br24 custom-title-code-bold" name="CusCode" ng-model="model.CusCode" type="text" placeholder="Họ và tên" ng-readonly="CustomerId !=''" />
+                            <input class="form-control br24 custom-title-code-bold" name="CusCode"
+                                ng-model="model.CusCode" type="text" placeholder="Họ và tên"
+                                ng-readonly="CustomerId !=''" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -147,7 +150,9 @@
                             <label class="control-label require custom-title-code-bold">Ngày sinh</label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control br24 custom-title-code-bold" name="CusCode" ng-model="model.CusCode" type="text" placeholder="Ngày sinh" ng-readonly="CustomerId !=''" />
+                            <input class="form-control br24 custom-title-code-bold" name="CusCode"
+                                ng-model="model.CusCode" type="text" placeholder="Ngày sinh"
+                                ng-readonly="CustomerId !=''" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -156,7 +161,9 @@
                             <label class="control-label require custom-title-code-bold">Giới tính</label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control br24 custom-title-code-bold" name="CusCode" ng-model="model.CusCode" type="text" placeholder="Giới tính" ng-readonly="CustomerId !=''" />
+                            <input class="form-control br24 custom-title-code-bold" name="CusCode"
+                                ng-model="model.CusCode" type="text" placeholder="Giới tính"
+                                ng-readonly="CustomerId !=''" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -165,7 +172,9 @@
                             <label class="control-label require custom-title-code-bold">Số điện thoại</label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control br24 custom-title-code-bold" name="CusCode" ng-model="model.CusCode" type="text" placeholder="Số điện thoai" ng-readonly="CustomerId !=''" />
+                            <input class="form-control br24 custom-title-code-bold" name="CusCode"
+                                ng-model="model.CusCode" type="text" placeholder="Số điện thoai"
+                                ng-readonly="CustomerId !=''" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -174,7 +183,8 @@
                             <label class="control-label require custom-title-code-bold">Email</label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control br24 custom-title-code-bold" name="CusName" ng-model="model.CusName" type="text" placeholder="email" />
+                            <input class="form-control br24 custom-title-code-bold" name="CusName"
+                                ng-model="model.CusName" type="text" placeholder="email" />
                         </div>
                     </div>
                     <div class="form-group">
@@ -183,15 +193,18 @@
                             <label class="control-label require custom-title-code-bold">Tài khoản</label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control br24 custom-title-code-bold" name="CusName" ng-model="model.CusName" type="text" placeholder="Tài khoản" />
+                            <input class="form-control br24 custom-title-code-bold" name="CusName"
+                                ng-model="model.CusName" type="text" placeholder="Tài khoản" />
                         </div>
-                    </div><div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <div class="col-md-4 pr-0 ">
                             <i class="fa fa-user"></i>
                             <label class="control-label require custom-title-code-bold">Mật khẩu</label>
                         </div>
                         <div class="col-md-8">
-                            <input class="form-control br24 custom-title-code-bold" name="CusName" ng-model="model.CusName" type="text" placeholder="Mật khẩu" />
+                            <input class="form-control br24 custom-title-code-bold" name="CusName"
+                                ng-model="model.CusName" type="text" placeholder="Mật khẩu" />
                         </div>
                     </div>
                 </div>

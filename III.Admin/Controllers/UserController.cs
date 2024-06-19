@@ -1,4 +1,5 @@
 ﻿using Aspose.Pdf.Operators;
+using DataConnection;
 using DocumentFormat.OpenXml.Spreadsheet;
 using ESEIM.Models;
 using ESEIM.Utils;
@@ -112,7 +113,7 @@ namespace III.Admin.Controllers
         public async Task<IActionResult> Register2([FromBody] RegisterDto model)
         {
             var msg = new JMessage() { Error = false };
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
             {
                 var check = _userManager.FindByNameAsync(model.UserName).Result;
                 if (check != null)
@@ -645,6 +646,42 @@ namespace III.Admin.Controllers
         {
             var rs = _context.Wards.Where(p => p.name.Trim() == name.Trim()).ToList();
             return Json(rs);
+        }
+
+
+        public object GetDistrictsName(string name, string ProvincesName)
+        {
+/*            var rs = _context.Districts.Where(p => p.name.Trim() == name.Trim() && ).ToList();
+            return Json(rs);*/
+
+            var query = from a in _context.Districts
+                        join b in _context.Provinces on a.provinceId equals b.provinceId
+                        where(ProvincesName.Trim() == b.name.Trim() && a.name.Trim() == name.Trim())
+                        select new
+                        {
+                            a.name,
+                            a.provinceId,
+                            a.districtId
+                        };
+            return Ok(query);
+
+        }
+        public object GetWardsName(string name, string DistrictsName, string ProvincesName)
+        {
+            /* var rs = _context.Wards.Where(p => p.name.Trim() == name.Trim()).ToList();
+             return Json(rs);*/
+            var query = from a in _context.Wards
+                        join b in _context.Districts on a.districtId equals b.districtId
+                        join c in _context.Provinces on b.provinceId equals c.provinceId
+
+                        where (ProvincesName.Trim() == c.name.Trim() && DistrictsName.Trim() == b.name.Trim() && a.name.Trim() == name.Trim())
+                        select new
+                        {
+                            a.name,
+                            a.wardsId,
+                            a.districtId
+                        };
+            return Ok(query);
         }
         #endregion
         #region Update
