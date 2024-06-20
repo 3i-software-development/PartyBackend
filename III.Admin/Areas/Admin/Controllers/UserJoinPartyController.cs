@@ -133,7 +133,7 @@ namespace III.Admin.Controllers
         public class ItemNoteJson
         {
             public string id { get; set; }
-            public string idFamily { get; set; }
+            public dynamic idFamily { get; set; }
             public string comment { get; set; }
         }
 
