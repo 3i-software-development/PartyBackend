@@ -282,9 +282,12 @@ app.factory('dataserviceJoinParty', function ($http) {
             $http.post('/Admin/UserJoinParty/UpdateOrCreateUserfileJson', data).then(callback);
         },
         GetMemberPartyProfile: function (data, callback) {
-            $http.get('/Admin/UserJoinParty/GetMemberPartyProfile2?ressumeNumber=' + data).then(callback);
+            $http.get('/Admin/UserJoinParty/GetMemberPartyProfile?ressumeNumber=' + data).then(callback);
         },
 
+        GetMemberPartyProfile2: function (data, callback) {
+            $http.get('/Admin/UserJoinParty/GetMemberPartyProfile2?ressumeNumber=' + data).then(callback);
+        },
         //Quá trình liền kề
         updatePartyFamilyTime: function (data, callback) {
             $http.put('/Admin/UserJoinParty/UpdatePartyFamilyTime', data).then(callback);
@@ -1205,6 +1208,18 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
             console.log(rs);
         });
     }
+
+
+    $scope.GetMemberPartyProfile2 = function (resumeNumber) {
+        dataserviceJoinParty.GetMemberPartyProfile2(resumeNumber, function (rs) {
+            rs = rs.data;
+            rs.forEach(item => {
+                if (!item.Error)
+                    $scope.downloadFile(item.Object, item.Title)
+            });
+            console.log(rs);
+        });
+    }
     //Tải sơ yếu lý lịch trích lượt
     $scope.BriefCurriculumVitaeExport = function (ResumeNumber) {
         var data = $rootScope.configProfile;
@@ -1676,17 +1691,23 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     // vm.dtColumns.push(DTColumnBuilder.newColumn('resumeNumber').withOption('sClass', '').withTitle('{{"Mã hồ sơ" | translate}}').renderWith(function (data, type) {
     //     return data
     // }));<i class="fs24 h-25 fa-solid fa-diagram-project" style="font-size: 25px; padding-left: 25px;"></i>
+    $scope.Export = []
     vm.dtColumns.push(DTColumnBuilder.newColumn('LastTimeReport').withOption('sClass', 'listaction text-center w50').withTitle('{{"Lý lịch trích lược" | translate}}')
         .renderWith(function (data, type, full) {
             var wfbtn = '';
-            wfbtn = `
+           /* wfbtn = `
         <div>
         <input type="checkbox" style=" width: 20px; height: 20px;" ng-model="Export['${full.resumeNumber}']"/>
         <a title="{{&quot;Xem trước file&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
                 ng-click="BriefCurriculumVitaeExport('${full.resumeNumber}')"><i class="fa fa-file-word-o fs25"></i>
             </a>
         </div>
-        `
+        `*/
+            wfbtn = `
+        <input type="checkbox" style=" width: 20px; height: 20px;" ng-model="Export['${full.resumeNumber}']"/>
+        <a title="{{&quot;Tải Phiếu đảng viên&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
+            ng-click="GetMemberPartyProfile2('${full.resumeNumber}')"><i class="fa fa-file-word-o  fs25"></i>
+        </a> `
             if (data != undefined && data != '') {
                 wfbtn += `<div>${data}</div>`;
             }
