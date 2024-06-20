@@ -359,6 +359,9 @@
         font-size: 12px;
         height: auto;
     }
+    .selected {
+        background-color: #dfebf5;
+    }
 </style>
 
 <div class="portlet-body form row" style="margin-top: 15px">
@@ -1454,7 +1457,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-user" id="MenberFamilyName"
-                                                   ng-click="openPopover('MenberFamilyName');"
+                                                   ng-click="openPopover3('MenberFamilyName');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                    popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
@@ -1937,8 +1940,11 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
-                                                                <td>
+                                                            <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}" >
+                                                                <td id="{{'popup_' + $index}}"
+                                                                   title="Popover Header" popover-placement="bottom-left"
+                                                                   uib-popover="Giáo dục nghề nghiệp của bạn là: {{infUser.LevelEducation.VocationalTraining}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                                   popover-trigger="outsideClick">
                                                                     {{x.Relation}}
                                                                 </td>
                                                                 <td>
@@ -1998,6 +2004,11 @@
                                                                             style="color:red">
                                                                         <i class="fa fa-trash"></i>
                                                                     </button>
+                                                                    <button class="btn mt-1" ng-click="openPopover2(x.Id)" 
+                                                                             uib-popover-template="'popoverTemplate.html'" popover-placement="left" popover-trigger="outsideClick">
+                                                                        <i class="fa-solid fa-comments"></i>
+                                                                    </button>
+
                                                                 </td>
                                                             </tr>
                                                         </tbody>

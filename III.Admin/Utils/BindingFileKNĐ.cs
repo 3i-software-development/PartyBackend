@@ -12,6 +12,9 @@ using Syncfusion.DocIO.DLS;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Syncfusion.DocIO;
+using System.IO;
+using System.Drawing;
 using static III.Admin.Controllers.MobileLoginController;
 
 namespace III.Admin.Utils
@@ -1851,4 +1854,558 @@ namespace III.Admin.Utils
     }
 
 
+
+    public static class BinddingPartyMemberProfile2
+    {
+        public static void BiddingPatyProfile(
+            IWSection section,
+            UserJoinPartyController.converJsonPartyAdmission jsonParty
+        )
+        {
+            foreach (IWParagraph p in section.Paragraphs)
+            {
+                string a = p.Text.Trim();
+                switch (a)
+                {
+                    case "Họ và tên:họ và tên………………………………Giới tính:……….":
+                        p.Replace(
+                            "Họ và tên:họ và tên",
+                            "Họ và tên: " + jsonParty.Profile.CurrentName,
+                            true,
+                            true
+                        );
+                        p.Replace(
+                            "Giới tính:……….",
+                            "Giới tính: " + jsonParty.Profile.Gender,
+                            true,
+                            true
+                        );
+                        break;
+                    case "Dân tộc:dân tộc…………………………………..Tôn giáo:……….":
+                        p.Replace(
+                            "Dân tộc:dân tộc",
+                            "Dân tộc:" + jsonParty.Profile.Nation,
+                            true,
+                            true
+                        );
+                        p.Replace(
+                            "Tôn giáo:……….",
+                            "Tôn giáo: " + jsonParty.Profile.Religion,
+                            true,
+                            true
+                        );
+                        break;
+                    case "Sinh ngày:…………………………………………………………...":
+                        p.Replace(
+                            "Sinh ngày:…………………………………………………………...",
+                            "Sinh ngày: " + jsonParty.Profile.Birthday,
+                            true,
+                            true
+                        );
+                        break;
+                    case "Nơi sinh:…………………………………………………………….":
+                        p.Replace(
+                            "Nơi sinh:…………………………………………………………….",
+                            "Nơi sinh: " + jsonParty.Profile.BirthPlaceValue,
+                            true,
+                            true
+                        );
+                        break;
+                    case "Quê quán:……………………………………………………………":
+                        p.Replace(
+                            "Quê quán:……………………………………………………………",
+                            "Quê quán: " + jsonParty.Profile.HomeTownValue,
+                            true,
+                            true
+                        );
+                        break;
+                    case "Nơi ở hiện nay:………………………………………………………":
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.PermanentResidenceValue))
+                            p.Replace(
+                                "Nơi ở hiện nay:………………………………………………………",
+                                "Nơi ở hiện nay: " + jsonParty.Profile.PermanentResidenceValue,
+                                true,
+                                true
+                            );
+                        break;
+
+                    case "Giáo dục đại học:…………………………………………………….":
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.UnderPostGraduateEducation))
+                            p.Replace(
+                                "…………………………………………………….",
+                                jsonParty.Profile.UnderPostGraduateEducation,
+                                true,
+                                true
+                            );
+                        break;
+                    case "Chức vụ, đơn vị công tác hiện nay:…………………………………….":
+                        p.Replace(
+                            "…………………………………….",
+                            jsonParty.Profile.Job,
+                            true,
+                            true
+                        );
+                        break;
+                    case "12) Ngày vào Đảng:…/…/…… Tại Chi bộ:…………………………………………………………..":
+                        if (jsonParty.IntroducerOfParty != null)
+
+                            p.Replace(
+                                "12) Ngày vào Đảng:…/…/…… Tại Chi bộ:………………………………………………………….",
+                                "12) Ngày vào Đảng: "
+                                    + jsonParty.IntroducerOfParty.PlaceTimeJoinParty,
+                                true,
+                                true
+                            );
+
+                        break;
+
+                    case "Người giới thiệu thứ 1:…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….":
+                        if (jsonParty.IntroducerOfParty != null)
+                            p.Replace(
+                                "…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….",
+                                jsonParty.IntroducerOfParty.PersonIntroduced,
+                                true,
+                                true
+                            );
+                        break;
+                    case "Ngày chính thức:…/…/…… Tại Chi bộ:………………………………………………………………":
+                        if (jsonParty.IntroducerOfParty != null)
+                            p.Replace(
+                                "…/…/…… Tại Chi bộ:………………………………………………………………",
+                                jsonParty.IntroducerOfParty.PlaceTimeRecognize,
+                                true,
+                                true
+                            );
+                        break;
+                    case "14) Ngày vào Đoàn TNCS Hồ Chí Minh:…/…/……………………………………………..............":
+                        if (jsonParty.IntroducerOfParty != null)
+                            p.Replace(
+                                "…/…/……………………………………………..............",
+                                jsonParty.IntroducerOfParty.PlaceTimeJoinUnion,
+                                true,
+                                true
+                            );
+                        break;
+                    case "- Giáo dục phổ thông:…………….…… - Giáo dục nghề nghiệp:………………………………….":
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.GeneralEducation))
+                            p.Replace(
+                                "Giáo dục phổ thông:…………….…",
+                                "Giáo dục phổ thông: " + jsonParty.Profile.GeneralEducation,
+                                true,
+                                true
+                            );
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.JobEducation))
+                            p.Replace(
+                                "Giáo dục nghề nghiệp:…………………………………",
+                                "Giáo dục nghề nghiệp: " + jsonParty.Profile.JobEducation,
+                                true,
+                                true
+                            );
+                        break;
+                    case "Học vị: …………………………………. - Học hàm: ………………………………………………….":
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.Degree))
+                            p.Replace("…………………………………………………", jsonParty.Profile.Degree, true, true);
+                        break;
+                    case "- Lý luận chính trị: ……………………. - Ngoại ngữ: ………………………………………………..":
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.PoliticalTheory))
+                            p.Replace(
+                                "Lý luận chính trị: …………………….",
+                                "Lý luận chính trị: " + jsonParty.Profile.PoliticalTheory,
+                                true,
+                                true
+                            );
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.ForeignLanguage))
+                            p.Replace(
+                                "Ngoại ngữ: ………………………………………………..",
+                                "Ngoại ngữ: " + jsonParty.Profile.ForeignLanguage,
+                                true,
+                                true
+                            );
+                        break;
+                    case "Chi bộ…………………………":
+                        if (!string.IsNullOrEmpty(jsonParty.Profile.GroupUserCode))
+                            p.Replace(
+                                "Chi bộ…………………………",
+                                jsonParty.Profile.GroupUserCode,
+                                true,
+                                true
+                            );
+                        break;
+                    case "23) Khen thưởng : (Huân chương, huy chương, bằng khen)……………………………………\v…………………………………………………………………………………………………………\v…………………………………………………………………………………………………………":
+                        BindingAward(p, jsonParty.Awards);
+                        break;
+                  /*  case "26) Kỷ luật (Đảng, chính quyền, pháp luật): ……………………………………………………\v………………………………………………………………………………………………………":
+                        BindingWarning(p, jsonParty.WarningDisciplineds);
+                        break;*/
+                    case "a) Đã đi nước ngoài (nước nào, lý do, thời gian ra nước ngoài...): …………………………\v………………………………………………………………………………………………………\v………………………………………………………………………………………………………":
+                        BindingGoAboards(p, jsonParty.GoAboards);
+                        break;
+                    case "Thời gian: …………………………………\tTại Chi bộ: ……………………………":
+                        BindingPersonalHistories1(p, jsonParty.PersonalHistories);
+                        break;
+                    case "- Ngày vào Đảng lần thứ 2: …/…/…… Tại chi bộ: …………………………………………….":
+                        BindingPersonalHistories2(p, jsonParty.PersonalHistories);
+                        break;
+                    case "d) Bị xử lý theo pháp luật (ngày, tháng, năm; chính quyền nào xử lý; hình thức xử lý, nơi thi hành án...): ……………………………………………………………………………………………….\v………………………………………………………………………………………………………\v………………………………………………………………………………………………………":
+                        BindingPersonalHistories4(p, jsonParty.PersonalHistories);
+                        break;
+                    case "e) Bản thân có làm việc trong chế độ cũ (ngày, tháng, năm; chức vụ; nơi làm việc...): ….\v………………………………………………………………………………………………………\v………………………………………………………………………………………………………":
+                        BindingPersonalHistories5(p, jsonParty.PersonalHistories);
+                        break;
+                    case "c) Ngày được khôi phục đảng tịch: …/…/…… Tại chi bộ: ……………………………………\v……………………………………………………………………………………………………….":
+                        BindingPersonalHistories3(p, jsonParty.PersonalHistories);
+                        break;
+
+                    case "Tóm tắt quá trình công tác":
+                        BindingWorkingTracking(p, jsonParty.WorkingTracking);
+                        break;
+
+                    case "c. Khen thưởng, kỷ luật:...................................................................":
+                        BindingAward(p, jsonParty.Awards);
+                        break;
+                    case "- hoàn cảnh gđ":
+                        BindingFamily(p, jsonParty.Families);
+                        break;
+
+                }
+            }
+
+            /*var table = section.Tables[1] as WTable;
+            BindingWorkingTracking(table, jsonParty.WorkingTracking);
+
+            table = section.Tables[2] as WTable;
+            BindingTrainingCertificatedPasses(table, jsonParty.TrainingCertificatedPasses);
+
+            table = section.Tables[3] as WTable;
+            BindingFamily(table, jsonParty.Families);*/
+        }
+        
+        //Được kết nạp lại vào Đảng
+        private static void BindingPersonalHistories2(
+            IWParagraph p,
+            List<PersonalHistory> personalHistories
+        )
+        {
+            var item = personalHistories.FirstOrDefault(x => x.Type == "2");
+
+            if (item != null)
+            {
+                p.Replace("…/…/……", item.Begin + "-" + item.End, true, true);
+                if (!string.IsNullOrEmpty(item.Content))
+                    p.Replace("……………………………………………", item.Content, true, true);
+            }
+        }
+
+        //khôi phục đảng tịch
+        private static void BindingPersonalHistories3(
+            IWParagraph p,
+            List<PersonalHistory> personalHistories
+        )
+        {
+            var item = personalHistories.FirstOrDefault(x => x.Type == "3");
+
+            if (item != null)
+            {
+                p.Replace("…/…/……", item.Begin + "-" + item.End, true, true);
+                if (!string.IsNullOrEmpty(item.Content))
+                    p.Replace(
+                        "……………………………………\v……………………………………………………………………………………………………….",
+                        item.Content,
+                        true,
+                        true
+                    );
+            }
+        }
+
+        //Làm việc trong chế độ cũ
+        private static void BindingPersonalHistories5(
+            IWParagraph p,
+            List<PersonalHistory> personalHistories
+        )
+        {
+            string text = "";
+            personalHistories = personalHistories.Where(x => x.Type == "5").ToList();
+
+            foreach (var item in personalHistories)
+            {
+                text += $"{item.Content}(Thời gian: {item.Begin}-{item.End}),";
+            }
+            if (text != "")
+                p.Replace(
+                    "….\v………………………………………………………………………………………………………\v………………………………………………………………………………………………………",
+                    text,
+                    true,
+                    true
+                );
+        }
+
+        //Bị xử lý theo pháp luật
+        private static void BindingPersonalHistories4(
+            IWParagraph p,
+            List<ESEIM.Models.PersonalHistory> personalHistories
+        )
+        {
+            string text = "";
+            personalHistories = personalHistories.Where(x => x.Type == "4").ToList();
+
+            foreach (var item in personalHistories)
+            {
+                text += $"{item.Content}(Thời gian: {item.Begin}-{item.End}),";
+            }
+            if (text != "")
+                p.Replace(
+                    " ……………………………………………………………………………………………….\v………………………………………………………………………………………………………\v………………………………………………………………………………………………………",
+                    text,
+                    true,
+                    true
+                );
+        }
+
+        //Bị xóa tên trong danh sách đảng viên
+        private static void BindingPersonalHistories1(
+            IWParagraph p,
+            List<ESEIM.Models.PersonalHistory> personalHistories
+        )
+        {
+            var item = personalHistories.FirstOrDefault(x => x.Type == "1");
+
+            if (item != null)
+            {
+                p.Replace(
+                    "Thời gian: …………………………………",
+                    "Thời gian: " + item.Begin + "-" + item.End,
+                    true,
+                    true
+                );
+                if (!string.IsNullOrEmpty(item.Content))
+                    p.Replace("Tại Chi bộ: ……………………………", "Tại Chi bộ: " + item.Content, true, true);
+            }
+        }
+
+        private static void BindingGoAboards(IWParagraph p, List<ESEIM.Models.GoAboard> goAboards)
+        {
+            string text = "";
+            foreach (var item in goAboards)
+            {
+                text +=
+                    $"- {item.Country}(Thời gian: {item.From}-{item.To}, Nội dung: {item.Contact})";
+            }
+            if (text != "")
+                p.Replace(
+                    " …………………………\v………………………………………………………………………………………………………\v………………………………………………………………………………………………………",
+                    text,
+                    true,
+                    true
+                );
+        }
+
+        private static void BindingAward(IWParagraph p, List<Award> awards)
+        {
+            string text = "";
+            foreach (var item in awards)
+            {
+
+                // Format {item.Relation}: {item.Name} as bold
+                 IWTextRange relationRange = p.AppendText($"\n- {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})");
+                SetStyle2(relationRange);
+                text +=
+                    $"\n- {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})";
+            }
+            if (text != "")
+            {
+                p.Replace(
+                    "...................................................................",
+                    " ",
+                    true,
+                    true
+                );
+            }
+            else
+            {
+                p.Replace(
+                    "...................................................................",
+                    " Không",
+                    true,
+                    true
+                );
+            }
+        }
+
+        private static void BindingWarning(IWParagraph p, List<WarningDisciplined> awards, List<WarningDisciplined> warningDisciplineds)
+        {
+            string text = "";
+            foreach (var item in awards)
+            {
+                text +=
+                    $"- {item.Reason}(Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})";
+            }
+
+            foreach (var item in warningDisciplineds)
+            {
+                text +=
+                    $"- {item.Reason}(Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})";
+            }
+            if (text != "")
+                p.Replace(
+                    "……………………………………………………\v………………………………………………………………………………………………………",
+                    text,
+                    true,
+                    true
+                );
+        }
+
+        private static void BindingFamily(IWParagraph p, List<Family> families)
+        {
+            string text = "";
+            foreach (var item in families)
+            {
+                // Create a new text body part for each family member
+                IWTextRange textRange = p.AppendText("\n- ");
+
+                // Format {item.Relation}: {item.Name} as bold
+                IWTextRange relationRange = p.AppendText($"{item.Relation}: ");
+                relationRange.CharacterFormat.FontSize = 14;
+
+
+                IWTextRange nameRange = p.AppendText($"{item.Name}; ");
+                nameRange.CharacterFormat.FontSize = 14;
+
+                // Format the rest of the text as normal
+                /*p.AppendText($"Năm sinh: {item.BirthYear}, Quê quán: {item.HomeTownVillage}, {item.HomeTownValue}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. {item.WorkingProgress}") ;*/
+                IWTextRange partyMemberRange2 = p.AppendText($"Năm sinh: {item.BirthYear}, Quê quán: {item.HomeTownVillage}, {item.HomeTownValue}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. {item.WorkingProgress}.");
+                SetStyle2(partyMemberRange2);
+                // Check if PartyMember needs to be added
+                if (item.PartyMember != null)
+                {
+                    var partMember = item.PartyMember.Split("_");
+                    if (partMember.Length == 3 && partMember[1] == "true")
+                    {
+                        IWTextRange partyMemberRange = p.AppendText($" Là đảng viên đang sinh hoạt tại {partMember[0]}, thuộc đảng bộ: {partMember[2]}");
+                        partyMemberRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Red;
+                        partyMemberRange.CharacterFormat.FontSize = 15;
+
+                    }
+                }
+            }
+
+            // Assuming that "- Bố đẻ" is a placeholder text in the document
+            if (p.Text.Contains("- hoàn cảnh gđ"))
+            {
+                p.Text = p.Text.Replace("- hoàn cảnh gđ", ""); // Clear the placeholder text
+            }
+
+
+
+            /* if (text != "")
+             {
+                 p.Replace(
+                     "- Bố đẻ",
+                     text,
+                     true,
+                     true
+                 );
+             }*/
+
+        }
+
+
+        private static void BindingTrainingCertificatedPasses(
+            WTable table,
+            List<TrainingCertificatedPass> trainingCertificatedPasses
+        )
+        {
+            int countRow = table.Rows.Count;
+            int selectRow = 1;
+            WTableRow row;
+            foreach (var item in trainingCertificatedPasses)
+            {
+                if (selectRow < countRow)
+                {
+                    row = table.Rows[selectRow];
+                }
+                else
+                {
+                    row = table.AddRow();
+                    countRow++;
+                }
+
+                var cell = row.Cells[0];
+                IWTextRange text;
+
+                var p = cell.Paragraphs[0];
+                p.ParagraphFormat.HorizontalAlignment = Syncfusion
+                    .DocIO
+                    .DLS
+                    .HorizontalAlignment
+                    .Left;
+                text = p.AppendText(item.SchoolName);
+                SetStyle2(text);
+
+                cell = row.Cells[1];
+
+                p = cell.Paragraphs[0];
+                p.ParagraphFormat.HorizontalAlignment = Syncfusion
+                    .DocIO
+                    .DLS
+                    .HorizontalAlignment
+                    .Left;
+                text = p.AppendText(item.Class);
+                SetStyle2(text);
+
+                cell = row.Cells[2];
+
+                p = cell.Paragraphs[0];
+                p.ParagraphFormat.HorizontalAlignment = Syncfusion
+                    .DocIO
+                    .DLS
+                    .HorizontalAlignment
+                    .Left;
+                text = p.AppendText("Từ:" + item.From);
+                SetStyle2(text);
+
+                p = cell.AddParagraph() as WParagraph;
+                text = p.AppendText("Đến:" + item.To);
+                SetStyle2(text);
+
+                cell = row.Cells[4];
+
+                p = cell.Paragraphs[0];
+                p.ParagraphFormat.HorizontalAlignment = Syncfusion
+                    .DocIO
+                    .DLS
+                    .HorizontalAlignment
+                    .Left;
+                text = p.AppendText(item.Certificate);
+                SetStyle2(text);
+                selectRow++;
+            }
+        }
+
+        private static void SetStyle2(IWTextRange text)
+        {
+            text.CharacterFormat.FontName = "Times New Roman";
+            text.CharacterFormat.FontSize = 14;
+        }
+
+        private static void BindingWorkingTracking(
+           IWParagraph p,
+            List<WorkingTracking> workingTracking
+        )
+        {
+
+            string text = "";
+            foreach (var item in workingTracking)
+            {
+                text +=
+                    $"- Từ {item.From} - Đến {item.To}: {item.Work} \n";
+            }
+            if (text != "")
+                p.Replace(
+                    "Tóm tắt quá trình công tác",
+                    text,
+                    true,
+                    true
+                );
+        }
+    }
 }

@@ -133,6 +133,7 @@ namespace III.Admin.Controllers
         public class ItemNoteJson
         {
             public string id { get; set; }
+            public string idFamily { get; set; }
             public string comment { get; set; }
         }
 
@@ -172,6 +173,7 @@ namespace III.Admin.Controllers
                             if (x.id == jsonData.id)
                             {
                                 x.comment = jsonData.comment;
+                                x.idFamily = jsonData.idFamily;
                             }
                         });
                         Object = jsonData;
@@ -861,6 +863,174 @@ namespace III.Admin.Controllers
             return msg;
         }
 
+
+        [HttpGet]
+        [AllowAnonymous]
+        public object GetMemberPartyProfile2(string ressumeNumber)
+        {
+            var msg = new JMessage { Error = false, Title = "" };
+
+            List<JMessage> filePath = new List<JMessage>();
+            //truy vấn
+            var jsonData = new converJsonPartyAdmission();
+            var profile = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber);
+            jsonData.Profile = _context.PartyAdmissionProfiles.Where(x => x.ResumeNumber == ressumeNumber && x.IsDeleted == false)
+                .Select(x => new ModelViewPAMP
+                {
+                    CurrentName = x.CurrentName,
+                    Nation = x.Nation,
+                    BirthName = x.BirthName,
+                    Gender = x.Gender == 0 ? "Nam" : "Nữ",
+                    Religion = x.Religion,
+                    Birthday = x.Birthday.Value.ToShortDateString(),
+                    PermanentResidence = x.PermanentResidence,
+                    Phone = x.Phone,
+                    Picture = x.Picture,
+                    HomeTown = x.HomeTown,
+                    PlaceBirth = x.PlaceBirth,
+                    Job = x.Job,
+                    TemporaryAddress = x.TemporaryAddress,
+                    GeneralEducation = x.GeneralEducation,
+                    JobEducation = x.JobEducation,
+                    UnderPostGraduateEducation = x.UnderPostGraduateEducation,
+                    Degree = x.Degree,
+                    PoliticalTheory = x.PoliticalTheory,
+                    ForeignLanguage = x.ForeignLanguage,
+                    ItDegree = x.ItDegree,
+                    MinorityLanguages = x.MinorityLanguages,
+                    ResumeNumber = x.ResumeNumber,
+                    SelfComment = x.SelfComment,
+                    CreatedPlace = x.CreatedPlace,
+                    WfInstCode = x.WfInstCode,
+                    Username = x.Username,
+                    Status = x.Status,
+                    GroupUserCode = x.GroupUserCode,
+                    PlaceWorking = x.PlaceWorking,
+                    MarriedStatus = x.MarriedStatus,
+                    AddressText = x.AddressText,
+                    TemporaryAddressValue = $"{x.TemporaryAddressVillage}, {x.TemporaryAddressValue}",
+                    TemporaryAddressVillage = x.TemporaryAddressVillage,
+                    PermanentResidenceVillage = x.PermanentResidenceVillage,
+                    PermanentResidenceValue = $"{x.PermanentResidenceVillage}, {x.PermanentResidenceValue}",
+                    HomeTownVillage = x.HomeTownVillage,
+                    HomeTownValue = $"{x.HomeTownVillage}, {x.HomeTownValue}",
+                    BirthPlaceValue = $"{x.BirthPlaceVillage}, {x.BirthPlaceValue}",
+
+                }).FirstOrDefault();
+
+            jsonData.IntroducerOfParty = _context.IntroducerOfParties.FirstOrDefault(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false);
+            jsonData.WorkingTracking = _context.WorkingTrackings.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.TrainingCertificatedPasses = _context.TrainingCertificatedPasses.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.Families = _context.Families.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.Awards = _context.Awards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.WarningDisciplineds = _context.WarningDisciplineds.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.GoAboards = _context.GoAboards.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+            jsonData.PersonalHistories = _context.PersonalHistories.Where(x => x.ProfileCode == ressumeNumber && x.IsDeleted == false).ToList();
+
+
+            // Process BirthYear for each family member
+            foreach (var familyMember in jsonData.Families)
+            {
+                string[] parts = familyMember.BirthYear.Split('_'); // Assuming parts are separated by semicolon
+
+                familyMember.BirthYear = parts.Length > 1 ? parts[1] : familyMember.BirthYear;
+                if (parts[0] == "true")
+                {
+                    familyMember.BirthYear = parts[1];
+                    familyMember.Name += "(Đã mất - " + "mất tại: " + parts[2] + "- mất do:" + parts[3] + ")";
+                }
+                else
+                {
+                    familyMember.BirthYear = parts[1];
+                };
+                
+                if (familyMember.Relation.ToLower() == "vợ" || familyMember.Relation.ToLower() == "chồng" || familyMember.Relation.ToLower() == "vợ (chồng)")
+                {
+                    string[] marriedParts = jsonData.Profile.MarriedStatus.Split('_');
+                    if (marriedParts[0] == "2")
+                    {
+                        familyMember.Name += $" (Đã Ly hôn theo quyết định số: {marriedParts[1]}, Ngày: {marriedParts[2]}, Địa điểm: {marriedParts[3]})";
+                    }
+                }
+                
+
+                /*
+                                var workingProgressLines = familyMember.WorkingProgress.Split( "\n" , StringSplitOptions.RemoveEmptyEntries);
+                                familyMember.WorkingProgress = string.Join(";", workingProgressLines);*/
+
+            }
+
+            //tạo file
+            msg = CreatePartyMemberProfile2(jsonData);
+            if (!msg.Error)
+            {
+                //lấy đường dẫn file
+                msg.Title = ressumeNumber;
+                filePath.Add(msg);
+            }
+            return filePath;
+        }
+
+        [NonAction]
+        private JMessage CreatePartyMemberProfile2(converJsonPartyAdmission jsonParty)
+        {
+            var msg = new JMessage { Title = _sharedResources["COM_MSG_SUCCES_SAVE"], Error = false };
+
+            string path = "/files/Template/ĐẢNG ỦY CÁC KHU CÔNG NGHIỆP.docx";
+            string rootPath = _hostingEnvironment.WebRootPath;
+            var filePath = string.Concat(rootPath, path);
+            var fileStream = new FileStream(filePath, FileMode.Open);
+
+            try
+            {
+                WordDocument document = new WordDocument(fileStream, Syncfusion.DocIO.FormatType.Docx);
+                IWSection section = document.Sections[0];
+
+                //binding file
+                BinddingPartyMemberProfile2.BiddingPatyProfile(section, jsonParty);
+
+                #region Saving document
+                MemoryStream memoryStream = new MemoryStream();
+                //Save the document into memory stream
+                document.Save(memoryStream, Syncfusion.DocIO.FormatType.Docx);
+                //Closes the Word document instance
+                document.Close();
+
+                //Lưu 1 file sinh chữ ký
+                var pathVersion = "/uploads/files/fileVersion/";
+                var pathFileVersion = string.Concat(rootPath, pathVersion);
+                if (!Directory.Exists(pathFileVersion)) Directory.CreateDirectory(pathFileVersion);
+                var fileName = "FILE_VERSION_"
+                          + Guid.NewGuid().ToString().Substring(0, 8)
+                          + Path.GetExtension(path);
+                var fileVersionPath = string.Concat(pathFileVersion, fileName);
+                FileStream fileVersion = new FileStream(fileVersionPath, FileMode.Create, FileAccess.Write);
+                memoryStream.WriteTo(fileVersion);
+                fileVersion.Close();
+
+                //FileStream file = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+                //memoryStream.WriteTo(file);
+                //file.Close();
+
+                //signBytes.Close();
+                memoryStream.Position = 0;
+
+                msg.Object = string.Concat(pathVersion, fileName);
+                msg.Title = fileVersionPath;
+
+                #endregion
+            }
+            catch (Exception ex)
+            {
+                msg.Error = true;
+                msg.Title = "Có lỗi xảy ra";
+                msg.Object = path;
+                //signBytes.Close();
+            }
+
+            fileStream.Dispose();
+            return msg;
+        }
         [NonAction]
         private JMessage GenergatePesonnal(SelectedParty jsonParty)
         {

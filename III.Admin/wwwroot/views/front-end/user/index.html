@@ -1871,7 +1871,8 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)">
+                                                <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)"
+                                                    ng-class="{'selected': x.selected}">
                                                     <td>
                                                         {{x.Relation}}
 
@@ -1933,9 +1934,15 @@
                                                     </td>
 
 
-                                                    <td ng-click="deleteFamily($index)">
-                                                        <button class="btn" style="color:red">
+                                                    <td>
+                                                        <button class="btn" style="color:red" ng-click="deleteFamily($index)">
                                                             <i class="fa fa-trash"></i>
+                                                        </button>
+                                                        <button class="btn mt-1">
+                                                            <i class="fa fa-info-circle icon-clickable" id="{{x.Id}}" ng-click="check(x.Id)"
+                                                               title="Popover Header" popover-placement="bottom-left"
+                                                               uib-popover="Lưu ý: {{matchedItemss[0].comment}}"
+                                                               popover-trigger="outsideClick"></i>
                                                         </button>
                                                     </td>
                                                 </tr>
@@ -3266,6 +3273,11 @@
             display: block;
             width: 100%;
         }
+    }
+
+
+    .selected {
+        background-color: #dfebf5;
     }
 
     .col-md-8 {

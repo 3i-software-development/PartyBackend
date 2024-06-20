@@ -2353,17 +2353,31 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.handleUserClick(id);
     });
 
+    $scope.check = function (id) {
+        /* var id = $(this).attr('id');*/
+       var id2 = id
+        $scope.handleUserClick(id2);
+    }
+
     $scope.handleUserClick = function (id) {
         if (!Array.isArray($scope.jsonGuide)) {
             $scope.jsonGuide = [];
             console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
         }
+        var id3 = "" + id
+/*        return $scope.jsonGuide.find(function (item) {
+            return item.id ===id3;
+        });*/
 
         $scope.matchedItemss = $scope.jsonGuide.filter(function (item) {
-            return item.id === id;
+            return item.id === id3;
         });
         console.log('$scope.matchedItemss:', $scope.matchedItemss)
-        $scope.$apply();
+/*        $timeout(function () {
+            // Các thay đổi cần áp dụng vào scope
+            $scope.$apply();
+
+        });*/
     };
 
     $scope.getPartyAdmissionProfileByUsername = function () {
@@ -4240,6 +4254,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.selectFamily = function (x) {
         if (x) {
             $scope.selectedFamily = x;
+            $scope.Relationship.forEach(function (Relationship) {
+                Relationship.selected = false;
+            });
+
+            // Set selected family
+            $scope.selectedFamily = x;
+            $scope.selectedFamily.selected = true;
             //var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
             //$scope.WorkingProgressStart = years[0];
             //$scope.WorkingProgressEnd = years[1];
