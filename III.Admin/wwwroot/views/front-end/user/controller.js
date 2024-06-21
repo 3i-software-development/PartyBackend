@@ -3527,6 +3527,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.deleteselectPersonHistory = function () {
         $scope.selectedPersonHistory = {};
+        for (var i = 0; i < $scope.PersonalHistory.length; i++) {
+            $scope.PersonalHistory[i].selected = false;
+        }
         $scope.changeHistory()
         $scope.resetValidateFamily()
     };
@@ -4313,6 +4316,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.changedisable();
             $scope.changedis();
             $scope.filterRelation();
+            $scope.pp = {};
+            $scope.matchedItemss = [];
             setTimeout(() => $scope.resetValidateFamily(), 150);
         }
         $scope.deleteS = false;
@@ -4333,6 +4338,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.PartyMember = false;
         $scope.changedisable();
         $scope.changedis();
+        $scope.pp = {};
+        $scope.matchedItemss = [];
         //var $icon = $('.fa.fa-info-circle.icon-family');
         //console.log($icon.length);
         //if ($icon.length > 0) {
@@ -4367,6 +4374,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
+        for (var i = 0; i < $scope.PersonalHistory.length; i++) {
+            $scope.PersonalHistory[i].selected = false;
+        }
+        $scope.selectedPersonHistory.selected = true;
     };
     $scope.selectWarningDisciplined = function (x) {
         $scope.selectedWarningDisciplined = x;
@@ -4376,6 +4387,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     };
     $scope.selectWorkingTracking = function (x) {
         $scope.selectedWorkingTracking = x;
+        for (var i = 0; i < $scope.BusinessNDuty.length; i++) {
+            $scope.BusinessNDuty[i].selected = false;
+        }
+        $scope.selectedWorkingTracking.selected = true;
     };
     $scope.selectTrainingCertificatedPass = function (x) {
         $scope.selectedTrainingCertificatedPass = x;

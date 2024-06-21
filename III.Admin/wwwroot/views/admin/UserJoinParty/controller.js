@@ -2652,6 +2652,32 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         //$scope.commentTextarea = matchedGuide.comment;
     };
 
+    $scope.openPopover4 = function (popoverId) {
+        if (!$scope.selectedPersonHistory || !$scope.selectedPersonHistory.Id) {
+            return;
+        }
+        const pp = $scope.jsonGuide.find(x => x.id === `history_${$scope.selectedPersonHistory.Id}`);
+        matchedLabel = $scope.popoverLabels.find(function (item) {
+            return item.id === popoverId;
+        });
+        if (pp) {
+            $scope.pp = angular.copy(pp);
+        }
+        else {
+            $scope.pp = {
+                id: `history_${$scope.selectedPersonHistory.Id}`,
+                comment: '',
+                idFamily: {
+                }
+            };
+        }
+        $scope.popoverid = $scope.pp.id;
+        $scope.popoverLabel = matchedLabel.labelText;
+        $scope.popoveridFamily = popoverId;
+        $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
+        //$scope.commentTextarea = matchedGuide.comment;
+    };
+
 
     $scope.openPopover2 = function (popoverId) {
         /*        matchedLabel = $scope.popoverLabels.find(function (item) {
@@ -3070,6 +3096,24 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         console.log('$scope.matchedItemss:', $scope.matchedItemss)
         $scope.$apply();
     };
+    $scope.handerClickIconChild = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case "family":
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedFamily.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
 
     $scope.downloadFile = function (file) {
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
@@ -3595,11 +3639,18 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
+        for (var i = 0; i < $scope.PersonalHistory.length; i++) {
+            $scope.PersonalHistory[i].selected = false;
+        }
+        $scope.selectedPersonHistory.selected = true;
         $scope.PersonHistoryType = x.Type;
     };
 
     $scope.deleteselectPersonHistory = function () {
         $scope.selectedPersonHistory = {};
+        for (var i = 0; i < $scope.PersonalHistory.length; i++) {
+            $scope.PersonalHistory[i].selected = false;
+        }
         $scope.changeHistory()
         $scope.resetValidateFamily()
     };

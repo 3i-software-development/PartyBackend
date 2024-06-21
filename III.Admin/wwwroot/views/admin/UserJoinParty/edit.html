@@ -1438,9 +1438,10 @@
                                             <div class="col-md-8">
                                                 <div class="br24 form-control custom-title-code-bold"
                                                      style="white-space:nowrap">
-                                                    <i class="fa fa-info-circle icon-clickable" id="relationship"
+                                                    <i class="fa fa-info-circle" id="relationship"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="Quan hệ: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                        ng-click="handerClickIconChild('family','relationship')"
+                                                       uib-popover="Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ... Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="selectedFamilyRelation"
                                                            ng-model="selectedFamily.Relation" type="text"
@@ -2182,7 +2183,7 @@
                                                 <th>Chức vụ</th>
                                                 <th>Xoá bỏ</th>
                                             </tr>
-                                            <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
+                                            <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}">
                                                 <td>{{x.From}}</td>
                                                 <td>{{x.To}}</td>
                                                 <td>{{x.Work}}</td>

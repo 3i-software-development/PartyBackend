@@ -31,7 +31,7 @@
             <div class="form-group row">
                 <div class="col-md-6" >
                     <div class="col-md-6 pr-0 pl-0" >
-                        <i class="fa fa-calendar" id="startDate" ng-click="openPopover('startDate');"
+                        <i class="fa fa-calendar" id="startDate" ng-click="openPopover4('startDate');"
                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                            popover-trigger="outsideClick"></i>
                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -53,7 +53,7 @@
                 </div>
                 <div class="col-md-6 " >
                     <div class="col-md-6 pr-0 pl-0">
-                        <i class="fa fa-calendar" id="endDate" ng-click="openPopover('endDate');"
+                        <i class="fa fa-calendar" id="endDate" ng-click="openPopover4('endDate');"
                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                            popover-trigger="outsideClick"></i>
                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -76,7 +76,7 @@
 
             <div class="form-group row">
                 <div class="col-md-3 pr-0">
-                    <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');"
+                    <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover4('content');"
                        uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                        popover-trigger="outsideClick"></i>
                     <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType!=1&&PersonHistoryType!=2&&PersonHistoryType!=3">{{"Nội dung"}}</label>
@@ -147,7 +147,7 @@
                    <!-- <th>Phân loại</th>-->
                     <th>Xoá bỏ</th>
                 </tr>
-                <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)">
+                <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}">
                     <td>{{x.Begin}}</td>
                     <td>{{x.End}}</td>
                     <td>
