@@ -1425,9 +1425,11 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-user" id="relationship"
-                                                   ng-click="openPopover('relationship');"
+                                                   ng-click="openPopover3('relationship');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-user" id="relationship" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quan
                                                     hệ
@@ -1461,7 +1463,8 @@
                                                    ng-click="openPopover3('MenberFamilyName');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                    popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
-                                                <i class="fa fa-user" id="MenberFamilyName" ng-if="!selectedFamily || !selectedFamily.Id"></i>
+                                                <i class="fa fa-user" id="MenberFamilyName" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Họ
                                                     và tên
@@ -1487,15 +1490,17 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-calendar-o" id="dateOfBirdRelation"
-                                                   ng-click="openPopover('dateOfBirdRelation');"
+                                                   ng-click="openPopover3('dateOfBirdRelation');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-calendar-o" id="dateOfBirdRelation" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Năm
                                                     sinh
                                                 </label>
                                                 <!-- <input ng-change="updateAddressState()" type="checkbox"
-                                                ng-model="selectedFamily.disableAddress" ng-change="changedisable()">Đã mất -->
+    ng-model="selectedFamily.disableAddress" ng-change="changedisable()">Đã mất -->
 
                                             </div>
                                             <div class="col-md-8">
@@ -1552,9 +1557,11 @@
 
                                         <div class="form-group row" ng-if="selectedFamily.disableAddress">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-home" id="residence" ng-click="openPopover('residence');"
+                                                <i class="fa fa-home" id="residence" ng-click="openPopover3('residence');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-home" id="residence" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Lí do mất
                                                 </label>
@@ -1593,7 +1600,12 @@
 
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-user"></i>
+                                                <i class="fa fa-user" id="PartyMember"
+                                                   ng-click="openPopover3('PartyMember');"
+                                                   uib-popover-template="'popoverTemplate.html'" popover-placement="right"
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-user" id="PartyMember" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label custom-title-code-bold">
                                                     Đảng
                                                     viên
@@ -1645,9 +1657,11 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-user" id="politicalAttitude"
-                                                   ng-click="openPopover('politicalAttitude');"
+                                                   ng-click="openPopover3('politicalAttitude');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-user" id="politicalAttitude" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Thái
                                                     độ chính trị
@@ -1672,9 +1686,11 @@
 
                                         <div class="form-group row " ng-if="queQuan">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-user" id="working" ng-click="openPopover('working');"
+                                                <i class="fa fa-user" id="working" ng-click="openPopover3('working');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-user" id="working" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quá trình công tác
                                                 </label>
@@ -1744,9 +1760,11 @@
                                         <div class="form-group row" ng-if="queQuan">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker" id="homeTown"
-                                                   ng-click="openPopover('homeTown');"
+                                                   ng-click="openPopover3('homeTown');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-map-marker" id="homeTown" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quê
                                                     quán
@@ -1779,17 +1797,19 @@
 
                                         <div class="form-group row" ng-if="changedisHistory">
                                             <div class="col-md-4 pr-0">
-                                                <i class="fa fa-map-marker" id="homeTown"
-                                                   ng-click="openPopover('homeTown');"
+                                                <i class="fa fa-map-marker" id="BirthPlace"
+                                                   ng-click="openPopover3('BirthPlace');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-map-marker" id="BirthPlace" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require  custom-title-code-bold">
                                                     Nơi sinh
                                                 </label>
                                             </div>
                                             <div class="col-md-8" style=" white-space:nowrap">
                                                 <div class="br24 form-control custom-title-code-bold">
-                                                    <i class="fa fa-info-circle icon-clickable" id="homeTown"
+                                                    <i class="fa fa-info-circle icon-clickable" id="BirthPlace"
                                                        title="Popover Header" popover-placement="bottom-left"
                                                        uib-popover="Nơi sinh của người thân là: {{selectedFamily.BirthPlace}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="outsideClick"></i>
@@ -1804,10 +1824,12 @@
 
                                         <div class="form-group row" ng-if="changedisHistoryVC">
                                             <div class="col-md-4 pr-0">
-                                                <i class="fa fa-map-marker" id="homeTown"
-                                                   ng-click="openPopover('homeTown');"
+                                                <i class="fa fa-map-marker" id="BirthPlace"
+                                                   ng-click="openPopover3('BirthPlace');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-map-marker" id="BirthPlace" ng-click="warningPopover3()"
+                                                   ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Nơi sinh
                                                 </label>
@@ -1829,10 +1851,11 @@
 
                                         <div class="form-group row" ng-if="changedisHistory">
                                             <div class="col-md-4 pr-0">
-                                                <i class="fa fa-map-marker" id="homeTown"
-                                                   ng-click="openPopover('homeTown');"
+                                                <i class="fa fa-map-marker" id="class"
+                                                   ng-click="openPopover3('class');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-map-marker" id="class" ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label custom-title-code-bold">
                                                     Thành phần giai cấp
                                                 </label>
@@ -1854,9 +1877,10 @@
 
                                         <div class="form-group row" ng-if="!selectedFamily.disableAddress">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-home" id="residence" ng-click="openPopover('residence');"
+                                                <i class="fa fa-home" id="residence" ng-click="openPopover3('residence');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-user" id="residence" ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nơi
                                                     cư trú
@@ -1880,9 +1904,10 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-users" id="career" ng-click="openPopover('career');"
+                                                <i class="fa fa-users" id="career" ng-click="openPopover3('career');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                                   popover-trigger="outsideClick"></i>
+                                                   popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
+                                                <i class="fa fa-users" id="career" ng-if="!selectedFamily || !selectedFamily.Id"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nghề
                                                     nghiệp
@@ -2006,11 +2031,10 @@
                                                                             style="color:red">
                                                                         <i class="fa fa-trash"></i>
                                                                     </button>
-                                                                    <button class="btn mt-1" ng-click="openPopover2(x.Id)"
+                                                                    <!--<button class="btn mt-1" ng-click="openPopover2(x.Id)"
                                                                             uib-popover-template="'popoverTemplate.html'" popover-placement="left" popover-trigger="outsideClick">
                                                                         <i class="fa-solid fa-comments"></i>
-                                                                    </button>
-
+                                                                    </button>-->
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -2788,9 +2812,13 @@
 
 <script type="text/ng-template" id="popoverTemplate.html">
     <div class="custom-popover-content">
-        <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
-        <i class="fa fa-microphone" style="padding-right: 85px"></i>
-        <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
+        <div class="d-flex w-100 justify-content-sb">
+            <div class="flex-grow-full">
+                <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
+                <i class="fa fa-microphone"></i>
+            </div>
+            <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
+        </div>
         <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment" popover-placement="bottom" uib-popover="{{matchedItemss[0].comment}}"></textarea>
     </div>
 </script>

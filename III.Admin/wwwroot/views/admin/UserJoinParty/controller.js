@@ -2453,6 +2453,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             "labelText": "Thái độ chính trị",
         },
         {
+            "id": "PartyMember",
+            "labelText": "Đảng viên",
+        },
+        {
             "id": "homeTown",
             "labelText": "Quê quán",
         },
@@ -2597,6 +2601,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
     };
 
+    $scope.warningPopover3 = function() {
+        App.toastrWarning('Vui lòng chọn dòng dữ liệu');
+    }
+
     $scope.openPopover3 = function (popoverId) {
         if (!$scope.selectedFamily || !$scope.selectedFamily.Id) {
             return;
@@ -2640,9 +2648,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     $scope.submit = function () {
         if ($scope.pp.idFamily) {
             $scope.pp.idFamily[$scope.popoveridFamily] = $scope.pp.comment;
-            const pp = $scope.jsonGuide.find(x => x.id === `family_${$scope.selectedFamily.Id}`);
+            let pp = $scope.jsonGuide.find(x => x.id === `family_${$scope.selectedFamily.Id}`);
             if (pp) {
-                pp = angular.copy($scope.pp);
+                pp.idFamily = $scope.pp.idFamily;
+                pp.comment = $scope.pp.comment;
             }
             else {
                 $scope.jsonGuide.push($scope.pp);
@@ -5575,6 +5584,9 @@ return;
         $scope.WorkingProgressStart = "";
         $scope.WorkingProgressEnd = "";
         $scope.PartyMember = false;
+        for (var i = 0; i < $scope.Relationship.length; i++) {
+            $scope.Relationship[i].selected = false;
+        }
         $scope.changedisable();
         $scope.changedis();
         //$scope.filterRelation();

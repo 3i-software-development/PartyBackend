@@ -2355,7 +2355,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.check = function (id) {
         /* var id = $(this).attr('id');*/
-       var id2 = id
+        var id2 = id
         $scope.handleUserClick(id2);
     }
 
@@ -2365,20 +2365,38 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
         }
         var id3 = "" + id
-/*        return $scope.jsonGuide.find(function (item) {
-            return item.id ===id3;
-        });*/
+        /*        return $scope.jsonGuide.find(function (item) {
+                    return item.id ===id3;
+                });*/
 
         $scope.matchedItemss = $scope.jsonGuide.filter(function (item) {
             return item.id === id3;
         });
         console.log('$scope.matchedItemss:', $scope.matchedItemss)
-/*        $timeout(function () {
-            // Các thay đổi cần áp dụng vào scope
-            $scope.$apply();
-
-        });*/
+        /*        $timeout(function () {
+                    // Các thay đổi cần áp dụng vào scope
+                    $scope.$apply();
+        
+                });*/
     };
+    $scope.handerClickIconChild = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case "family":
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedFamily.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
 
     $scope.getPartyAdmissionProfileByUsername = function () {
         if ($scope.UserName == null || $scope.UserName == undefined) {
@@ -4261,6 +4279,16 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             // Set selected family
             $scope.selectedFamily = x;
             $scope.selectedFamily.selected = true;
+            //const pp = $scope.jsonGuide.find(x => x.id === `family_${$scope.selectedFamily.Id}`);
+            //const keys = Object.keys(pp.idFamily);
+            //$.each(keys, function (index, item) {
+            //    // Tìm thẻ <i> có id trùng với id của phần tử
+            //    var $icon = $('#' + item + '.fa.fa-info-circle');
+            //    // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+            //    if ($icon.length > 0) {
+            //        $icon.css('color', 'red');
+            //    }
+            //});
             //var years = $scope.selectedFamily.WorkingProgress.match(/\b\d{4}\b/g);
             //$scope.WorkingProgressStart = years[0];
             //$scope.WorkingProgressEnd = years[1];
@@ -4305,6 +4333,14 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.PartyMember = false;
         $scope.changedisable();
         $scope.changedis();
+        //var $icon = $('.fa.fa-info-circle.icon-family');
+        //console.log($icon.length);
+        //if ($icon.length > 0) {
+        //    $icon.css('color', 'unset');
+        //}
+        for (var i = 0; i < $scope.Relationship.length; i++) {
+            $scope.Relationship[i].selected = false;
+        }
         //$scope.filterRelation();
         //$scope.resetFamilyHomeTown();
 
@@ -5260,5 +5296,33 @@ app.directive("choosePosition", function (dataservice) {
             }
             scope.component.resetModel = resetModel;
         },
+    };
+});
+
+app.directive('iconChildTab', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            rowId: '=',
+            childTab: '@',
+            jsonGuide: '=',
+            controlId: '@'
+        },
+        link: function (scope, element) {
+            scope.$watchGroup(['jsonGuide', 'childTab', 'rowId', 'controlId'], function () {
+                if (!Array.isArray(scope.jsonGuide)) {
+                    scope.jsonGuide = [];
+                    console.warn('scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+                }
+                const pp = scope.jsonGuide.find(x => x.id === `${scope.childTab}_${scope.rowId}`);
+                const hasComment = pp?.idFamily ? pp?.idFamily[scope.controlId] : false;
+
+                if (hasComment) {
+                    element.css('color', 'red');
+                } else {
+                    element.css('color', 'unset');
+                }
+            });
+        }
     };
 });
