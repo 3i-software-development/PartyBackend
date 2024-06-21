@@ -1968,13 +1968,18 @@
                                                         </thead>
                                                         <tbody>
                                                             <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}">
-                                                                <td id="{{'popup_' + $index}}"
-                                                                    title="Popover Header" popover-placement="bottom-left"
-                                                                    uib-popover="Giáo dục nghề nghiệp của bạn là: {{infUser.LevelEducation.VocationalTraining}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
-                                                                    popover-trigger="outsideClick">
+                                                                <td tr-child-tab
+                                                                     row-id="x.Id"
+                                                                     child-tab="family"
+                                                                     json-guide="jsonGuide"
+                                                                     control-id="relationship">
                                                                     {{x.Relation}}
                                                                 </td>
-                                                                <td>
+                                                                <td tr-child-tab
+                                                                     row-id="x.Id"
+                                                                     child-tab="family"
+                                                                     json-guide="jsonGuide"
+                                                                     control-id="MenberFamilyName">
                                                                     {{x.Name}}
                                                                     <span ng-if="(x.Relation.toLowerCase() === 'vợ (chồng)' || x.Relation.toLowerCase() === 'vợ' || x.Relation.toLowerCase() === 'chồng') && infUser.MaritalStatus.marriedStatus.split('_')[0] === '2'">
                                                                         (Đã Ly hôn theo quyết định
@@ -1989,7 +1994,11 @@
                                                                         - Thành phần giai cấp: {{x.class}}
                                                                     </p>
                                                                 </td>
-                                                                <td>
+                                                                <td tr-child-tab
+                                                                     row-id="x.Id"
+                                                                     child-tab="family"
+                                                                     json-guide="jsonGuide"
+                                                                     control-id="dateOfBirdRelation">
                                                                     <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
                                                                     {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                                     <div>
@@ -2005,16 +2014,32 @@
                                                                         <span>{{x.die == true ?"- Lý do mất: "+ x.Reason : ""  }}</span>
                                                                     </div>
                                                                 </td>
-                                                                <td>
+                                                                <td tr-child-tab
+                                                                     row-id="x.Id"
+                                                                     child-tab="family"
+                                                                     json-guide="jsonGuide"
+                                                                     control-id="homeTown">
                                                                     <div ng-if="(x.HomeTownVillage || x.HomeTownValue)"><span>- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>
                                                                     <div>
                                                                         <span> {{x.die == false ? "- Nơi cư trú:" + x.Residence.trim() : "" }}</span>
                                                                     </div>
                                                                 </td>
-                                                                <td>{{x.Job}}</td>
+                                                                <td tr-child-tab
+                                                                     row-id="x.Id"
+                                                                     child-tab="family"
+                                                                     json-guide="jsonGuide"
+                                                                     control-id="career">{{x.Job}}</td>
                                                                 <td style="white-space: pre">{{x.WorkingProgress}}</td>
-                                                                <td>{{x.PoliticalAttitude}}</td>
-                                                                <td>
+                                                                <td tr-child-tab
+                                                                     row-id="x.Id"
+                                                                     child-tab="family"
+                                                                     json-guide="jsonGuide"
+                                                                     control-id="politicalAttitude">{{x.PoliticalAttitude}}</td>
+                                                                <td tr-child-tab
+                                                                     row-id="x.Id"
+                                                                     child-tab="family"
+                                                                     json-guide="jsonGuide"
+                                                                     control-id="PartyMember">
 
                                                                     <!--{{x.PartyMember == true?"Có (Sinh hoạt tại: " +x.wordAt + ")" : "Không"}}-->
                                                                     <div><span>{{x.PartyMember == true ?"- Là đảng viên" : "- Không phải là đảng viên"}}</span></div>
