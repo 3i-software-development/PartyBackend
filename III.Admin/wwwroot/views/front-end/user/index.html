@@ -2423,9 +2423,16 @@
                                     </div>
                                     <div class="col-md-9" style=" padding-right: 1px;">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="HistorySpecialist-MonthYear"
+                                            <i class="fa fa-info-circle" icon-child-tab
+                                                       row-id="selectedHistorySpecialist.Id"
+                                                       child-tab="historyspecialist"
+                                                       json-guide="jsonGuide"
+                                                       control-id="MonthYear"
+                                               id="HistorySpecialist-MonthYear"
+
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{selectedHistorySpecialist.MonthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                ng-click="handerClickIconChild6('historyspecialist','MonthYear')"
+                                                uib-popover="Thời gian: .{{selectedHistorySpecialist.MonthYear}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
 
                                             </i>
@@ -2447,9 +2454,15 @@
                                     <div class="col-md-9" style="padding-right: 1px;">
                                         <div class="br24 form-control custom-title-code-bold"
                                              style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="HistorySpecialist-content"
+                                            <i class="fa fa-info-circle " id="HistorySpecialist-content"
+                                               icon-child-tab
+                                              row-id="selectedHistorySpecialist.Id"
+                                              child-tab="historyspecialist"
+                                              json-guide="jsonGuide"
+                                              control-id="content"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{selectedHistorySpecialist.Content}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                               ng-click="handerClickIconChild6('historyspecialist','content')"
+                                                uib-popover="{{selectedHistorySpecialist.Content}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
 
                                             </i>
@@ -2544,14 +2557,13 @@
                                         <div class="col-md-6 pr-0 pl-0">
                                             <div class=" br24 form-control custom-title-code-bold"
                                                  style="display: flex;align-items: center;">
-                                                <i class="fa fa-info-circle icon-clickable" id="Laudatory-MonthYear"
-                                                   popover-placement="bottom-left"
-                                                   icon-child-tab
+                                                <i class="fa fa-info-circle icon-clickable" id="MonthYear"
+                                                   popover-placement="bottom-left" icon-child-tab
                                                    row-id="selectedLaudatory.Id"
                                                    child-tab="laudatory"
                                                    json-guide="jsonGuide"
-                                                   control-id="Laudatory-MonthYear"
-                                                   ng-click="handerClickIconChild('laudatory','Laudatory-MonthYear')"
+                                                   control-id="MonthYear"
+                                                   ng-click="handerClickIconChild7('laudatory','MonthYear')"
                                                    uib-popover="{{selectedLaudatory.MonthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
@@ -2572,8 +2584,14 @@
                                         <div class="col-md-6 pr-0 pl-0">
                                             <div class="br24 form-control custom-title-code-bold"
                                                  style="white-space:nowrap">
-                                                <i class="fa fa-info-circle icon-clickable"
-                                                   id="Laudatory-GrantOfDecision" popover-placement="bottom-left"
+                                                <i class="fa fa-info-circle "
+                                                   id="GrantOfDecision" popover-placement="bottom-left"
+                                                   icon-child-tab
+                                                   row-id="selectedLaudatory.Id"
+                                                   child-tab="laudatory"
+                                                   json-guide="jsonGuide"
+                                                   control-id="GrantOfDecision"
+                                                   ng-click="handerClickIconChild7('laudatory','GrantOfDecision')"
                                                    uib-popover="{{selectedLaudatory.GrantOfDecision}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
 
@@ -2602,6 +2620,12 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="AwardReason"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               icon-child-tab
+                                               row-id="selectedLaudatory.Id"
+                                               child-tab="laudatory"
+                                               json-guide="jsonGuide"
+                                               control-id="AwardReason"
+                                               ng-click="handerClickIconChild7('laudatory','AwardReason')"
                                                uib-popover="{{selectedLaudatory.AwardReason}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
 
