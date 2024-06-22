@@ -1888,7 +1888,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row"> <!--ng-if="!selectedFamily.disableAddress"-->
+                                        <div class="form-group row">
+                                            <!--ng-if="!selectedFamily.disableAddress"-->
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-home" id="residence" ng-click="openPopover3('residence');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
@@ -2113,7 +2114,7 @@
                         <div class="mt-15" style="padding-left: 15px;">
                             <form ng-validate="validationOptionBusinessNDuty" name="forms.BusinessNDuty">
                                 <div class="form-group row">
-                                    <div class="col-md-6" >
+                                    <div class="col-md-6">
                                         <div class="col-md-6 pr-0 pl-0">
                                             <i class="fa fa-calendar" id="From" ng-click="openPopover5('From');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
@@ -2285,7 +2286,7 @@
                             <form ng-validate="validationOptionsHistorySpecialist" name="forms.HistorySpecialist">
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
-                                        <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover('MonthYear');"
+                                        <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover6('MonthYear');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2296,7 +2297,7 @@
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="MonthYear"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild('family','to')"
+                                               ng-click="handerClickIconChild6('historyspecialist','MonthYear')"
                                                uib-popover="Thời gian: .{{selectedHistorySpecialist.MonthYear}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="selectedHistorySpecialistMonthYear"
@@ -2307,7 +2308,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
-                                        <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover('content');"
+                                        <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover6('content');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2316,9 +2317,10 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
+                                            <i class="fa fa-info-circle " id="content" title="Popover Header"
                                                popover-placement="bottom-left"
-                                               uib-popover="Nội dung: .{{selectedHistorySpecialist.Content}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}"
+                                                 ng-click="handerClickIconChild6('historyspecialist','content')"
+                                                uib-popover="{{selectedHistorySpecialist.Content}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
 
                                             <input class="displayInfo" style="border: #FFFF;" name="selectedHistorySpecialistContent"
@@ -2349,8 +2351,18 @@
                                             <th>Xoá bỏ</th>
                                         </tr>
                                         <tr ng-repeat="x in HistoricalFeatures" ng-click="selectHistorySpecialist(x)">
-                                            <td>{{x.MonthYear}}</td>
-                                            <td>{{x.Content}}</td>
+                                            <td tr-child-tab
+                                                row-id="x.Id"
+                                                child-tab="historyspecialist"
+                                                json-guide="jsonGuide"
+                                                control-id="MonthYear">
+                                            {{x.MonthYear}}</td>
+                                            <td tr-child-tab
+                                                row-id="x.Id"
+                                                child-tab="historyspecialist"
+                                                json-guide="jsonGuide"
+                                                control-id="content">
+                                            {{x.Content}}</td>
 
                                             <td style="text-align:center">
                                                 <i style="color:red" class="fa fa-trash"
@@ -2375,17 +2387,21 @@
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <div class="col-md-6 pr-0 pl-0">
-                                            <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover('MonthYear');"
+                                            <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover7('MonthYear');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                               popover-trigger="outsideClick"></i>
+                                               popover-trigger="outsideClick" ng-if="selectedLaudatory && selectedLaudatory.Id"></i>
+                                            <i class="fa fa-user" id="MonthYear" ng-click="warningPopover3()"
+                                               ng-if="!selectedLaudatory || !selectedLaudatory.Id"></i>
+
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Ngày, tháng, năm
                                             </label>
                                         </div>
                                         <div class="col-md-6 pr-0 pl-0">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="Laudatory-MonthYear"
+                                                <i class="fa fa-info-circle" id="MonthYear"
                                                    title="Popover Header" popover-placement="bottom-left"
+                                                   ng-click="handerClickIconChild7('laudatory','MonthYear')"
                                                    uib-popover="Ngày, tháng, năm: {{selectedLaudatory.MonthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="selectedLaudatoryMonthYear"
@@ -2396,18 +2412,20 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="col-md-6 pr-0 pl-0">
-                                            <i class="fa fa-calendar" id="GrantOfDecision"
-                                               ng-click="openPopover('GrantOfDecision');"
+                                            <i class="fa fa-calendar" id="GrantOfDecision" ng-click="openPopover7('GrantOfDecision');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                               popover-trigger="outsideClick"></i>
+                                               popover-trigger="outsideClick" ng-if="selectedLaudatory && selectedLaudatory.Id"></i>
+                                            <i class="fa fa-user" id="GrantOfDecision" ng-click="warningPopover3()"
+                                               ng-if="!selectedLaudatory || !selectedLaudatory.Id"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Cấp quyết định
                                             </label>
                                         </div>
                                         <div class="col-md-6 pr-0 pl-0">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="Laudatory-GrantOfDecision"
+                                                <i class="fa fa-info-circle " id="GrantOfDecision"
                                                    title="Popover Header" popover-placement="bottom-left"
+                                                   ng-click="handerClickIconChild7('laudatory','GrantOfDecision')"
                                                    uib-popover="Cấp quyết định: {{selectedLaudatory.GrantOfDecision}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick"></i>
 
@@ -2423,17 +2441,20 @@
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-pencil-square-o" id="AwardReason"
-                                           ng-click="openPopover('AwardReason');"
+                                           ng-click="openPopover7('AwardReason');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                           popover-trigger="outsideClick"></i>
+                                           popover-trigger="outsideClick" ng-if="selectedLaudatory && selectedLaudatory.Id"></i>
+                                        <i class="fa fa-user" id="AwardReason" ng-click="warningPopover3()"
+                                           ng-if="!selectedLaudatory || !selectedLaudatory.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Lý do, hình thức
                                         </label>
                                     </div>
                                     <div class="col-md-9">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="AwardReason"
+                                            <i class="fa fa-info-circle " id="AwardReason"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               ng-click="handerClickIconChild7('laudatory','AwardReason')"
                                                uib-popover="Lý do: {{selectedLaudatory.Reason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
 
@@ -2465,9 +2486,19 @@
                                             <th>Xoá bỏ</th>
                                         </tr>
                                         <tr ng-repeat="x in Laudatory" ng-click="selectLaudatory(x)">
-                                            <td>{{x.MonthYear}}</td>
-                                            <td>{{x.Reason}}</td>
-                                            <td>{{x.GrantOfDecision}}</td>
+                                            <!--<td>{{x.MonthYear}}</td>-->
+                                            <td tr-child-tab row-id="x.Id" child-tab="laudatory" json-guide="jsonGuide" control-id="MonthYear">
+                                                {{x.MonthYear}}
+                                            </td>
+
+                                            <!--<td>{{x.Reason}}</td>-->
+                                            <td tr-child-tab row-id="x.Id" child-tab="laudatory" json-guide="jsonGuide" control-id="GrantOfDecision">
+                                                {{x.Reason}}
+                                            </td>
+                                            <!--<td>{{x.GrantOfDecision}}</td>-->
+                                            <td tr-child-tab row-id="x.Id" child-tab="laudatory" json-guide="jsonGuide" control-id="GrantOfDecision">
+                                                {{x.GrantOfDecision}}
+                                            </td>
                                             <td style="text-align:center">
                                                 <i style="color:red" class="fa fa-trash" ng-click="deleteAward($index)"></i>
                                             </td>
@@ -2799,7 +2830,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0">
                                         <i class="fa fa-user" id="PersonIntroduced"
-                                           ng-click="openPopover('PersonIntroduced');"
+                                           ng-click="openPopover10('PersonIntroduced');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require  custom-title-code-bold">
@@ -2809,9 +2840,11 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="PersonIntroduced"
+                                            <i class="fa fa-info-circle " id="PersonIntroduced"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="Người giới thiệu: {{Introducer.PersonIntroduced}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                               ng-click="handerClickIconChild10('introducerofparty','PersonIntroduced')"
+                                               uib-popover="{{Introducer.PersonIntroduced}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="IntroducerPersonIntroduced"
                                                    ng-model="Introducer.PersonIntroduced" type="text"
@@ -2824,7 +2857,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 ">
                                         <i class="fa fa-calendar" id="PlaceTimeJoinUnion"
-                                           ng-click="openPopover('PlaceTimeJoinUnion');"
+                                           ng-click="openPopover10('PlaceTimeJoinUnion');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require  custom-title-code-bold">
@@ -2833,9 +2866,10 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinUnion"
+                                            <i class="fa fa-info-circle " id="PlaceTimeJoinUnion"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{Introducer.PlaceTimeJoinUnion}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                               ng-click="handerClickIconChild10('introducerofparty','PlaceTimeJoinUnion')"
+                                                uib-popover="{{Introducer.PlaceTimeJoinUnion}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="IntroducerPlaceTimeJoinUnion"
                                                    ng-model="Introducer.PlaceTimeJoinUnion" type="text"
@@ -2846,7 +2880,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 ">
                                         <i class="fa fa-calendar" id="PlaceTimeJoinParty"
-                                           ng-click="openPopover('PlaceTimeJoinParty');"
+                                             ng-click="openPopover10('PlaceTimeJoinParty');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require  custom-title-code-bold">
@@ -2856,9 +2890,11 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinParty"
+                                            <i class="fa fa-info-circle " id="PlaceTimeJoinParty"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{Introducer.PlaceTimeJoinParty}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                ng-click="handerClickIconChild10('introducerofparty','PlaceTimeJoinParty')"
+                                                uib-popover="{{Introducer.PlaceTimeJoinParty}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                             
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="IntroducerPlaceTimeJoinParty"
                                                    ng-model="Introducer.PlaceTimeJoinParty" type="text"
@@ -2869,7 +2905,8 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 ">
                                         <i class="fa fa-calendar" id="PlaceTimeRecognize"
-                                           ng-click="openPopover('PlaceTimeRecognize');"
+                                          
+                                            ng-click="openPopover10('PlaceTimeRecognize');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo  control-label require  custom-title-code-bold">
@@ -2882,7 +2919,8 @@
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="PlaceTimeRecognize"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{Introducer.PlaceTimeRecognize}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                ng-click="handerClickIconChild10('introducerofparty','PlaceTimeRecognize')"
+                                                 uib-popover="{{Introducer.PlaceTimeRecognize}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="IntroducerPlaceTimeRecognize"
                                                    ng-model="Introducer.PlaceTimeRecognize" type="text"
