@@ -2704,8 +2704,32 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
         //$scope.commentTextarea = matchedGuide.comment;
     };
-
-
+ 
+     $scope.openPopover6 = function (popoverId) {
+         if (!$scope.selectedHistorySpecialist || !$scope.selectedHistorySpecialist.Id) {
+            return;
+        }
+         const pp = $scope.jsonGuide.find(x => x.id === `historyspecialist_${$scope.selectedHistorySpecialist.Id}`);
+        matchedLabel = $scope.popoverLabels.find(function (item) {
+            return item.id === popoverId;
+        });
+        if (pp) {
+            $scope.pp = angular.copy(pp);
+        }
+        else {
+            $scope.pp = {
+                id: `historyspecialist_${$scope.selectedHistorySpecialist.Id}`,
+                comment: '',
+                idFamily: {
+                }
+            };
+        }
+        $scope.popoverid = $scope.pp.id;
+        $scope.popoverLabel = matchedLabel.labelText;
+        $scope.popoveridFamily = popoverId;
+        $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
+        //$scope.commentTextarea = matchedGuide.comment;
+    };
     $scope.openPopover2 = function (popoverId) {
         /*        matchedLabel = $scope.popoverLabels.find(function (item) {
                     return item.id === popoverId;
@@ -3141,6 +3165,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.matchedItemss = [pp];
         }
     }
+
+
+ 
     $scope.handerClickIconChild1 = function (tabId, id) {
         if (!Array.isArray($scope.jsonGuide)) {
             $scope.jsonGuide = [];
@@ -3177,7 +3204,25 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.matchedItemss = [pp];
         }
     }
-
+    $scope.handerClickIconChild6 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case "historyspecialist":
+                console.log(`${tabId}_${$scope.selectedHistorySpecialist.Id}`);
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedHistorySpecialist.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
     $scope.downloadFile = function (file) {
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
         var link = document.createElement("a");
