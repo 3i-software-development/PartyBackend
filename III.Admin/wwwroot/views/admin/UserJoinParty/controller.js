@@ -2651,12 +2651,14 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
         //$scope.commentTextarea = matchedGuide.comment;
     };
-
+    $scope.warningPopover4 = function () {
+        App.toastrWarning('Vui lòng chọn dòng dữ liệu');
+    }
     $scope.openPopover4 = function (popoverId) {
         if (!$scope.selectedPersonHistory || !$scope.selectedPersonHistory.Id) {
             return;
         }
-        const pp = $scope.jsonGuide.find(x => x.id === `history_${$scope.selectedPersonHistory.Id}`);
+        const pp = $scope.jsonGuide.find(x => x.id === `history_${$scope.selectedPersonHistory.Id}`); 
         matchedLabel = $scope.popoverLabels.find(function (item) {
             return item.id === popoverId;
         });
@@ -2666,6 +2668,31 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         else {
             $scope.pp = {
                 id: `history_${$scope.selectedPersonHistory.Id}`,
+                comment: '',
+                idFamily: {
+                }
+            };
+        }
+        $scope.popoverid = $scope.pp.id;
+        $scope.popoverLabel = matchedLabel.labelText;
+        $scope.popoveridFamily = popoverId;
+        $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
+        //$scope.commentTextarea = matchedGuide.comment;
+    };
+    $scope.openPopover5 = function (popoverId) {
+        if (!$scope.selectedWorkingTracking || !$scope.selectedWorkingTracking.Id) {
+            return;
+        }
+        const pp = $scope.jsonGuide.find(x => x.id === `workingtracking_${$scope.selectedWorkingTracking.Id}`);
+        matchedLabel = $scope.popoverLabels.find(function (item) {
+            return item.id === popoverId;
+        });
+        if (pp) {
+            $scope.pp = angular.copy(pp);
+        }
+        else {
+            $scope.pp = {
+                id: `workingtracking_${$scope.selectedWorkingTracking.Id}`,
                 comment: '',
                 idFamily: {
                 }
@@ -3105,6 +3132,42 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         switch (tabId) {
             case "family":
                 pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedFamily.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
+    $scope.handerClickIconChild1 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case "history":
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedPersonHistory.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
+    $scope.handerClickIconChild2 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case "laudatory":
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedWarningDisciplined.Id}`);
                 break;
             default:
                 break;
