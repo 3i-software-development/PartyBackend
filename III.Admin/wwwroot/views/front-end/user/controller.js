@@ -2397,6 +2397,24 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.matchedItemss = [pp];
         }
     }
+    $scope.handerClickIconChild7 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case "laudatory":
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedLaudatory.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
 
     $scope.getPartyAdmissionProfileByUsername = function () {
         if ($scope.UserName == null || $scope.UserName == undefined) {
