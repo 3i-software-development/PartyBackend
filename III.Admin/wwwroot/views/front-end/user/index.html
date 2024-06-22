@@ -1271,12 +1271,7 @@
                                                             ng-change="filterMarriedStatus()">
                                                         <option ng-repeat="status in infUser.MarriedStatus"
                                                                 value="{{status.id}}">
-                                                            {{
-status.marriedStatus == 'DOC_THAN' ?
-                                                            'Độc thân' : (status.marriedStatus == 'LY_HON' ? 'Đã ly dị'
-                                                            :
-                                                            'Đã kết hôn')
-                                                            }}
+                                                            {{status.marriedStatus == 'DOC_THAN' ?'Độc thân' : (status.marriedStatus == 'LY_HON' ? 'Đã ly dị':'Đã kết hôn')}}
                                                         </option>
                                                     </select>
 
@@ -1340,9 +1335,9 @@ status.marriedStatus == 'DOC_THAN' ?
                                                      style="white-space:nowrap">
                                                     <i class="fa fa-info-circle icon-family" icon-child-tab
                                                        row-id="selectedFamily.Id"
+                                                       control-id="relationship"
                                                        child-tab="family"
                                                        json-guide="jsonGuide"
-                                                       control-id="relationship"
                                                        id="relationship" ng-click="handerClickIconChild('family','relationship')"
                                                        title="Popover Header" popover-placement="bottom-left"
                                                        uib-popover="Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ... Lưu ý: {{matchedItemss[0].comment}}"
@@ -2010,26 +2005,18 @@ status.marriedStatus == 'DOC_THAN' ?
                                                         <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
                                                         {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                         <div>
-                                                            <span>
-                                                                - Năm sinh{{x.die == true ?"(Đã mất)" : ""}}:
-                                                                {{x.BirthYear}} {{
-x.BirthDie?"-" + x.BirthDie :
-                                                                ""
-                                                                }}
+                                                            <span>- Năm sinh{{x.die == true ?"(Đã mất)" : ""}}:
+                                                                {{x.BirthYear}} {{x.BirthDie?"-" + x.BirthDie :""}}
                                                             </span>
                                                         </div>
                                                         <div>
                                                             <span>
-                                                                {{
-x.die == true ?"- Nơi mất: "+ x.AddressDie : ""
-                                                                }}
+                                                                {{x.die == true ?"- Nơi mất: "+ x.AddressDie : ""}}
                                                             </span>
                                                         </div>
                                                         <div>
                                                             <span>
-                                                                {{
-x.die == true ?"- Lý do mất: "+ x.Reason : ""
-                                                                }}
+                                                                {{x.die == true ?"- Lý do mất: "+ x.Reason : ""}}
                                                             </span>
                                                         </div>
                                                     </td>
@@ -2043,11 +2030,9 @@ x.die == true ?"- Lý do mất: "+ x.Reason : ""
                                                         </div>
                                                         <div>
                                                             <span>
-                                                                {{
-x.die == false ? "- Nơi cư trú:" +
-                                                                x.Residence.trim() : ""
-                                                                }}
+                                                                {{x.die == false ? "- Nơi cư trú:" +x.Residence.trim() : ""}}
                                                             </span>
+                                                         </div>
                                                     </td>
                                                     <td>{{x.Job}}</td>
                                                     <td style="white-space: pre">{{x.WorkingProgress}}</td>
@@ -2055,27 +2040,17 @@ x.die == false ? "- Nơi cư trú:" +
                                                     <td>
                                                         <div>
                                                             <span>
-                                                                {{
-x.PartyMember == true ?"Là đảng viên" :
-                                                                "không"
-                                                                }}
+                                                                {{x.PartyMember == true ?"Là đảng viên" :"không"}}
                                                             </span>
                                                         </div>
                                                         <div>
                                                             <span>
-                                                                {{
-x.PartyMember == true ?"Sinh hoạt tại chi bộ: "+
-                                                                x.wordAt : " "
-                                                                }}
+                                                                {{x.PartyMember == true ?"Sinh hoạt tại chi bộ: "+x.wordAt : " "}}
                                                             </span>
                                                         </div>
                                                         <div>
                                                             <span>
-                                                                {{
-x.PartyMember == true ?"Thuộc đảng bộ: "+
-                                                                x.Party
-                                                                : " "
-                                                                }}
+                                                                {{x.PartyMember == true ?"Thuộc đảng bộ: "+x.Party: " "}}
                                                             </span>
                                                         </div>
                                                     </td>
@@ -2264,9 +2239,14 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                         </div>
                                         <div class="col-md-8" style=" padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle " id="WorkingTracking-From"
+                                                <i class="fa fa-info-circle " id="From"
                                                    popover-placement="bottom-left"
-                                                   ng-click="handerClickIconChild('workingTracking','WorkingTracking-From')"
+                                                   icon-child-tab
+                                                   child-tab="WorkingTracking"
+                                                   row-id="selectedWorkingTracking.Id"
+                                                    json-guide="jsonGuide"
+                                                   control-id="From"
+                                                   ng-click="handerClickIconChild5('WorkingTracking','From')"
                                                    uib-popover="{{selectedWorkingTracking.From}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
@@ -2288,6 +2268,12 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle " id="WorkingTracking-To"
                                                    popover-placement="bottom-left"
+                                                   icon-child-tab
+                                                    child-tab="WorkingTracking"
+                                                    row-id="selectedWorkingTracking.Id"
+                                                    json-guide="jsonGuide"
+                                                   control-id="To"
+                                                   ng-click="handerClickIconChild5('WorkingTracking','To')"
                                                    uib-popover="{{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" validateDateNow="true"
@@ -2311,6 +2297,12 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="WorkingTracking-content"
                                                title="Popover Header" popover-placement="bottom-left"
+                                                icon-child-tab
+                                                  child-tab="WorkingTracking"
+                                                  row-id="selectedWorkingTracking.Id"
+                                                   json-guide="jsonGuide"
+                                               control-id="Work"
+                                               ng-click="handerClickIconChild5('WorkingTracking','Work')"
                                                uib-popover="{{selectedWorkingTracking.Work}}.{{matchedItems[0].guide}} . Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             <input class="displayInfo" style="border: #FFFF;"
@@ -2335,6 +2327,13 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="WorkingTracking-role"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               row-id="selectedWorkingTracking.Id"
+                                                
+                                                icon-child-tab
+                                                  child-tab="WorkingTracking"
+                                                   json-guide="jsonGuide"
+                                               control-id="Role"
+                                               ng-click="handerClickIconChild5('WorkingTracking','Role')"
                                                uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             <input class="displayInfo" style="border: #FFFF;"
@@ -2370,7 +2369,7 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                                 <th>Chức vụ</th>
                                                 <th>Xoá bỏ</th>
                                             </tr>
-                                            <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)">
+                                            <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)" ng-class="{'selected': x.selected}">
                                                 <td>{{x.From}}</td>
                                                 <td>{{x.To}}</td>
                                                 <td>{{x.Work}}</td>
@@ -2552,7 +2551,7 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                                    child-tab="laudatory"
                                                    json-guide="jsonGuide"
                                                    control-id="Laudatory-MonthYear"
-                                                   id="class" ng-click="handerClickIconChild('laudatory','Laudatory-MonthYear')"
+                                                   ng-click="handerClickIconChild('laudatory','Laudatory-MonthYear')"
                                                    uib-popover="{{selectedLaudatory.MonthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
@@ -2606,7 +2605,7 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                                uib-popover="{{selectedLaudatory.AwardReason}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
 
-                                            </i>
+                                            
                                             <input class="displayInfo" style="border: #FFFF;"
                                                    name="selectedLaudatoryReason" ng-model="selectedLaudatory.Reason"
                                                    type="text" placeholder="Lý do, hình thức" />
@@ -2695,6 +2694,13 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                         <div class="col-md-6 pl-0 pr-0">
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle icon-clickable"
+                                                    icon-child-tab
+                                                       row-id="selectedWarningDisciplined.Id"
+                                                       child-tab="WarningDisciplined"
+                                                       json-guide="jsonGuide"
+                                                       control-id="MonthYear"
+                                                        ng-click="handerClickIconChild8('WarningDisciplined','MonthYear')"
+
                                                    id="WarningDisciplined-MonthYear" popover-placement="bottom-left"
                                                    uib-popover="{{selectedWarningDisciplined.MonthYear}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -2718,11 +2724,17 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                             <div class="br24 form-control custom-title-code-bold"
                                                  style="white-space:nowrap">
                                                 <i class="fa fa-info-circle icon-clickable"
+                                                   icon-child-tab
+                                                   row-id="selectedWarningDisciplined.Id"
+                                                   child-tab="WarningDisciplined"
+                                                   json-guide="jsonGuide"
+                                                   control-id="GrantOfDecision"
+                                                    ng-click="handerClickIconChild8('WarningDisciplined','GrantOfDecision')"
                                                    id="WarningDisciplined-GrantOfDecision"
                                                    popover-placement="bottom-left"
                                                    uib-popover="{{selectedWarningDisciplined.GrantOfDecision}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
-                                                </i>
+                                                
                                                 <input class="displayInfo" style="border: #FFFF;"
                                                        name="selectedWarningDisciplinedGrantOfDecision"
                                                        ng-model="selectedWarningDisciplined.GrantOfDecision" type="text"
@@ -2747,10 +2759,16 @@ x.PartyMember == true ?"Thuộc đảng bộ: "+
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="DisciplineReason"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               icon-child-tab
+                                                row-id="selectedWarningDisciplined.Id"
+                                                child-tab="WarningDisciplined"
+                                                json-guide="jsonGuide"
+                                                control-id="DisciplineReason"
+                                                 ng-click="handerClickIconChild8('WarningDisciplined','DisciplineReason')"
                                                uib-popover="{{selectedWarningDisciplined.Reason}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
 
-                                            </i>
+                                            
                                             <input class="displayInfo" style="border: #FFFF;"
                                                    name="selectedWarningDisciplinedReason"
                                                    ng-model="selectedWarningDisciplined.Reason" type="text"

@@ -2683,7 +2683,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         if (!$scope.selectedWorkingTracking || !$scope.selectedWorkingTracking.Id) {
             return;
         }
-        const pp = $scope.jsonGuide.find(x => x.id === `workingtracking_${$scope.selectedWorkingTracking.Id}`);
+        const pp = $scope.jsonGuide.find(x => x.id === `WorkingTracking_${$scope.selectedWorkingTracking.Id}`);
         matchedLabel = $scope.popoverLabels.find(function (item) {
             return item.id === popoverId;
         });
@@ -2692,7 +2692,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
         else {
             $scope.pp = {
-                id: `workingtracking_${$scope.selectedWorkingTracking.Id}`,
+                id: `WorkingTracking_${$scope.selectedWorkingTracking.Id}`,
                 comment: '',
                 idFamily: {
                 }
@@ -2704,7 +2704,68 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
         //$scope.commentTextarea = matchedGuide.comment;
     };
+    $scope.handerClickIconChild5 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case tabId:
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedWorkingTracking.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
 
+    $scope.openPopover8 = function (popoverId) {
+        if (!$scope.selectedWarningDisciplined || !$scope.selectedWarningDisciplined.Id) {
+            return;
+        }
+        const pp = $scope.jsonGuide.find(x => x.id === `WarningDisciplined_${$scope.selectedWarningDisciplined.Id}`);
+        matchedLabel = $scope.popoverLabels.find(function (item) {
+            return item.id === popoverId;
+        });
+        if (pp) {
+            $scope.pp = angular.copy(pp);
+        }
+        else {
+            $scope.pp = {
+                id: `WarningDisciplined_${$scope.selectedWarningDisciplined.Id}`,
+                comment: '',
+                idFamily: {
+                }
+            };
+        }
+        $scope.popoverid = $scope.pp.id;
+        $scope.popoverLabel = matchedLabel.labelText;
+        $scope.popoveridFamily = popoverId;
+        $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
+        //$scope.commentTextarea = matchedGuide.comment;
+    };
+    $scope.handerClickIconChild8 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case tabId:
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedWarningDisciplined.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
 
     $scope.openPopover2 = function (popoverId) {
         /*        matchedLabel = $scope.popoverLabels.find(function (item) {

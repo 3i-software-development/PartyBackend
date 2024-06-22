@@ -959,11 +959,7 @@
                                                     ng-change="filterMarriedStatus()">
                                                 <option ng-repeat="status in infUser.MarriedStatus"
                                                         value="{{status.id}}">
-                                                    {{
-                    status.marriedStatus == 'DOC_THAN' ?
-                    'Độc thân' : (status.marriedStatus == 'LY_HON' ? 'Đã ly dị' :
-                    'Đã kết hôn')
-                                                    }}
+                                                    {{status.marriedStatus == 'DOC_THAN' ?'Độc thân' : (status.marriedStatus == 'LY_HON' ? 'Đã ly dị' :'Đã kết hôn')}}
                                                 </option>
                                             </select>
 
@@ -2119,9 +2115,14 @@
                                 <div class="form-group row">
                                     <div class="col-md-6" >
                                         <div class="col-md-6 pr-0 pl-0">
-                                            <i class="fa fa-calendar" id="From" ng-click="openPopover4('From');"
+                                            <i class="fa fa-calendar" id="From" ng-click="openPopover5('From');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                               popover-trigger="outsideClick"></i>
+                                               popover-trigger="outsideClick"
+
+                                                ng-if="selectedWorkingTracking && selectedWorkingTracking.Id"></i>
+                                            <i class="fa fa-user" id="WorkingTracking" ng-click="warningPopover3()"
+                                               ng-if="!selectedWorkingTracking || !selectedWorkingTracking.Id"></i>
+
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Từ ngày
                                             </label>
@@ -2130,8 +2131,8 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle icon-clickable" id="From"
                                                    popover-placement="bottom-left"
-                                                    ng-click="handerClickIconChild('workingTracking','From')"
-                                                   uib-popover="{{selectedWorkingTracking.From}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                   ng-click="handerClickIconChild5('WorkingTracking','From')"
+                                                   uib-popover="Chọn từ ngày {{selectedWorkingTracking.From}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick">
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="selectedWorkingTrackingFrom"
@@ -2142,7 +2143,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="col-md-6 pr-0 pl-0">
-                                            <i class="fa fa-calendar" id="To" ng-click="openPopover4('To');"
+                                            <i class="fa fa-calendar" id="To" ng-click="openPopover5('To');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
@@ -2153,11 +2154,12 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle icon-clickable" id="To"
                                                    popover-placement="bottom-left"
-                                                   ng-click="handerClickIconChild('workingTracking','To')"
+                                                   ng-click="handerClickIconChild5('WorkingTracking','To')"
                                                    uib-popover="{{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}"
-                                                   popover-trigger="outsideClick">
-
+                                                   popover-trigger="outsideClick"
+                                                   ng-if="selectedWorkingTracking && selectedWorkingTracking.Id">
                                                 </i>
+                                                
                                                 <input class="displayInfo" style="border: #FFFF;" name="selectedWorkingTrackingTo"
                                                        ng-model="selectedWorkingTracking.To" type="text"
                                                        placeholder="Đến ngày" monthOrDate="true" validateDateNow="true" />
@@ -2167,7 +2169,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
-                                        <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover4('content');"
+                                        <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover5('Work');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2178,22 +2180,24 @@
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
                                                popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild('workingTracking','content')"
-                                               uib-popover="{{selectedWorkingTracking.Work}}.{{matchedItems[0].guide}}"
-                                               popover-trigger="outsideClick">
-
+                                               ng-click="handerClickIconChild5('WorkingTracking','Work')"
+                                               uib-popover="{{selectedWorkingTracking.content}}.{{matchedItems[0].guide}}"
+                                               popover-trigger="outsideClick"
+                                               ng-if="selectedWorkingTracking && selectedWorkingTracking.Id">
                                             </i>
+                                            <i class="fa fa-user" id="relationship" ng-click="warningPopover3()"
+                                               ng-if="!selectedWorkingTracking || !selectedWorkingTracking.Id"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="selectedWorkingTrackingWork"
-                                                   ng-model="selectedWorkingTracking.Work" type="text"
+                                                   ng-model="selectedWorkingTracking.content" type="text"
                                                    placeholder="Làm việc gì, ở đâu" />
                                             <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                               ng-model="selectedWorkingTracking.Work"></i>
+                                               ng-model="selectedWorkingTracking.content"></i>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
-                                        <i class="fa fa-pencil-square-o" id="role" ng-click="openPopover('role');"
+                                        <i class="fa fa-pencil-square-o" id="role" ng-click="openPopover5('Role');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2204,6 +2208,7 @@
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="role" title="Popover Header"
                                                popover-placement="bottom-left"
+                                               ng-click="handerClickIconChild('WorkingTracking','Role')"
                                                uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}"
                                                popover-trigger="outsideClick">
 
@@ -2237,10 +2242,27 @@
                                                 <th>Xoá bỏ</th>
                                             </tr>
                                             <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}">
-                                                <td>{{x.From}}</td>
-                                                <td>{{x.To}}</td>
-                                                <td>{{x.Work}}</td>
-                                                <td>{{x.Role}}</td>
+                                                <td  tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WorkingTracking"
+                                                    json-guide="jsonGuide"
+                                                    control-id="From"
+                                                    >{{x.From}}</td>
+                                                <td  tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WorkingTracking"
+                                                    json-guide="jsonGuide"
+                                                    control-id="To">{{x.To}}</td>
+                                                <td  tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WorkingTracking"
+                                                    json-guide="jsonGuide"
+                                                    control-id="Work">{{x.Work}}</td>
+                                                <td  tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WorkingTracking"
+                                                    json-guide="jsonGuide"
+                                                    control-id="Role">{{x.Role}}</td>
                                                 <td style="text-align:center">
                                                     <i style="color:red" class="fa fa-trash"
                                                        ng-click="deleteWorkingTracking($index)"></i>
@@ -2468,9 +2490,12 @@
                                 <div class="form-group row">
                                     <div class="col-md-6">
                                         <div class="col-md-6 pr-0 pl-0">
-                                            <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover('MonthYear');"
+                                            <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover8('MonthYear');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                               popover-trigger="outsideClick"></i>
+                                               popover-trigger="outsideClick"
+                                               ng-if="selectedWarningDisciplined && selectedWarningDisciplined.Id"></i>
+                                            <i class="fa fa-user" id="WorkingTracking" ng-click="warningPopover3()"
+                                               ng-if="!selectedWarningDisciplined || !selectedWarningDisciplined.Id"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Tháng, năm
                                             </label>
@@ -2479,6 +2504,7 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle icon-clickable" id="MonthYear"
                                                    title="Popover Header" popover-placement="bottom-left"
+                                                     ng-click="handerClickIconChild8('WarningDisciplined','MonthYear')"
                                                    uib-popover="Tháng, năm: {{selectedWarningDisciplined.MonthYear}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="selectedWarningDisciplinedMonthYear"
@@ -2490,7 +2516,8 @@
                                     <div class="col-md-6">
                                         <div class="col-md-6 pr-0 pl-0">
                                             <i class="fa fa-calendar" id="GrantOfDecision"
-                                               ng-click="openPopover('GrantOfDecision');"
+                                               ng-click="openPopover8('GrantOfDecision');"
+                                               ng-if="selectedWarningDisciplined && selectedWarningDisciplined.Id"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
@@ -2501,6 +2528,7 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle icon-clickable" id="GrantOfDecision"
                                                    title="Popover Header" popover-placement="bottom-left"
+                                                   ng-click="handerClickIconChild8('WarningDisciplined','GrantOfDecision')"
                                                    uib-popover="Cấp quyết định: {{selectedWarningDisciplined.GrantOfDecision}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick"></i>
 
@@ -2517,7 +2545,8 @@
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-pencil-square-o" id="DisciplineReason"
-                                           ng-click="openPopover('DisciplineReason');"
+                                           ng-click="openPopover8('DisciplineReason');"
+                                            ng-if="selectedWarningDisciplined && selectedWarningDisciplined.Id"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2528,14 +2557,15 @@
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="DisciplineReason"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="Từ ngày: {{selectedWarningDisciplined.DisciplineReason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                               ng-click="handerClickIconChild8('WarningDisciplined','DisciplineReason')"
+                                               uib-popover="Từ ngày: {{selectedWarningDisciplined.Reason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
 
                                             <input class="displayInfo" style="border: #FFFF;" name="selectedWarningDisciplinedReason"
                                                    ng-model="selectedWarningDisciplined.Reason" type="text"
                                                    placeholder="Lý do.. hình thức" />
                                             <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                               ng-model="selectedWarningDisciplined.DisciplineReason"></i>
+                                               ng-model="selectedWarningDisciplined.Reason"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -2558,9 +2588,23 @@
                                             <th>Xoá bỏ</th>
                                         </tr>
                                         <tr ng-repeat="x in Disciplined" ng-click="selectWarningDisciplined(x)">
-                                            <td>{{x.MonthYear}}</td>
-                                            <td>{{x.Reason}}</td>
-                                            <td>{{x.GrantOfDecision}}</td>
+                                            <td tr-child-tab
+                                             row-id="x.Id"
+                                             child-tab="WarningDisciplined"
+                                             json-guide="jsonGuide"
+                                             control-id="MonthYear">{{x.MonthYear}}</td>
+                                            <td tr-child-tab
+                                                row-id="x.Id"
+                                                child-tab="WarningDisciplined"
+                                                json-guide="jsonGuide"
+                                                control-id="DisciplineReason">
+                                                {{x.Reason}}
+                                            </td>
+                                            <td tr-child-tab
+                                             row-id="x.Id"
+                                             child-tab="WarningDisciplined"
+                                             json-guide="jsonGuide"
+                                             control-id="GrantOfDecision">{{x.GrantOfDecision}}</td>
                                             <td style="text-align:center">
                                                 <i style="color:red" class="fa fa-trash"
                                                    ng-click="deleteWarningDisciplined($index)"></i>
