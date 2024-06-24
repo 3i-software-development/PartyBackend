@@ -5795,6 +5795,9 @@ return;
 
     $scope.deleteSelectToBusinessNDuty = function () {
         $scope.selectedWorkingTracking = {};
+        for (var i = 0; i < $scope.BusinessNDuty.length; i++) {
+            $scope.BusinessNDuty[i].selected = false;
+        }
         $scope.resetValidateFamily()
 
     }
