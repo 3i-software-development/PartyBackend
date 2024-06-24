@@ -2486,7 +2486,11 @@
                                         </tr>
                                         <tr ng-repeat="x in Laudatory" ng-click="selectLaudatory(x)">
                                             <!--<td>{{x.MonthYear}}</td>-->
-                                            <td tr-child-tab row-id="x.Id" child-tab="laudatory" json-guide="jsonGuide" control-id="MonthYear">
+                                            <td tr-child-tab 
+                                                row-id="x.Id" 
+                                                child-tab="laudatory" 
+                                                json-guide="jsonGuide" 
+                                                control-id="MonthYear">
                                                 {{x.MonthYear}}
                                             </td>
 
@@ -2660,7 +2664,8 @@
                                         <div class="col-md-6 pr-0 pl-0">
                                             <i class="fa fa-calendar" id="From" ng-click="openPopover11('From');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                               popover-trigger="outsideClick"></i>
+                                               popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
+                                            <i class="fa fa-users" id="From" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Từ
                                                 ngày
@@ -2683,7 +2688,8 @@
                                         <div class="col-md-6 pr-0 pl-0">
                                             <i class="fa fa-calendar" id="To" ng-click="openPopover11('To');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                               popover-trigger="outsideClick"></i>
+                                               popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
+                                            <i class="fa fa-users" id="To" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Đến
                                                 ngày
@@ -2708,7 +2714,8 @@
                                         <i class="fa fa-pencil-square-o" id="SchoolName"
                                            ng-click="openPopover11('SchoolName');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                           popover-trigger="outsideClick"></i>
+                                           popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
+                                            <i class="fa fa-users" id="SchoolName" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Tên
                                             trường
@@ -2731,10 +2738,11 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
-                                        <i class="fa fa-pencil-square-o" id="Class" 
+                                        <i class="fa fa-pencil-square-o" id="Class"
                                            ng-click="openPopover11('Class');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                           popover-trigger="outsideClick"></i>
+                                           popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
+                                        <i class="fa fa-users" id="Class" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Ngành
                                             học hoặc tên lớp học
@@ -2760,7 +2768,8 @@
                                         <i class="fa fa-pencil-square-o" id="Certificate"
                                            ng-click="openPopover11('Certificate');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                           popover-trigger="outsideClick"></i>
+                                           popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
+                                        <i class="fa fa-users" id="Certificate" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Văn
                                             bằng

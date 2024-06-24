@@ -6106,6 +6106,13 @@ return;
     };
     $scope.selectTrainingCertificatedPass = function (x) {
         $scope.selectedTrainingCertificatedPass = x;
+        $scope.PassedTrainingClasses.forEach(function (PassedTrainingClasses) {
+            Relationship.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedTrainingCertificatedPass = x;
+        $scope.selectedTrainingCertificatedPass.selected = true;
     };
 
     //Delete
