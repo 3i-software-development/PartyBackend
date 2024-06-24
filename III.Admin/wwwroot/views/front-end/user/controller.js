@@ -2434,7 +2434,24 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             $scope.matchedItemss = [pp];
         }
     }
-
+    $scope.handerClickIconChild4 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case tabId:
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedPersonHistory.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
     $scope.handerClickIconChild5 = function (tabId, id) {
         if (!Array.isArray($scope.jsonGuide)) {
             $scope.jsonGuide = [];
@@ -2472,7 +2489,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         }
     }
     $scope.handerClickIconChild10 = function (tabId, id) {
-        console.log(`${tabId}_${$scope.Introducer.Id}`);
+       
         if (!Array.isArray($scope.jsonGuide)) {
             $scope.jsonGuide = [];
             console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
@@ -2480,7 +2497,26 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         let pp = null;
         switch (tabId) {
             case "introducerofparty":
+                
                 pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.Introducer.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
+    $scope.handerClickIconChild9 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case tabId:
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedGoAboard.Id}`);
                 break;
             default:
                 break;
