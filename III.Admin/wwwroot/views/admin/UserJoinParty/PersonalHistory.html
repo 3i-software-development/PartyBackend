@@ -43,10 +43,9 @@
                         <div class="br24 form-control custom-title-code-bold">
                             <i class="fa fa-info-circle icon-clickable" id="PersonHistory-From" title="Popover Header"
                                popover-placement="bottom-left"
-                               ng-click="handerClickIconChild('history','startDate')"
+                                ng-click="handerClickIconChild4('PersonHistory','startDate')"
                                uib-popover="Từ ngày: {{selectedPersonHistory.Begin}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                               popover-trigger="outsideClick"></i>
-
+                               popover-trigger="outsideClick" ng-if="selectedPersonHistory && selectedPersonHistory.Id"></i>
                             <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Begin" type="text" name="selectedPersonHistoryBegin"
                                    placeholder="Từ ngày" ng-change="changeHistory()" monthOrDate="true" validateDateNow="true" />
                         </div>
@@ -67,6 +66,7 @@
                         <div class="br24 form-control custom-title-code-bold">
                             <i class="fa fa-info-circle icon-clickable" id="PersonHistory-To" title="Popover Header"
                                popover-placement="bottom-left"
+                               ng-click="handerClickIconChild4('PersonHistory','endDate')"
                                uib-popover="Đến ngày: {{selectedPersonHistory.End}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                popover-trigger="outsideClick"></i>
                             <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.End" type="text" name="selectedPersonHistoryEnd"
@@ -89,6 +89,7 @@
                     <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                         <i class="fa fa-info-circle icon-clickable" id="PersonHistory-content" title="Popover Header"
                            popover-placement="bottom-left"
+                           ng-click="handerClickIconChild4('PersonHistory','content')"
                            uib-popover="Nội dung: {{selectedPersonHistory.Content}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                            popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Content" type="text" name="selectedPersonHistoryContent"
@@ -150,9 +151,21 @@
                     <th>Xoá bỏ</th>
                 </tr>
                 <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}">
-                    <td>{{x.Begin}}</td>
-                    <td>{{x.End}}</td>
-                    <td>
+                    <td  tr-child-tab
+                         row-id="x.Id"
+                         child-tab="PersonHistory"
+                         json-guide="jsonGuide"
+                         control-id="startDate">{{x.Begin}}</td>
+                    <td  tr-child-tab
+                         row-id="x.Id"
+                         child-tab="PersonHistory"
+                         json-guide="jsonGuide"
+                         control-id="endDate">{{x.End}}</td>
+                    <td  tr-child-tab
+                         row-id="x.Id"
+                         child-tab="PersonHistory"
+                         json-guide="jsonGuide"
+                         control-id="content">
                         <span ng-if="x.Type==1||x.Type==2||x.Type==3">Tại chi bộ:</span>{{x.Content}}
                     </td>
                     <!--<td>

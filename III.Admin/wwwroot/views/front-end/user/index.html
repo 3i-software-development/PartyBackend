@@ -403,6 +403,9 @@
             display: flex
         }
     }
+      .selected {
+      background-color: #dfebf5;
+  }
 </style>
 <div class="notifi">
     <div class="showNotifi" style="justify-content: space-between;">
@@ -2108,12 +2111,12 @@
                                                  style="padding-right: 0px;">
                                                 <i class="fa fa-info-circle " icon-child-tab
                                                    row-id="selectedPersonHistory.Id"
-                                                   child-tab="history"
+                                                   child-tab="PersonHistory"
                                                    json-guide="jsonGuide"
                                                    control-id="startDate"
-                                                   id="PersonHistory-From"
+                                                   ng-click="handerClickIconChild4('PersonHistory','startDate')"
+                                                    id="PersonHistory-From"
                                                    popover-placement="bottom-left"
-                                                   ng-click="handerClickIconChild('history','startDate')"
                                                    uib-popover="{{selectedPersonHistory.Begin}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
@@ -2135,7 +2138,12 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle " id="PersonHistory-To"
                                                    popover-placement="bottom-left"
-                                                   ng-click="handerClickIconChild('history','PersonHistory-To')"
+                                                   icon-child-tab
+                                                   row-id="selectedPersonHistory.Id"
+                                                   child-tab="PersonHistory"
+                                                   json-guide="jsonGuide"
+                                                   control-id="endDate"
+                                                   ng-click="handerClickIconChild4('PersonHistory','endDate')"
                                                    uib-popover="{{selectedPersonHistory.End}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" validateDateNow="true"
@@ -2158,7 +2166,12 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle " id="PersonHistory-content"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild('history','PersonHistory-content')"
+                                                icon-child-tab
+                                                row-id="selectedPersonHistory.Id"
+                                                child-tab="PersonHistory"
+                                                json-guide="jsonGuide"
+                                                control-id="content"
+                                                ng-click="handerClickIconChild4('PersonHistory','content')"
                                                uib-popover="{{selectedPersonHistory.Content}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             <input class="displayInfo" style="border: #FFFF;"
@@ -3284,9 +3297,17 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="PersonIntroduced"
+                                            <i class="fa fa-info-circle " id="PersonIntroduced"
+                                                 icon-child-tab
+                                                 row-id="Introducer.Id"
+                                                 child-tab="introducerofparty"
+                                                 json-guide="jsonGuide"
+                                                 control-id="PersonIntroduced"
+
+
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{Introducer.PersonIntroduced}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                               ng-click="handerClickIconChild10('introducerofparty','PersonIntroduced')"
+                                                 uib-popover="{{Introducer.PersonIntroduced}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             <input class="displayInfo" style="border: #FFFF;"
                                                    name="IntroducerPersonIntroduced" ng-model="Introducer.PersonIntroduced"
@@ -3307,8 +3328,14 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinUnion"
+                                            <i class="fa fa-info-circle " id="PlaceTimeJoinUnion"
+                                               icon-child-tab
+                                                row-id="Introducer.Id"
+                                                child-tab="introducerofparty"
+                                                json-guide="jsonGuide"
+                                                control-id="PlaceTimeJoinUnion"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               ng-click="handerClickIconChild10('introducerofparty','PlaceTimeJoinUnion')"
                                                uib-popover="{{Introducer.PlaceTimeJoinUnion}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             <input class="displayInfo" style="border: #FFFF;"
@@ -3331,8 +3358,14 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinParty"
+                                            <i class="fa fa-info-circle " id="PlaceTimeJoinParty"
+                                               icon-child-tab
+                                                 row-id="Introducer.Id"
+                                                 child-tab="introducerofparty"
+                                                 json-guide="jsonGuide"
+                                                 control-id="PlaceTimeJoinParty"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               ng-click="handerClickIconChild10('introducerofparty','PlaceTimeJoinParty')"
                                                uib-popover="{{Introducer.PlaceTimeRecognize}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             <input class="displayInfo" style="border: #FFFF;"
@@ -3353,8 +3386,14 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="PlaceTimeRecognize"
+                                            <i class="fa fa-info-circle " id="PlaceTimeRecognize"
+                                               icon-child-tab
+                                              row-id="Introducer.Id"
+                                              child-tab="introducerofparty"
+                                              json-guide="jsonGuide"
+                                              control-id="PlaceTimeRecognize"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               ng-click="handerClickIconChild10('introducerofparty','PlaceTimeRecognize')"
                                                uib-popover="{{Introducer.PlaceTimeRecognize}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             <input class="displayInfo" style="border: #FFFF;"
