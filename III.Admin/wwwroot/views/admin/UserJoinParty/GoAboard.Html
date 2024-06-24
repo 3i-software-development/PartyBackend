@@ -116,7 +116,7 @@
                     <th>Đi nước nào</th>
                     <th>Xoá bỏ</th>
                 </tr>
-                <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)">
+                <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)" ng-class="{'selected': x.selected}">
                     <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="From">
                         {{x.From}}
                     </td>

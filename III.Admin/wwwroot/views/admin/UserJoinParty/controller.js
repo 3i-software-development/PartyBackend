@@ -4288,6 +4288,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     $scope.selectLaudatory = function (x) {
         $scope.selectedLaudatory = x;
+        $scope.Laudatory.forEach(function (Laudatory) {
+            Laudatory.selected = false;
+        });
+
+        $scope.selectedLaudatory = x;
+        $scope.selectedLaudatory.selected = true;
+
     };
 
     $scope.getAwardByProfileCode = function () {
@@ -5758,6 +5765,10 @@ return;
     }
     $scope.deleteSelectToAward = function () {
         $scope.selectedLaudatory = {}
+        for (var i = 0; i < $scope.Laudatory.length; i++) {
+            $scope.Laudatory[i].selected = false;
+        }
+
         $scope.resetValidateFamily()
 
     }
@@ -5832,6 +5843,9 @@ return;
     }
     $scope.deleteSelectToHistorySpecialist = function () {
         $scope.selectedHistorySpecialist = {};
+        for (var i = 0; i < $scope.HistoricalFeatures.length; i++) {
+            $scope.HistoricalFeatures[i].selected = false;
+        }
         $scope.resetValidateFamily()
 
     }
@@ -5866,6 +5880,10 @@ return;
     $scope.deleteSelectaddToDisciplined = function () {
 
         $scope.selectedWarningDisciplined = {};
+        for (var i = 0; i < $scope.Disciplined.length; i++) {
+            $scope.Disciplined[i].selected = false;
+        }
+
         $scope.resetValidateFamily()
 
     }
@@ -5904,6 +5922,11 @@ return;
     }
     $scope.deleteSelectToTrainingCertificatedPass = function () {
         $scope.selectedTrainingCertificatedPass = {};
+        for (var i = 0; i < $scope.PassedTrainingClasses.length; i++) {
+            $scope.PassedTrainingClasses[i].selected = false;
+        }
+
+
         $scope.resetValidateFamily()
 
     }
@@ -5940,6 +5963,10 @@ return;
     }
     $scope.deleteSelectToGoAboard = function () {
         $scope.selectedGoAboard = {};
+        for (var i = 0; i < $scope.GoAboard.length; i++) {
+            $scope.GoAboard[i].selected = false;
+        }
+
         $scope.resetValidateFamily()
     }
 
@@ -6052,15 +6079,13 @@ return;
 
     }
     $scope.selectGoAboard = function (x) {
-        //$scope.selectedGoAboard = x;
+        $scope.selectedGoAboard = x;
         $scope.GoAboard.forEach(function (GoAboard) {
             GoAboard.selected = false;
         });
 
-        // Set selected family
         $scope.selectedGoAboard = x;
         $scope.selectedGoAboard.selected = true;
-        console.log("đã chọn");
     };
 
     $scope.resetValidateFamily = function () {
