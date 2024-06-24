@@ -4491,6 +4491,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     };
     $scope.selectGoAboard = function (x) {
         $scope.selectedGoAboard = x;
+        $scope.GoAboard.forEach(function (GoAboard) {
+            GoAboard.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedGoAboard = x;
+        $scope.selectedGoAboard.selected = true;
     };
     $scope.updatePartyAdmissionProfile = function () {
         $scope.modelPartyAdmissionProfile = $scope.infUser;

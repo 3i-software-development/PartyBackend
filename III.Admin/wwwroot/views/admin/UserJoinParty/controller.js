@@ -5928,6 +5928,17 @@ return;
         setTimeout(() => $scope.$apply());
 
     }
+    $scope.selectGoAboard = function (x) {
+        //$scope.selectedGoAboard = x;
+        $scope.GoAboard.forEach(function (GoAboard) {
+            GoAboard.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedGoAboard = x;
+        $scope.selectedGoAboard.selected = true;
+        console.log("đã chọn");
+    };
 
     $scope.resetValidateFamily = function () {
         var helpBlocks = document.querySelectorAll('.help-block');
@@ -5953,9 +5964,6 @@ return;
     };
     $scope.selectTrainingCertificatedPass = function (x) {
         $scope.selectedTrainingCertificatedPass = x;
-    };
-    $scope.selectGoAboard = function (x) {
-        $scope.selectedGoAboard = x;
     };
 
     //Delete
