@@ -2668,9 +2668,9 @@
                                         </div>
                                         <div class="col-md-6 pr-0 pl-0">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="From" title="Popover Header"
+                                                <i class="fa fa-info-circle " id="From" title="Popover Header"
                                                    popover-placement="bottom-left"
-                                                    ng-click="handerClickIconChild11('CertificatedPass','From')"
+                                                   ng-click="handerClickIconChild11('TrainingCertificatedPass','From')"
                                                    uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="selectedTrainingCertificatedPassFrom"
@@ -2691,9 +2691,9 @@
                                         </div>
                                         <div class="col-md-6 pr-0 pl-0">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="To" title="Popover Header"
+                                                <i class="fa fa-info-circle " id="To" title="Popover Header"
                                                    popover-placement="bottom-left"
-                                                   ng-click="handerClickIconChild11('CertificatedPass','To')"
+                                                   ng-click="handerClickIconChild11('TrainingCertificatedPass','To')"
                                                    uib-popover="Đến ngày: {{selectedTrainingCertificatedPass.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" name="selectedTrainingCertificatedPassTo"
@@ -2706,7 +2706,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-pencil-square-o" id="SchoolName"
-                                           
+                                           ng-click="openPopover11('SchoolName');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2716,9 +2716,9 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="SchoolName"
+                                            <i class="fa fa-info-circle " id="SchoolName"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild11('CertificatedPass','SchoolName')"
+                                               ng-click="handerClickIconChild11('TrainingCertificatedPass','SchoolName')"
                                                uib-popover="Tên trường: {{selectedTrainingCertificatedPass.SchoolName}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="selectedTrainingCertificatedPassSchoolName"
@@ -2732,7 +2732,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-pencil-square-o" id="Class" 
-
+                                           ng-click="openPopover11('Class');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2742,9 +2742,9 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="Class" title="Popover Header"
+                                            <i class="fa fa-info-circle " id="Class" title="Popover Header"
                                                popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild11('CertificatedPass','Class')"
+                                               ng-click="handerClickIconChild11('TrainingCertificatedPass','Class')"
                                                uib-popover="Ngành học hoặc tên lớp học: {{selectedTrainingCertificatedPass.Class}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="selectedTrainingCertificatedPassClass"
@@ -2758,7 +2758,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-pencil-square-o" id="Certificate"
-                                           
+                                           ng-click="openPopover11('Certificate');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2769,9 +2769,9 @@
                                     </div>
                                     <div class="col-md-9">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="Certificate"
+                                            <i class="fa fa-info-circle " id="Certificate"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild11('CertificatedPass','Certificate')"
+                                               ng-click="handerClickIconChild11('TrainingCertificatedPass','Certificate')"
                                                uib-popover="Văn bằng chứng chỉ: {{selectedTrainingCertificatedPass.Certificate}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
 
@@ -2807,29 +2807,29 @@
                                             ng-click="selectTrainingCertificatedPass(x)"  ng-class="{'selected': x.selected}">
                                             <td tr-child-tab
                                              row-id="x.Id"
-                                             child-tab="WarningDisciplined"
+                                             child-tab="TrainingCertificatedPass"
                                              json-guide="jsonGuide"
-                                             control-id="MonthYear" >{{x.From}}</td>
+                                             control-id="From" >{{x.From}}</td>
                                             <td tr-child-tab
                                              row-id="x.Id"
-                                             child-tab="WarningDisciplined"
+                                             child-tab="TrainingCertificatedPass"
                                              json-guide="jsonGuide"
-                                             control-id="MonthYear">{{x.To}}</td>
+                                             control-id="To">{{x.To}}</td>
                                             <td tr-child-tab
                                              row-id="x.Id"
-                                             child-tab="WarningDisciplined"
+                                             child-tab="TrainingCertificatedPass"
                                              json-guide="jsonGuide"
-                                             control-id="MonthYear">{{x.SchoolName}}</td>
+                                             control-id="SchoolName">{{x.SchoolName}}</td>
                                             <td tr-child-tab
                                              row-id="x.Id"
-                                             child-tab="WarningDisciplined"
+                                             child-tab="TrainingCertificatedPass"
                                              json-guide="jsonGuide"
-                                             control-id="MonthYear">{{x.Class}}</td>
+                                             control-id="Class">{{x.Class}}</td>
                                             <td tr-child-tab
                                              row-id="x.Id"
-                                             child-tab="WarningDisciplined"
+                                             child-tab="TrainingCertificatedPass"
                                              json-guide="jsonGuide"
-                                             control-id="MonthYear">{{x.Certificate}}</td>
+                                             control-id="Certificate">{{x.Certificate}}</td>
                                             <td style="text-align:center">
                                                 <i style="color:red" class="fa fa-trash"
                                                    ng-click="deleteTrainingCertificatedPass($index)"></i>
