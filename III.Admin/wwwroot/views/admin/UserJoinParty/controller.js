@@ -3434,7 +3434,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         let pp = null;
         switch (tabId) {
             case "historyspecialist":
-               
+                console.log(`${tabId}_${$scope.selectedHistorySpecialist.Id}`);
                 pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedHistorySpecialist.Id}`);
                 break;
             default:
@@ -4007,6 +4007,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
+        $scope.PersonalHistory.forEach(function (PersonalHistory) {
+            PersonalHistory.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedPersonHistory = x;
+        $scope.selectedPersonHistory.selected = true;
         for (var i = 0; i < $scope.PersonalHistory.length; i++) {
             $scope.PersonalHistory[i].selected = false;
         }
@@ -6041,6 +6048,17 @@ return;
         setTimeout(() => $scope.$apply());
 
     }
+    $scope.selectGoAboard = function (x) {
+        //$scope.selectedGoAboard = x;
+        $scope.GoAboard.forEach(function (GoAboard) {
+            GoAboard.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedGoAboard = x;
+        $scope.selectedGoAboard.selected = true;
+        console.log("đã chọn");
+    };
 
     $scope.resetValidateFamily = function () {
         var helpBlocks = document.querySelectorAll('.help-block');
@@ -6057,27 +6075,37 @@ return;
 
     $scope.selectWarningDisciplined = function (x) {
         $scope.selectedWarningDisciplined = x;
+        $scope.Disciplined.forEach(function (WarningDisciplined) {
+            WarningDisciplined.selected = false;
+        });
+
+        $scope.selectedWarningDisciplined = x;
+        $scope.selectedWarningDisciplined.selected = true;
+        
     };
     $scope.selectHistorySpecialist = function (x) {
-
-        $scope.HistoricalFeatures.forEach(function (HistoricalFeatures) {
-            
-            HistoricalFeatures.selected = false;
+        $scope.selectedHistorySpecialist = x;
+        $scope.HistoricalFeatures.forEach(function (Relationship) {
+            Relationship.selected = false;
         });
 
         // Set selected family
         $scope.selectedHistorySpecialist = x;
         $scope.selectedHistorySpecialist.selected = true;
-
     };
     $scope.selectWorkingTracking = function (x) {
         $scope.selectedWorkingTracking = x;
+        $scope.BusinessNDuty.forEach(function (BusinessNDuty) {
+            BusinessNDuty.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedWorkingTracking = x;
+        $scope.selectedWorkingTracking.selected = true;
+
     };
     $scope.selectTrainingCertificatedPass = function (x) {
         $scope.selectedTrainingCertificatedPass = x;
-    };
-    $scope.selectGoAboard = function (x) {
-        $scope.selectedGoAboard = x;
     };
 
     //Delete

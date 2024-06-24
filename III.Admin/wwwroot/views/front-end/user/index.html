@@ -403,6 +403,9 @@
             display: flex
         }
     }
+      .selected {
+      background-color: #dfebf5;
+  }
 </style>
 <div class="notifi">
     <div class="showNotifi" style="justify-content: space-between;">
@@ -2513,7 +2516,7 @@
                                                 <th>Xoá bỏ</th>
                                             </tr>
                                             <tr ng-repeat="x in HistoricalFeatures"
-                                                ng-click="selectHistorySpecialist(x)">
+                                                ng-click="selectHistorySpecialist(x)" ng-class="{'selected': x.selected}">
                                                 <td>{{x.MonthYear}}</td>
                                                 <td>{{x.Content}}</td>
 
