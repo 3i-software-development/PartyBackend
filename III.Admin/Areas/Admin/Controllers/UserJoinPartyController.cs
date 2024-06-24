@@ -44,6 +44,7 @@ using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
 using III.Admin.Utils;
 using Syncfusion.EJ2.Charts;
 using System.ComponentModel.DataAnnotations;
+using Syncfusion.DocIO;
 
 namespace III.Admin.Controllers
 {
@@ -969,6 +970,47 @@ namespace III.Admin.Controllers
                 filePath.Add(msg);
             }
             return filePath;
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult TestWordSyncfusion()
+        {
+            string path = "/files/Template/ĐẢNG ỦY CÁC KHU CÔNG NGHIỆP.docx";
+            string rootPath = _hostingEnvironment.WebRootPath;
+            var filePath = string.Concat(rootPath, path);
+            FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite);
+            using (WordDocument document = new WordDocument(fileStream, FormatType.Docx))
+            {
+                //Adds new section to the document
+                IWSection section = document.Sections[0];
+                //Adds new paragraph to the section
+                IWParagraph paragraph = section.AddParagraph();
+                try
+                {
+                    //Adds new text to the paragraph
+                    WTextRange text = paragraph.AppendText("Adding new paragraph to the document") as WTextRange;
+                    if (text != null)
+                    {
+                        //Modifies the character format of the text
+                        text.CharacterFormat.Bold = true;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }
+
+                string pathSave = "/uploads/Sample2.docx";
+                var filePathSave = string.Concat(rootPath, pathSave);
+                //Save the Word document to  FileStream
+                using (FileStream stream = new FileStream(filePathSave, FileMode.OpenOrCreate))
+                {
+                    document.Save(stream, FormatType.Docx);
+                }
+            }
+            fileStream.Dispose();
+            return Ok();
         }
 
         [NonAction]
