@@ -2774,6 +2774,32 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
         //$scope.commentTextarea = matchedGuide.comment;
     };
+
+    $scope.openPopover9 = function (popoverId) {
+        if (!$scope.selectedGoAboard || !$scope.selectedGoAboard.Id) {
+            return;
+        }
+        const pp = $scope.jsonGuide.find(x => x.id === `goaboard_${$scope.selectedGoAboard.Id}`);
+        matchedLabel = $scope.popoverLabels.find(function (item) {
+            return item.id === popoverId;
+        });
+        if (pp) {
+            $scope.pp = angular.copy(pp);
+        }
+        else {
+            $scope.pp = {
+                id: `goaboard_${$scope.selectedGoAboard.Id}`,
+                comment: '',
+                idFamily: {
+                }
+            };
+        }
+        $scope.popoverid = $scope.pp.id;
+        $scope.popoverLabel = matchedLabel.labelText;
+        $scope.popoveridFamily = popoverId;
+        $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
+        //$scope.commentTextarea = matchedGuide.comment;
+    };
     $scope.handerClickIconChild5 = function (tabId, id) {
         if (!Array.isArray($scope.jsonGuide)) {
             $scope.jsonGuide = [];
@@ -2793,6 +2819,24 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
     }
 
+    $scope.handerClickIconChild9 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case tabId:
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedGoAboard.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
     $scope.openPopover8 = function (popoverId) {
         if (!$scope.selectedWarningDisciplined || !$scope.selectedWarningDisciplined.Id) {
             return;

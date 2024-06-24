@@ -3089,11 +3089,11 @@
 
                         <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess7">
                             <form ng-validate="validationOptionsGoAboard" name="forms.GoAboard">
-
                                 <div class="form-group row">
                                     <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
                                         <div class="col-md-4 pr-0" style="padding-left: 7px; white-space:nowrap">
-                                            <i class="fa fa-calendar"></i>
+                                            <i class="fa fa-calendar"
+                                            ng-click="openPopover9('Form');"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Từ
                                                 ngày
@@ -3101,11 +3101,15 @@
                                         </div>
                                         <div class="col-md-8" style=" padding-left: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="GoAboard-From"
+                                                <i class="fa fa-info-circle " id="From" icon-child-tab
+                                                       row-id="selectedGoAboard.Id"
+                                                       child-tab="goaboard"
+                                                       json-guide="jsonGuide"
+                                                       control-id="From"
                                                    popover-placement="bottom-left"
+                                                   ng-click="handerClickIconChild9('goaboard','From')"
                                                    uib-popover="{{selectedGoAboard.From}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
-
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" validateDateNow="true"
                                                        name="selectedGoAboardFrom" ng-model="selectedGoAboard.From"
@@ -3123,8 +3127,13 @@
                                         </div>
                                         <div class="col-md-8" style="padding-right: 8px;">
                                             <div class="br24 form-control custom-title-code-bold">
-                                                <i class="fa fa-info-circle icon-clickable" id="GoAboard-To"
+                                                <i class="fa fa-info-circle " id="GoAboard-To"  icon-child-tab
+                                                       row-id="selectedGoAboard.Id"
+                                                       child-tab="goaboard"
+                                                       json-guide="jsonGuide"
+                                                       control-id="To"
                                                    popover-placement="bottom-left"
+                                                   ng-click="handerClickIconChild9('goaboard','To')"
                                                    uib-popover="{{selectedGoAboard.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
 
@@ -3148,8 +3157,13 @@
                                     <div class="col-md-10" style="padding-left: 1px; ">
                                         <div class="br24 form-control custom-title-code-bold"
                                              style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="Contact"
+                                            <i class="fa fa-info-circle " id="Contact"  icon-child-tab
+                                                       row-id="selectedGoAboard.Id"
+                                                       child-tab="goaboard"
+                                                       json-guide="jsonGuide"
+                                                       control-id="contact"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               ng-click="handerClickIconChild9('goaboard','contact')"
                                                uib-popover="{{selectedGoAboard.Contact}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             </i>
@@ -3163,7 +3177,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-2 pr-0" style="padding-left: 7px; white-space: nowrap">
-                                        <i class="fas fa-question-circle"></i>
+                                        <i class="fas fa-question-circle"  ></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Nước
                                             nào
@@ -3172,8 +3186,13 @@
                                     <div class="col-md-10" style="padding-left: 1px; ">
                                         <div class="br24 form-control custom-title-code-bold"
                                              style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="WhichCountry"
+                                            <i class="fa fa-info-circle icon-clickable" id="WhichCountry"icon-child-tab
+                                                       row-id="selectedGoAboard.Id"
+                                                       child-tab="goaboard"
+                                                       json-guide="jsonGuide"
+                                                       control-id="WhichCountry"
                                                title="Popover Header" popover-placement="bottom-left"
+                                               ng-click="handerClickIconChild9('goaboard','WhichCountry')"
                                                uib-popover="{{selectedGoAboard.Country}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
 
