@@ -2350,8 +2350,18 @@
                                             <th>Xoá bỏ</th>
                                         </tr>
                                         <tr ng-repeat="x in HistoricalFeatures" ng-click="selectHistorySpecialist(x)">
-                                            <td>{{x.MonthYear}}</td>
-                                            <td>{{x.Content}}</td>
+                                            <td tr-child-tab
+                                                row-id="x.Id"
+                                                child-tab="historyspecialist"
+                                                json-guide="jsonGuide"
+                                                control-id="MonthYear">
+                                            {{x.MonthYear}}</td>
+                                            <td tr-child-tab
+                                                row-id="x.Id"
+                                                child-tab="historyspecialist"
+                                                json-guide="jsonGuide"
+                                                control-id="content">
+                                            {{x.Content}}</td>
 
                                             <td style="text-align:center">
                                                 <i style="color:red" class="fa fa-trash"
@@ -2845,7 +2855,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0">
                                         <i class="fa fa-user" id="PersonIntroduced"
-                                           ng-click="openPopover('PersonIntroduced');"
+                                           ng-click="openPopover10('PersonIntroduced');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require  custom-title-code-bold">
@@ -2855,9 +2865,11 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                                            <i class="fa fa-info-circle icon-clickable" id="PersonIntroduced"
+                                            <i class="fa fa-info-circle " id="PersonIntroduced"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="Người giới thiệu: {{Introducer.PersonIntroduced}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                               ng-click="handerClickIconChild10('introducerofparty','PersonIntroduced')"
+                                               uib-popover="{{Introducer.PersonIntroduced}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="IntroducerPersonIntroduced"
                                                    ng-model="Introducer.PersonIntroduced" type="text"
@@ -2870,7 +2882,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 ">
                                         <i class="fa fa-calendar" id="PlaceTimeJoinUnion"
-                                           ng-click="openPopover('PlaceTimeJoinUnion');"
+                                           ng-click="openPopover10('PlaceTimeJoinUnion');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require  custom-title-code-bold">
@@ -2879,9 +2891,10 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinUnion"
+                                            <i class="fa fa-info-circle " id="PlaceTimeJoinUnion"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{Introducer.PlaceTimeJoinUnion}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                               ng-click="handerClickIconChild10('introducerofparty','PlaceTimeJoinUnion')"
+                                                uib-popover="{{Introducer.PlaceTimeJoinUnion}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="IntroducerPlaceTimeJoinUnion"
                                                    ng-model="Introducer.PlaceTimeJoinUnion" type="text"
@@ -2892,7 +2905,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 ">
                                         <i class="fa fa-calendar" id="PlaceTimeJoinParty"
-                                           ng-click="openPopover('PlaceTimeJoinParty');"
+                                             ng-click="openPopover10('PlaceTimeJoinParty');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require  custom-title-code-bold">
@@ -2902,9 +2915,11 @@
                                     </div>
                                     <div class="col-md-8">
                                         <div class="br24 form-control custom-title-code-bold">
-                                            <i class="fa fa-info-circle icon-clickable" id="PlaceTimeJoinParty"
+                                            <i class="fa fa-info-circle " id="PlaceTimeJoinParty"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{Introducer.PlaceTimeJoinParty}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                ng-click="handerClickIconChild10('introducerofparty','PlaceTimeJoinParty')"
+                                                uib-popover="{{Introducer.PlaceTimeJoinParty}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                             
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="IntroducerPlaceTimeJoinParty"
                                                    ng-model="Introducer.PlaceTimeJoinParty" type="text"
@@ -2915,7 +2930,8 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 ">
                                         <i class="fa fa-calendar" id="PlaceTimeRecognize"
-                                           ng-click="openPopover('PlaceTimeRecognize');"
+                                          
+                                            ng-click="openPopover10('PlaceTimeRecognize');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo  control-label require  custom-title-code-bold">
@@ -2928,7 +2944,8 @@
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="PlaceTimeRecognize"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="{{Introducer.PlaceTimeRecognize}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                ng-click="handerClickIconChild10('introducerofparty','PlaceTimeRecognize')"
+                                                 uib-popover="{{Introducer.PlaceTimeRecognize}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="IntroducerPlaceTimeRecognize"
                                                    ng-model="Introducer.PlaceTimeRecognize" type="text"

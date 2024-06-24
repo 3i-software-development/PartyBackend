@@ -2774,6 +2774,33 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
         //$scope.commentTextarea = matchedGuide.comment;
     };
+    $scope.openPopover10 = function (popoverId) {
+        
+        if (!$scope.Introducer || !$scope.Introducer.Id) {
+            return;
+        }
+        const pp = $scope.jsonGuide.find(x => x.id === `introducerofparty_${$scope.Introducer.Id}`);
+        matchedLabel = $scope.popoverLabels.find(function (item) {
+            return item.id === popoverId;
+        });
+        if (pp) {
+            $scope.pp = angular.copy(pp);
+        }
+        else {
+            $scope.pp = {
+                id: `introducerofparty_${$scope.Introducer.Id}`,
+                comment: '',
+                idFamily: {
+                }
+            };
+        }
+        $scope.popoverid = $scope.pp.id;
+        $scope.popoverLabel = matchedLabel.labelText;
+        $scope.popoveridFamily = popoverId;
+        $scope.pp.comment = $scope.pp.idFamily[popoverId] ?? '';
+        
+        //$scope.commentTextarea = matchedGuide.comment;
+    };
 
     $scope.openPopover9 = function (popoverId) {
         if (!$scope.selectedGoAboard || !$scope.selectedGoAboard.Id) {
@@ -3407,7 +3434,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         let pp = null;
         switch (tabId) {
             case "historyspecialist":
-                console.log(`${tabId}_${$scope.selectedHistorySpecialist.Id}`);
+               
                 pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedHistorySpecialist.Id}`);
                 break;
             default:
@@ -3427,6 +3454,25 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         switch (tabId) {
             case "laudatory":
                 pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedLaudatory.Id}`);
+                break;
+            default:
+                break;
+        }
+        if (pp != null) {
+            pp.comment = pp.idFamily[id];
+            $scope.matchedItemss = [pp];
+        }
+    }
+    $scope.handerClickIconChild10 = function (tabId, id) {
+        if (!Array.isArray($scope.jsonGuide)) {
+            $scope.jsonGuide = [];
+            console.warn('$scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+        }
+        let pp = null;
+        switch (tabId) {
+            case "introducerofparty":
+              
+                pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.Introducer.Id}`);
                 break;
             default:
                 break;
@@ -5753,6 +5799,10 @@ return;
 
     }
     $scope.addToHistorySpecialist = function () {
+
+
+       
+
         if ($scope.forms.HistorySpecialist.validate()) {
 
             $scope.err = false
@@ -6023,7 +6073,16 @@ return;
         
     };
     $scope.selectHistorySpecialist = function (x) {
+
+        $scope.HistoricalFeatures.forEach(function (HistoricalFeatures) {
+            
+            HistoricalFeatures.selected = false;
+        });
+
+        // Set selected family
         $scope.selectedHistorySpecialist = x;
+        $scope.selectedHistorySpecialist.selected = true;
+
     };
     $scope.selectWorkingTracking = function (x) {
         $scope.selectedWorkingTracking = x;
