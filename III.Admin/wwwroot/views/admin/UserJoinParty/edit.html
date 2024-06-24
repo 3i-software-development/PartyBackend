@@ -2155,7 +2155,7 @@
                                                 <i class="fa fa-info-circle icon-clickable" id="To"
                                                    popover-placement="bottom-left"
                                                    ng-click="handerClickIconChild5('WorkingTracking','To')"
-                                                   uib-popover="{{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}"
+                                                   uib-popover="{{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick"
                                                    ng-if="selectedWorkingTracking && selectedWorkingTracking.Id">
                                                 </i>
@@ -2181,7 +2181,7 @@
                                             <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
                                                popover-placement="bottom-left"
                                                ng-click="handerClickIconChild5('WorkingTracking','Work')"
-                                               uib-popover="{{selectedWorkingTracking.content}}.{{matchedItems[0].guide}}"
+                                               uib-popover="{{selectedWorkingTracking.content}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"
                                                ng-if="selectedWorkingTracking && selectedWorkingTracking.Id">
                                             </i>
@@ -2209,7 +2209,7 @@
                                             <i class="fa fa-info-circle icon-clickable" id="role" title="Popover Header"
                                                popover-placement="bottom-left"
                                                ng-click="handerClickIconChild('WorkingTracking','Role')"
-                                               uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}"
+                                               uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick">
 
                                             </i>
@@ -2495,11 +2495,19 @@
                                             </td>
 
                                             <!--<td>{{x.Reason}}</td>-->
-                                            <td tr-child-tab row-id="x.Id" child-tab="laudatory" json-guide="jsonGuide" control-id="GrantOfDecision">
+                                            <td tr-child-tab 
+                                                row-id="x.Id" 
+                                                child-tab="laudatory" 
+                                                json-guide="jsonGuide" 
+                                                control-id="GrantOfDecision">
                                                 {{x.Reason}}
                                             </td>
                                             <!--<td>{{x.GrantOfDecision}}</td>-->
-                                            <td tr-child-tab row-id="x.Id" child-tab="laudatory" json-guide="jsonGuide" control-id="GrantOfDecision">
+                                            <td tr-child-tab 
+                                                row-id="x.Id" 
+                                                child-tab="laudatory" 
+                                                json-guide="jsonGuide"
+                                                control-id="GrantOfDecision">
                                                 {{x.GrantOfDecision}}
                                             </td>
                                             <td style="text-align:center">
