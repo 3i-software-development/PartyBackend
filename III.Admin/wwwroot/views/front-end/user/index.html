@@ -2108,12 +2108,12 @@
                                                  style="padding-right: 0px;">
                                                 <i class="fa fa-info-circle " icon-child-tab
                                                    row-id="selectedPersonHistory.Id"
-                                                   child-tab="history"
+                                                   child-tab="PersonHistory"
                                                    json-guide="jsonGuide"
                                                    control-id="startDate"
-                                                   id="PersonHistory-From"
+                                                   ng-click="handerClickIconChild4('PersonHistory','startDate')"
+                                                    id="PersonHistory-From"
                                                    popover-placement="bottom-left"
-                                                   ng-click="handerClickIconChild('history','startDate')"
                                                    uib-popover="{{selectedPersonHistory.Begin}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;"
@@ -2135,7 +2135,12 @@
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle " id="PersonHistory-To"
                                                    popover-placement="bottom-left"
-                                                   ng-click="handerClickIconChild('history','PersonHistory-To')"
+                                                   icon-child-tab
+                                                   row-id="selectedPersonHistory.Id"
+                                                   child-tab="PersonHistory"
+                                                   json-guide="jsonGuide"
+                                                   control-id="endDate"
+                                                   ng-click="handerClickIconChild4('PersonHistory','endDate')"
                                                    uib-popover="{{selectedPersonHistory.End}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
                                                 <input class="displayInfo" style="border: #FFFF;" validateDateNow="true"
@@ -2158,7 +2163,12 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle " id="PersonHistory-content"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild('history','PersonHistory-content')"
+                                                icon-child-tab
+                                                row-id="selectedPersonHistory.Id"
+                                                child-tab="PersonHistory"
+                                                json-guide="jsonGuide"
+                                                control-id="content"
+                                                ng-click="handerClickIconChild4('PersonHistory','content')"
                                                uib-popover="{{selectedPersonHistory.Content}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
                                             <input class="displayInfo" style="border: #FFFF;"
