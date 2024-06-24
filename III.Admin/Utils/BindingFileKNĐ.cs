@@ -1858,7 +1858,7 @@ namespace III.Admin.Utils
                 string a = p.Text.Trim();
                 switch (a)
                 {
-                    case "Họ và tên:họ và tên………………………………Giới tính:……….":
+                    case "Họ và tên:họ và tên                                                Giới tính:……….":
                         p.Replace(
                             "Họ và tên:họ và tên",
                             "Họ và tên: " + jsonParty.Profile.CurrentName,
@@ -1872,7 +1872,7 @@ namespace III.Admin.Utils
                             true
                         );
                         break;
-                    case "Dân tộc:dân tộc…………………………………..Tôn giáo:……….":
+                    case "Dân tộc:dân tộc                                                      Tôn giáo:……….":
                         p.Replace(
                             "Dân tộc:dân tộc",
                             "Dân tộc:" + jsonParty.Profile.Nation,
@@ -1950,14 +1950,25 @@ namespace III.Admin.Utils
 
                         break;
 
-                    case "Người giới thiệu thứ 1:…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….":
+                    case "5. Người giới thiệu:  Đinh Thị Thanh Tâm – Bí thư chi bộ.":
                         if (jsonParty.IntroducerOfParty != null)
+                        {
                             p.Replace(
-                                "…………………………….. Chức vụ, đơn vị:……………………………...\v…………………………………………………………………………………………………………….",
+                                " Đinh Thị Thanh Tâm – Bí thư chi bộ.",
                                 jsonParty.IntroducerOfParty.PersonIntroduced,
                                 true,
                                 true
                             );
+                        }
+                        else
+                        {
+                            p.Replace(
+                                " Đinh Thị Thanh Tâm – Bí thư chi bộ.",
+                                "Không",
+                                true,
+                                true
+                            );
+                        }
                         break;
                     case "Ngày chính thức:…/…/…… Tại Chi bộ:………………………………………………………………":
                         if (jsonParty.IntroducerOfParty != null)
@@ -2022,9 +2033,9 @@ namespace III.Admin.Utils
                                 true
                             );
                         break;
-                    case "23) Khen thưởng : (Huân chương, huy chương, bằng khen)……………………………………\v…………………………………………………………………………………………………………\v…………………………………………………………………………………………………………":
+                    /*case "23) Khen thưởng : (Huân chương, huy chương, bằng khen)……………………………………\v…………………………………………………………………………………………………………\v…………………………………………………………………………………………………………":
                         BindingAward(p, jsonParty.Awards);
-                        break;
+                        break;*/
                     /*  case "26) Kỷ luật (Đảng, chính quyền, pháp luật): ……………………………………………………\v………………………………………………………………………………………………………":
                           BindingWarning(p, jsonParty.WarningDisciplineds);
                           break;*/
@@ -2052,7 +2063,7 @@ namespace III.Admin.Utils
                         break;
 
                     case "c. Khen thưởng, kỷ luật:...................................................................":
-                        BindingAward(p, jsonParty.Awards);
+                        BindingAward(p, jsonParty.Awards, jsonParty.WarningDisciplineds);
                         break;
                     case "- hoàn cảnh gđ":
                         BindingFamily(p, jsonParty.Families);
@@ -2190,35 +2201,65 @@ namespace III.Admin.Utils
                 );
         }
 
-        private static void BindingAward(IWParagraph p, List<Award> awards)
+        private static void BindingAward(IWParagraph p, List<Award> awards, List<WarningDisciplined> warningDisciplineds)
         {
             string text = "";
-            foreach (var item in awards)
+            if(awards.Count > 0)
             {
+                IWTextRange relationRangeTitle = p.AppendText("\n- Khen thưởng:");
+                SetStyle2(relationRangeTitle);
+                foreach (var item in awards)
+                {
 
-                // Format {item.Relation}: {item.Name} as bold
-                IWTextRange relationRange = p.AppendText($"\n- {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})");
-                SetStyle2(relationRange);
-                text +=
-                    $"\n- {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})";
+                    // Format {item.Relation}: {item.Name} as bold
+                    IWTextRange relationRange = p.AppendText($"\n  {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})");
+                    SetStyle2(relationRange);
+                    text +=
+                        $"\n  {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})";
+                }
+                if (text != "")
+                {
+                    p.Replace(
+                        "...................................................................",
+                        " ",
+                        true,
+                        true
+                    );
+                }
             }
-            if (text != "")
+
+            
+            if(warningDisciplineds.Count > 0)
+            {
+                IWTextRange relationRangeTitle2 = p.AppendText("\n- Kỷ luật:");
+                SetStyle2(relationRangeTitle2);
+
+                foreach (var item in warningDisciplineds)
+                {
+                    IWTextRange relationRange = p.AppendText($"\n  {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})");
+                    SetStyle2(relationRange);
+                    text +=
+                       $"\n  {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})";
+                }
+                if (text != "")
+                {
+                    p.Replace(
+                        "...................................................................",
+                        " ",
+                        true,
+                        true
+                    );
+                }
+            }
+
+            if(awards.Count == 0 && warningDisciplineds.Count == 0)
             {
                 p.Replace(
-                    "...................................................................",
-                    " ",
-                    true,
-                    true
-                );
-            }
-            else
-            {
-                p.Replace(
-                    "...................................................................",
-                    " Không",
-                    true,
-                    true
-                );
+                        "...................................................................",
+                        "Không",
+                        true,
+                        true
+                    );
             }
         }
 
@@ -2250,23 +2291,18 @@ namespace III.Admin.Utils
             string text = "";
             foreach (var item in families)
             {
-                //Create a new text body part for each family member
-                IWTextRange textRange = p.AppendText("\n- ");
-
-                //Format {item.Relation}: {item.Name} as bold
-                IWTextRange relationRange = p.AppendText($"{item.Relation}: ");
+                if (p.Text.Contains("- hoàn cảnh gđ"))
+                {
+                    p.Text = p.Text.Replace("- hoàn cảnh gđ", ""); 
+                }
+                IWTextRange relationRange = p.AppendText($"\n- {item.Relation}: ");
                 relationRange.CharacterFormat.FontSize = 14;
-
-
+                relationRange.CharacterFormat.Bold = true;
                 WTextRange nameRange = p.AppendText($"{item.Name}; ") as WTextRange;
                 nameRange.CharacterFormat.FontSize = 14;
                 nameRange.CharacterFormat.Bold = true;
-
-                //Format the rest of the text as normal
-                /*p.AppendText($"Năm sinh: {item.BirthYear}, Quê quán: {item.HomeTownVillage}, {item.HomeTownValue}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. {item.WorkingProgress}") ;*/
                 IWTextRange partyMemberRange2 = p.AppendText($"Năm sinh: {item.BirthYear}, Quê quán: {item.HomeTownVillage}, {item.HomeTownValue}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. {item.WorkingProgress}.");
                 SetStyle2(partyMemberRange2);
-                // Check if PartyMember needs to be added
                 if (item.PartyMember != null)
                 {
                     var partMember = item.PartyMember.Split("_");
@@ -2274,29 +2310,11 @@ namespace III.Admin.Utils
                     {
                         IWTextRange partyMemberRange = p.AppendText($" Là đảng viên đang sinh hoạt tại {partMember[0]}, thuộc đảng bộ: {partMember[2]}");
                         partyMemberRange.CharacterFormat.TextColor = Syncfusion.Drawing.Color.Red;
-                        partyMemberRange.CharacterFormat.FontSize = 15;
+                        partyMemberRange.CharacterFormat.FontSize = 14;
 
                     }
                 }
             }
-
-            // Assuming that "- Bố đẻ" is a placeholder text in the document
-            //if (p.Text.Contains("- hoàn cảnh gđ"))
-            //{
-            //    p.Text = p.Text.Replace("- hoàn cảnh gđ", ""); // Clear the placeholder text
-            //}
-
-
-            /* if (text != "")
-             {
-                 p.Replace(
-                     "- Bố đẻ",
-                     text,
-                     true,
-                     true
-                 );
-             }*/
-
         }
 
 

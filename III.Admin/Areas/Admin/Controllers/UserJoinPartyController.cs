@@ -905,7 +905,10 @@ namespace III.Admin.Controllers
                     WfInstCode = x.WfInstCode,
                     Username = x.Username,
                     Status = x.Status,
-                    GroupUserCode = x.GroupUserCode,
+                    GroupUserCode = _context.AdGroupUsers
+                .Where(g => g.GroupUserCode == x.GroupUserCode)
+                .Select(g => g.Title)
+                .FirstOrDefault(),
                     PlaceWorking = x.PlaceWorking,
                     MarriedStatus = x.MarriedStatus,
                     AddressText = x.AddressText,
