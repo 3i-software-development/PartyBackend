@@ -2169,7 +2169,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
-                                        <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover5('Work');"
+                                        <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover5('work');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2180,7 +2180,7 @@
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
                                                popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild5('WorkingTracking','Work')"
+                                               ng-click="handerClickIconChild5('WorkingTracking','work')"
                                                uib-popover="{{selectedWorkingTracking.Work}}.{{matchedItems[0].guide}}"
                                                popover-trigger="outsideClick"
                                                ng-if="selectedWorkingTracking && selectedWorkingTracking.Id">
@@ -2197,7 +2197,7 @@
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-3 pr-0">
-                                        <i class="fa fa-pencil-square-o" id="role" ng-click="openPopover5('Role');"
+                                        <i class="fa fa-pencil-square-o" id="role" ng-click="openPopover5('role');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2208,7 +2208,7 @@
                                         <div class="br24 form-control custom-title-code-bold">
                                             <i class="fa fa-info-circle icon-clickable" id="role" title="Popover Header"
                                                popover-placement="bottom-left"
-                                               ng-click="handerClickIconChild('WorkingTracking','Role')"
+                                               ng-click="handerClickIconChild5('WorkingTracking','role')"
                                                uib-popover="{{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}"
                                                popover-trigger="outsideClick">
 
@@ -2257,12 +2257,12 @@
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
-                                                    control-id="Work">{{x.Work}}</td>
+                                                    control-id="work">{{x.Work}}</td>
                                                 <td  tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
-                                                    control-id="Role">{{x.Role}}</td>
+                                                    control-id="role">{{x.Role}}</td>
                                                 <td style="text-align:center">
                                                     <i style="color:red" class="fa fa-trash"
                                                        ng-click="deleteWorkingTracking($index)"></i>
