@@ -4502,6 +4502,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
+        $scope.PersonalHistory.forEach(function (PersonalHistory) {
+            PersonalHistory.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedPersonHistory = x;
+        $scope.selectedPersonHistory.selected = true;
         for (var i = 0; i < $scope.PersonalHistory.length; i++) {
             $scope.PersonalHistory[i].selected = false;
         }
@@ -4537,6 +4544,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     };
     $scope.selectGoAboard = function (x) {
         $scope.selectedGoAboard = x;
+        $scope.GoAboard.forEach(function (GoAboard) {
+            GoAboard.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedGoAboard = x;
+        $scope.selectedGoAboard.selected = true;
     };
     $scope.updatePartyAdmissionProfile = function () {
         $scope.modelPartyAdmissionProfile = $scope.infUser;

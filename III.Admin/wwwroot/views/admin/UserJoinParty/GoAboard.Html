@@ -1,3 +1,8 @@
+<style>
+    .selected {
+        background-color: #dfebf5;
+    }
+</style>
 <div style="display:flex;justify-content: end;margin-bottom: 10px;margin: 10px;" class="ng-scope">
     <div ng-click="submitGoAboard()" class="d-flex flex-column" style="align-items: center; gap: 5px;width:unset">
         <i class="fa fa-floppy-o fs-1" style="font-size: 25px;"></i> <span  style="font-size: x-small;">Lưu lại</span>
@@ -112,10 +117,22 @@
                     <th>Xoá bỏ</th>
                 </tr>
                 <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)">
-                    <td>{{x.From}}</td>
-                    <td>{{x.To}}</td>
-                    <td>{{x.Contact}}</td>
-                    <td>{{x.Country}}</td>
+                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="From">
+                        {{x.From}}
+                    </td>
+                    <!--<td>{{x.From}}</td>-->
+                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="To">
+                        {{x.To}}
+                    </td>
+                    <!--<td>{{x.To}}</td>-->
+                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="contact">
+                        {{x.Contact}}
+                    </td>
+                    <!--<td>{{x.Contact}}</td>-->
+                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="WhichCountry">
+                    {{x.Country}}
+                </td>
+                    <!--<td>{{x.Country}}</td>-->
                     <td style="text-align:center">
                         <i style="color:red" class="fa fa-trash"
                            ng-click="deleteGoAboard($index)"></i>
