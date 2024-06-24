@@ -9,14 +9,17 @@
         <div class="form-group row">
             <div class="col-md-6">
                 <div class="col-md-6 pr-0 pl-0">
-                    <i class="fa fa-calendar" id="From" ng-click="openPopover('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                    <i class="fa fa-calendar" id="From" ng-click="openPopover9('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                    <i class="fa fa-user" id="From" ng-click="warningPopover3()"
+                       ng-if="!selectedGoAboard || !selectedGoAboard.Id"></i>
                     <label class="displayInfo control-label require custom-title-code-bold">
                         Từ ngày
                     </label>
                 </div>
                 <div class="col-md-6 pr-0 pl-0">
                     <div class="br24 form-control custom-title-code-bold">
-                        <i class="fa fa-info-circle icon-clickable" id="GoAboard-From" title="Popover Header" popover-placement="bottom-left"
+                        <i class="fa fa-info-circle " id="GoAboard-From" title="Popover Header" popover-placement="bottom-left" 
+                           ng-click="handerClickIconChild9('goaboard','From')"
                            uib-popover="Từ ngày: {{selectedGoAboard.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;"
                                name="selectedGoAboardFrom" ng-model="selectedGoAboard.From"
@@ -26,14 +29,15 @@
             </div>
             <div class="col-md-6">
                 <div class="col-md-6 pr-0 pl-0">
-                    <i class="fa fa-calendar" id="To" ng-click="openPopover('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                    <i class="fa fa-calendar" id="To" ng-click="openPopover9('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
                     <label class="displayInfo control-label require custom-title-code-bold">
                         Đến ngày
                     </label>
                 </div>
                 <div class="col-md-6 pr-0 pl-0">
                     <div class="br24 form-control custom-title-code-bold">
-                        <i class="fa fa-info-circle icon-clickable" id="GoAboard-To" title="Popover Header" popover-placement="bottom-left"
+                        <i class="fa fa-info-circle " id="GoAboard-To" title="Popover Header" popover-placement="bottom-left"
+                            ng-click="handerClickIconChild9('goaboard','To')"
                            uib-popover="Đến ngày: {{selectedGoAboard.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;"
                                name="selectedGoAboardTo" ng-model="selectedGoAboard.To"
@@ -44,14 +48,15 @@
         </div>
         <div class="form-group row">
             <div class="col-md-3 pr-0">
-                <i class="fa fa-pencil-square-o" id="contact" ng-click="openPopover('contact');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                <i class="fa fa-pencil-square-o" id="contact" ng-click="openPopover9('contact');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
                 <label class="displayInfo control-label require custom-title-code-bold">
                     Nội dung đi
                 </label>
             </div>
             <div class="col-md-9">
                 <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
-                    <i class="fa fa-info-circle icon-clickable" id="contact" title="Popover Header" popover-placement="bottom-left"
+                    <i class="fa fa-info-circle " id="contact" title="Popover Header" popover-placement="bottom-left"
+                       ng-click="handerClickIconChild9('goaboard','contact')"
                        uib-popover="Nội dung đi: {{selectedGoAboard.Contact}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;"
                            name="selectedGoAboardContact" ng-model="selectedGoAboard.Contact"
@@ -63,14 +68,15 @@
         </div>
         <div class="form-group row">
             <div class="col-md-3 pr-0">
-                <i class="fa fa-pencil-square-o" id="WhichCountry" ng-click="openPopover('WhichCountry');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                <i class="fa fa-pencil-square-o" id="WhichCountry" ng-click="openPopover9('WhichCountry');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
                 <label class="displayInfo control-label require custom-title-code-bold">
                     Nước nào
                 </label>
             </div>
             <div class="col-md-9">
                 <div class="br24 form-control custom-title-code-bold " style="white-space:nowrap">
-                    <i class="fa fa-info-circle icon-clickable" id="WhichCountry" title="Popover Header" popover-placement="bottom-left"
+                    <i class="fa fa-info-circle" id="WhichCountry" title="Popover Header" popover-placement="bottom-left"
+                            ng-click="handerClickIconChild9('goaboard','WhichCountry')"
                        uib-popover="{{selectedGoAboard.Country}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;"
                            name="selectedGoAboardCountry" ng-model="selectedGoAboard.Country" ng-change="filterCountry()"
@@ -91,7 +97,7 @@
 
                 <i class="fa fa-plus"></i>
                 <span>Thêm</span>
-            </button> <button class="btn m-1" ng-click="deleteSelectToGoAboard()">
+            </button> <button class="btn m-1" ng-click="deleteSelectToGoAboard()" ng-class="{'selected': x.selected}" id="{{x.Id}}">
                 <i class="fa-solid fa-rotate-right"></i>
                 <span>Refresh</span>
             </button>

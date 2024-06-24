@@ -39,17 +39,17 @@
                             ngày
                         </label>
                     </div>
-                    <div class="col-md-6 pr-0 pl-0" >
-                        <div class="br24 form-control custom-title-code-bold" >
+                    <div class="col-md-6 pr-0 pl-0">
+                        <div class="br24 form-control custom-title-code-bold">
                             <i class="fa fa-info-circle icon-clickable" id="PersonHistory-From" title="Popover Header"
                                popover-placement="bottom-left"
-                               <!--ng-click="handerClickIconChild1('history','startDate')"-->
                                uib-popover="Từ ngày: {{selectedPersonHistory.Begin}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                popover-trigger="outsideClick"></i>
 
                             <input class="displayInfo" style="border: #FFFF;" ng-model="selectedPersonHistory.Begin" type="text" name="selectedPersonHistoryBegin"
-                                   placeholder="Từ ngày" ng-change="changeHistory()" monthOrDate="true" validateDateNow="true"/>
+                                   placeholder="Từ ngày" ng-change="changeHistory()" monthOrDate="true" validateDateNow="true" />
                         </div>
+                        <!--ng-click="handerClickIconChild1('history','startDate')"-->
                     </div>
                 </div>
                 <div class="col-md-6 " >
