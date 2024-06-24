@@ -6107,7 +6107,7 @@ return;
     $scope.selectTrainingCertificatedPass = function (x) {
         $scope.selectedTrainingCertificatedPass = x;
         $scope.PassedTrainingClasses.forEach(function (PassedTrainingClasses) {
-            Relationship.selected = false;
+            PassedTrainingClasses.selected = false;
         });
 
         // Set selected family
