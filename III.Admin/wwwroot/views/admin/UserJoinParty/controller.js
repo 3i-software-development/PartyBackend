@@ -3961,6 +3961,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
+        $scope.PersonalHistory.forEach(function (PersonalHistory) {
+            PersonalHistory.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedPersonHistory = x;
+        $scope.selectedPersonHistory.selected = true;
         for (var i = 0; i < $scope.PersonalHistory.length; i++) {
             $scope.PersonalHistory[i].selected = false;
         }
@@ -6007,12 +6014,27 @@ return;
 
     $scope.selectWarningDisciplined = function (x) {
         $scope.selectedWarningDisciplined = x;
+        $scope.Disciplined.forEach(function (WarningDisciplined) {
+            WarningDisciplined.selected = false;
+        });
+
+        $scope.selectedWarningDisciplined = x;
+        $scope.selectedWarningDisciplined.selected = true;
+        
     };
     $scope.selectHistorySpecialist = function (x) {
         $scope.selectedHistorySpecialist = x;
     };
     $scope.selectWorkingTracking = function (x) {
         $scope.selectedWorkingTracking = x;
+        $scope.BusinessNDuty.forEach(function (BusinessNDuty) {
+            BusinessNDuty.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedWorkingTracking = x;
+        $scope.selectedWorkingTracking.selected = true;
+
     };
     $scope.selectTrainingCertificatedPass = function (x) {
         $scope.selectedTrainingCertificatedPass = x;

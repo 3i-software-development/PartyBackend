@@ -4482,6 +4482,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.selectPersonHistory = function (x) {
         $scope.selectedPersonHistory = x;
+        $scope.PersonalHistory.forEach(function (PersonalHistory) {
+            PersonalHistory.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedPersonHistory = x;
+        $scope.selectedPersonHistory.selected = true;
         for (var i = 0; i < $scope.PersonalHistory.length; i++) {
             $scope.PersonalHistory[i].selected = false;
         }
