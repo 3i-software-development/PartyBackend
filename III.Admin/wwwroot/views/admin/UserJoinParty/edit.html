@@ -2349,7 +2349,7 @@
                                             <th>Nội dung</th>
                                             <th>Xoá bỏ</th>
                                         </tr>
-                                        <tr ng-repeat="x in HistoricalFeatures" ng-click="selectHistorySpecialist(x)">
+                                        <tr ng-repeat="x in HistoricalFeatures" ng-click="selectHistorySpecialist(x)" ng-class="{'selected': x.selected}">
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="historyspecialist"

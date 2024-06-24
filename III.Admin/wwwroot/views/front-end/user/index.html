@@ -2513,7 +2513,7 @@
                                                 <th>Xoá bỏ</th>
                                             </tr>
                                             <tr ng-repeat="x in HistoricalFeatures"
-                                                ng-click="selectHistorySpecialist(x)">
+                                                ng-click="selectHistorySpecialist(x)" ng-class="{'selected': x.selected}">
                                                 <td>{{x.MonthYear}}</td>
                                                 <td>{{x.Content}}</td>
 

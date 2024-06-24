@@ -2405,7 +2405,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         let pp = null;
         switch (tabId) {
             case "historyspecialist":
-                console.log(`${tabId}_${$scope.selectedHistorySpecialist.Id}`);
+                
                 pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedHistorySpecialist.Id}`);
                 break;
             default:
@@ -4512,6 +4512,15 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     };
     $scope.selectHistorySpecialist = function (x) {
         $scope.selectedHistorySpecialist = x;
+        $scope.HistoricalFeatures.forEach(function (HistoricalFeature) {
+            console.log("gg");
+
+            HistoricalFeature.selected = false;
+        });
+
+        // Set selected family
+        $scope.selectedHistorySpecialist = x;
+        $scope.selectedHistorySpecialist.selected = true;
     };
     $scope.selectWorkingTracking = function (x) {
         $scope.selectedWorkingTracking = x;
@@ -5457,7 +5466,7 @@ app.directive('iconChildTab', function () {
                     scope.jsonGuide = [];
                     console.warn('scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
                 }
-                console.log(`${scope.childTab}_${scope.rowId}`);
+                
                 const pp = scope.jsonGuide.find(x => x.id === `${scope.childTab}_${scope.rowId}`);
                 const hasComment = pp?.idFamily ? pp?.idFamily[scope.controlId] : false;
 

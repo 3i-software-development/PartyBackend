@@ -3434,7 +3434,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         let pp = null;
         switch (tabId) {
             case "historyspecialist":
-               
+                console.log(`${tabId}_${$scope.selectedHistorySpecialist.Id}`);
                 pp = $scope.jsonGuide.find(x => x.id === `${tabId}_${$scope.selectedHistorySpecialist.Id}`);
                 break;
             default:
@@ -6059,16 +6059,14 @@ return;
         $scope.selectedWarningDisciplined = x;
     };
     $scope.selectHistorySpecialist = function (x) {
-
-        $scope.HistoricalFeatures.forEach(function (HistoricalFeatures) {
-            
-            HistoricalFeatures.selected = false;
+        $scope.selectedHistorySpecialist = x;
+        $scope.HistoricalFeatures.forEach(function (Relationship) {
+            Relationship.selected = false;
         });
 
         // Set selected family
         $scope.selectedHistorySpecialist = x;
         $scope.selectedHistorySpecialist.selected = true;
-
     };
     $scope.selectWorkingTracking = function (x) {
         $scope.selectedWorkingTracking = x;
