@@ -1,21 +1,12 @@
-﻿using Amazon.Runtime;
-using Aspose.Pdf;
-using DataConnection;
-using ESEIM.Models;
-using ESEIM.Utils;
+﻿using ESEIM.Models;
 using III.Admin.Controllers;
 using III.Domain.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.TeamFoundation.Common;
-using OpenXmlPowerTools;
 using Syncfusion.DocIO.DLS;
+using Syncfusion.EJ2.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Syncfusion.DocIO;
-using System.IO;
-using System.Drawing;
-using static III.Admin.Controllers.MobileLoginController;
 
 namespace III.Admin.Utils
 {
@@ -58,7 +49,7 @@ namespace III.Admin.Utils
                     case ("Số LL:"):
                         text = p.AppendText(Pap.ResumeNumber ?? "");
                         break;
-                    // Thêm các trường hợp khác tùy thuộc vào yêu cầu của bạn
+                        // Thêm các trường hợp khác tùy thuộc vào yêu cầu của bạn
                 }
             }
             WTableCell cell2 = table[1, 0] as WTableCell;
@@ -179,31 +170,31 @@ namespace III.Admin.Utils
                     case ("Ngày và nơi vào Đoàn TNCSHCM:"):
                         text = p.AppendText(Pap.CreatedPlace ?? "");
                         break;
-                    /*case ("Ngày và nơi vào Đoàn TNCSHCM:"):
-                        if (Iop != null)
-                        {
-                            text=p.AppendText(Iop.PlaceTimeJoinUnion);
-                        }
-                        break;
-                    case ("Ngày và nơi vào Đảng CSVN lần thứ nhất (nếu có):"):
-                        if (Iop != null)
-                        {
-                            text=p.AppendText(Iop.PlaceTimeJoinParty);
-                        }
-                        break;
-                    case ("Ngày và nơi công nhận chính thức lần thứ nhất (nếu có):"):
-                        if (Iop != null)
-                        {
-                            text=p.AppendText(Iop.PlaceTimeRecognize);
-                        }
-                        break;
+                        /*case ("Ngày và nơi vào Đoàn TNCSHCM:"):
+                            if (Iop != null)
+                            {
+                                text=p.AppendText(Iop.PlaceTimeJoinUnion);
+                            }
+                            break;
+                        case ("Ngày và nơi vào Đảng CSVN lần thứ nhất (nếu có):"):
+                            if (Iop != null)
+                            {
+                                text=p.AppendText(Iop.PlaceTimeJoinParty);
+                            }
+                            break;
+                        case ("Ngày và nơi công nhận chính thức lần thứ nhất (nếu có):"):
+                            if (Iop != null)
+                            {
+                                text=p.AppendText(Iop.PlaceTimeRecognize);
+                            }
+                            break;
 
-                    case ("Người giới thiệu vào Đảng lần thứ nhất (nếu có):"):
-                        if (Iop != null)
-                        {
-                            text=p.AppendText(Iop.PersonIntroduced);
-                        }
-                        break;*/
+                        case ("Người giới thiệu vào Đảng lần thứ nhất (nếu có):"):
+                            if (Iop != null)
+                            {
+                                text=p.AppendText(Iop.PersonIntroduced);
+                            }
+                            break;*/
                 }
             }
         }
@@ -2034,9 +2025,9 @@ namespace III.Admin.Utils
                     case "23) Khen thưởng : (Huân chương, huy chương, bằng khen)……………………………………\v…………………………………………………………………………………………………………\v…………………………………………………………………………………………………………":
                         BindingAward(p, jsonParty.Awards);
                         break;
-                  /*  case "26) Kỷ luật (Đảng, chính quyền, pháp luật): ……………………………………………………\v………………………………………………………………………………………………………":
-                        BindingWarning(p, jsonParty.WarningDisciplineds);
-                        break;*/
+                    /*  case "26) Kỷ luật (Đảng, chính quyền, pháp luật): ……………………………………………………\v………………………………………………………………………………………………………":
+                          BindingWarning(p, jsonParty.WarningDisciplineds);
+                          break;*/
                     case "a) Đã đi nước ngoài (nước nào, lý do, thời gian ra nước ngoài...): …………………………\v………………………………………………………………………………………………………\v………………………………………………………………………………………………………":
                         BindingGoAboards(p, jsonParty.GoAboards);
                         break;
@@ -2079,7 +2070,7 @@ namespace III.Admin.Utils
             table = section.Tables[3] as WTable;
             BindingFamily(table, jsonParty.Families);*/
         }
-        
+
         //Được kết nạp lại vào Đảng
         private static void BindingPersonalHistories2(
             IWParagraph p,
@@ -2206,7 +2197,7 @@ namespace III.Admin.Utils
             {
 
                 // Format {item.Relation}: {item.Name} as bold
-                 IWTextRange relationRange = p.AppendText($"\n- {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})");
+                IWTextRange relationRange = p.AppendText($"\n- {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})");
                 SetStyle2(relationRange);
                 text +=
                     $"\n- {item.Reason} (Thời gian: {item.MonthYear}, Cấp quyết định: {item.GrantOfDecision})";
@@ -2259,18 +2250,19 @@ namespace III.Admin.Utils
             string text = "";
             foreach (var item in families)
             {
-                // Create a new text body part for each family member
+                //Create a new text body part for each family member
                 IWTextRange textRange = p.AppendText("\n- ");
 
-                // Format {item.Relation}: {item.Name} as bold
+                //Format {item.Relation}: {item.Name} as bold
                 IWTextRange relationRange = p.AppendText($"{item.Relation}: ");
                 relationRange.CharacterFormat.FontSize = 14;
 
 
-                IWTextRange nameRange = p.AppendText($"{item.Name}; ");
+                WTextRange nameRange = p.AppendText($"{item.Name}; ") as WTextRange;
                 nameRange.CharacterFormat.FontSize = 14;
+                nameRange.CharacterFormat.Bold = true;
 
-                // Format the rest of the text as normal
+                //Format the rest of the text as normal
                 /*p.AppendText($"Năm sinh: {item.BirthYear}, Quê quán: {item.HomeTownVillage}, {item.HomeTownValue}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. {item.WorkingProgress}") ;*/
                 IWTextRange partyMemberRange2 = p.AppendText($"Năm sinh: {item.BirthYear}, Quê quán: {item.HomeTownVillage}, {item.HomeTownValue}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. {item.WorkingProgress}.");
                 SetStyle2(partyMemberRange2);
@@ -2289,11 +2281,10 @@ namespace III.Admin.Utils
             }
 
             // Assuming that "- Bố đẻ" is a placeholder text in the document
-            if (p.Text.Contains("- hoàn cảnh gđ"))
-            {
-                p.Text = p.Text.Replace("- hoàn cảnh gđ", ""); // Clear the placeholder text
-            }
-
+            //if (p.Text.Contains("- hoàn cảnh gđ"))
+            //{
+            //    p.Text = p.Text.Replace("- hoàn cảnh gđ", ""); // Clear the placeholder text
+            //}
 
 
             /* if (text != "")
