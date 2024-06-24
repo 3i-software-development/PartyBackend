@@ -2181,17 +2181,17 @@
                                             <i class="fa fa-info-circle icon-clickable" id="content" title="Popover Header"
                                                popover-placement="bottom-left"
                                                ng-click="handerClickIconChild5('WorkingTracking','Work')"
-                                               uib-popover="{{selectedWorkingTracking.content}}.{{matchedItems[0].guide}}"
+                                               uib-popover="{{selectedWorkingTracking.Work}}.{{matchedItems[0].guide}}"
                                                popover-trigger="outsideClick"
                                                ng-if="selectedWorkingTracking && selectedWorkingTracking.Id">
                                             </i>
                                             <i class="fa fa-user" id="relationship" ng-click="warningPopover3()"
                                                ng-if="!selectedWorkingTracking || !selectedWorkingTracking.Id"></i>
                                             <input class="displayInfo" style="border: #FFFF;" name="selectedWorkingTrackingWork"
-                                                   ng-model="selectedWorkingTracking.content" type="text"
+                                                   ng-model="selectedWorkingTracking.Work" type="text"
                                                    placeholder="Làm việc gì, ở đâu" />
                                             <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
-                                               ng-model="selectedWorkingTracking.content"></i>
+                                               ng-model="selectedWorkingTracking.Work"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -2484,7 +2484,7 @@
                                             <th>Cấp quyết định</th>
                                             <th>Xoá bỏ</th>
                                         </tr>
-                                        <tr ng-repeat="x in Laudatory" ng-click="selectLaudatory(x)">
+                                        <tr ng-repeat="x in Laudatory" ng-click="selectLaudatory(x)" ng-class="{'selected': x.selected}">
                                             <!--<td>{{x.MonthYear}}</td>-->
                                             <td tr-child-tab 
                                                 row-id="x.Id" 

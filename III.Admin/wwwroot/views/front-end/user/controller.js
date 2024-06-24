@@ -3735,6 +3735,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.deleteSelectaddToDisciplined = function () {
         $scope.selectedWarningDisciplined = {};
+        for (var i = 0; i < $scope.Disciplined.length; i++) {
+            $scope.Disciplined[i].selected = false;
+        }
+
         $scope.resetValidateFamily()
     }
 
@@ -3795,6 +3799,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.deleteSelectToBusinessNDuty = function () {
         $scope.selectedWorkingTracking = {};
+        for (var i = 0; i < $scope.BusinessNDuty.length; i++) {
+            $scope.BusinessNDuty[i].selected = false;
+        }
         $scope.resetValidateFamily()
 
     }
@@ -3850,7 +3857,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     $scope.deleteSelectToHistorySpecialist = function () {
         $scope.selectedHistorySpecialist = {};
         $scope.resetValidateFamily()
-
+        for (var i = 0; i < $scope.HistoricalFeatures.length; i++) {
+            $scope.HistoricalFeatures[i].selected = false;
+        }
     }
 
     $scope.submitHistorySpecialist = function () {
@@ -3913,6 +3922,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.deleteSelectToTrainingCertificatedPass = function () {
         $scope.selectedTrainingCertificatedPass = {};
+        for (var i = 0; i < $scope.PassedTrainingClasses.length; i++) {
+            $scope.PassedTrainingClasses[i].selected = false;
+        }
+
+
         $scope.resetValidateFamily()
 
     }
@@ -3973,6 +3987,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.deleteSelectToAward = function () {
         $scope.selectedLaudatory = {}
+        for (var i = 0; i < $scope.Laudatory.length; i++) {
+            $scope.Laudatory[i].selected = false;
+        }
+
+
         $scope.resetValidateFamily()
 
     }
@@ -4045,6 +4064,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.deleteSelectToGoAboard = function () {
         $scope.selectedGoAboard = {};
+        for (var i = 0; i < $scope.GoAboard.length; i++) {
+            $scope.GoAboard[i].selected = false;
+        }
+
         $scope.resetValidateFamily()
     }
 
@@ -4535,6 +4558,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     };
     $scope.selectWarningDisciplined = function (x) {
         $scope.selectedWarningDisciplined = x;
+        $scope.Disciplined.forEach(function (Disciplined) {
+            Disciplined.selected = false;
+        });
+
+        $scope.selectedWarningDisciplined = x;
+        $scope.selectedWarningDisciplined.selected = true;
     };
     $scope.selectHistorySpecialist = function (x) {
         $scope.selectedHistorySpecialist = x;
@@ -4557,9 +4586,21 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     };
     $scope.selectTrainingCertificatedPass = function (x) {
         $scope.selectedTrainingCertificatedPass = x;
+        $scope.PassedTrainingClasses.forEach(function (PassedTrainingClasses) {
+            PassedTrainingClasses.selected = false;
+        });
+
+        $scope.selectedTrainingCertificatedPass.selected = true; 
+
     };
     $scope.selectLaudatory = function (x) {
         $scope.selectedLaudatory = x;
+        $scope.Laudatory.forEach(function (Laudatory) {
+            Laudatory.selected = false;
+        });
+
+        $scope.selectedLaudatory = x;
+        $scope.selectedLaudatory.selected = true;
     };
     $scope.selectGoAboard = function (x) {
         $scope.selectedGoAboard = x;
