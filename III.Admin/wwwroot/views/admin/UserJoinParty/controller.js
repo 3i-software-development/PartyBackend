@@ -2968,7 +2968,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     $scope.submit = function () {
         if ($scope.pp.idFamily) {
             $scope.pp.idFamily[$scope.popoveridFamily] = $scope.pp.comment;
-            let pp = $scope.jsonGuide.find(x => x.id === `family_${$scope.selectedFamily.Id}`);
+            let pp = $scope.jsonGuide.find(x => x.id === $scope.pp.id);
             if (pp) {
                 pp.idFamily = $scope.pp.idFamily;
                 pp.comment = $scope.pp.comment;
