@@ -1888,7 +1888,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
+                                        <div class="form-group row" ng-if="!selectedFamily.disableAddress">
                                             <!--ng-if="!selectedFamily.disableAddress"-->
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-home" id="residence" ng-click="openPopover3('residence');"
@@ -2038,9 +2038,14 @@
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
                                                                     control-id="homeTown">
-                                                                    <div ng-if="(x.HomeTownVillage || x.HomeTownValue)"><span>- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>
-                                                                    <div ng-if="(!x.die)">
-                                                                        <span>- Nơi cư trú:{{ x.Residence}}</span>
+                                                                    <!--<div><span  ng-if="x.HomeTownVillage">- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>-->
+                                                                    <div>
+                                                                        <span>
+                                                                            {{ (x.HomeTownVillage || x.HomeTownValue) ? '- Quê quán: ' + (x.HomeTownVillage || '') + ', ' + (x.HomeTownValue || '') : '' }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div >
+                                                                        <span>{{ !x.die ? '- Nơi cư trú: ' + (x.Residence || '') : '' }}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td tr-child-tab

@@ -1415,8 +1415,7 @@
                                                     <div class="col-md-2">
                                                         <input type="checkbox" ng-model="selectedFamily.disableAddress"
                                                                ng-change="changedisable()"><span style="font-weight: bold; text-wrap: nowrap;">
-                                                            Đã
-                                                            mất
+                                                            Đã mất
                                                         </span>
                                                     </div>
                                                     <div style="display: block; width: 100%;" class="col-md-10 pr-0"
@@ -2393,22 +2392,26 @@
                             </form>
                         </div>
                         <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                            <div class="d-flex"
-                                 ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
-                                <i class="fa fa-caret-right"></i>&nbsp;
-                                <!--<i ng-show="!showWorkingProcess3" class="fa fa-caret-right"></i>-->
-                                <label class="fs-18">Đặc điểm lịch sử</label>
-                                <div class="mt-checkbox-list pt5" style="margin-left: 15px">
-                                    <label class="mt-checkbox"
-                                           style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                        <input type="checkbox" ng-model="showWorkingProcess3"
-                                               ng-checked="showWorkingProcess3">
-                                        <span></span>
-                                    </label>
+                            <div class="d-flex" style="gap: 5px"
+                                 ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}" >
+                                <i ng-show="showWorkingProcess3" class="fa fa-caret-down"></i>
+                                <i ng-show="!showWorkingProcess3" class="fa fa-caret-right"></i>
+                                <label ng-click="showWorkingProcess3=!showWorkingProcess3" class="fs-18">Đặc điểm lịch sử</label>
+                                <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-model="WorkingProcess3"
+                                               ng-checked="WorkingProcess3"><span style="font-size: x-small;">Có</span>
+                                    </div>
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-click="WorkingProcess3 = !WorkingProcess3"
+                                               ng-checked="!WorkingProcess3"><span style="font-size: x-small;">Không</span>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div ng-show="showWorkingProcess3" ng-click="submitHistorySpecialist()"
+                            <div ng-show="showWorkingProcess3 && WorkingProcess3" ng-click="submitHistorySpecialist()"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
                                 <i class="fas fa-save" style="font-size: 26px"></i><span style="font-size: x-small;">
@@ -2418,7 +2421,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess3">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess3 && WorkingProcess3">
                             <form ng-validate="validationOptionsHistorySpecialist" name="forms.HistorySpecialist">
 
                                 <div class="form-group row">

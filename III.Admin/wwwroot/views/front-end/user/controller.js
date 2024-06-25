@@ -4185,7 +4185,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         obj.BirthYear = parts[1];
                     }
                     if (obj.Relation.toLowerCase().includes("con") || obj.Relation.toLowerCase().includes("anh") || obj.Relation.toLowerCase().includes("chị") || obj.Relation.toLowerCase().includes("em")) {
-                        obj.HomeTownValue;
+                        obj.HomeTownValue = "";
                         obj.HomeTownVillage = "";
                     }
                     const partMember = obj.PartyMember.split('_');
@@ -4362,6 +4362,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         });
 
     }
+    $scope.WorkingProcess3 = false;
     $scope.getHistorySpecialistByProfileCode = function () {
         var requestData = { id: $scope.id };
         $.ajax({
@@ -4372,6 +4373,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
             success: function (response) {
                 $scope.HistoricalFeatures = response;
+                if ($scope.HistoricalFeatures.length > 0) {
+                    $scope.WorkingProcess3 = true;
+                }
                 //$scope.$apply();
                 console.log($scope.HistoricalFeatures);
             },
