@@ -1542,7 +1542,7 @@
                                                              style="white-space:nowrap">
                                                             <i class="fa fa-info-circle" id="dateOfBirdRelation"
                                                                title="Popover Header" popover-placement="bottom-left"
-                                                               ng-click="handerClickIconChild('family','BirthDie')"
+                                                               ng-click="handerClickIconChild('family','dateOfBirdRelation')"
                                                                uib-popover="Năm mất của bạn là: {{selectedFamily.BirthDie}}. {{matchedItems[0].guide}}"
                                                                popover-trigger="outsideClick"></i>
 
@@ -1705,11 +1705,12 @@
                                             <div class="col-md-8 d-md-flex" style=" gap: 6px">
                                                 <div class="col-md-6 p-0">
                                                     <div class="br24  mb-1   custom-title-code-bold form-control ">
+                                                        <!--WorkingProgressStart-->
                                                         <div class="br24 custom-title-code-bold"
                                                              style="white-space: nowrap; padding-right: 35px;">
                                                             <i class="fa fa-info-circle " id="residence"
                                                                title="Popover Header" popover-placement="bottom-left"
-                                                               ng-click="handerClickIconChild('family','WorkingProgressStart')"
+                                                               ng-click="handerClickIconChild('family','working')"
                                                                uib-popover="Năm bắt đầu công tác: {{WorkingProgressStart}}. {{matchedItems[0].guide}}. VD: 2002. Lưu ý: {{matchedItemss[0].comment}}"
                                                                popover-trigger="outsideClick"></i>
                                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode"
@@ -1724,11 +1725,12 @@
                                                 </div>
                                                 <div class="col-md-5 p-0">
                                                     <div class=" br24  mb-1  custom-title-code-bold form-control ">
+                                                        <!--WorkingProgressEnd-->
                                                         <div class="br24  custom-title-code-bold"
                                                              style="white-space: nowrap; padding-right: 35px;">
                                                             <i class="fa fa-info-circle " id="residence"
                                                                title="Popover Header" popover-placement="bottom-left"
-                                                               ng-click="handerClickIconChild('family','WorkingProgressEnd')"
+                                                               ng-click="handerClickIconChild('family','working')"
                                                                uib-popover="Năm kết thúc công tác: {{WorkingProgressEnd}}. {{matchedItems[0].guide}}. VD: 2010. Lưu ý: {{matchedItemss[0].comment}}"
                                                                popover-trigger="outsideClick"></i>
                                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode" regexWorkingProgressEnd="true"
@@ -1741,7 +1743,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-md-1  custom-title-code-bold "
-                                                     style=" display: flex;align-items: center; flex-direction: row-reverse;">
+                                                     style="display: flex; align-items: center; justify-content: center;">
+                                                    <!--flex-direction: row-reverse;-->
                                                     <div ng-click="saveWorkingProgressYear()">
                                                         <i class="fas fa-plus fs-1" style="font-size: 25px;"></i>
                                                     </div>
@@ -1956,7 +1959,7 @@
                                             </button>
                                             <button class="btn m-1" ng-click="resetFormFamily()">
                                                 <i class="fa-solid fa-rotate-right"></i>
-                                                <span>Refresh</span>
+                                                <span>Làm mới</span>
                                             </button>
                                         </div>
                                     </div>
@@ -2055,7 +2058,7 @@
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
-                                                                    control-id="politicalAttitude">
+                                                                    control-id="working">
                                                                     {{x.PoliticalAttitude}}
                                                                 </td>
                                                                 <td tr-child-tab
