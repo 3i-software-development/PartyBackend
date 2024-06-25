@@ -498,7 +498,7 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                     required: true,
                 },
                 selectedFamilyBirthPlace: {
-                    required: true,
+                    required: false,
                 },
                 selectedFamilyBirthDie: {
                     required: true,
@@ -2342,7 +2342,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             }
 
 
-            if ($scope.selectedFamily.Relation.toLowerCase().includes("con")) {
+            if ($scope.selectedFamily.Relation.toLowerCase().includes("con") || $scope.selectedFamily.Relation.toLowerCase().includes("anh") || $scope.selectedFamily.Relation.toLowerCase().includes("chị") || $scope.selectedFamily.Relation.toLowerCase().includes("em")) {
                 $scope.queQuan = false;
             } else {
                 $scope.queQuan = true;
@@ -5336,6 +5336,10 @@ return;
                         obj.BirthYear = parts[1];
                     }
 
+                    if (obj.Relation.toLowerCase().includes("con") || obj.Relation.toLowerCase().includes("anh") || obj.Relation.toLowerCase().includes("chị") || obj.Relation.toLowerCase().includes("em")) {
+                        obj.HomeTownValue = "";
+                        obj.HomeTownVillage = "";
+                    }
                     //if (obj.ClassComposition) {
                     //    const partsClassComposition = obj.ClassComposition.split('_');
                     //    if (partsClassComposition.length === 2) {
@@ -5622,7 +5626,7 @@ return;
                     }
                 }
             }
-            $scope.biologicalParents = ["Bố đẻ", "Mẹ đẻ", "Bố ruột", "Mẹ ruột", "Bố", "Mẹ"];
+         /*   $scope.biologicalParents = ["Bố đẻ", "Mẹ đẻ", "Bố ruột", "Mẹ ruột", "Bố", "Mẹ"];
             if ($scope.biologicalParents.includes($scope.selectedFamily.Relation)) {
                 if ($scope.selectedFamily.BirthPlace == null || $scope.selectedFamily.BirthPlace == undefined || $scope.selectedFamily.BirthPlace === '') {
                     $scope.err = true;
@@ -5635,7 +5639,7 @@ return;
                     return
                 }
 
-            }
+            }*/
 
             console.log($scope.selectedFamily.disableAddress);
 
@@ -5679,6 +5683,10 @@ return;
                 return
             }
             var model = {}
+            if ($scope.selectedFamily.Relation.toLowerCase().includes("con") || $scope.selectedFamily.Relation.toLowerCase().includes("anh") || $scope.selectedFamily.Relation.toLowerCase().includes("chị") || $scope.selectedFamily.Relation.toLowerCase().includes("em")) {
+                $scope.selectedFamily.HomeTownValue = "";
+                $scope.selectedFamily.HomeTownVillage = "";
+            } 
             model.Relation = $scope.selectedFamily.Relation;
             model.Residence = $scope.selectedFamily.Residence;
             model.PartyMember = $scope.selectedFamily.PartyMember;
@@ -6810,6 +6818,7 @@ return;
                     if (pE8[y][i].startsWith("- Lý do mất:")) {
                         $scope.Relationship[RelationshipIndex].Reason = pE8[y][i].slice(('- Lý do mất:').length).trim()
                     }
+
                     if (pE8[y][i].startsWith("- Quê quán:")) {
                         $scope.Relationship[RelationshipIndex].HomeTown = pE8[y][i].slice(('- Quê quán:').length).trim()
                         if ($scope.Relationship[RelationshipIndex].HomeTown = pE8[y][i].slice(('- Quê quán:').length).trim()) {

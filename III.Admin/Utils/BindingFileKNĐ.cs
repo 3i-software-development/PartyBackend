@@ -2301,8 +2301,15 @@ namespace III.Admin.Utils
                 WTextRange nameRange = p.AppendText($"{item.Name}; ") as WTextRange;
                 nameRange.CharacterFormat.FontSize = 14;
                 nameRange.CharacterFormat.Bold = true;
-                IWTextRange partyMemberRange2 = p.AppendText($"Năm sinh: {item.BirthYear}, Quê quán: {item.HomeTownVillage}, {item.HomeTownValue}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. {item.WorkingProgress}.");
-                SetStyle2(partyMemberRange2);
+                if (item.Relation.ToLower().Contains("con") || item.Relation.ToLower().Contains("anh") || item.Relation.ToLower().Contains("chị") || item.Relation.ToLower().Contains("em")) {
+                    IWTextRange partyMemberRange2 = p.AppendText($"Năm sinh: {item.BirthYear}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. \n{item.WorkingProgress}.");
+                    SetStyle2(partyMemberRange2);
+                }
+                else
+                {
+                    IWTextRange partyMemberRange2 = p.AppendText($"Năm sinh: {item.BirthYear}, Quê quán: {item.HomeTownVillage}, {item.HomeTownValue}, Nơi ở hiện nay: {item.Residence}. Nghề nghiệp: {item.Job}. \n{item.WorkingProgress}.");
+                    SetStyle2(partyMemberRange2);
+                }
                 if (item.PartyMember != null)
                 {
                     var partMember = item.PartyMember.Split("_");

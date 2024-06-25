@@ -404,7 +404,7 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
                 required: true,
             },
             selectedFamilyBirthPlace: {
-                required: true,
+                required: false,
             },
             selectedFamilyBirthDie: {
                 required: true,
@@ -1260,10 +1260,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             }
 
 
-            if ($scope.selectedFamily.Relation.toLowerCase().includes("con")) {
-                $scope.changedisHistoryCC = false;
+            if ($scope.selectedFamily.Relation.toLowerCase().includes("con") || $scope.selectedFamily.Relation.toLowerCase().includes("anh") || $scope.selectedFamily.Relation.toLowerCase().includes("chị") || $scope.selectedFamily.Relation.toLowerCase().includes("em")) {
+                $scope.queQuan = false;
             } else {
-                $scope.changedisHistoryCC = true;
+                $scope.queQuan = true;
             }
         }
         $scope.changeBirthYear();
@@ -2760,13 +2760,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     }
                 }
             }
-            $scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ"];
+            /*$scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ"];
             if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
-                if ($scope.selectedFamily.BirthPlace == null || $scope.selectedFamily.BirthPlace == undefined || $scope.selectedFamily.BirthPlace === '') {
+               *//* if ($scope.selectedFamily.BirthPlace == null || $scope.selectedFamily.BirthPlace == undefined || $scope.selectedFamily.BirthPlace === '') {
                     $scope.err = true;
                     App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
                     return
-                }
+                }*//*
                 if ($scope.selectedFamily.class == null || $scope.selectedFamily.class == undefined || $scope.selectedFamily.class === '') {
                     $scope.err = true;
                     App.toastrError("Bạn cần nhập thông tin thành phần giao cấp vào trường hợp này")
@@ -2774,16 +2774,16 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 }
 
             }
+*/
 
-
-            $scope.biologicalParents1 = ["vợ", "chồng"];
+            /*$scope.biologicalParents1 = ["vợ", "chồng"];
             if ($scope.biologicalParents1.includes($scope.selectedFamily.Relation.toLowerCase())) {
                 if ($scope.selectedFamily.BirthPlace == null || $scope.selectedFamily.BirthPlace == undefined || $scope.selectedFamily.BirthPlace === '') {
                     $scope.err = true;
                     App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
                     return
                 }
-            }
+            }*/
             // if ($scope.selectedFamily.HomeTown == null || $scope.selectedFamily.HomeTown == undefined || $scope.selectedFamily.HomeTown === '') {
             //     let part2 = $scope.selectedFamily.HomeTown.split("_");
             //     if (part2[0] == '' || part2[1] == '' || part2[2] === '') {
@@ -2836,6 +2836,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 return
             }
             var model = {}
+            if ($scope.selectedFamily.Relation.toLowerCase().includes("con") || $scope.selectedFamily.Relation.toLowerCase().includes("anh") || $scope.selectedFamily.Relation.toLowerCase().includes("chị") || $scope.selectedFamily.Relation.toLowerCase().includes("em")) {
+                $scope.selectedFamily.HomeTownValue;
+                $scope.selectedFamily.HomeTownVillage = "";
+            } 
             model.Relation = $scope.selectedFamily.Relation;
             model.Residence = $scope.selectedFamily.Residence;
             model.PartyMember = $scope.selectedFamily.PartyMember;
@@ -4180,7 +4184,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         obj.die = parts[0];
                         obj.BirthYear = parts[1];
                     }
-
+                    if (obj.Relation.toLowerCase().includes("con") || obj.Relation.toLowerCase().includes("anh") || obj.Relation.toLowerCase().includes("chị") || obj.Relation.toLowerCase().includes("em")) {
+                        obj.HomeTownValue;
+                        obj.HomeTownVillage = "";
+                    }
                     const partMember = obj.PartyMember.split('_');
                     partMember[0]
                     partMember[1]

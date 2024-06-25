@@ -1371,7 +1371,7 @@
                                                    uib-popover-template="'popoverTemplate.html'"
                                                    popover-placement="right"
                                                    popover-trigger="outsideClick"></i>
-                                                <label class="displayInfo control-label custom-title-code-bold">
+                                                <label class="displayInfo require control-label custom-title-code-bold">
                                                     Họ
                                                     và tên
                                                 </label>
@@ -1725,7 +1725,7 @@
                                                    popover-trigger="outsideClick"></i>
                                                 <textarea class="br24 form-control custom-title-code-bold min-h-sm"
                                                           style="resize: block; padding-left:35px;padding-right:35px;min-height: 150px;"
-                                                          name="selectedFamilyWorkingProgress" rows="3"
+                                                          name="selectedFamilyWorkingProgress" rows="3" require
                                                           ng-model="selectedFamily.WorkingProgress" type="text"
                                                           placeholder="Quá trình công tác">
                                                 </textarea>
@@ -2027,19 +2027,13 @@
                                                     </td>
                                                     <td>
                                                         <div ng-if="(x.HomeTownVillage || x.HomeTownValue)">
-                                                            <span>
-                                                                - Quê
-                                                                quán: {{x.HomeTownVillage}},
-                                                                {{x.HomeTownValue}}
-                                                            </span>
+                                                            <span>- Quê quán: {{x.HomeTownVillage}},{{x.HomeTownValue}}</span>
                                                         </div>
-                                                        <div>
-                                                            <span>
-                                                                {{x.die == false ? "- Nơi cư trú:" +x.Residence.trim() : ""}}
-                                                            </span>
+                                                        <div ng-if="(!x.die)">
+                                                            <span>- Nơi cư trú:{{ x.Residence}}</span>
                                                         </div>
                                                     </td>
-                                                    <td>{{x.Job}}</td>
+                                                    <td >{{x.Job}}</td>
                                                     <td style="white-space: pre">{{x.WorkingProgress}}</td>
                                                     <td>{{x.PoliticalAttitude}}</td>
                                                     <td>

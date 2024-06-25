@@ -1816,7 +1816,7 @@
                                                    popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
                                                 <i class="fa fa-map-marker" id="BirthPlace" ng-click="warningPopover3()"
                                                    ng-if="!selectedFamily || !selectedFamily.Id"></i>
-                                                <label class="displayInfo control-label require  custom-title-code-bold">
+                                                <label class="displayInfo control-label  custom-title-code-bold">
                                                     Nơi sinh
                                                 </label>
                                             </div>
@@ -2039,8 +2039,8 @@
                                                                     json-guide="jsonGuide"
                                                                     control-id="homeTown">
                                                                     <div ng-if="(x.HomeTownVillage || x.HomeTownValue)"><span>- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>
-                                                                    <div>
-                                                                        <span> {{x.die == false ? "- Nơi cư trú:" + x.Residence.trim() : "" }}</span>
+                                                                    <div ng-if="(!x.die)">
+                                                                        <span>- Nơi cư trú:{{ x.Residence}}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td tr-child-tab
