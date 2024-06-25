@@ -4304,7 +4304,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         });
 
     }
-
+    $scope.WorkingProcess7= false;
     $scope.getGoAboardByProfileCode = function () {
         $.ajax({
             type: "GET",
@@ -4313,6 +4313,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             dataType: "json",
             success: function (response) {
                 $scope.GoAboard = response;
+                if ($scope.GoAboard.length > 0) {
+                    $scope.WorkingProcess7 = true;
+                }
                 //$scope.$apply();
                 console.log($scope.GoAboard);
                 setTimeout(() => $scope.$apply());
@@ -4323,6 +4326,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         });
 
     }
+    $scope.WorkingProcess4 = false;
     $scope.getAwardByProfileCode = function () {
         var requestData = { id: $scope.id };
         $.ajax({
@@ -4333,6 +4337,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
             success: function (response) {
                 $scope.Laudatory = response;
+                if ($scope.Laudatory.length > 0) {
+                    $scope.WorkingProcess4 = true;
+                }
                 //$scope.$apply();
                 console.log($scope.Laudatory);
             },
@@ -4385,7 +4392,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         });
 
     }
-
+    $scope.WorkingProcess6 = false;
     $scope.getTrainingCertificatedPassByProfileCode = function () {
         var requestData = { id: $scope.id };
         $.ajax({
@@ -4396,6 +4403,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
             success: function (response) {
                 $scope.PassedTrainingClasses = response;
+
+                if ($scope.PassedTrainingClasses.length > 0) {
+                    $scope.WorkingProcess6 = true;
+                }
+
                 //$scope.$apply();
                 console.log($scope.PassedTrainingClasses);
             },
@@ -4405,7 +4417,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         });
 
     }
-
+    $scope.WorkingProcess5 = false;
     $scope.getWarningDisciplinedByProfileCode = function () {
         var requestData = { id: $scope.id };
         $.ajax({
@@ -4416,6 +4428,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
             success: function (response) {
                 $scope.Disciplined = response;
+
+                if ($scope.Disciplined.length > 0) {
+                    $scope.WorkingProcess5 = true;
+                }
                 //$scope.$apply();
                 console.log($scope.Disciplined);
             },
@@ -4426,7 +4442,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     }
     $scope.Introducer = {};
-
+    $scope.WorkingProcess8 = false;
     $scope.getIntroducerOfPartyByProfileCode = function () {
         $.ajax({
             type: "POST",
@@ -4434,6 +4450,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             contentType: "application/json; charset=utf-8",
             success: function (response) {
                 $scope.Introducer = response;
+                if ($scope.Introducer != null) {
+                    $scope.WorkingProcess8 = true;
+                }
                 //$scope.$apply();
                 console.log($scope.Introducer);
             },

@@ -2537,15 +2537,23 @@
                         <div class="toggle-header" style="display:flex; justify-content:space-between">
                             <div class="d-flex"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
-                                <i class="fa fa-caret-right"></i>&nbsp;
-                                <label class="fs-18">Khen thưởng</label>
-                                <div class="mt-checkbox-list pt5" style="margin-left: 15px">
-                                    <label class="mt-checkbox"
-                                           style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                        <input type="checkbox" ng-model="showWorkingProcess4"
-                                               ng-checked="showWorkingProcess4">
-                                        <span></span>
-                                    </label>
+                                <i ng-show="showWorkingProcess4" class="fa fa-caret-down"></i>
+                                <i ng-show="!showWorkingProcess4" class="fa fa-caret-right"></i>
+                                <label  ng-click="showWorkingProcess4=!showWorkingProcess4" class="fs-18">Khen thưởng</label>
+                                <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
+
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-model="WorkingProcess4"
+                                               ng-checked="WorkingProcess4"><span style="font-size: x-small;">Có</span>
+                                    </div>
+
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-click="WorkingProcess4 = !WorkingProcess4"
+                                               ng-checked="!WorkingProcess4"><span style="font-size: x-small;">Không</span>
+                                    </div>
+
                                 </div>
                             </div>
                             <div ng-show="showWorkingProcess4"
@@ -2699,15 +2707,20 @@
                         <div class="toggle-header" style="display:flex ; justify-content:space-between">
                             <div class="d-flex"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
-                                <i class="fa fa-caret-right"></i>&nbsp;
-                                <label class="fs-18">Kỷ luật</label>
-                                <div class="mt-checkbox-list pt5" style="margin-left: 15px">
-                                    <label class="mt-checkbox"
-                                           style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                        <input type="checkbox" ng-model="showWorkingProcess5"
-                                               ng-checked="showWorkingProcess5">
-                                        <span></span>
-                                    </label>
+                                <i ng-show="showWorkingProcess5" class="fa fa-caret-down"></i>
+                                <i ng-show="!showWorkingProcess5" class="fa fa-caret-right"></i>
+                                <label ng-click="showWorkingProcess5=!showWorkingProcess5" class="fs-18">Kỷ luật</label>
+                                <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-model="WorkingProcess5"
+                                               ng-checked="WorkingProcess5"><span style="font-size: x-small;">Có</span>
+                                    </div>
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-click="WorkingProcess5 = !WorkingProcess5"
+                                               ng-checked="!WorkingProcess5"><span style="font-size: x-small;">Không</span>
+                                    </div>
                                 </div>
                             </div>
                             <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
@@ -2867,15 +2880,20 @@
                             <div class="d-flex"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  style="width: 75%; display: flex; text-wrap: wrap;">
-                                <i class="fa fa-caret-right"></i>&nbsp;
-                                <label class="fs-18">Lớp đào tạo và bồi dưỡng đã qua</label>
-                                <div class="mt-checkbox-list pt5" style="margin-left: 15px">
-                                    <label class="mt-checkbox"
-                                           style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                        <input type="checkbox" ng-model="showWorkingProcess6"
-                                               ng-checked="showWorkingProcess6">
-                                        <span></span>
-                                    </label>
+                                <i ng-show="showWorkingProcess6" class="fa fa-caret-down"></i>
+                                <i ng-show="!showWorkingProcess6" class="fa fa-caret-right"></i>
+                                <label ng-click="showWorkingProcess6=!showWorkingProcess6"  class="fs-18">Lớp đào tạo và bồi dưỡng đã qua</label>
+                                <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-model="WorkingProcess6"
+                                               ng-checked="WorkingProcess6"><span style="font-size: x-small;">Có</span>
+                                    </div>
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;WorkingProcess6:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-click="WorkingProcess6 = !WorkingProcess6"
+                                               ng-checked="!WorkingProcess6"><span style="font-size: x-small;">Không</span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -3099,15 +3117,20 @@
                         <div class="toggle-header" style="display:flex ; justify-content:space-between">
                             <div class="d-flex"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
-                                <i class="fa fa-caret-right"></i>&nbsp;
-                                <label class="fs-18">Đi nước ngoài</label>
-                                <div class="mt-checkbox-list pt5" style="margin-left: 15px">
-                                    <label class="mt-checkbox"
-                                           style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                        <input type="checkbox" ng-model="showWorkingProcess7"
-                                               ng-checked="showWorkingProcess7">
-                                        <span></span>
-                                    </label>
+                                <i ng-show="showWorkingProcess7" class="fa fa-caret-down"></i>
+                                <i ng-show="!showWorkingProcess7" class="fa fa-caret-right"></i>
+                                <label ng-click="showWorkingProcess7=!showWorkingProcess7" class="fs-18">Đi nước ngoài</label>
+                                <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-model="WorkingProcess7"
+                                               ng-checked="WorkingProcess7"><span style="font-size: x-small;">Có</span>
+                                    </div>
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-click="WorkingProcess7 = !WorkingProcess7"
+                                               ng-checked="!WorkingProcess7"><span style="font-size: x-small;">Không</span>
+                                    </div>
                                 </div>
                             </div>
                             <div ng-show="showWorkingProcess7"
@@ -3295,14 +3318,20 @@
 
                             <div class="d-flex"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
-                                <i class="fa fa-caret-right"></i>&nbsp;
-                                <label>Giới thiệu vào đảng</label>
-                                <div class="mt-checkbox-list pt5" style="margin-left: 15px">
-                                    <label class="mt-checkbox"
-                                           style="margin-bottom: 0; width: 30px;display:inline; font-size:13px">
-                                        <input type="checkbox" ng-model="showDegree" ng-checked="showDegree">
-                                        <span></span>
-                                    </label>
+                                <i ng-show="showDegree" class="fa fa-caret-down"></i>
+                                <i ng-show="!showDegree" class="fa fa-caret-right"></i>
+                                <label ng-click="showDegree=!showDegree">Giới thiệu vào đảng</label>
+                                <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-model="WorkingProcess8"
+                                               ng-checked="WorkingProcess8"><span style="font-size: x-small;">Có</span>
+                                    </div>
+                                    <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
+                                         style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                        <input type="checkbox" ng-click="WorkingProcess8 = !WorkingProcess8"
+                                               ng-checked="!WorkingProcess8"><span style="font-size: x-small;">Không</span>
+                                    </div>
                                 </div>
                             </div>
                             <div ng-show="showDegree"
