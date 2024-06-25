@@ -1892,7 +1892,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group row">
+                                        <div class="form-group row" ng-if="!selectedFamily.disableAddress">
                                             <!--ng-if="!selectedFamily.disableAddress"-->
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-home" id="residence" ng-click="openPopover3('residence');"
@@ -1960,7 +1960,7 @@
                                             </button>
                                             <button class="btn m-1" ng-click="resetFormFamily()">
                                                 <i class="fa-solid fa-rotate-right"></i>
-                                                <span>Làm mới</span>
+                                                <span>Refresh</span>
                                             </button>
                                         </div>
                                     </div>
@@ -2042,9 +2042,14 @@
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
                                                                     control-id="homeTown">
-                                                                    <div ng-if="(x.HomeTownVillage || x.HomeTownValue)"><span>- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>
-                                                                    <div ng-if="(!x.die)">
-                                                                        <span>- Nơi cư trú:{{ x.Residence}}</span>
+                                                                    <!--<div><span  ng-if="x.HomeTownVillage">- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>-->
+                                                                    <div>
+                                                                        <span>
+                                                                            {{ (x.HomeTownVillage || x.HomeTownValue) ? '- Quê quán: ' + (x.HomeTownVillage || '') + ', ' + (x.HomeTownValue || '') : '' }}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div >
+                                                                        <span>{{ !x.die ? '- Nơi cư trú: ' + (x.Residence || '') : '' }}</span>
                                                                     </div>
                                                                 </td>
                                                                 <td tr-child-tab
@@ -2631,7 +2636,7 @@
                                         <span>Thêm</span>
                                     </button> <button class="btn m-1" ng-click="deleteSelectaddToDisciplined()">
                                         <i class="fa-solid fa-xmark"></i>
-                                        <span>Hủy</span>
+                                        <span>Refresh</span>
                                     </button>
                                 </div>
                                 <div class="list-item">
@@ -2824,7 +2829,7 @@
                                         <span>Thêm</span>
                                     </button><button class="btn m-1" ng-click="deleteSelectToTrainingCertificatedPass()">
                                         <i class="fa-solid fa-xmark"></i>
-                                        <span>Hủy</span>
+                                        <span>Refresh</span>
                                     </button>
                                 </div>
                                 <div class="list-item">
