@@ -2621,6 +2621,8 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             $scope.commentTextarea = matchedLabel.comment;
         }
     };
+    // khai báo 
+    $scope.jsonGuide = [];
 
     $scope.warningPopover3 = function () {
         App.toastrWarning('Vui lòng chọn dòng dữ liệu');
