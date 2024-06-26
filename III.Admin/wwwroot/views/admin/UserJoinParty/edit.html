@@ -2064,12 +2064,18 @@
                                                                     check-load="checkFamilyLoad">
                                                                     {{x.Job}}
                                                                 </td>
-                                                                <td style="white-space: pre">{{x.WorkingProgress}}</td>
-                                                                <td tr-child-tab
+                                                                <td style="white-space: pre"  tr-child-tab
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
                                                                     control-id="working"
+                                                                    check-load="checkFamilyLoad"
+                                                                    >{{x.WorkingProgress}}</td>
+                                                                <td tr-child-tab
+                                                                    row-id="x.Id"
+                                                                    child-tab="family"
+                                                                    json-guide="jsonGuide"
+                                                                    control-id="politicalAttitude"
                                                                     check-load="checkFamilyLoad">
                                                                     {{x.PoliticalAttitude}}
                                                                 </td>
