@@ -254,6 +254,7 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
             },
             Phone: {
                 required: true,
+                phoneVN: true
             },
             thon_PlaceofBirth: {
                 required: true,
@@ -313,7 +314,10 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
                 required: "Bạn không được để trống trường giới tính"
             },
             Phone: {
-                required: "Bạn không được bỏ trống trường số điện thoại "
+                required: "Bạn không được bỏ trống trường số điện thoại ",
+                phoneVN: 'Số điện thoại không hợp lệ', // Custom message for invalid phone number
+                minlength: "Số điện thoại phải có ít nhất {0} ký tự",
+                maxlength: "Số điện thoại có tối đa {0} ký tự",
             },
             thon_PlaceofBirth: {
                 required: "Bạn không được bỏ trống trường nơi sinh"
@@ -749,6 +753,10 @@ app.config(function ($routeProvider, $locationProvider, $validatorProvider) {
 
         return this.optional(element) || regexMonthYear.test(value) || regexDayMonthYear.test(value);
     }, "Vui lòng nhập định dạng ngày hợp lệ, ví dụ: 8/2006 hoặc 20/9/2006");
+
+    $.validator.addMethod("phoneVN", function (value, element) {
+        return this.optional(element) || /^(0|\+84)[1-9][0-9]{8,9}$/.test(value);
+    }, "Số điện thoại không hợp lệ");
 
 
     const currentDate = new Date();
@@ -1261,9 +1269,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
 
             if ($scope.selectedFamily.Relation.toLowerCase().includes("con") || $scope.selectedFamily.Relation.toLowerCase().includes("anh") || $scope.selectedFamily.Relation.toLowerCase().includes("chị") || $scope.selectedFamily.Relation.toLowerCase().includes("em")) {
-                $scope.queQuan = false;
+                $scope.changedisHistoryCC = false;
             } else {
-                $scope.queQuan = true;
+                $scope.changedisHistoryCC = true;
             }
         }
         $scope.changeBirthYear();
@@ -3113,7 +3121,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 App.toastrError("Bạn chưa chọn nhóm chi bộ để xử lý")
                 return;
 
-            } if ($scope.infUser.Phone.length != 10 || !pattern.test($scope.infUser.Phone)) {
+            } if ( 11<$scope.infUser.Phone.length > 10 || !pattern.test($scope.infUser.Phone)) {
                 $scope.err = true
                 App.toastrError("Vui lòng nhập số điện thoại hợp lệ")
                 return;
@@ -4496,6 +4504,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             //$scope.WorkingProgressStart = years[0];
             //$scope.WorkingProgressEnd = years[1];
             //$scope.selectedFamily.WorkingProgress = $scope.selectedFamily.WorkingProgress.split(": ")[1].trim();
+            if (x.Relation.toLowerCase().includes("con") || x.Relation.toLowerCase().includes("anh") || x.Relation.toLowerCase().includes("chị") || x.Relation.toLowerCase().includes("em")) {
+                x.HomeTownValue = "";
+                x.HomeTown = "";
+                x.HomeTownVillage = "";
+            }
             var BirthYear = $scope.selectedFamily.BirthYear ? $scope.selectedFamily.BirthYear.split("-") : "";
             if (BirthYear.length === 2) {
                 $scope.selectedFamily.BirthYear = BirthYear[0];
@@ -5505,6 +5518,12 @@ app.directive("choosePosition", function (dataservice) {
                     scope.model.tinh_id = parsedValue.tinh_id;
                     scope.model.huyen_id = parsedValue.huyen_id;
                     scope.model.xaPhuong_id = parsedValue.xaPhuong_id;
+                    updateNgModelValue();
+                }
+                else {
+                    scope.model.tinh_id = "";
+                    scope.model.huyen_id = "";
+                    scope.model.xaPhuong_id = "";
                     updateNgModelValue();
                 }
                 if (!scope.component) {
