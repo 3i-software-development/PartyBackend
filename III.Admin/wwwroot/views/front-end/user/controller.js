@@ -1536,8 +1536,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
             for (let i = 0; i < pElementP2s.length; i++) {
                 if (pElementP2s[i].length != 0) {
-                    var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
-                    var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);
+                    var parts = pElementP2s[i][0].split(" đến ");
+                    var begin = parts[0].substr(2); // Extracts "02/2000"
+                    var end = parts[1]; 
+                   /* var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
+                    var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);*/
                     var BusinessNDutyObj = {
                         From: begin,
                         To: end,
@@ -1601,6 +1604,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             // }
             console.log('PassedTrainingClasses', $scope.PassedTrainingClasses)
 
+            if ($scope.PassedTrainingClasses && $scope.PassedTrainingClasses.length != 0) {
+                $scope.WorkingProcess6 = true
+            }
 
 
             var data = Array.from(listPage[3].querySelectorAll('td > p')).filter(function (ele) {
@@ -1628,6 +1634,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 }
             }
             console.log("HistoricalFeatures:", $scope.HistoricalFeatures);
+
+            if ($scope.HistoricalFeatures && $scope.HistoricalFeatures.length != 0) {
+                $scope.WorkingProcess3 = true
+            }
             //Page 5 Di nuoc nguoai
             var datapage5 = Array.from(listPage[5].querySelectorAll("tr:nth-child(n+2)"));
             var pElementP5s = [];
@@ -1651,6 +1661,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 }
             }
             console.log('GoAboard', $scope.GoAboard)
+
+            if ($scope.GoAboard && $scope.GoAboard.length != 0) {
+                $scope.WorkingProcess7 = true
+            }
             //Page6 Khen thuong
             var datapage6 = Array.from(listPage[6].querySelectorAll("tr:nth-child(n+2)"));
             var pElementP6s = [];
@@ -1673,6 +1687,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 }
             }
             console.log('Laudatory', $scope.Laudatory)
+
+            if ($scope.Laudatory && $scope.Laudatory.length != 0) {
+                $scope.WorkingProcess4 = true
+            }
             //Page7 ki luat
             //phan van giua 2 truong hop: neu bi ki luat thi lay binh thuonng con neeu ko bij thi se de trong
             var datapage7 = Array.from(listPage[7].querySelectorAll("tr:nth-child(n+2)"));
@@ -1697,6 +1715,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 $scope.Disciplined.push(DisciplinedObj);
             }
             console.log('Disciplined', $scope.Disciplined)
+
+            if ($scope.Disciplined && $scope.Disciplined.length != 0) {
+                $scope.WorkingProcess5 = true
+            }
             //Page8 Hoan canh gia dinh
             var datapage8 = Array.from(listPage[8].querySelectorAll("tr:first-child>td"));
             var pE8 = [];
@@ -2325,6 +2347,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 PlaceTimeRecognize: $scope.infUser.PlaceRecognize
             };
             console.log($scope.infUser);
+            if ($scope.Introducer.PersonIntroduced != undefined && $scope.Introducer.PlaceTimeJoinUnion != undefined && $scope.Introducer.PlaceTimeJoinParty != undefined && $scope.Introducer.PlaceTimeRecognize != undefined ) {
+                $scope.WorkingProcess8 = true
+            }
             var JSONobj = {
                 InformationUser: $scope.infUser,
                 Create: $scope.PlaceCreatedTime,
@@ -4250,7 +4275,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 console.log(error);
             }
         });
-
     }
 
     // $scope.getFamilyByProfileCode = function () {
@@ -4318,7 +4342,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         });
 
     }
-    $scope.WorkingProcess7= false;
+    $scope.WorkingProcess7 = false;
+    $scope.checkGoAboardLoad = false;
+
     $scope.getGoAboardByProfileCode = function () {
         $.ajax({
             type: "GET",
@@ -4332,7 +4358,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 }
                 //$scope.$apply();
                 console.log($scope.GoAboard);
-                setTimeout(() => $scope.$apply());
+                setTimeout(() => {
+                    $scope.checkGoAboardLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -4364,6 +4393,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     }
 
+
+    $scope.checkBusinessNDutyLoad = false;
     $scope.getWorkingTrackingByProfileCode = function () {
         var requestData = { id: $scope.id };
         $.ajax({
@@ -4374,6 +4405,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
             success: function (response) {
                 $scope.BusinessNDuty = response;
+                setTimeout(() => {
+                    $scope.checkBusinessNDutyLoad = true;
+                    $scope.$apply();
+                }, 500);
                 //$scope.$apply();
                 console.log($scope.BusinessNDuty);
             },

@@ -160,17 +160,23 @@
                          row-id="x.Id"
                          child-tab="PersonHistory"
                          json-guide="jsonGuide"
-                         control-id="startDate">{{x.Begin}}</td>
+                         control-id="startDate"
+                        check-load="checkHistoryLoad"
+                        >{{x.Begin}}</td>
                     <td  tr-child-tab
                          row-id="x.Id"
                          child-tab="PersonHistory"
                          json-guide="jsonGuide"
-                         control-id="endDate">{{x.End}}</td>
+                         control-id="endDate"
+                        check-load="checkHistoryLoad"
+                        >{{x.End}}</td>
                     <td  tr-child-tab
                          row-id="x.Id"
                          child-tab="PersonHistory"
                          json-guide="jsonGuide"
-                         control-id="content">
+                         control-id="content"
+                        check-load="checkHistoryLoad"
+                        >
                         <span ng-if="x.Type==1||x.Type==2||x.Type==3">Tại chi bộ:</span>{{x.Content}}
                     </td>
                     <!--<td>

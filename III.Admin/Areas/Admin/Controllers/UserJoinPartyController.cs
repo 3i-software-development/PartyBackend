@@ -208,6 +208,56 @@ namespace III.Admin.Controllers
             }
             return rs;
         }
+
+
+        [HttpPost]
+        public JMessage DeleteJson([FromBody] ItemNoteJson jsonData, string ResumeNumber)
+        {
+            var rs = new JMessage { Error = false, };
+            try
+            {
+                string folderPath = "/uploads/json/";
+                string fileName = "reviewprofile_" + ResumeNumber + ".json";
+                string filePath = _hostingEnvironment.WebRootPath + folderPath + fileName;
+
+                // Kiểm tra xem thư mục chứa file có tồn tại không
+             /*   if (!Directory.Exists(_hostingEnvironment.WebRootPath + folderPath))
+                {
+                    // Nếu không tồn tại, tạo thư mục mới
+                    Directory.CreateDirectory(_hostingEnvironment.WebRootPath + folderPath);
+                }*/
+                if (System.IO.File.Exists(filePath))
+                {
+                    // Đọc dữ liệu từ file JSON
+                    string existingData = System.IO.File.ReadAllText(filePath);
+
+                    // Chuyển đổi dữ liệu JSON từ file thành đối tượng C#
+                    List<ItemNoteJson> existingObject = JsonConvert.DeserializeObject<List<ItemNoteJson>>(existingData);
+
+                    var Object = existingObject.FirstOrDefault(x => x.id == jsonData.id);
+                    if (Object != null)
+                    {
+                        existingObject.Remove(Object);
+                    }
+                    
+
+                    // Chuyển đối tượng đã cập nhật thành JSON
+                    string updatedJsonData = JsonConvert.SerializeObject(existingObject);
+
+                    // Ghi lại vào file JSON
+                    System.IO.File.WriteAllText(filePath, updatedJsonData);
+
+                    rs.Title = "Xóa thành công";
+                    return rs;
+                }
+            }
+            catch (Exception ex)
+            {
+                rs.Error = true;
+                rs.Title = "Không tìm thấy file";
+            }
+            return rs;
+        }
         public class JTableModelFile : JTableModel
         {
             public string FromDate { get; set; }

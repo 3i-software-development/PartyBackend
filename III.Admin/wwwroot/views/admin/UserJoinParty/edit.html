@@ -2268,13 +2268,16 @@
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
-                                                    control-id="From">
+                                                    control-id="From"
+                                                    check-load="checkBusinessNDutyLoad"
+                                                    >
                                                     {{x.From}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
+                                                    check-load="checkBusinessNDutyLoad"
                                                     control-id="To">
                                                     {{x.To}}
                                                 </td>
@@ -2282,6 +2285,7 @@
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
+                                                    check-load="checkBusinessNDutyLoad"
                                                     control-id="work">
                                                     {{x.Work}}
                                                 </td>
@@ -2289,6 +2293,7 @@
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
+                                                    check-load="checkBusinessNDutyLoad"
                                                     control-id="role">
                                                     {{x.Role}}
                                                 </td>
@@ -2387,6 +2392,7 @@
                                                 row-id="x.Id"
                                                 child-tab="historyspecialist"
                                                 json-guide="jsonGuide"
+                                                check-load="checkHistoricalFeaturesLoad"
                                                 control-id="MonthYear">
                                                 {{x.MonthYear}}
                                             </td>
@@ -2394,6 +2400,7 @@
                                                 row-id="x.Id"
                                                 child-tab="historyspecialist"
                                                 json-guide="jsonGuide"
+                                                check-load="checkHistoricalFeaturesLoad"
                                                 control-id="content">
                                                 {{x.Content}}
                                             </td>
@@ -2525,6 +2532,7 @@
                                                 row-id="x.Id"
                                                 child-tab="laudatory"
                                                 json-guide="jsonGuide"
+                                                check-load="checkLaudatoryLoad"
                                                 control-id="MonthYear">
                                                 {{x.MonthYear}}
                                             </td>
@@ -2533,6 +2541,7 @@
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="laudatory"
+                                                check-load="checkLaudatoryLoad"
                                                 json-guide="jsonGuide"
                                                 control-id="GrantOfDecision">
                                                 {{x.Reason}}
@@ -2541,6 +2550,7 @@
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="laudatory"
+                                                check-load="checkLaudatoryLoad"
                                                 json-guide="jsonGuide"
                                                 control-id="GrantOfDecision">
                                                 {{x.GrantOfDecision}}
@@ -2672,13 +2682,15 @@
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="WarningDisciplined"
-                                                json-guide="jsonGuide"
+                                                json-guide="jsonGuide"                                               
+                                                check-load="checkDisciplinedLoad"
                                                 control-id="MonthYear">
                                                 {{x.MonthYear}}
                                             </td>
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="WarningDisciplined"
+                                                check-load="checkDisciplinedLoad"
                                                 json-guide="jsonGuide"
                                                 control-id="DisciplineReason">
                                                 {{x.Reason}}
@@ -2686,6 +2698,7 @@
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="WarningDisciplined"
+                                                check-load="checkDisciplinedLoad"
                                                 json-guide="jsonGuide"
                                                 control-id="GrantOfDecision">
                                                 {{x.GrantOfDecision}}
@@ -2868,13 +2881,15 @@
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="TrainingCertificatedPass"
-                                                json-guide="jsonGuide"
+                                                json-guide="jsonGuide"                                                
+                                                check-load="checkPassedTrainingClassesLoad"
                                                 control-id="From">
                                                 {{x.From}}
                                             </td>
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="TrainingCertificatedPass"
+                                                check-load="checkPassedTrainingClassesLoad"
                                                 json-guide="jsonGuide"
                                                 control-id="To">
                                                 {{x.To}}
@@ -2882,6 +2897,7 @@
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="TrainingCertificatedPass"
+                                                check-load="checkPassedTrainingClassesLoad"
                                                 json-guide="jsonGuide"
                                                 control-id="SchoolName">
                                                 {{x.SchoolName}}
@@ -2889,6 +2905,7 @@
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="TrainingCertificatedPass"
+                                                check-load="checkPassedTrainingClassesLoad"
                                                 json-guide="jsonGuide"
                                                 control-id="Class">
                                                 {{x.Class}}
@@ -2896,6 +2913,7 @@
                                             <td tr-child-tab
                                                 row-id="x.Id"
                                                 child-tab="TrainingCertificatedPass"
+                                                check-load="checkPassedTrainingClassesLoad"
                                                 json-guide="jsonGuide"
                                                 control-id="Certificate">
                                                 {{x.Certificate}}
@@ -3046,6 +3064,7 @@
                 <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
                 <i class="fa fa-microphone"></i>
             </div>
+            <i class="fa fa-trash-o ml-5" style="margin-right: 15px" ng-click="deleteJson()"></i>
             <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
         </div>
         <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment" popover-placement="bottom" uib-popover="{{matchedItemss[0].comment}}"></textarea>

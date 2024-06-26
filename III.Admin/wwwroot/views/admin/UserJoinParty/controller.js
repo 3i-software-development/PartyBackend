@@ -43,6 +43,9 @@ app.factory('dataserviceJoinParty', function ($http) {
         UpdateOrCreateJson: function (data, callback) {
             $http.post('/admin/UserJoinParty/UpdateOrCreateJson?ResumeNumber=' + data.ResumeNumber, data.json).then(callback);
         },
+        DeleteJson: function (data, callback) {
+            $http.post('/admin/UserJoinParty/DeleteJson?ResumeNumber=' + data.ResumeNumber, data.json).then(callback);
+        },
         //địa chỉ 
         getProvince: function (callback) {
             $http.get('/UserProfile/GetProvince').then(callback);
@@ -3782,6 +3785,70 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             })
         }
     }
+
+    $scope.deleteJson = function () {
+        console.log($scope.pp);
+        if ($scope.pp.id != null && $scope.pp.id != '') {
+            if ($scope.pp.idFamily) {
+                $scope.pp.idFamily[$scope.popoveridFamily] = $scope.pp.comment;
+                let pp = $scope.jsonGuide.find(x => x.id === $scope.pp.id);
+                if (pp) {
+                    delete $scope.pp.idFamily[$scope.popoveridFamily];
+                    $scope.pp.comment = '';
+                    let pp = $scope.jsonGuide.find(x => x.id === $scope.pp.id);
+                    if (pp) {
+                        pp.idFamily = $scope.pp.idFamily;
+                        pp.comment = $scope.pp.comment;
+                    }
+                    var data = {
+                        ResumeNumber: $scope.infUser.ResumeNumber,
+                        json: $scope.pp
+                    }
+                    dataserviceJoinParty.UpdateOrCreateJson(data, function (rs) {
+                        rs = rs.data;
+                        if (rs.Error) {
+                            App.toastrError(rs.Title);
+                            var $icon = $('#' + $scope.pp.id + '.fa.fa-info-circle');
+                            // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+                            if ($icon.length > 0) {
+                                $icon.css('color', 'red');
+                            }
+                        }
+                        else {
+                            App.toastrSuccess(rs.Title);
+                        }
+                    })
+                }
+            }
+            else {
+                var data = {
+                    ResumeNumber: $scope.infUser.ResumeNumber,
+                    json: $scope.pp
+                };
+                const index = $scope.jsonGuide.findIndex(x => x.id === $scope.pp.id);
+                if (index !== -1) {
+                    $scope.jsonGuide.splice(index, 1);
+                }
+                dataserviceJoinParty.DeleteJson(data, function (rs) {
+                    rs = rs.data;
+                    if (rs.Error) {
+                        App.toastrError(rs.Title);
+                    }
+                    else {
+                        App.toastrSuccess(rs.Title);
+                        var $icon = $('#' + $scope.pp.id + '.fa.fa-info-circle');
+                        // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+                        if ($icon.length > 0) {
+                            $icon.css('color', 'red');
+                        }
+                        else {
+                            $icon.css('color', 'unset');
+                        }
+                    }
+                })
+            }
+        }
+    }
     $scope.initData();
 
     $scope.GroupUsers = [];
@@ -4238,10 +4305,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 } else {
                     $scope.selectedPersonHistory.Begin = $scope.selectedPersonHistory.End + 1
                 }
-                $scope.$apply()
-                setTimeout(function () {
-
-                }, 500)
+                setTimeout(() => {
+                    $scope.checkHistoryLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -4253,7 +4320,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     //Đi nước ngoài
     $scope.selectedGoAboard = {}
 
-
+    $scope.checkGoAboardLoad = false;
     $scope.getGoAboardByProfileCode = function () {
         $.ajax({
             type: "GET",
@@ -4262,8 +4329,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             dataType: "json",
             success: function (result) {
                 $scope.GoAboard = result;
-                $scope.$apply();
-                console.log($scope.GoAboard);
+
             },
             error: function (error) {
                 console.log(error);
@@ -4302,6 +4368,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     //Khen thưởng
 
     $scope.selectedLaudatory = {};
+    $scope.checkLaudatoryLoad = false;
 
     $scope.selectLaudatory = function (x) {
         $scope.selectedLaudatory = x;
@@ -4322,7 +4389,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             dataType: "json",
             success: function (result) {
                 $scope.Laudatory = result;
-                $scope.$apply();
+                setTimeout(() => {
+                    $scope.checkLaudatoryLoad = true;
+                    $scope.$apply();
+                }, 500);
                 console.log($scope.Laudatory);
             },
             error: function (error) {
@@ -5437,6 +5507,10 @@ return;
             success: function (result) {
                 $scope.GoAboard = result;
                 console.log($scope.GoAboard);
+                setTimeout(() => {
+                    $scope.checkGoAboardLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -5444,6 +5518,8 @@ return;
         });
         console.log("Vào");
     }
+
+    $scope.checkBusinessNDutyLoad = false;
     $scope.getWorkingTrackingByProfileCode = function () {
         var requestData = { id: $scope.id };
         $.ajax({
@@ -5455,6 +5531,10 @@ return;
             success: function (result) {
                 $scope.BusinessNDuty = result;
                 console.log($scope.BusinessNDuty);
+                setTimeout(() => {
+                    $scope.checkBusinessNDutyLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -5462,6 +5542,8 @@ return;
         });
         console.log("Vào");
     }
+
+    $scope.checkHistoricalFeaturesLoad = false;
     $scope.getHistorySpecialistByProfileCode = function () {
         var requestData = { id: $scope.id };
         $.ajax({
@@ -5473,6 +5555,10 @@ return;
             success: function (result) {
                 $scope.HistoricalFeatures = result;
                 console.log($scope.HistoricalFeatures);
+                setTimeout(() => {
+                    $scope.checkHistoricalFeaturesLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -5490,6 +5576,10 @@ return;
             data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
             success: function (result) {
                 $scope.PassedTrainingClasses = result;
+                setTimeout(() => {
+                    $scope.checkPassedTrainingClassesLoad = true;
+                    $scope.$apply();
+                }, 500);
                 console.log($scope.PassedTrainingClasses);
             },
             error: function (error) {
@@ -5498,6 +5588,8 @@ return;
         });
         console.log("Vào");
     }
+
+    $scope.checkDisciplinedLoad = false;
     $scope.getWarningDisciplinedByProfileCode = function () {
         var requestData = { id: $scope.id };
         $.ajax({
@@ -5508,6 +5600,10 @@ return;
             data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
             success: function (result) {
                 $scope.Disciplined = result;
+                setTimeout(() => {
+                    $scope.checkDisciplinedLoad = true;
+                    $scope.$apply();
+                }, 500);
                 console.log($scope.Disciplined);
             },
             error: function (error) {
@@ -6627,8 +6723,12 @@ return;
 
             for (let i = 0; i < pElementP2s.length; i++) {
                 if (pElementP2s[i].length != 0) {
-                    var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
-                    var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);
+
+                    var parts = pElementP2s[i][0].split(" đến ");
+                    var begin = parts[0].substr(2); // Extracts "02/2000"
+                    var end = parts[1]; 
+                    /*var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
+                    var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);*/
                     var BusinessNDutyObj = {
                         From: begin,
                         To: end,

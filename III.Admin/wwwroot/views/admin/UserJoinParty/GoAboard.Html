@@ -123,19 +123,20 @@
                     <th>Xoá bỏ</th>
                 </tr>
                 <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)" ng-class="{'selected': x.selected}">
-                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="From">
+                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="From" 
+                                                check-load="checkGoAboardLoad">
                         {{x.From}}
                     </td>
                     <!--<td>{{x.From}}</td>-->
-                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="To">
+                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="To" check-load="checkGoAboardLoad">
                         {{x.To}}
                     </td>
                     <!--<td>{{x.To}}</td>-->
-                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="contact">
+                    <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="contact" check-load="checkGoAboardLoad" >
                         {{x.Contact}}
                     </td>
                     <!--<td>{{x.Contact}}</td>-->
-                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="WhichCountry">
+                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="WhichCountry" check-load="checkGoAboardLoad">
                     {{x.Country}}
                 </td>
                     <!--<td>{{x.Country}}</td>-->
