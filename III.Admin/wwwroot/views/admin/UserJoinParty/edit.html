@@ -541,7 +541,7 @@
                                                title="Popover Header" popover-placement="bottom-left"
                                                uib-popover="Số điện thoại của bạn là: {{infUser.Phone}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick"></i>
-                                            <input class="displayInfo speechInput" style="border: #FFFF;" name="Phone"
+                                            <input class="displayInfo speechInput" style="border: #FFFF;" name="Phone" minlength="10" maxlength="11" 
                                                    ng-model="infUser.Phone" type="text" placeholder="Số điện thoại">
                                             <i class="fa fa-microphone" style="font-size: 20px;" voice-recognition
                                                ng-model="infUser.Phone"></i>

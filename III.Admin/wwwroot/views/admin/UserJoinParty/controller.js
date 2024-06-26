@@ -348,6 +348,8 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                 },
                 Phone: {
                     required: true,
+                    phoneVN: true
+
                 },
                 thon_PlaceofBirth: {
                     required: true,
@@ -407,7 +409,10 @@ app.controller('Ctrl_USER_JOIN_PARTY', function ($scope, $rootScope, $compile, $
                     required: "Bạn không được để trống trường giới tính"
                 },
                 Phone: {
-                    required: "Bạn không được bỏ trống trường số điện thoại "
+                    required: "Bạn không được bỏ trống trường số điện thoại ",
+                    phoneVN: 'Số điện thoại không hợp lệ', // Custom message for invalid phone number
+                    minlength: "Số điện thoại phải có ít nhất {0} ký tự",
+                    maxlength: "Số điện thoại có tối đa {0} ký tự",
                 },
                 thon_PlaceofBirth: {
                     required: "Bạn không được bỏ trống trường nơi sinh"
@@ -1021,6 +1026,10 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider, $lo
 
         return true;
     }, "Thời gian của bạn không được lớn hơn thời gian hiện tại");
+
+    $.validator.addMethod("phoneVN", function (value, element) {
+        return this.optional(element) || /^(0|\+84)[1-9][0-9]{8,9}$/.test(value);
+    }, "Số điện thoại không hợp lệ");
 
 });
 
