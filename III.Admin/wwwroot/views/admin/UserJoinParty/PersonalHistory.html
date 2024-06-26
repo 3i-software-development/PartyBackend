@@ -30,10 +30,12 @@
         <form ng-validate="validationOptionsPersonalHistory" name="forms.personalHis">
             <div class="form-group row">
                 <div class="col-md-6" >
-                    <div class="col-md-6 pr-0 pl-0" >
+                    <div class="col-md-6 pr-0 pl-0">
                         <i class="fa fa-calendar" id="startDate" ng-click="openPopover4('startDate');"
                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                           popover-trigger="outsideClick"></i>
+                           popover-trigger="outsideClick" ng-if="selectedPersonHistory && selectedPersonHistory.Id"></i>
+                        <i class="fa fa-calendar" id="startDate" ng-if="!selectedPersonHistory || !selectedPersonHistory.Id" ng-click="warningPopover3()"></i>
+
                         <label class="displayInfo control-label require custom-title-code-bold">
                             Từ
                             ngày
@@ -56,7 +58,8 @@
                     <div class="col-md-6 pr-0 pl-0">
                         <i class="fa fa-calendar" id="endDate" ng-click="openPopover4('endDate');"
                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                           popover-trigger="outsideClick"></i>
+                           popover-trigger="outsideClick"  ng-if="selectedPersonHistory && selectedPersonHistory.Id"></i>
+                        <i class="fa fa-calendar" id="endDate" ng-if="!selectedPersonHistory || !selectedPersonHistory.Id" ng-click="warningPopover3()"></i>
                         <label class="displayInfo control-label require custom-title-code-bold">
                             Đến
                             ngày
@@ -80,7 +83,9 @@
                 <div class="col-md-3 pr-0">
                     <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover4('content');"
                        uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                       popover-trigger="outsideClick"></i>
+                       popover-trigger="outsideClick" ng-if="selectedPersonHistory && selectedPersonHistory.Id"></i>
+                    <i class="fa fa-pencil-square-o" id="content" ng-if="!selectedPersonHistory || !selectedPersonHistory.Id"
+                       ng-click="warningPopover3()"></i>
                     <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType!=1&&PersonHistoryType!=2&&PersonHistoryType!=3">{{"Nội dung"}}</label>
                     <label class="displayInfo control-label require custom-title-code-bold" ng-if="PersonHistoryType==1||PersonHistoryType==2||PersonHistoryType==3">{{"Tại chi bộ"}}</label>
 

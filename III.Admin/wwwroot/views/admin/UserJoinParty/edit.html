@@ -1872,7 +1872,7 @@
                                                    ng-click="openPopover3('class');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                    popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
-                                                <i class="fa fa-map-marker" id="class" ng-if="!selectedFamily || !selectedFamily.Id"></i>
+                                                <i class="fa fa-map-marker" id="class" ng-if="!selectedFamily || !selectedFamily.Id" ng-click="warningPopover3()"></i>
                                                 <label class="displayInfo control-label custom-title-code-bold">
                                                     Thành phần giai cấp
                                                 </label>
@@ -1898,7 +1898,7 @@
                                                 <i class="fa fa-home" id="residence" ng-click="openPopover3('residence');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                    popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
-                                                <i class="fa fa-user" id="residence" ng-if="!selectedFamily || !selectedFamily.Id"></i>
+                                                <i class="fa fa-user" id="residence" ng-if="!selectedFamily || !selectedFamily.Id" ng-click="warningPopover3()"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nơi
                                                     cư trú
@@ -1926,7 +1926,7 @@
                                                 <i class="fa fa-users" id="career" ng-click="openPopover3('career');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                    popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
-                                                <i class="fa fa-users" id="career" ng-if="!selectedFamily || !selectedFamily.Id"></i>
+                                                <i class="fa fa-users" id="career" ng-if="!selectedFamily || !selectedFamily.Id" ng-click="warningPopover3()"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nghề
                                                     nghiệp
@@ -2129,7 +2129,7 @@
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick"
                                                ng-if="selectedWorkingTracking && selectedWorkingTracking.Id"></i>
-                                            <i class="fa fa-user" id="WorkingTracking" ng-click="warningPopover3()"
+                                            <i class="fa fa-calendar" id="From" ng-click="warningPopover3()"
                                                ng-if="!selectedWorkingTracking || !selectedWorkingTracking.Id"></i>
 
                                             <label class="displayInfo control-label require custom-title-code-bold">
@@ -2154,7 +2154,9 @@
                                         <div class="col-md-6 pr-0 pl-0">
                                             <i class="fa fa-calendar" id="To" ng-click="openPopover5('To');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                               popover-trigger="outsideClick"></i>
+                                               popover-trigger="outsideClick"  ng-if="selectedWorkingTracking && selectedWorkingTracking.Id"></i>
+                                            <i class="fa fa-calendar" id="To" ng-click="warningPopover3()"
+                                               ng-if="!selectedWorkingTracking || !selectedWorkingTracking.Id"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Đến ngày
                                             </label>
@@ -2180,7 +2182,9 @@
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover5('work');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                           popover-trigger="outsideClick"></i>
+                                           popover-trigger="outsideClick" ng-if="selectedWorkingTracking && selectedWorkingTracking.Id"></i>
+                                        <i class="fa fa-pencil-square-o" id="content" ng-click="warningPopover3()"
+                                           ng-if="!selectedWorkingTracking || !selectedWorkingTracking.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Nội dung
                                         </label>
@@ -2208,7 +2212,9 @@
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-pencil-square-o" id="role" ng-click="openPopover5('role');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                           popover-trigger="outsideClick"></i>
+                                           popover-trigger="outsideClick" ng-if="selectedWorkingTracking && selectedWorkingTracking.Id"></i>
+                                        <i class="fa fa-pencil-square-o" id="role" ng-click="warningPopover3()"
+                                           ng-if="!selectedWorkingTracking || !selectedWorkingTracking.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Chức vụ
                                         </label>
@@ -2303,7 +2309,9 @@
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover6('MonthYear');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                           popover-trigger="outsideClick"></i>
+                                           popover-trigger="outsideClick" ng-if="selectedHistorySpecialist && selectedHistorySpecialist.Id"></i>
+                                        <i class="fa fa-calendar" id="MonthYear" ng-click="warningPopover3()"
+                                           ng-if="!selectedHistorySpecialist || !selectedHistorySpecialist.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Thời gian
                                         </label>
@@ -2325,7 +2333,9 @@
                                     <div class="col-md-3 pr-0">
                                         <i class="fa fa-pencil-square-o" id="content" ng-click="openPopover6('content');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
-                                           popover-trigger="outsideClick"></i>
+                                           popover-trigger="outsideClick" ng-if="selectedHistorySpecialist && selectedHistorySpecialist.Id"></i>
+                                        <i class="fa fa-pencil-square-o" id="content" ng-click="warningPopover3()"
+                                           ng-if="!selectedHistorySpecialist || !selectedHistorySpecialist.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Nội dung
                                         </label>
@@ -2407,7 +2417,7 @@
                                             <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover7('MonthYear');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick" ng-if="selectedLaudatory && selectedLaudatory.Id"></i>
-                                            <i class="fa fa-user" id="MonthYear" ng-click="warningPopover3()"
+                                            <i class="fa fa-calendar" id="MonthYear" ng-click="warningPopover3()"
                                                ng-if="!selectedLaudatory || !selectedLaudatory.Id"></i>
 
                                             <label class="displayInfo control-label require custom-title-code-bold">
@@ -2432,7 +2442,7 @@
                                             <i class="fa fa-calendar" id="GrantOfDecision" ng-click="openPopover7('GrantOfDecision');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick" ng-if="selectedLaudatory && selectedLaudatory.Id"></i>
-                                            <i class="fa fa-user" id="GrantOfDecision" ng-click="warningPopover3()"
+                                            <i class="fa fa-calendar" id="GrantOfDecision" ng-click="warningPopover3()"
                                                ng-if="!selectedLaudatory || !selectedLaudatory.Id"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Cấp quyết định
@@ -2461,7 +2471,7 @@
                                            ng-click="openPopover7('AwardReason');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick" ng-if="selectedLaudatory && selectedLaudatory.Id"></i>
-                                        <i class="fa fa-user" id="AwardReason" ng-click="warningPopover3()"
+                                        <i class="fa fa-pencil-square-o" id="AwardReason" ng-click="warningPopover3()"
                                            ng-if="!selectedLaudatory || !selectedLaudatory.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Lý do, hình thức
@@ -2554,7 +2564,7 @@
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick"
                                                ng-if="selectedWarningDisciplined && selectedWarningDisciplined.Id"></i>
-                                            <i class="fa fa-user" id="WorkingTracking" ng-click="warningPopover3()"
+                                            <i class="fa fa-calendar" id="MonthYear" ng-click="warningPopover3()"
                                                ng-if="!selectedWarningDisciplined || !selectedWarningDisciplined.Id"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Tháng, năm
@@ -2580,6 +2590,8 @@
                                                ng-if="selectedWarningDisciplined && selectedWarningDisciplined.Id"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick"></i>
+                                            <i class="fa fa-calendar" id="GrantOfDecision" ng-click="warningPopover3()"
+                                               ng-if="!selectedWarningDisciplined || !selectedWarningDisciplined.Id"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Cấp quyết định
                                             </label>
@@ -2609,6 +2621,8 @@
                                            ng-if="selectedWarningDisciplined && selectedWarningDisciplined.Id"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick"></i>
+                                        <i class="fa fa-pencil-square-o" id="DisciplineReason" ng-click="warningPopover3()"
+                                           ng-if="!selectedWarningDisciplined || !selectedWarningDisciplined.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Lý do, hình thức
                                         </label>
@@ -2619,7 +2633,7 @@
                                                title="Popover Header" popover-placement="bottom-left"
                                                ng-click="handerClickIconChild8('WarningDisciplined','DisciplineReason')"
                                                uib-popover="Từ ngày: {{selectedWarningDisciplined.Reason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
-                                               popover-trigger="outsideClick"></i>
+                                               popover-trigger="outsideClick"  ng-if="selectedWarningDisciplined && selectedWarningDisciplined.Id"></i>
 
                                             <input class="displayInfo" style="border: #FFFF;" name="selectedWarningDisciplinedReason"
                                                    ng-model="selectedWarningDisciplined.Reason" type="text"
@@ -2695,7 +2709,7 @@
                                             <i class="fa fa-calendar" id="From" ng-click="openPopover11('From');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
-                                            <i class="fa fa-users" id="From" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
+                                            <i class="fa fa-calendar" id="From" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id" ng-click="warningPopover3()"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Từ
                                                 ngày
@@ -2719,7 +2733,7 @@
                                             <i class="fa fa-calendar" id="To" ng-click="openPopover11('To');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
-                                            <i class="fa fa-users" id="To" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
+                                            <i class="fa fa-calendar" id="To" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id" ng-click="warningPopover3()"></i>
                                             <label class="displayInfo control-label require custom-title-code-bold">
                                                 Đến
                                                 ngày
@@ -2745,7 +2759,7 @@
                                            ng-click="openPopover11('SchoolName');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
-                                        <i class="fa fa-users" id="SchoolName" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
+                                        <i class="fa fa-pencil-square-o" id="SchoolName" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id" ng-click="warningPopover3()"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Tên
                                             trường
@@ -2772,7 +2786,7 @@
                                            ng-click="openPopover11('Class');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
-                                        <i class="fa fa-users" id="Class" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
+                                        <i class="fa fa-pencil-square-o" id="Class" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id" ng-click="warningPopover3()"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Ngành
                                             học hoặc tên lớp học
@@ -2799,7 +2813,7 @@
                                            ng-click="openPopover11('Certificate');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
-                                        <i class="fa fa-users" id="Certificate" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id"></i>
+                                        <i class="fa fa-pencil-square-o" id="Certificate" ng-if="!selectedTrainingCertificatedPass || !selectedTrainingCertificatedPass.Id" ng-click="warningPopover3()"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Văn
                                             bằng
