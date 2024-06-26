@@ -2419,10 +2419,9 @@
 
                             <div ng-show="showWorkingProcess3 && WorkingProcess3" ng-click="submitHistorySpecialist()"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                 style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                 style="display: flex; align-items: center; gap: 5px; width: unset; flex-direction: column; min-width: 31px;">
                                 <i class="fas fa-save" style="font-size: 26px"></i><span style="font-size: x-small;">
-                                    Lưu
-                                    lại
+                                    Lưu lại
                                 </span>
                             </div>
                         </div>
@@ -2534,7 +2533,7 @@
                             </form>
                         </div>
                         <div class="toggle-header" style="display:flex; justify-content:space-between">
-                            <div class="d-flex"
+                            <div class="d-flex" style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showWorkingProcess4" class="fa fa-caret-down"></i>
                                 <i ng-show="!showWorkingProcess4" class="fa fa-caret-right"></i>
@@ -2555,18 +2554,17 @@
 
                                 </div>
                             </div>
-                            <div ng-show="showWorkingProcess4"
+                            <div ng-show="showWorkingProcess4  && WorkingProcess4"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  ng-click="submitAward()"
-                                 style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                 style="display: flex; align-items: center; gap: 5px; width: unset; flex-direction: column; min-width: 31px;">
                                 <i class="fas fa-save" style="font-size: 26px"></i><span style="font-size: x-small;">
-                                    Lưu
-                                    lại
+                                    Lưu lại
                                 </span>
                             </div>
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess4">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess4 && WorkingProcess4">
                             <form ng-validate="validationOptionsAward" name="forms.Award">
 
                                 <div class="form-group row">
@@ -2704,7 +2702,7 @@
                             </form>
                         </div>
                         <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                            <div class="d-flex"
+                            <div class="d-flex"  style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showWorkingProcess5" class="fa fa-caret-down"></i>
                                 <i ng-show="!showWorkingProcess5" class="fa fa-caret-right"></i>
@@ -2723,8 +2721,8 @@
                                 </div>
                             </div>
                             <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                 ng-show="showWorkingProcess5" ng-click="submitDisciplined()"
-                                 style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                 ng-show="showWorkingProcess5  && WorkingProcess5" ng-click="submitDisciplined()"
+                                 style="display: flex; align-items: center; gap: 5px; width: unset; flex-direction: column; min-width: 31px; ">
                                 <i class="fas fa-save" style="font-size: 26px"></i><span style="font-size: x-small;">
                                     Lưu
                                     lại
@@ -2732,7 +2730,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess5">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess5  && WorkingProcess5">
                             <form ng-validate="validationOptionsDisciplined" name="forms.Disciplined">
 
                                 <div class="form-group row">
@@ -2876,7 +2874,7 @@
                         </div>
                         <div class="toggle-header"
                              style="display:flex ; justify-content:space-between; white-space:nowrap">
-                            <div class="d-flex"
+                            <div class="d-flex"  style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  style="width: 75%; display: flex; text-wrap: wrap;">
                                 <i ng-show="showWorkingProcess6" class="fa fa-caret-down"></i>
@@ -2896,10 +2894,10 @@
                                 </div>
                             </div>
 
-                            <div ng-show="showWorkingProcess6"
+                            <div ng-show="showWorkingProcess6  && WorkingProcess6"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  ng-click="submitTrainingCertificatedPass()"
-                                 style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                 style="display: flex; align-items: center; gap: 5px; width: unset; flex-direction: column; min-width: 31px;">
                                 <i class="fas fa-save" style="font-size: 26px"></i><span style="font-size: x-small;">
                                     Lưu
                                     lại
@@ -2907,7 +2905,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess6">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess6  && WorkingProcess6">
                             <form ng-validate="validationOptionsCertificatedPass" name="forms.CertificatedPass">
 
                                 <div class="form-group row">
@@ -3114,7 +3112,7 @@
                             </form>
                         </div>
                         <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                            <div class="d-flex"
+                            <div class="d-flex"  style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showWorkingProcess7" class="fa fa-caret-down"></i>
                                 <i ng-show="!showWorkingProcess7" class="fa fa-caret-right"></i>
@@ -3132,10 +3130,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="showWorkingProcess7"
+                            <div ng-show="showWorkingProcess7 && WorkingProcess7"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  ng-click="submitGoAboard()"
-                                 style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                 style="display: flex; align-items: center; gap: 5px; width: unset; flex-direction: column; min-width: 31px;">
                                 <i class="fas fa-save" style="font-size: 26px"></i><span style="font-size: x-small;">
                                     Lưu
                                     lại
@@ -3144,7 +3142,7 @@
 
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess7">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess7 && WorkingProcess7">
                             <form ng-validate="validationOptionsGoAboard" name="forms.GoAboard">
                                 <div class="form-group row">
                                     <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
@@ -3315,7 +3313,7 @@
 
                         <div class="toggle-header" id="GTVD" style="display: flex; justify-content: space-between;">
 
-                            <div class="d-flex"
+                            <div class="d-flex"  style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showDegree" class="fa fa-caret-down"></i>
                                 <i ng-show="!showDegree" class="fa fa-caret-right"></i>
@@ -3333,10 +3331,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="showDegree"
+                            <div ng-show="showDegree && WorkingProcess8"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  ng-click="submitIntroducer()"
-                                 style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
+                                 style="display: flex; align-items: center; gap: 5px; width: unset; flex-direction: column; min-width: 31px;">
                                 <i class="fas fa-save" style="font-size: 26px"></i><span style="font-size: x-small;">
                                     Lưu
                                     lại
@@ -3344,7 +3342,7 @@
                             </div>
                         </div>
                         <div class="mt-15" style="padding-left: 20px;font-size: 13px;padding-right:10px;"
-                             ng-show="showDegree">
+                             ng-show="showDegree  && WorkingProcess8">
                             <form ng-validate="validationOptionsIntroducer" name="forms.Introducer">
 
                                 <div class="form-group row">
