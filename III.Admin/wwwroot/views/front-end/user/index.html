@@ -2556,7 +2556,7 @@
 
                                 </div>
                             </div>
-                            <div ng-show="showWorkingProcess4"
+                            <div ng-show="showWorkingProcess4  && WorkingProcess4"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  ng-click="submitAward()"
                                  style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
@@ -2567,7 +2567,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess4">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess4 && WorkingProcess4">
                             <form ng-validate="validationOptionsAward" name="forms.Award">
 
                                 <div class="form-group row">
@@ -2724,7 +2724,7 @@
                                 </div>
                             </div>
                             <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
-                                 ng-show="showWorkingProcess5" ng-click="submitDisciplined()"
+                                 ng-show="showWorkingProcess5  && WorkingProcess5" ng-click="submitDisciplined()"
                                  style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
                                 <i class="fas fa-save" style="font-size: 26px"></i><span style="font-size: x-small;">
                                     Lưu
@@ -2733,7 +2733,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess5">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess5  && WorkingProcess5">
                             <form ng-validate="validationOptionsDisciplined" name="forms.Disciplined">
 
                                 <div class="form-group row">
@@ -2897,7 +2897,7 @@
                                 </div>
                             </div>
 
-                            <div ng-show="showWorkingProcess6"
+                            <div ng-show="showWorkingProcess6  && WorkingProcess6"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  ng-click="submitTrainingCertificatedPass()"
                                  style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
@@ -2908,7 +2908,7 @@
                             </div>
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess6">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess6  && WorkingProcess6">
                             <form ng-validate="validationOptionsCertificatedPass" name="forms.CertificatedPass">
 
                                 <div class="form-group row">
@@ -3133,7 +3133,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="showWorkingProcess7"
+                            <div ng-show="showWorkingProcess7 && WorkingProcess7"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  ng-click="submitGoAboard()"
                                  style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
@@ -3145,7 +3145,7 @@
 
                         </div>
 
-                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess7">
+                        <div class="mt-15" style="padding-left: 15px;padding-right:10px;" ng-show="showWorkingProcess7 && WorkingProcess7">
                             <form ng-validate="validationOptionsGoAboard" name="forms.GoAboard">
                                 <div class="form-group row">
                                     <div class="col-md-6" style="padding-left: 0px;padding-right: 0px;">
@@ -3334,7 +3334,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div ng-show="showDegree"
+                            <div ng-show="showDegree && WorkingProcess8"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  ng-click="submitIntroducer()"
                                  style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
@@ -3345,7 +3345,7 @@
                             </div>
                         </div>
                         <div class="mt-15" style="padding-left: 20px;font-size: 13px;padding-right:10px;"
-                             ng-show="showDegree">
+                             ng-show="showDegree  && WorkingProcess8">
                             <form ng-validate="validationOptionsIntroducer" name="forms.Introducer">
 
                                 <div class="form-group row">
