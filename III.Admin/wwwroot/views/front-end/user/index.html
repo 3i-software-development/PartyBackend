@@ -1988,14 +1988,19 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)"
-                                                    ng-class="{'selected': x.selected}">
-                                                    <td>
+                                                <tr ng-repeat="x in Relationship" ng-click="selectFamily(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}">
+                                                    <td tr-child-tab
+                                                        row-id="x.Id"
+                                                        child-tab="family"
+                                                        json-guide="jsonGuide"
+                                                        control-id="relationship">
                                                         {{x.Relation}}
-
-
                                                     </td>
-                                                    <td>
+                                                    <td tr-child-tab
+                                                        row-id="x.Id"
+                                                        child-tab="family"
+                                                        json-guide="jsonGuide"
+                                                        control-id="MenberFamilyName">
                                                         {{x.Name}}
                                                         <span ng-if="(x.Relation.toLowerCase() === 'vợ (chồng)' || x.Relation.toLowerCase() === 'vợ' || x.Relation.toLowerCase() === 'chồng') && infUser.MaritalStatus.marriedStatus.split('_')[0] === '2'">
                                                             (Đã Ly hôn theo quyết định
@@ -2006,70 +2011,88 @@
                                                         <p class="m-0" ng-if="x.BirthPlace">
                                                             - Nơi sinh: {{x.BirthPlace}}
                                                         </p>
-                                                        <p class="m-0" ng-if="x.class && x.class != '_' ">
+                                                        <p class="m-0" ng-if="x.class">
                                                             - Thành phần giai cấp: {{x.class}}
                                                         </p>
                                                     </td>
-                                                    <td>
+                                                    <td tr-child-tab
+                                                        row-id="x.Id"
+                                                        child-tab="family"
+                                                        json-guide="jsonGuide"
+                                                        control-id="dateOfBirdRelation">
                                                         <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
-                                                        {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
+        {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                         <div>
                                                             <span>
+
+
+
                                                                 - Năm sinh{{x.die == true ?"(Đã mất)" : ""}}:
-                                                                {{x.BirthYear}} {{x.BirthDie?"-" + x.BirthDie :""}}
+                                                                {{x.BirthYear}} {{x.BirthDie?"-" + x.BirthDie : ""}}
                                                             </span>
                                                         </div>
                                                         <div>
+                                                            <span>{{x.die == true ?"- Nơi mất: "+ x.AddressDie : ""  }}</span>
+                                                        </div>
+                                                        <div>
+                                                            <span>{{x.die == true ?"- Lý do mất: "+ x.Reason : ""  }}</span>
+                                                        </div>
+                                                    </td>
+                                                    <td tr-child-tab
+                                                        row-id="x.Id"
+                                                        child-tab="family"
+                                                        json-guide="jsonGuide"
+                                                        control-id="homeTown">
+                                                        <!--<div><span  ng-if="x.HomeTownVillage">- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>-->
+                                                        <div>
                                                             <span>
-                                                                {{x.die == true ?"- Nơi mất: "+ x.AddressDie : ""}}
+                                                                {{ (x.HomeTownVillage || x.HomeTownValue) ? '- Quê quán: ' + (x.HomeTownVillage || '') + ', ' + (x.HomeTownValue || '') : '' }}
                                                             </span>
                                                         </div>
                                                         <div>
-                                                            <span>
-                                                                {{x.die == true ?"- Lý do mất: "+ x.Reason : ""}}
-                                                            </span>
+                                                            <span>{{ !x.die ? '- Nơi cư trú: ' + (x.Residence || '') : '' }}</span>
                                                         </div>
                                                     </td>
-                                                    <td>
-                                                        <div ng-if="(x.HomeTownVillage || x.HomeTownValue)">
-                                                            <span>- Quê quán: {{x.HomeTownVillage}},{{x.HomeTownValue}}</span>
-                                                        </div>
-                                                        <div ng-if="(!x.die)">
-                                                            <span>- Nơi cư trú:{{ x.Residence}}</span>
-                                                        </div>
+                                                    <td tr-child-tab
+                                                        row-id="x.Id"
+                                                        child-tab="family"
+                                                        json-guide="jsonGuide"
+                                                        control-id="career">
+                                                        {{x.Job}}
                                                     </td>
-                                                    <td >{{x.Job}}</td>
                                                     <td style="white-space: pre">{{x.WorkingProgress}}</td>
-                                                    <td>{{x.PoliticalAttitude}}</td>
-                                                    <td>
+                                                    <td tr-child-tab
+                                                        row-id="x.Id"
+                                                        child-tab="family"
+                                                        json-guide="jsonGuide"
+                                                        control-id="working">
+                                                        {{x.PoliticalAttitude}}
+                                                    </td>
+                                                    <td tr-child-tab
+                                                        row-id="x.Id"
+                                                        child-tab="family"
+                                                        json-guide="jsonGuide"
+                                                        control-id="PartyMember">
+
+                                                        <!--{{x.PartyMember == true?"Có (Sinh hoạt tại: " +x.wordAt + ")" : "Không"}}-->
+                                                        <div><span>{{x.PartyMember == true ?"- Là đảng viên" : "- Không phải là đảng viên"}}</span></div>
                                                         <div>
-                                                            <span>
-                                                                {{x.PartyMember == true ?"Là đảng viên" :"không"}}
-                                                            </span>
+                                                            <span>{{x.PartyMember == true ?"    + Sinh hoạt tại chi bộ: "+ x.wordAt : ""  }}</span>
                                                         </div>
                                                         <div>
-                                                            <span>
-                                                                {{x.PartyMember == true ?"Sinh hoạt tại chi bộ: "+x.wordAt : " "}}
-                                                            </span>
-                                                        </div>
-                                                        <div>
-                                                            <span>
-                                                                {{x.PartyMember == true ?"Thuộc đảng bộ: "+x.Party: " "}}
-                                                            </span>
+                                                            <span>{{x.PartyMember == true ?"    + Thuộc đảng bộ: "+ x.Party : ""  }}</span>
                                                         </div>
                                                     </td>
 
-
                                                     <td>
-                                                        <button class="btn" style="color:red" ng-click="deleteFamily($index)">
+                                                        <button class="btn" ng-click="deleteFamily($index)"
+                                                                style="color:red">
                                                             <i class="fa fa-trash"></i>
                                                         </button>
-                                                        <!--<button class="btn mt-1">
-                                                            <i class="fa fa-info-circle icon-clickable" id="{{x.Id}}" ng-click="check(x.Id)"
-                                                               title="Popover Header" popover-placement="bottom-left"
-                                                               uib-popover="Lưu ý: {{matchedItemss[0].comment}}"
-                                                               popover-trigger="outsideClick"></i>
-                                                        </button>-->
+                                                        <!--<button class="btn mt-1" ng-click="openPopover2(x.Id)"
+                uib-popover-template="'popoverTemplate.html'" popover-placement="left" popover-trigger="outsideClick">
+            <i class="fa-solid fa-comments"></i>
+        </button>-->
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -2206,13 +2229,38 @@
                                                 <th>Nội dung</th>
                                                 <th>Xoá bỏ</th>
                                             </tr>
-                                            <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)" ng-class="{'selected': x.selected}">
-                                                <td>{{x.Begin}}</td>
-                                                <td>{{x.End}}</td>
-                                                <td>{{x.Content}}</td>
+                                            <tr ng-repeat="x in PersonalHistory" ng-click="selectPersonHistory(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}">
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="PersonHistory"
+                                                    json-guide="jsonGuide"
+                                                    control-id="startDate">
+                                                    {{x.Begin}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="PersonHistory"
+                                                    json-guide="jsonGuide"
+                                                    control-id="endDate">
+                                                    {{x.End}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="PersonHistory"
+                                                    json-guide="jsonGuide"
+                                                    control-id="content">
+                                                    <span ng-if="x.Type==1||x.Type==2||x.Type==3">Tại chi bộ:</span>{{x.Content}}
+                                                </td>
+                                                <!--<td>
+        <span ng-if="x.Type == '0'||x.Type==null||x.Type==''">Chưa phân loại</span>
+        <span ng-if="x.Type == '1'">Bị xóa tên trong danh sách đảng viên</span>
+        <span ng-if="x.Type == '2'">Được kết nạp lại vào Đảng lần 2</span>
+        <span ng-if="x.Type == '3'">Được khôi phục đảng tịch</span>
+        <span ng-if="x.Type == '4'">Bị xử lý theo pháp luật</span>
+        <span ng-if="x.Type == '5'">Làm việc trong chế độ cũ</span>
+    </td>-->
                                                 <td style="text-align:center">
-                                                    <i style="color:red" class="fa fa-trash"
-                                                       ng-click="deletePesonalHistory($index)"></i>
+                                                    <i style="color:red" class="fa fa-trash" ng-click="deletePesonalHistory($index)"></i>
                                                 </td>
                                             </tr>
                                         </table>
@@ -2382,11 +2430,35 @@
                                                 <th>Chức vụ</th>
                                                 <th>Xoá bỏ</th>
                                             </tr>
-                                            <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)" ng-class="{'selected': x.selected}">
-                                                <td>{{x.From}}</td>
-                                                <td>{{x.To}}</td>
-                                                <td>{{x.Work}}</td>
-                                                <td>{{x.Role}}</td>
+                                            <tr ng-repeat="x in BusinessNDuty" ng-click="selectWorkingTracking(x)" ng-class="{'selected': x.selected}" id="{{x.Id}}">
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WorkingTracking"
+                                                    json-guide="jsonGuide"
+                                                    control-id="From">
+                                                    {{x.From}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WorkingTracking"
+                                                    json-guide="jsonGuide"
+                                                    control-id="To">
+                                                    {{x.To}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WorkingTracking"
+                                                    json-guide="jsonGuide"
+                                                    control-id="work">
+                                                    {{x.Work}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WorkingTracking"
+                                                    json-guide="jsonGuide"
+                                                    control-id="role">
+                                                    {{x.Role}}
+                                                </td>
                                                 <td style="text-align:center">
                                                     <i style="color:red" class="fa fa-trash"
                                                        ng-click="deleteWorkingTracking($index)"></i>
@@ -2517,10 +2589,21 @@
                                                 <th>Nội dung</th>
                                                 <th>Xoá bỏ</th>
                                             </tr>
-                                            <tr ng-repeat="x in HistoricalFeatures"
-                                                ng-click="selectHistorySpecialist(x)" ng-class="{'selected': x.selected}">
-                                                <td>{{x.MonthYear}}</td>
-                                                <td>{{x.Content}}</td>
+                                            <tr ng-repeat="x in HistoricalFeatures" ng-click="selectHistorySpecialist(x)" ng-class="{'selected': x.selected}">
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="historyspecialist"
+                                                    json-guide="jsonGuide"
+                                                    control-id="MonthYear">
+                                                    {{x.MonthYear}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="historyspecialist"
+                                                    json-guide="jsonGuide"
+                                                    control-id="content">
+                                                    {{x.Content}}
+                                                </td>
 
                                                 <td style="text-align:center">
                                                     <i style="color:red" class="fa fa-trash"
@@ -2688,12 +2771,33 @@
                                                 <th>Xoá bỏ</th>
                                             </tr>
                                             <tr ng-repeat="x in Laudatory" ng-click="selectLaudatory(x)" ng-class="{'selected': x.selected}">
-                                                <td>{{x.MonthYear}}</td>
-                                                <td>{{x.Reason}}</td>
-                                                <td>{{x.GrantOfDecision}}</td>
+                                                <!--<td>{{x.MonthYear}}</td>-->
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="laudatory"
+                                                    json-guide="jsonGuide"
+                                                    control-id="MonthYear">
+                                                    {{x.MonthYear}}
+                                                </td>
+
+                                                <!--<td>{{x.Reason}}</td>-->
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="laudatory"
+                                                    json-guide="jsonGuide"
+                                                    control-id="GrantOfDecision">
+                                                    {{x.Reason}}
+                                                </td>
+                                                <!--<td>{{x.GrantOfDecision}}</td>-->
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="laudatory"
+                                                    json-guide="jsonGuide"
+                                                    control-id="GrantOfDecision">
+                                                    {{x.GrantOfDecision}}
+                                                </td>
                                                 <td style="text-align:center">
-                                                    <i style="color:red" class="fa fa-trash"
-                                                       ng-click="deleteAward($index)"></i>
+                                                    <i style="color:red" class="fa fa-trash" ng-click="deleteAward($index)"></i>
                                                 </td>
                                             </tr>
                                         </table>
@@ -2858,9 +2962,27 @@
                                                 <th>Xoá bỏ</th>
                                             </tr>
                                             <tr ng-repeat="x in Disciplined" ng-click="selectWarningDisciplined(x)" ng-class="{'selected': x.selected}">
-                                                <td>{{x.MonthYear}}</td>
-                                                <td>{{x.Reason}}</td>
-                                                <td>{{x.GrantOfDecision}}</td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WarningDisciplined"
+                                                    json-guide="jsonGuide"
+                                                    control-id="MonthYear">
+                                                    {{x.MonthYear}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WarningDisciplined"
+                                                    json-guide="jsonGuide"
+                                                    control-id="DisciplineReason">
+                                                    {{x.Reason}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="WarningDisciplined"
+                                                    json-guide="jsonGuide"
+                                                    control-id="GrantOfDecision">
+                                                    {{x.GrantOfDecision}}
+                                                </td>
                                                 <td style="text-align:center">
                                                     <i style="color:red" class="fa fa-trash"
                                                        ng-click="deleteWarningDisciplined($index)"></i>
@@ -3096,11 +3218,41 @@
                                             </tr>
                                             <tr ng-repeat="x in PassedTrainingClasses"
                                                 ng-click="selectTrainingCertificatedPass(x)" ng-class="{'selected': x.selected}">
-                                                <td>{{x.From}}</td>
-                                                <td>{{x.To}}</td>
-                                                <td>{{x.SchoolName}}</td>
-                                                <td>{{x.Class}}</td>
-                                                <td>{{x.Certificate}}</td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="TrainingCertificatedPass"
+                                                    json-guide="jsonGuide"
+                                                    control-id="From">
+                                                    {{x.From}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="TrainingCertificatedPass"
+                                                    json-guide="jsonGuide"
+                                                    control-id="To">
+                                                    {{x.To}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="TrainingCertificatedPass"
+                                                    json-guide="jsonGuide"
+                                                    control-id="SchoolName">
+                                                    {{x.SchoolName}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="TrainingCertificatedPass"
+                                                    json-guide="jsonGuide"
+                                                    control-id="Class">
+                                                    {{x.Class}}
+                                                </td>
+                                                <td tr-child-tab
+                                                    row-id="x.Id"
+                                                    child-tab="TrainingCertificatedPass"
+                                                    json-guide="jsonGuide"
+                                                    control-id="Certificate">
+                                                    {{x.Certificate}}
+                                                </td>
                                                 <td style="text-align:center">
                                                     <i style="color:red" class="fa fa-trash"
                                                        ng-click="deleteTrainingCertificatedPass($index)"></i>
@@ -3296,10 +3448,22 @@
                                                 <th>Xoá bỏ</th>
                                             </tr>
                                             <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)" ng-class="{'selected': x.selected}">
-                                                <td>{{x.From}}</td>
-                                                <td>{{x.To}}</td>
-                                                <td>{{x.Contact}}</td>
-                                                <td>{{x.Country}}</td>
+                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="From">
+                                                    {{x.From}}
+                                                </td>
+                                                <!--<td>{{x.From}}</td>-->
+                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="To">
+                                                    {{x.To}}
+                                                </td>
+                                                <!--<td>{{x.To}}</td>-->
+                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="contact">
+                                                    {{x.Contact}}
+                                                </td>
+                                                <!--<td>{{x.Contact}}</td>-->
+                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="WhichCountry">
+                                                    {{x.Country}}
+                                                </td>
+                                                <!--<td>{{x.Country}}</td>-->
                                                 <td style="text-align:center">
                                                     <i style="color:red" class="fa fa-trash"
                                                        ng-click="deleteGoAboard($index)"></i>

@@ -2845,7 +2845,8 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             }
             var model = {}
             if ($scope.selectedFamily.Relation.toLowerCase().includes("con") || $scope.selectedFamily.Relation.toLowerCase().includes("anh") || $scope.selectedFamily.Relation.toLowerCase().includes("chị") || $scope.selectedFamily.Relation.toLowerCase().includes("em")) {
-                $scope.selectedFamily.HomeTownValue;
+                $scope.selectedFamily.HomeTownValue = "";
+                $scope.selectedFamily.HomeTown = "";
                 $scope.selectedFamily.HomeTownVillage = "";
             } 
             model.Relation = $scope.selectedFamily.Relation;
@@ -4194,6 +4195,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     }
                     if (obj.Relation.toLowerCase().includes("con") || obj.Relation.toLowerCase().includes("anh") || obj.Relation.toLowerCase().includes("chị") || obj.Relation.toLowerCase().includes("em")) {
                         obj.HomeTownValue = "";
+                        obj.HomeTown = "";
                         obj.HomeTownVillage = "";
                     }
                     const partMember = obj.PartyMember.split('_');
@@ -4239,6 +4241,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         obj.PartyMember = false;
                     }
                 })
+                setTimeout(() => {
+                    $scope.checkFamilyLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -5599,6 +5605,42 @@ app.directive('iconChildTab', function () {
                     element.css('color', 'unset');
                 }
             });
+        }
+    };
+});
+
+
+app.directive('trChildTab', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            rowId: '=',
+            childTab: '@',
+            jsonGuide: '=',
+            controlId: '@'
+        },
+        link: function (scope, element) {
+            function watchFunction() {
+                if (!Array.isArray(scope.jsonGuide)) {
+                    scope.jsonGuide = [];
+                    console.warn('scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+                }
+                const pp = scope.jsonGuide.find(x => x.id === `${scope.childTab}_${scope.rowId}`);
+                const hasComment = pp?.idFamily ? pp?.idFamily[scope.controlId] : false;
+
+                // Remove old span with class 'trComment' if it exists
+                element.find('.trComment').remove();
+
+                if (hasComment) {
+                    //element.css('color', 'red');
+                    const oldHtml = element.html();
+                    element.html(oldHtml + `<span style="color:red" class="trComment"><br>Lưu ý: ${hasComment}</span>`);
+                } else {
+                    //element.css('color', 'unset');
+                }
+            }
+            scope.$watch('jsonGuide', watchFunction(), true);
+            scope.$watchGroup(['childTab', 'rowId', 'controlId'], watchFunction());
         }
     };
 });

@@ -1992,14 +1992,16 @@
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
-                                                                    control-id="relationship">
+                                                                    control-id="relationship"
+                                                                    check-load="checkFamilyLoad">
                                                                     {{x.Relation}}
                                                                 </td>
                                                                 <td tr-child-tab
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
-                                                                    control-id="MenberFamilyName">
+                                                                    control-id="MenberFamilyName"
+                                                                    check-load="checkFamilyLoad">
                                                                     {{x.Name}}
                                                                     <span ng-if="(x.Relation.toLowerCase() === 'vợ (chồng)' || x.Relation.toLowerCase() === 'vợ' || x.Relation.toLowerCase() === 'chồng') && infUser.MaritalStatus.marriedStatus.split('_')[0] === '2'">
                                                                         (Đã Ly hôn theo quyết định
@@ -2018,7 +2020,8 @@
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
-                                                                    control-id="dateOfBirdRelation">
+                                                                    control-id="dateOfBirdRelation"
+                                                                    check-load="checkFamilyLoad">
                                                                     <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
                                                                     {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                                     <div>
@@ -2041,7 +2044,8 @@
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
-                                                                    control-id="homeTown">
+                                                                    control-id="homeTown"
+                                                                    check-load="checkFamilyLoad">
                                                                     <!--<div><span  ng-if="x.HomeTownVillage">- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>-->
                                                                     <div>
                                                                         <span>
@@ -2056,7 +2060,8 @@
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
-                                                                    control-id="career">
+                                                                    control-id="career"
+                                                                    check-load="checkFamilyLoad">
                                                                     {{x.Job}}
                                                                 </td>
                                                                 <td style="white-space: pre">{{x.WorkingProgress}}</td>
@@ -2064,14 +2069,16 @@
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
-                                                                    control-id="working">
+                                                                    control-id="working"
+                                                                    check-load="checkFamilyLoad">
                                                                     {{x.PoliticalAttitude}}
                                                                 </td>
                                                                 <td tr-child-tab
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
-                                                                    control-id="PartyMember">
+                                                                    control-id="PartyMember"
+                                                                    check-load="checkFamilyLoad">
 
                                                                     <!--{{x.PartyMember == true?"Có (Sinh hoạt tại: " +x.wordAt + ")" : "Không"}}-->
                                                                     <div><span>{{x.PartyMember == true ?"- Là đảng viên" : "- Không phải là đảng viên"}}</span></div>
