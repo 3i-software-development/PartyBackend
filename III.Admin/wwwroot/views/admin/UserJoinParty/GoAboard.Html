@@ -14,8 +14,8 @@
         <div class="form-group row">
             <div class="col-md-6">
                 <div class="col-md-6 pr-0 pl-0">
-                    <i class="fa fa-calendar" id="From" ng-click="openPopover9('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
-                    <i class="fa fa-user" id="From" ng-click="warningPopover3()"
+                    <i class="fa fa-calendar" id="From" ng-click="openPopover9('From');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick" ng-if="selectedGoAboard && selectedGoAboard.Id"></i>
+                    <i class="fa fa-calendar" id="From" ng-click="warningPopover3()"
                        ng-if="!selectedGoAboard || !selectedGoAboard.Id"></i>
                     <label class="displayInfo control-label require custom-title-code-bold">
                         Từ ngày
@@ -34,7 +34,9 @@
             </div>
             <div class="col-md-6">
                 <div class="col-md-6 pr-0 pl-0">
-                    <i class="fa fa-calendar" id="To" ng-click="openPopover9('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                    <i class="fa fa-calendar" id="To" ng-click="openPopover9('To');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick" ng-if="selectedGoAboard && selectedGoAboard.Id"></i>
+                    <i class="fa fa-calendar" id="To" ng-click="warningPopover3()"
+                       ng-if="!selectedGoAboard || !selectedGoAboard.Id"></i>
                     <label class="displayInfo control-label require custom-title-code-bold">
                         Đến ngày
                     </label>
@@ -53,7 +55,9 @@
         </div>
         <div class="form-group row">
             <div class="col-md-3 pr-0">
-                <i class="fa fa-pencil-square-o" id="contact" ng-click="openPopover9('contact');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                <i class="fa fa-pencil-square-o" id="contact" ng-click="openPopover9('contact');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick" ng-if="selectedGoAboard && selectedGoAboard.Id"></i>
+                <i class="fa fa-pencil-square-o" id="contact" ng-click="warningPopover3()"
+                   ng-if="!selectedGoAboard || !selectedGoAboard.Id"></i>
                 <label class="displayInfo control-label require custom-title-code-bold">
                     Nội dung đi
                 </label>
@@ -73,7 +77,9 @@
         </div>
         <div class="form-group row">
             <div class="col-md-3 pr-0">
-                <i class="fa fa-pencil-square-o" id="WhichCountry" ng-click="openPopover9('WhichCountry');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick"></i>
+                <i class="fa fa-pencil-square-o" id="WhichCountry" ng-click="openPopover9('WhichCountry');" uib-popover-template="'popoverTemplate.html'" popover-placement="right" popover-trigger="outsideClick" ng-if="selectedGoAboard && selectedGoAboard.Id"></i>
+                <i class="fa fa-pencil-square-o" id="WhichCountry" ng-click="warningPopover3()"
+                   ng-if="!selectedGoAboard || !selectedGoAboard.Id"></i>
                 <label class="displayInfo control-label require custom-title-code-bold">
                     Nước nào
                 </label>
