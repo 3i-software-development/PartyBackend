@@ -84,7 +84,7 @@
     "Guide": "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
   },
   {
-    "Id": "Relationship",
+    "Id": "relationship",
     "Guide": "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
   },
   {
@@ -190,13 +190,16 @@
   {
     "Id": "MenberFamilyName",
     "Guide": "Bạn cần nhập họ va tên người thân của mình.Ví dụ: Nguyễn Văn A"
+  },{
+	"Id": "BirthPlace",
+    "Guide": "Bạn cần nhập nơi sinh của người thân của mình.Ví dụ: Tỉnh Hà Giang,..."
   },
   {
-    "Id": "Relation",
+    "Id": "dateOfBirdRelation",
     "Guide": "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố"
   },
   {
-    "Id": "selectedFamily.BirthYear",
+    "Id": "BirthYear",
     "Guide": "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
   },
   {

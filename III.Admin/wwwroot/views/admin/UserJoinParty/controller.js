@@ -3403,6 +3403,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             pp.comment = pp.idFamily[id];
             $scope.matchedItemss = [pp];
         }
+        
     }
 
 
@@ -3819,7 +3820,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
             return item.Id === id;
         });
-        /* $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide*/
+         $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide
     };
 
     $scope.createWfInstance = function () {
