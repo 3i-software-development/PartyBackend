@@ -4194,7 +4194,17 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         })
         console.log($scope.id);
     }
+    $scope.checkFamilyLoad = false;
 
+    $scope.checkPersonalHistoryLoad = false;
+    $scope.checkBusinessNDutyLoad = false;
+    $scope.checkHistoricalFeaturesLoad = false;
+
+    $scope.checkLaudatoryLoad = false;
+    $scope.checkDisciplinedLoad = false;
+    $scope.checkPassedTrainingClassesLoad = false;
+
+    $scope.checkGoAboardLoad = false;
     //Get By Profilecode
     $scope.getFamilyByProfileCode = function () {
         $.ajax({
@@ -4333,8 +4343,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 } else {
 
                 }
-                //$scope.$apply();
-                console.log($scope.PersonalHistory);
+                setTimeout(() => {
+                    $scope.checkPersonalHistoryLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -4383,8 +4395,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 if ($scope.Laudatory.length > 0) {
                     $scope.WorkingProcess4 = true;
                 }
-                //$scope.$apply();
-                console.log($scope.Laudatory);
+                setTimeout(() => {
+                    $scope.checkLaudatoryLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -4410,7 +4424,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     $scope.$apply();
                 }, 500);
                 //$scope.$apply();
-                console.log($scope.BusinessNDuty);
+                setTimeout(() => {
+                    $scope.checkBusinessNDutyLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -4432,8 +4449,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 if ($scope.HistoricalFeatures.length > 0) {
                     $scope.WorkingProcess3 = true;
                 }
-                //$scope.$apply();
-                console.log($scope.HistoricalFeatures);
+                setTimeout(() => {
+                    $scope.checkHistoricalFeaturesLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -4457,8 +4476,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     $scope.WorkingProcess6 = true;
                 }
 
-                //$scope.$apply();
-                console.log($scope.PassedTrainingClasses);
+                setTimeout(() => {
+                    $scope.checkPassedTrainingClassesLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -4481,8 +4502,10 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 if ($scope.Disciplined.length > 0) {
                     $scope.WorkingProcess5 = true;
                 }
-                //$scope.$apply();
-                console.log($scope.Disciplined);
+                setTimeout(() => {
+                    $scope.checkDisciplinedLoad = true;
+                    $scope.$apply();
+                }, 500);
             },
             error: function (error) {
                 console.log(error);
@@ -5645,7 +5668,7 @@ app.directive('iconChildTab', function () {
 });
 
 
-app.directive('trChildTab', function () {
+/*checkFamilyLoad
     return {
         restrict: 'A',
         scope: {
@@ -5676,6 +5699,50 @@ app.directive('trChildTab', function () {
             }
             scope.$watch('jsonGuide', watchFunction(), true);
             scope.$watchGroup(['childTab', 'rowId', 'controlId'], watchFunction());
+        }
+    };
+});*/
+app.directive('trChildTab', function () {
+    return {
+        restrict: 'A',
+        scope: {
+            rowId: '=',
+            childTab: '@',
+            jsonGuide: '=',
+            checkLoad: '=',
+            controlId: '@'
+        },
+        link: function (scope, element) {
+            function updateElement() {
+                if (!Array.isArray(scope.jsonGuide)) {
+                    scope.jsonGuide = [];
+                    console.warn('scope.jsonGuide không phải là một mảng. Đã gán thành một mảng trống.');
+                }
+                const pp = scope.jsonGuide.find(x => x.id === `${scope.childTab}_${scope.rowId}`);
+                const hasComment = pp?.idFamily ? pp?.idFamily[scope.controlId] : false;
+
+                // Remove old span with class 'trComment' if it exists
+                element.find('.trComment').remove();
+
+                if (hasComment) {
+                    //element.css('color', 'red');
+                    const oldHtml = element.html();
+                    element.html(oldHtml + `<span style="color:red" class="trComment"><br>Lưu ý: ${hasComment}</span>`);
+                } else {
+                    //element.css('color', 'unset');
+                }
+            }
+            scope.$watch('jsonGuide', function (newVal, oldVal) {
+                if (scope.checkLoad) {
+                    updateElement();
+                }
+            }, true);
+            scope.$watch('checkLoad', function (newVal, oldVal) {
+                if (newVal) {
+                    updateElement();
+                }
+            })
+            //scope.$watchGroup(['childTab', 'rowId', 'controlId'], watchFunction());
         }
     };
 });

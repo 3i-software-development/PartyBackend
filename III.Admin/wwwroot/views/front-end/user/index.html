@@ -1993,14 +1993,16 @@
                                                         row-id="x.Id"
                                                         child-tab="family"
                                                         json-guide="jsonGuide"
-                                                        control-id="relationship">
+                                                        control-id="relationship"
+                                                        check-load="checkFamilyLoad">
                                                         {{x.Relation}}
                                                     </td>
                                                     <td tr-child-tab
                                                         row-id="x.Id"
                                                         child-tab="family"
                                                         json-guide="jsonGuide"
-                                                        control-id="MenberFamilyName">
+                                                        control-id="MenberFamilyName"
+                                                        check-load="checkFamilyLoad">
                                                         {{x.Name}}
                                                         <span ng-if="(x.Relation.toLowerCase() === 'vợ (chồng)' || x.Relation.toLowerCase() === 'vợ' || x.Relation.toLowerCase() === 'chồng') && infUser.MaritalStatus.marriedStatus.split('_')[0] === '2'">
                                                             (Đã Ly hôn theo quyết định
@@ -2019,7 +2021,8 @@
                                                         row-id="x.Id"
                                                         child-tab="family"
                                                         json-guide="jsonGuide"
-                                                        control-id="dateOfBirdRelation">
+                                                        control-id="dateOfBirdRelation"
+                                                        check-load="checkFamilyLoad">
                                                         <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
         {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                         <div>
@@ -2042,7 +2045,8 @@
                                                         row-id="x.Id"
                                                         child-tab="family"
                                                         json-guide="jsonGuide"
-                                                        control-id="homeTown">
+                                                        control-id="homeTown"
+                                                        check-load="checkFamilyLoad">
                                                         <!--<div><span  ng-if="x.HomeTownVillage">- Quê quán: {{x.HomeTownVillage}}, {{x.HomeTownValue}}</span></div>-->
                                                         <div>
                                                             <span>
@@ -2057,22 +2061,32 @@
                                                         row-id="x.Id"
                                                         child-tab="family"
                                                         json-guide="jsonGuide"
-                                                        control-id="career">
+                                                        control-id="career"
+                                                        check-load="checkFamilyLoad">
                                                         {{x.Job}}
                                                     </td>
-                                                    <td style="white-space: pre">{{x.WorkingProgress}}</td>
+                                                    <td style="white-space: pre"
+                                                        tr-child-tab
+                                                        row-id="x.Id"
+                                                        child-tab="family"
+                                                        json-guide="jsonGuide"
+                                                        control-id="working"
+                                                        check-load="checkFamilyLoad"
+                                                        >{{x.WorkingProgress}}</td>
                                                     <td tr-child-tab
                                                         row-id="x.Id"
                                                         child-tab="family"
                                                         json-guide="jsonGuide"
-                                                        control-id="working">
+                                                        control-id="politicalAttitude"
+                                                        check-load="checkFamilyLoad">
                                                         {{x.PoliticalAttitude}}
                                                     </td>
                                                     <td tr-child-tab
                                                         row-id="x.Id"
                                                         child-tab="family"
                                                         json-guide="jsonGuide"
-                                                        control-id="PartyMember">
+                                                        control-id="PartyMember"
+                                                        check-load="checkFamilyLoad">
 
                                                         <!--{{x.PartyMember == true?"Có (Sinh hoạt tại: " +x.wordAt + ")" : "Không"}}-->
                                                         <div><span>{{x.PartyMember == true ?"- Là đảng viên" : "- Không phải là đảng viên"}}</span></div>
@@ -2234,21 +2248,24 @@
                                                     row-id="x.Id"
                                                     child-tab="PersonHistory"
                                                     json-guide="jsonGuide"
-                                                    control-id="startDate">
+                                                    control-id="startDate"
+                                                      check-load="checkPersonalHistoryLoad">
                                                     {{x.Begin}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="PersonHistory"
                                                     json-guide="jsonGuide"
-                                                    control-id="endDate">
+                                                    control-id="endDate"
+                                                      check-load="checkPersonalHistoryLoad">
                                                     {{x.End}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="PersonHistory"
                                                     json-guide="jsonGuide"
-                                                    control-id="content">
+                                                    control-id="content"
+                                                      check-load="checkPersonalHistoryLoad">
                                                     <span ng-if="x.Type==1||x.Type==2||x.Type==3">Tại chi bộ:</span>{{x.Content}}
                                                 </td>
                                                 <!--<td>
@@ -2435,28 +2452,32 @@
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
-                                                    control-id="From">
+                                                    control-id="From"
+                                                      check-load="checkBusinessNDutyLoad">
                                                     {{x.From}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
-                                                    control-id="To">
+                                                    control-id="To"
+                                                    check-load="checkBusinessNDutyLoad">
                                                     {{x.To}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
-                                                    control-id="work">
+                                                    control-id="work"
+                                                    check-load="checkBusinessNDutyLoad">
                                                     {{x.Work}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
-                                                    control-id="role">
+                                                    control-id="role"
+                                                    check-load="checkBusinessNDutyLoad">
                                                     {{x.Role}}
                                                 </td>
                                                 <td style="text-align:center">
@@ -2594,14 +2615,16 @@
                                                     row-id="x.Id"
                                                     child-tab="historyspecialist"
                                                     json-guide="jsonGuide"
-                                                    control-id="MonthYear">
+                                                    control-id="MonthYear"
+                                                    check-load="checkHistoricalFeaturesLoad">
                                                     {{x.MonthYear}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="historyspecialist"
                                                     json-guide="jsonGuide"
-                                                    control-id="content">
+                                                    control-id="content"
+                                                    check-load="checkHistoricalFeaturesLoad">
                                                     {{x.Content}}
                                                 </td>
 
@@ -2776,7 +2799,8 @@
                                                     row-id="x.Id"
                                                     child-tab="laudatory"
                                                     json-guide="jsonGuide"
-                                                    control-id="MonthYear">
+                                                    control-id="MonthYear"
+                                                    check-load="checkLaudatoryLoad">
                                                     {{x.MonthYear}}
                                                 </td>
 
@@ -2785,7 +2809,8 @@
                                                     row-id="x.Id"
                                                     child-tab="laudatory"
                                                     json-guide="jsonGuide"
-                                                    control-id="GrantOfDecision">
+                                                    control-id="AwardReason"
+                                                    check-load="checkLaudatoryLoad">
                                                     {{x.Reason}}
                                                 </td>
                                                 <!--<td>{{x.GrantOfDecision}}</td>-->
@@ -2793,7 +2818,8 @@
                                                     row-id="x.Id"
                                                     child-tab="laudatory"
                                                     json-guide="jsonGuide"
-                                                    control-id="GrantOfDecision">
+                                                    control-id="GrantOfDecision"
+                                                    check-load="checkLaudatoryLoad">
                                                     {{x.GrantOfDecision}}
                                                 </td>
                                                 <td style="text-align:center">
@@ -2966,21 +2992,24 @@
                                                     row-id="x.Id"
                                                     child-tab="WarningDisciplined"
                                                     json-guide="jsonGuide"
-                                                    control-id="MonthYear">
+                                                    control-id="MonthYear" 
+                                                    check-load="checkDisciplinedLoad">
                                                     {{x.MonthYear}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="WarningDisciplined"
                                                     json-guide="jsonGuide"
-                                                    control-id="DisciplineReason">
+                                                    control-id="DisciplineReason"
+                                                     check-load="checkDisciplinedLoad">
                                                     {{x.Reason}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="WarningDisciplined"
                                                     json-guide="jsonGuide"
-                                                    control-id="GrantOfDecision">
+                                                    control-id="GrantOfDecision"
+                                                     check-load="checkDisciplinedLoad">
                                                     {{x.GrantOfDecision}}
                                                 </td>
                                                 <td style="text-align:center">
@@ -3222,35 +3251,40 @@
                                                     row-id="x.Id"
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
-                                                    control-id="From">
+                                                    control-id="From"
+                                                     check-load="checkPassedTrainingClassesLoad">
                                                     {{x.From}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
-                                                    control-id="To">
+                                                    control-id="To"
+                                                     check-load="checkPassedTrainingClassesLoad">
                                                     {{x.To}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
-                                                    control-id="SchoolName">
+                                                    control-id="SchoolName"
+                                                     check-load="checkPassedTrainingClassesLoad">
                                                     {{x.SchoolName}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
-                                                    control-id="Class">
+                                                    control-id="Class"
+                                                     check-load="checkPassedTrainingClassesLoad">
                                                     {{x.Class}}
                                                 </td>
                                                 <td tr-child-tab
                                                     row-id="x.Id"
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
-                                                    control-id="Certificate">
+                                                    control-id="Certificate"
+                                                     check-load="checkPassedTrainingClassesLoad">
                                                     {{x.Certificate}}
                                                 </td>
                                                 <td style="text-align:center">
@@ -3448,19 +3482,19 @@
                                                 <th>Xoá bỏ</th>
                                             </tr>
                                             <tr ng-repeat="x in GoAboard" ng-click="selectGoAboard(x)" ng-class="{'selected': x.selected}">
-                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="From">
+                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="From" check-load="checkGoAboardLoad">
                                                     {{x.From}}
                                                 </td>
                                                 <!--<td>{{x.From}}</td>-->
-                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="To">
+                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="To" check-load="checkGoAboardLoad">
                                                     {{x.To}}
                                                 </td>
                                                 <!--<td>{{x.To}}</td>-->
-                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="contact">
+                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="contact" check-load="checkGoAboardLoad">
                                                     {{x.Contact}}
                                                 </td>
                                                 <!--<td>{{x.Contact}}</td>-->
-                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="WhichCountry">
+                                                <td tr-child-tab row-id="x.Id" child-tab="goaboard" json-guide="jsonGuide" control-id="WhichCountry" check-load="checkGoAboardLoad">
                                                     {{x.Country}}
                                                 </td>
                                                 <!--<td>{{x.Country}}</td>-->
