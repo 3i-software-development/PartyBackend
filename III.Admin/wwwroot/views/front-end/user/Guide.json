@@ -153,19 +153,19 @@
   },
   {
     "Id": "MonthYear",
-    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+    "Guide": "Bạn cần nhập tháng năm xảy ra.Ví dụ: 09-2023."
   },
   {
     "Id": "HistorySpecialist-MonthYear",
-    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+    "Guide": "Bạn cần nhập tháng năm xảy ra.Ví dụ: 09-2023."
   },
   {
     "Id": "WarningDisciplined-MonthYear",
-    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+    "Guide": "Bạn cần nhập tháng năm xảy ra.Ví dụ: 09-2023."
   },
   {
     "Id": "Laudatory-MonthYear",
-    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+    "Guide": "Bạn cần nhập tháng năm xảy ra.Ví dụ: 09-2023."
   },
   {
     "Id": "WarningDisciplined-GrantOfDecision",
@@ -250,10 +250,16 @@
   {
     "Id": "PersonHistory-To",
     "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+  },{
+    "Id": "WorkingProgressStart",
+    "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
   },
   {
     "Id": "WorkingTracking-From",
     "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },{
+    "Id": "WorkingProgressEnd",
+    "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
     "Id": "WorkingTracking-To",

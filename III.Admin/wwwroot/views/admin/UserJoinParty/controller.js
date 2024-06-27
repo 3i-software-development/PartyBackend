@@ -3887,7 +3887,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
             return item.Id === id;
         });
-     /*    $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide*/
+         $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide
     };
 
     $scope.createWfInstance = function () {
@@ -4210,6 +4210,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     App.toastrError(result.Title);
                 } else {
                     App.toastrSuccess(result.Title);
+                    $scope.getPersonalHistoryByProfileCode(); 
                 }
             });
         } else {
@@ -4551,6 +4552,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 /*$scope.selectedFamily = {
                     WorkingProgress: `Từ năm 18 tuổi đến năm`
                 };*/
+              
             }
         })
 

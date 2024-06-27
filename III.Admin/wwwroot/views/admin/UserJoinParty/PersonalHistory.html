@@ -30,18 +30,18 @@
         <form ng-validate="validationOptionsPersonalHistory" name="forms.personalHis">
             <div class="form-group row">
                 <div class="col-md-6" >
-                    <div class="col-md-6 pr-0 pl-0">
+                    <div class="col-md-6 pr-0 pl-0" style="width: 51.5%;">
                         <i class="fa fa-calendar" id="startDate" ng-click="openPopover4('startDate');"
                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                            popover-trigger="outsideClick" ng-if="selectedPersonHistory && selectedPersonHistory.Id"></i>
-                        <i class="fa fa-calendar" id="startDate" ng-if="!selectedPersonHistory || !selectedPersonHistory.Id" ng-click="warningPopover3()"></i>
+                        <i class="fa fa-calendar" id="startDate" ng-click="warningPopover3()" ng-if="!selectedPersonHistory || !selectedPersonHistory.Id" ></i>
 
                         <label class="displayInfo control-label require custom-title-code-bold">
                             Từ
                             ngày
                         </label>
                     </div>
-                    <div class="col-md-6 pr-0 pl-0">
+                    <div class="col-md-6 pr-0 pl-0" style="width: 48.5%;">
                         <div class="br24 form-control custom-title-code-bold">
                             <i class="fa fa-info-circle icon-clickable" id="PersonHistory-From" title="Popover Header"
                                popover-placement="bottom-left"

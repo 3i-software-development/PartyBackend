@@ -1439,7 +1439,7 @@
                                                     <i class="fa fa-info-circle" id="relationship"
                                                        title="Popover Header" popover-placement="bottom-left"
                                                        ng-click="handerClickIconChild('family','relationship')"
-                                                       uib-popover="Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ... Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Mối quan hệ với người thân:{{selectedFamily.Relation}}. {{matchedItems[0].guide}}.  {{matchedItemss[0].comment}}"
                                                        popover-trigger="outsideClick"></i>
 
                                                     <input class="displayInfo" style="border: #FFFF;" name="selectedFamilyRelation"
@@ -1636,7 +1636,7 @@
                                                             <i class="fa fa-info-circle " id="dateOfBirdRelation"
                                                                title="Popover Header" popover-placement="bottom-left"
                                                                ng-click="handerClickIconChild('family','WordAt');handleClick('WordAt')"
-                                                               uib-popover="Năm sinh của bạn là: {{selectedFamily.wordAt}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                               uib-popover="Nơi công tác của bạn là: {{selectedFamily.wordAt}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                                popover-trigger="outsideClick"></i>
 
                                                             <input class="displayInfo" style="border: #FFFF;" name="selectedFamilywordAt"
@@ -1736,7 +1736,7 @@
                                                             <i class="fa fa-info-circle " id="residence"
                                                                title="Popover Header" popover-placement="bottom-left"
                                                                ng-click="handerClickIconChild('family','working');handleClick('WorkingTracking-To')"
-                                                               uib-popover="Năm kết thúc công tác: {{WorkingProgressEnd}}. {{matchedItems[0].guide}}. VD: 2010. Lưu ý: {{matchedItemss[0].comment}}"
+                                                               uib-popover="Năm kết thúc công tác: {{WorkingProgressEnd}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                                popover-trigger="outsideClick"></i>
                                                             <input class="displayInfo" style="border: #FFFF;" name="CusCode" regexWorkingProgressEnd="true"
                                                                    ng-model="WorkingProgressEnd" type="text"
@@ -2147,7 +2147,7 @@
                             <form ng-validate="validationOptionBusinessNDuty" name="forms.BusinessNDuty">
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <div class="col-md-6 pr-0 pl-0">
+                                        <div class="col-md-6 pr-0 pl-0" style="width:52%;">
                                             <i class="fa fa-calendar" id="From" ng-click="openPopover5('From');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick"
@@ -2159,7 +2159,7 @@
                                                 Từ ngày
                                             </label>
                                         </div>
-                                        <div class="col-md-6 pr-0 pl-0">
+                                        <div class="col-md-6 pr-0 pl-0" style="width:48%;">
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle" id="From"
                                                    popover-placement="bottom-left"
@@ -2189,7 +2189,7 @@
                                                 <i class="fa fa-info-circle" id="To"
                                                    popover-placement="bottom-left"
                                                    ng-click="handerClickIconChild5('WorkingTracking','To');handleClick('WorkingTracking-To')"
-                                                   uib-popover="{{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                   uib-popover="Đến ngày: {{selectedWorkingTracking.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="outsideClick"
                                                   >
                                                 </i>
@@ -2235,7 +2235,8 @@
                                         <i class="fa fa-pencil-square-o" id="role" ng-click="openPopover5('role');"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                            popover-trigger="outsideClick" ng-if="selectedWorkingTracking && selectedWorkingTracking.Id"></i>
-                                      
+                                        <i class="fa fa-pencil-square-o" id="role" ng-click="warningPopover3()"
+                                           ng-if="!selectedWorkingTracking || !selectedWorkingTracking.Id"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
                                             Chức vụ
                                         </label>
@@ -2245,7 +2246,7 @@
                                             <i class="fa fa-info-circle icon-clickable" id="role" title="Popover Header"
                                                popover-placement="bottom-left"
                                                ng-click="handerClickIconChild5('WorkingTracking','role')"
-                                               uib-popover="Chức vụ cảu bạn là:{{selectedWorkingTracking.Role}}. {{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}"
+                                               uib-popover="Chức vụ của bạn là:{{selectedWorkingTracking.Role}}. {{selectedWorkingTracking.Role}}.{{matchedItems[0].guide}}"
                                                popover-trigger="outsideClick">
 
                                             </i>
@@ -2441,7 +2442,7 @@
                             <form ng-validate="validationOptionsAward" name="forms.Award">
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <div class="col-md-6 pr-0 pl-0">
+                                        <div class="col-md-6 pr-0 pl-0" style="width:52%;">
                                             <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover7('MonthYear');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick" ng-if="selectedLaudatory && selectedLaudatory.Id"></i>
@@ -2452,7 +2453,7 @@
                                                 Ngày, tháng, năm
                                             </label>
                                         </div>
-                                        <div class="col-md-6 pr-0 pl-0">
+                                        <div class="col-md-6 pr-0 pl-0" style="width:48%;">
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle" id="MonthYear"
                                                    title="Popover Header" popover-placement="bottom-left"
@@ -2590,7 +2591,7 @@
                             <form ng-validate="validationOptionsDisciplined" name="forms.Disciplined">
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <div class="col-md-6 pr-0 pl-0">
+                                        <div class="col-md-6 pr-0 pl-0" style="width:52%;">
                                             <i class="fa fa-calendar" id="MonthYear" ng-click="openPopover8('MonthYear');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick"
@@ -2601,7 +2602,7 @@
                                                 Tháng, năm
                                             </label>
                                         </div>
-                                        <div class="col-md-6 pr-0 pl-0">
+                                        <div class="col-md-6 pr-0 pl-0" style="width:48%;">
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle icon-clickable" id="MonthYear"
                                                    title="Popover Header" popover-placement="bottom-left"
@@ -2739,7 +2740,7 @@
                             <form ng-validate="validationOptionsCertificatedPass" name="forms.CertificatedPass">
                                 <div class="form-group row">
                                     <div class="col-md-6">
-                                        <div class="col-md-6 pr-0 pl-0">
+                                        <div class="col-md-6 pr-0 pl-0" style="width:52%;">
                                             <i class="fa fa-calendar" id="From" ng-click="openPopover11('From');"
                                                uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                popover-trigger="outsideClick" ng-if="selectedTrainingCertificatedPass && selectedTrainingCertificatedPass.Id"></i>
@@ -2749,7 +2750,7 @@
                                                 ngày
                                             </label>
                                         </div>
-                                        <div class="col-md-6 pr-0 pl-0">
+                                        <div class="col-md-6 pr-0 pl-0" style="width:48%;">
                                             <div class="br24 form-control custom-title-code-bold">
                                                 <i class="fa fa-info-circle " id="From" title="Popover Header"
                                                    popover-placement="bottom-left"
