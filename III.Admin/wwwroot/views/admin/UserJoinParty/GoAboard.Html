@@ -24,7 +24,7 @@
                 <div class="col-md-6 pr-0 pl-0">
                     <div class="br24 form-control custom-title-code-bold">
                         <i class="fa fa-info-circle " id="GoAboard-From" title="Popover Header" popover-placement="bottom-left" 
-                           ng-click="handerClickIconChild9('goaboard','From')"
+                           ng-click="handerClickIconChild9('goaboard','From');handleClick('GoAboard-From')"
                            uib-popover="Từ ngày: {{selectedGoAboard.From}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;"
                                name="selectedGoAboardFrom" ng-model="selectedGoAboard.From"
@@ -44,7 +44,7 @@
                 <div class="col-md-6 pr-0 pl-0">
                     <div class="br24 form-control custom-title-code-bold">
                         <i class="fa fa-info-circle " id="GoAboard-To" title="Popover Header" popover-placement="bottom-left"
-                            ng-click="handerClickIconChild9('goaboard','To')"
+                            ng-click="handerClickIconChild9('goaboard','To');handleClick('GoAboard-To')"
                            uib-popover="Đến ngày: {{selectedGoAboard.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                         <input class="displayInfo" style="border: #FFFF;"
                                name="selectedGoAboardTo" ng-model="selectedGoAboard.To"
@@ -65,7 +65,7 @@
             <div class="col-md-9">
                 <div class="br24 form-control custom-title-code-bold" style="white-space:nowrap">
                     <i class="fa fa-info-circle " id="contact" title="Popover Header" popover-placement="bottom-left"
-                       ng-click="handerClickIconChild9('goaboard','contact')"
+                       ng-click="handerClickIconChild9('goaboard','contact');handleClick('contact')"
                        uib-popover="Nội dung đi: {{selectedGoAboard.Contact}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;"
                            name="selectedGoAboardContact" ng-model="selectedGoAboard.Contact"
@@ -87,7 +87,7 @@
             <div class="col-md-9">
                 <div class="br24 form-control custom-title-code-bold " style="white-space:nowrap">
                     <i class="fa fa-info-circle" id="WhichCountry" title="Popover Header" popover-placement="bottom-left"
-                            ng-click="handerClickIconChild9('goaboard','WhichCountry')"
+                            ng-click="handerClickIconChild9('goaboard','WhichCountry');handleClick('WhichCountry')"
                        uib-popover="{{selectedGoAboard.Country}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="outsideClick"></i>
                     <input class="displayInfo" style="border: #FFFF;"
                            name="selectedGoAboardCountry" ng-model="selectedGoAboard.Country" ng-change="filterCountry()"
