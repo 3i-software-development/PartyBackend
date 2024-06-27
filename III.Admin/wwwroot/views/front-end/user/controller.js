@@ -1481,6 +1481,25 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     function handleTextUpload(txt) {
         $scope.Relationship = []
         $scope.PersonalHistory = []
+
+        //lịch sử bản thân
+        $scope.PersonalHistory = [];
+        //quá trình công tác
+        $scope.BusinessNDuty = [];
+        //di nước ngoài
+        $scope.GoAboard = [];
+        //Những lớp đào tạo
+        $scope.PassedTrainingClasses = [];
+        //đạc điểm lịch sử
+        $scope.HistoricalFeatures = [];
+        //khen thưởng
+        $scope.Laudatory = [];
+        //Kỷ luật
+        $scope.Disciplined = [];
+        //quan hệ gia đình
+        $scope.Relationship = [];
+        $scope.SelfComment = {};
+        $scope.GroupUser = '';
         $scope.defaultRTE.value = txt;
         setTimeout(function () {
             var listPage = document.querySelectorAll(".Section0 > div > table");
@@ -3675,6 +3694,28 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.addToPersonalHistory = function () {
         if ($scope.forms.personalHis.validate()) {
+            const fromDate = $scope.selectedPersonHistory.Begin;
+            const toDate = $scope.selectedPersonHistory.End;
+
+            if (fromDate && toDate) {
+                const parseDate = (dateStr) => {
+                    const parts = dateStr.split('/');
+                    if (parts.length === 2) {
+                        return new Date(parts[1], parts[0] - 1);
+                    } else if (parts.length === 3) {
+                        return new Date(parts[2], parts[1] - 1, parts[0]);
+                    }
+                    return null;
+                };
+
+                const from = parseDate(fromDate);
+                const to = parseDate(toDate);
+
+                if (from && to && from > to) {
+                    App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
+                    return;
+                }
+            } 
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
             $scope.err = false
@@ -3809,6 +3850,28 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
     }
     $scope.addToBusinessNDuty = function () {
         if ($scope.forms.BusinessNDuty.validate()) {
+            const fromDate = $scope.selectedWorkingTracking.From;
+            const toDate = $scope.selectedWorkingTracking.To;
+
+            if (fromDate && toDate) {
+                const parseDate = (dateStr) => {
+                    const parts = dateStr.split('/');
+                    if (parts.length === 2) {
+                        return new Date(parts[1], parts[0] - 1);
+                    } else if (parts.length === 3) {
+                        return new Date(parts[2], parts[1] - 1, parts[0]);
+                    }
+                    return null;
+                };
+
+                const from = parseDate(fromDate);
+                const to = parseDate(toDate);
+
+                if (from && to && from > to) {
+                    App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
+                    return;
+                }
+            } 
             if ($scope.selectedWorkingTracking.From == null || $scope.selectedWorkingTracking.From == undefined || $scope.selectedWorkingTracking.From == '') {
                 return
             }
@@ -3931,7 +3994,28 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.addToTrainingCertificatedPass = function () {
         if ($scope.forms.CertificatedPass.validate()) {
+            const fromDate = $scope.selectedTrainingCertificatedPass.From;
+            const toDate = $scope.selectedTrainingCertificatedPass.To;
 
+            if (fromDate && toDate) {
+                const parseDate = (dateStr) => {
+                    const parts = dateStr.split('/');
+                    if (parts.length === 2) {
+                        return new Date(parts[1], parts[0] - 1);
+                    } else if (parts.length === 3) {
+                        return new Date(parts[2], parts[1] - 1, parts[0]);
+                    }
+                    return null;
+                };
+
+                const from = parseDate(fromDate);
+                const to = parseDate(toDate);
+
+                if (from && to && from > to) {
+                    App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
+                    return;
+                }
+            } 
             if ($scope.selectedTrainingCertificatedPass.From == null || $scope.selectedTrainingCertificatedPass.From == undefined || $scope.selectedTrainingCertificatedPass.From == '') {
                 return
             }
@@ -4066,7 +4150,28 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
     $scope.addToGoAboard = function () {
         if ($scope.forms.GoAboard.validate()) {
+            const fromDate = $scope.selectedGoAboard.From;
+            const toDate = $scope.selectedGoAboard.To;
 
+            if (fromDate && toDate) {
+                const parseDate = (dateStr) => {
+                    const parts = dateStr.split('/');
+                    if (parts.length === 2) {
+                        return new Date(parts[1], parts[0] - 1);
+                    } else if (parts.length === 3) {
+                        return new Date(parts[2], parts[1] - 1, parts[0]);
+                    }
+                    return null;
+                };
+
+                const from = parseDate(fromDate);
+                const to = parseDate(toDate);
+
+                if (from && to && from > to) {
+                    App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
+                    return;
+                }
+            } s
             if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
                 return
             }
