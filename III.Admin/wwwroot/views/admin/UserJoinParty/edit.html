@@ -1439,7 +1439,7 @@
                                                     <i class="fa fa-info-circle" id="relationship"
                                                        title="Popover Header" popover-placement="bottom-left"
                                                        ng-click="handerClickIconChild('family','relationship')"
-                                                       uib-popover="Quan hệ: {{selectedFamily.Relation}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ... Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="outsideClick"></i>
 
                                                     <input class="displayInfo" style="border: #FFFF;" name="selectedFamilyRelation"
@@ -1836,6 +1836,7 @@
                                                 <div class="br24 form-control custom-title-code-bold">
                                                     <i class="fa fa-info-circle " id="homeTown"
                                                        title="Popover Header" popover-placement="bottom-left"
+                                                        ng-click="handerClickIconChild('family','BirthPlace')"
                                                        uib-popover="Nơi sinh của người thân là: {{selectedFamily.BirthPlace}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="selectedFamilyBirthPlace"
