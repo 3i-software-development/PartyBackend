@@ -196,7 +196,7 @@
   },
   {
     "Id": "dateOfBirdRelation",
-    "Guide": "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố"
+    "Guide": "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
   },
   {
     "Id": "BirthYear",
