@@ -4169,6 +4169,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
 
     $scope.submitPersonalHistorys = function () {
+        if ($scope.isLoadFileWord === true) {
+            /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAllWorkingTracking?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
         $scope.model = [];
         if ($scope.PersonalHistory.length > 0) {
             $scope.PersonalHistory.forEach(function (personalHistory) {
@@ -4224,6 +4246,26 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
     }
     $scope.submitDisciplined = function () {
+        if ($scope.isLoadFileWord === true) {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAllWarningDisciplined?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
         console.log($scope.Disciplined)
         $scope.model = [];
         if ($scope.Disciplined.length > 0) {
@@ -4251,6 +4293,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
     }
     $scope.submitTrainingCertificatedPass = function () {
+        if ($scope.isLoadFileWord === true) {
+            /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAllTrainingCertificatedPasse?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
         $scope.model = [];
         if ($scope.PassedTrainingClasses.length > 0) {
             $scope.PassedTrainingClasses.forEach(function (passedTrainingClasses) {
@@ -4427,6 +4491,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     //submit
 
     $scope.insertFamily = function () {
+        if ($scope.isLoadFileWord === true) {
+            /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAllFamily?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
         $scope.model = [];
 
         $scope.Relationship.forEach(function (e) {
@@ -4471,6 +4557,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         console.log($scope.model);
     }
     $scope.submitGoAboard = function () {
+        if ($scope.isLoadFileWord === true) {
+            /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAllGoAboard?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
         $scope.model = [];
         if ($scope.GoAboard.length > 0) {
             $scope.GoAboard.forEach(function (e) {
@@ -4497,6 +4605,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         }
     }
     $scope.submitBusinessNDuty = function () {
+        if ($scope.isLoadFileWord === true) {
+            /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAllHistorySpecialist?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
         $scope.model = [];
         if ($scope.BusinessNDuty.length > 0) {
             $scope.BusinessNDuty.forEach(function (businessNDuty) {
@@ -4527,6 +4657,28 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
 
     $scope.submitHistorySpecialist = function () {
+        if ($scope.isLoadFileWord === true) {
+            /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAllHistorySpecialist?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
+                success: function (result) {
+
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
         $scope.model = [];
         if ($scope.HistoricalFeatures.length > 0) {
             $scope.HistoricalFeatures.forEach(function (historicalFeatures) {
@@ -4553,6 +4705,26 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
     }
 
     $scope.submitAward = function () {
+        if ($scope.isLoadFileWord === true) {
+            $.ajax({
+                type: "DELETE",
+                url: "/UserProfile/DeleteAllAward?profileCode=" + $scope.infUser.ResumeNumber,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+
+                    if (result.Error) {
+                        App.toastrError(result.Title);
+                    } else {
+                        App.toastrSuccess(result.Title);
+                        $scope.$apply()
+                    }
+                },
+                error: function (error) {
+                    console.log(error.Title);
+                }
+            });
+        }
         $scope.model = [];
         if ($scope.Laudatory.length > 0) {
             $scope.Laudatory.forEach(function (laudatory) {
@@ -5432,18 +5604,35 @@ return;
                 console.log(result);
 
                 result.forEach(obj => {
+                    try {
                     const parts = obj.BirthYear.split('_');
                     if (parts.length === 2) {
                         obj.die = parts[0];
                         obj.BirthYear = parts[1];
-                    } else if (parts.length >= 4) {
+                    } else if (parts.length = 4) {
+                        if (parts[1] == "false" || parts[1] == "true") {
+                            obj.die = parts[0];
+                            obj.BirthYear = parts[2];
+                            obj.AddressDie = parts[3];
+                            obj.Reason = parts[4];
+                        } else {
+                            obj.die = parts[0];
+                            obj.BirthYear = parts[1];
+                            obj.AddressDie = parts[2];
+                            obj.Reason = parts[3];
+                        }
+                        
+                    }else if(parts.length >= 5) {
                         obj.die = parts[0];
-                        obj.BirthYear = parts[1];
-                        obj.AddressDie = parts[2];
-                        obj.Reason = parts[3];
+                        obj.BirthYear = parts[2];
+                        obj.AddressDie = parts[3];
+                        obj.Reason = parts[4];
                     } else {
                         obj.die = parts[0];
                         obj.BirthYear = parts[1];
+                        }
+                    } catch (error) {
+                        obj.BirthYear = obj.BirthYear
                     }
 
                     if (obj.Relation.toLowerCase().includes("con") || obj.Relation.toLowerCase().includes("anh") || obj.Relation.toLowerCase().includes("chị") || obj.Relation.toLowerCase().includes("em")) {
