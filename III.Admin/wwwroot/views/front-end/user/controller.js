@@ -1310,7 +1310,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
             return item.Id === id;
         });
-        // $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide 
+        $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide 
     };
     $scope.downloadFile = function () {
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word

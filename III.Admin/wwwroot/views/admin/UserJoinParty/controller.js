@@ -4188,6 +4188,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     App.toastrError(result.Title);
                 } else {
                     App.toastrSuccess(result.Title);
+                    $scope.getPersonalHistoryByProfileCode(); 
                 }
             });
         } else {
@@ -4465,6 +4466,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 /*$scope.selectedFamily = {
                     WorkingProgress: `Từ năm 18 tuổi đến năm`
                 };*/
+              
             }
         })
 
