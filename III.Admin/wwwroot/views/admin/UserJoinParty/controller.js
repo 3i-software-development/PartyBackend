@@ -2396,6 +2396,12 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         {
             "id": "phone",
             "labelText": "Số điện thoại",
+        }, {
+            "id": "BirthPlace",
+            "labelText": "Nơi sinh",
+        }, {
+            "id": "class",
+            "labelText": "Thành phần giai cấp",
         },
         {
             "id": "noiSinh",
