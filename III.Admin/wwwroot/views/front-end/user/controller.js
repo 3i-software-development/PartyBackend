@@ -669,7 +669,7 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
         }
     }
     $rootScope.validationOptionsIntroducer = {
-        rules: {
+      /*  rules: {
             IntroducerPersonIntroduced: {
                 required: true,
             },
@@ -696,7 +696,7 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
             IntroducerPlaceTimeJoinParty: {
                 required: "Bạn không được để trống trường này",
             }
-        }
+        }*/
     }
 
 });

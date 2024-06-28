@@ -3513,18 +3513,18 @@
                                 <i ng-show="!showDegree" class="fa fa-caret-right"></i>
                                 <label ng-click="showDegree=!showDegree">Giới thiệu vào đảng</label>
                                 <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
-                                    <div ng-class="{'disabled': infUser.Introducer.PersonIntroduced == null || infUser.Introducer.PersonIntroduced == '' || infUser.Introducer.PersonIntroduced == undefined
-                                         && infUser.Introducer.PlaceTimeJoinUnion == null || infUser.Introducer.PersonPlaceTimeJoinUnion == '' || infUser.Introducer.PlaceTimeJoinUnion == undefined
-                                         && infUser.Introducer.PlaceTimeJoinParty == null || infUser.Introducer.PlaceTimeJoinParty == '' || infUser.Introducer.PlaceTimeJoinParty == undefined
-                                         && infUser.Introducer.PersonIPlaceTimeRecognize == null || infUser.Introducer.PlaceTimeRecognize == '' || infUser.Introducer.PlaceTimeRecognize == undefined}"
+                                    <div ng-class="{'enable': (infUser.Introducer.PersonIntroduced == null || infUser.Introducer.PersonIntroduced == '' || infUser.Introducer.PersonIntroduced == undefined)
+                                         && (infUser.Introducer.PlaceTimeJoinUnion == null || infUser.Introducer.PersonPlaceTimeJoinUnion == '' || infUser.Introducer.PlaceTimeJoinUnion == undefined)
+                                         && (infUser.Introducer.PlaceTimeJoinParty == null || infUser.Introducer.PlaceTimeJoinParty == '' || infUser.Introducer.PlaceTimeJoinParty == undefined)
+                                         && (infUser.Introducer.PersonIPlaceTimeRecognize == null || infUser.Introducer.PlaceTimeRecognize == '' || infUser.Introducer.PlaceTimeRecognize == undefined)}"
                                          style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
                                         <input type="checkbox" ng-model="WorkingProcess8"
                                                ng-checked="WorkingProcess8"><span style="font-size: x-small;">Có</span>
                                     </div>
-                                    <div ng-class="{'disabled':  infUser.Introducer.PersonIntroduced == null || infUser.Introducer.PersonIntroduced == '' || infUser.Introducer.PersonIntroduced == undefined
-                                         && infUser.Introducer.PlaceTimeJoinUnion == null || infUser.Introducer.PersonPlaceTimeJoinUnion == '' || infUser.Introducer.PlaceTimeJoinUnion == undefined
-                                         && infUser.Introducer.PlaceTimeJoinParty == null || infUser.Introducer.PlaceTimeJoinParty == '' || infUser.Introducer.PlaceTimeJoinParty == undefined
-                                         && infUser.Introducer.PersonIPlaceTimeRecognize == null || infUser.Introducer.PlaceTimeRecognize == '' || infUser.Introducer.PlaceTimeRecognize == undefined}"
+                                    <div ng-class="{'enable': ( infUser.Introducer.PersonIntroduced == null || infUser.Introducer.PersonIntroduced == '' || infUser.Introducer.PersonIntroduced == undefined)
+                                         && (infUser.Introducer.PlaceTimeJoinUnion == null || infUser.Introducer.PersonPlaceTimeJoinUnion == '' || infUser.Introducer.PlaceTimeJoinUnion == undefined)
+                                         && (infUser.Introducer.PlaceTimeJoinParty == null || infUser.Introducer.PlaceTimeJoinParty == '' || infUser.Introducer.PlaceTimeJoinParty == undefined)
+                                         && (infUser.Introducer.PersonIPlaceTimeRecognize == null || infUser.Introducer.PlaceTimeRecognize == '' || infUser.Introducer.PlaceTimeRecognize == undefined)}"
                                          style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
                                         <input type="checkbox" ng-click="WorkingProcess8 = !WorkingProcess8"
                                                ng-checked="!WorkingProcess8"><span style="font-size: x-small;">Không</span>
