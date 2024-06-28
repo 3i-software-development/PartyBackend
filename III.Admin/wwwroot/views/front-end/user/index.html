@@ -1493,8 +1493,8 @@
 
                                         <div class="form-group row" ng-if="selectedFamily.disableAddress">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-home" id="residence"
-                                                   ng-click="openPopover('residence');"
+                                                <i class="fa fa-home" id="dateOfBirdRelation"
+                                                   ng-click="openPopover('dateOfBirdRelation');"
                                                    uib-popover-template="'popoverTemplate.html'"
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
@@ -1510,8 +1510,8 @@
                                                        row-id="selectedFamily.Id"
                                                        child-tab="family"
                                                        json-guide="jsonGuide"
-                                                       control-id="residence"
-                                                       id="residence" ng-click="handerClickIconChild('family','residence');handleClick('AddressDie')"
+                                                       control-id="dateOfBirdRelation"
+                                                       id="dateOfBirdRelation" ng-click="handerClickIconChild('family','dateOfBirdRelation');handleClick('dateOfBirdRelation')"
                                                        title="Popover Header" popover-placement="bottom-left"
                                                         uib-popover="Nơi mất của người thân là: {{selectedFamily.AddressDie}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
