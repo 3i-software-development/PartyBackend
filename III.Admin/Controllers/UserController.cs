@@ -651,12 +651,12 @@ namespace III.Admin.Controllers
 
         public object GetDistrictsName(string name, string ProvincesName)
         {
-/*            var rs = _context.Districts.Where(p => p.name.Trim() == name.Trim() && ).ToList();
-            return Json(rs);*/
+            /*            var rs = _context.Districts.Where(p => p.name.Trim() == name.Trim() && ).ToList();
+                        return Json(rs);*/
 
             var query = from a in _context.Districts
                         join b in _context.Provinces on a.provinceId equals b.provinceId
-                        where(ProvincesName.Trim() == b.name.Trim() && a.name.Trim() == name.Trim())
+                        where (ProvincesName.Trim() == b.name.Trim() && a.name.Trim() == name.Trim())
                         select new
                         {
                             a.name,
@@ -2015,6 +2015,210 @@ namespace III.Admin.Controllers
         #endregion
 
         #region delete
+        [HttpDelete]
+        public object DeleteAllFamily(String profileCode)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                var data = _context.Families.Where(p => p.ProfileCode == profileCode).ToList();
+                if (data == null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Không tìm thấy mã hồ sơ";
+                    return msg;
+                }
+                foreach (var record in data)
+                {
+                    record.IsDeleted = true;
+
+                    _context.Families.Update(record);
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Xóa Hoàn cảnh gia đình thất bại";
+            }
+            return msg;
+        }
+
+        [HttpDelete]
+        public object DeleteAllWorkingTracking(String profileCode)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                var data = _context.WorkingTrackings.Where(p => p.ProfileCode == profileCode).ToList();
+                if (data == null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Không tìm thấy mã hồ sơ";
+                    return msg;
+                }
+                foreach (var record in data)
+                {
+                    record.IsDeleted = true;
+
+                    _context.WorkingTrackings.Update(record);
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Xóa thất bại";
+            }
+            return msg;
+        }
+
+        [HttpDelete]
+        public object DeleteAllHistorySpecialist(String profileCode)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                var data = _context.HistorySpecialists.Where(p => p.ProfileCode == profileCode).ToList();
+                if (data == null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Không tìm thấy mã hồ sơ";
+                    return msg;
+                }
+                foreach (var record in data)
+                {
+                    record.IsDeleted = true;
+
+                    _context.HistorySpecialists.Update(record);
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Xóa thất bại";
+            }
+            return msg;
+        }
+
+        [HttpDelete]
+        public object DeleteAllAward(String profileCode)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                var data = _context.Awards.Where(p => p.ProfileCode == profileCode).ToList();
+                if (data == null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Không tìm thấy mã hồ sơ";
+                    return msg;
+                }
+                foreach (var record in data)
+                {
+                    record.IsDeleted = true;
+
+                    _context.Awards.Update(record);
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Xóa thất bại";
+            }
+            return msg;
+        }
+
+        [HttpDelete]
+        public object DeleteAllWarningDisciplined(String profileCode)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                var data = _context.WarningDisciplineds.Where(p => p.ProfileCode == profileCode).ToList();
+                if (data == null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Không tìm thấy mã hồ sơ";
+                    return msg;
+                }
+                foreach (var record in data)
+                {
+                    record.IsDeleted = true;
+
+                    _context.WarningDisciplineds.Update(record);
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Xóa thất bại";
+            }
+            return msg;
+        }
+
+        [HttpDelete]
+        public object DeleteAllTrainingCertificatedPasse(String profileCode)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                var data = _context.TrainingCertificatedPasses.Where(p => p.ProfileCode == profileCode).ToList();
+                if (data == null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Không tìm thấy mã hồ sơ";
+                    return msg;
+                }
+                foreach (var record in data)
+                {
+                    record.IsDeleted = true;
+
+                    _context.TrainingCertificatedPasses.Update(record);
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Xóa thất bại";
+            }
+            return msg;
+        }
+
+        [HttpDelete]
+        public object DeleteAllGoAboard(String profileCode)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                var data = _context.GoAboards.Where(p => p.ProfileCode == profileCode).ToList();
+                if (data == null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Không tìm thấy mã hồ sơ";
+                    return msg;
+                }
+                foreach (var record in data)
+                {
+                    record.IsDeleted = true;
+
+                    _context.GoAboards.Update(record);
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Xóa thất bại";
+            }
+            return msg;
+        }
+
+
         [HttpDelete]
         public object DeleteFamily(int Id)
         {
