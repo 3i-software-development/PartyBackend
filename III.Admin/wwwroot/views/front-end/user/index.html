@@ -616,8 +616,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker icon-clickable" id="noiSinh"
-                                                   ng-click="openPopover('noiSinh')"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                
                                                    popover-placement="right"></i>
                                                 <label class=" displayInfo control-label require custom-title-code-bold"
                                                        popover-trigger="outsideClick">
@@ -630,7 +629,7 @@
                                                      style="white-space:nowrap; overflow:unset;">
                                                     <i class="fa fa-info-circle  icon-clickable" id="noiSinh"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="Nơi sinh của bạn là: {{infUser.PlaceofBirth}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Nơi sinh của bạn là: {{infUser.BirthPlaceValue}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'">
                                                     </i>
                                                     <input class="displayInfo speechInput" style="border: #FFFF;"
@@ -663,7 +662,7 @@
                                                      style="white-space:nowrap;">
                                                     <i class="fa fa-info-circle icon-clickable" id="diaChiThuongTru"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Quê quán của bạn là: {{infUser.HomeTownValue}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'">
                                                     </i>
                                                     <input class="displayInfo speechInput" style="border: #FFFF;"
@@ -697,7 +696,7 @@
                                                      style="white-space:nowrap;">
                                                     <i class="fa fa-info-circle icon-clickable" id="diaChiThuongTru"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Địa chỉ thường trú của bạn là: {{infUser.ResidenceValue}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'">
                                                     </i>
                                                     <input class="displayInfo speechInput" style="border: #FFFF;"
@@ -724,8 +723,8 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-home icon-clickable" id="diaChiTamTru"
-                                                   ng-click="openPopover('diaChiTamTru')"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                 
+                                                   
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label custom-title-code-bold">
                                                     Địa chỉ
@@ -737,7 +736,7 @@
                                                      style="white-space:nowrap;">
                                                     <i class="fa fa-info-circle  icon-clickable" id="diaChiTamTru"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddress}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddressValue}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'">
                                                     </i>
                                                     <input class="displayInfo speechInput" style="border: #FFFF;"
@@ -1141,8 +1140,8 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker icon-clickable" id="place"
-                                                   ng-click="openPopover('place')"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                  
+                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Ngày kết nạp đoàn
@@ -1174,8 +1173,8 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker icon-clickable" id="place"
-                                                   ng-click="openPopover('place')"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                 
+                                            
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Nơi kết nạp đoàn
@@ -1327,8 +1326,8 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-user" id="relationship"
-                                                   ng-click="openPopover('relationship');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                  
+                                               
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quan
@@ -1368,8 +1367,8 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-user" id="MenberFamilyName"
-                                                   ng-click="openPopover('MenberFamilyName');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                   
+                                                
                                                    popover-placement="right"
                                                    popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo require control-label custom-title-code-bold">
@@ -1493,9 +1492,7 @@
 
                                         <div class="form-group row" ng-if="selectedFamily.disableAddress">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-home" id="dateOfBirdRelation"
-                                                   ng-click="openPopover('dateOfBirdRelation');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                <i class="fa fa-home" id="residence"
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Lí do mất
@@ -1549,8 +1546,7 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-user" id="PartyMember"
-                                                   ng-click="openPopover3('PartyMember');"
-                                                   uib-popover-template="'popoverTemplate.html'" popover-placement="right"
+                                                   popover-placement="right"
                                                    popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
                                                 <i class="fa fa-user" id="PartyMember" ng-click="warningPopover3()"
                                                    ng-if="!selectedFamily || !selectedFamily.Id"></i>
@@ -1615,8 +1611,8 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-user" id="politicalAttitude"
-                                                   ng-click="openPopover('politicalAttitude');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                 
+                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Thái
@@ -1648,8 +1644,8 @@
                                         </div>
                                         <div class="form-group row " ng-show="changedisHistoryCC">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-user" id="working" ng-click="openPopover('working');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                <i class="fa fa-user" id="working" 
+                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quá trình công tác
@@ -1746,8 +1742,8 @@
                                         <div class="form-group row" ng-show="changedisHistoryCC">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker" id="homeTown"
-                                                   ng-click="openPopover('homeTown');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                   
+                                                  
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quê quán
@@ -1800,8 +1796,7 @@
                                         <div class="form-group row" ng-show="!selectedFamily.disableAddress">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-home" id="residence"
-                                                   ng-click="openPopover('residence');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nơi
@@ -1832,8 +1827,8 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-users" id="career" ng-click="openPopover('career')"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                <i class="fa fa-users" id="career" 
+                                                
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nghề nghiệp
@@ -1867,8 +1862,6 @@
                                         <div class="form-group row" ng-show="changedisHistoryVC">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-map-marker" id="homeTown"
-                                                   ng-click="openPopover('homeTown');"
-                                                   uib-popover-template="'popoverTemplate.html'"
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nơi sinh
@@ -1898,8 +1891,8 @@
                                         <div class="form-group row" ng-if="changedisHistory">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-map-marker" id="homeTown"
-                                                   ng-click="openPopover('homeTown');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                  
+                                                
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Nơi sinh
@@ -1929,8 +1922,8 @@
                                         <div class="form-group row" ng-show="changedisHistory">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-map-marker" id="class"
-                                                   ng-click="openPopover('class');"
-                                                   uib-popover-template="'popoverTemplate.html'"
+                                                  
+                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Thành phần giai cấp
@@ -2029,14 +2022,15 @@
                                                         control-id="dateOfBirdRelation"
                                                         check-load="checkFamilyLoad">
                                                         <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
-        {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
+    {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                         <div>
-                                                            <span>
-
-
-
+                                                            <span ng-if="x.die">
                                                                 - Năm sinh{{x.die == true ?"(Đã mất)" : ""}}:
                                                                 {{x.BirthYear}} {{x.BirthDie?"-" + x.BirthDie : ""}}
+                                                            </span>
+                                                            <span ng-if="!x.die">
+                                                                - Năm sinh
+                                                                {{x.BirthYear}}
                                                             </span>
                                                         </div>
                                                         <div>
@@ -3519,18 +3513,18 @@
                                 <i ng-show="!showDegree" class="fa fa-caret-right"></i>
                                 <label ng-click="showDegree=!showDegree">Giới thiệu vào đảng</label>
                                 <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
-                                    <div ng-class="{'disabled': infUser.Introducer.PersonIntroduced == null || infUser.Introducer.PersonIntroduced == '' || infUser.Introducer.PersonIntroduced == undefined
-                                         && infUser.Introducer.PlaceTimeJoinUnion == null || infUser.Introducer.PersonPlaceTimeJoinUnion == '' || infUser.Introducer.PlaceTimeJoinUnion == undefined
-                                         && infUser.Introducer.PlaceTimeJoinParty == null || infUser.Introducer.PlaceTimeJoinParty == '' || infUser.Introducer.PlaceTimeJoinParty == undefined
-                                         && infUser.Introducer.PersonIPlaceTimeRecognize == null || infUser.Introducer.PlaceTimeRecognize == '' || infUser.Introducer.PlaceTimeRecognize == undefined}"
+                                    <div ng-class="{'enable': (infUser.Introducer.PersonIntroduced == null || infUser.Introducer.PersonIntroduced == '' || infUser.Introducer.PersonIntroduced == undefined)
+                                         && (infUser.Introducer.PlaceTimeJoinUnion == null || infUser.Introducer.PersonPlaceTimeJoinUnion == '' || infUser.Introducer.PlaceTimeJoinUnion == undefined)
+                                         && (infUser.Introducer.PlaceTimeJoinParty == null || infUser.Introducer.PlaceTimeJoinParty == '' || infUser.Introducer.PlaceTimeJoinParty == undefined)
+                                         && (infUser.Introducer.PersonIPlaceTimeRecognize == null || infUser.Introducer.PlaceTimeRecognize == '' || infUser.Introducer.PlaceTimeRecognize == undefined)}"
                                          style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
                                         <input type="checkbox" ng-model="WorkingProcess8"
                                                ng-checked="WorkingProcess8"><span style="font-size: x-small;">Có</span>
                                     </div>
-                                    <div ng-class="{'disabled':  infUser.Introducer.PersonIntroduced == null || infUser.Introducer.PersonIntroduced == '' || infUser.Introducer.PersonIntroduced == undefined
-                                         && infUser.Introducer.PlaceTimeJoinUnion == null || infUser.Introducer.PersonPlaceTimeJoinUnion == '' || infUser.Introducer.PlaceTimeJoinUnion == undefined
-                                         && infUser.Introducer.PlaceTimeJoinParty == null || infUser.Introducer.PlaceTimeJoinParty == '' || infUser.Introducer.PlaceTimeJoinParty == undefined
-                                         && infUser.Introducer.PersonIPlaceTimeRecognize == null || infUser.Introducer.PlaceTimeRecognize == '' || infUser.Introducer.PlaceTimeRecognize == undefined}"
+                                    <div ng-class="{'enable': ( infUser.Introducer.PersonIntroduced == null || infUser.Introducer.PersonIntroduced == '' || infUser.Introducer.PersonIntroduced == undefined)
+                                         && (infUser.Introducer.PlaceTimeJoinUnion == null || infUser.Introducer.PersonPlaceTimeJoinUnion == '' || infUser.Introducer.PlaceTimeJoinUnion == undefined)
+                                         && (infUser.Introducer.PlaceTimeJoinParty == null || infUser.Introducer.PlaceTimeJoinParty == '' || infUser.Introducer.PlaceTimeJoinParty == undefined)
+                                         && (infUser.Introducer.PersonIPlaceTimeRecognize == null || infUser.Introducer.PlaceTimeRecognize == '' || infUser.Introducer.PlaceTimeRecognize == undefined)}"
                                          style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
                                         <input type="checkbox" ng-click="WorkingProcess8 = !WorkingProcess8"
                                                ng-checked="!WorkingProcess8"><span style="font-size: x-small;">Không</span>

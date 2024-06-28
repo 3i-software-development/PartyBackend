@@ -1868,7 +1868,7 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
             IsSign: false,
             Mode: 1
         };
-
+       
         var extension = data.Url.substr(data.Url.lastIndexOf('.') + 1);
         var word = ['DOCX', 'DOC'];
         var pdf = ['PDF'];
@@ -2396,6 +2396,12 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         {
             "id": "phone",
             "labelText": "Số điện thoại",
+        }, {
+            "id": "BirthPlace",
+            "labelText": "Nơi sinh",
+        }, {
+            "id": "class",
+            "labelText": "Thành phần giai cấp",
         },
         {
             "id": "noiSinh",
@@ -4290,7 +4296,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     App.toastrError(result.Title);
                 } else {
                     App.toastrSuccess(result.Title);
-                    $scope.getGoAboardByProfileCode();
+                    $scope.getWarningDisciplinedByProfileCode()
                 }
             })
         } else {
@@ -4340,8 +4346,9 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 if (result.Error) {
                     App.toastrError(result.Title);
                 } else {
+                    
                     App.toastrSuccess(result.Title);
-                    $scope.getGoAboardByProfileCode();
+                    $scope.getTrainingCertificatedPassByProfileCode()
                 }
             })
         } else {
@@ -4519,7 +4526,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             });
         }
         $scope.model = [];
-
+        $scope.checkFamilyLoad = false;
         $scope.Relationship.forEach(function (e) {
             var obj = {};
             obj.Relation = e.Relation;
@@ -5689,9 +5696,13 @@ return;
                     console.log(result);
                 });
                 setTimeout(() => {
-                    $scope.checkFamilyLoad = true;
+
                     $scope.$apply();
-                }, 500);
+                    setTimeout(function () {
+                        $scope.checkFamilyLoad = true;
+                        $scope.$apply();
+                    }, (250));
+                }, 250);
             },
             error: function (error) {
                 console.log(error);
@@ -8051,7 +8062,7 @@ app.directive("choosePosition", function (dataserviceJoinParty) {
 });
 
 
-app.directive('trChildTab', function () {
+app.directive('trChildTab', ['$compile', function ($compile) {
     return {
         restrict: 'A',
         scope: {
@@ -8077,6 +8088,8 @@ app.directive('trChildTab', function () {
                     //element.css('color', 'red');
                     const oldHtml = element.html();
                     element.html(oldHtml + `<span style="color:red" class="trComment"><br>Lưu ý: ${hasComment}</span>`);
+                    //const parentScope = angular.element(element.parent()).scope();
+                    //$compile(element.contents())(parentScope); // Compile the new content
                 } else {
                     //element.css('color', 'unset');
                 }
@@ -8094,4 +8107,4 @@ app.directive('trChildTab', function () {
             //scope.$watchGroup(['childTab', 'rowId', 'controlId'], watchFunction());
         }
     };
-});
+}]);

@@ -595,7 +595,7 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle  icon-clickable" id="noiSinh"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="Nơi sinh của bạn là: {{infUser.PlaceofBirth}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                               uib-popover="Nơi sinh của bạn là: {{infUser.BirthPlaceValue}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick">
                                             </i>
                                             <input class="displayInfo speechInput" style="border: #FFFF;" name="thon_PlaceofBirth"
@@ -655,7 +655,7 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="diaChiThuongTru"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="Quê quán của bạn là: {{infUser.HomeTown}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                               uib-popover="Quê quán của bạn là: {{infUser.HomeTownValue}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick">
                                             </i>
                                             <input class="displayInfo speechInput" style="border: #FFFF;" name="thon_HomeTown"
@@ -716,7 +716,7 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="diaChiThuongTru"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="Địa chỉ thường trú của bạn là: {{infUser.Residence}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                               uib-popover="Địa chỉ thường trú của bạn là: {{infUser.ResidenceValue}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick">
                                             </i>
                                             <input class="displayInfo speechInput" style="border: #FFFF;" name="thon_Residence"
@@ -781,7 +781,7 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle  icon-clickable" id="diaChiTamTru"
                                                title="Popover Header" popover-placement="bottom-left"
-                                               uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddress}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                               uib-popover="Địa chỉ tạm trú của bạn là: {{infUser.TemporaryAddressValue}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="outsideClick">
                                             </i>
                                             <input class="displayInfo speechInput" style="border: #FFFF;" name="thon_TemporaryAddress"
@@ -2035,9 +2035,13 @@
                                                                     <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
                                                                     {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                                     <div>
-                                                                        <span>
+                                                                        <span ng-if="x.die">
                                                                             - Năm sinh{{x.die == true ?"(Đã mất)" : ""}}:
                                                                             {{x.BirthYear}} {{x.BirthDie?"-" + x.BirthDie : ""}}
+                                                                        </span>
+                                                                        <span ng-if="!x.die">
+                                                                            - Năm sinh
+                                                                            {{x.BirthYear}}
                                                                         </span>
                                                                     </div>
                                                                     <div >

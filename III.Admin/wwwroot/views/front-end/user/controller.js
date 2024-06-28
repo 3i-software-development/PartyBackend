@@ -669,7 +669,7 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
         }
     }
     $rootScope.validationOptionsIntroducer = {
-        rules: {
+      /*  rules: {
             IntroducerPersonIntroduced: {
                 required: true,
             },
@@ -696,7 +696,7 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
             IntroducerPlaceTimeJoinParty: {
                 required: "Bạn không được để trống trường này",
             }
-        }
+        }*/
     }
 
 });
@@ -2991,7 +2991,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             });
         }
         $scope.model = [];
-
+        $scope.checkFamilyLoad = false;
         $scope.Relationship.forEach(function (e) {
             var obj = {};
             obj.Relation = e.Relation;
@@ -4575,9 +4575,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     }
                 })
                 setTimeout(() => {
-                    $scope.checkFamilyLoad = true;
+
                     $scope.$apply();
-                }, 500);
+                    setTimeout(function () {
+                        $scope.checkFamilyLoad = true;
+                        $scope.$apply();
+                    }, (250));
+                }, 250);
             },
             error: function (error) {
                 console.log(error);
@@ -6000,7 +6004,7 @@ app.directive('iconChildTab', function () {
         }
     };
 });*/
-app.directive('trChildTab', function () {
+app.directive('trChildTab', ['$compile', function ($compile) {
     return {
         restrict: 'A',
         scope: {
@@ -6026,6 +6030,8 @@ app.directive('trChildTab', function () {
                     //element.css('color', 'red');
                     const oldHtml = element.html();
                     element.html(oldHtml + `<span style="color:red" class="trComment"><br>Lưu ý: ${hasComment}</span>`);
+                    //const parentScope = angular.element(element.parent()).scope();
+                    //$compile(element.contents())(parentScope); // Compile the new content
                 } else {
                     //element.css('color', 'unset');
                 }
@@ -6043,4 +6049,4 @@ app.directive('trChildTab', function () {
             //scope.$watchGroup(['childTab', 'rowId', 'controlId'], watchFunction());
         }
     };
-});
+}]);
