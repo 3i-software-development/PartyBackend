@@ -1,23 +1,16 @@
-﻿using Aspose.Pdf.Operators;
-using DataConnection;
-using DocumentFormat.OpenXml.Spreadsheet;
+﻿using ESEIM;
 using ESEIM.Models;
 using ESEIM.Utils;
-using FTU.Utils.HelperNet;
 using Hot.Models.AccountViewModels;
-using III.Domain.Enums;
-using III.Domain.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
-using OpenXmlPowerTools;
 using Syncfusion.EJ2.DocumentEditor;
 using System;
 using System.Collections.Generic;
@@ -25,12 +18,9 @@ using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using System.Web;
-using static III.Admin.Controllers.AccountController;
-using static III.Admin.Controllers.MobileLoginController;
 
 namespace III.Admin.Controllers
 {
@@ -44,6 +34,8 @@ namespace III.Admin.Controllers
         private readonly IParameterService _parameterService;
         private readonly IStringLocalizer<SharedResources> _sharedResources;
         private readonly IUploadService _upload;
+        private readonly AppSettings _appSettings;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public UserProfileController(EIMDBContext context,
             UserManager<AspNetUser> userManager,
@@ -51,7 +43,9 @@ namespace III.Admin.Controllers
             IStringLocalizer<AccountLoginController> stringLocalizer,
             IParameterService parameterService,
             IStringLocalizer<SharedResources> sharedResources,
-            IUploadService upload)
+            IOptions<AppSettings> appSettings,
+            IUploadService upload,
+            IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _userManager = userManager;
@@ -60,6 +54,8 @@ namespace III.Admin.Controllers
             _parameterService = parameterService;
             _sharedResources = sharedResources;
             _upload = upload;
+            _appSettings = appSettings.Value;
+            _httpClientFactory = httpClientFactory;
         }
 
         [Authorize]
@@ -684,6 +680,7 @@ namespace III.Admin.Controllers
             return Ok(query);
         }
         #endregion
+
         #region Update
 
         [HttpPost]
@@ -876,7 +873,7 @@ namespace III.Admin.Controllers
             public string TemporaryAddressVillage { get; set; }
         }
         [HttpPut]
-        public async Task<object> UpdatePartyAdmissionProfile([FromBody] ModelViewPAMP model)
+        public async Task<JMessage> UpdatePartyAdmissionProfile([FromBody] ModelViewPAMP model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -943,7 +940,13 @@ namespace III.Admin.Controllers
                 obj.TemporaryAddressVillage = model.TemporaryAddressVillage;
 
                 _context.PartyAdmissionProfiles.Update(obj);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
+
+                var actInst = GetActInstanceCode(model.ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                var client = _httpClientFactory.CreateClient();
+                client.BaseAddress = new Uri(_appSettings.UrlProd);
+                var response = await client.PostAsync(url, null);
 
                 msg.Title = "Cập nhật Sơ yếu lí lịch thành công";
             }
@@ -954,6 +957,17 @@ namespace III.Admin.Controllers
             }
             return msg;
         }
+        private string GetActInstanceCode(string resumeNumber, string actCode)
+        {
+            var wfInst = _context.WorkflowInstances.FirstOrDefault(x => x.IsDeleted == false && x.ObjectType == "TEST_JOIN_PARTY" && x.ObjectInst == resumeNumber);
+            if (wfInst == null)
+            {
+                return "";
+            }
+            var actInst = _context.ActivityInstances.FirstOrDefault(x => !x.IsDeleted && x.WorkflowCode == wfInst.WfInstCode && x.ActivityCode == actCode);
+            return actInst?.ActivityInstCode ?? "";
+        }
+
         [HttpPost]
         public object UpdateIntroduceOfParty([FromBody] IntroducerOfParty model)
         {

@@ -407,6 +407,22 @@
     .selected {
         background-color: #dfebf5;
     }
+
+    .status-temp .ui-select-toggle {
+        height: 70px;
+    }
+
+    .status-temp .ui-select-match-text {
+        height: unset;
+    }
+
+    .status-temp p {
+        white-space: normal;
+    }
+
+    .status-temp .ui-select-choices-row.active > a {
+        text-wrap: unset;
+    }
 </style>
 <div class="notifi">
     <div class="showNotifi" style="justify-content: space-between;">
@@ -763,6 +779,33 @@
                                     </div>
                                     <div class="col-xl-6" style="padding-right: 10px">
                                         <div class="form-group row">
+                                            <div class="col-md-4 pr-0">
+                                                <i class="fa fa-history" aria-hidden="true"></i>
+                                                <label class="displayInfo control-label custom-title-code-bold">
+                                                    Thông báo luồng
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="br24 form-control custom-title-code-bold">
+                                                    <ui-select class="ui-select-bootstrap-right-radius status-temp" ng-model="infUser.StatusTemp" theme="bootstrap">
+                                                        <ui-select-match placeholder="Chưa có điều chỉnh...">
+                                                            <p>
+                                                                <span>{{$select.selected.CreatedBy}}</span> đã cập nhật trạng thái
+                                                                <span class="text-primary fw600">{{$select.selected.Name}}</span> cho hoạt động
+                                                                <span class="fw600 text-green">{{$select.selected.ObjectRelative}}</span>
+                                                                <span class="fw600 text-green">[{{$select.selected.SCreatedTime}}]</span>
+                                                            </p>
+                                                        </ui-select-match>
+                                                        <ui-select-choices repeat="x.Code as x in listStatusLog | filter: $select.search" ui-disable-choice="true">
+                                                            <span>{{x.CreatedBy}}</span> đã cập nhật trạng thái
+                                                            <span class="text-primary fw600">{{x.Name}}</span> cho hoạt động
+                                                            <span class="fw600 text-green">{{x.ObjectRelative}} [{{x.SCreatedTime}}]</span>
+                                                        </ui-select-choices>
+                                                    </ui-select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
                                             <div class="col-md-4 pr-0" style="white-space: nowrap; overflow: auto">
                                                 <i class="fa fa-user"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
@@ -888,8 +931,8 @@
                                                      style="white-space:nowrap;">
                                                     <i class="fa fa-info-circle icon-clickable" id="selfComment"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                        ng-click="handerClickIconChild('family','selfComment');handleClick('selfComment')"
-                                               uib-popover="Tự nhận xét của bạn là: {{SelfComment.context}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                       ng-click="handerClickIconChild('family','selfComment');handleClick('selfComment')"
+                                                       uib-popover="Tự nhận xét của bạn là: {{SelfComment.context}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
                                                     <input class="displayInfo" name="SelfCommentcontext"
                                                            ng-model="SelfComment.context" type="text"
@@ -1140,8 +1183,6 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker icon-clickable" id="place"
-                                                  
-                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Ngày kết nạp đoàn
@@ -1173,8 +1214,6 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker icon-clickable" id="place"
-                                                 
-                                            
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Nơi kết nạp đoàn
@@ -1237,23 +1276,23 @@
                                         </div>
 
                                         <!-- <div class="form-group row">
-                                            <div class="col-md-4 pr-0 " style="white-space: nowrap; overflow: auto">
-                                                <i class="fa fa-users"></i>
-                                                <label class="displayInfo control-label custom-title-code-bold">
-                                                    Địa giới hành chính
-                                                </label>
-                                            </div>
-                                            <div class="col-md-8">
-                                                <div class="br24 form-control custom-title-code-bold" style="display:flex">
-                                                    <i class="fa fa-info-circle icon-clickable" data-bs-toggle="popover"
-                                                        title="Popover Header" data-bs-placement="bottom"
-                                                        data-bs-content="Ví dụ: 'Hà Nội'"
-                                                        style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                                    <choose-position ng-model="infUser.PlaceWorking"
-                                                        provinces="ListProvince"></choose-position>
-                                                </div>
-                                            </div>
-                                        </div> -->
+        <div class="col-md-4 pr-0 " style="white-space: nowrap; overflow: auto">
+            <i class="fa fa-users"></i>
+            <label class="displayInfo control-label custom-title-code-bold">
+                Địa giới hành chính
+            </label>
+        </div>
+        <div class="col-md-8">
+            <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                <i class="fa fa-info-circle icon-clickable" data-bs-toggle="popover"
+                    title="Popover Header" data-bs-placement="bottom"
+                    data-bs-content="Ví dụ: 'Hà Nội'"
+                    style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                <choose-position ng-model="infUser.PlaceWorking"
+                    provinces="ListProvince"></choose-position>
+            </div>
+        </div>
+    </div> -->
 
                                         <div class="form-group row" ng-class="{ 'has-error': errorMarital}">
                                             <div class="col-md-4 pr-0" style="display: flex;align-items: baseline;">
@@ -1299,9 +1338,9 @@
                                                 </span>
                                             </div>
                                         </div>
+                                    </div>
                                 </form>
                             </div>
-
                         </div>
                         <div class="toggle-header" id="LLGD" style="display: flex; justify-content: space-between;">
                             <div ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"

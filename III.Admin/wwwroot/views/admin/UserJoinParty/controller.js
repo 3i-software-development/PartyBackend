@@ -1662,11 +1662,27 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     vm.dtColumns.push(DTColumnBuilder.newColumn('CurrentName').withOption('sClass', '').withTitle('{{"Mã và tên người" | translate}}')
         .renderWith(function (data, type, full) {
             var res1 = ``;
+            var res2 = ``;
             if (full.WfInstCode != null && full.WfInstCode != undefined && full.WfInstCode != '') {
-                res1 = `<span style='color: green'>[Đã tạo luồng hoạt động]</span>`
+                res1 = `<span style='color: green'>[Đã tạo luồng hoạt động]</span>`;
+                try {
+                    var lstStatus = JSON.parse(full.Status);
+                    console.log(lstStatus.length);
+                } catch (e) {
+                    console.log(e);
+                    lstStatus = [];
+                }
+                if (lstStatus.length > 0) {
+                    const x = lstStatus[lstStatus.length - 1];
+                    res2 = `<br>
+                        <span>${x.CreatedBy}</span> đã cập nhật trạng thái
+                        <span class="text-primary fw600">${x.Name}</span> cho hoạt động
+                        <span class="fw600 text-green">${x.ObjectRelative} [${x.SCreatedTime}]</span>
+                    `;
+                }
             }
 
-            var res = `<p class="bold isEdit"><span style="color: blue">[Mã: ${full.Username}]</span>${res1}<br><span>${data}</span></p>`;
+            var res = `<p class="bold isEdit"><span style="color: blue">[Mã: ${full.Username}]</span>${res1}<br><span>${data}</span>${res2}</p>`;
             return res;
         }));
 

@@ -39,7 +39,7 @@ namespace III.Admin.Controllers
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly AppSettings _appSettings;
-        private readonly HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpClientFactory;
 
         public UserJoinPartyController(
             EIMDBContext context,
@@ -49,7 +49,7 @@ namespace III.Admin.Controllers
             IRepositoryService repositoryService,
             IOptions<AppSettings> appSettings,
             IHostingEnvironment hostingEnvironment,
-            HttpClient httpClient)
+            IHttpClientFactory httpClientFactory)
         {
             _context = context;
             _sharedResources = sharedResources;
@@ -58,7 +58,7 @@ namespace III.Admin.Controllers
             _repositoryService = repositoryService;
             _hostingEnvironment = hostingEnvironment;
             _appSettings = appSettings.Value;
-            _httpClient = httpClient;
+            _httpClientFactory = httpClientFactory;
         }
 
         [Breadcrumb("ViewData.UserJoinParty", AreaName = "Admin", FromAction = "Index", FromController = typeof(DashBoardController))]
@@ -179,6 +179,11 @@ namespace III.Admin.Controllers
                     System.IO.File.WriteAllText(filePath, updatedJsonData);
 
                     rs.Title = "Cập nhật thành công";
+                    var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     return rs;
                 }
                 else
@@ -191,8 +196,10 @@ namespace III.Admin.Controllers
 
                     rs.Title = "Thêm file thành công";
                     var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = _appSettings.UrlMain + $"Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING";
-                    var response = await _httpClient.PostAsync(url, null);
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     return rs;
                 }
             }
@@ -216,7 +223,7 @@ namespace III.Admin.Controllers
 
 
         [HttpPost]
-        public JMessage DeleteJson([FromBody] ItemNoteJson jsonData, string ResumeNumber)
+        public async Task<JMessage> DeleteJson([FromBody] ItemNoteJson jsonData, string ResumeNumber)
         {
             var rs = new JMessage { Error = false, };
             try
@@ -226,11 +233,11 @@ namespace III.Admin.Controllers
                 string filePath = _hostingEnvironment.WebRootPath + folderPath + fileName;
 
                 // Kiểm tra xem thư mục chứa file có tồn tại không
-             /*   if (!Directory.Exists(_hostingEnvironment.WebRootPath + folderPath))
-                {
-                    // Nếu không tồn tại, tạo thư mục mới
-                    Directory.CreateDirectory(_hostingEnvironment.WebRootPath + folderPath);
-                }*/
+                /*   if (!Directory.Exists(_hostingEnvironment.WebRootPath + folderPath))
+                   {
+                       // Nếu không tồn tại, tạo thư mục mới
+                       Directory.CreateDirectory(_hostingEnvironment.WebRootPath + folderPath);
+                   }*/
                 if (System.IO.File.Exists(filePath))
                 {
                     // Đọc dữ liệu từ file JSON
@@ -244,7 +251,7 @@ namespace III.Admin.Controllers
                     {
                         existingObject.Remove(Object);
                     }
-                    
+
 
                     // Chuyển đối tượng đã cập nhật thành JSON
                     string updatedJsonData = JsonConvert.SerializeObject(existingObject);
@@ -253,6 +260,11 @@ namespace III.Admin.Controllers
                     System.IO.File.WriteAllText(filePath, updatedJsonData);
 
                     rs.Title = "Xóa thành công";
+                    var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     return rs;
                 }
             }
@@ -287,6 +299,29 @@ namespace III.Admin.Controllers
             public string PoliticalTheory { get; set; }
             public string GeneralEducation { get; set; }
             public string AddressText { get; set; }
+        }
+        public class JTableResult
+        {
+            public int stt { get; set; }
+            public int Id { get; set; }
+            public string CurrentName { get; set; }
+            public string Nation { get; set; }
+            public int? UserCode { get; set; }
+            public string Status { get; set; }
+            public string Username { get; set; }
+            public string CreatedBy { get; set; }
+            public string ProfileLink { get; set; }
+            public string resumeNumber { get; set; }
+            public string WfInstCode { get; set; }
+            public string UnderPostGraduateEducation { get; set; }
+            public string Degree { get; set; }
+            public string GeneralEducation { get; set; }
+            public string TemporaryAddress { get; set; }
+            public string AddressText { get; set; }
+            public string PermanentResidenceValue { get; set; }
+            public string BirthYear { get; set; }
+            public int? Gender { get; set; }
+            public string LastTimeReport { get; set; }
         }
 
         [HttpPost]
@@ -379,33 +414,33 @@ namespace III.Admin.Controllers
                                  Gender = a.Gender,
                                  AddressText = a.AddressText,
                                  PermanentResidenceValue = $"{a.PermanentResidenceVillage}, {a.PermanentResidenceValue}",
-                                 LastTimeReport = a.LastTimeReport.HasValue ? a.LastTimeReport.Value.ToString("dd/MM/yyyy HH:mm") : "",
+                                 LastTimeReport = a.LastTimeReport.HasValue ? a.LastTimeReport.Value.ToString("dd/MM/yyyy HH:mm") : ""
                              })
                              .OrderByDescending(x => x.Id); // Sắp xếp giảm dần theo Id
 
                 int total = _context.PartyAdmissionProfiles.Count();
-                var query_row_number = query.AsEnumerable().Select((x, index) => new
+                var query_row_number = query.AsEnumerable().Select((x, index) => new JTableResult
                 {
                     stt = index + 1,
-                    x.Id,
-                    x.CurrentName,
-                    x.Nation,
-                    x.UserCode,
-                    x.Status,
-                    x.Username,
-                    x.CreatedBy,
-                    x.ProfileLink,
-                    x.resumeNumber,
-                    x.WfInstCode,
-                    x.UnderPostGraduateEducation,
-                    x.Degree,
-                    x.GeneralEducation,
-                    x.TemporaryAddress,
-                    x.AddressText,
-                    x.PermanentResidenceValue,
-                    x.BirthYear,
-                    x.Gender,
-                    x.LastTimeReport
+                    Id = x.Id,
+                    CurrentName = x.CurrentName,
+                    Nation = x.Nation,
+                    UserCode = x.UserCode,
+                    Status = x.Status,
+                    Username = x.Username,
+                    CreatedBy = x.CreatedBy,
+                    ProfileLink = x.ProfileLink,
+                    resumeNumber = x.resumeNumber,
+                    WfInstCode = x.WfInstCode,
+                    UnderPostGraduateEducation = x.UnderPostGraduateEducation,
+                    Degree = x.Degree,
+                    GeneralEducation = x.GeneralEducation,
+                    TemporaryAddress = x.TemporaryAddress,
+                    AddressText = x.AddressText,
+                    PermanentResidenceValue = x.PermanentResidenceValue,
+                    BirthYear = x.BirthYear,
+                    Gender = x.Gender,
+                    LastTimeReport = x.LastTimeReport
                 }).ToList();
                 int count = query_row_number.Count();
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
@@ -465,7 +500,8 @@ namespace III.Admin.Controllers
         [NonAction]
         private string ReplaceCreatedPlace(string CreatedPlace)
         {
-            try {
+            try
+            {
                 var Place = CreatedPlace.Split("_");
                 if (Place.Length >= 2)
                 {
@@ -475,9 +511,10 @@ namespace III.Admin.Controllers
                 {
                     CreatedPlace = CreatedPlace ?? "";
                 }
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
-                CreatedPlace =  "";
+                CreatedPlace = "";
             }
 
             return CreatedPlace;
@@ -1002,7 +1039,7 @@ namespace III.Admin.Controllers
                 {
                     familyMember.BirthYear = parts[1];
                 };
-                
+
                 if (familyMember.Relation.ToLower() == "vợ" || familyMember.Relation.ToLower() == "chồng" || familyMember.Relation.ToLower() == "vợ (chồng)")
                 {
                     string[] marriedParts = jsonData.Profile.MarriedStatus.Split('_');
@@ -1011,7 +1048,7 @@ namespace III.Admin.Controllers
                         familyMember.Name += $" (Đã Ly hôn theo quyết định số: {marriedParts[1]}, Ngày: {marriedParts[2]}, Địa điểm: {marriedParts[3]})";
                     }
                 }
-                
+
 
                 /*
                                 var workingProgressLines = familyMember.WorkingProgress.Split( "\n" , StringSplitOptions.RemoveEmptyEntries);
@@ -1744,6 +1781,7 @@ namespace III.Admin.Controllers
         public string Nation { get; set; }
         public string AddressText { get; set; }
         public string PermanentResidenceValue { get; set; }
+        public List<JsonLog> JsonStatus { get; set; }
     }
 
     public class ResumeNumber

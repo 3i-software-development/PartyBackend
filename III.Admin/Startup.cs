@@ -172,6 +172,8 @@ namespace ESEIM
             services.Configure<CheckoutConfig>(Configuration.GetSection("CheckoutConfig"));
 
             services.AddSession();
+            services.AddHttpClient();
+
             //services.AddCors();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<ILanguageService, LanguageService>();

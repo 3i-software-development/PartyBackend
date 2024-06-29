@@ -2650,6 +2650,13 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     $scope.status = JSON.parse(rs.Status).slice(-4);
                     $scope.infUser.ResumeNumber = rs.ResumeNumber;
                     $scope.GroupUser = rs.GroupUserCode;
+                    const lstStatus = rs.JsonStaus;
+                    if (lstStatus.length > 0) {
+                        $scope.infUser.Status = lstStatus[lstStatus.length - 1].Code;
+                        $scope.infUser.StatusDefault = lstStatus[lstStatus.length - 1].Code;
+                        $scope.infUser.StatusTemp = lstStatus[lstStatus.length - 1].Code;
+                        $scope.listStatusLog = lstStatus;
+                    }
 
                     console.log($scope.status);
 
@@ -3400,7 +3407,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         var TemporaryAddress = $scope.infUser.TemporaryAddress.split('_');
                         if (TemporaryAddress.length >= 3) {
                             const listPromise = [];
-                            if (TemporaryAddress[0]) {
+                            if (TemporaryAddress[0] && TemporaryAddress[0] !== "NaN" && !Number.isNaN(TemporaryAddress[0])) {
                                 listPromise.push(new Promise((resolve, reject) => {
                                     try {
                                         dataservice.GetTinh(TemporaryAddress[0], function (rs) {
@@ -3415,7 +3422,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                                     }
                                 }));
                             }
-                            if (TemporaryAddress[1]) {
+                            if (TemporaryAddress[1] && TemporaryAddress[1] !== "NaN" && !Number.isNaN(TemporaryAddress[1])) {
                                 listPromise.push(new Promise((resolve, reject) => {
                                     try {
                                         dataservice.GetHuyen(TemporaryAddress[1], function (rs) {
@@ -3430,7 +3437,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                                     }
                                 }));
                             }
-                            if (TemporaryAddress[2]) {
+                            if (TemporaryAddress[2] && TemporaryAddress[2] !== "NaN" && !Number.isNaN(TemporaryAddress[2])) {
                                 listPromise.push(new Promise((resolve, reject) => {
                                     try {
                                         dataservice.GetXa(TemporaryAddress[2], function (rs) {

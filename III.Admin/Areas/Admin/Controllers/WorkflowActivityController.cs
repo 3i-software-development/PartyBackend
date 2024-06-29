@@ -2437,7 +2437,7 @@ namespace III.Admin.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public JsonResult UpdateStatusActInst(string actInst, string status)
+        public async Task<IActionResult> UpdateStatusActInst(string actInst, string status, string userName)
         {
             var msg = new JMessage { Error = false, Title = "" };
             try
@@ -2456,7 +2456,7 @@ namespace III.Admin.Controllers
                     var log = new LogStatus
                     {
                         Status = status,
-                        CreatedBy = ESEIM.AppContext.UserName,
+                        CreatedBy = userName ?? ESEIM.AppContext.UserName,
                         CreatedTime = DateTime.Now,
                         Lock = false
                     };
@@ -2478,7 +2478,7 @@ namespace III.Admin.Controllers
                     if (!string.IsNullOrEmpty(wfInfo.ObjectInst) && !string.IsNullOrEmpty(wfInfo.ObjectType))
                     {
                         //AddLogStatus(wfInfo.ObjectType, wfInfo.ObjectInst, status, inst.Title);
-                        _workflowService.AddLogStatusAll(wfInfo.ObjectType, wfInfo.ObjectInst, status, inst.Title, inst.Type, ESEIM.AppContext.UserName);
+                        _workflowService.AddLogStatusAll(wfInfo.ObjectType, wfInfo.ObjectInst, status, inst.Title, inst.Type, userName ?? ESEIM.AppContext.UserName);
                     }
 
                     var assignInst = (_context.ExcuterControlRoleInsts.Where(x => !x.IsDeleted && x.ActivityCodeInst == inst.ActivityInstCode)
@@ -2544,7 +2544,7 @@ namespace III.Admin.Controllers
 
                     var session = HttpContext.GetSessionUser();
                     var message = "Hoạt động " + inst.Title + " thuộc luồng " + wfInfo.WfName + " đã được cập nhật trạng thái bởi " + session.FullName;
-                    SendPushNotification(listUser, message,
+                    await SendPushNotification(listUser, message,
                         new
                         {
                             ActivityCode = inst.ActivityCode,
