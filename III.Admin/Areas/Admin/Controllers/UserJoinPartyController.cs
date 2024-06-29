@@ -1,52 +1,30 @@
 ﻿using ESEIM.Models;
 using ESEIM.Utils;
 using FTU.Utils.HelperNet;
-using III.Admin.Controllers;
-using Lucene.Net.Search;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
-using Newtonsoft.Json.Linq;
 using SmartBreadcrumbs.Attributes;
 using Syncfusion.EJ2.Linq;
 using System;
 using System.Globalization;
 using System.Linq;
-using ESEIM.Models;
 using Microsoft.AspNetCore.Authorization;
-using static III.Admin.Controllers.MobileProductController;
-using III.Domain.Enums;
-using III.Domain.Common;
 using System.Collections.Generic;
-using Xfinium.Pdf.Forms;
 using Microsoft.AspNetCore.Http;
-using static III.Admin.Controllers.MobileLoginController;
-using Syncfusion.EJ2.Spreadsheet;
-using DocumentFormat.OpenXml.InkML;
-using OpenXmlPowerTools;
-using DocumentFormat.OpenXml.Bibliography;
-using System.Text;
-using static Dropbox.Api.Files.SearchMatchType;
-using PdfSharp.Charting;
-using Microsoft.EntityFrameworkCore;
-using DocumentFormat.OpenXml.VariantTypes;
 using log4net;
 using System.Reflection;
 using System.Data;
-using static III.Admin.Controllers.WorkflowActivityController;
 using Syncfusion.DocIO.DLS;
 using System.IO;
-using Microsoft.SqlServer.Management.Smo;
 using Newtonsoft.Json;
 using Microsoft.AspNetCore.Hosting;
-using Amazon.SimpleNotificationService.Util;
 using static III.Admin.Controllers.UserProfileController;
-using Microsoft.AspNetCore.Rewrite.Internal.UrlActions;
 using III.Admin.Utils;
-using Syncfusion.EJ2.Charts;
-using System.ComponentModel.DataAnnotations;
 using Syncfusion.DocIO;
 using ESEIM;
 using Microsoft.Extensions.Options;
+using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace III.Admin.Controllers
 {
@@ -61,6 +39,7 @@ namespace III.Admin.Controllers
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly AppSettings _appSettings;
+        private readonly HttpClient _httpClient;
 
         public UserJoinPartyController(
             EIMDBContext context,
@@ -69,7 +48,8 @@ namespace III.Admin.Controllers
             ILuceneService luceneService,
             IRepositoryService repositoryService,
             IOptions<AppSettings> appSettings,
-            IHostingEnvironment hostingEnvironment)
+            IHostingEnvironment hostingEnvironment,
+            HttpClient httpClient)
         {
             _context = context;
             _sharedResources = sharedResources;
@@ -78,6 +58,7 @@ namespace III.Admin.Controllers
             _repositoryService = repositoryService;
             _hostingEnvironment = hostingEnvironment;
             _appSettings = appSettings.Value;
+            _httpClient = httpClient;
         }
 
         [Breadcrumb("ViewData.UserJoinParty", AreaName = "Admin", FromAction = "Index", FromController = typeof(DashBoardController))]
@@ -150,7 +131,7 @@ namespace III.Admin.Controllers
         }
 
         [HttpPost]
-        public JMessage UpdateOrCreateJson([FromBody] ItemNoteJson jsonData, string ResumeNumber)
+        public async Task<JMessage> UpdateOrCreateJson([FromBody] ItemNoteJson jsonData, string ResumeNumber)
         {
             var rs = new JMessage { Error = false, };
             try
@@ -209,6 +190,9 @@ namespace III.Admin.Controllers
                     System.IO.File.WriteAllText(filePath, updatedJsonData);
 
                     rs.Title = "Thêm file thành công";
+                    var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = _appSettings.UrlMain + $"Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING";
+                    var response = await _httpClient.PostAsync(url, null);
                     return rs;
                 }
             }
@@ -218,6 +202,16 @@ namespace III.Admin.Controllers
                 rs.Title = "Không thể tạo file";
             }
             return rs;
+        }
+        private string GetActInstanceCode(string resumeNumber, string actCode)
+        {
+            var wfInst = _context.WorkflowInstances.FirstOrDefault(x => x.IsDeleted == false && x.ObjectType == "TEST_JOIN_PARTY" && x.ObjectInst == resumeNumber);
+            if (wfInst == null)
+            {
+                return "";
+            }
+            var actInst = _context.ActivityInstances.FirstOrDefault(x => !x.IsDeleted && x.WorkflowCode == wfInst.WfInstCode && x.ActivityCode == actCode);
+            return actInst?.ActivityInstCode ?? "";
         }
 
 

@@ -2435,6 +2435,7 @@ namespace III.Admin.Controllers
             return Json(query);
         }
 
+        [AllowAnonymous]
         [HttpPost]
         public JsonResult UpdateStatusActInst(string actInst, string status)
         {
