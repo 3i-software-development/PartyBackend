@@ -363,6 +363,18 @@
     .selected {
         background-color: #dfebf5;
     }
+    .status-temp .ui-select-toggle {
+        height: 50px;
+    }
+    .status-temp .ui-select-match-text {
+        height: unset;
+    }
+    .status-temp p {
+        white-space: normal;
+    }
+    .status-temp .ui-select-choices-row.active > a {
+        text-wrap: unset;
+    }
 </style>
 
 <div class="portlet-body form row" style="margin-top: 15px">
@@ -808,6 +820,33 @@
                             <div class="col-xl-6 p-sm-40">
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0">
+                                        <i class="fa fa-history" aria-hidden="true"></i>
+                                        <label class="displayInfo control-label custom-title-code-bold">
+                                            {{'Thông báo luồng' | translate}}
+                                        </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="br24 form-control custom-title-code-bold">
+                                            <ui-select class="ui-select-bootstrap-right-radius status-temp" ng-model="infUser.StatusTemp" theme="bootstrap">
+                                                <ui-select-match placeholder="{{'Chưa có điều chỉnh' | translate}}...">
+                                                    <p>
+                                                        <span>{{$select.selected.CreatedBy}}</span> đã cập nhật trạng thái
+                                                        <span class="text-primary fw600">{{$select.selected.Name}}</span> cho hoạt động
+                                                        <span class="fw600 text-green">{{$select.selected.ObjectRelative}}</span>
+                                                        <span class="fw600 text-green">[{{$select.selected.SCreatedTime}}]</span>
+                                                    </p>
+                                                </ui-select-match>
+                                                <ui-select-choices repeat="x.Code as x in listStatusLog | filter: $select.search" ui-disable-choice="true">
+                                                    <span>{{x.CreatedBy}}</span> đã cập nhật trạng thái
+                                                    <span class="text-primary fw600">{{x.Name}}</span> cho hoạt động
+                                                    <span class="fw600 text-green">{{x.ObjectRelative}} [{{x.SCreatedTime}}]</span>
+                                                </ui-select-choices>
+                                            </ui-select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4 pr-0">
                                         <i class="fa fa-user icon-clickable" id="firstName"
                                            ng-click="openPopover('firstName')"
                                            uib-popover-template="'popoverTemplate.html'" popover-placement="right"
@@ -922,24 +961,24 @@
                                     </div>
                                 </div>
                                 <!--
-                                <div class="form-group row">
-                                    <div class="col-md-4 pr-0 ">
-                                        <i class="fa fa-users" id="DGHC"></i>
-                                        <label class="displayInfo control-label custom-title-code-bold">
-                                            Địa giới hành chính
-                                        </label>
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="br24 form-control custom-title-code-bold" style="display:flex">
-                                            <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
-                                               title="Popover Header" data-bs-placement="bottom"
-                                               data-bs-content="Ví dụ: 'Hà Nội'"
-                                               style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                                            <choose-position ng-model="infUser.PlaceWorking" provinces="ListProvince"
-                                                             style="width: 100%;"></choose-position>
-                                        </div>
-                                    </div>
-                                </div>-->
+    <div class="form-group row">
+        <div class="col-md-4 pr-0 ">
+            <i class="fa fa-users" id="DGHC"></i>
+            <label class="displayInfo control-label custom-title-code-bold">
+                Địa giới hành chính
+            </label>
+        </div>
+        <div class="col-md-8">
+            <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                <i class="fa fa-info-circle  icon-clickable" data-bs-toggle="popover"
+                   title="Popover Header" data-bs-placement="bottom"
+                   data-bs-content="Ví dụ: 'Hà Nội'"
+                   style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                <choose-position ng-model="infUser.PlaceWorking" provinces="ListProvince"
+                                 style="width: 100%;"></choose-position>
+            </div>
+        </div>
+    </div>-->
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0">
                                         <i class="fa fa-heart" id="MarriedStatusIcon"></i>

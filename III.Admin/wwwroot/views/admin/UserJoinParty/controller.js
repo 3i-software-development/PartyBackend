@@ -3649,7 +3649,13 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 // Gán đối tượng JSON vào $scope.infUser.MaritalStatus
 
             }
-
+            const lstStatus = rs.JsonStaus;
+            if (lstStatus.length > 0) {
+                $scope.infUser.Status = lstStatus[lstStatus.length - 1].Code;
+                $scope.infUser.StatusDefault = lstStatus[lstStatus.length - 1].Code;
+                $scope.infUser.StatusTemp = lstStatus[lstStatus.length - 1].Code;
+                $scope.listStatusLog = lstStatus;
+            }
             console.log($scope.infUser.MaritalStatus.decisionDate);
             $scope.infUser.LastName = rs.CurrentName;
             let marriedStatus = $scope.infUser.MarriedStatus;
@@ -4895,7 +4901,7 @@ return;
                 var TemporaryAddress = $scope.infUser.TemporaryAddress.split('_');
                 if (TemporaryAddress.length >= 3) {
                     const listPromise = [];
-                    if (TemporaryAddress[0]) {
+                    if (TemporaryAddress[0] && TemporaryAddress[0] !== "NaN" && !Number.isNaN(TemporaryAddress[0])) {
                         listPromise.push(new Promise((resolve, reject) => {
                             try {
                                 dataserviceJoinParty.GetTinh(TemporaryAddress[0], function (rs) {
@@ -4910,7 +4916,7 @@ return;
                             }
                         }));
                     }
-                    if (TemporaryAddress[1]) {
+                    if (TemporaryAddress[1] && TemporaryAddress[1] !== "NaN" && !Number.isNaN(TemporaryAddress[1])) {
                         listPromise.push(new Promise((resolve, reject) => {
                             try {
                                 dataserviceJoinParty.GetHuyen(TemporaryAddress[1], function (rs) {
@@ -4925,7 +4931,7 @@ return;
                             }
                         }));
                     }
-                    if (TemporaryAddress[2]) {
+                    if (TemporaryAddress[2] && TemporaryAddress[2] !== "NaN" && !Number.isNaN(TemporaryAddress[2])) {
                         listPromise.push(new Promise((resolve, reject) => {
                             try {
                                 dataserviceJoinParty.GetXa(TemporaryAddress[2], function (rs) {
