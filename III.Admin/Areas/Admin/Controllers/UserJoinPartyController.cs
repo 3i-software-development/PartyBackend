@@ -25,6 +25,7 @@ using ESEIM;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using System.Net.Http;
+using OpenXmlPowerTools;
 
 namespace III.Admin.Controllers
 {
@@ -299,11 +300,14 @@ namespace III.Admin.Controllers
             public string PoliticalTheory { get; set; }
             public string GeneralEducation { get; set; }
             public string AddressText { get; set; }
+
         }
         public class JTableResult
         {
             public int stt { get; set; }
             public int Id { get; set; }
+            public int UpdateBy { get; set; }
+            public DateTime? UpdateTime { get; set; }
             public string CurrentName { get; set; }
             public string Nation { get; set; }
             public int? UserCode { get; set; }
@@ -397,6 +401,7 @@ namespace III.Admin.Controllers
                              select new ModelUserJoinPartyTable
                              {
                                  Id = a.Id,
+                                 UpdateTime = a.UpdateTime,
                                  CurrentName = a.CurrentName,
                                  UserCode = a.UserCode,
                                  Status = a.Status,
@@ -423,6 +428,8 @@ namespace III.Admin.Controllers
                 {
                     stt = index + 1,
                     Id = x.Id,
+                    UpdateBy = x.UpdateBy,
+                    UpdateTime = x.UpdateTime,
                     CurrentName = x.CurrentName,
                     Nation = x.Nation,
                     UserCode = x.UserCode,
@@ -445,13 +452,13 @@ namespace III.Admin.Controllers
                 int count = query_row_number.Count();
                 var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
 
-                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "CurrentName", "Nation", "UserCode", "Status", "Username", "AddressText", "PermanentResidenceValue",
+                var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "UpdateBy", "UpdateTime", "CurrentName", "Nation", "UserCode", "Status", "Username", "AddressText", "PermanentResidenceValue",
                     "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
             catch (Exception err)
             {
-                var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "CurrentName", "UserCode", "Status", "Username", "Nation", "CreatedBy",
+                var jdata = JTableHelper.JObjectTable(null, jTablePara.Draw, 0, "stt", "Id", "UpdateBy", "UpdateTime", "CurrentName", "UserCode", "Status", "Username", "Nation", "CreatedBy",
                     "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
                 return Json(jdata);
             }
@@ -1763,6 +1770,8 @@ namespace III.Admin.Controllers
     public class ModelUserJoinPartyTable
     {
         public int Id { get; set; }
+        public int UpdateBy { get; set; }
+        public DateTime? UpdateTime { get; set; }
         public string CurrentName { get; set; }
         public int UserCode { get; set; }
         public string Status { get; set; }
