@@ -45,6 +45,8 @@ using III.Admin.Utils;
 using Syncfusion.EJ2.Charts;
 using System.ComponentModel.DataAnnotations;
 using Syncfusion.DocIO;
+using ESEIM;
+using Microsoft.Extensions.Options;
 
 namespace III.Admin.Controllers
 {
@@ -58,8 +60,16 @@ namespace III.Admin.Controllers
         private readonly IStringLocalizer<SharedResources> _sharedResources;
         private static readonly ILog Log = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly AppSettings _appSettings;
 
-        public UserJoinPartyController(EIMDBContext context, IStringLocalizer<SharedResources> sharedResources, IUploadService upload, ILuceneService luceneService, IRepositoryService repositoryService, IHostingEnvironment hostingEnvironment)
+        public UserJoinPartyController(
+            EIMDBContext context,
+            IStringLocalizer<SharedResources> sharedResources,
+            IUploadService upload,
+            ILuceneService luceneService,
+            IRepositoryService repositoryService,
+            IOptions<AppSettings> appSettings,
+            IHostingEnvironment hostingEnvironment)
         {
             _context = context;
             _sharedResources = sharedResources;
@@ -67,6 +77,7 @@ namespace III.Admin.Controllers
             _luceneService = luceneService;
             _repositoryService = repositoryService;
             _hostingEnvironment = hostingEnvironment;
+            _appSettings = appSettings.Value;
         }
 
         [Breadcrumb("ViewData.UserJoinParty", AreaName = "Admin", FromAction = "Index", FromController = typeof(DashBoardController))]
