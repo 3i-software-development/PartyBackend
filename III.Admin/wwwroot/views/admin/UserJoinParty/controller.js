@@ -4786,6 +4786,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         console.log($scope.model);
     }
     // AdmissionProfile
+    $scope.isLoadFileWord = false;
     $scope.submitPartyAdmissionProfile = function () {
         if ($scope.forms.edit.validate()) {
             $scope.err = false
@@ -6988,7 +6989,7 @@ return;
     function handleTextUpload(txt) {
         $scope.Relationship = []
         $scope.PersonalHistory = []
-
+        $scope.isLoadFileWord = true;
         //lịch sử bản thân
         $scope.PersonalHistory = [];
         //quá trình công tác

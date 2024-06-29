@@ -1290,7 +1290,7 @@ namespace III.Admin.Controllers
         #region insert
 
         [HttpPost]
-        public object InsertFamily([FromBody] FamilyModel[] model)
+        public async Task<JMessage> InsertFamily([FromBody] FamilyModel[] model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -1377,6 +1377,14 @@ namespace III.Admin.Controllers
                     }
                 }
                 _context.SaveChanges();
+                if (model.Length > 0)
+                {
+                    var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null); 
+                }
                 msg.Title = "Thêm mới lý lịch gia đình thành công";
             }
             catch (Exception err)
@@ -1510,7 +1518,7 @@ namespace III.Admin.Controllers
         }
 
         [HttpPost]
-        public object InsertIntroduceOfParty([FromBody] IntroducerOfParty model)
+        public async Task<JMessage> InsertIntroduceOfParty([FromBody] IntroducerOfParty model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -1550,7 +1558,14 @@ namespace III.Admin.Controllers
                     return msg;
                 }
                 _context.SaveChanges();
-
+                if (model.ProfileCode != null)
+                {
+                    var actInst = GetActInstanceCode(model.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
+                }
                 msg.Title = "Thêm mới Giới thiệu vào đảng thành công";
             }
             catch (Exception err)
@@ -1561,7 +1576,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpPost]
-        public object InsertPersonalHistory([FromBody] PersonalHistory[] model)
+        public async Task<JMessage> InsertPersonalHistory([FromBody] PersonalHistory[] model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -1612,7 +1627,14 @@ namespace III.Admin.Controllers
                 }
 
                 _context.SaveChanges();
-
+                if (model.Length > 0)
+                {
+                    var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
+                }
                 msg.Title = "Thêm mới Lịch sử bản thân thành công";
 
             }
@@ -1629,7 +1651,7 @@ namespace III.Admin.Controllers
 
 
         [HttpPost]
-        public object InsertGoAboardOnly([FromBody] GoAboard x)
+        public async Task<JMessage> InsertGoAboardOnly([FromBody] GoAboard x)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -1646,7 +1668,14 @@ namespace III.Admin.Controllers
                     _context.GoAboards.Add(x);
 
                     _context.SaveChanges();
-
+                    if (x.ProfileCode != null)
+                    {
+                        var actInst = GetActInstanceCode(x.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                        var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                        var client = _httpClientFactory.CreateClient();
+                        client.BaseAddress = new Uri(_appSettings.UrlProd);
+                        var response = await client.PostAsync(url, null);
+                    }
                     msg.Title = "Thêm Đi nước ngoài thành công";
                 }
                 else
@@ -1727,7 +1756,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpPost]
-        public object InsertTrainingCertificatedPass([FromBody] TrainingCertificatedPass[] model)
+        public async Task<JMessage> InsertTrainingCertificatedPass([FromBody] TrainingCertificatedPass[] model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -1778,7 +1807,14 @@ namespace III.Admin.Controllers
 
                 }
                 _context.SaveChanges();
-
+                if (model.Length > 0)
+                {
+                    var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
+                }
                 msg.Title = "Thêm những lớp đào tạo đã qua thành công";
             }
             catch (Exception err)
@@ -1789,7 +1825,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpPost]
-        public object InsertHistorysSpecialist([FromBody] HistorySpecialist[] model)
+        public async Task<JMessage> InsertHistorysSpecialist([FromBody] HistorySpecialist[] model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -1837,6 +1873,14 @@ namespace III.Admin.Controllers
 
                 }
                 _context.SaveChanges();
+                if (model.Length > 0)
+                {
+                    var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
+                }
                 msg.Title = "Thêm Đặc điểm lịch sử thành công";
             }
             catch (Exception err)
@@ -1847,7 +1891,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpPost]
-        public object InsertWarningDisciplined([FromBody] WarningDisciplined[] model)
+        public async Task<JMessage> InsertWarningDisciplined([FromBody] WarningDisciplined[] model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -1896,7 +1940,14 @@ namespace III.Admin.Controllers
 
                 }
                 _context.SaveChanges();
-
+                if (model.Length > 0)
+                {
+                    var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
+                }
                 msg.Title = "Thêm kỷ luật thành công";
             }
             catch (Exception err)
@@ -1907,7 +1958,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpPost]
-        public object InsertAward([FromBody] Award[] model)
+        public async Task<JMessage> InsertAward([FromBody] Award[] model)
         {
             var msg = new JMessage() { Error = false };
 
@@ -1956,6 +2007,14 @@ namespace III.Admin.Controllers
 
                 }
                 _context.SaveChanges();
+                if (model.Length > 0)
+                {
+                    var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
+                }
                 msg.Title = "Thêm khen thưởng thành công";
 
             }
@@ -1967,7 +2026,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpPost]
-        public object InsertWorkingTracking([FromBody] WorkingTracking[] model)
+        public async Task<JMessage> InsertWorkingTracking([FromBody] WorkingTracking[] model)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2016,6 +2075,14 @@ namespace III.Admin.Controllers
 
                 }
                 _context.SaveChanges();
+                if (model.Length > 0)
+                {
+                    var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
+                }
                 msg.Title = "Thêm quá trình công tác thành công";
             }
             catch (Exception err)
@@ -2234,7 +2301,7 @@ namespace III.Admin.Controllers
 
 
         [HttpDelete]
-        public object DeleteFamily(int Id)
+        public async Task<JMessage> DeleteFamily(int Id)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2245,6 +2312,11 @@ namespace III.Admin.Controllers
                     data.IsDeleted = true;
                     _context.Families.Update(data);
                     _context.SaveChanges();
+                    var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     msg.Title = "Xóa hoàn cảnh gia đình thành công";
                 }
                 else
@@ -2312,7 +2384,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpDelete]
-        public object DeleteAward(int Id)
+        public async Task<JMessage> DeleteAward(int Id)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2323,6 +2395,11 @@ namespace III.Admin.Controllers
                     data.IsDeleted = true;
                     _context.Awards.Update(data);
                     _context.SaveChanges();
+                    var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     msg.Title = "Xóa Khen thưởng thành công";
                 }
                 else
@@ -2339,7 +2416,7 @@ namespace III.Admin.Controllers
         }
 
         [HttpDelete]
-        public object DeleteGoAboard(int Id)
+        public async Task<JMessage> DeleteGoAboard(int Id)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2350,6 +2427,11 @@ namespace III.Admin.Controllers
                     data.IsDeleted = true;
                     _context.GoAboards.Update(data);
                     _context.SaveChanges();
+                    var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     msg.Title = "Xóa Đi nước ngoài thành công";
                 }
                 else
@@ -2365,7 +2447,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpDelete]
-        public object DeletePersonalHistory(int Id)
+        public async Task<JMessage> DeletePersonalHistory(int Id)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2376,6 +2458,11 @@ namespace III.Admin.Controllers
                     data.IsDeleted = true;
                     _context.PersonalHistories.Update(data);
                     _context.SaveChanges();
+                    var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     msg.Title = "Xóa Lịch sử cá nhân thành công";
                 }
                 else
@@ -2392,7 +2479,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpDelete]
-        public object DeleteWorkingTracking(int Id)
+        public async Task<JMessage> DeleteWorkingTracking(int Id)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2403,6 +2490,11 @@ namespace III.Admin.Controllers
                     data.IsDeleted = true;
                     _context.WorkingTrackings.Update(data);
                     _context.SaveChanges();
+                    var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     msg.Title = "Xóa Công tác thành công";
                 }
                 else
@@ -2418,7 +2510,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpDelete]
-        public object DeleteTrainingCertificatedPass(int Id)
+        public async Task<JMessage> DeleteTrainingCertificatedPass(int Id)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2429,6 +2521,11 @@ namespace III.Admin.Controllers
                     data.IsDeleted = true;
                     _context.TrainingCertificatedPasses.Update(data);
                     _context.SaveChanges();
+                    var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     msg.Title = "Xóa Những lớp đào tạo bồi dưỡng đã qua thành công";
                 }
                 else
@@ -2445,7 +2542,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpDelete]
-        public object DeleteWarningDisciplined(int Id)
+        public async Task<JMessage> DeleteWarningDisciplined(int Id)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2456,6 +2553,11 @@ namespace III.Admin.Controllers
                     data.IsDeleted = true;
                     _context.WarningDisciplineds.Update(data);
                     _context.SaveChanges();
+                    var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     msg.Title = "Xóa Cảnh cáo kỉ luật thành công";
                 }
                 else
@@ -2471,7 +2573,7 @@ namespace III.Admin.Controllers
             return msg;
         }
         [HttpDelete]
-        public object DeleteHistorySpecialist(int Id)
+        public async Task<JMessage> DeleteHistorySpecialist(int Id)
         {
             var msg = new JMessage() { Error = false };
             try
@@ -2482,6 +2584,11 @@ namespace III.Admin.Controllers
                     data.IsDeleted = true;
                     _context.HistorySpecialists.Update(data);
                     _context.SaveChanges();
+                    var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var client = _httpClientFactory.CreateClient();
+                    client.BaseAddress = new Uri(_appSettings.UrlProd);
+                    var response = await client.PostAsync(url, null);
                     msg.Title = "Xóa Đặc điểm lịch sử thành công";
                 }
                 else
