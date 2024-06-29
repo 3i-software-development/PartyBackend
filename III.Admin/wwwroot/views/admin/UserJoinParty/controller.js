@@ -2485,7 +2485,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         },
         {
             "id": "dateOfBirdRelation",
-            "labelText": "Năm sinh",
+            "labelText": "Năm sinh (Lí do mất nếu có)",
         },
         {
             "id": "politicalAttitude",
@@ -2619,6 +2619,10 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         {
             "id": "popup_1",
             "labelText": "Ngày sinh"
+        },
+        {
+            "id": "AddressDie",
+            "labelText": "Lí do"
         },
     ];
 

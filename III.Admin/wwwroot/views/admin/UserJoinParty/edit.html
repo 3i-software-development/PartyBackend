@@ -1601,7 +1601,7 @@
 
                                         <div class="form-group row" ng-if="selectedFamily.disableAddress">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-home" id="residence" ng-click="openPopover3('residence');"
+                                                <i class="fa fa-home" id="dateOfBirdRelation" ng-click="openPopover3('dateOfBirdRelation');"
                                                    uib-popover-template="'popoverTemplate.html'" popover-placement="right"
                                                    popover-trigger="outsideClick" ng-if="selectedFamily && selectedFamily.Id"></i>
                                                 <i class="fa fa-home" id="residence" ng-click="warningPopover3()"
@@ -1614,9 +1614,9 @@
                                             <div class="col-md-4">
                                                 <div class="br24 form-control custom-title-code-bold mb-1"
                                                      style="white-space: nowrap; padding-right: 35px;">
-                                                    <i class="fa fa-info-circle " id="residence"
+                                                    <i class="fa fa-info-circle " id="AddressDie"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       ng-click="handerClickIconChild('family','AddressDie');handleClick('AddressDie')"
+                                                       ng-click="handerClickIconChild('family','dateOfBirdRelation');handleClick('dateOfBirdRelation')"
                                                         uib-popover="Nơi mất của người thân là: {{selectedFamily.AddressDie}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="selectedFamilyAddressDie"
@@ -1630,9 +1630,9 @@
                                             <div class="col-md-4">
                                                 <div class="br24 form-control custom-title-code-bold mb-1"
                                                      style="white-space: nowrap; padding-right: 35px;">
-                                                    <i class="fa fa-info-circle " id="residence"
+                                                    <i class="fa fa-info-circle " id="dateOfBirdRelation"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       ng-click="handerClickIconChild('family','DieReason');handleClick('DieReason')"
+                                                       ng-click="handerClickIconChild('family','dateOfBirdRelation');handleClick('dateOfBirdRelation')"
                                                         uib-popover="Lý do mất của người thân: {{selectedFamily.DieReason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="outsideClick"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="selectedFamilyReason"
@@ -2083,10 +2083,10 @@
                                                                             {{x.BirthYear}}
                                                                         </span>
                                                                     </div>
-                                                                    <div>
+                                                                    <div >
                                                                         <span>{{x.die == true ?"- Nơi mất: "+ x.AddressDie : ""  }}</span>
                                                                     </div>
-                                                                    <div>
+                                                                    <div >
                                                                         <span>{{x.die == true ?"- Lý do mất: "+ x.Reason : ""  }}</span>
                                                                     </div>
                                                                 </td>
