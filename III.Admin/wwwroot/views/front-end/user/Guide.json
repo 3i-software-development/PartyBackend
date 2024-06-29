@@ -49,7 +49,7 @@
   },
   {
     "Id": "selfComment",
-    "Guide": "Bạn cần nhập đầy đủ họ, tên và viết hoa chữ cái đầu"
+    "Guide": "Bạn cần nhập đánh giá về bản thân. Ví dụ: Tốt,..."
   },
   {
     "Id": "generalEducation",
@@ -62,6 +62,10 @@
   {
     "Id": "rankAcademic",
     "Guide": "Bạn cần nhập đầy đủ học hàm.Ví dụ: Thạc sĩ"
+  },
+  {
+    "Id": "career",
+    "Guide": "Bạn cần nhập nghề nghiêp của người thân.Ví dụ: Thợ may..."
   },
   {
     "Id": "vocationalTraining",
@@ -84,7 +88,7 @@
     "Guide": "Bạn cần nhập đầy đủ trình độ hoặc chứng chỉ được cấp về tin học. Ví dụ: tin học văn phòng cơ bản"
   },
   {
-    "Id": "Relationship",
+    "Id": "relationship",
     "Guide": "Bạn cần nhập rõ mối quan hệ với người thân. Ví dụ: 'Bố, mẹ, ông ngoại, ông ngoại vợ, ...'"
   },
   {
@@ -148,19 +152,27 @@
     "Guide": "Bạn cần nhập lý do được thưởng.Ví dụ: Có công trong việc Phòng chống dịch Covid-19"
   },
   {
+    "Id": "MonthYear",
+    "Guide": "Bạn cần nhập tháng năm xảy ra.Ví dụ: 09-2023."
+  },
+  {
     "Id": "HistorySpecialist-MonthYear",
-    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+    "Guide": "Bạn cần nhập tháng năm xảy ra.Ví dụ: 09-2023."
   },
   {
     "Id": "WarningDisciplined-MonthYear",
-    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+    "Guide": "Bạn cần nhập tháng năm xảy ra.Ví dụ: 09-2023."
   },
   {
     "Id": "Laudatory-MonthYear",
-    "Guide": "Bạn cần nhập tháng năm sảy ra.Ví dụ: 09-2023."
+    "Guide": "Bạn cần nhập tháng năm xảy ra.Ví dụ: 09-2023."
   },
   {
     "Id": "WarningDisciplined-GrantOfDecision",
+    "Guide": "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
+  },
+  {
+    "Id": "GrantOfDecision",
     "Guide": "Bạn cần nhập số quyết định.Ví dụ: Quyết định số CP003."
   },
   {
@@ -174,6 +186,10 @@
   {
     "Id": "SchoolName",
     "Guide": "Bạn cần nhập tên trường bạn đã theo học.Ví dụ: Trường Đại học Sư Phạm Hà Nội"
+  },
+  {
+    "Id": "classFamily",
+    "Guide": "Bạn cần nhập thành phần giai cấp của người thân.Ví dụ: Nông dân,..."
   },
   {
     "Id": "Class",
@@ -192,11 +208,31 @@
     "Guide": "Bạn cần nhập họ va tên người thân của mình.Ví dụ: Nguyễn Văn A"
   },
   {
-    "Id": "Relation",
-    "Guide": "Bạn cần nhập mối quan hệ với người thân của mình.Ví dụ: Bố"
+    "Id": "BirthPlace",
+    "Guide": "Bạn cần nhập nơi sinh của người thân của mình.Ví dụ: Tỉnh Hà Giang,..."
   },
   {
-    "Id": "selectedFamily.BirthYear",
+    "Id": "AddressDie",
+    "Guide": "Bạn cần nhập nơi mất của người thân của mình.Ví dụ:  Tỉnh Hà Giang,..."
+  },
+  {
+    "Id": "dateOfBirdRelation",
+    "Guide": "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
+  },
+  {
+    "Id": "WordAt",
+    "Guide": "Bạn cần nhập nơi công tác của người thân của mình.Ví dụ: Tỉnh Hà Giang,..."
+  },
+  {
+    "Id": "BirthDie",
+    "Guide": "Bạn cần nhập ngày mất người thân của mình.Ví dụ: 13-4-1999"
+  },
+  {
+    "Id": "DieReason",
+    "Guide": "Bạn cần nhập lý do mất của người thân.Ví dụ: Do bệnh tật"
+  },
+  {
+    "Id": "BirthYear",
     "Guide": "Bạn cần nhập ngày sinh người thân của mình.Ví dụ: 13-4-1999"
   },
   {
@@ -214,10 +250,16 @@
   {
     "Id": "PersonHistory-To",
     "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
+  },{
+    "Id": "WorkingProgressStart",
+    "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
   },
   {
     "Id": "WorkingTracking-From",
     "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },{
+    "Id": "WorkingProgressEnd",
+    "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
     "Id": "WorkingTracking-To",
@@ -232,15 +274,27 @@
     "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
+    "Id": "From",
+    "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },
+  {
+    "Id": "content",
+    "Guide": "Bạn cần nhập nội dung. Ví dụ: 20-11-2020"
+  },
+  {
     "Id": "GoAboard-From",
     "Guide": "Bạn cần nhập thời gian bắt đầu. Ví dụ: 20-11-2020"
+  },
+  {
+    "Id": "To",
+    "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
     "Id": "GoAboard-To",
     "Guide": "Bạn cần nhập thời gian kết thúc. Ví dụ: 13-12-2020"
   },
   {
-    "Id": "Contact",
+    "Id": "contact",
     "Guide": "Bạn cần nhập lý do đi ra nước ngoài. Ví dụ: Đi du lịch, Đi công tác,..."
   },
   {
@@ -262,5 +316,9 @@
   {
     "Id": "PersonIntroduced",
     "Guide": "Bạn có thể ghi tên người giới thiệu vào Đảng và chức vụ của người giới thiệu. Ví dụ: Trịnh Ngọc Thái - Bí thư Đảng Uỷ "
+  },
+  {
+    "Id": "Party",
+    "Guide": "Bạn cần nhập tên Đảng bộ mà người thân đã công tác. Ví dụ: Đảng bộ A"
   }
 ]
