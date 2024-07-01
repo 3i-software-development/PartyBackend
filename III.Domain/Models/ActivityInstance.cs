@@ -88,6 +88,7 @@ namespace ESEIM.Models
     }
     public class LogStatus
     {
+        public string Content { get; set; }
         public string Status { get; set; }
         public string CreatedBy { get; set; }
         public bool Lock { get; set; }

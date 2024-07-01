@@ -2652,6 +2652,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         $scope.infUser.Status = lstStatus[lstStatus.length - 1].Code;
                         $scope.infUser.StatusDefault = lstStatus[lstStatus.length - 1].Code;
                         $scope.infUser.StatusTemp = lstStatus[lstStatus.length - 1].Code;
+                        $scope.infUser.StatusObj = lstStatus[lstStatus.length - 1];
                         $scope.listStatusLog = lstStatus;
                     }
 

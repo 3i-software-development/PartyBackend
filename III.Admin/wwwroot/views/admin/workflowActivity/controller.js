@@ -692,10 +692,10 @@ app.factory('dataservice', function ($http) {
 
         //File workflow
         getFileWfInst: function (data, callback) {
-            
-            var Activity=''
-            if(data.ActInsCode!=''&&data.ActInsCode!=null&&data.ActInsCode!=undefined){
-                Activity='&ActInsCode='+data.ActInsCode
+
+            var Activity = ''
+            if (data.ActInsCode != '' && data.ActInsCode != null && data.ActInsCode != undefined) {
+                Activity = '&ActInsCode=' + data.ActInsCode
             }
             $http.post('/Admin/WorkflowActivity/GetFileWfInst?wfInstCode=' + data.wfInstCode + Activity).then(callback);
         },
@@ -955,8 +955,8 @@ app.config(function ($routeProvider, $validatorProvider, $translateProvider) {
     });
 });
 
-app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataservice, $filter, myService, $location) {
-    
+app.controller('index', function ($scope, $timeout, $rootScope, $compile, $uibModal, DTOptionsBuilder, DTColumnBuilder, DTInstances, dataservice, $filter, myService, $location) {
+
     $(".content-wrapper").removeClass("padding-right-80");
     $(".content-wrapper").addClass("padding-right-90");
     $("#breadcrumb").appendTo("#breadcrumb-container");
@@ -976,7 +976,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     $scope.isShowDiagram = false;
     $scope.isShowCard = false;
     $scope.isShowListWf = true;
-    $scope.checkHiddenFileWfActivity=false;
+    $scope.checkHiddenFileWfActivity = false;
 
     $scope.showDiagram = function () {
         $scope.isShowDiagram = true;
@@ -1001,7 +1001,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     $scope.model = {
         WfInst: "",
         WfCode: "",
-        checkHiddenFileWfActivity:false
+        checkHiddenFileWfActivity: false
     };
     $scope.modelSearch = {
         WfInst: "",
@@ -1255,7 +1255,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
             rs = rs.data;
             $scope.lstStatusAssign = rs;
         })
-        
+
 
         //Object operation
         dataservice.getObjTypeJC(function (rs) {
@@ -1300,7 +1300,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
         $scope.isShowDiagram = true;
         $scope.isShowCard = false;
         $scope.isShowListWf = false;
-        
+
         drawWfInstance(code);
     };
 
@@ -2069,7 +2069,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     }
 
     $scope.deleteWfInstance = function (code) {
-        
+
         dataservice.deleteWfInstance(code, function (rs) {
             rs = rs.data;
             if (rs.Error) {
@@ -2599,14 +2599,14 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
         .withOption('initComplete', function (settings, json) {
         })
         .withOption('rowCallback', function (tabRow, data) {
-            
+
         })
         .withOption('createdRow', function (row, data, dataIndex) {
             $compile(angular.element(row))($scope);
             $(row).find('td:not(.listaction):not(:has(label.mt-checkbox))').on('click', function (evt) {
                 // Xóa lớp active khỏi tất cả các hàng
                 $(this).closest('table').find('tr').removeClass('active');
-                        
+
                 // Thêm lớp active vào hàng đã được click
                 $(this).closest('tr').addClass('active');
 
@@ -2673,8 +2673,13 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     //     }
     // }));
     vm.dtColumnsList.push(DTColumnBuilder.newColumn('ListCard').withTitle('{{"WFAI_BTN_JOB_CARD" | translate}}').withOption('sClass', 'w20 nowrap text-center').renderWith(function (data, type, full) {
-        var lstAct = JSON.parse(full.ListAct);
-        return lstAct.length > 0 ? '<button title="Xem danh sách hoạt động" ng-click="showActivityList(\'' + full.WfCode + '\')" style = "width: 32px; height: 32px; padding: 0px; border: none;color: #183153; background: transparent" class1="btn btn-icon-only primary btn-circle btn-outline blue"><i class="fas fa-tasks-alt fs25" style="line-height:32px"></i></button>' : '';
+        try {
+            var lstAct = JSON.parse(full.ListAct);
+            return lstAct.length > 0 ? '<button title="Xem danh sách hoạt động" ng-click="showActivityList(\'' + full.WfCode + '\')" style = "width: 32px; height: 32px; padding: 0px; border: none;color: #183153; background: transparent" class1="btn btn-icon-only primary btn-circle btn-outline blue"><i class="fas fa-tasks-alt fs25" style="line-height:32px"></i></button>' : '';
+        } catch (e) {
+            console.log(e);
+            return '';
+        }
     }));
     vm.dtColumnsList.push(DTColumnBuilder.newColumn('action').withTitle("{{'COM_LIST_COL_ACTION' | translate}}").withOption('sClass', 'w20 nowrap listaction').renderWith(function (data, type, full) {
         return '<button title="Sửa" ng-click="editWfInst(\'' + full.WfCode + '\')" style = "width: 25px; height: 25px; padding: 0px; border: none; color: #183153; background: transparent; margin-right: 10px" class1="btn btn-icon-only btn-circle btn-outline blue"><i class="fas fa-edit fs20"></i></button>' +
@@ -2712,7 +2717,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
         }
         vm.selectAll = true;
     }
-    $rootScope.reloadActWf = function() {
+    $rootScope.reloadActWf = function () {
         reloadDataList(false, true);
     };
     function reloadWfAct() {
@@ -2729,13 +2734,18 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     $rootScope.wfListActId = '';
     function formatRow(full) {
         $rootScope.wfListActId = full.Id;
-        var lstAct = JSON.parse(full.ListAct);
+        try {
+            var lstAct = JSON.parse(full.ListAct);
+        } catch (e) {
+            console.log(e);
+            return;
+        }
         $scope.listActs = lstAct;
         $scope.isEditWorkflow = true;
-        $scope.model.checkHiddenFileWfActivity=false;
+        $scope.model.checkHiddenFileWfActivity = false;
         //console.log($scope.isEditWorkflow,$scope.listActs);
-        $scope.full=full;
-        $timeout(function() {
+        $scope.full = full;
+        $timeout(function () {
             $scope.$apply();
         });
     }
@@ -2849,8 +2859,8 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
         window.open(url, '_blank');
     }
 
-    $scope.moreFile = function (wfCode,ActInsCode) {
-        
+    $scope.moreFile = function (wfCode, ActInsCode) {
+
         var modalInstance = $uibModal.open({
             animation: true,
             templateUrl: ctxfolder + "/more-file.html",
@@ -2868,10 +2878,10 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
             }
         });
         modalInstance.result.then(function (d) {
-            
+
         }, function () {
-            
-         });
+
+        });
     }
 
     $scope.reidrectToObject = function (objectType, objectCode) {
@@ -4036,7 +4046,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
         ObjectInst: "",
         ActInstCode: ""
     };
-    
+
     $scope.submit = function () {
         validationSelect($scope.modelEditWf);
         if ($scope.addwfinstance.validate() && !validationSelect($scope.modelEditWf).Status) {
@@ -4414,7 +4424,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     }
 
     function setBackgroundColor(lstActInst) {
-        
+
         //Get all figure in canvas
         var arrFigure = $rootScope.canvas2.getFigures();
         if (arrFigure.data.length > 0) {
@@ -4442,7 +4452,7 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
     }
 
     function clearTime(actInstCode) {
-        
+
         var allFigure = $rootScope.canvas2.getFigures();
         if (allFigure.data.length > 0) {
             for (var i = 0; i < allFigure.data.length; i++) {
@@ -4510,17 +4520,17 @@ app.controller('index', function ($scope ,$timeout, $rootScope, $compile, $uibMo
 
         return mess;
     };
-    $scope.CloseAll=function(act1){
-        if(!act1.IsApprovable && !window.isAllData){
+    $scope.CloseAll = function (act1) {
+        if (!act1.IsApprovable && !window.isAllData) {
             act1.checkHiddenActWf = false;
             App.toastrError(caption.WFAI_MSG_U_NOT_PER_APPROVE_ACT);
             return
         }
-        var actCheck=act1.checkHiddenActWf
-        $scope.listActs.forEach(function(act) {
+        var actCheck = act1.checkHiddenActWf
+        $scope.listActs.forEach(function (act) {
             act.checkHiddenActWf = false;
         });
-        act1.checkHiddenActWf=!actCheck;
+        act1.checkHiddenActWf = !actCheck;
     }
     setTimeout(function () {
         initDateTime();
@@ -5150,10 +5160,10 @@ app.controller('setting-transition', function ($scope, $rootScope, $compile, $ui
 app.controller('edit-activity-instance', function ($scope, $rootScope, $compile, $uibModal, $confirm, dataservice, $translate, $filter) {
     $scope.tabnav = 'Section3'; // Initialize tabnav variable
     $scope.isAllData = window.isAllData;
-    $scope.saveTabNav = function(href) {
+    $scope.saveTabNav = function (href) {
         $scope.tabnav = href; // Save href to tabnav variable
     };
-    
+
     $scope.model = {
         Template: "",
         Status: ""
@@ -5169,7 +5179,7 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
 
     $scope.isAll = true;
 
-    
+
 
     $rootScope.isAccepted = true;
 
@@ -5193,14 +5203,14 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
             $rootScope.lstCommandFromExtra = rs;
         })
     }
-    $scope.initEdit=function(id,ObjCode){
-        
+    $scope.initEdit = function (id, ObjCode) {
+
         dataservice.getItemActInst(id, function (rs) {
-                    $rootScope.IsLock = rs.data.IsLock;
-                    $scope.ActCatCode = rs.data.DataActInst.ActivityCode
-                    $scope.Data = rs.data;
-                    $scope.ObjectCode=ObjCode;
-                    $scope.initData();
+            $rootScope.IsLock = rs.data.IsLock;
+            $scope.ActCatCode = rs.data.DataActInst.ActivityCode
+            $scope.Data = rs.data;
+            $scope.ObjectCode = ObjCode;
+            $scope.initData();
         });
     }
     $scope.initData = function () {
@@ -5300,7 +5310,7 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
         //$scope.interval = setInterval(sessionAct, 3000);
     }
 
-    
+
 
     $rootScope.reloadHeader = function () {
         dataservice.getItemActInstByCode($rootScope.ActInstCode, function (rs) {
@@ -5382,7 +5392,7 @@ app.controller('edit-activity-instance', function ($scope, $rootScope, $compile,
     }
 
     $scope.submit = function () {
-        
+
         if (!validationSelect($scope.model).Status) {
             if ($rootScope.IsLock) {
                 return App.toastrError(caption.WFAI_MSG_ACT_IS_LOCKED);
@@ -6212,10 +6222,10 @@ app.controller('nested-wf', function ($scope, $rootScope, $uibModal, $confirm, $
     }
 
     $scope.initData();
-    
-    $scope.$watch(function() {
+
+    $scope.$watch(function () {
         return $rootScope.ActInstCode;
-    }, function(newVal, oldVal) {
+    }, function (newVal, oldVal) {
         // Check if the value has changed
         if (newVal !== oldVal) {
             // If the value has changed, call init function
@@ -6302,9 +6312,9 @@ app.controller('assign-member', function ($scope, $rootScope, $uibModal, $confir
         Role: ""
     }
 
-    $scope.$watch(function() {
+    $scope.$watch(function () {
         return $rootScope.ActInstCode;
-    }, function(newVal, oldVal) {
+    }, function (newVal, oldVal) {
         // Check if the value has changed
         if (newVal !== oldVal) {
             // If the value has changed, call init function
@@ -9780,13 +9790,13 @@ app.controller('fileActivity', function ($scope, $rootScope, $compile, $uibModal
     $scope.progressModal = {};
     $scope.isProgressModelOpen = false;
     $scope.lstAttach = [];
-    $scope.$watch('$rootScope.ActInstCode', function(newVal, oldVal) {
+    $scope.$watch('$rootScope.ActInstCode', function (newVal, oldVal) {
         if (newVal !== oldVal) {
             // Thực hiện các thao tác khi giá trị thay đổi
             $rootScope.reloadFile()
         }
     });
-    
+
     var titleHtml = '<label class="mt-checkbox"><input type="checkbox" ng-model="selectAll" ng-change="toggleAll(selectAll, selected)"/><span></span></label>';
     vm.dtOptions = DTOptionsBuilder.newOptions()
         .withOption('ajax', {
@@ -10046,7 +10056,7 @@ app.controller('fileActivity', function ($scope, $rootScope, $compile, $uibModal
     }
 
     $rootScope.reloadFile = function () {
-        
+
         $scope.reload();
     }
 
@@ -11548,42 +11558,42 @@ app.controller('send-notifi-act', function ($scope, $rootScope, $compile, $uibMo
 
 app.controller('more-file', function ($scope, $rootScope, $compile, $uibModal, $uibModalInstance, dataservice, para) {
     $scope.cancel = function () {
-        $rootScope.IsOpenModal=false;
+        $rootScope.IsOpenModal = false;
         $uibModalInstance.close(true);
     }
-        var excel = ['.XLSM', '.XLSX', '.XLS'];
-        var document = ['.TXT'];
-        var word = ['.DOCX', '.DOC'];
-        var pdf = ['.PDF'];
-        var powerPoint = ['.PPS', '.PPTX', '.PPT'];
-        var image = ['.JPG', '.PNG', '.TIF', '.TIFF'];
+    var excel = ['.XLSM', '.XLSX', '.XLS'];
+    var document = ['.TXT'];
+    var word = ['.DOCX', '.DOC'];
+    var pdf = ['.PDF'];
+    var powerPoint = ['.PPS', '.PPTX', '.PPT'];
+    var image = ['.JPG', '.PNG', '.TIF', '.TIFF'];
 
-    $scope.IsOpenModal=true;
+    $scope.IsOpenModal = true;
     $scope.initData = function () {
         dataservice.getFileWfInst(para, function (rs) {
-                rs = rs.data;
-                $scope.lstFile = rs;
-                $scope.lstFile.forEach(element => {
-                    var icon = '<i style="color: rgb(42,42,42);font-size: 15px;" class="fas fa-align-justify pr5" aria-hidden="true"></i>';
+            rs = rs.data;
+            $scope.lstFile = rs;
+            $scope.lstFile.forEach(element => {
+                var icon = '<i style="color: rgb(42,42,42);font-size: 15px;" class="fas fa-align-justify pr5" aria-hidden="true"></i>';
 
-                    if (excel.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
-                        icon = '<i style="color: rgb(106,170,89);font-size: 15px;" class="fa fa-file-excel-o pr5" aria-hidden="true"></i>';
-                    } else if (word.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
-                        icon = '<i style="color: rgb(13,118,206);font-size: 15px;" class="fa fa-file-word-o pr5" aria-hidden="true"></i>';
-                    } else if (document.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
-                        icon = '<i style="color: rgb(0,0,0);font-size: 15px;" class="fa fa-file-text-o pr5" aria-hidden="true"></i>';
-                    } else if (pdf.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
-                        icon = '<i style="color: rgb(226,165,139);font-size: 15px;" class="fa fa-file-pdf-o pr5" aria-hidden="true"></i>';
-                    } else if (powerPoint.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
-                        icon = '<i style="color: rgb(226,165,139);font-size: 15px;" class="fa fa-file-powerpoint-o pr5" aria-hidden="true"></i>';
-                    } else if (image.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
-                        icon = '<i style="color: rgb(42,42,42);font-size: 15px;" class="fa fa-picture-o pr5" aria-hidden="true"></i>';
-                    }
+                if (excel.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    icon = '<i style="color: rgb(106,170,89);font-size: 15px;" class="fa fa-file-excel-o pr5" aria-hidden="true"></i>';
+                } else if (word.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    icon = '<i style="color: rgb(13,118,206);font-size: 15px;" class="fa fa-file-word-o pr5" aria-hidden="true"></i>';
+                } else if (document.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    icon = '<i style="color: rgb(0,0,0);font-size: 15px;" class="fa fa-file-text-o pr5" aria-hidden="true"></i>';
+                } else if (pdf.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    icon = '<i style="color: rgb(226,165,139);font-size: 15px;" class="fa fa-file-pdf-o pr5" aria-hidden="true"></i>';
+                } else if (powerPoint.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    icon = '<i style="color: rgb(226,165,139);font-size: 15px;" class="fa fa-file-powerpoint-o pr5" aria-hidden="true"></i>';
+                } else if (image.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
+                    icon = '<i style="color: rgb(42,42,42);font-size: 15px;" class="fa fa-picture-o pr5" aria-hidden="true"></i>';
+                }
 
-                    element.icon=icon;
-                });
-                console.log(rs)
-        }) 
+                element.icon = icon;
+            });
+            console.log(rs)
+        })
     }
 
     $scope.initData();
@@ -11763,15 +11773,15 @@ app.controller('more-file', function ($scope, $rootScope, $compile, $uibModal, $
     }, 400);
 });
 app.controller('more-file-wf', function ($scope, $rootScope, $compile, dataservice) {
-    $scope.IsOpenModal=false;
+    $scope.IsOpenModal = false;
     var excel = ['.XLSM', '.XLSX', '.XLS'];
-        var document = ['.TXT'];
-        var word = ['.DOCX', '.DOC'];
-        var pdf = ['.PDF'];
-        var powerPoint = ['.PPS', '.PPTX', '.PPT'];
-        var image = ['.JPG', '.PNG', '.TIF', '.TIFF'];
-        
-    $scope.InitNotModal=function(WfCode){
+    var document = ['.TXT'];
+    var word = ['.DOCX', '.DOC'];
+    var pdf = ['.PDF'];
+    var powerPoint = ['.PPS', '.PPTX', '.PPT'];
+    var image = ['.JPG', '.PNG', '.TIF', '.TIFF'];
+
+    $scope.InitNotModal = function (WfCode) {
         var model = {
             wfInstCode: WfCode
         }
@@ -11781,7 +11791,7 @@ app.controller('more-file-wf', function ($scope, $rootScope, $compile, dataservi
             $scope.lstFile.forEach(element => {
                 element.iconClass = 'fas fa-align-justify pr5'; // Default icon class
                 element.iconColor = 'rgb(42,42,42)'; // Default icon color
-            
+
                 if (excel.indexOf(element.FileTypePhysic.toUpperCase()) !== -1) {
                     element.iconClass = 'fa fa-file-excel-o pr5';
                     element.iconColor = 'rgb(106,170,89)';
@@ -11802,7 +11812,7 @@ app.controller('more-file-wf', function ($scope, $rootScope, $compile, dataservi
                     element.iconColor = 'rgb(42,42,42)';
                 }
             });
-            
+
         })
     }
 
@@ -12002,7 +12012,7 @@ app.directive("myFormEditInstance", function () {
     return {
         restrict: "E",
         templateUrl: ctxfolder + "edit-activity-instance.html",
-        scope:{
+        scope: {
             para: '='
         }
     };

@@ -352,6 +352,7 @@ namespace ESEIM.Models
         public int? No { get; set; }
         public string Code { get; set; }
         public string Name { get; set; }
+        public string Content { get; set; }
         //public string Type { get; set; }
         public string ObjectRelative { get; set; }
         public string ObjectType { get; set; }

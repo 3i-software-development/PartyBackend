@@ -647,6 +647,15 @@ namespace III.Admin.Controllers
 
                             var watchObjectToJsonLoop = System.Diagnostics.Stopwatch.StartNew();
                             var listActInfo = new List<ActInstInfo>();
+                            var updatedAct = item.ListActGrids.Where(x => x.Log != null).OrderByDescending(x => x.Log.CreatedTime).FirstOrDefault();
+                            if (updatedAct != null)
+                            {
+                                updatedAct.IsLastUpdated = true;
+                                var userLastUpdated = _context.Users.FirstOrDefault(x => x.UserName == updatedAct.Log.CreatedBy);
+                                updatedAct.Log.CreatedBy = userLastUpdated?.GivenName ?? "";
+                                var statusLastUpdated = commonActStatus.FirstOrDefault(x => x.CodeSet == updatedAct.Log.Status);
+                                updatedAct.Log.Status = statusLastUpdated?.ValueSet ?? ""; 
+                            }
                             item.ListAct = JsonConvert.SerializeObject(/*ArrangeAct(lstAct, 1, actInitial, listActInfo)*/item.ListActGrids.SetLockAndStatus(commonActStatus, commonActType, commandFromExtra,
                                 actFrom, assigns));
                             watchObjectToJsonLoop.Stop();
@@ -2437,7 +2446,7 @@ namespace III.Admin.Controllers
 
         [AllowAnonymous]
         [HttpPost]
-        public async Task<IActionResult> UpdateStatusActInst(string actInst, string status, string userName)
+        public async Task<IActionResult> UpdateStatusActInst(string actInst, string status, string userName, string content)
         {
             var msg = new JMessage { Error = false, Title = "" };
             try
@@ -2455,6 +2464,7 @@ namespace III.Admin.Controllers
                     }
                     var log = new LogStatus
                     {
+                        Content = content,
                         Status = status,
                         CreatedBy = userName ?? ESEIM.AppContext.UserName,
                         CreatedTime = DateTime.Now,
@@ -2478,7 +2488,7 @@ namespace III.Admin.Controllers
                     if (!string.IsNullOrEmpty(wfInfo.ObjectInst) && !string.IsNullOrEmpty(wfInfo.ObjectType))
                     {
                         //AddLogStatus(wfInfo.ObjectType, wfInfo.ObjectInst, status, inst.Title);
-                        _workflowService.AddLogStatusAll(wfInfo.ObjectType, wfInfo.ObjectInst, status, inst.Title, inst.Type, userName ?? ESEIM.AppContext.UserName);
+                        _workflowService.AddLogStatusAll(wfInfo.ObjectType, wfInfo.ObjectInst, status, inst.Title, inst.Type, userName ?? ESEIM.AppContext.UserName, content);
                     }
 
                     var assignInst = (_context.ExcuterControlRoleInsts.Where(x => !x.IsDeleted && x.ActivityCodeInst == inst.ActivityInstCode)
@@ -3477,6 +3487,7 @@ namespace III.Admin.Controllers
                 }
             }
             public string sCreatedTime { get; set; }
+            public string Content { get; set; }
         }
         #endregion
 
@@ -11825,11 +11836,36 @@ namespace III.Admin.Controllers
                                   IsLock = (a.Status.Equals("STATUS_ACTIVITY_NOT_DOING") || a.Status.Equals("STATUS_ACTIVITY_LOCK")) ? true : false,
                                   Level = 0,
                                   IsInstance = true,
-                                  ObjectCode = c.ObjectInst
+                                  ObjectCode = c.ObjectInst,
+                                  JsonStatusLog = a.JsonStatusLog
                               }).ToList();
             foreach (var item in activities)
             {
                 item.IsApprovable = GetPermission(item.ActivityInstCode).PermisstionApprove;
+                try
+                {
+                    item.ListLogStatus = JsonConvert.DeserializeObject<List<ESEIM.Models.LogStatus>>(item.JsonStatusLog);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    item.ListLogStatus = new List<ESEIM.Models.LogStatus>();
+                }
+            }
+            var lastActUpdated = activities.Where(x => x.ListLogStatus.Count > 0).Select(x => new
+            {
+                ActivityInstCode = x.ActivityInstCode,
+                LogStatus = x.ListLogStatus.OrderByDescending(y => y.CreatedTime).FirstOrDefault()
+            }).OrderByDescending(x => x.LogStatus.CreatedTime).FirstOrDefault();
+            if (lastActUpdated != null)
+            {
+                var lastActInstUpdated = activities.FirstOrDefault(x => x.ActivityInstCode == lastActUpdated.ActivityInstCode);
+                lastActInstUpdated.IsLastUpdated = true;
+                lastActInstUpdated.Log = lastActUpdated.LogStatus;
+                var userLastUpdated = _context.Users.FirstOrDefault(x => x.UserName == lastActInstUpdated.Log.CreatedBy);
+                lastActInstUpdated.Log.CreatedBy = userLastUpdated?.GivenName ?? "";
+                var statusLastUpdated = _context.CommonSettings.Where(x => !x.IsDeleted).FirstOrDefault(x => x.CodeSet == lastActInstUpdated.Log.Status);
+                lastActInstUpdated.Log.Status = statusLastUpdated?.ValueSet ?? "";
             }
             var actInit = activities.FirstOrDefault(x => x.ActType.Equals(EnumHelper<TypeActivity>.GetDisplayValue(TypeActivity.Initial)));
 

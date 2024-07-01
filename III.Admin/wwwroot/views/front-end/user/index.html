@@ -425,16 +425,16 @@
     }
 </style>
 <div class="notifi">
-    <div class="showNotifi" style="justify-content: space-between;">
+    <audio id="errorSound" src="/Sounds/incorrect.mp3"></audio>
+    <!--<div class="showNotifi" style="justify-content: space-between;">
         <div ng-click="showNotifi=!showNotifi">
             <i ng-show="showNotifi" class="fa fa-caret-down"></i>
             <i ng-show="!showNotifi" class="fa fa-caret-right"></i>
             <label>Thông báo</label>
-            <audio id="errorSound" src="/Sounds/incorrect.mp3"></audio>
 
         </div>
-    </div>
-    <ul ng-show="showNotifi">
+    </div>-->
+    <!--<ul ng-show="showNotifi">
         <li ng-repeat="item in status">
             <span style="font-weight: bold;">{{item.CreatedBy}}</span>:<span ng-style="{'color': (item.Name === 'Đã xử lý' ? 'green' : (item.Name === 'Đang xử lý' ? 'orange' : (item.Name === 'Dừng lại' ? 'red' : '')))}">
                 {{item.Name}}
@@ -443,7 +443,21 @@
             </span>{{item.ObjectRelative}}
             <div><span style="font-weight: bold;">Vào lúc: </span>{{item.SCreatedTime}}</div>
         </li>
-    </ul>
+    </ul>-->
+    <div ng-if="infUser.StatusObj" style="padding-top: 10px">
+        <span style="font-weight: bold;">{{infUser.StatusObj.CreatedBy}}</span>
+        <span ng-if="!infUser.StatusObj.Content">
+            đã cập nhật trạng thái
+            <span class="text-primary fw600" ng-style="{'color': (infUser.StatusObj.Name === 'Đã xử lý' ? 'green' : (infUser.StatusObj.Name === 'Đang xử lý' ? 'orange' : (infUser.StatusObj.Name === 'Dừng lại' ? 'red' : '')))}">
+                {{infUser.StatusObj.Name}}
+            </span>
+        </span>
+        <span ng-if="infUser.StatusObj.Content">
+            {{infUser.StatusObj.Content}}
+        </span>
+        cho hoạt động
+        <span class="fw600 text-green">{{infUser.StatusObj.ObjectRelative}} [{{infUser.StatusObj.SCreatedTime}}]</span>
+    </div>
 </div>
 <div class="form " style="margin-top: 15px; margin-bottom: 150px;">
     <div class="row">
@@ -619,7 +633,7 @@
                                                        title="Popover Header" popover-placement="bottom-left"
                                                        uib-popover="Sdt của bạn là: {{infUser.Phone}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
-                                                    <input class="displayInfo speechInput" style="border: #FFFF;" minlength="10" maxlength="11" 
+                                                    <input class="displayInfo speechInput" style="border: #FFFF;" minlength="10" maxlength="11"
                                                            name="Phone" ng-model="infUser.Phone" type="text"
                                                            placeholder="Số điện thoại" ng-required="true">
                                                     <i class="fa fa-microphone" style="font-size: 20px;"
@@ -632,7 +646,6 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker icon-clickable" id="noiSinh"
-                                                
                                                    popover-placement="right"></i>
                                                 <label class=" displayInfo control-label require custom-title-code-bold"
                                                        popover-trigger="outsideClick">
@@ -739,8 +752,6 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-home icon-clickable" id="diaChiTamTru"
-                                                 
-                                                   
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label custom-title-code-bold">
                                                     Địa chỉ
@@ -778,7 +789,7 @@
 
                                     </div>
                                     <div class="col-xl-6" style="padding-right: 10px">
-                                        <div class="form-group row">
+                                        <!--<div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-history" aria-hidden="true"></i>
                                                 <label class="displayInfo control-label custom-title-code-bold">
@@ -790,21 +801,33 @@
                                                     <ui-select class="ui-select-bootstrap-right-radius status-temp" ng-model="infUser.StatusTemp" theme="bootstrap">
                                                         <ui-select-match placeholder="Chưa có điều chỉnh...">
                                                             <p>
-                                                                <span>{{$select.selected.CreatedBy}}</span> đã cập nhật trạng thái
-                                                                <span class="text-primary fw600">{{$select.selected.Name}}</span> cho hoạt động
+                                                                <span>{{$select.selected.CreatedBy}}</span>
+                                                                <span ng-if="!$select.selected.Content">
+                                                                    đã cập nhật trạng thái <span class="text-primary fw600">{{$select.selected.Name}}</span>
+                                                                </span>
+                                                                <span ng-if="$select.selected.Content">
+                                                                    {{$select.selected.Content}}
+                                                                </span>
+                                                                cho hoạt động
                                                                 <span class="fw600 text-green">{{$select.selected.ObjectRelative}}</span>
                                                                 <span class="fw600 text-green">[{{$select.selected.SCreatedTime}}]</span>
                                                             </p>
                                                         </ui-select-match>
                                                         <ui-select-choices repeat="x.Code as x in listStatusLog | filter: $select.search" ui-disable-choice="true">
-                                                            <span>{{x.CreatedBy}}</span> đã cập nhật trạng thái
-                                                            <span class="text-primary fw600">{{x.Name}}</span> cho hoạt động
+                                                            <span>{{x.CreatedBy}}</span>
+                                                            <span ng-if="!x.Content">
+                                                                đã cập nhật trạng thái <span class="text-primary fw600">{{x.Name}}</span>
+                                                            </span>
+                                                            <span ng-if="x.Content">
+                                                                {{x.Content}}
+                                                            </span>
+                                                            cho hoạt động
                                                             <span class="fw600 text-green">{{x.ObjectRelative}} [{{x.SCreatedTime}}]</span>
                                                         </ui-select-choices>
                                                     </ui-select>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0" style="white-space: nowrap; overflow: auto">
                                                 <i class="fa fa-user"></i>
@@ -1276,23 +1299,23 @@
                                         </div>
 
                                         <!-- <div class="form-group row">
-        <div class="col-md-4 pr-0 " style="white-space: nowrap; overflow: auto">
-            <i class="fa fa-users"></i>
-            <label class="displayInfo control-label custom-title-code-bold">
-                Địa giới hành chính
-            </label>
-        </div>
-        <div class="col-md-8">
-            <div class="br24 form-control custom-title-code-bold" style="display:flex">
-                <i class="fa fa-info-circle icon-clickable" data-bs-toggle="popover"
-                    title="Popover Header" data-bs-placement="bottom"
-                    data-bs-content="Ví dụ: 'Hà Nội'"
-                    style="vertical-align: 7px; display: flex; align-items: center;"></i>
-                <choose-position ng-model="infUser.PlaceWorking"
-                    provinces="ListProvince"></choose-position>
-            </div>
-        </div>
-    </div> -->
+                                            <div class="col-md-4 pr-0 " style="white-space: nowrap; overflow: auto">
+                                                <i class="fa fa-users"></i>
+                                                <label class="displayInfo control-label custom-title-code-bold">
+                                                    Địa giới hành chính
+                                                </label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <div class="br24 form-control custom-title-code-bold" style="display:flex">
+                                                    <i class="fa fa-info-circle icon-clickable" data-bs-toggle="popover"
+                                                        title="Popover Header" data-bs-placement="bottom"
+                                                        data-bs-content="Ví dụ: 'Hà Nội'"
+                                                        style="vertical-align: 7px; display: flex; align-items: center;"></i>
+                                                    <choose-position ng-model="infUser.PlaceWorking"
+                                                        provinces="ListProvince"></choose-position>
+                                                </div>
+                                            </div>
+                                        </div> -->
 
                                         <div class="form-group row" ng-class="{ 'has-error': errorMarital}">
                                             <div class="col-md-4 pr-0" style="display: flex;align-items: baseline;">
@@ -1365,8 +1388,6 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-user" id="relationship"
-                                                  
-                                               
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quan
@@ -1383,7 +1404,7 @@
                                                        json-guide="jsonGuide"
                                                        id="relationship" ng-click="handerClickIconChild('family','relationship')"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="Mối quan hệ với người thân:{{selectedFamily.Relation}}. {{matchedItems[0].guide}}.  {{matchedItemss[0].comment}}"  
+                                                       uib-popover="Mối quan hệ với người thân:{{selectedFamily.Relation}}. {{matchedItems[0].guide}}.  {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
 
                                                     <input class="displayInfo" style="border: #FFFF;"
@@ -1406,8 +1427,6 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-user" id="MenberFamilyName"
-                                                   
-                                                
                                                    popover-placement="right"
                                                    popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo require control-label custom-title-code-bold">
@@ -1549,7 +1568,7 @@
                                                        control-id="dateOfBirdRelation"
                                                        id="dateOfBirdRelation" ng-click="handerClickIconChild('family','dateOfBirdRelation');handleClick('dateOfBirdRelation')"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                        uib-popover="Nơi mất của người thân là: {{selectedFamily.AddressDie}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Nơi mất của người thân là: {{selectedFamily.AddressDie}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
                                                     <input class="displayInfo" style="border: #FFFF;"
                                                            name="selectedFamilyAddressDie"
@@ -1571,7 +1590,7 @@
                                                        control-id="residence"
                                                        id="residence" ng-click="handerClickIconChild('family','residence');handleClick('DieReason')"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                        uib-popover="Lý do mất của người thân: {{selectedFamily.DieReason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Lý do mất của người thân: {{selectedFamily.DieReason}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
                                                     <input class="displayInfo" style="border: #FFFF;"
                                                            name="selectedFamilyReason" ng-model="selectedFamily.Reason"
@@ -1650,8 +1669,6 @@
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-user" id="politicalAttitude"
-                                                 
-                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Thái
@@ -1683,8 +1700,7 @@
                                         </div>
                                         <div class="form-group row " ng-show="changedisHistoryCC">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-user" id="working" 
-                                                 
+                                                <i class="fa fa-user" id="working"
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quá trình công tác
@@ -1781,8 +1797,6 @@
                                         <div class="form-group row" ng-show="changedisHistoryCC">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-map-marker" id="homeTown"
-                                                   
-                                                  
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Quê quán
@@ -1820,9 +1834,9 @@
                                                        data-bs-placement="bottom" data-bs-content="Ví dụ: 'Hà Nội'"
                                                        style="vertical-align: 7px; display: flex; align-items: center;"></i>
                                                     <!-- <choose-position ng-model="selectedFamily.HomeTown"
-                    provinces="ListProvince" value="selectedFamily.HomeTownValue"
-                    json="selectedFamily.HomeTownJson" style="width: 100%;"
-                    ng-if="showFamilyHomeTown"></choose-position> -->
+                                                    provinces="ListProvince" value="selectedFamily.HomeTownValue"
+                                                    json="selectedFamily.HomeTownJson" style="width: 100%;"
+                                                    ng-if="showFamilyHomeTown"></choose-position> -->
                                                     <choose-position ng-model="selectedFamily.HomeTown" required="true"
                                                                      value="selectedFamily.HomeTownValue"
                                                                      json="selectedFamily.HomeTownJson" provinces="ListProvince"
@@ -1835,7 +1849,6 @@
                                         <div class="form-group row" ng-show="!selectedFamily.disableAddress">
                                             <div class="col-md-4 pr-0 ">
                                                 <i class="fa fa-home" id="residence"
-                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nơi
@@ -1866,8 +1879,7 @@
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-4 pr-0 ">
-                                                <i class="fa fa-users" id="career" 
-                                                
+                                                <i class="fa fa-users" id="career"
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label require custom-title-code-bold">
                                                     Nghề nghiệp
@@ -1930,8 +1942,6 @@
                                         <div class="form-group row" ng-if="changedisHistory">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-map-marker" id="homeTown"
-                                                  
-                                                
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Nơi sinh
@@ -1961,8 +1971,6 @@
                                         <div class="form-group row" ng-show="changedisHistory">
                                             <div class="col-md-4 pr-0">
                                                 <i class="fa fa-map-marker" id="class"
-                                                  
-                                                 
                                                    popover-placement="right" popover-trigger="outsideClick"></i>
                                                 <label class="displayInfo control-label  custom-title-code-bold">
                                                     Thành phần giai cấp
@@ -1975,8 +1983,7 @@
                                                        child-tab="family"
                                                        json-guide="jsonGuide"
                                                        control-id="class"
-                                                       id="classFamily" 
-                                                    
+                                                       id="classFamily"
                                                        title="Popover Header" popover-placement="bottom-left"
                                                        ng-click="handerClickIconChild('family','class');handleClick('classFamily')"
                                                        uib-popover="Thành phần giai cấp của người thân là: {{selectedFamily.class}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
@@ -2061,7 +2068,7 @@
                                                         control-id="dateOfBirdRelation"
                                                         check-load="checkFamilyLoad">
                                                         <!-- {{x.die == true ?"Năm sinh - Năm mất :" : ""}} <span>{{x.BirthYear}}</span>
-    {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
+                                                        {{x.die == true ?"Nơi mất: "+x.AddressDie :""  }}-->
                                                         <div>
                                                             <span ng-if="x.die">
                                                                 - Năm sinh{{x.die == true ?"(Đã mất)" : ""}}:
@@ -2109,8 +2116,9 @@
                                                         child-tab="family"
                                                         json-guide="jsonGuide"
                                                         control-id="working"
-                                                        check-load="checkFamilyLoad"
-                                                        >{{x.WorkingProgress}}</td>
+                                                        check-load="checkFamilyLoad">
+                                                        {{x.WorkingProgress}}
+                                                    </td>
                                                     <td tr-child-tab
                                                         row-id="x.Id"
                                                         child-tab="family"
@@ -2142,9 +2150,9 @@
                                                             <i class="fa fa-trash"></i>
                                                         </button>
                                                         <!--<button class="btn mt-1" ng-click="openPopover2(x.Id)"
-                uib-popover-template="'popoverTemplate.html'" popover-placement="left" popover-trigger="outsideClick">
-            <i class="fa-solid fa-comments"></i>
-        </button>-->
+                                                                uib-popover-template="'popoverTemplate.html'" popover-placement="left" popover-trigger="outsideClick">
+                                                            <i class="fa-solid fa-comments"></i>
+                                                        </button>-->
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -2287,7 +2295,7 @@
                                                     child-tab="PersonHistory"
                                                     json-guide="jsonGuide"
                                                     control-id="startDate"
-                                                      check-load="checkPersonalHistoryLoad">
+                                                    check-load="checkPersonalHistoryLoad">
                                                     {{x.Begin}}
                                                 </td>
                                                 <td tr-child-tab
@@ -2295,7 +2303,7 @@
                                                     child-tab="PersonHistory"
                                                     json-guide="jsonGuide"
                                                     control-id="endDate"
-                                                      check-load="checkPersonalHistoryLoad">
+                                                    check-load="checkPersonalHistoryLoad">
                                                     {{x.End}}
                                                 </td>
                                                 <td tr-child-tab
@@ -2303,17 +2311,17 @@
                                                     child-tab="PersonHistory"
                                                     json-guide="jsonGuide"
                                                     control-id="content"
-                                                      check-load="checkPersonalHistoryLoad">
+                                                    check-load="checkPersonalHistoryLoad">
                                                     <span ng-if="x.Type==1||x.Type==2||x.Type==3">Tại chi bộ:</span>{{x.Content}}
                                                 </td>
                                                 <!--<td>
-        <span ng-if="x.Type == '0'||x.Type==null||x.Type==''">Chưa phân loại</span>
-        <span ng-if="x.Type == '1'">Bị xóa tên trong danh sách đảng viên</span>
-        <span ng-if="x.Type == '2'">Được kết nạp lại vào Đảng lần 2</span>
-        <span ng-if="x.Type == '3'">Được khôi phục đảng tịch</span>
-        <span ng-if="x.Type == '4'">Bị xử lý theo pháp luật</span>
-        <span ng-if="x.Type == '5'">Làm việc trong chế độ cũ</span>
-    </td>-->
+                                                    <span ng-if="x.Type == '0'||x.Type==null||x.Type==''">Chưa phân loại</span>
+                                                    <span ng-if="x.Type == '1'">Bị xóa tên trong danh sách đảng viên</span>
+                                                    <span ng-if="x.Type == '2'">Được kết nạp lại vào Đảng lần 2</span>
+                                                    <span ng-if="x.Type == '3'">Được khôi phục đảng tịch</span>
+                                                    <span ng-if="x.Type == '4'">Bị xử lý theo pháp luật</span>
+                                                    <span ng-if="x.Type == '5'">Làm việc trong chế độ cũ</span>
+                                                </td>-->
                                                 <td style="text-align:center">
                                                     <i style="color:red" class="fa fa-trash" ng-click="deletePesonalHistory($index)"></i>
                                                 </td>
@@ -2491,7 +2499,7 @@
                                                     child-tab="WorkingTracking"
                                                     json-guide="jsonGuide"
                                                     control-id="From"
-                                                      check-load="checkBusinessNDutyLoad">
+                                                    check-load="checkBusinessNDutyLoad">
                                                     {{x.From}}
                                                 </td>
                                                 <td tr-child-tab
@@ -2530,7 +2538,7 @@
                         </div>
                         <div class="toggle-header" style="display:flex ; justify-content:space-between">
                             <div class="d-flex" style="gap: 5px"
-                                 ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}" >
+                                 ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showWorkingProcess3" class="fa fa-caret-down"></i>
                                 <i ng-show="!showWorkingProcess3" class="fa fa-caret-right"></i>
                                 <label ng-click="showWorkingProcess3=!showWorkingProcess3" class="fs-18">Đặc điểm lịch sử</label>
@@ -2679,7 +2687,7 @@
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showWorkingProcess4" class="fa fa-caret-down"></i>
                                 <i ng-show="!showWorkingProcess4" class="fa fa-caret-right"></i>
-                                <label  ng-click="showWorkingProcess4=!showWorkingProcess4" class="fs-18">Khen thưởng</label>
+                                <label ng-click="showWorkingProcess4=!showWorkingProcess4" class="fs-18">Khen thưởng</label>
                                 <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
 
                                     <div ng-class="{'disabled': Laudatory.length > 0}"
@@ -2779,7 +2787,7 @@
                                             hình thức
                                         </label>
                                     </div>
-                                    <div class="col-md-9 " style="width: 76.3%;" >
+                                    <div class="col-md-9 " style="width: 76.3%;">
                                         <div class="br24 form-control custom-title-code-bold"
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="AwardReason"
@@ -2868,7 +2876,7 @@
                             </form>
                         </div>
                         <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                            <div class="d-flex"  style="gap: 5px"
+                            <div class="d-flex" style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showWorkingProcess5" class="fa fa-caret-down"></i>
                                 <i ng-show="!showWorkingProcess5" class="fa fa-caret-right"></i>
@@ -2961,7 +2969,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="form-group row"  >
+                                <div class="form-group row">
                                     <div class="col-md-3 pr-0" style="width: 23.7%;">
                                         <i class="fas fa-question-circle"></i>
                                         <label class="displayInfo control-label require custom-title-code-bold">
@@ -2970,7 +2978,7 @@
                                             hình thức
                                         </label>
                                     </div>
-                                    <div class="col-md-9"  style="width: 76.3%;">
+                                    <div class="col-md-9" style="width: 76.3%;">
                                         <div class="br24 form-control custom-title-code-bold"
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle icon-clickable" id="DisciplineReason"
@@ -3028,7 +3036,7 @@
                                                     row-id="x.Id"
                                                     child-tab="WarningDisciplined"
                                                     json-guide="jsonGuide"
-                                                    control-id="MonthYear" 
+                                                    control-id="MonthYear"
                                                     check-load="checkDisciplinedLoad">
                                                     {{x.MonthYear}}
                                                 </td>
@@ -3037,7 +3045,7 @@
                                                     child-tab="WarningDisciplined"
                                                     json-guide="jsonGuide"
                                                     control-id="DisciplineReason"
-                                                     check-load="checkDisciplinedLoad">
+                                                    check-load="checkDisciplinedLoad">
                                                     {{x.Reason}}
                                                 </td>
                                                 <td tr-child-tab
@@ -3045,7 +3053,7 @@
                                                     child-tab="WarningDisciplined"
                                                     json-guide="jsonGuide"
                                                     control-id="GrantOfDecision"
-                                                     check-load="checkDisciplinedLoad">
+                                                    check-load="checkDisciplinedLoad">
                                                     {{x.GrantOfDecision}}
                                                 </td>
                                                 <td style="text-align:center">
@@ -3061,12 +3069,12 @@
                         </div>
                         <div class="toggle-header"
                              style="display:flex ; justify-content:space-between; white-space:nowrap">
-                            <div class="d-flex"  style="gap: 5px"
+                            <div class="d-flex" style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}"
                                  style="width: 75%; display: flex; text-wrap: wrap;">
                                 <i ng-show="showWorkingProcess6" class="fa fa-caret-down"></i>
                                 <i ng-show="!showWorkingProcess6" class="fa fa-caret-right"></i>
-                                <label ng-click="showWorkingProcess6=!showWorkingProcess6"  class="fs-18">Lớp đào tạo và bồi dưỡng đã qua</label>
+                                <label ng-click="showWorkingProcess6=!showWorkingProcess6" class="fs-18">Lớp đào tạo và bồi dưỡng đã qua</label>
                                 <div class="mt-checkbox-list pt5" style="margin-left: 15px; display:flex; gap:10px">
                                     <div ng-class="{'disabled': PassedTrainingClasses.length > 0}"
                                          style="display: flex; align-items: center; gap: 5px;width:unset;flex-direction: column;">
@@ -3111,7 +3119,7 @@
                                                    row-id="selectedTrainingCertificatedPass.Id"
                                                    child-tab="TrainingCertificatedPass"
                                                    json-guide="jsonGuide"
-                                                   control-id="From" 
+                                                   control-id="From"
                                                    ng-click="handerClickIconChild11('TrainingCertificatedPass','From')"
                                                    uib-popover="Từ ngày: {{selectedTrainingCertificatedPass.From}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                    popover-trigger="'outsideClick'"></i>
@@ -3139,7 +3147,7 @@
                                                    row-id="selectedTrainingCertificatedPass.Id"
                                                    child-tab="TrainingCertificatedPass"
                                                    json-guide="jsonGuide"
-                                                   control-id="To" 
+                                                   control-id="To"
                                                    ng-click="handerClickIconChild11('TrainingCertificatedPass','To')"
                                                    popover-placement="bottom-left"
                                                    uib-popover="Đến ngày:{{selectedTrainingCertificatedPass.To}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
@@ -3167,11 +3175,11 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle " id="SchoolName"
                                                icon-child-tab
-                                                   row-id="selectedTrainingCertificatedPass.Id"
-                                                   child-tab="TrainingCertificatedPass"
-                                                   json-guide="jsonGuide"
-                                                   control-id="SchoolName" 
-                                                   ng-click="handerClickIconChild11('TrainingCertificatedPass','SchoolName')"
+                                               row-id="selectedTrainingCertificatedPass.Id"
+                                               child-tab="TrainingCertificatedPass"
+                                               json-guide="jsonGuide"
+                                               control-id="SchoolName"
+                                               ng-click="handerClickIconChild11('TrainingCertificatedPass','SchoolName')"
                                                title="Popover Header" popover-placement="bottom-left"
                                                uib-popover="Trường: {{selectedTrainingCertificatedPass.SchoolName}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
@@ -3199,11 +3207,11 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle " id="Class"
                                                icon-child-tab
-                                                   row-id="selectedTrainingCertificatedPass.Id"
-                                                   child-tab="TrainingCertificatedPass"
-                                                   json-guide="jsonGuide"
-                                                   control-id="Class" 
-                                                   ng-click="handerClickIconChild11('TrainingCertificatedPass','Class')"
+                                               row-id="selectedTrainingCertificatedPass.Id"
+                                               child-tab="TrainingCertificatedPass"
+                                               json-guide="jsonGuide"
+                                               control-id="Class"
+                                               ng-click="handerClickIconChild11('TrainingCertificatedPass','Class')"
                                                title="Popover Header" popover-placement="bottom-left"
                                                uib-popover="Ngành: {{selectedTrainingCertificatedPass.Class}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
@@ -3233,11 +3241,11 @@
                                              style="white-space:nowrap">
                                             <i class="fa fa-info-circle " id="Certificate"
                                                icon-child-tab
-                                                   row-id="selectedTrainingCertificatedPass.Id"
-                                                   child-tab="TrainingCertificatedPass"
-                                                   json-guide="jsonGuide"
-                                                   control-id="Certificate" 
-                                                   ng-click="handerClickIconChild11('TrainingCertificatedPass','Certificate')"
+                                               row-id="selectedTrainingCertificatedPass.Id"
+                                               child-tab="TrainingCertificatedPass"
+                                               json-guide="jsonGuide"
+                                               control-id="Certificate"
+                                               ng-click="handerClickIconChild11('TrainingCertificatedPass','Certificate')"
                                                title="Popover Header" popover-placement="bottom-left"
                                                uib-popover="Bằng cấp của bạn: {{selectedTrainingCertificatedPass.Certificate}}.{{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                popover-trigger="'outsideClick'"></i>
@@ -3288,7 +3296,7 @@
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
                                                     control-id="From"
-                                                     check-load="checkPassedTrainingClassesLoad">
+                                                    check-load="checkPassedTrainingClassesLoad">
                                                     {{x.From}}
                                                 </td>
                                                 <td tr-child-tab
@@ -3296,7 +3304,7 @@
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
                                                     control-id="To"
-                                                     check-load="checkPassedTrainingClassesLoad">
+                                                    check-load="checkPassedTrainingClassesLoad">
                                                     {{x.To}}
                                                 </td>
                                                 <td tr-child-tab
@@ -3304,7 +3312,7 @@
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
                                                     control-id="SchoolName"
-                                                     check-load="checkPassedTrainingClassesLoad">
+                                                    check-load="checkPassedTrainingClassesLoad">
                                                     {{x.SchoolName}}
                                                 </td>
                                                 <td tr-child-tab
@@ -3312,7 +3320,7 @@
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
                                                     control-id="Class"
-                                                     check-load="checkPassedTrainingClassesLoad">
+                                                    check-load="checkPassedTrainingClassesLoad">
                                                     {{x.Class}}
                                                 </td>
                                                 <td tr-child-tab
@@ -3320,7 +3328,7 @@
                                                     child-tab="TrainingCertificatedPass"
                                                     json-guide="jsonGuide"
                                                     control-id="Certificate"
-                                                     check-load="checkPassedTrainingClassesLoad">
+                                                    check-load="checkPassedTrainingClassesLoad">
                                                     {{x.Certificate}}
                                                 </td>
                                                 <td style="text-align:center">
@@ -3334,7 +3342,7 @@
                             </form>
                         </div>
                         <div class="toggle-header" style="display:flex ; justify-content:space-between">
-                            <div class="d-flex"  style="gap: 5px"
+                            <div class="d-flex" style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showWorkingProcess7" class="fa fa-caret-down"></i>
                                 <i ng-show="!showWorkingProcess7" class="fa fa-caret-right"></i>
@@ -3411,7 +3419,7 @@
                                                    popover-placement="bottom-left"
                                                    ng-click="handerClickIconChild9('goaboard','To');handleClick('GoAboard-To')"
                                                    uib-popover="Đến ngày: {{selectedGoAboard.To}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}" popover-trigger="'outsideClick'"></i>
-                                                  
+
 
                                                 </i>
                                                 <input class="displayInfo" style="border: #FFFF;" validateDateNow="true"
@@ -3546,7 +3554,7 @@
 
                         <div class="toggle-header" id="GTVD" style="display: flex; justify-content: space-between;">
 
-                            <div class="d-flex"  style="gap: 5px"
+                            <div class="d-flex" style="gap: 5px"
                                  ng-class="{'disabled': infUser.ResumeNumber == null || infUser.ResumeNumber == '' || infUser.ResumeNumber == undefined}">
                                 <i ng-show="showDegree" class="fa fa-caret-down"></i>
                                 <i ng-show="!showDegree" class="fa fa-caret-right"></i>

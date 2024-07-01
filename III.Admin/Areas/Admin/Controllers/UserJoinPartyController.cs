@@ -25,7 +25,6 @@ using ESEIM;
 using Microsoft.Extensions.Options;
 using System.Threading.Tasks;
 using System.Net.Http;
-using OpenXmlPowerTools;
 
 namespace III.Admin.Controllers
 {
@@ -181,7 +180,8 @@ namespace III.Admin.Controllers
 
                     rs.Title = "Cập nhật thành công";
                     var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -197,7 +197,8 @@ namespace III.Admin.Controllers
 
                     rs.Title = "Thêm file thành công";
                     var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -211,6 +212,7 @@ namespace III.Admin.Controllers
             }
             return rs;
         }
+
         private string GetActInstanceCode(string resumeNumber, string actCode)
         {
             var wfInst = _context.WorkflowInstances.FirstOrDefault(x => x.IsDeleted == false && x.ObjectType == "TEST_JOIN_PARTY" && x.ObjectInst == resumeNumber);
@@ -221,7 +223,6 @@ namespace III.Admin.Controllers
             var actInst = _context.ActivityInstances.FirstOrDefault(x => !x.IsDeleted && x.WorkflowCode == wfInst.WfInstCode && x.ActivityCode == actCode);
             return actInst?.ActivityInstCode ?? "";
         }
-
 
         [HttpPost]
         public async Task<JMessage> DeleteJson([FromBody] ItemNoteJson jsonData, string ResumeNumber)
@@ -262,7 +263,8 @@ namespace III.Admin.Controllers
 
                     rs.Title = "Xóa thành công";
                     var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -276,6 +278,7 @@ namespace III.Admin.Controllers
             }
             return rs;
         }
+
         public class JTableModelFile : JTableModel
         {
             public string FromDate { get; set; }
@@ -302,6 +305,7 @@ namespace III.Admin.Controllers
             public string AddressText { get; set; }
 
         }
+
         public class JTableResult
         {
             public int stt { get; set; }
@@ -326,10 +330,11 @@ namespace III.Admin.Controllers
             public string BirthYear { get; set; }
             public int? Gender { get; set; }
             public string LastTimeReport { get; set; }
+            public List<JsonLog> JsonStatus { get; set; }
         }
 
         [HttpPost]
-        public object JTable2([FromBody] JTableModelFile jTablePara)
+        public IActionResult JTable2([FromBody] JTableModelFile jTablePara)
         {
             try
             {
@@ -405,6 +410,7 @@ namespace III.Admin.Controllers
                                  CurrentName = a.CurrentName,
                                  UserCode = a.UserCode,
                                  Status = a.Status,
+                                 JsonStatus = a.JsonStaus,
                                  Username = a.Username,
                                  Nation = a.Nation,
                                  CreatedBy = b != null ? b.GivenName : "",
@@ -447,10 +453,28 @@ namespace III.Admin.Controllers
                     PermanentResidenceValue = x.PermanentResidenceValue,
                     BirthYear = x.BirthYear,
                     Gender = x.Gender,
-                    LastTimeReport = x.LastTimeReport
+                    LastTimeReport = x.LastTimeReport,
+                    JsonStatus = x.JsonStatus,
                 }).ToList();
                 int count = query_row_number.Count();
-                var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length);
+                var data = query_row_number.AsQueryable().OrderBy(x => x.stt).Skip(intBegin).Take(jTablePara.Length).ToList();
+                foreach (var item in data)
+                {
+                    var listJsonWithName = (from a in item.JsonStatus
+                                            join b in _context.Users.ToList() on a.CreatedBy equals b.UserName
+                                            select new JsonLog
+                                            {
+                                                No = a.No,
+                                                Code = a.Code,
+                                                Name = a.Name,
+                                                Content = a.Content,
+                                                ObjectRelative = a.ObjectRelative,
+                                                ObjectType = a.ObjectType,
+                                                CreatedBy = b.GivenName,
+                                                CreatedTime = a.CreatedTime
+                                            }).ToList();
+                    item.Status = JsonConvert.SerializeObject(listJsonWithName);
+                }
 
                 var jdata = JTableHelper.JObjectTable(Enumerable.ToList(data), jTablePara.Draw, count, "stt", "Id", "UpdateBy", "UpdateTime", "CurrentName", "Nation", "UserCode", "Status", "Username", "AddressText", "PermanentResidenceValue",
                     "CreatedBy", "ProfileLink", "resumeNumber", "WfInstCode", "UnderPostGraduateEducation", "Degree", "GeneralEducation", "TemporaryAddress", "BirthYear", "Gender", "LastTimeReport");
@@ -474,6 +498,7 @@ namespace III.Admin.Controllers
                 Code = x.ResumeNumber
             }).ToList();
         }
+
         [NonAction]
         private string GetPlaceWorking(string Place)
         {
@@ -526,6 +551,7 @@ namespace III.Admin.Controllers
 
             return CreatedPlace;
         }
+
         [HttpPost]
         [AllowAnonymous]
         public object GetReportProfile([FromBody] DataModel data)

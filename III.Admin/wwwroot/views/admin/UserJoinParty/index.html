@@ -1,650 +1,659 @@
 <style>
-  @media (min-width: 1200px) and (max-width:1500px) {
-    .col-custom-lg-2 {
-      float: left !important;
-      width: 25% !important;
+    @media (min-width: 1200px) and (max-width:1500px) {
+        .col-custom-lg-2 {
+            float: left !important;
+            width: 25% !important;
+        }
     }
-  }
 
 
-  .app-content {
-    width: 100%;
-  }
-
-  .breadcrumb>li {
-    font-size: 16px;
-    font-weight: 700;
-    color: black;
-    text-decoration: underline;
-  }
-
-  #contentMain {
-    position: relative;
-  }
-
-  #searchBox {
-    position: absolute;
-    z-index: 12;
-    width: calc(100% - 80px);
-    right: 30px;
-  }
-
-  #searchBox .bordered {
-    border: 1px solid #80808057 !important;
-    box-shadow: 1px 3px 8px 0px #888888c2;
-  }
-
-  @media (max-width: 450px){
-      #searchBox {
-          left:-12px;
-          top:-30px;
-      }
-
-     
-  }
-
-  .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top {
-    z-index: 1032 !important;
-  }
-
-  .main-menu-editWorkflow {
-    position: absolute;
-    right: -10px;
-    display: flex;
-    top: 68px;
-    width: 50%;
-    min-height: 80vh;
-    display: flex;
-    background-color: #fff;
-    box-shadow: -2px -2px 2px 0px rgb(0 0 0 / 30%);
-    overflow-y: auto;
-    overflow-x: hidden;
-  }
-
-  .main-right-editWorkflow {
-    position: absolute;
-    right: -10px;
-    display: flex;
-    top: 68px;
-    width: 35px;
-    height: 40px;
-    display: flex;
-    background-color: #cccccc;
-  }
-
-  .toggle-header {
-    cursor: pointer;
-    background-color: #EEEEEE;
-    padding-left: 10px;
-  }
-
-  #tblData_wrapper {
-    box-shadow: 2px -2px 2px 0px rgb(0 0 0 / 30%);
-    min-height: 80vh;
-  }
-
-  @media (max-width:600px){
-      #tblData_wrapper {
-          width:100vw;
-      }
-  }
-
-  .actName {
-    font-weight: bold;
-    color: black;
-  }
-
-  .listaction a {
-    margin-right: 10px;
-  }
-
-  tr.active {
-    background-color: #44d9ec;
-    /* Màu nền khi hàng được chọn */
-    font-weight: bold;
-  }
-
-  .table-scrollable {
-    max-height: 80vh;
-    /* Chiều cao tối đa của phần tử chứa bảng */
-    max-width: 100%;
-    /* Chiều rộng tối đa của phần tử chứa bảng */
-    overflow: auto!important;
-  }
-
-  @media (max-width:600px){
-    .table-scrollable{
-        max-width:100vw!important;
+    .app-content {
+        width: 100%;
     }
-  }
 
-  .w4 {
-    width: 33, 3%;
-  }
+    .breadcrumb > li {
+        font-size: 16px;
+        font-weight: 700;
+        color: black;
+        text-decoration: underline;
+    }
+
+    #contentMain {
+        position: relative;
+    }
+
+    #searchBox {
+        position: absolute;
+        z-index: 12;
+        width: calc(100% - 80px);
+        right: 30px;
+    }
+
+        #searchBox .bordered {
+            border: 1px solid #80808057 !important;
+            box-shadow: 1px 3px 8px 0px #888888c2;
+        }
+
+    @media (max-width: 450px) {
+        #searchBox {
+            left: -12px;
+            top: -30px;
+        }
+    }
+
+    .datepicker.datepicker-dropdown.dropdown-menu.datepicker-orient-left.datepicker-orient-top {
+        z-index: 1032 !important;
+    }
+
+    .main-menu-editWorkflow {
+        position: absolute;
+        right: -10px;
+        display: flex;
+        top: 68px;
+        width: 50%;
+        min-height: 80vh;
+        display: flex;
+        background-color: #fff;
+        box-shadow: -2px -2px 2px 0px rgb(0 0 0 / 30%);
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .main-right-editWorkflow {
+        position: absolute;
+        right: -10px;
+        display: flex;
+        top: 68px;
+        width: 35px;
+        height: 40px;
+        display: flex;
+        background-color: #cccccc;
+    }
+
+    .toggle-header {
+        cursor: pointer;
+        background-color: #EEEEEE;
+        padding-left: 10px;
+    }
+
+    #tblData_wrapper {
+        box-shadow: 2px -2px 2px 0px rgb(0 0 0 / 30%);
+        min-height: 80vh;
+    }
+
+    @media (max-width:600px) {
+        #tblData_wrapper {
+            width: 100vw;
+        }
+    }
+
+    .actName {
+        font-weight: bold;
+        color: black;
+    }
+
+    .listaction a {
+        margin-right: 10px;
+    }
+
+    tr.active {
+        background-color: #44d9ec;
+        /* Màu nền khi hàng được chọn */
+        font-weight: bold;
+    }
+
+    .table-scrollable {
+        max-height: 80vh;
+        /* Chiều cao tối đa của phần tử chứa bảng */
+        max-width: 100%;
+        /* Chiều rộng tối đa của phần tử chứa bảng */
+        overflow: auto !important;
+    }
+
+    @media (max-width:600px) {
+        .table-scrollable {
+            max-width: 100vw !important;
+        }
+    }
+
+    .w4 {
+        width: 33, 3%;
+    }
 
     .w3 {
         width: 25% !important;
     }
 
-  .d-flex {
-    display: flex;
-  }
+    .d-flex {
+        display: flex;
+    }
 
-  .ui-select-toggle {
-    align-items: center;
-    display: flex;
-  }
+    .ui-select-toggle {
+        align-items: center;
+        display: flex;
+    }
 
-  .ui-select-toggle .caret {
-    right: 2px !important;
-  }
+        .ui-select-toggle .caret {
+            right: 2px !important;
+        }
+
+    .lastUpdated .actName {
+        color: #337ab7;
+    }
 </style>
 <link href="../../../css/admin/site/search-control.css" rel="stylesheet" />
 <div class="col">
-  <div class="col">
-    <div class="btn-group pt5 pb-1 pull-right actions d-flex">
-      <div class="text-center mt10 pr30">
-        <a class="" ng-click="reload()">
-          <span><i class="fas fa-arrows-rotate fs30"></i></span>
-        </a>
-        <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_REFRESH' | translate}}</p>
-      </div>
-      <div class="text-center mt10 pr30">
-        <a class="" ng-click="showSearch()">
-          <span><i class="fas fa-search fs30"></i></span>
-        </a>
-        <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
-      </div>
-      <div class="text-center mt10 pr30">
-        <a class="" ng-click="report()">
-          <span><i class="fas fa-clipboard fs30"></i></span>
-        </a>
-        <p class="text-underline fs9 mb5 pt3">{{'Báo cáo' | translate}}</p>
-      </div>
-      <div class="text-center mt10 pr10">
-        <a class="" ng-click="Config()">
-          <span><i class="fas fa-gears fs30"></i></span>
-        </a>
-        <p class="text-underline fs9 mb5 pt3">{{'Điều kiện tìm kiếm' | translate}}</p>
-      </div>
-      <div class="text-center mt10 pr10">
-        <a class="" ng-click="ExportChecked()">
-          <span><i class="fas fa-cloud-arrow-down fs30"></i></span>
-        </a>
-        <p class="text-underline fs9 mb5 pt3">{{'Tải file' | translate}}</p>
-    </div>
-    </div>
-    <div id="searchBox" ng-show="isSearch">
-      <div class="table-toolbar">
-        <div class="portlet light bordered input-search mb5">
-          <div class="portlet-body">
-            <div class="col-md-12" style="height:20px">
-              <i ng-click="showSearch()" style="margin-top:9px !important; margin-right:5px !important; font-size:25px"
-                class="fas fa-times  pull-right h28 w28  close-input-search" role="button" title="Ẩn tìm kiếm"></i>
+    <div class="col">
+        <div class="btn-group pt5 pb-1 pull-right actions d-flex">
+            <div class="text-center mt10 pr30">
+                <a class="" ng-click="reload()">
+                    <span><i class="fas fa-arrows-rotate fs30"></i></span>
+                </a>
+                <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_REFRESH' | translate}}</p>
             </div>
-            <div class="row pt5 mb5 mr10">
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Từ khóa' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.KeyWord" class="form-control" type="text"
-                    placeholder="{{'Từ khóa' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.KeyWord=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Họ và tên' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.Name" class="form-control" type="text"
-                    placeholder="{{'Họ và tên' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.Name=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Mã' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.Username" class="form-control" type="text"
-                    placeholder="{{'Mã' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.Username=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Quê quán' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.HomeTown" class="form-control" type="text"
-                    placeholder="{{'Quê quán' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.HomeTown=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Ngày sinh từ' | translate}}</label>
-                <div class="input-group br24">
-                  <input type="text" autocomplete="off" class="form-control"
-                    placeholder="{{'Ngày sinh từ' | translate}}..." ng-model="searchModel.FromDate" id="PostFromDate" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.FromDate='';"
-                      class="btn btn-default no-shadow start-post-date">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Ngày sinh đến' | translate}}</label>
-                <div class="input-group br24">
-                  <input type="text" autocomplete="off" class="form-control"
-                    placeholder="{{'Ngày sinh đến' | translate}}..." ng-model="searchModel.ToDate" id="PostToDate" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.ToDate='';"
-                      class="btn btn-default no-shadow end-post-date">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Trạng thái' | translate}}</label>
-                <div class="input-group br24">
-                  <ui-select tagging ng-model="searchModel.Status" theme="bootstrap">
-                    <ui-select-match
-                      placeholder="{{'Trạng thái' | translate}}...">{{$select.selected.Name}}</ui-select-match>
-                    <ui-select-choices repeat="x.Code as x in ListStatus | filter: $select.search">
-                      {{x.Name}}
-                    </ui-select-choices>
-                  </ui-select>
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.Status='';"
-                      class="btn btn-default no-shadow start-date">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Dân tộc' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.Nation" class="form-control" type="text"
-                    placeholder="{{'Dân tộc' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.Nation=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Tôn giáo' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.Religion" class="form-control" type="text"
-                    placeholder="{{'Tôn giáo' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.Religion=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Tin học' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.ItDegree" class="form-control" type="text"
-                    placeholder="{{'Tin học' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.ItDegree=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Nghề nghiệp hiện nay' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.Job" class="form-control" type="text"
-                    placeholder="{{'Nghề nghiệp hiện nay' | translate}}..."
-                    ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.Job=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Ngoại ngữ' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.ForeignLanguage" class="form-control" type="text"
-                    placeholder="{{'Ngoại ngữ' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.ForeignLanguage=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Giáo dục phổ thông' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.GeneralEducation" class="form-control" type="text"
-                    placeholder="{{'Giáo dục phổ thông' | translate}}..."
-                    ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.GeneralEducation=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Giáo dục đại học và sau đại học' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.UnderPostGraduateEducation" class="form-control" type="text"
-                    placeholder="{{'Giáo dục đại học và sau đại học' | translate}}..."
-                    ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.UnderPostGraduateEducation=''"
-                      class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Giáo dục nghề nghiệp' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.JobEducation" class="form-control" type="text"
-                    placeholder="{{'Giáo dục nghề nghiệp' | translate}}..."
-                    ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.JobEducation=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Lý luận chính trị' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.PoliticalTheory" class="form-control" type="text"
-                    placeholder="{{'Lý luận chính trị' | translate}}..."
-                    ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.PoliticalTheory=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Học hàm' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.Degree" class="form-control" type="text"
-                    placeholder="{{'Học hàm' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.Degree=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Tiếng dân tộc thiểu số' | translate}}</label>
-                <div class="input-group br24">
-                  <input ng-model="searchModel.MinorityLanguages" class="form-control" type="text"
-                    placeholder="{{'Tiếng dân tộc thiểu số' | translate}}..."
-                    ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.MinorityLanguages=''" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Giới tính' | translate}}</label>
-                <div class="input-group br24">
-                  <ui-select tagging ng-model="searchModel.Gender" theme="bootstrap">
-                    <ui-select-match
-                      placeholder="{{'Giới tính' | translate}}...">{{$select.selected.Name}}</ui-select-match>
-                    <ui-select-choices repeat="x.Code as x in ListGender | filter: $select.search">
-                      {{x.Name}}
-                    </ui-select-choices>
-                  </ui-select>
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.Gender=null;"
-                      class="btn btn-default no-shadow start-date">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Tuổi từ' | translate}}</label>
-                <div class="input-group br24">
-                  <input type='number' ng-model="searchModel.FromAge" class="form-control"
-                    placeholder="{{'Tuổi từ' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.FromAge=null" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-              <div class="col-md-2 pr-0">
-                <label class="fw600 text-underline">{{'Đến' | translate}}</label>
-                <div class="input-group br24">
-                  <input type='number' ng-model="searchModel.ToAge" class="form-control"
-                    placeholder="{{'Tuổi từ' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
-                  <span class="input-group-btn">
-                    <button type="button" ng-click="searchModel.ToAge=null" class="btn btn-default no-shadow">
-                      <span class="glyphicon glyphicon-remove"></span>
-                    </button>
-                  </span>
-                </div>
-              </div>
-
-              <div class="col-md-2">
-                <div class="btn-group pt20 actions d-flex">
-                  <div class="text-center">
-                    <a class="btn btn-icon-only btn-circle btn-outline purple-custom" ng-click="search()">
-                      <span><i class="fa fa-search"></i></span>
-                    </a>
-                    <p class="text-underline fs9 mb5 pt3">
-                      {{'COM_BTN_SEARCH' | translate}}
-                    </p>
-                  </div>
-
-                </div>
-              </div>
-
+            <div class="text-center mt10 pr30">
+                <a class="" ng-click="showSearch()">
+                    <span><i class="fas fa-search fs30"></i></span>
+                </a>
+                <p class="text-underline fs9 mb5 pt3">{{'COM_BTN_SEARCH' | translate}}</p>
             </div>
-          </div>
+            <div class="text-center mt10 pr30">
+                <a class="" ng-click="report()">
+                    <span><i class="fas fa-clipboard fs30"></i></span>
+                </a>
+                <p class="text-underline fs9 mb5 pt3">{{'Báo cáo' | translate}}</p>
+            </div>
+            <div class="text-center mt10 pr10">
+                <a class="" ng-click="Config()">
+                    <span><i class="fas fa-gears fs30"></i></span>
+                </a>
+                <p class="text-underline fs9 mb5 pt3">{{'Điều kiện tìm kiếm' | translate}}</p>
+            </div>
+            <div class="text-center mt10 pr10">
+                <a class="" ng-click="ExportChecked()">
+                    <span><i class="fas fa-cloud-arrow-down fs30"></i></span>
+                </a>
+                <p class="text-underline fs9 mb5 pt3">{{'Tải file' | translate}}</p>
+            </div>
         </div>
-
-      </div>
-    </div>
-
-    <div class="row pr-2">
-      <div class="" id="dropzone">
-        <table class="table dataTable table-hover table-striped" datatable dt-options="dtOptions" dt-columns="dtColumns"
-          dt-instance="dtInstance" id="tblData"></table>
-      </div>
-    </div>
-
-
-    <div class="main-menu-editWorkflow" ng-show="isEditWorkflow">
-      <div class="portlet-body form baolo" style="width:100%; position:absolute; background:#fff;">
-        <div class="modal-header" style="background-color: #ffffff; padding: 5px;">
-          <div class="col-md-10 pl-0">
-            <i class="fa fa-edit black icon-insert fs20"></i>
-            <span class="label-lg" id="modal-title"
-              style="vertical-align: 5px;font-weight: bold; color: black;">{{'WFAI_TITLE_EDIT_WF'|translate}}</span>
-          </div>
-          <!-- <div class="col-md-2 text-right">
-                  <i class="fa-solid fa-caret-right icon-scalet fs20 mt5" ng-click="editWorkflow()"></i>
-              </div> -->
-        </div>
-        <div class="modal-body" style="padding-bottom: 0px;">
-          <div class="row" ng-repeat="act in listActs">
-            <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
-              <div class="toggle-header" style="display: flex;  min-height: 40px;">
-                <i ng-show="act[0].checkHiddenActWf" class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
-                <i ng-show="!act[0].checkHiddenActWf" class="fa-solid fa-caret-right icon-scalet fs30 mt10"></i>
-                <label ng-click="CloseAll(act[0]);" class="label-lg"
-                  style="vertical-align: 7px;display: flex; align-items: center;">
-                  <div>
-                    <div class="d-flex">
-
-                      <div style="display: inline-block; margin-left: 5px; font-weight: 500">
-                        <div ng-if="act[0].ActStatus == 'Đã xử lý'">
-                          <a class="actName" title="{{ act[0].ActName }}"
-                            ng-click="editInstAct(act[0].Id, full.ObjectCode)">
-                            <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
-                          </a>
-
-                          <span class="badge-customer badge-customer-success">{{ act[0].ActStatus }}</span>
-                          <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
-                            style="width: 17px;height: 17px;margin-top: -5px;" />
+        <div id="searchBox" ng-show="isSearch">
+            <div class="table-toolbar">
+                <div class="portlet light bordered input-search mb5">
+                    <div class="portlet-body">
+                        <div class="col-md-12" style="height:20px">
+                            <i ng-click="showSearch()" style="margin-top:9px !important; margin-right:5px !important; font-size:25px"
+                               class="fas fa-times  pull-right h28 w28  close-input-search" role="button" title="Ẩn tìm kiếm"></i>
                         </div>
-                        <div
-                          ng-if="act[0].ActStatus == 'Đang xử lý' || act[0].ActStatus == 'Chưa xử lý' || act[0].ActStatus == 'Kích hoạt'">
-                          <div ng-if="act[0].ActStatus != 'Chưa xử lý'">
-                            <a class="actName" title="{{ act[0].ActName }}"
-                              ng-click="editInstAct(act[0].Id, full.ObjectCode)">
-                              <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
-                            </a>
+                        <div class="row pt5 mb5 mr10">
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Từ khóa' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.KeyWord" class="form-control" type="text"
+                                           placeholder="{{'Từ khóa' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.KeyWord=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
 
-                            <span class="badge-customer badge-customer-warning">{{ act[0].ActStatus }}</span>
-                            <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
-                              style="width: 17px;height: 17px;margin-top: -5px;" />
-                          </div>
-                          <div ng-if="act[0].ActStatus == 'Chưa xử lý'">
-                            <a class="actName" title="{{ act[0].ActName }}"
-                              ng-click="editInstAct(act[0].Id, full.ObjectCode)">
-                              <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
-                            </a>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Họ và tên' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.Name" class="form-control" type="text"
+                                           placeholder="{{'Họ và tên' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.Name=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
 
-                            <span class="badge-customer badge-customer-lock">{{ act[0].ActStatus }}</span>
-                            <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
-                              style="width: 17px;height: 17px;margin-top: -5px;" />
-                          </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Mã' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.Username" class="form-control" type="text"
+                                           placeholder="{{'Mã' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.Username=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Quê quán' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.HomeTown" class="form-control" type="text"
+                                           placeholder="{{'Quê quán' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.HomeTown=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Ngày sinh từ' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input type="text" autocomplete="off" class="form-control"
+                                           placeholder="{{'Ngày sinh từ' | translate}}..." ng-model="searchModel.FromDate" id="PostFromDate" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.FromDate='';"
+                                                class="btn btn-default no-shadow start-post-date">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Ngày sinh đến' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input type="text" autocomplete="off" class="form-control"
+                                           placeholder="{{'Ngày sinh đến' | translate}}..." ng-model="searchModel.ToDate" id="PostToDate" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.ToDate='';"
+                                                class="btn btn-default no-shadow end-post-date">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Trạng thái' | translate}}</label>
+                                <div class="input-group br24">
+                                    <ui-select tagging ng-model="searchModel.Status" theme="bootstrap">
+                                        <ui-select-match placeholder="{{'Trạng thái' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                        <ui-select-choices repeat="x.Code as x in ListStatus | filter: $select.search">
+                                            {{x.Name}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.Status='';"
+                                                class="btn btn-default no-shadow start-date">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Dân tộc' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.Nation" class="form-control" type="text"
+                                           placeholder="{{'Dân tộc' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.Nation=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Tôn giáo' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.Religion" class="form-control" type="text"
+                                           placeholder="{{'Tôn giáo' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.Religion=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Tin học' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.ItDegree" class="form-control" type="text"
+                                           placeholder="{{'Tin học' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.ItDegree=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Nghề nghiệp hiện nay' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.Job" class="form-control" type="text"
+                                           placeholder="{{'Nghề nghiệp hiện nay' | translate}}..."
+                                           ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.Job=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Ngoại ngữ' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.ForeignLanguage" class="form-control" type="text"
+                                           placeholder="{{'Ngoại ngữ' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.ForeignLanguage=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Giáo dục phổ thông' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.GeneralEducation" class="form-control" type="text"
+                                           placeholder="{{'Giáo dục phổ thông' | translate}}..."
+                                           ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.GeneralEducation=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Giáo dục đại học và sau đại học' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.UnderPostGraduateEducation" class="form-control" type="text"
+                                           placeholder="{{'Giáo dục đại học và sau đại học' | translate}}..."
+                                           ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.UnderPostGraduateEducation=''"
+                                                class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Giáo dục nghề nghiệp' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.JobEducation" class="form-control" type="text"
+                                           placeholder="{{'Giáo dục nghề nghiệp' | translate}}..."
+                                           ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.JobEducation=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Lý luận chính trị' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.PoliticalTheory" class="form-control" type="text"
+                                           placeholder="{{'Lý luận chính trị' | translate}}..."
+                                           ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.PoliticalTheory=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Học hàm' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.Degree" class="form-control" type="text"
+                                           placeholder="{{'Học hàm' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.Degree=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Tiếng dân tộc thiểu số' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input ng-model="searchModel.MinorityLanguages" class="form-control" type="text"
+                                           placeholder="{{'Tiếng dân tộc thiểu số' | translate}}..."
+                                           ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.MinorityLanguages=''" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Giới tính' | translate}}</label>
+                                <div class="input-group br24">
+                                    <ui-select tagging ng-model="searchModel.Gender" theme="bootstrap">
+                                        <ui-select-match placeholder="{{'Giới tính' | translate}}...">{{$select.selected.Name}}</ui-select-match>
+                                        <ui-select-choices repeat="x.Code as x in ListGender | filter: $select.search">
+                                            {{x.Name}}
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.Gender=null;"
+                                                class="btn btn-default no-shadow start-date">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Tuổi từ' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input type='number' ng-model="searchModel.FromAge" class="form-control"
+                                           placeholder="{{'Tuổi từ' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.FromAge=null" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-2 pr-0">
+                                <label class="fw600 text-underline">{{'Đến' | translate}}</label>
+                                <div class="input-group br24">
+                                    <input type='number' ng-model="searchModel.ToAge" class="form-control"
+                                           placeholder="{{'Tuổi từ' | translate}}..." ng-keydown="($event.keyCode == 13) && reload()" />
+                                    <span class="input-group-btn">
+                                        <button type="button" ng-click="searchModel.ToAge=null" class="btn btn-default no-shadow">
+                                            <span class="glyphicon glyphicon-remove"></span>
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-2">
+                                <div class="btn-group pt20 actions d-flex">
+                                    <div class="text-center">
+                                        <a class="btn btn-icon-only btn-circle btn-outline purple-custom" ng-click="search()">
+                                            <span><i class="fa fa-search"></i></span>
+                                        </a>
+                                        <p class="text-underline fs9 mb5 pt3">
+                                            {{'COM_BTN_SEARCH' | translate}}
+                                        </p>
+                                    </div>
+
+                                </div>
+                            </div>
+
                         </div>
-
-                        <div ng-if="act[0].ActStatus == 'Hủy'">
-                          <a class="actName" title="{{ act[0].ActName }}"
-                            ng-click="editInstAct(act[0].Id, full.ObjectCode)">
-                            <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
-                          </a>
-
-                          <span class="badge-customer badge-customer-danger">{{ act[0].ActStatus }}</span>
-                          <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
-                            style="width: 17px;height: 17px;margin-top: -5px;" />
-                        </div>
-                        <div ng-if="act[0].ActStatus == 'Dừng lại'">
-                          <a class="actName" title="{{ act[0].ActName }}"
-                            ng-click="editInstAct(act[0].Id, full.ObjectCode)">
-                            <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
-                          </a>
-
-                          <span class="badge-customer badge-customer-pause">{{ act[0].ActStatus }}</span>
-                          <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
-                            style="width: 17px;height: 17px;margin-top: -5px;" />
-                        </div>
-                        <div
-                          ng-if="act[0].ActStatus != 'Hủy' && act[0].ActStatus != 'Dừng lại' && act[0].ActStatus != 'Đã xử lý' && act[0].ActStatus != 'Đang xử lý' && act[0].ActStatus != 'Chưa xử lý' && act[0].ActStatus != 'Kích hoạt'">
-                          <a class="actName" title="{{ act[0].ActName }}"
-                            ng-click="editInstAct(act[0].Id, full.ObjectCode)">
-                            <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
-                          </a>
-                          <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
-                            style="width: 17px;height: 17px;margin-top: -5px;" />
-                        </div>
-
-                      </div>
-
                     </div>
-                    <span ng-if="act[0].ActStatus == 'Đã xử lý' && act[0].Log" class="fs10">
-                      <span class="bold fs12">{{ act[0].Log.CreatedBy }}</span><br />
-                      [{{ act[0].Log.sCreatedTime }}]
-                    </span>
-                  </div>
-                </label>
-                <div style="display: flex;align-items: center;margin-left: auto;margin-right: 20px;">
-                  <a title="Xem danh sách file" type="button" ng-click="moreFile(WfCode, act[0].ActivityInstCode)"
-                    style="width: 28px; height: 28px">
-                    <i class="fa-solid fa-file"
-                      style="--fa-secondary-color:blue; --fa-secondary-opacity: 1; --fa-primary-color: white; font-size: 25px;margin-top: 5px;"></i>
-                  </a>
                 </div>
-              </div>
-            </div>
-            <div class="col-md-12" style="padding: 0px;" ng-if="act[0].checkHiddenActWf">
-              <div ng-include="'../views/admin/workflowActivity/edit-activity-instance.html'"
-                ng-controller="edit-activity-instance" ng-init="initEdit(act[0].Id, full.ObjectCode)"></div>
-            </div>
-          </div>
 
-          <div class="row">
-            <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
-              <div class="toggle-header" style="display: flex;  min-height: 40px;">
-                <i ng-show="model.checkHiddenFileWfActivity" class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
-                <i ng-show="!model.checkHiddenFileWfActivity" class="fa-solid fa-caret-right icon-scalet fs30 mt10"></i>
-                <label ng-click="model.checkHiddenFileWfActivity=!model.checkHiddenFileWfActivity" class="label-lg"
-                  style="vertical-align: 7px;display: flex; align-items: center;">
-                  <div>
-                    <div class="d-flex">
-                      <div style="display: inline-block; margin-left: 5px; font-weight: 500">
-                        <a class="actName" title="Danh sách tệp đính kèm">
-                          <div class="numberStep1" style="display: inline">
-                            <span>{{"Danh sách tệp đính kèm" }}</span>
-                          </div>
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </label>
-              </div>
             </div>
-          </div>
-          <div class="col-md-12" style="padding: 0px;" ng-if="model.checkHiddenFileWfActivity">
-            <div ng-include="'../views/admin/workflowActivity/more-file.html'" ng-controller="more-file-wf"
-              ng-init="InitNotModal(WfCode)"></div>
-          </div>
         </div>
-      </div>
 
-    </div>
+        <div class="row pr-2">
+            <div class="" id="dropzone">
+                <table class="table dataTable table-hover table-striped" datatable dt-options="dtOptions" dt-columns="dtColumns"
+                       dt-instance="dtInstance" id="tblData"></table>
+            </div>
+        </div>
 
-    <div class="main-right-editWorkflow" ng-show="isEditWorkflow">
-      <div class="create-box create-box-r" ng-click="editWorkflow()">
-        <!-- <img src="/images/notepad/notepad/activity/left.png" ng-show="!isEditWorkflow" style="border: 2px solid gray;"/>
-          <img src="/images/notepad/notepad/activity/right.png" ng-show="isEditWorkflow" style="border: 2px solid gray;"/> -->
-        <i class="fa-solid fa-caret-right icon-scalet fs25 mt10" style="margin-left: 12px;"
-          ng-show="isEditWorkflow"></i>
-        <i class="fa-solid fa-caret-left icon-scalet fs25 mt10" style="margin-left: 12px;"
-          ng-show="!isEditWorkflow"></i>
-      </div>
+
+        <div class="main-menu-editWorkflow" ng-show="isEditWorkflow">
+            <div class="portlet-body form baolo" style="width:100%; position:absolute; background:#fff;">
+                <div class="modal-header" style="background-color: #ffffff; padding: 5px;">
+                    <div class="col-md-10 pl-0">
+                        <i class="fa fa-edit black icon-insert fs20"></i>
+                        <span class="label-lg" id="modal-title"
+                              style="vertical-align: 5px;font-weight: bold; color: black;">{{'WFAI_TITLE_EDIT_WF'|translate}}</span>
+                    </div>
+                    <!-- <div class="col-md-2 text-right">
+                            <i class="fa-solid fa-caret-right icon-scalet fs20 mt5" ng-click="editWorkflow()"></i>
+                        </div> -->
+                </div>
+                <div class="modal-body" style="padding-bottom: 0px;">
+                    <div class="row" ng-repeat="act in listActs">
+                        <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
+                            <div class="toggle-header" style="display: flex;  min-height: 40px;">
+                                <i ng-show="act[0].checkHiddenActWf" class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
+                                <i ng-show="!act[0].checkHiddenActWf" class="fa-solid fa-caret-right icon-scalet fs30 mt10"></i>
+                                <label ng-click="CloseAll(act[0]);" class="label-lg"
+                                       style="vertical-align: 7px;display: flex; align-items: center;">
+                                    <div ng-class="{'lastUpdated': act[0].IsLastUpdated}">
+                                        <div class="d-flex">
+
+                                            <div style="display: inline-block; margin-left: 5px; font-weight: 500">
+                                                <div ng-if="act[0].ActStatus == 'Đã xử lý'">
+                                                    <a class="actName" title="{{ act[0].ActName }}"
+                                                       ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                                        <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                                    </a>
+
+                                                    <span class="badge-customer badge-customer-success">{{ act[0].ActStatus }}</span>
+                                                    <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                                         style="width: 17px;height: 17px;margin-top: -5px;" />
+                                                </div>
+                                                <div ng-if="act[0].ActStatus == 'Đang xử lý' || act[0].ActStatus == 'Chưa xử lý' || act[0].ActStatus == 'Kích hoạt'">
+                                                    <div ng-if="act[0].ActStatus != 'Chưa xử lý'">
+                                                        <a class="actName" title="{{ act[0].ActName }}"
+                                                           ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                                            <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                                        </a>
+
+                                                        <span class="badge-customer badge-customer-warning">{{ act[0].ActStatus }}</span>
+                                                        <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                                             style="width: 17px;height: 17px;margin-top: -5px;" />
+                                                    </div>
+                                                    <div ng-if="act[0].ActStatus == 'Chưa xử lý'">
+                                                        <a class="actName" title="{{ act[0].ActName }}"
+                                                           ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                                            <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                                        </a>
+
+                                                        <span class="badge-customer badge-customer-lock">{{ act[0].ActStatus }}</span>
+                                                        <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                                             style="width: 17px;height: 17px;margin-top: -5px;" />
+                                                    </div>
+                                                </div>
+
+                                                <div ng-if="act[0].ActStatus == 'Hủy'">
+                                                    <a class="actName" title="{{ act[0].ActName }}"
+                                                       ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                                        <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                                    </a>
+
+                                                    <span class="badge-customer badge-customer-danger">{{ act[0].ActStatus }}</span>
+                                                    <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                                         style="width: 17px;height: 17px;margin-top: -5px;" />
+                                                </div>
+                                                <div ng-if="act[0].ActStatus == 'Dừng lại'">
+                                                    <a class="actName" title="{{ act[0].ActName }}"
+                                                       ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                                        <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                                    </a>
+
+                                                    <span class="badge-customer badge-customer-pause">{{ act[0].ActStatus }}</span>
+                                                    <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                                         style="width: 17px;height: 17px;margin-top: -5px;" />
+                                                </div>
+                                                <div ng-if="act[0].ActStatus != 'Hủy' && act[0].ActStatus != 'Dừng lại' && act[0].ActStatus != 'Đã xử lý' && act[0].ActStatus != 'Đang xử lý' && act[0].ActStatus != 'Chưa xử lý' && act[0].ActStatus != 'Kích hoạt'">
+                                                    <a class="actName" title="{{ act[0].ActName }}"
+                                                       ng-click="editInstAct(act[0].Id, full.ObjectCode)">
+                                                        <div class="numberStep1" style="display: inline"><span>{{ act[0].ActName }}</span></div>
+                                                    </a>
+                                                    <img ng-if="act[0].IsApprovable" class="blink-act" src="/images/default/green-blink.png"
+                                                         style="width: 17px;height: 17px;margin-top: -5px;" />
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                        <span ng-if="act[0].IsLastUpdated && act[0].Log" class="fs10">
+                                            <span>{{ act[0].Log.CreatedBy }}</span>
+                                            <span ng-if="act[0].Log.Content">
+                                                {{ act[0].Log.Content }} lúc
+                                            </span>
+                                            <span ng-if="!act[0].Log.Content">
+                                                đã cập nhật trạng thái
+                                                <span class="text-primary fw600">{{ act[0].Log.Status }}</span> lúc
+                                            </span>
+                                            <span class="fw600 text-green">{{ act[0].Log.sCreatedTime }}</span>
+                                        </span>
+                                        <!--<span ng-if="act[0].ActStatus == 'Đã xử lý' && act[0].Log" class="fs10">
+                                            <span class="bold fs12">{{ act[0].Log.CreatedBy }}</span><br />
+                                            [{{ act[0].Log.sCreatedTime }}]
+                                        </span>-->
+                                    </div>
+                                </label>
+                                <div style="display: flex;align-items: center;margin-left: auto;margin-right: 20px;">
+                                    <a title="Xem danh sách file" type="button" ng-click="moreFile(WfCode, act[0].ActivityInstCode)"
+                                       style="width: 28px; height: 28px">
+                                        <i class="fa-solid fa-file"
+                                           style="--fa-secondary-color:blue; --fa-secondary-opacity: 1; --fa-primary-color: white; font-size: 25px;margin-top: 5px;"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="padding: 0px;" ng-if="act[0].checkHiddenActWf">
+                            <div ng-include="'../views/admin/workflowActivity/edit-activity-instance.html'"
+                                 ng-controller="edit-activity-instance" ng-init="initEdit(act[0].Id, full.ObjectCode)"></div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 pl-0 pr-0" style="margin: 1px;">
+                            <div class="toggle-header" style="display: flex;  min-height: 40px;">
+                                <i ng-show="model.checkHiddenFileWfActivity" class="fa-solid fa-caret-down icon-scalet fs30 mt10"></i>
+                                <i ng-show="!model.checkHiddenFileWfActivity" class="fa-solid fa-caret-right icon-scalet fs30 mt10"></i>
+                                <label ng-click="model.checkHiddenFileWfActivity=!model.checkHiddenFileWfActivity" class="label-lg"
+                                       style="vertical-align: 7px;display: flex; align-items: center;">
+                                    <div>
+                                        <div class="d-flex">
+                                            <div style="display: inline-block; margin-left: 5px; font-weight: 500">
+                                                <a class="actName" title="Danh sách tệp đính kèm">
+                                                    <div class="numberStep1" style="display: inline">
+                                                        <span>{{"Danh sách tệp đính kèm" }}</span>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12" style="padding: 0px;" ng-if="model.checkHiddenFileWfActivity">
+                        <div ng-include="'../views/admin/workflowActivity/more-file.html'" ng-controller="more-file-wf"
+                             ng-init="InitNotModal(WfCode)"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="main-right-editWorkflow" ng-show="isEditWorkflow">
+            <div class="create-box create-box-r" ng-click="editWorkflow()">
+                <!-- <img src="/images/notepad/notepad/activity/left.png" ng-show="!isEditWorkflow" style="border: 2px solid gray;"/>
+                  <img src="/images/notepad/notepad/activity/right.png" ng-show="isEditWorkflow" style="border: 2px solid gray;"/> -->
+                <i class="fa-solid fa-caret-right icon-scalet fs25 mt10" style="margin-left: 12px;"
+                   ng-show="isEditWorkflow"></i>
+                <i class="fa-solid fa-caret-left icon-scalet fs25 mt10" style="margin-left: 12px;"
+                   ng-show="!isEditWorkflow"></i>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

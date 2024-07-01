@@ -15,7 +15,7 @@ namespace ESEIM.Utils
 
         Task AddLogStatusAllAsync(string objType, string objInst, string status, string actName, string actType, string userName);
 
-        void AddLogStatusAll(string objType, string objInst, string status, string actName, string actType, string userName);
+        void AddLogStatusAll(string objType, string objInst, string status, string actName, string actType, string userName, string content = "");
     }
 
     public class WorkflowService : IWorkflowService
@@ -333,13 +333,13 @@ namespace ESEIM.Utils
             await _context.SaveChangesAsync();
         }
 
-        public void AddLogStatusAll(string objType, string objInst, string status, string actName, string actType, string userName)
+        public void AddLogStatusAll(string objType, string objInst, string status, string actName, string actType, string userName, string content)
         {
-            AddLogStatusPrivate(objType, objInst, status, actName, actType, userName);
+            AddLogStatusPrivate(objType, objInst, status, actName, actType, userName, content);
             // Save all change
             _context.SaveChanges();
         }
-        private void AddLogStatusPrivate(string objType, string objInst, string status, string actName, string actType, string userName)
+        private void AddLogStatusPrivate(string objType, string objInst, string status, string actName, string actType, string userName, string content = "")
         {
             /* 
             1.CONTRACT.Hợp đồng bán (v)
@@ -385,7 +385,8 @@ namespace ESEIM.Utils
                 CreatedTime = DateTime.Now,
                 Name = common != null ? common.ValueSet : "",
                 ObjectType = actType,
-                ObjectRelative = actName
+                ObjectRelative = actName,
+                Content = content
             };
 
             switch (objType)
@@ -1073,6 +1074,9 @@ namespace ESEIM.Utils
         }
         public LogStatus Log { get; set; }
         public bool IsApprovable { get; set; }
+        public bool IsLastUpdated { get; set; }
+        public string JsonStatusLog { get; set; }
+        public List<LogStatus> ListLogStatus { get; set; }
     }
 
     public class JsonCommand

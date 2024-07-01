@@ -234,7 +234,7 @@ namespace III.Admin.Controllers
 
                             HttpContext.Session.Set("UserSession", session);
 
-                            return RedirectToAction("Index", "Home");
+                            return RedirectToAction("Index", "UserProfile");
                         }
                         if (result.IsLockedOut)
                         {
@@ -396,10 +396,13 @@ namespace III.Admin.Controllers
             {
                 foreach (var a in user.JsonStaus)
                 {
-                    var userCreatedBy = await _userManager.FindByNameAsync(a.CreatedBy);
-                    if (userCreatedBy != null)
+                    if (!string.IsNullOrEmpty(a.CreatedBy))
                     {
-                        a.CreatedBy = userCreatedBy.GivenName;
+                        var userCreatedBy = await _userManager.FindByNameAsync(a.CreatedBy);
+                        if (userCreatedBy != null)
+                        {
+                            a.CreatedBy = userCreatedBy.GivenName;
+                        }
                     }
                 }
 
@@ -427,10 +430,13 @@ namespace III.Admin.Controllers
                 {
                     foreach (var a in user.JsonStaus)
                     {
-                        var userCreatedBy = await _userManager.FindByNameAsync(a.CreatedBy);
-                        if (userCreatedBy != null)
+                        if (!string.IsNullOrEmpty(a.CreatedBy))
                         {
-                            a.CreatedBy = userCreatedBy.GivenName;
+                            var userCreatedBy = await _userManager.FindByNameAsync(a.CreatedBy);
+                            if (userCreatedBy != null)
+                            {
+                                a.CreatedBy = userCreatedBy.GivenName;
+                            }
                         }
                     }
                 }
@@ -945,7 +951,8 @@ namespace III.Admin.Controllers
                 await _context.SaveChangesAsync();
 
                 var actInst = GetActInstanceCode(model.ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                var content = " đã cập nhật hồ sơ ";
+                var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                 var client = _httpClientFactory.CreateClient();
                 client.BaseAddress = new Uri(_appSettings.UrlProd);
                 var response = await client.PostAsync(url, null);
@@ -1382,10 +1389,11 @@ namespace III.Admin.Controllers
                 if (model.Length > 0)
                 {
                     var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
-                    var response = await client.PostAsync(url, null); 
+                    var response = await client.PostAsync(url, null);
                 }
                 msg.Title = "Thêm mới lý lịch gia đình thành công";
             }
@@ -1563,7 +1571,8 @@ namespace III.Admin.Controllers
                 if (model.ProfileCode != null)
                 {
                     var actInst = GetActInstanceCode(model.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -1632,7 +1641,8 @@ namespace III.Admin.Controllers
                 if (model.Length > 0)
                 {
                     var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -1673,7 +1683,8 @@ namespace III.Admin.Controllers
                     if (x.ProfileCode != null)
                     {
                         var actInst = GetActInstanceCode(x.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                        var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                        var content = " đã cập nhật hồ sơ ";
+                        var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                         var client = _httpClientFactory.CreateClient();
                         client.BaseAddress = new Uri(_appSettings.UrlProd);
                         var response = await client.PostAsync(url, null);
@@ -1812,7 +1823,8 @@ namespace III.Admin.Controllers
                 if (model.Length > 0)
                 {
                     var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -1878,7 +1890,8 @@ namespace III.Admin.Controllers
                 if (model.Length > 0)
                 {
                     var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -1945,7 +1958,8 @@ namespace III.Admin.Controllers
                 if (model.Length > 0)
                 {
                     var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2012,7 +2026,8 @@ namespace III.Admin.Controllers
                 if (model.Length > 0)
                 {
                     var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2080,7 +2095,8 @@ namespace III.Admin.Controllers
                 if (model.Length > 0)
                 {
                     var actInst = GetActInstanceCode(model[0].ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2344,7 +2360,8 @@ namespace III.Admin.Controllers
                     _context.Families.Update(data);
                     _context.SaveChanges();
                     var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2427,7 +2444,8 @@ namespace III.Admin.Controllers
                     _context.Awards.Update(data);
                     _context.SaveChanges();
                     var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2459,7 +2477,8 @@ namespace III.Admin.Controllers
                     _context.GoAboards.Update(data);
                     _context.SaveChanges();
                     var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2490,7 +2509,8 @@ namespace III.Admin.Controllers
                     _context.PersonalHistories.Update(data);
                     _context.SaveChanges();
                     var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2522,7 +2542,8 @@ namespace III.Admin.Controllers
                     _context.WorkingTrackings.Update(data);
                     _context.SaveChanges();
                     var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2553,7 +2574,8 @@ namespace III.Admin.Controllers
                     _context.TrainingCertificatedPasses.Update(data);
                     _context.SaveChanges();
                     var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2585,7 +2607,8 @@ namespace III.Admin.Controllers
                     _context.WarningDisciplineds.Update(data);
                     _context.SaveChanges();
                     var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -2616,7 +2639,8 @@ namespace III.Admin.Controllers
                     _context.HistorySpecialists.Update(data);
                     _context.SaveChanges();
                     var actInst = GetActInstanceCode(data.ProfileCode, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
+                    var content = " đã cập nhật hồ sơ ";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}&content={content}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);

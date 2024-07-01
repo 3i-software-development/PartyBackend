@@ -1675,8 +1675,13 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
                 if (lstStatus.length > 0) {
                     const x = lstStatus[lstStatus.length - 1];
                     res2 = `<br>
-                        <span>${x.CreatedBy}</span> đã cập nhật trạng thái
-                        <span class="text-primary fw600">${x.Name}</span> cho hoạt động
+                        <span>${x.CreatedBy}</span>
+                        <span ng-if="${!Boolean(x.Content)}">
+                            đã cập nhật trạng thái <span class="text-primary fw600">${x.Name}</span> cho hoạt động
+                        </span>
+                        <span ng-if="${Boolean(x.Content)}">
+                            ${x.Content} cho hoạt động
+                        </span>
                         <span class="fw600 text-green">${x.ObjectRelative} [${x.SCreatedTime}]</span>
                     `;
                 }
@@ -3690,6 +3695,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 $scope.infUser.Status = lstStatus[lstStatus.length - 1].Code;
                 $scope.infUser.StatusDefault = lstStatus[lstStatus.length - 1].Code;
                 $scope.infUser.StatusTemp = lstStatus[lstStatus.length - 1].Code;
+                $scope.infUser.StatusObj = lstStatus[lstStatus.length - 1];
                 $scope.listStatusLog = lstStatus;
             }
             console.log($scope.infUser.MaritalStatus.decisionDate);
