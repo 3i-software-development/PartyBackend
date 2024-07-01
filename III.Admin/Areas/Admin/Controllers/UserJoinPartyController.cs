@@ -181,7 +181,7 @@ namespace III.Admin.Controllers
 
                     rs.Title = "Cập nhật thành công";
                     var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -197,7 +197,7 @@ namespace III.Admin.Controllers
 
                     rs.Title = "Thêm file thành công";
                     var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
@@ -262,7 +262,7 @@ namespace III.Admin.Controllers
 
                     rs.Title = "Xóa thành công";
                     var actInst = GetActInstanceCode(ResumeNumber, "6158ccd2-8312-59bc-6ec3-e7955d722e57");
-                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst=${actInst}&status=STATUS_ACTIVITY_DOING&userName=${ESEIM.AppContext.UserName}";
+                    var url = $"/Admin/WorkflowActivity/UpdateStatusActInst?actInst={actInst}&status=STATUS_ACTIVITY_DOING&userName={ESEIM.AppContext.UserName}";
                     var client = _httpClientFactory.CreateClient();
                     client.BaseAddress = new Uri(_appSettings.UrlProd);
                     var response = await client.PostAsync(url, null);
