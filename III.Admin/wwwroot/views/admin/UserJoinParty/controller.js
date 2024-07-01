@@ -1142,7 +1142,7 @@ app.controller('report', function ($scope, $rootScope, $compile, $uibModal, DTOp
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
         var link = document.createElement("a");
         link.href = file; // Đặt đường dẫn đến tệp Word
-        link.download = "Profile_" + ResumeNumber + ".docx"; // Đặt tên cho tệp khi được tải xuống
+        link.download = "Trích lược hồ sơ (" + ResumeNumber + ").docx"; // Đặt tên cho tệp khi được tải xuống
         // Kích hoạt sự kiện nhấp vào liên kết
         link.click();
     }
@@ -1285,7 +1285,7 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
         var link = document.createElement("a");
         link.href = file; // Đặt đường dẫn đến tệp Word
-        link.download = "Profile_" + ResumeNumber + ".docx"; // Đặt tên cho tệp khi được tải xuống
+        link.download = "Phiếu đảng viên (" + ResumeNumber + ").docx"; // Đặt tên cho tệp khi được tải xuống
         // Kích hoạt sự kiện nhấp vào liên kết
         link.click();
     }
@@ -2021,7 +2021,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
         var link = document.createElement("a");
         link.href = file; // Đặt đường dẫn đến tệp Word
-        link.download = "Profile_" + ResumeNumber + ".docx"; // Đặt tên cho tệp khi được tải xuống
+        link.download = "Hồ sơ lý lịch (" + ResumeNumber + ").docx"; // Đặt tên cho tệp khi được tải xuống
         // Kích hoạt sự kiện nhấp vào liên kết
         link.click();
     }
@@ -4202,25 +4202,11 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 
     $scope.submitPersonalHistorys = function () {
         if ($scope.isLoadFileWord === true) {
-            /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
             $.ajax({
                 type: "DELETE",
-                url: "/UserProfile/DeleteAllWorkingTracking?profileCode=" + $scope.infUser.ResumeNumber,
+                url: "/UserProfile/DeleteAllPersonalHistory?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4285,18 +4271,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 url: "/UserProfile/DeleteAllWarningDisciplined?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         console.log($scope.Disciplined)
@@ -4333,19 +4307,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 url: "/UserProfile/DeleteAllTrainingCertificatedPasse?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4532,19 +4493,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 url: "/UserProfile/DeleteAllFamily?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4599,19 +4547,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 url: "/UserProfile/DeleteAllGoAboard?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4647,19 +4582,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 url: "/UserProfile/DeleteAllHistorySpecialist?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4699,19 +4621,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 url: "/UserProfile/DeleteAllHistorySpecialist?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4746,18 +4655,6 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 url: "/UserProfile/DeleteAllAward?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];

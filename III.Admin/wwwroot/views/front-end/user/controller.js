@@ -2278,19 +2278,16 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         var parts = info.split(",");
                         if (parts.length === 1) {
                             $scope.placeAddress = parts[0];
-                            var cleanPlace = parts[1].replace("tại ", "").trim();
-
                         }
 
                         if (parts.length = 2) {
+                            var cleanPlace = parts[1].replace("tại ", "").trim();
                             $scope.placeAddress = parts[0]
                             $scope.PlaceCreatedTime.place = cleanPlace;
-                            var cleanPlace = parts[1].replace("tại ", "").trim();
                         }
                     } catch (error) {
                         $scope.placeAddress = ""
                         $scope.PlaceCreatedTime.place = ""
-                        var cleanPlace = parts[1].replace("tại ", "").trim();
                     }
 
                 }
@@ -2982,19 +2979,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 url: "/UserProfile/DeleteAllFamily?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -3801,22 +3785,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
             $.ajax({
                 type: "DELETE",
-                url: "/UserProfile/DeleteAllWorkingTracking?profileCode=" + $scope.infUser.ResumeNumber,
+                url: "/UserProfile/DeleteAllPersonalHistory?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -3886,18 +3857,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 url: "/UserProfile/DeleteAllWarningDisciplined?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         console.log($scope.Disciplined)
@@ -3993,19 +3952,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 url: "/UserProfile/DeleteAllHistorySpecialist?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4071,19 +4017,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 url: "/UserProfile/DeleteAllHistorySpecialist?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4182,19 +4115,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 url: "/UserProfile/DeleteAllTrainingCertificatedPasse?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                // data: JSON.stringify(requestData), // Chuyển đổi dữ liệu thành chuỗi JSON
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4268,18 +4188,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 url: "/UserProfile/DeleteAllAward?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];
@@ -4334,7 +4242,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
                     return;
                 }
-            } s
+            } 
             if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
                 return
             }
@@ -4384,18 +4292,6 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                 url: "/UserProfile/DeleteAllGoAboard?profileCode=" + $scope.infUser.ResumeNumber,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                success: function (result) {
-
-                    if (result.Error) {
-                        App.toastrError(result.Title);
-                    } else {
-                        App.toastrSuccess(result.Title);
-                        $scope.$apply()
-                    }
-                },
-                error: function (error) {
-                    console.log(error.Title);
-                }
             });
         }
         $scope.model = [];

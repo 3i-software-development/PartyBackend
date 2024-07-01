@@ -107,6 +107,8 @@ namespace ESEIM.Models
         public int UserCode { get; set; }
         public bool IsDeleted { get; set; }
         public string CreatedBy { get; set; }
+        public string UpdateBy { get; set; }
+        public DateTime? UpdateTime { get; set; }
         public string Username { get; set; }
         public string Status
         {

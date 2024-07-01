@@ -938,6 +938,8 @@ namespace III.Admin.Controllers
                 obj.PermanentResidenceVillage = model.PermanentResidenceVillage;
                 obj.TemporaryAddressValue = model.TemporaryAddressValue;
                 obj.TemporaryAddressVillage = model.TemporaryAddressVillage;
+                obj.UpdateTime = DateTime.Now;
+                obj.UpdateBy = ESEIM.AppContext.UserName;
 
                 _context.PartyAdmissionProfiles.Update(obj);
                 await _context.SaveChangesAsync();
@@ -2121,6 +2123,35 @@ namespace III.Admin.Controllers
             {
                 msg.Error = true;
                 msg.Title = "Xóa Hoàn cảnh gia đình thất bại";
+            }
+            return msg;
+        }
+
+        [HttpDelete]
+        public object DeleteAllPersonalHistory(String profileCode)
+        {
+            var msg = new JMessage() { Error = false };
+            try
+            {
+                var data = _context.PersonalHistories.Where(p => p.ProfileCode == profileCode).ToList();
+                if (data == null)
+                {
+                    msg.Error = true;
+                    msg.Title = "Không tìm thấy mã hồ sơ";
+                    return msg;
+                }
+                foreach (var record in data)
+                {
+                    record.IsDeleted = true;
+
+                    _context.PersonalHistories.Update(record);
+                }
+                _context.SaveChanges();
+            }
+            catch (Exception err)
+            {
+                msg.Error = true;
+                msg.Title = "Xóa lịch sử bản thân thất bại";
             }
             return msg;
         }
