@@ -1213,24 +1213,27 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
     $scope.GetMemberPartyProfile = function (resumeNumber) {
         dataserviceJoinParty.GetMemberPartyProfile(resumeNumber, function (rs) {
             rs = rs.data;
-            rs.forEach(item => {
-                if (!item.Error)
-                    $scope.downloadFile(item.Object, item.Title)
-            });
+            if (!rs.Error)
+                $scope.downloadFileObj("Phiếu đảng viên", rs.Object);
             console.log(rs);
         });
     }
 
 
-    $scope.GetMemberPartyProfile2 = function (resumeNumber) {
+    $scope.getBriefCv = function (resumeNumber) {
         dataserviceJoinParty.GetMemberPartyProfile2(resumeNumber, function (rs) {
             rs = rs.data;
-            rs.forEach(item => {
-                if (!item.Error)
-                    $scope.downloadFile(item.Object, item.Title)
-            });
+            if (!rs.Error)
+                $scope.downloadFileObj("Lý lịch trích lược", rs.Object);
             console.log(rs);
         });
+    }
+    $scope.downloadFileObj = function (typePrefix = "Lý lịch trích lược", obj, extension = "docx") {
+        console.log(obj);
+        var link = document.createElement("a");
+        link.href = obj.Path;
+        link.download = `${typePrefix} ${obj.Profile.CurrentName} ${obj.Profile.Username}.${extension}`;
+        link.click();
     }
     //Tải sơ yếu lý lịch trích lượt
     $scope.BriefCurriculumVitaeExport = function (ResumeNumber) {
@@ -1276,7 +1279,8 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
                 $uibModalInstance.close('cancel');
             } else {
                 console.log(rs.Object);
-                $scope.downloadFile(rs.Object, data)
+                $scope.downloadFileObj("Sơ yếu lý lịch đầy đủ", rs.Object);
+                //$scope.downloadFile(rs.Object, data)
                 //window.open('/Admin/Docman#', '_blank');
             }
         });
@@ -1738,8 +1742,8 @@ app.controller('index', function ($scope, $rootScope, $compile, $uibModal, DTOpt
          `*/
             wfbtn = `
         <input type="checkbox" style=" width: 20px; height: 20px;" ng-model="Export['${full.resumeNumber}']"/>
-        <a title="{{&quot;Tải Phiếu đảng viên&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
-            ng-click="GetMemberPartyProfile2('${full.resumeNumber}')"><i class="fa fa-file-word-o  fs25"></i>
+        <a title="{{&quot;Tải Lý lịch trích lược&quot; | translate}}" class="width: 25px; height: 25px; padding: 0px"
+            ng-click="getBriefCv('${full.resumeNumber}')"><i class="fa fa-file-word-o  fs25"></i>
         </a> `
             if (data != undefined && data != '') {
                 wfbtn += `<div>${data}</div>`;
@@ -1889,7 +1893,7 @@ app.controller('file-version', function ($scope, $rootScope, $compile, $uibModal
             IsSign: false,
             Mode: 1
         };
-       
+
         var extension = data.Url.substr(data.Url.lastIndexOf('.') + 1);
         var word = ['DOCX', 'DOC'];
         var pdf = ['PDF'];
@@ -1987,7 +1991,8 @@ app.controller('addSpecialHistory', function ($scope, $rootScope, $compile, $rou
         $uibModalInstance.close('cancel');
     }
 
-})
+});
+
 app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $routeParams, dataserviceJoinParty, $filter, $uibModal, $http) {
     $scope.addSpecialHistory = function () {
         var modalInstance = $uibModal.open({
@@ -3437,7 +3442,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
             pp.comment = pp.idFamily[id];
             $scope.matchedItemss = [pp];
         }
-        
+
     }
 
 
@@ -3925,7 +3930,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
             return item.Id === id;
         });
-         $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide
+        $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide
     };
 
     $scope.createWfInstance = function () {
@@ -4176,7 +4181,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
                     return;
                 }
-            } 
+            }
             const currentDate = new Date();
             const currentYear = currentDate.getFullYear();
             $scope.err = false
@@ -4234,7 +4239,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                     App.toastrError(result.Title);
                 } else {
                     App.toastrSuccess(result.Title);
-                    $scope.getPersonalHistoryByProfileCode(); 
+                    $scope.getPersonalHistoryByProfileCode();
                 }
             });
         } else {
@@ -4335,7 +4340,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 if (result.Error) {
                     App.toastrError(result.Title);
                 } else {
-                    
+
                     App.toastrSuccess(result.Title);
                     $scope.getTrainingCertificatedPassByProfileCode()
                 }
@@ -4539,7 +4544,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
                 /*$scope.selectedFamily = {
                     WorkingProgress: `Từ năm 18 tuổi đến năm`
                 };*/
-              
+
             }
         })
 
@@ -4713,7 +4718,7 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
 $scope.err = true
 App.toastrError("Ngày tháng năm sinh không đúng định dạng")
 return;*//*
-                                                                       }*/
+                                                                                   }*/
             /*if ($scope.infUser.FirstName == "" || $scope.infUser.FirstName == null || $scope.infUser.FirstName == undefined) {
                 $scope.err = true
                 App.toastrError("Không được để trường Họ và tên khai sinh trống")
@@ -4768,9 +4773,9 @@ App.toastrError("Không được để trường Quê quán trống")
 return;
 
 *//*            } if ($scope.infUser.TemporaryAddress == "" || $scope.infUser.TemporaryAddress == null || $scope.infUser.TemporaryAddress == undefined) {
-                                                                                                                                    $scope.err = true
-                                                                                                                                    App.toastrError("Không được để trường Địa chỉ tạm trú trống")
-                                                                                                                                    return;*//*
+                                                                                                                                                $scope.err = true
+                                                                                                                                                App.toastrError("Không được để trường Địa chỉ tạm trú trống")
+                                                                                                                                                return;*//*
 
 } if ($scope.infUser.LevelEducation.GeneralEducation == "" || $scope.infUser.LevelEducation.GeneralEducation == null || $scope.infUser.LevelEducation.GeneralEducation == undefined) {
 $scope.err = true
@@ -4797,94 +4802,94 @@ App.toastrError("Không được để trường tự nhận xét trống")
 return;
 }
 *//* if (PlaceWorking[0] === "NaN" || PlaceWorking[1] === "NaN" || PlaceWorking[2] === "NaN" || PlaceWorking[0] === "undefined" || PlaceWorking[1] === "undefined" || PlaceWorking[2] === "undefined" ) {
-                                                                                                                                     $scope.err = true
-                                                                                                                                     App.toastrError("Không được để trường Địa giới hành chính")
-                                                                                                                                     return;
-                                                                                                                         }*//*
+                                                                                                                                                 $scope.err = true
+                                                                                                                                                 App.toastrError("Không được để trường Địa giới hành chính")
+                                                                                                                                                 return;
+                                                                                                                                     }*//*
 *//* var HomeTown = $scope.infUser.HomeTown.toLowerCase().split(",");
-                                                                                                    if (HomeTown.length < 4) {
-                                                                                                            $scope.err = true;
-                                                                                                            App.toastrError("Bạn vui lòng nhập đầy đủ thôn, xã, huyện, TP ở quê quán");
-                                                                                                            return;
-                                                                                                        }
-                                                                                                    if (HomeTown.length > 4) {
-                                                                                                            $scope.err = true;
-                                                                                                        App.toastrError("Bạn vui lòng nhập theo định dạng thôn, xã, huyện, TP ở ở quê quán");
-                                                                                                            return;
-                                                                                                        }*//*
+                                                                                                                if (HomeTown.length < 4) {
+                                                                                                                        $scope.err = true;
+                                                                                                                        App.toastrError("Bạn vui lòng nhập đầy đủ thôn, xã, huyện, TP ở quê quán");
+                                                                                                                        return;
+                                                                                                                    }
+                                                                                                                if (HomeTown.length > 4) {
+                                                                                                                        $scope.err = true;
+                                                                                                                    App.toastrError("Bạn vui lòng nhập theo định dạng thôn, xã, huyện, TP ở ở quê quán");
+                                                                                                                        return;
+                                                                                                                    }*//*
 
 
 
 *//* return new Promise((resolve, reject) => {
-                                                                                                                    if ($scope.infUser.PlaceWorking.length > 0) {
-                                                                                                                        $scope.tinhName = ''
-                                                                                                                        $scope.huyenName = ''
-                                                                                                                        $scope.xaName = ''
-                                                                                                                        var PlaceWorking = $scope.infUser.PlaceWorking.split('_');
-                                                                                                                       if (Residence.length === 4) {
-                                                                                                                            var provinceId = parseInt(PlaceWorking[0]);
-                                                                                                                            var districtId = parseInt(PlaceWorking[1]);
-                                                                                                                            var communeId = parseInt(PlaceWorking[2]);
-                                                                                                                            var promises = [];
-                                                                                                       
-                                                                                                       
-                                                                                                                            var promiseProvince = new Promise((resolve, reject) => {
-                                                                                                                                dataserviceJoinParty.GetTinh(provinceId, function (rs) {
-                                                                                                                                    $scope.provinceName = rs.data[0].name.toLowerCase();
-                                                                                                                                    console.log($scope.provinceName)
-                                                                                                                                    $scope.tinh = Residence[3].includes($scope.provinceName)
-                                                                                                                                    $scope.tinh1 = HomeTown[3].includes($scope.provinceName)
-                                                                                                                                    if ($scope.tinh === false || $scope.tinh1 === false) {
-                                                                                                                                        $scope.err = true;
-                                                                                                                                        App.toastrError("Tỉnh ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
-                                                                                                                                        reject();
+                                                                                                                                if ($scope.infUser.PlaceWorking.length > 0) {
+                                                                                                                                    $scope.tinhName = ''
+                                                                                                                                    $scope.huyenName = ''
+                                                                                                                                    $scope.xaName = ''
+                                                                                                                                    var PlaceWorking = $scope.infUser.PlaceWorking.split('_');
+                                                                                                                                   if (Residence.length === 4) {
+                                                                                                                                        var provinceId = parseInt(PlaceWorking[0]);
+                                                                                                                                        var districtId = parseInt(PlaceWorking[1]);
+                                                                                                                                        var communeId = parseInt(PlaceWorking[2]);
+                                                                                                                                        var promises = [];
+                                                                                                                   
+                                                                                                                   
+                                                                                                                                        var promiseProvince = new Promise((resolve, reject) => {
+                                                                                                                                            dataserviceJoinParty.GetTinh(provinceId, function (rs) {
+                                                                                                                                                $scope.provinceName = rs.data[0].name.toLowerCase();
+                                                                                                                                                console.log($scope.provinceName)
+                                                                                                                                                $scope.tinh = Residence[3].includes($scope.provinceName)
+                                                                                                                                                $scope.tinh1 = HomeTown[3].includes($scope.provinceName)
+                                                                                                                                                if ($scope.tinh === false || $scope.tinh1 === false) {
+                                                                                                                                                    $scope.err = true;
+                                                                                                                                                    App.toastrError("Tỉnh ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
+                                                                                                                                                    reject();
+                                                                                                                                                } else {
+                                                                                                                                                    $scope.err = false
+                                                                                                                                                    resolve();
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        });
+                                                                                                                                        var promiseDistrict = new Promise((resolve, reject) => {
+                                                                                                                                            dataserviceJoinParty.GetHuyen(districtId, function (rs) {
+                                                                                                                                                $scope.districtname = rs.data[0].name.toLowerCase();
+                                                                                                                                                $scope.huyen = Residence[2].includes($scope.districtname)
+                                                                                                                                                $scope.huyen1 = HomeTown[2].includes($scope.districtname)
+                                                                                                                                                if ($scope.huyen === false || $scope.huyen1 === false ) {
+                                                                                                                                                    $scope.err = true;
+                                                                                                                                                    App.toastrError("Huyện ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
+                                                                                                                                                    reject();
+                                                                                                                                                    return;
+                                                                                                                                                } else {
+                                                                                                                                                    $scope.err = false
+                                                                                                                                                    resolve();
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        });
+                                                                                                                                        var promiseCommune = new Promise((resolve, reject) => {
+                                                                                                                                            dataserviceJoinParty.GetXa(communeId, function (rs) {
+                                                                                                                                                $scope.communeName = rs.data[0].name.toLowerCase();
+                                                                                                                                                $scope.xa = Residence[1].includes($scope.communeName)
+                                                                                                                                                $scope.xa1 = HomeTown[1].includes($scope.communeName)
+                                                                                                                                                if ($scope.xa === false|| $scope.xa === false) {
+                                                                                                                                                    $scope.err = true;
+                                                                                                                                                    App.toastrError("Xã ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
+                                                                                                                                                    reject();
+                                                                                                                                                    return;
+                                                                                                                                                } else {
+                                                                                                                                                    $scope.err = false
+                                                                                                                                                    resolve();
+                                                                                                                                                }
+                                                                                                                                            });
+                                                                                                                                        });
                                                                                                                                     } else {
-                                                                                                                                        $scope.err = false
-                                                                                                                                        resolve();
+                                                                                                                   
                                                                                                                                     }
-                                                                                                                                });
-                                                                                                                            });
-                                                                                                                            var promiseDistrict = new Promise((resolve, reject) => {
-                                                                                                                                dataserviceJoinParty.GetHuyen(districtId, function (rs) {
-                                                                                                                                    $scope.districtname = rs.data[0].name.toLowerCase();
-                                                                                                                                    $scope.huyen = Residence[2].includes($scope.districtname)
-                                                                                                                                    $scope.huyen1 = HomeTown[2].includes($scope.districtname)
-                                                                                                                                    if ($scope.huyen === false || $scope.huyen1 === false ) {
-                                                                                                                                        $scope.err = true;
-                                                                                                                                        App.toastrError("Huyện ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
-                                                                                                                                        reject();
-                                                                                                                                        return;
-                                                                                                                                    } else {
-                                                                                                                                        $scope.err = false
-                                                                                                                                        resolve();
-                                                                                                                                    }
-                                                                                                                                });
-                                                                                                                            });
-                                                                                                                            var promiseCommune = new Promise((resolve, reject) => {
-                                                                                                                                dataserviceJoinParty.GetXa(communeId, function (rs) {
-                                                                                                                                    $scope.communeName = rs.data[0].name.toLowerCase();
-                                                                                                                                    $scope.xa = Residence[1].includes($scope.communeName)
-                                                                                                                                    $scope.xa1 = HomeTown[1].includes($scope.communeName)
-                                                                                                                                    if ($scope.xa === false|| $scope.xa === false) {
-                                                                                                                                        $scope.err = true;
-                                                                                                                                        App.toastrError("Xã ở địa giới hành chính và địa chỉ thường trú hoặc quê quán khác nhau");
-                                                                                                                                        reject();
-                                                                                                                                        return;
-                                                                                                                                    } else {
-                                                                                                                                        $scope.err = false
-                                                                                                                                        resolve();
-                                                                                                                                    }
-                                                                                                                                });
-                                                                                                                            });
-                                                                                                                        } else {
-                                                                                                       
-                                                                                                                        }
-                                                                                                                        promises.push(promiseProvince);
-                                                                                                                        promises.push(promiseDistrict);
-                                                                                                                        promises.push(promiseCommune);
-                                                                                                       
-                                                                                                                        Promise.all(promises)
-                                                                                                                            .then(() => {*//*
+                                                                                                                                    promises.push(promiseProvince);
+                                                                                                                                    promises.push(promiseDistrict);
+                                                                                                                                    promises.push(promiseCommune);
+                                                                                                                   
+                                                                                                                                    Promise.all(promises)
+                                                                                                                                        .then(() => {*//*
 if ($scope.infUser.MaritalStatus.marriedStatus === "" || $scope.infUser.MaritalStatus.marriedStatus == null || $scope.infUser.MaritalStatus.marriedStatus == undefined) {
 $scope.infUser.MaritalStatus.marriedStatus === '1'
 } else if ($scope.infUser.MaritalStatus.marriedStatus === '2') {
@@ -4926,26 +4931,26 @@ return;
 //    return;
 //}
 *//*
-                                                                                                                                                    if ($scope.infUser.PlaceofBirth != infUser.PlaceWorking) {
-                                                                                                                                                        $scope.err = true
-                                                                                                                                                        App.toastrError("Nơi sinh và địa giới hành chính khác nhau")
-                                                                                                                                                        return;
-                                                                                                                                                    }
-                                                                                                                                                    if ($scope.infUser.HomeTown != infUser.PlaceWorking) {
-                                                                                                                                                        $scope.err = true
-                                                                                                                                                        App.toastrError("Quê quán và địa giới hành chính khác nhau")
-                                                                                                                                                        return;
-                                                                                                                                                    }
-                                                                                                                                                    if ($scope.infUser.Residence != infUser.PlaceWorking) {
-                                                                                                                                                        $scope.err = true
-                                                                                                                                                        App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
-                                                                                                                                                        return;
-                                                                                                                                                    }
-                                                                                                                                                    if ($scope.infUser.Residence != infUser.PlaceWorking) {
-                                                                                                                                                        $scope.err = true
-                                                                                                                                                        App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
-                                                                                                                                                        return;
-                                                                                                                                                    }*//*
+                                                                                                                                                                if ($scope.infUser.PlaceofBirth != infUser.PlaceWorking) {
+                                                                                                                                                                    $scope.err = true
+                                                                                                                                                                    App.toastrError("Nơi sinh và địa giới hành chính khác nhau")
+                                                                                                                                                                    return;
+                                                                                                                                                                }
+                                                                                                                                                                if ($scope.infUser.HomeTown != infUser.PlaceWorking) {
+                                                                                                                                                                    $scope.err = true
+                                                                                                                                                                    App.toastrError("Quê quán và địa giới hành chính khác nhau")
+                                                                                                                                                                    return;
+                                                                                                                                                                }
+                                                                                                                                                                if ($scope.infUser.Residence != infUser.PlaceWorking) {
+                                                                                                                                                                    $scope.err = true
+                                                                                                                                                                    App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
+                                                                                                                                                                    return;
+                                                                                                                                                                }
+                                                                                                                                                                if ($scope.infUser.Residence != infUser.PlaceWorking) {
+                                                                                                                                                                    $scope.err = true
+                                                                                                                                                                    App.toastrError("Địa chỉ thường trú và địa giới hành chính khác nhau")
+                                                                                                                                                                    return;
+                                                                                                                                                                }*//*
 
 if ($scope.err == true) {
 return
@@ -5544,12 +5549,24 @@ return;
 
                 result.forEach(obj => {
                     try {
-                    const parts = obj.BirthYear.split('_');
-                    if (parts.length === 2) {
-                        obj.die = parts[0];
-                        obj.BirthYear = parts[1];
-                    } else if (parts.length = 4) {
-                        if (parts[1] == "false" || parts[1] == "true") {
+                        const parts = obj.BirthYear.split('_');
+                        if (parts.length === 2) {
+                            obj.die = parts[0];
+                            obj.BirthYear = parts[1];
+                        } else if (parts.length = 4) {
+                            if (parts[1] == "false" || parts[1] == "true") {
+                                obj.die = parts[0];
+                                obj.BirthYear = parts[2];
+                                obj.AddressDie = parts[3];
+                                obj.Reason = parts[4];
+                            } else {
+                                obj.die = parts[0];
+                                obj.BirthYear = parts[1];
+                                obj.AddressDie = parts[2];
+                                obj.Reason = parts[3];
+                            }
+
+                        } else if (parts.length >= 5) {
                             obj.die = parts[0];
                             obj.BirthYear = parts[2];
                             obj.AddressDie = parts[3];
@@ -5557,18 +5574,6 @@ return;
                         } else {
                             obj.die = parts[0];
                             obj.BirthYear = parts[1];
-                            obj.AddressDie = parts[2];
-                            obj.Reason = parts[3];
-                        }
-                        
-                    }else if(parts.length >= 5) {
-                        obj.die = parts[0];
-                        obj.BirthYear = parts[2];
-                        obj.AddressDie = parts[3];
-                        obj.Reason = parts[4];
-                    } else {
-                        obj.die = parts[0];
-                        obj.BirthYear = parts[1];
                         }
                     } catch (error) {
                         obj.BirthYear = obj.BirthYear
@@ -6077,7 +6082,7 @@ return;
                     App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
                     return;
                 }
-            } 
+            }
             if ($scope.selectedWorkingTracking.From == null || $scope.selectedWorkingTracking.From == undefined || $scope.selectedWorkingTracking.From == '') {
                 $scope.err = true
             }
@@ -6214,7 +6219,7 @@ return;
                     App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
                     return;
                 }
-            } 
+            }
             $scope.err = false
             if ($scope.selectedTrainingCertificatedPass.From == null || $scope.selectedTrainingCertificatedPass.From == undefined || $scope.selectedTrainingCertificatedPass.From == '') {
                 $scope.err = true
@@ -6279,7 +6284,7 @@ return;
                     App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
                     return;
                 }
-            } 
+            }
             if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
                 $scope.err = true
             }
@@ -6877,7 +6882,7 @@ return;
         }
     }
 
-    
+
     function convertDateFormat(dateString) {
         var datePart = dateString.split('/');
 
@@ -6969,7 +6974,7 @@ return;
 
                     var parts = pElementP2s[i][0].split(" đến ");
                     var begin = parts[0].substr(2); // Extracts "02/2000"
-                    var end = parts[1]; 
+                    var end = parts[1];
                     /*var begin = pElementP2s[i][0].substr(pElementP2s[i][0].indexOf('-') - 2, 7);
                     var end = pElementP2s[i][0].substr(pElementP2s[i][0].lastIndexOf('-') - 2, 7);*/
                     var BusinessNDutyObj = {

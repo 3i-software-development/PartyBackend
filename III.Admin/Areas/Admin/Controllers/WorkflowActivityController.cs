@@ -103,6 +103,12 @@ namespace III.Admin.Controllers
                 if (!msg.Error)
                 {
                     var filePath = msg.Object.ToString();
+                    var profile = _context.PartyAdmissionProfiles.FirstOrDefault(x => x.ResumeNumber == ressumeNumber);
+                    msg.Object = new
+                    {
+                        Profile = profile,
+                        Path = filePath
+                    };
                 }
             }
             catch (Exception ex)

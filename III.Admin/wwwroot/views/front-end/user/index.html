@@ -423,6 +423,18 @@
     .status-temp .ui-select-choices-row.active > a {
         text-wrap: unset;
     }
+
+    .fw600 {
+        font-weight: 600;
+    }
+
+    .text-primary {
+        color: #337ab7;
+    }
+
+    .text-green {
+        color: green !important;
+    }
 </style>
 <div class="notifi">
     <audio id="errorSound" src="/Sounds/incorrect.mp3"></audio>
@@ -1188,7 +1200,7 @@
                                                      style="white-space:nowrap;">
                                                     <i class="fa fa-info-circle icon-clickable" id="it"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="Tôn giáo của bạn là: {{infUser.LevelEducation.It}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Tin học của bạn là: {{infUser.LevelEducation.It}}. {{matchedItems[0].guide}}. Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
                                                     <input class="displayInfo" style="border: #FFFF;" name="CusCode"
                                                            ng-change="filterIt()" ng-model="infUser.LevelEducation.It"
@@ -2110,7 +2122,7 @@
                                                         check-load="checkFamilyLoad">
                                                         {{x.Job}}
                                                     </td>
-                                                    <td style="white-space: pre"
+                                                    <td style="white-space: pre-line;"
                                                         tr-child-tab
                                                         row-id="x.Id"
                                                         child-tab="family"

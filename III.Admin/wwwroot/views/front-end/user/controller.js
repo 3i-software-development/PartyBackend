@@ -669,34 +669,34 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
         }
     }
     $rootScope.validationOptionsIntroducer = {
-      /*  rules: {
-            IntroducerPersonIntroduced: {
-                required: true,
-            },
-            IntroducerPlaceTimeJoinUnion: {
-                required: true,
-            },
-            IntroducerPlaceTimeRecognize: {
-                required: true,
-            },
-            IntroducerPlaceTimeJoinParty: {
-                required: true,
-            }
-        },
-        messages: {
-            IntroducerPersonIntroduced: {
-                required: "Bạn không được để trống trường này",
-            },
-            IntroducerPlaceTimeJoinUnion: {
-                required: "Bạn không được để trống trường này",
-            },
-            IntroducerPlaceTimeRecognize: {
-                required: "Bạn không được để trống trường này",
-            },
-            IntroducerPlaceTimeJoinParty: {
-                required: "Bạn không được để trống trường này",
-            }
-        }*/
+        /*  rules: {
+              IntroducerPersonIntroduced: {
+                  required: true,
+              },
+              IntroducerPlaceTimeJoinUnion: {
+                  required: true,
+              },
+              IntroducerPlaceTimeRecognize: {
+                  required: true,
+              },
+              IntroducerPlaceTimeJoinParty: {
+                  required: true,
+              }
+          },
+          messages: {
+              IntroducerPersonIntroduced: {
+                  required: "Bạn không được để trống trường này",
+              },
+              IntroducerPlaceTimeJoinUnion: {
+                  required: "Bạn không được để trống trường này",
+              },
+              IntroducerPlaceTimeRecognize: {
+                  required: "Bạn không được để trống trường này",
+              },
+              IntroducerPlaceTimeJoinParty: {
+                  required: "Bạn không được để trống trường này",
+              }
+          }*/
     }
 
 });
@@ -1310,7 +1310,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.matchedItems = $scope.jsonParse.filter(function (item) {
             return item.Id === id;
         });
-        $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide 
+        $scope.matchedItems[0].guide = $scope.matchedItems[0].Guide
     };
     $scope.downloadFile = function () {
         // Tạo một phần tử a để tạo ra một liên kết tới tệp Word
@@ -2692,6 +2692,88 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             })
         }
     }
+    
+    $scope.refreshPartyAdmissionProfileByUsername = function () {
+        if ($scope.UserName == null || $scope.UserName == undefined) {
+            //thông báo không lấy được username
+        }
+        else {
+            dataservice.getPartyAdmissionProfileByUsername($scope.UserName, function (rs) {
+                rs = rs.data;
+                console.log(rs);
+                if (rs.Error) {
+
+                }
+                else {
+                    rs = rs.Object;
+                    $scope.infUser.LastName = rs.CurrentName;
+                    var date = new Date(rs.Birthday);
+                    var day = date.getDate();
+                    var month = date.getMonth() + 1; // Tháng bắt đầu từ 0
+                    var year = date.getFullYear();
+                    if (day < 10) {
+                        day = '0' + day;
+                    }
+                    if (month < 10) {
+                        month = '0' + month;
+                    }
+                    $scope.infUser.Birthday = day + '-' + month + '-' + year;
+                    $scope.infUser.FirstName = rs.BirthName;
+
+                    $scope.infUser.Sex = rs.Gender == 0 ? "Nam" : "Nữ";
+                    $scope.infUser.Nation = rs.Nation;
+                    $scope.infUser.Religion = rs.Religion;
+                    $scope.infUser.Residence = rs.PermanentResidence;
+                    $scope.infUser.Phone = rs.Phone;
+                    $scope.infUser.PlaceofBirth = rs.PlaceBirth;
+                    $scope.infUser.NowEmployee = rs.Job;
+                    $scope.infUser.HomeTown = rs.HomeTown;
+                    $scope.infUser.TemporaryAddress = rs.TemporaryAddress;
+                    $scope.infUser.LevelEducation.GeneralEducation = rs.GeneralEducation;
+                    $scope.infUser.LevelEducation.VocationalTraining = rs.JobEducation;
+                    $scope.infUser.LevelEducation.Undergraduate = rs.UnderPostGraduateEducation;
+                    $scope.infUser.LevelEducation.RankAcademic = rs.Degree;
+
+                    $scope.infUser.LevelEducation.ForeignLanguage = rs.ForeignLanguage;
+                    $scope.infUser.LevelEducation.MinorityLanguage = rs.MinorityLanguages;
+                    $scope.infUser.LevelEducation.It = rs.ItDegree;
+                    $scope.infUser.LevelEducation.PoliticalTheory = rs.PoliticalTheory;
+                    $scope.PlaceCreatedTime = { place: rs.CreatedPlace };
+                    $scope.SelfComment.context = rs.SelfComment;
+                    $scope.status = JSON.parse(rs.Status).slice(-4);
+                    $scope.infUser.ResumeNumber = rs.ResumeNumber;
+                    $scope.GroupUser = rs.GroupUserCode;
+                    const lstStatus = rs.JsonStaus;
+                    if (lstStatus.length > 0) {
+                        $scope.infUser.Status = lstStatus[lstStatus.length - 1].Code;
+                        $scope.infUser.StatusDefault = lstStatus[lstStatus.length - 1].Code;
+                        $scope.infUser.StatusTemp = lstStatus[lstStatus.length - 1].Code;
+                        $scope.infUser.StatusObj = lstStatus[lstStatus.length - 1];
+                        $scope.listStatusLog = lstStatus;
+                    }
+
+                    console.log($scope.status);
+
+                    // Tạo đường dẫn đến tệp JSON
+                    var jsonUrl = `/uploads/json/reviewprofile_${$scope.infUser.ResumeNumber}.json`;
+
+                    $http.get(jsonUrl).then(function (response) {
+                        $scope.jsonGuide = response.data;
+                        $.each($scope.jsonGuide, function (index, item) {
+                            // Tìm thẻ <i> có id trùng với id của phần tử
+                            var $icon = $('#' + item.id + '.fa.fa-info-circle');
+                            // Nếu thẻ <i> được tìm thấy, đổi màu chúng thành đỏ
+                            if ($icon.length > 0) {
+                                $icon.css('color', 'red');
+                            }
+                        });
+                    }).catch(function (error) {
+                        console.error('Lỗi khi tải dữ liệu JSON');
+                    });
+                }
+            })
+        }
+    }
 
     $scope.ProfileList = [];
 
@@ -2823,17 +2905,17 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
             /*$scope.biologicalParents = ["bố đẻ", "mẹ đẻ", "bố ruột", "mẹ ruột", "bố", "mẹ"];
             if ($scope.biologicalParents.includes($scope.selectedFamily.Relation.toLowerCase())) {
                *//* if ($scope.selectedFamily.BirthPlace == null || $scope.selectedFamily.BirthPlace == undefined || $scope.selectedFamily.BirthPlace === '') {
-                 $scope.err = true;
-                 App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
-                 return
-             }*//*
-            if ($scope.selectedFamily.class == null || $scope.selectedFamily.class == undefined || $scope.selectedFamily.class === '') {
-                $scope.err = true;
-                App.toastrError("Bạn cần nhập thông tin thành phần giao cấp vào trường hợp này")
-                return
-            }
+              $scope.err = true;
+              App.toastrError("Bạn cần nhập thông tin nơi sinh vào trường hợp này")
+              return
+          }*//*
+           if ($scope.selectedFamily.class == null || $scope.selectedFamily.class == undefined || $scope.selectedFamily.class === '') {
+               $scope.err = true;
+               App.toastrError("Bạn cần nhập thông tin thành phần giao cấp vào trường hợp này")
+               return
+           }
 
-        }
+       }
 */
 
             /*$scope.biologicalParents1 = ["vợ", "chồng"];
@@ -3565,7 +3647,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                                         App.toastrError(result.Title);
                                     } else {
                                         App.toastrSuccess(result.Title);
-                                        $scope.getPartyAdmissionProfileByUsername();
+                                        $scope.refreshPartyAdmissionProfileByUsername();
                                     }
 
                                 });
@@ -3578,11 +3660,11 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                                     } else {
                                         App.toastrSuccess(result.Title);
                                         $scope.infUser.ResumeNumber = result.Object.ResumeNumber;
-                                        $scope.getPartyAdmissionProfileByUsername();
+                                        $scope.refreshPartyAdmissionProfileByUsername();
                                         var family = ["Ông nội", "Bà nội", "Ông ngoại", "Bà ngoại", "Bố đẻ", "Mẹ đẻ"]
                                         // for (let index = 0; index < family.length; index++) {
                                         if ($scope.isLoadFileWord === false) {
-                                        insertFamily2(family, 0);
+                                            insertFamily2(family, 0);
 
                                         }
 
@@ -3944,7 +4026,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
         $scope.resetValidateFamily()
 
     }
-    
+
     $scope.submitBusinessNDuty = function () {
         if ($scope.isLoadFileWord === true) {
             /*DeleteAllFamily($scope.infUser.ResumeNumber);*/
@@ -4243,7 +4325,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     App.toastrError("đảm bảo 'từ ngày' không được lớn hơn 'đến ngày'.");
                     return;
                 }
-            } 
+            }
             if ($scope.selectedGoAboard.From == null || $scope.selectedGoAboard.From == undefined || $scope.selectedGoAboard.From == '') {
                 return
             }

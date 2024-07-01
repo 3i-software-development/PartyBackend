@@ -2144,7 +2144,7 @@
                                                                     check-load="checkFamilyLoad">
                                                                     {{x.Job}}
                                                                 </td>
-                                                                <td style="white-space: pre" tr-child-tab
+                                                                <td style="white-space: pre-line;"  tr-child-tab
                                                                     row-id="x.Id"
                                                                     child-tab="family"
                                                                     json-guide="jsonGuide"
@@ -3145,10 +3145,9 @@
         <div class="d-flex w-100 justify-content-sb">
             <div class="flex-grow-full">
                 <label class="control-label" for="inputName" style="padding-right: 5px">{{popoverLabel}}</label>
-                <i class="fa fa-microphone"></i>
             </div>
-            <i class="fa fa-trash-o ml-5" style="margin-right: 15px" ng-click="deleteJson()"></i>
-            <i class="fa fa-floppy-o custom-popover-icon" ng-click="submit()"></i>
+            <i class="fa fa-trash-o ml-5" style="margin-right: 25px" ng-click="deleteJson()"></i>
+            <i class="fa fa-floppy-o custom-popover-icon" style="margin-right: 10px" ng-click="submit()"></i>
         </div>
         <textarea class="form-control" ng-model="pp.comment" id="inputName" placeholder="Nhập comment" popover-placement="bottom" uib-popover="{{matchedItemss[0].comment}}"></textarea>
     </div>

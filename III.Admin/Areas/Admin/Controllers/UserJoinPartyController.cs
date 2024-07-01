@@ -921,10 +921,16 @@ namespace III.Admin.Controllers
             if (!msg.Error)
             {
                 //lấy đường dẫn file
-                msg.Title = ressumeNumber;
-                filePath.Add(msg);
+                msg.Title = "Tải file thành công";
+                var pathDownload = msg.Object;
+                msg.Object = new
+                {
+                    Profile = profile,
+                    Path = pathDownload
+                };
+                //filePath.Add(msg);
             }
-            return filePath;
+            return Ok(msg);
         }
 
 
@@ -1094,10 +1100,16 @@ namespace III.Admin.Controllers
             if (!msg.Error)
             {
                 //lấy đường dẫn file
-                msg.Title = ressumeNumber;
-                filePath.Add(msg);
+                msg.Title = "Tải file thành công";
+                var pathDownload = msg.Object;
+                msg.Object = new
+                {
+                    Profile = profile,
+                    Path = pathDownload
+                };
+                //filePath.Add(msg);
             }
-            return filePath;
+            return Ok(msg);
         }
 
         [HttpGet]
@@ -1201,6 +1213,7 @@ namespace III.Admin.Controllers
             fileStream.Dispose();
             return msg;
         }
+
         [NonAction]
         private JMessage GenergatePesonnal(SelectedParty jsonParty)
         {
