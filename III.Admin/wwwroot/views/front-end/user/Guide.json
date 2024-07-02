@@ -198,6 +198,12 @@
   {
     "Id": "Certificate",
     "Guide": "Bạn cần nhập chứng chỉ mà bạn đã đạt được.Ví dụ: Chứng chỉ Tin học văn phòng"
+  }, {
+    "Id": "TimeJoinParty",
+    "Guide": "Bạn cần nhập thời gian mình kết nạp vào Đảng.Ví dụ: 13/11/1999"
+  }, {
+    "Id": "PlaceJoinParty",
+    "Guide": "Bạn cần nhập tên tỉnh nơi mình kết nạp vào Đảng.Ví dụ: Bến Tre"
   },
   {
     "Id": "place",

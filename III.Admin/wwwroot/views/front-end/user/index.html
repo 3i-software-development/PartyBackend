@@ -1226,9 +1226,10 @@
                                             <div class="col-md-8">
                                                 <div class="br24 form-control custom-title-code-bold"
                                                      style="white-space:nowrap;">
-                                                    <i class="fa fa-info-circle  icon-clickable" id="place"
+                                                    <i class="fa fa-info-circle  icon-clickable" id="TimeJoinParty"
+                                                       ng-click="handleClick('TimeJoinParty')"
                                                        title="Popover Header" popover-placement="bottom-left"
-                                                       uib-popover="Nơi bạn tạo phiếu: {{PlaceCreatedTime.place}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
+                                                       uib-popover="Ngày bạn tạo phiếu: {{PlaceCreatedTime.place}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
                                                     <input class="displayInfo" style="border: #FFFF;"
                                                            name="placeAddress" validateDateNow="true"
@@ -1257,7 +1258,8 @@
                                             <div class="col-md-8">
                                                 <div class="br24 form-control custom-title-code-bold"
                                                      style="white-space:nowrap;">
-                                                    <i class="fa fa-info-circle  icon-clickable" id="place"
+                                                    <i class="fa fa-info-circle  icon-clickable" id="PlaceJoinParty"
+                                                          ng-click="handleClick('PlaceJoinParty')"
                                                        title="Popover Header" popover-placement="bottom-left"
                                                        uib-popover="Nơi bạn tạo phiếu: {{PlaceCreatedTime.place}}. {{matchedItems[0].guide}} Lưu ý: {{matchedItemss[0].comment}}"
                                                        popover-trigger="'outsideClick'"></i>
@@ -3664,7 +3666,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 " style="padding-left: 7px;">
                                         <i class="fa fa-calendar"></i>
-                                        <label class="displayInfo control-label custom-title-code-bold require">
+                                        <label class="displayInfo control-label custom-title-code-bold ">
                                             Ngày và nơi vào Đảng
                                             lần
                                             thứ nhất
@@ -3694,7 +3696,7 @@
                                 <div class="form-group row">
                                     <div class="col-md-4 pr-0 " style="padding-left: 7px;">
                                         <i class="fa fa-calendar"></i>
-                                        <label class="displayInfo control-label custom-title-code-bold require">
+                                        <label class="displayInfo control-label custom-title-code-bold ">
                                             Ngày và nơi công nhận
                                             chính thức lần đầu
                                         </label>
