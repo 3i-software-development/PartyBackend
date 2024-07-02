@@ -2661,13 +2661,26 @@ app.controller('edit-user-join-party', function ($scope, $rootScope, $compile, $
         matchedLabel = $scope.popoverLabels.find(function (item) {
             return item.id === popoverId;
         });
-        $scope.pp.id = matchedLabel.id;
-        $scope.pp.comment = matchedLabel.comment;
-        $scope.popoverid = matchedLabel.id;
-        if (matchedLabel) {
-            $scope.popoverLabel = matchedLabel.labelText;
-            $scope.commentTextarea = matchedLabel.comment;
+        const pp = $scope.jsonGuide.find(x => x.id === popoverId);
+
+        if (pp != null) {
+            $scope.pp.id = matchedLabel.id;
+            $scope.pp.comment = pp.comment;
+            $scope.popoverid = matchedLabel.id;
+            if (matchedLabel) {
+                $scope.popoverLabel = matchedLabel.labelText;
+                $scope.commentTextarea = pp.comment;
+            }
+        } else {
+            $scope.pp.id = matchedLabel.id;
+            $scope.pp.comment = matchedLabel.comment;
+            $scope.popoverid = matchedLabel.id;
+            if (matchedLabel) {
+                $scope.popoverLabel = matchedLabel.labelText;
+                $scope.commentTextarea = '';
+            }
         }
+       
     };
     // khai báo 
     $scope.jsonGuide = [];
