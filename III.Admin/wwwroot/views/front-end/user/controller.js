@@ -2642,7 +2642,17 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     $scope.infUser.LevelEducation.MinorityLanguage = rs.MinorityLanguages;
                     $scope.infUser.LevelEducation.It = rs.ItDegree;
                     $scope.infUser.LevelEducation.PoliticalTheory = rs.PoliticalTheory;
-                    $scope.PlaceCreatedTime = { place: rs.CreatedPlace };
+                    if (rs.CreatedPlace) {
+                        var partPlace = rs.CreatedPlace.split("_");
+                        if (partPlace.length == 2) {
+                            partPlace[1] = $scope.placeAddress;
+                            $scope.PlaceCreatedTime = { place: partPlace[0] };
+                            $scope.placeAddress = partPlace[1];
+                        } else {
+                            $scope.PlaceCreatedTime = { place: rs.CreatedPlace };
+                        }
+                    }
+
                     $scope.SelfComment.context = rs.SelfComment;
                     $scope.status = JSON.parse(rs.Status).slice(-4);
                     $scope.infUser.ResumeNumber = rs.ResumeNumber;
@@ -2739,6 +2749,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     $scope.infUser.LevelEducation.It = rs.ItDegree;
                     $scope.infUser.LevelEducation.PoliticalTheory = rs.PoliticalTheory;
                     $scope.PlaceCreatedTime = { place: rs.CreatedPlace };
+                  
+                    let parts = PlaceCreatedTime.split('_');
+                    $scope.placeAddress = parts[0];
                     $scope.SelfComment.context = rs.SelfComment;
                     $scope.status = JSON.parse(rs.Status).slice(-4);
                     $scope.infUser.ResumeNumber = rs.ResumeNumber;
@@ -3405,6 +3418,12 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         $scope.model.SelfComment = $scope.SelfComment.context;
                         if ($scope.PlaceCreatedTime?.place !== '' && $scope.PlaceCreatedTime?.place !== undefined && $scope.PlaceCreatedTime?.place !== null) {
                             $scope.model.CreatedPlace = [($scope.PlaceCreatedTime?.place ?? ''), $scope.placeAddress].join('_');
+                        }
+                        if ($scope.PlaceCreatedTime.place) {
+                            var partPlace = $scope.PlaceCreatedTime.place.split("_");
+                            if (partPlace.length == 2) {
+                                partPlace[1] = $scope.placeAddress;
+                            }
                         }
                         $scope.model.ResumeNumber = $scope.infUser.ResumeNumber;
                         $scope.model.Status = $scope.infUser.Status;
