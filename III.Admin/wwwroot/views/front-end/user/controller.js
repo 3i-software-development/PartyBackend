@@ -3403,7 +3403,9 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                         const theories = $scope.infUser.LevelEducation.PoliticalTheory;
                         $scope.model.PoliticalTheory = theories && theories.constructor === Array ? '' : theories;
                         $scope.model.SelfComment = $scope.SelfComment.context;
-                        $scope.model.CreatedPlace = [($scope.PlaceCreatedTime?.place ?? ''), $scope.placeAddress].join('_');
+                        if ($scope.PlaceCreatedTime?.place !== '' && $scope.PlaceCreatedTime?.place !== undefined && $scope.PlaceCreatedTime?.place !== null) {
+                            $scope.model.CreatedPlace = [($scope.PlaceCreatedTime?.place ?? ''), $scope.placeAddress].join('_');
+                        }
                         $scope.model.ResumeNumber = $scope.infUser.ResumeNumber;
                         $scope.model.Status = $scope.infUser.Status;
                         $scope.model.UserName = $scope.UserName;
