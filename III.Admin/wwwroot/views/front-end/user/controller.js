@@ -669,19 +669,19 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
         }
     }
     $rootScope.validationOptionsIntroducer = {
-        /*  rules: {
+         rules: {
               IntroducerPersonIntroduced: {
                   required: true,
               },
               IntroducerPlaceTimeJoinUnion: {
                   required: true,
-              },
+              } /*,
               IntroducerPlaceTimeRecognize: {
                   required: true,
               },
               IntroducerPlaceTimeJoinParty: {
                   required: true,
-              }
+              }*/
           },
           messages: {
               IntroducerPersonIntroduced: {
@@ -689,14 +689,14 @@ app.controller('Ctrl_ESEIM', function ($scope, $rootScope, $compile, dataservice
               },
               IntroducerPlaceTimeJoinUnion: {
                   required: "Bạn không được để trống trường này",
-              },
+              }/*,
               IntroducerPlaceTimeRecognize: {
                   required: "Bạn không được để trống trường này",
               },
               IntroducerPlaceTimeJoinParty: {
                   required: "Bạn không được để trống trường này",
-              }
-          }*/
+              }*/
+          }
     }
 
 });
@@ -2717,7 +2717,7 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
                     if (month < 10) {
                         month = '0' + month;
                     }
-                    $scope.infUser.Birthday = day + '-' + month + '-' + year;
+                    $scope.infUser.Birthday = day + '/' + month + '/' + year;
                     $scope.infUser.FirstName = rs.BirthName;
 
                     $scope.infUser.Sex = rs.Gender == 0 ? "Nam" : "Nữ";
@@ -4407,7 +4407,30 @@ app.controller('index', function ($scope, $rootScope, $compile, dataservice, $fi
 
 
     $scope.submitIntroducer = function () {
-        if ($scope.forms.Introducer.validate()) {
+        var checkFirstIntroFiled = true;
+        var checkSecondIntroFiled = true;
+        var checkThirdIntroFiled = true;
+        var checkFourthIntroFiled = true;
+        var isAcceptInsert = false;
+        if ($scope.Introducer.PersonIntroduced == '' || $scope.Introducer.PersonIntroduced == null || $scope.Introducer.PersonIntroduced == undefined) {
+            checkFirstFiled = false;
+        }
+        if ($scope.Introducer.PlaceTimeJoinUnion == '' || $scope.Introducer.PlaceTimeJoinUnion == null || $scope.Introducer.PlaceTimeJoinUnion == undefined) {
+            checkSecondIntroFiled = false;
+        }
+        if ($scope.Introducer.PlaceTimeJoinParty == '' || $scope.Introducer.PlaceTimeJoinParty == null || $scope.Introducer.PlaceTimeJoinParty == undefined) {
+            checkThirdIntroFiled = false;
+        }
+        if ($scope.Introducer.PlaceTimeRecognize == '' || $scope.Introducer.PlaceTimeRecognize == null || $scope.Introducer.PlaceTimeRecognize == undefined) {
+            checkFourthIntroFiled = false;
+        }
+
+        if (!checkFirstFiled && !checkSecondIntroFiled && !checkThirdIntroFiled && !checkFourthIntroFiled) {
+            isAcceptInsert = true;
+        }
+       
+
+        if ($scope.forms.Introducer.validate() || isAcceptInsert) {
             $scope.model = {};
             if ($scope.UserName != null && $scope.UserName != undefined) {
                 $scope.model.PersonIntroduced = $scope.Introducer.PersonIntroduced;
